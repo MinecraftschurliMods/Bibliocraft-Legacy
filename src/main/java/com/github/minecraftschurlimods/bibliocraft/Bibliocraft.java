@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft;
 
-import com.github.minecraftschurlimods.bibliocraft.handler.EventHandler;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import net.neoforged.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +12,5 @@ public final class Bibliocraft {
 
     public Bibliocraft() {
         BCRegistries.init();
-        EventHandler.init();
     }
 }
