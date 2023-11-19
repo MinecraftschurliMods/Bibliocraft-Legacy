@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.github.minecraftschurlimods.bibliocraft;
 
 import net.neoforged.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
