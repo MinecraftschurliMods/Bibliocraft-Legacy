@@ -1,4 +1,14 @@
 {
-  "block.bibliocraft.bookcase": "Bookcase",
+  "block.bibliocraft.acacia_bookcase": "Acacia Bookcase",
+  "block.bibliocraft.bamboo_bookcase": "Bamboo Bookcase",
+  "block.bibliocraft.birch_bookcase": "Birch Bookcase",
+  "block.bibliocraft.cherry_bookcase": "Cherry Bookcase",
+  "block.bibliocraft.crimson_bookcase": "Crimson Bookcase",
+  "block.bibliocraft.dark_oak_bookcase": "Dark Oak Bookcase",
+  "block.bibliocraft.jungle_bookcase": "Jungle Bookcase",
+  "block.bibliocraft.mangrove_bookcase": "Mangrove Bookcase",
+  "block.bibliocraft.oak_bookcase": "Oak Bookcase",
+  "block.bibliocraft.spruce_bookcase": "Spruce Bookcase",
+  "block.bibliocraft.warped_bookcase": "Warped Bookcase",
   "container.bibliocraft.bookcase": "Bookcase"
 }

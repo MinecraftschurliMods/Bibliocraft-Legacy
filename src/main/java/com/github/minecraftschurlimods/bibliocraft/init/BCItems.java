@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
+import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -9,7 +10,7 @@ import java.util.function.Supplier;
 public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
-    Supplier<BlockItem> BOOKCASE = blockItem("bookcase", BCBlocks.BOOKCASE);
+    WoodTypeDeferredHolder<Item, BlockItem> BOOKCASE = woodenBlock("bookcase", BCBlocks.BOOKCASE);
     //TODO Atlas
     //TODO Big Book
     //TODO Clipboard
@@ -35,6 +36,10 @@ public interface BCItems {
     //TODO Tape Measure
     //TODO Tinted Glasses
     //TODO Waypoint Compass
+
+    static WoodTypeDeferredHolder<Item, BlockItem> woodenBlock(String name, WoodTypeDeferredHolder<Block, ?> block) {
+        return new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, name, BCBlocks.WOOD_TYPES, wood -> new BlockItem(block.holder(wood).get(), PROPERTIES));
+    }
 
     static Supplier<BlockItem> blockItem(String name, Supplier<? extends Block> block) {
         return BCRegistries.ITEMS.register(name, () -> new BlockItem(block.get(), PROPERTIES));

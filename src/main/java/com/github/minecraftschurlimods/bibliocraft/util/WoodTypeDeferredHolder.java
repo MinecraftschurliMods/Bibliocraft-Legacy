@@ -5,13 +5,14 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 public class WoodTypeDeferredHolder<R, T extends R> {
-    private static final List<WoodType> DEFAULT_WOOD_TYPES = List.of(WoodType.OAK, WoodType.SPRUCE, WoodType.BIRCH, WoodType.JUNGLE, WoodType.ACACIA, WoodType.DARK_OAK, WoodType.CRIMSON, WoodType.WARPED, WoodType.MANGROVE, WoodType.BAMBOO, WoodType.CHERRY);
     private final Map<WoodType, DeferredHolder<R, T>> map = new HashMap<>();
 
     public WoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, List<WoodType> types, Function<WoodType, ? extends T> creator) {
@@ -30,5 +31,21 @@ public class WoodTypeDeferredHolder<R, T extends R> {
 
     public ResourceLocation id(WoodType type) {
         return map.get(type).getId();
+    }
+
+    public Collection<DeferredHolder<R, T>> holders() {
+        return map.values();
+    }
+
+    public Collection<T> values() {
+        return map.values().stream().map(DeferredHolder::get).toList();
+    }
+
+    public Collection<ResourceLocation> ids() {
+        return map.values().stream().map(DeferredHolder::getId).toList();
+    }
+
+    public Map<WoodType, DeferredHolder<R, T>> map() {
+        return Collections.unmodifiableMap(map);
     }
 }

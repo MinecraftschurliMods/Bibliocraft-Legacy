@@ -1,8 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -13,6 +16,13 @@ public class BCItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        withExistingParent("bookcase", new ResourceLocation(Bibliocraft.MOD_ID, "block/oak_bookcase"));
+        woodenBlock(BCItems.BOOKCASE, "bookcase");
+    }
+
+    private void woodenBlock(WoodTypeDeferredHolder<Item, ?> holder, String suffix) {
+        holder.map().forEach((k, v) -> {
+            String name = k.name() + "_" + suffix;
+            withExistingParent(name, new ResourceLocation(Bibliocraft.MOD_ID, "block/" + name));
+        });
     }
 }

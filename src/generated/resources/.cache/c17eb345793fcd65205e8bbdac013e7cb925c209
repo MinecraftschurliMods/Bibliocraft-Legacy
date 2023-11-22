@@ -1,2 +1,12 @@
-// 1.20.2	2023-11-22T00:19:22.115925	Item Models: bibliocraft
-3018c76a3e657cac2cad157f27ccf08a59c0298c assets/bibliocraft/models/item/bookcase.json
+// 1.20.2	2023-11-22T14:06:50.7916374	Item Models: bibliocraft
+36c2ae88060a10b2ba6510d8a8dcbdb484c8f69c assets/bibliocraft/models/item/acacia_bookcase.json
+c02dcf6a2c74af639be1007b97f5fcdf9800a90c assets/bibliocraft/models/item/bamboo_bookcase.json
+cafee59d6319389a2b0dd06d1ca3fb5990a17e35 assets/bibliocraft/models/item/birch_bookcase.json
+98645dcea39b28991a685fec55b2960ad8996efa assets/bibliocraft/models/item/cherry_bookcase.json
+22c99e89d234181c3f87fe58171ae9d25ab0b877 assets/bibliocraft/models/item/crimson_bookcase.json
+69cf639922ebd1d4da290e432803b98a5f2ef7e0 assets/bibliocraft/models/item/dark_oak_bookcase.json
+3f46f5ca05ed9a0a3c3ec8dbabcd13bba78cd5f6 assets/bibliocraft/models/item/jungle_bookcase.json
+3b57b6983ea2396c4bdce121de8f37cbcd681c5d assets/bibliocraft/models/item/mangrove_bookcase.json
+3018c76a3e657cac2cad157f27ccf08a59c0298c assets/bibliocraft/models/item/oak_bookcase.json
+57f0ce3c28ca7630262d5d8169b4ed2b140cb012 assets/bibliocraft/models/item/spruce_bookcase.json
+84edc4c0abd9574af9bbc990297a0e8f1b19fb38 assets/bibliocraft/models/item/warped_bookcase.json

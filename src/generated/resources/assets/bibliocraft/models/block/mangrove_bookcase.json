@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/bookcase",
+  "textures": {
+    "texture": "minecraft:block/mangrove_planks"
+  }
+}
