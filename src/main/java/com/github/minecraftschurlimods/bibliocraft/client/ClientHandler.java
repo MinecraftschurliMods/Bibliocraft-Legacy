@@ -16,8 +16,9 @@ public final class ClientHandler {
             MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BookcaseScreen::new);
         }
     }
-
+/*
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, modid = Bibliocraft.MOD_ID)
     public static final class NeoBus {
     }
+*/
 }

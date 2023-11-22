@@ -1,13 +1,13 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlock;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.registries.DeferredHolder;
+
+import java.util.function.Supplier;
 
 public interface BCBlocks {
-    DeferredHolder<Block, BookcaseBlock> BOOKCASE = BCRegistries.BLOCKS.register("bookcase", () -> new BookcaseBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
+    Supplier<BookcaseBlock> BOOKCASE = BCRegistries.BLOCKS.register("bookcase", () -> new BookcaseBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).noOcclusion()));
     //TODO Clock
     //TODO Cookie Jar
     //TODO Desk
