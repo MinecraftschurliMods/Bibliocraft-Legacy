@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.datagen;
+package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import net.minecraft.data.PackOutput;

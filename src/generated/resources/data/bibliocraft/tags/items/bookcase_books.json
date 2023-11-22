@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#minecraft:bookshelf_books",
+    "#minecraft:lectern_books",
+    {
+      "id": "patchouli:guide_book",
+      "required": false
+    }
+  ]
+}

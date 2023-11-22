@@ -1,12 +1,20 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCBlockStateProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCEnglishLanguageProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCItemModelProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCBlockTagsProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCItemTagsProvider;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+
+import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Bibliocraft.MOD_ID)
 public final class BCDatagen {
@@ -15,8 +23,14 @@ public final class BCDatagen {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
         generator.addProvider(event.includeClient(), new BCEnglishLanguageProvider(output));
         generator.addProvider(event.includeClient(), new BCBlockStateProvider(output, existingFileHelper));
         generator.addProvider(event.includeClient(), new BCItemModelProvider(output, existingFileHelper));
+
+        BCBlockTagsProvider blockTags = new BCBlockTagsProvider(output, lookupProvider, existingFileHelper);
+        generator.addProvider(event.includeServer(), blockTags);
+        generator.addProvider(event.includeServer(), new BCItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
     }
 }
