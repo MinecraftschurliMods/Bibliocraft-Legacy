@@ -11,8 +11,8 @@ import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public interface BCRegistries {
-    DeferredRegister<Block> BLOCKS = DeferredRegister.createBlocks(Bibliocraft.MOD_ID);
-    DeferredRegister<Item> ITEMS = DeferredRegister.createItems(Bibliocraft.MOD_ID);
+    DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Bibliocraft.MOD_ID);
+    DeferredRegister.Items ITEMS = DeferredRegister.createItems(Bibliocraft.MOD_ID);
     DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Bibliocraft.MOD_ID);
     DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(BuiltInRegistries.MENU, Bibliocraft.MOD_ID);
 
