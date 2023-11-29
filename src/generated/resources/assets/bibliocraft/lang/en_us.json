@@ -10,5 +10,6 @@
   "block.bibliocraft.oak_bookcase": "Oak Bookcase",
   "block.bibliocraft.spruce_bookcase": "Spruce Bookcase",
   "block.bibliocraft.warped_bookcase": "Warped Bookcase",
-  "container.bibliocraft.bookcase": "Bookcase"
+  "container.bibliocraft.bookcase": "Bookcase",
+  "itemGroup.bibliocraft": "Bibliocraft"
 }

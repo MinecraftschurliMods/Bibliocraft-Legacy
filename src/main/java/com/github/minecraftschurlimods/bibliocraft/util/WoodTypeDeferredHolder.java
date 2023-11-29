@@ -8,12 +8,13 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 public class WoodTypeDeferredHolder<R, T extends R> {
-    private final Map<WoodType, DeferredHolder<R, T>> map = new HashMap<>();
+    private final Map<WoodType, DeferredHolder<R, T>> map = new LinkedHashMap<>();
 
     public WoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, List<WoodType> types, Function<WoodType, ? extends T> creator) {
         for (WoodType type : types) {
