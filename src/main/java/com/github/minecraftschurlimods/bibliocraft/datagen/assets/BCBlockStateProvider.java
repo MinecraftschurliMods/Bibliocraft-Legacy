@@ -39,7 +39,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
 
     private <T extends Block> void woodenBlock(WoodTypeDeferredHolder<Block, T> holder, String name, Function<WoodType, ResourceLocation> textureFunction) {
         for (Map.Entry<WoodType, DeferredHolder<Block, T>> t : holder.map().entrySet()) {
-            horizontalBlock(t.getValue(), t.getKey().name() + "_" + name, modLoc(name), textureFunction.apply(t.getKey()));
+            horizontalBlock(t.getValue(), t.getKey().name() + "_" + name, modLoc("block/" + name + "/" + name), textureFunction.apply(t.getKey()));
         }
     }
 }

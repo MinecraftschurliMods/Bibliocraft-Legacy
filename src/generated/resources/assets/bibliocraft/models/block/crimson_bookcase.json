@@ -1,5 +1,5 @@
 {
-  "parent": "bibliocraft:block/bookcase",
+  "parent": "bibliocraft:block/bookcase/bookcase",
   "textures": {
     "texture": "minecraft:block/crimson_planks"
   }

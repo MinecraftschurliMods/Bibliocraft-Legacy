@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "14": "bibliocraft:block/bookcase/book_13"
+  },
+  "elements": [
+    {
+      "name": "book13",
+      "from": [5, 1, 9],
+      "to": [7, 6, 15],
+      "faces": {
+        "north": {"uv": [14, 6, 16, 11], "texture": "#14"},
+        "east": {"uv": [0, 6, 6, 11], "texture": "#14"},
+        "south": {"uv": [6, 6, 8, 11], "texture": "#14"},
+        "west": {"uv": [8, 6, 14, 11], "texture": "#14"},
+        "up": {"uv": [6, 0, 8, 6], "texture": "#14"},
+        "down": {"uv": [8, 0, 10, 6], "texture": "#14"}
+      }
+    }
+  ]
+}

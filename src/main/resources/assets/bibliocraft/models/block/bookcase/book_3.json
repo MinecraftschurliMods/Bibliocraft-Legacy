@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "4": "bibliocraft:block/bookcase/book_3",
+    "5": "bibliocraft:block/bookcase/book_4",
+    "6": "bibliocraft:block/bookcase/book_5",
+    "7": "bibliocraft:block/bookcase/book_6",
+    "8": "bibliocraft:block/bookcase/book_7",
+    "9": "bibliocraft:block/bookcase/book_8",
+    "10": "bibliocraft:block/bookcase/book_9",
+    "11": "bibliocraft:block/bookcase/book_10",
+    "12": "bibliocraft:block/bookcase/book_11",
+    "13": "bibliocraft:block/bookcase/book_12",
+    "14": "bibliocraft:block/bookcase/book_13",
+    "15": "bibliocraft:block/bookcase/book_14",
+    "16": "bibliocraft:block/bookcase/book_15"
+  },
+  "elements": [
+    {
+      "name": "book3",
+      "from": [8, 9, 9],
+      "to": [10, 15, 15],
+      "faces": {
+        "north": {"uv": [14, 6, 16, 12], "texture": "#4"},
+        "east": {"uv": [0, 6, 6, 12], "texture": "#4"},
+        "south": {"uv": [6, 6, 8, 12], "texture": "#4"},
+        "west": {"uv": [8, 6, 14, 12], "texture": "#4"},
+        "up": {"uv": [6, 0, 8, 6], "texture": "#4"},
+        "down": {"uv": [8, 0, 10, 6], "texture": "#4"}
+      }
+    }
+  ]
+}
