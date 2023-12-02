@@ -1,9 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlock;
-import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseModel;
+import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BookcaseScreen;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
@@ -11,6 +10,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -26,14 +26,14 @@ public final class ClientHandler {
     public static final class ModBus {
         @SubscribeEvent
         static void clientSetup(FMLClientSetupEvent event) {
-            MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BookcaseScreen::new);
+            event.enqueueWork(() -> MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BookcaseScreen::new));
         }
 
         @SubscribeEvent
         static void modifyBakingResult(ModelEvent.ModifyBakingResult event) {
             Map<ResourceLocation, BakedModel> models = event.getModels();
             for (BookcaseBlock block : BCBlocks.BOOKCASE.values()) {
-                bakeBCBlock(models, block, BookcaseModel::new);
+                bakeBlock(models, block, BookcaseGeometryLoader.BookcaseBakedModel::new);
             }
         }
 
@@ -44,7 +44,12 @@ public final class ClientHandler {
             }
         }
 
-        private static void bakeBCBlock(Map<ResourceLocation, BakedModel> models, BCBlock block, Function<BakedModel, ? extends BakedModelWrapper<BakedModel>> modelFactory) {
+        @SubscribeEvent
+        static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
+            event.register("bookcase", BookcaseGeometryLoader.INSTANCE);
+        }
+
+        private static void bakeBlock(Map<ResourceLocation, BakedModel> models, Block block, Function<BakedModel, ? extends BakedModelWrapper<BakedModel>> modelFactory) {
             for (BlockState state : block.getStateDefinition().getPossibleStates()) {
                 models.computeIfPresent(BlockModelShaper.stateToModelLocation(state), ($, model) -> modelFactory.apply(model));
             }
