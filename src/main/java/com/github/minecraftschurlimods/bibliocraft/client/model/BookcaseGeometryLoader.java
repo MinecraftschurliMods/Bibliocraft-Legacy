@@ -46,12 +46,14 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
 
     @Override
     public BookcaseGeometry read(JsonObject jsonObject, JsonDeserializationContext context) throws JsonParseException {
+        jsonObject.remove("loader");
+        BlockModel base = context.deserialize(jsonObject, BlockModel.class);
         BlockModel[] books = new BlockModel[16];
         for (int i = 0; i < 16; i++) {
             String book = "book_" + i;
             books[i] = context.deserialize(GsonHelper.getAsJsonObject(jsonObject, book), BlockModel.class);
         }
-        return new BookcaseGeometry(context.deserialize(GsonHelper.getAsJsonObject(jsonObject, "base"), BlockModel.class), books);
+        return new BookcaseGeometry(base, books);
     }
 
     public static class BookcaseGeometry implements IUnbakedGeometry<BookcaseGeometry> {
@@ -65,15 +67,12 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
 
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BakedModel[] directionalBase = new BakedModel[4];
-            BakedModel[][] directionalBooks = new BakedModel[4][16];
-            for (int i = 0; i < directionalBooks.length; i++) {
-                directionalBase[i] = base.bake(baker, base, spriteGetter, BlockModelRotation.by(0, i * 90), modelLocation, context.useBlockLight());
-                for (int j = 0; j < directionalBooks[i].length; j++) {
-                    directionalBooks[i][j] = books[j].bake(baker, books[j], spriteGetter, BlockModelRotation.by(0, i * 90), modelLocation, context.useBlockLight());
-                }
+            BakedModel base = this.base.bake(baker, this.base, spriteGetter, modelState, modelLocation, context.useBlockLight());
+            BakedModel[] books = new BakedModel[16];
+            for (int j = 0; j < books.length; j++) {
+                books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, modelState, modelLocation, context.useBlockLight());
             }
-            return new BookcaseDynamicModel(context.useAmbientOcclusion(), context.isGui3d(), context.useBlockLight(), spriteGetter.apply(base.getMaterial("particle")), directionalBase, directionalBooks);
+            return new BookcaseDynamicModel(context.useAmbientOcclusion(), context.isGui3d(), context.useBlockLight(), spriteGetter.apply(this.base.getMaterial("particle")), base, books);
         }
 
         @Override
@@ -90,10 +89,10 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
         private final boolean isGui3d;
         private final boolean usesBlockLight;
         private final TextureAtlasSprite particle;
-        private final BakedModel[] base;
-        private final BakedModel[][] books;
+        private final BakedModel base;
+        private final BakedModel[] books;
 
-        public BookcaseDynamicModel(boolean useAmbientOcclusion, boolean isGui3d, boolean usesBlockLight, TextureAtlasSprite particle, BakedModel[] base, BakedModel[][] books) {
+        public BookcaseDynamicModel(boolean useAmbientOcclusion, boolean isGui3d, boolean usesBlockLight, TextureAtlasSprite particle, BakedModel base, BakedModel[] books) {
             this.useAmbientOcclusion = useAmbientOcclusion;
             this.isGui3d = isGui3d;
             this.usesBlockLight = usesBlockLight;
@@ -104,18 +103,11 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
 
         @Override
         public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
-            int sideIndex = side == null ? 0 : switch (side) {
-                case NORTH -> 0;
-                case EAST -> 1;
-                case SOUTH -> 2;
-                case WEST -> 3;
-                default -> 0;
-            };
-            List<BakedQuad> quads = new ArrayList<>(base[sideIndex].getQuads(state, side, rand, extraData, renderType));
-            for (int i = 0; i < books[sideIndex].length; i++) {
+            List<BakedQuad> quads = new ArrayList<>(base.getQuads(state, side, rand, extraData, renderType));
+            for (int i = 0; i < books.length; i++) {
                 Boolean book = extraData.get(BookcaseBlockEntity.MODEL_PROPERTIES.get(i));
                 if (book == null || !book) continue;
-                quads.addAll(books[sideIndex][i].getQuads(state, side, rand, extraData, renderType));
+                quads.addAll(books[i].getQuads(state, side, rand, extraData, renderType));
             }
             return quads;
         }

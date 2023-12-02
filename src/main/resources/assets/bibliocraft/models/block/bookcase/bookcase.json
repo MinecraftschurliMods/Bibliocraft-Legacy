@@ -1,20 +1,104 @@
 {
-	"loader": "bibliocraft:bookcase",
-	"base": {"parent": "bibliocraft:block/bookcase/base"},
-    "book_0": {"parent": "bibliocraft:block/bookcase/book_0"},
-    "book_1": {"parent": "bibliocraft:block/bookcase/book_1"},
-    "book_2": {"parent": "bibliocraft:block/bookcase/book_2"},
-    "book_3": {"parent": "bibliocraft:block/bookcase/book_3"},
-    "book_4": {"parent": "bibliocraft:block/bookcase/book_4"},
-    "book_5": {"parent": "bibliocraft:block/bookcase/book_5"},
-    "book_6": {"parent": "bibliocraft:block/bookcase/book_6"},
-    "book_7": {"parent": "bibliocraft:block/bookcase/book_7"},
-    "book_8": {"parent": "bibliocraft:block/bookcase/book_8"},
-    "book_9": {"parent": "bibliocraft:block/bookcase/book_9"},
-    "book_10": {"parent": "bibliocraft:block/bookcase/book_10"},
-    "book_11": {"parent": "bibliocraft:block/bookcase/book_11"},
-    "book_12": {"parent": "bibliocraft:block/bookcase/book_12"},
-    "book_13": {"parent": "bibliocraft:block/bookcase/book_13"},
-    "book_14": {"parent": "bibliocraft:block/bookcase/book_14"},
-    "book_15": {"parent": "bibliocraft:block/bookcase/book_15"}
+  "loader": "bibliocraft:bookcase",
+  "parent": "minecraft:block/block",
+  "textures": {
+    "0": "#texture",
+    "particle": "#texture"
+  },
+  "elements": [
+    {
+      "name": "bottom",
+      "from": [1, 0, 8],
+      "to": [15, 1, 15],
+      "faces": {
+        "north": {"uv": [1, 15, 15, 16], "texture": "#0"},
+        "east": {"uv": [0, 0, 7, 1], "texture": "#missing"},
+        "south": {"uv": [0, 0, 14, 1], "texture": "#missing"},
+        "west": {"uv": [0, 0, 7, 1], "texture": "#missing"},
+        "up": {"uv": [1, 8, 15, 15], "texture": "#0"},
+        "down": {"uv": [1, 1, 15, 8], "texture": "#0"}
+      }
+    },
+    {
+      "name": "middle",
+      "from": [1, 7, 8],
+      "to": [15, 9, 15],
+      "faces": {
+        "north": {"uv": [1, 7, 15, 9], "texture": "#0"},
+        "east": {"uv": [0, 0, 7, 2], "texture": "#missing"},
+        "south": {"uv": [0, 0, 14, 2], "texture": "#missing"},
+        "west": {"uv": [0, 0, 7, 2], "texture": "#missing"},
+        "up": {"uv": [1, 8, 15, 15], "texture": "#0"},
+        "down": {"uv": [1, 1, 15, 8], "texture": "#0"}
+      }
+    },
+    {
+      "name": "top",
+      "from": [1, 15, 8],
+      "to": [15, 16, 15],
+      "faces": {
+        "north": {"uv": [1, 0, 15, 1], "texture": "#0"},
+        "east": {"uv": [0, 0, 7, 1], "texture": "#missing"},
+        "south": {"uv": [0, 0, 14, 1], "texture": "#missing"},
+        "west": {"uv": [0, 0, 7, 1], "texture": "#missing"},
+        "up": {"uv": [1, 8, 15, 15], "texture": "#0"},
+        "down": {"uv": [1, 1, 15, 8], "texture": "#0"}
+      }
+    },
+    {
+      "name": "left",
+      "from": [15, 0, 8],
+      "to": [16, 16, 15],
+      "faces": {
+        "north": {"uv": [0, 0, 1, 16], "texture": "#0"},
+        "east": {"uv": [1, 0, 8, 16], "texture": "#0"},
+        "south": {"uv": [0, 0, 1, 16], "texture": "#missing"},
+        "west": {"uv": [8, 0, 15, 16], "texture": "#0"},
+        "up": {"uv": [15, 8, 16, 15], "texture": "#0"},
+        "down": {"uv": [15, 1, 16, 8], "texture": "#0"}
+      }
+    },
+    {
+      "name": "right",
+      "from": [0, 0, 8],
+      "to": [1, 16, 15],
+      "faces": {
+        "north": {"uv": [15, 0, 16, 16], "texture": "#0"},
+        "east": {"uv": [1, 0, 8, 16], "texture": "#0"},
+        "south": {"uv": [0, 0, 1, 16], "texture": "#missing"},
+        "west": {"uv": [8, 0, 15, 16], "texture": "#0"},
+        "up": {"uv": [0, 8, 1, 15], "texture": "#0"},
+        "down": {"uv": [0, 1, 1, 8], "texture": "#0"}
+      }
+    },
+    {
+      "name": "back",
+      "from": [0, 0, 15],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+        "east": {"uv": [0, 0, 1, 16], "texture": "#0"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#0"},
+        "west": {"uv": [15, 0, 16, 16], "texture": "#0"},
+        "up": {"uv": [0, 15, 16, 16], "texture": "#0"},
+        "down": {"uv": [0, 0, 16, 1], "texture": "#0"}
+      }
+    }
+  ],
+  "book_0": {"parent": "bibliocraft:block/bookcase/book_0"},
+  "book_1": {"parent": "bibliocraft:block/bookcase/book_1"},
+  "book_2": {"parent": "bibliocraft:block/bookcase/book_2"},
+  "book_3": {"parent": "bibliocraft:block/bookcase/book_3"},
+  "book_4": {"parent": "bibliocraft:block/bookcase/book_4"},
+  "book_5": {"parent": "bibliocraft:block/bookcase/book_5"},
+  "book_6": {"parent": "bibliocraft:block/bookcase/book_6"},
+  "book_7": {"parent": "bibliocraft:block/bookcase/book_7"},
+  "book_8": {"parent": "bibliocraft:block/bookcase/book_8"},
+  "book_9": {"parent": "bibliocraft:block/bookcase/book_9"},
+  "book_10": {"parent": "bibliocraft:block/bookcase/book_10"},
+  "book_11": {"parent": "bibliocraft:block/bookcase/book_11"},
+  "book_12": {"parent": "bibliocraft:block/bookcase/book_12"},
+  "book_13": {"parent": "bibliocraft:block/bookcase/book_13"},
+  "book_14": {"parent": "bibliocraft:block/bookcase/book_14"},
+  "book_15": {"parent": "bibliocraft:block/bookcase/book_15"}
 }
