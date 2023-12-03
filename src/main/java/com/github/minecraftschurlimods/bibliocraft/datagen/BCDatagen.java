@@ -6,6 +6,8 @@ import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCEnglishLangu
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCItemModelProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCBlockTagsProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCItemTagsProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCLootTableProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -29,6 +31,8 @@ public final class BCDatagen {
         generator.addProvider(event.includeClient(), new BCBlockStateProvider(output, existingFileHelper));
         generator.addProvider(event.includeClient(), new BCItemModelProvider(output, existingFileHelper));
 
+        generator.addProvider(event.includeServer(), new BCLootTableProvider(output));
+        generator.addProvider(event.includeServer(), new BCRecipeProvider(output, lookupProvider));
         BCBlockTagsProvider blockTags = new BCBlockTagsProvider(output, lookupProvider, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new BCItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));

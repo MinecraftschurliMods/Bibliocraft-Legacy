@@ -1,12 +1,16 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
+import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -19,6 +23,11 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
+        woodTypeTag(BCTags.Items.BOOKCASES, BCItems.BOOKCASE);
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS).addOptional(new ResourceLocation("patchouli", "guide_book"));
+    }
+
+    private void woodTypeTag(TagKey<Item> tag, WoodTypeDeferredHolder<Item, ? extends Item> holder) {
+        tag(tag).add(holder.values().toArray(new Item[0]));
     }
 }

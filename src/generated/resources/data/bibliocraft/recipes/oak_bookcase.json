@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "minecraft:oak_planks"
+    },
+    "S": {
+      "item": "minecraft:oak_slab"
+    }
+  },
+  "pattern": [
+    "PSP",
+    "PSP",
+    "PSP"
+  ],
+  "result": {
+    "item": "bibliocraft:oak_bookcase"
+  },
+  "show_notification": true
+}
