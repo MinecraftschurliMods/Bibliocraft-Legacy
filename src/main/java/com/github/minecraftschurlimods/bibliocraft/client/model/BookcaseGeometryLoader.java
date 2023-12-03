@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlockE
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Transformation;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -22,10 +23,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.BakedModelWrapper;
+import net.neoforged.neoforge.client.model.ElementsModel;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
 import net.neoforged.neoforge.client.model.SimpleModelState;
 import net.neoforged.neoforge.client.model.data.ModelData;
@@ -65,14 +68,17 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
             this.books = books;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BakedModel base = this.base.bake(baker, this.base, spriteGetter, modelState, modelLocation, context.useBlockLight());
+            BakedModel base = new ElementsModel(this.base.getElements()).bake(context, baker, spriteGetter, modelState, overrides, modelLocation);
             BakedModel[] books = new BakedModel[16];
+            ModelState bookState = new SimpleModelState(modelState.getRotation(), false);
+            boolean useBlockLight = context.useBlockLight();
             for (int j = 0; j < books.length; j++) {
-                books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, modelState, modelLocation, context.useBlockLight());
+                books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, bookState, modelLocation, useBlockLight);
             }
-            return new BookcaseDynamicModel(context.useAmbientOcclusion(), context.isGui3d(), context.useBlockLight(), spriteGetter.apply(this.base.getMaterial("particle")), base, books);
+            return new BookcaseDynamicModel(context.useAmbientOcclusion(), context.isGui3d(), useBlockLight, spriteGetter.apply(context.getMaterial("particle")), base, books);
         }
 
         @Override
@@ -140,6 +146,11 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
         @Override
         public ItemOverrides getOverrides() {
             return ItemOverrides.EMPTY;
+        }
+
+        @Override
+        public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
+            return base.applyTransform(transformType, poseStack, applyLeftHandTransform);
         }
     }
 
