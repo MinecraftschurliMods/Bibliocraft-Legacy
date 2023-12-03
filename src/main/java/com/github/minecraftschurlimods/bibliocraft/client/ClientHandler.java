@@ -1,10 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BookcaseScreen;
-import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.block.BlockModelShaper;
@@ -27,21 +25,6 @@ public final class ClientHandler {
         @SubscribeEvent
         static void clientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BookcaseScreen::new));
-        }
-
-        @SubscribeEvent
-        static void modifyBakingResult(ModelEvent.ModifyBakingResult event) {
-            Map<ResourceLocation, BakedModel> models = event.getModels();
-            for (BookcaseBlock block : BCBlocks.BOOKCASE.values()) {
-                bakeBlock(models, block, BookcaseGeometryLoader.BookcaseBakedModel::new);
-            }
-        }
-
-        @SubscribeEvent
-        static void registerAdditional(ModelEvent.RegisterAdditional event) {
-            for (int i = 0; i < 16; i++) {
-                event.register(new ResourceLocation(Bibliocraft.MOD_ID, "block/bookcase/book_" + i));
-            }
         }
 
         @SubscribeEvent

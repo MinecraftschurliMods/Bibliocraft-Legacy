@@ -6,14 +6,12 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Transformation;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
@@ -27,7 +25,6 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.BakedModelWrapper;
 import net.neoforged.neoforge.client.model.ElementsModel;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
 import net.neoforged.neoforge.client.model.SimpleModelState;
@@ -152,25 +149,17 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
         public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
             return base.applyTransform(transformType, poseStack, applyLeftHandTransform);
         }
-    }
-
-    public static class BookcaseBakedModel extends BakedModelWrapper<BakedModel> {
-        public BookcaseBakedModel(BakedModel originalModel) {
-            super(originalModel);
-        }
 
         @Override
         public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData) {
-            if (state.getBlock() instanceof BookcaseBlock) {
-                BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (!(blockEntity instanceof BookcaseBlockEntity be)) return modelData;
-                ModelData.Builder builder = ModelData.builder();
-                for (int i = 0; i < BookcaseBlockEntity.MODEL_PROPERTIES.size(); i++) {
-                    builder.with(BookcaseBlockEntity.MODEL_PROPERTIES.get(i), !be.getItem(i).isEmpty());
-                }
-                return builder.build();
+            if (!(state.getBlock() instanceof BookcaseBlock)) return modelData;
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (!(blockEntity instanceof BookcaseBlockEntity be)) return modelData;
+            ModelData.Builder builder = ModelData.builder();
+            for (int i = 0; i < BookcaseBlockEntity.MODEL_PROPERTIES.size(); i++) {
+                builder.with(BookcaseBlockEntity.MODEL_PROPERTIES.get(i), !be.getItem(i).isEmpty());
             }
-            return modelData;
+            return builder.build();
         }
     }
 }
