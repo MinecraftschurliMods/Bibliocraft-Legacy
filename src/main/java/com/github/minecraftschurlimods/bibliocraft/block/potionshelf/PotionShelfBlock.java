@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.block.potionshelf;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
+import com.github.minecraftschurlimods.bibliocraft.block.BCInteractibleBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,7 @@ import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class PotionShelfBlock extends BCBlock {
+public class PotionShelfBlock extends BCInteractibleBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0, 0.0625, 0.75, 1, 1, 1),
             Shapes.box(0, 0, 0.75, 0.0625, 0.0625, 1),
@@ -54,34 +55,7 @@ public class PotionShelfBlock extends BCBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.isSecondaryUseActive()) {
-            if (level.isClientSide()) return InteractionResult.SUCCESS;
-            NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) level.getBlockEntity(pos), pos);
-            return InteractionResult.SUCCESS;
-        }
-        Direction direction = state.getValue(FACING);
-        if (hit.getDirection() != direction && hit.getDirection() != direction.getOpposite())
-            return super.use(state, level, pos, player, hand, hit);
-        ItemStack stack = player.getItemInHand(hand);
-        if (!stack.isEmpty() && !stack.is(BCTags.Items.POTION_SHELF_POTIONS))
-            return super.use(state, level, pos, player, hand, hit);
-        int slot = lookingAtSlot(state, hit);
-        if (slot != -1) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof PotionShelfBlockEntity potionShelf) {
-                ItemStack slotStack = potionShelf.getItem(slot);
-                if (!stack.isEmpty() || !slotStack.isEmpty()) {
-                    potionShelf.setItem(slot, stack);
-                    player.setItemInHand(hand, slotStack);
-                    return InteractionResult.SUCCESS;
-                }
-            }
-        }
-        return super.use(state, level, pos, player, hand, hit);
-    }
-
-    private static int lookingAtSlot(BlockState state, BlockHitResult hit) { // constant double values computed from PotionShelfBER#render
+    public int lookingAtSlot(BlockState state, BlockHitResult hit) {
         Direction.Axis axis = state.getValue(FACING).getClockWise().getAxis();
         double hitX = 1.125 - (hit.getLocation().get(axis) - hit.getBlockPos().get(axis));
         double hitY = hit.getLocation().y - hit.getBlockPos().getY();
