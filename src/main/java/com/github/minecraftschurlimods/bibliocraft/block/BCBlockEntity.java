@@ -9,6 +9,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -19,12 +20,14 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-    public abstract class BCBlockEntity extends BlockEntity implements Container {
+public abstract class BCBlockEntity extends BlockEntity implements Container, MenuProvider {
     private static final String ITEMS_TAG = "items";
     protected final ItemStackHandler items;
+    private final Component title;
 
-    public BCBlockEntity(BlockEntityType<?> type, int containerSize, BlockPos pos, BlockState state) {
+    public BCBlockEntity(BlockEntityType<?> type, int containerSize, Component title, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        this.title = title;
         items = new ItemStackHandler(containerSize) {
             @Override
             protected void onContentsChanged(int slot) {
@@ -37,6 +40,11 @@ import org.jetbrains.annotations.Nullable;
 
     public static Component title(String name) {
         return Component.translatable("container." + Bibliocraft.MOD_ID + "." + name);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return title;
     }
 
     @Override

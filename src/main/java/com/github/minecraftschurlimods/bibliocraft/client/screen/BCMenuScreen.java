@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public abstract class BCMenuScreen<T extends BCMenu<?>> extends AbstractContainerScreen<T> {
+public class BCMenuScreen<T extends BCMenu<?>> extends AbstractContainerScreen<T> {
     private final ResourceLocation background;
 
     public BCMenuScreen(T menu, Inventory inventory, Component title, ResourceLocation background) {

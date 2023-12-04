@@ -1,11 +1,15 @@
 package com.github.minecraftschurlimods.bibliocraft.block;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
 
@@ -39,5 +43,61 @@ public abstract class BCMenu<T extends BCBlockEntity> extends AbstractContainerM
     @Override
     public boolean stillValid(Player player) {
         return blockEntity.stillValid(player);
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+        int slotCount = blockEntity.items.getSlots();
+        Slot slot = slots.get(index);
+        if (!slot.hasItem()) return ItemStack.EMPTY;
+        ItemStack stack = slot.getItem();
+        ItemStack originalStack = stack.copy();
+        if (index < slotCount) { // If slot is a bookcase slot
+            // Try moving to the hotbar or inventory, return if successful
+            if (!moveItemStackTo(slot.getItem(), slotCount, slotCount + 36, false)) return ItemStack.EMPTY;
+        } else if (index < slotCount + 9) { // If slot is a hotbar slot
+            // Try moving to the BE, return if successful
+            for (int i = 0; i < slotCount; i++) {
+                Slot bookcaseSlot = slots.get(i);
+                if (!bookcaseSlot.hasItem() && bookcaseSlot.mayPlace(stack) && !moveItemStackTo(stack, i, i + 1, false))
+                    return ItemStack.EMPTY;
+            }
+            // Try moving to the inventory, return if successful
+            if (!moveItemStackTo(stack, slotCount + 9, slotCount + 36, false)) return ItemStack.EMPTY;
+        } else if (index < slotCount + 36) { // If slot is an inventory slot
+            // Try moving to the BE, return if successful
+            for (int i = 0; i < slotCount; i++) {
+                Slot bookcaseSlot = slots.get(i);
+                if (!bookcaseSlot.hasItem() && bookcaseSlot.mayPlace(stack) && !moveItemStackTo(stack, i, i + 1, false))
+                    return ItemStack.EMPTY;
+            }
+            // Try moving to the hotbar, return if successful
+            if (!moveItemStackTo(stack, slotCount, slotCount + 9, false)) return ItemStack.EMPTY;
+        }
+        if (stack.isEmpty()) {
+            slot.set(ItemStack.EMPTY);
+        } else {
+            slot.setChanged();
+        }
+        return originalStack;
+    }
+
+    public static class TagLimitedSlot extends Slot {
+        private final TagKey<Item> tag;
+
+        public TagLimitedSlot(Container container, int index, int x, int y, TagKey<Item> tag) {
+            super(container, index, x, y);
+            this.tag = tag;
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return stack.is(tag);
+        }
+
+        @Override
+        public int getMaxStackSize() {
+            return 1;
+        }
     }
 }
