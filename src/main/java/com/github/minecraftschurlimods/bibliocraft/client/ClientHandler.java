@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BookcaseScreen;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.PotionShelfScreen;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.block.BlockModelShaper;
@@ -24,7 +25,10 @@ public final class ClientHandler {
     public static final class ModBus {
         @SubscribeEvent
         static void clientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(() -> MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BookcaseScreen::new));
+            event.enqueueWork(() -> {
+                MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BookcaseScreen::new);
+                MenuScreens.register(BCMenuTypes.POTION_SHELF.get(), PotionShelfScreen::new);
+            });
         }
 
         @SubscribeEvent

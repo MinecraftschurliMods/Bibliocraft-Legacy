@@ -19,16 +19,6 @@ public class BookcaseMenu extends BCMenu<BookcaseBlockEntity> {
     }
 
     @Override
-    public void addSlots(Inventory inventory, BookcaseBlockEntity blockEntity) {
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 8; j++) {
-                addSlot(new BookcaseSlot(blockEntity, i * 8 + j, 17 + j * 18, 17 + i * 25));
-            }
-        }
-        addInventorySlots(inventory, 8, 84);
-    }
-
-    @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = slots.get(index);
         if (!slot.hasItem()) return ItemStack.EMPTY;
@@ -62,6 +52,16 @@ public class BookcaseMenu extends BCMenu<BookcaseBlockEntity> {
             slot.setChanged();
         }
         return originalStack;
+    }
+
+    @Override
+    protected void addSlots(Inventory inventory, BookcaseBlockEntity blockEntity) {
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 8; j++) {
+                addSlot(new BookcaseSlot(blockEntity, i * 8 + j, 17 + j * 18, 17 + i * 25));
+            }
+        }
+        addInventorySlots(inventory, 8, 84);
     }
 
     public static class BookcaseSlot extends Slot {

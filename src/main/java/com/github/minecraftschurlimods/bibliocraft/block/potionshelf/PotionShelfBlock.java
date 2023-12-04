@@ -34,7 +34,7 @@ public class PotionShelfBlock extends BCBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new PotionShelfBlockEntity(pos, state);
     }
 
     @Override

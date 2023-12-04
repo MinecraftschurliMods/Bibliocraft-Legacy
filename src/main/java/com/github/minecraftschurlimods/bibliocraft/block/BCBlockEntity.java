@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BCBlockEntity extends BlockEntity implements Container {
+    public abstract class BCBlockEntity extends BlockEntity implements Container {
     private static final String ITEMS_TAG = "items";
     protected final ItemStackHandler items;
 
