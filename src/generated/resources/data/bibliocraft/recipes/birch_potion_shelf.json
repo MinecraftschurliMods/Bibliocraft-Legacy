@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:birch_planks"
+    },
+    "S": {
+      "item": "minecraft:birch_slab"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "PBP",
+    "SSS"
+  ],
+  "result": {
+    "item": "bibliocraft:birch_potion_shelf"
+  },
+  "show_notification": true
+}

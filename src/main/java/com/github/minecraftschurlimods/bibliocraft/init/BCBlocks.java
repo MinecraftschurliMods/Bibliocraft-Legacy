@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlock;
+import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.Util;
 import net.minecraft.world.level.block.Block;
@@ -29,7 +30,8 @@ public interface BCBlocks {
         map.put(WoodType.CHERRY,   Blocks.CHERRY_PLANKS);
     });
 
-    WoodTypeDeferredHolder<Block, BookcaseBlock> BOOKCASE = woodenBlock("bookcase", p -> new BookcaseBlock(p.noOcclusion()));
+    WoodTypeDeferredHolder<Block, BookcaseBlock>    BOOKCASE     = woodenBlock("bookcase",     BookcaseBlock::new);
+    WoodTypeDeferredHolder<Block, PotionShelfBlock> POTION_SHELF = woodenBlock("potion_shelf", PotionShelfBlock::new);
     //TODO Clock
     //TODO Cookie Jar
     //TODO Desk
@@ -57,7 +59,7 @@ public interface BCBlocks {
     //TODO Typewriter
 
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, WOOD_TYPES, wood -> creator.apply(BlockBehaviour.Properties.copy(PLANKS.get(wood))));
+        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, WOOD_TYPES, wood -> creator.apply(BlockBehaviour.Properties.copy(PLANKS.get(wood)).noOcclusion()));
     }
 
     static void init() {}

@@ -16,6 +16,7 @@ public interface BCCreativeTabs {
             .title(Component.translatable("itemGroup." + Bibliocraft.MOD_ID))
             .displayItems((display, output) -> {
                 addToTab(output, BCItems.BOOKCASE.values());
+                addToTab(output, BCItems.POTION_SHELF.values());
             })
             .build());
 

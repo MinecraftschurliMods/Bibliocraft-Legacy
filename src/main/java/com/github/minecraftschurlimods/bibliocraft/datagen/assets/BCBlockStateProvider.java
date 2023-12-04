@@ -19,13 +19,16 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class BCBlockStateProvider extends BlockStateProvider {
+    private final Function<WoodType, ResourceLocation> TYPE_TO_PLANKS = wood -> mcLoc("block/" + wood.name() + "_planks");
+
     public BCBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, Bibliocraft.MOD_ID, exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
-        woodenBlock(BCBlocks.BOOKCASE, "bookcase", wood -> mcLoc("block/" + wood.name() + "_planks"));
+        woodenMultiModelBlock(BCBlocks.BOOKCASE, "bookcase", TYPE_TO_PLANKS);
+        woodenBlock(BCBlocks.POTION_SHELF, "potion_shelf", TYPE_TO_PLANKS);
     }
 
     private void horizontalBlock(Supplier<? extends Block> block, String name, ResourceLocation parent, ResourceLocation texture) {
@@ -37,9 +40,15 @@ public class BCBlockStateProvider extends BlockStateProvider {
                 .build());
     }
 
-    private <T extends Block> void woodenBlock(WoodTypeDeferredHolder<Block, T> holder, String name, Function<WoodType, ResourceLocation> textureFunction) {
+    private <T extends Block> void woodenMultiModelBlock(WoodTypeDeferredHolder<Block, T> holder, String name, Function<WoodType, ResourceLocation> textureFunction) {
         for (Map.Entry<WoodType, DeferredHolder<Block, T>> t : holder.map().entrySet()) {
             horizontalBlock(t.getValue(), t.getKey().name() + "_" + name, modLoc("block/" + name + "/" + name), textureFunction.apply(t.getKey()));
+        }
+    }
+
+    private <T extends Block> void woodenBlock(WoodTypeDeferredHolder<Block, T> holder, String name, Function<WoodType, ResourceLocation> textureFunction) {
+        for (Map.Entry<WoodType, DeferredHolder<Block, T>> t : holder.map().entrySet()) {
+            horizontalBlock(t.getValue(), t.getKey().name() + "_" + name, modLoc("block/" + name), textureFunction.apply(t.getKey()));
         }
     }
 }

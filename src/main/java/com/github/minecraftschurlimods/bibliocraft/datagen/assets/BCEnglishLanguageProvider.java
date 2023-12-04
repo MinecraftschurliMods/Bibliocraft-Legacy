@@ -34,7 +34,9 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addWoodenBlock(BCBlocks.BOOKCASE, "Bookcase");
+        addWoodenBlock(BCBlocks.POTION_SHELF, "Potion Shelf");
         add("container", "bookcase", "Bookcase");
+        add("container", "potion_shelf", "Potion Shelf");
         add("itemGroup." + Bibliocraft.MOD_ID, "Bibliocraft");
     }
 

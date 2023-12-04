@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:spruce_planks"
+    },
+    "S": {
+      "item": "minecraft:spruce_slab"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "PBP",
+    "SSS"
+  ],
+  "result": {
+    "item": "bibliocraft:spruce_potion_shelf"
+  },
+  "show_notification": true
+}

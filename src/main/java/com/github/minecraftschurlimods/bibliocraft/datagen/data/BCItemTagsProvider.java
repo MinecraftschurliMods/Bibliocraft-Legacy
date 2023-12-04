@@ -24,6 +24,7 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
         woodTypeTag(BCTags.Items.BOOKCASES, BCItems.BOOKCASE);
+        woodTypeTag(BCTags.Items.POTION_SHELVES, BCItems.POTION_SHELF);
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS).addOptional(new ResourceLocation("patchouli", "guide_book"));
     }
 

@@ -11,6 +11,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -33,6 +34,18 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('P', woodFamily.getBaseBlock())
                     .define('S', woodFamily.get(BlockFamily.Variant.SLAB))
                     .unlockedBy("has_planks", has(woodFamily.getBaseBlock()))
+                    .save(output);
+        }
+        for (Map.Entry<WoodType, DeferredHolder<Item, BlockItem>> entry : BCItems.POTION_SHELF.map().entrySet()) {
+            BlockFamily woodFamily = woodFamily(entry.getKey());
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get())
+                    .pattern("SSS")
+                    .pattern("PBP")
+                    .pattern("SSS")
+                    .define('S', woodFamily.get(BlockFamily.Variant.SLAB))
+                    .define('P', woodFamily.getBaseBlock())
+                    .define('B', Items.GLASS_BOTTLE)
+                    .unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE))
                     .save(output);
         }
     }

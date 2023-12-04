@@ -10,7 +10,8 @@ import java.util.function.Supplier;
 public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
-    WoodTypeDeferredHolder<Item, BlockItem> BOOKCASE = woodenBlock("bookcase", BCBlocks.BOOKCASE);
+    WoodTypeDeferredHolder<Item, BlockItem> BOOKCASE     = woodenBlock("bookcase",     BCBlocks.BOOKCASE);
+    WoodTypeDeferredHolder<Item, BlockItem> POTION_SHELF = woodenBlock("potion_shelf", BCBlocks.POTION_SHELF);
     //TODO Atlas
     //TODO Big Book
     //TODO Clipboard
