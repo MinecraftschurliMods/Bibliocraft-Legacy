@@ -21,6 +21,7 @@ public interface BCTags {
         TagKey<Item> BOOKCASES = tag("bookcases");
         TagKey<Item> POTION_SHELVES = tag("potion_shelves");
         TagKey<Item> BOOKCASE_BOOKS = tag("bookcase_books");
+        TagKey<Item> POTION_SHELF_POTIONS = tag("potion_shelf_potions");
 
         static TagKey<Item> tag(String name) {
             return TagKey.create(BuiltInRegistries.ITEM.key(), new ResourceLocation(Bibliocraft.MOD_ID, name));

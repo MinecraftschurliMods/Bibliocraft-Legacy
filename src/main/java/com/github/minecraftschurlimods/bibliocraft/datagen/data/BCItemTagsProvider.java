@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -21,11 +22,13 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
         super(output, lookupProvider, lookup, Bibliocraft.MOD_ID, existingFileHelper);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
         woodTypeTag(BCTags.Items.BOOKCASES, BCItems.BOOKCASE);
         woodTypeTag(BCTags.Items.POTION_SHELVES, BCItems.POTION_SHELF);
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS).addOptional(new ResourceLocation("patchouli", "guide_book"));
+        tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE);
     }
 
     private void woodTypeTag(TagKey<Item> tag, WoodTypeDeferredHolder<Item, ? extends Item> holder) {
