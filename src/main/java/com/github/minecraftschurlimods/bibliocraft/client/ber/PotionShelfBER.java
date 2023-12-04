@@ -33,6 +33,7 @@ public class PotionShelfBER implements BlockEntityRenderer<PotionShelfBlockEntit
                 stack.pushPose();
                 stack.translate(j * 0.21875, -i * 0.3125, 0); // j * 3.5 / 16, -i * 5 / 16
                 stack.scale(0.21875f, 0.21875f, 0.21875f); // 3.5 / 16
+                stack.mulPose(Axis.YP.rotationDegrees(180));
                 ItemStack item = blockEntity.getItem(i * 4 + j);
                 renderer.render(item, ItemDisplayContext.FIXED, false, stack, buffer, light, overlay, renderer.getModel(item, blockEntity.getLevel(), null, 0));
                 stack.popPose();
