@@ -6,9 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 public class ToolRackMenu extends BCMenu<ToolRackBlockEntity> {
     public ToolRackMenu(int id, Inventory inventory, ToolRackBlockEntity blockEntity) {
@@ -20,13 +18,8 @@ public class ToolRackMenu extends BCMenu<ToolRackBlockEntity> {
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int slot) {
-        return null;
-    }
-
-    @Override
     protected void addSlots(Inventory inventory, ToolRackBlockEntity blockEntity) {
-        TagKey<Item> tag = BCTags.Items.POTION_SHELF_POTIONS;
+        TagKey<Item> tag = BCTags.Items.TOOL_RACK_TOOLS;
         addSlot(new TagLimitedSlot(blockEntity, 0, 53, 15, tag));
         addSlot(new TagLimitedSlot(blockEntity, 1, 107, 15, tag));
         addSlot(new TagLimitedSlot(blockEntity, 2, 53, 53, tag));
