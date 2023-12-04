@@ -12,6 +12,7 @@ public interface BCItems {
 
     WoodTypeDeferredHolder<Item, BlockItem> BOOKCASE     = woodenBlock("bookcase",     BCBlocks.BOOKCASE);
     WoodTypeDeferredHolder<Item, BlockItem> POTION_SHELF = woodenBlock("potion_shelf", BCBlocks.POTION_SHELF);
+    WoodTypeDeferredHolder<Item, BlockItem> TOOL_RACK    = woodenBlock("tool_rack",    BCBlocks.TOOL_RACK);
     //TODO Atlas
     //TODO Big Book
     //TODO Clipboard

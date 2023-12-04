@@ -1,6 +1,6 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-package com.github.minecraftschurlimods.bibliocraft.handler;
+package com.github.minecraftschurlimods.bibliocraft.block.toolrack;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

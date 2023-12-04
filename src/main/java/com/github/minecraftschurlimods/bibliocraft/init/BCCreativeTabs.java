@@ -17,6 +17,7 @@ public interface BCCreativeTabs {
             .displayItems((display, output) -> {
                 addToTab(output, BCItems.BOOKCASE.values());
                 addToTab(output, BCItems.POTION_SHELF.values());
+                addToTab(output, BCItems.TOOL_RACK.values());
             })
             .build());
 

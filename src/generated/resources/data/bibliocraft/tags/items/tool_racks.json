@@ -1,0 +1,16 @@
+{
+  "values": [
+    "bibliocraft:oak_tool_rack",
+    "bibliocraft:spruce_tool_rack",
+    "bibliocraft:birch_tool_rack",
+    "bibliocraft:jungle_tool_rack",
+    "bibliocraft:acacia_tool_rack",
+    "bibliocraft:dark_oak_tool_rack",
+    "bibliocraft:crimson_tool_rack",
+    "bibliocraft:warped_tool_rack",
+    "bibliocraft:mangrove_tool_rack",
+    "bibliocraft:bamboo_tool_rack",
+    "bibliocraft:cherry_tool_rack",
+    "#forge:tools"
+  ]
+}

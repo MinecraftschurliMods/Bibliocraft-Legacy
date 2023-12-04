@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BookcaseScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.PotionShelfScreen;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.ToolRackScreen;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -31,6 +32,7 @@ public final class ClientHandler {
             event.enqueueWork(() -> {
                 MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BookcaseScreen::new);
                 MenuScreens.register(BCMenuTypes.POTION_SHELF.get(), PotionShelfScreen::new);
+                MenuScreens.register(BCMenuTypes.TOOL_RACK.get(), ToolRackScreen::new);
             });
         }
 

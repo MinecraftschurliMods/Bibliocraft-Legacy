@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/tool_rack",
+  "textures": {
+    "texture": "minecraft:block/crimson_planks"
+  }
+}

@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfBlock;
+import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.Util;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +33,7 @@ public interface BCBlocks {
 
     WoodTypeDeferredHolder<Block, BookcaseBlock>    BOOKCASE     = woodenBlock("bookcase",     BookcaseBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock> POTION_SHELF = woodenBlock("potion_shelf", PotionShelfBlock::new);
+    WoodTypeDeferredHolder<Block, ToolRackBlock>    TOOL_RACK    = woodenBlock("tool_rack",    ToolRackBlock::new);
     //TODO Clock
     //TODO Cookie Jar
     //TODO Desk
@@ -46,7 +48,6 @@ public interface BCBlocks {
     //TODO Fancy Workbench
     //TODO Label
     //TODO Map Frame
-    //TODO Potion Shelf
     //TODO Painting Frame
     //TODO Painting Press
     //TODO Printing Press
@@ -54,7 +55,6 @@ public interface BCBlocks {
     //TODO Shelf
     //TODO Sword Pedestal
     //TODO Table
-    //TODO Tool Rack
     //TODO Typesetting Table
     //TODO Typewriter
 

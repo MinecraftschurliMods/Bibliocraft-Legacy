@@ -18,6 +18,7 @@ public class BCItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         woodenBlock(BCItems.BOOKCASE, "bookcase");
         woodenBlock(BCItems.POTION_SHELF, "potion_shelf");
+        woodenBlock(BCItems.TOOL_RACK, "tool_rack");
     }
 
     private void woodenBlock(WoodTypeDeferredHolder<Item, ?> holder, String suffix) {

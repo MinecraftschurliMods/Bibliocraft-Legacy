@@ -13,6 +13,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Map;
@@ -46,6 +47,17 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('P', woodFamily.getBaseBlock())
                     .define('B', Items.GLASS_BOTTLE)
                     .unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE))
+                    .save(output);
+        }
+        for (Map.Entry<WoodType, DeferredHolder<Item, BlockItem>> entry : BCItems.TOOL_RACK.map().entrySet()) {
+            BlockFamily woodFamily = woodFamily(entry.getKey());
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get())
+                    .pattern("SSS")
+                    .pattern("SIS")
+                    .pattern("SSS")
+                    .define('S', woodFamily.get(BlockFamily.Variant.SLAB))
+                    .define('I', Tags.Items.INGOTS_IRON)
+                    .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output);
         }
     }
