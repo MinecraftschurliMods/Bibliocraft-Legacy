@@ -11,6 +11,7 @@ public interface BCTags {
     interface Blocks {
         TagKey<Block> BOOKCASES = tag("bookcases");
         TagKey<Block> POTION_SHELVES = tag("potion_shelves");
+        TagKey<Block> SHELVES = tag("shelves");
         TagKey<Block> TOOL_RACKS = tag("tool_racks");
 
         static TagKey<Block> tag(String name) {
@@ -21,6 +22,7 @@ public interface BCTags {
     interface Items {
         TagKey<Item> BOOKCASES = tag("bookcases");
         TagKey<Item> POTION_SHELVES = tag("potion_shelves");
+        TagKey<Item> SHELVES = tag("shelves");
         TagKey<Item> TOOL_RACKS = tag("tool_racks");
         TagKey<Item> BOOKCASE_BOOKS = tag("bookcase_books");
         TagKey<Item> POTION_SHELF_POTIONS = tag("potion_shelf_potions");

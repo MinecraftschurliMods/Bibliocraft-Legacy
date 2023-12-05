@@ -56,11 +56,10 @@ public class ToolRackBlock extends BCInteractibleBlock {
     }
 
     @Override
-    public int lookingAtSlot(BlockState state, BlockHitResult hit) { // constant double values computed from ToolRackBER#render
+    public int lookingAtSlot(BlockState state, BlockHitResult hit) {
         Direction.Axis axis = state.getValue(FACING).getClockWise().getAxis();
         double hitX = 1 - (hit.getLocation().get(axis) - hit.getBlockPos().get(axis));
         double hitY = hit.getLocation().y - hit.getBlockPos().getY();
-        System.out.println("X: " + hitX + ", Y: " + hitY);
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
                 double minX = 0.0625 + j * 0.4375;
@@ -71,5 +70,10 @@ public class ToolRackBlock extends BCInteractibleBlock {
             }
         }
         return -1;
+    }
+
+    @Override
+    protected boolean canAccessFromBack() {
+        return false;
     }
 }

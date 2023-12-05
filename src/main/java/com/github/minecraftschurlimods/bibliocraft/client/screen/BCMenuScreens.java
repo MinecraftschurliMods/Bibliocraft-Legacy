@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseMenu;
 import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.block.shelf.ShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -25,8 +26,16 @@ public final class BCMenuScreens {
         }
     }
 
+    public static class Shelf extends BCMenuScreen<ShelfMenu> {
+        private static final ResourceLocation BACKGROUND = new ResourceLocation(Bibliocraft.MOD_ID, "textures/gui/shelf.png");
+
+        public Shelf(ShelfMenu menu, Inventory inventory, Component title) {
+            super(menu, inventory, title, BACKGROUND);
+        }
+    }
+
     public static class ToolRack extends BCMenuScreen<ToolRackMenu> {
-        private static final ResourceLocation BACKGROUND = new ResourceLocation(Bibliocraft.MOD_ID, "textures/gui/tool_rack.png");
+        private static final ResourceLocation BACKGROUND = new ResourceLocation(Bibliocraft.MOD_ID, "textures/gui/shelf.png");
 
         public ToolRack(ToolRackMenu menu, Inventory inventory, Component title) {
             super(menu, inventory, title, BACKGROUND);

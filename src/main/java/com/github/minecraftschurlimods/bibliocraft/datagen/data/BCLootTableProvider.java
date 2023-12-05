@@ -37,6 +37,7 @@ public final class BCLootTableProvider extends LootTableProvider {
         protected void generate() {
             dropSelf(BCBlocks.BOOKCASE);
             dropSelf(BCBlocks.POTION_SHELF);
+            dropSelf(BCBlocks.SHELF);
             dropSelf(BCBlocks.TOOL_RACK);
         }
 

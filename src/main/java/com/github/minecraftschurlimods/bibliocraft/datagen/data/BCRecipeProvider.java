@@ -49,6 +49,17 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .unlockedBy("has_glass_bottle", has(Items.GLASS_BOTTLE))
                     .save(output);
         }
+        for (Map.Entry<WoodType, DeferredHolder<Item, BlockItem>> entry : BCItems.SHELF.map().entrySet()) {
+            BlockFamily woodFamily = woodFamily(entry.getKey());
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get())
+                    .pattern("SSS")
+                    .pattern(" P ")
+                    .pattern("SSS")
+                    .define('P', woodFamily.getBaseBlock())
+                    .define('S', woodFamily.get(BlockFamily.Variant.SLAB))
+                    .unlockedBy("has_planks", has(woodFamily.getBaseBlock()))
+                    .save(output);
+        }
         for (Map.Entry<WoodType, DeferredHolder<Item, BlockItem>> entry : BCItems.TOOL_RACK.map().entrySet()) {
             BlockFamily woodFamily = woodFamily(entry.getKey());
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get())

@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.block;
 
-import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,21 +29,25 @@ public abstract class BCInteractibleBlock extends BCBlock {
             return InteractionResult.SUCCESS;
         }
         Direction direction = state.getValue(FACING);
-        if (hit.getDirection() != direction && hit.getDirection() != direction.getOpposite())
-            return super.use(state, level, pos, player, hand, hit);
-        ItemStack stack = player.getItemInHand(hand);
-        int slot = lookingAtSlot(state, hit);
-        if (slot != -1) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof BCBlockEntity bcbe) {
-                ItemStack slotStack = bcbe.getItem(slot);
-                if ((!stack.isEmpty() && bcbe.canPlaceItem(slot, stack)) || !slotStack.isEmpty()) {
-                    bcbe.setItem(slot, stack);
-                    player.setItemInHand(hand, slotStack);
-                    return InteractionResult.SUCCESS;
+        if (hit.getDirection() == direction || hit.getDirection() == direction.getOpposite() && canAccessFromBack()) {
+            ItemStack stack = player.getItemInHand(hand);
+            int slot = lookingAtSlot(state, hit);
+            if (slot != -1) {
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (blockEntity instanceof BCBlockEntity bcbe) {
+                    ItemStack slotStack = bcbe.getItem(slot);
+                    if ((!stack.isEmpty() && bcbe.canPlaceItem(slot, stack)) || !slotStack.isEmpty()) {
+                        bcbe.setItem(slot, stack);
+                        player.setItemInHand(hand, slotStack);
+                        return InteractionResult.SUCCESS;
+                    }
                 }
             }
         }
         return super.use(state, level, pos, player, hand, hit);
+    }
+
+    protected boolean canAccessFromBack() {
+        return true;
     }
 }

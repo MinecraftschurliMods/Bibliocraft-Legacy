@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/shelf",
+  "textures": {
+    "texture": "minecraft:block/oak_planks"
+  }
+}

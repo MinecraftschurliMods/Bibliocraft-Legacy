@@ -29,6 +29,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         woodenMultiModelBlock(BCBlocks.BOOKCASE, "bookcase", TYPE_TO_PLANKS);
         woodenBlock(BCBlocks.POTION_SHELF, "potion_shelf", TYPE_TO_PLANKS);
+        woodenBlock(BCBlocks.SHELF, "shelf", TYPE_TO_PLANKS);
         woodenBlock(BCBlocks.TOOL_RACK, "tool_rack", TYPE_TO_PLANKS);
     }
 

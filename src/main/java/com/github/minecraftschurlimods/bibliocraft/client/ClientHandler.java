@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseMenu;
 import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackMenu;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreen;
@@ -27,6 +28,7 @@ public final class ClientHandler {
             event.enqueueWork(() -> {
                 MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BCMenuScreens.Bookcase::new);
                 MenuScreens.register(BCMenuTypes.POTION_SHELF.get(), BCMenuScreens.PotionShelf::new);
+                MenuScreens.register(BCMenuTypes.SHELF.get(), BCMenuScreens.Shelf::new);
                 MenuScreens.register(BCMenuTypes.TOOL_RACK.get(), BCMenuScreens.ToolRack::new);
             });
         }
@@ -39,6 +41,7 @@ public final class ClientHandler {
         @SubscribeEvent
         static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(), PotionShelfBER::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(), ShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.TOOL_RACK.get(), ToolRackBER::new);
         }
     }
