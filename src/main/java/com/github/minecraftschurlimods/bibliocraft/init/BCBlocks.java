@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlock;
+import com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand.FancyArmorStandBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.shelf.ShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackBlock;
@@ -32,10 +33,11 @@ public interface BCBlocks {
         map.put(WoodType.CHERRY,   Blocks.CHERRY_PLANKS);
     });
 
-    WoodTypeDeferredHolder<Block, BookcaseBlock>    BOOKCASE     = woodenBlock("bookcase",     BookcaseBlock::new);
-    WoodTypeDeferredHolder<Block, PotionShelfBlock> POTION_SHELF = woodenBlock("potion_shelf", PotionShelfBlock::new);
-    WoodTypeDeferredHolder<Block, ShelfBlock>       SHELF        = woodenBlock("shelf",        ShelfBlock::new);
-    WoodTypeDeferredHolder<Block, ToolRackBlock>    TOOL_RACK    = woodenBlock("tool_rack",    ToolRackBlock::new);
+    WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
+    WoodTypeDeferredHolder<Block, FancyArmorStandBlock> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
+    WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
+    WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf",             ShelfBlock::new);
+    WoodTypeDeferredHolder<Block, ToolRackBlock>        TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
     //TODO Clock
     //TODO Cookie Jar
     //TODO Desk
@@ -43,7 +45,6 @@ public interface BCBlocks {
     //TODO Dinner Plate
     //TODO Disc Rack
     //TODO Display Case
-    //TODO Fancy Armor Stand
     //TODO Fancy Lamp
     //TODO Fancy Lantern
     //TODO Fancy Sign
@@ -54,7 +55,6 @@ public interface BCBlocks {
     //TODO Painting Press
     //TODO Printing Press
     //TODO Seat
-    //TODO Shelf
     //TODO Sword Pedestal
     //TODO Table
     //TODO Typesetting Table

@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/fancy_armor_stand/top",
+  "textures": {
+    "texture": "minecraft:block/spruce_planks"
+  }
+}

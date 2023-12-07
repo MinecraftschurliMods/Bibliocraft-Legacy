@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/fancy_armor_stand/inventory",
+  "textures": {
+    "texture": "minecraft:block/jungle_planks"
+  }
+}

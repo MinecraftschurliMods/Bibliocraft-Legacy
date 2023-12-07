@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/fancy_armor_stand/bottom",
+  "textures": {
+    "texture": "minecraft:block/dark_oak_planks"
+  }
+}
