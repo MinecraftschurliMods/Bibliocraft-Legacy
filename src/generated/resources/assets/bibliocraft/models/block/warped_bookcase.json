@@ -1,5 +1,5 @@
 {
-  "parent": "bibliocraft:block/bookcase/bookcase",
+  "parent": "bibliocraft:block/template/bookcase/bookcase",
   "textures": {
     "texture": "minecraft:block/warped_planks"
   }

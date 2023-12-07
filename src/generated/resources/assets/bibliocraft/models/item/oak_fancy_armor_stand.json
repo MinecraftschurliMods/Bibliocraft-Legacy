@@ -1,5 +1,5 @@
 {
-  "parent": "bibliocraft:block/fancy_armor_stand/inventory",
+  "parent": "bibliocraft:block/template/fancy_armor_stand/inventory",
   "textures": {
     "texture": "minecraft:block/oak_planks"
   }

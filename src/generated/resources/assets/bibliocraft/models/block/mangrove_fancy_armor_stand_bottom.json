@@ -1,5 +1,5 @@
 {
-  "parent": "bibliocraft:block/fancy_armor_stand/bottom",
+  "parent": "bibliocraft:block/template/fancy_armor_stand/bottom",
   "textures": {
     "texture": "minecraft:block/mangrove_planks"
   }

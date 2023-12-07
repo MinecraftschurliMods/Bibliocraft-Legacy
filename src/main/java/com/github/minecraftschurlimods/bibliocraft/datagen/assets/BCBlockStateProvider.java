@@ -47,8 +47,8 @@ public class BCBlockStateProvider extends BlockStateProvider {
 
     private void woodenDoubleHighBlock(WoodTypeDeferredHolder<Block, ?> holder, String name, Function<WoodType, ResourceLocation> textureFunction) {
         forEachWoodType(holder, (k, v) -> {
-            ModelFile bottom = models().withExistingParent(k.name() + "_" + name + "_bottom", modLoc("block/" + name + "/bottom")).texture("texture", textureFunction.apply(k));
-            ModelFile top = models().withExistingParent(k.name() + "_" + name + "_top", modLoc("block/" + name + "/top")).texture("texture", textureFunction.apply(k));
+            ModelFile bottom = models().withExistingParent(k.name() + "_" + name + "_bottom", modLoc("block/template/" + name + "/bottom")).texture("texture", textureFunction.apply(k));
+            ModelFile top = models().withExistingParent(k.name() + "_" + name + "_top", modLoc("block/template/" + name + "/top")).texture("texture", textureFunction.apply(k));
             getVariantBuilder(v.get()).forAllStates(state -> {
                 ConfiguredModel.Builder<?> builder = ConfiguredModel.builder();
                 if (state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER) {
@@ -65,11 +65,11 @@ public class BCBlockStateProvider extends BlockStateProvider {
     }
 
     private <T extends Block> void woodenMultiModelBlock(WoodTypeDeferredHolder<Block, T> holder, String name, Function<WoodType, ResourceLocation> textureFunction) {
-        forEachWoodType(holder, (k, v) -> horizontalBlock(v, k.name() + "_" + name, modLoc("block/" + name + "/" + name), textureFunction.apply(k)));
+        forEachWoodType(holder, (k, v) -> horizontalBlock(v, k.name() + "_" + name, modLoc("block/template/" + name + "/" + name), textureFunction.apply(k)));
     }
 
     private <T extends Block> void woodenBlock(WoodTypeDeferredHolder<Block, T> holder, String name, Function<WoodType, ResourceLocation> textureFunction) {
-        forEachWoodType(holder, (k, v) -> horizontalBlock(v, k.name() + "_" + name, modLoc("block/" + name), textureFunction.apply(k)));
+        forEachWoodType(holder, (k, v) -> horizontalBlock(v, k.name() + "_" + name, modLoc("block/template/" + name), textureFunction.apply(k)));
     }
 
     private <T extends Block> void forEachWoodType(WoodTypeDeferredHolder<Block, T> holder, BiConsumer<WoodType, DeferredHolder<Block, T>> consumer) {

@@ -1,5 +1,5 @@
 {
-  "parent": "bibliocraft:block/tool_rack",
+  "parent": "bibliocraft:block/template/tool_rack",
   "textures": {
     "texture": "minecraft:block/spruce_planks"
   }

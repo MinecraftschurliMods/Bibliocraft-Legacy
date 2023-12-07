@@ -1,5 +1,5 @@
 {
-  "parent": "bibliocraft:block/shelf",
+  "parent": "bibliocraft:block/template/shelf",
   "textures": {
     "texture": "minecraft:block/birch_planks"
   }
