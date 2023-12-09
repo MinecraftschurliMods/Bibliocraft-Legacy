@@ -3,9 +3,11 @@ package com.github.minecraftschurlimods.bibliocraft.block.toolrack;
 import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.BCInteractibleBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,6 +39,11 @@ public class ToolRackBlock extends BCInteractibleBlock {
 
     public ToolRackBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(ToolRackBlock::new);
     }
 
     @Nullable

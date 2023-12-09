@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -32,6 +34,11 @@ public class FancyArmorStandBlock extends BCBlock {
     public FancyArmorStandBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return simpleCodec(FancyArmorStandBlock::new);
     }
 
     @Override
@@ -62,7 +69,7 @@ public class FancyArmorStandBlock extends BCBlock {
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && player.isCreative()) {
             //Copy of protected method DoublePlantBlock#preventCreativeDropFromBottomPart
             DoubleBlockHalf half = state.getValue(HALF);
@@ -82,7 +89,7 @@ public class FancyArmorStandBlock extends BCBlock {
                 }
             }
         }
-        super.playerWillDestroy(level, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override

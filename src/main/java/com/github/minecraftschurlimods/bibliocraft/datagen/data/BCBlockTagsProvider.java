@@ -19,6 +19,7 @@ public class BCBlockTagsProvider extends BlockTagsProvider {
         super(output, lookupProvider, Bibliocraft.MOD_ID, existingFileHelper);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
         woodTypeTag(BCTags.Blocks.BOOKCASES, BCBlocks.BOOKCASE);

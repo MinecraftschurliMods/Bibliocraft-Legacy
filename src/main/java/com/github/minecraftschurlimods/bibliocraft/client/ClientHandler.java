@@ -35,7 +35,7 @@ public final class ClientHandler {
 
         @SubscribeEvent
         static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
-            event.register("bookcase", BookcaseGeometryLoader.INSTANCE);
+            event.register(new ResourceLocation(Bibliocraft.MOD_ID, "bookcase"), BookcaseGeometryLoader.INSTANCE);
         }
 
         @SubscribeEvent

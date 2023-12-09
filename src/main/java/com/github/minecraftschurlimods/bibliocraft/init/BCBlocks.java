@@ -61,7 +61,7 @@ public interface BCBlocks {
     //TODO Typewriter
 
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, WOOD_TYPES, wood -> creator.apply(BlockBehaviour.Properties.copy(PLANKS.get(wood)).noOcclusion()));
+        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, WOOD_TYPES, wood -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood)).noOcclusion()));
     }
 
     static void init() {}
