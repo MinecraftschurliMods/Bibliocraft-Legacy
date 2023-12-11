@@ -1,14 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackMenu;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
-import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;

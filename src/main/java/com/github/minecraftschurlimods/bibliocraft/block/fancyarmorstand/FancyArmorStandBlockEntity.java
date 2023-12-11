@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.MenuProvider;

@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.block.toolrack;
 
-import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.BCInteractibleBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.mojang.serialization.MapCodec;
