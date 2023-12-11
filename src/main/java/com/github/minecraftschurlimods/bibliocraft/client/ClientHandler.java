@@ -1,14 +1,17 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -37,6 +40,8 @@ public final class ClientHandler {
 
         @SubscribeEvent
         static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), FancyArmorStandBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(), PotionShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(), ShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.TOOL_RACK.get(), ToolRackBER::new);

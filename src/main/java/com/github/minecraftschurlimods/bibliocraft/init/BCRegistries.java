@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -14,6 +15,7 @@ public interface BCRegistries {
     DeferredRegister.Items ITEMS = DeferredRegister.createItems(Bibliocraft.MOD_ID);
     DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, Bibliocraft.MOD_ID);
     DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Bibliocraft.MOD_ID);
+    DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, Bibliocraft.MOD_ID);
     DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, Bibliocraft.MOD_ID);
 
     static void init() {
@@ -22,11 +24,13 @@ public interface BCRegistries {
         BCItems.init();
         BCCreativeTabs.init();
         BCBlockEntities.init();
+        BCEntities.init();
         BCMenuTypes.init();
         BLOCKS.register(bus);
         ITEMS.register(bus);
         CREATIVE_TABS.register(bus);
         BLOCK_ENTITIES.register(bus);
+        ENTITIES.register(bus);
         MENUS.register(bus);
     }
 }
