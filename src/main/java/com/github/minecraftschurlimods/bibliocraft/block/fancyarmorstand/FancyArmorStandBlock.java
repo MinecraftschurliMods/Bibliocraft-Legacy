@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,12 +12,14 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -25,10 +28,21 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class FancyArmorStandBlock extends BCBlock {
+    private static final VoxelShape BOTTOM_NS = ShapeUtil.combine(
+            Shapes.box(0, 0, 0, 1, 0.0625, 1),
+            Shapes.box(0.375, 0.0625, 0.375, 0.625, 1, 0.625));
+    private static final VoxelShape TOP_NS = ShapeUtil.combine(
+            Shapes.box(0.375, 0, 0.375, 0.625, 0.875, 0.625),
+            Shapes.box(0.0625, 0.125, 0.375, 0.9375, 0.5, 0.625));
+    private static final VoxelShape BOTTOM_EW = ShapeUtil.rotate(BOTTOM_NS, Rotation.CLOCKWISE_90);
+    private static final VoxelShape TOP_EW = ShapeUtil.rotate(TOP_NS, Rotation.CLOCKWISE_90);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     public FancyArmorStandBlock(Properties properties) {
@@ -45,6 +59,15 @@ public class FancyArmorStandBlock extends BCBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(HALF);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            return state.getValue(FACING).getAxis() == Direction.Axis.X ? TOP_EW : TOP_NS;
+        } else {
+            return state.getValue(FACING).getAxis() == Direction.Axis.X ? BOTTOM_EW : BOTTOM_NS;
+        }
     }
 
     @Override
