@@ -30,6 +30,5 @@
     "recipes": [
       "bibliocraft:acacia_potion_shelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -28,6 +28,5 @@
     "recipes": [
       "bibliocraft:acacia_tool_rack"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

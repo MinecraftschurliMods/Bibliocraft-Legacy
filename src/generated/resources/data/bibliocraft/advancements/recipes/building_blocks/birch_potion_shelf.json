@@ -30,6 +30,5 @@
     "recipes": [
       "bibliocraft:birch_potion_shelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

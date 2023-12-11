@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    }
+  },
+  "pattern": [
+    " R ",
+    " R ",
+    "SSS"
+  ],
+  "result": {
+    "item": "bibliocraft:jungle_fancy_armor_stand"
+  }
+}

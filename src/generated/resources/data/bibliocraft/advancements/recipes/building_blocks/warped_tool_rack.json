@@ -28,6 +28,5 @@
     "recipes": [
       "bibliocraft:warped_tool_rack"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

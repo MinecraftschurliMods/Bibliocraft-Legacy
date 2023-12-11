@@ -10,6 +10,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -34,7 +35,18 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("PSP")
                     .define('P', woodFamily.getBaseBlock())
                     .define('S', woodFamily.get(BlockFamily.Variant.SLAB))
-                    .unlockedBy("has_planks", has(woodFamily.getBaseBlock()))
+                    .unlockedBy("has_slab", has(woodFamily.get(BlockFamily.Variant.SLAB)))
+                    .save(output);
+        }
+        for (Map.Entry<WoodType, DeferredHolder<Item, DoubleHighBlockItem>> entry : BCItems.FANCY_ARMOR_STAND.map().entrySet()) {
+            BlockFamily woodFamily = woodFamily(entry.getKey());
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get())
+                    .pattern(" R ")
+                    .pattern(" R ")
+                    .pattern("SSS")
+                    .define('S', woodFamily.get(BlockFamily.Variant.SLAB))
+                    .define('R', Tags.Items.RODS_WOODEN)
+                    .unlockedBy("has_slab", has(woodFamily.get(BlockFamily.Variant.SLAB)))
                     .save(output);
         }
         for (Map.Entry<WoodType, DeferredHolder<Item, BlockItem>> entry : BCItems.POTION_SHELF.map().entrySet()) {
@@ -57,7 +69,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("SSS")
                     .define('P', woodFamily.getBaseBlock())
                     .define('S', woodFamily.get(BlockFamily.Variant.SLAB))
-                    .unlockedBy("has_planks", has(woodFamily.getBaseBlock()))
+                    .unlockedBy("has_slab", has(woodFamily.get(BlockFamily.Variant.SLAB)))
                     .save(output);
         }
         for (Map.Entry<WoodType, DeferredHolder<Item, BlockItem>> entry : BCItems.TOOL_RACK.map().entrySet()) {

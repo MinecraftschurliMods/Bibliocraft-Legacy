@@ -30,6 +30,5 @@
     "recipes": [
       "bibliocraft:crimson_potion_shelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

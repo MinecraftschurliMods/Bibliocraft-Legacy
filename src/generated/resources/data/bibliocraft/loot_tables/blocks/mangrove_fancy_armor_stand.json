@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:mangrove_fancy_armor_stand",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
+          "name": "bibliocraft:mangrove_fancy_armor_stand"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bibliocraft:blocks/mangrove_fancy_armor_stand"
+}

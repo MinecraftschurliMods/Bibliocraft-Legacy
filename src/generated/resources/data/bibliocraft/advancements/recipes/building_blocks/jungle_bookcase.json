@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_planks": {
+    "has_slab": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:jungle_planks"
+              "minecraft:jungle_slab"
             ]
           }
         ]
@@ -23,13 +23,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_planks"
+      "has_slab"
     ]
   ],
   "rewards": {
     "recipes": [
       "bibliocraft:jungle_bookcase"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

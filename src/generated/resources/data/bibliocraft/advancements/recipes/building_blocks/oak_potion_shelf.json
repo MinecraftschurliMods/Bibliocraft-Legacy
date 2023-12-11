@@ -30,6 +30,5 @@
     "recipes": [
       "bibliocraft:oak_potion_shelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

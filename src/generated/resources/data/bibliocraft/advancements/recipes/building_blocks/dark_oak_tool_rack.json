@@ -28,6 +28,5 @@
     "recipes": [
       "bibliocraft:dark_oak_tool_rack"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
