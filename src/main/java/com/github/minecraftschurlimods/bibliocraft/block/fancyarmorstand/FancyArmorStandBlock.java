@@ -122,12 +122,15 @@ public class FancyArmorStandBlock extends BCBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return InteractionResult.PASS;
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            pos = pos.below();
+        }
+        return super.use(state, level, pos, player, hand, hit);
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new FancyArmorStandBlockEntity(pos, state);
     }
 }

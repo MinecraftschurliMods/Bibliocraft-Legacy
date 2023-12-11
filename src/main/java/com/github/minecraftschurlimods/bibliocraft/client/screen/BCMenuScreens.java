@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseMenu;
+import com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand.FancyArmorStandMenu;
 import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.block.shelf.ShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackMenu;
@@ -14,6 +15,14 @@ public final class BCMenuScreens {
         private static final ResourceLocation BACKGROUND = new ResourceLocation(Bibliocraft.MOD_ID, "textures/gui/bookcase.png");
 
         public Bookcase(BookcaseMenu menu, Inventory inventory, Component title) {
+            super(menu, inventory, title, BACKGROUND);
+        }
+    }
+
+    public static class FancyArmorStand extends BCMenuScreen<FancyArmorStandMenu> {
+        private static final ResourceLocation BACKGROUND = new ResourceLocation(Bibliocraft.MOD_ID, "textures/gui/fancy_armor_stand.png");
+
+        public FancyArmorStand(FancyArmorStandMenu menu, Inventory inventory, Component title) {
             super(menu, inventory, title, BACKGROUND);
         }
     }

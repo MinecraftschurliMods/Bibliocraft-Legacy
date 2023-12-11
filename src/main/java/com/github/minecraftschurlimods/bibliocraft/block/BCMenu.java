@@ -52,26 +52,26 @@ public abstract class BCMenu<T extends BCBlockEntity> extends AbstractContainerM
         if (!slot.hasItem()) return ItemStack.EMPTY;
         ItemStack stack = slot.getItem();
         ItemStack originalStack = stack.copy();
-        if (index < slotCount) { // If slot is a bookcase slot
-            // Try moving to the hotbar or inventory, return if successful
+        if (index < slotCount) { // If slot is a BE slot
+            // Try moving to the hotbar or inventory
             if (!moveItemStackTo(slot.getItem(), slotCount, slotCount + 36, false)) return ItemStack.EMPTY;
         } else if (index < slotCount + 9) { // If slot is a hotbar slot
-            // Try moving to the BE, return if successful
+            // Try moving to the BE
             for (int i = 0; i < slotCount; i++) {
-                Slot bookcaseSlot = slots.get(i);
-                if (!bookcaseSlot.hasItem() && bookcaseSlot.mayPlace(stack) && !moveItemStackTo(stack, i, i + 1, false))
+                Slot beSlot = slots.get(i);
+                if (!beSlot.hasItem() && beSlot.mayPlace(stack) && !moveItemStackTo(stack, i, i + 1, false))
                     return ItemStack.EMPTY;
             }
-            // Try moving to the inventory, return if successful
+            // Try moving to the inventory
             if (!moveItemStackTo(stack, slotCount + 9, slotCount + 36, false)) return ItemStack.EMPTY;
         } else if (index < slotCount + 36) { // If slot is an inventory slot
-            // Try moving to the BE, return if successful
+            // Try moving to the BE
             for (int i = 0; i < slotCount; i++) {
-                Slot bookcaseSlot = slots.get(i);
-                if (!bookcaseSlot.hasItem() && bookcaseSlot.mayPlace(stack) && !moveItemStackTo(stack, i, i + 1, false))
+                Slot beSlot = slots.get(i);
+                if (!beSlot.hasItem() && beSlot.mayPlace(stack) && !moveItemStackTo(stack, i, i + 1, false))
                     return ItemStack.EMPTY;
             }
-            // Try moving to the hotbar, return if successful
+            // Try moving to the hotbar
             if (!moveItemStackTo(stack, slotCount, slotCount + 9, false)) return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) {

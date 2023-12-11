@@ -26,6 +26,7 @@ public final class ClientHandler {
         @SubscribeEvent
         static void clientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
+                MenuScreens.register(BCMenuTypes.FANCY_ARMOR_STAND.get(), BCMenuScreens.FancyArmorStand::new);
                 MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BCMenuScreens.Bookcase::new);
                 MenuScreens.register(BCMenuTypes.POTION_SHELF.get(), BCMenuScreens.PotionShelf::new);
                 MenuScreens.register(BCMenuTypes.SHELF.get(), BCMenuScreens.Shelf::new);
