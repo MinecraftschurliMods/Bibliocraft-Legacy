@@ -1,18 +1,15 @@
 package com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand;
 
-import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
 import com.github.minecraftschurlimods.bibliocraft.block.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.block.BCInteractibleBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +34,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")

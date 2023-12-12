@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 
 public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBlockEntity> {
     public FancyArmorStandBER(BlockEntityRendererProvider.Context context) {
