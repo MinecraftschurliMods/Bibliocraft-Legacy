@@ -28,8 +28,7 @@ public abstract class BCInteractibleBlock extends BCBlock {
             NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) level.getBlockEntity(pos), pos);
             return InteractionResult.SUCCESS;
         }
-        Direction direction = state.getValue(FACING);
-        if (hit.getDirection() == direction || hit.getDirection() == direction.getOpposite() && canAccessFromBack()) {
+        if (canAccessFromDirection(state, hit.getDirection())) {
             ItemStack stack = player.getItemInHand(hand);
             int slot = lookingAtSlot(state, hit);
             if (slot != -1) {
@@ -47,7 +46,8 @@ public abstract class BCInteractibleBlock extends BCBlock {
         return super.use(state, level, pos, player, hand, hit);
     }
 
-    protected boolean canAccessFromBack() {
-        return true;
+    protected boolean canAccessFromDirection(BlockState state, Direction direction) {
+        Direction facing = state.getValue(FACING);
+        return facing == direction || facing == direction.getOpposite();
     }
 }

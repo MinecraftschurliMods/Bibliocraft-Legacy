@@ -1,15 +1,22 @@
 package com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCBlock;
+import com.github.minecraftschurlimods.bibliocraft.block.BCBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.block.BCInteractibleBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -30,10 +37,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class FancyArmorStandBlock extends BCBlock {
+public class FancyArmorStandBlock extends BCInteractibleBlock {
     private static final VoxelShape BOTTOM_NS = ShapeUtil.combine(
             Shapes.box(0, 0, 0, 1, 0.0625, 1),
             Shapes.box(0.375, 0.0625, 0.375, 0.625, 1, 0.625));
@@ -121,10 +129,56 @@ public class FancyArmorStandBlock extends BCBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
+            int slot = lookingAtSlot(state, hit);
+            if (slot != -1) {
+                if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+                    pos = pos.below();
+                }
+                BlockEntity blockEntity = level.getBlockEntity(pos);
+                if (blockEntity instanceof BCBlockEntity bcbe) {
+                    ItemStack stack = player.getInventory().getArmor(3 - slot);
+                    ItemStack slotStack = bcbe.getItem(slot);
+                    if (bcbe.canPlaceItem(slot, stack)) {
+                        bcbe.setItem(slot, stack);
+                        player.getInventory().setItem(39 - slot, slotStack);
+                        if (slotStack.getItem() instanceof Equipable equipable) {
+                            level.playSound(null, player, equipable.getEquipSound(), SoundSource.PLAYERS, 1, 1);
+                        }
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+            }
+        }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();
         }
         return super.use(state, level, pos, player, hand, hit);
+    }
+
+    @Override
+    public int lookingAtSlot(BlockState state, BlockHitResult hit) {
+        EquipmentSlot slot = null;
+        double y = hit.getLocation().y - hit.getBlockPos().getY();
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            if (y < 0.5) {
+                slot = EquipmentSlot.CHEST;
+            } else if (y < 0.875) {
+                slot = EquipmentSlot.HEAD;
+            }
+        } else {
+            if (y < 0.375) {
+                slot = EquipmentSlot.FEET;
+            } else {
+                slot = EquipmentSlot.LEGS;
+            }
+        }
+        return slot != null ? 3 - slot.getIndex() : -1;
+    }
+
+    @Override
+    protected boolean canAccessFromDirection(BlockState state, Direction direction) {
+        return direction.getAxis() != Direction.Axis.Y;
     }
 
     @Nullable

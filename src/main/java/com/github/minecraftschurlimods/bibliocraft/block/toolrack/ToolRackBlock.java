@@ -79,7 +79,7 @@ public class ToolRackBlock extends BCInteractibleBlock {
     }
 
     @Override
-    protected boolean canAccessFromBack() {
-        return false;
+    protected boolean canAccessFromDirection(BlockState state, Direction direction) {
+        return state.getValue(FACING) == direction;
     }
 }

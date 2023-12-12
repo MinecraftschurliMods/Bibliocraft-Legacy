@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBlockEntity> {
@@ -24,5 +25,10 @@ public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBl
             Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, partialTick, stack, buffer, light);
             stack.popPose();
         }
+    }
+
+    @Override
+    public AABB getRenderBoundingBox(FancyArmorStandBlockEntity blockEntity) {
+        return BlockEntityRenderer.super.getRenderBoundingBox(blockEntity).expandTowards(0, 1, 0);
     }
 }

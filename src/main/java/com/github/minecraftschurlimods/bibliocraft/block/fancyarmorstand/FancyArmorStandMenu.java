@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,9 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
-    private Map<EquipmentSlot, ArmorSlot> beSlots;
-    private Map<EquipmentSlot, ArmorSlot> playerSlots;
-
     public FancyArmorStandMenu(int id, Inventory inventory, FancyArmorStandBlockEntity blockEntity) {
         super(BCMenuTypes.FANCY_ARMOR_STAND.get(), id, inventory, blockEntity);
     }
@@ -29,15 +26,15 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
 
     @Override
     protected void addSlots(Inventory inventory, FancyArmorStandBlockEntity blockEntity) {
-        addSlot(blockEntity, 0, 80, 8, EquipmentSlot.HEAD);
-        addSlot(blockEntity, 1, 80, 26, EquipmentSlot.CHEST);
-        addSlot(blockEntity, 2, 80, 44, EquipmentSlot.LEGS);
-        addSlot(blockEntity, 3, 80, 62, EquipmentSlot.FEET);
+        addSlot(new EquipableSlot(blockEntity, 0, 80, 8, EquipmentSlot.HEAD));
+        addSlot(new EquipableSlot(blockEntity, 1, 80, 26, EquipmentSlot.CHEST));
+        addSlot(new EquipableSlot(blockEntity, 2, 80, 44, EquipmentSlot.LEGS));
+        addSlot(new EquipableSlot(blockEntity, 3, 80, 62, EquipmentSlot.FEET));
         addInventorySlots(inventory, 8, 84);
-        addPlayerSlot(inventory, 39, 126, 8, EquipmentSlot.HEAD);
-        addPlayerSlot(inventory, 38, 126, 26, EquipmentSlot.CHEST);
-        addPlayerSlot(inventory, 37, 126, 44, EquipmentSlot.LEGS);
-        addPlayerSlot(inventory, 36, 126, 62, EquipmentSlot.FEET);
+        addSlot(new EquipableSlot(inventory, 39, 126, 8, EquipmentSlot.HEAD));
+        addSlot(new EquipableSlot(inventory, 38, 126, 26, EquipmentSlot.CHEST));
+        addSlot(new EquipableSlot(inventory, 37, 126, 44, EquipmentSlot.LEGS));
+        addSlot(new EquipableSlot(inventory, 36, 126, 62, EquipmentSlot.FEET));
     }
 
     @Override
@@ -107,35 +104,17 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
         return null;
     }
 
-    private void addSlot(Container container, int index, int x, int y, EquipmentSlot armorType) {
-        ArmorSlot slot = new ArmorSlot(container, index, x, y, armorType);
-        addSlot(slot);
-        if (beSlots == null) {
-            beSlots = new HashMap<>();
-        }
-        beSlots.put(armorType, slot);
-    }
+    private static class EquipableSlot extends Slot {
+        private final EquipmentSlot slotType;
 
-    private void addPlayerSlot(Container container, int index, int x, int y, EquipmentSlot armorType) {
-        ArmorSlot slot = new ArmorSlot(container, index, x, y, armorType);
-        addSlot(slot);
-        if (playerSlots == null) {
-            playerSlots = new HashMap<>();
-        }
-        playerSlots.put(armorType, slot);
-    }
-
-    private static class ArmorSlot extends Slot {
-        private final EquipmentSlot armorType;
-
-        public ArmorSlot(Container container, int index, int x, int y, EquipmentSlot armorType) {
+        public EquipableSlot(Container container, int index, int x, int y, EquipmentSlot slotType) {
             super(container, index, x, y);
-            this.armorType = armorType;
+            this.slotType = slotType;
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() instanceof ArmorItem armor && armor.getEquipmentSlot() == armorType;
+            return stack.getItem() instanceof Equipable equipable && equipable.getEquipmentSlot() == slotType;
         }
 
         @Override
