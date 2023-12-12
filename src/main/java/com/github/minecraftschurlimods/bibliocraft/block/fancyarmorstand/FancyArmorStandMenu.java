@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCMenu;
-import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
+import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,16 +12,13 @@ import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
     public FancyArmorStandMenu(int id, Inventory inventory, FancyArmorStandBlockEntity blockEntity) {
-        super(BCMenuTypes.FANCY_ARMOR_STAND.get(), id, inventory, blockEntity);
+        super(BCMenus.FANCY_ARMOR_STAND.get(), id, inventory, blockEntity);
     }
 
     public FancyArmorStandMenu(int id, Inventory inventory, FriendlyByteBuf buf) {
-        super(BCMenuTypes.FANCY_ARMOR_STAND.get(), id, inventory, buf);
+        super(BCMenus.FANCY_ARMOR_STAND.get(), id, inventory, buf);
     }
 
     @Override

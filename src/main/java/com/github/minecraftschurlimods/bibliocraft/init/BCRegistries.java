@@ -25,7 +25,7 @@ public interface BCRegistries {
         BCCreativeTabs.init();
         BCBlockEntities.init();
         BCEntities.init();
-        BCMenuTypes.init();
+        BCMenus.init();
         BLOCKS.register(bus);
         ITEMS.register(bus);
         CREATIVE_TABS.register(bus);

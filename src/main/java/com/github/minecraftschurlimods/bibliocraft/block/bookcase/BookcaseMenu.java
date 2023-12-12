@@ -1,18 +1,18 @@
 package com.github.minecraftschurlimods.bibliocraft.block.bookcase;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCMenu;
-import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
+import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 
 public class BookcaseMenu extends BCMenu<BookcaseBlockEntity> {
     public BookcaseMenu(int id, Inventory inventory, BookcaseBlockEntity blockEntity) {
-        super(BCMenuTypes.BOOKCASE.get(), id, inventory, blockEntity);
+        super(BCMenus.BOOKCASE.get(), id, inventory, blockEntity);
     }
 
     public BookcaseMenu(int id, Inventory inventory, FriendlyByteBuf buf) {
-        super(BCMenuTypes.BOOKCASE.get(), id, inventory, buf);
+        super(BCMenus.BOOKCASE.get(), id, inventory, buf);
     }
 
     @Override

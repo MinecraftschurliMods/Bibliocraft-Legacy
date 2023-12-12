@@ -1,18 +1,18 @@
 package com.github.minecraftschurlimods.bibliocraft.block.potionshelf;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCMenu;
-import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
+import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 
 public class PotionShelfMenu extends BCMenu<PotionShelfBlockEntity> {
     public PotionShelfMenu(int id, Inventory inventory, PotionShelfBlockEntity blockEntity) {
-        super(BCMenuTypes.POTION_SHELF.get(), id, inventory, blockEntity);
+        super(BCMenus.POTION_SHELF.get(), id, inventory, blockEntity);
     }
 
     public PotionShelfMenu(int id, Inventory inventory, FriendlyByteBuf buf) {
-        super(BCMenuTypes.POTION_SHELF.get(), id, inventory, buf);
+        super(BCMenus.POTION_SHELF.get(), id, inventory, buf);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.block.toolrack;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCMenu;
-import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
+import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.TagKey;
@@ -10,11 +10,11 @@ import net.minecraft.world.item.Item;
 
 public class ToolRackMenu extends BCMenu<ToolRackBlockEntity> {
     public ToolRackMenu(int id, Inventory inventory, ToolRackBlockEntity blockEntity) {
-        super(BCMenuTypes.TOOL_RACK.get(), id, inventory, blockEntity);
+        super(BCMenus.TOOL_RACK.get(), id, inventory, blockEntity);
     }
 
     public ToolRackMenu(int id, Inventory inventory, FriendlyByteBuf data) {
-        super(BCMenuTypes.TOOL_RACK.get(), id, inventory, data);
+        super(BCMenus.TOOL_RACK.get(), id, inventory, data);
     }
 
     @Override

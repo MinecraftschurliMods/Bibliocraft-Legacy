@@ -9,7 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometry
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
-import com.github.minecraftschurlimods.bibliocraft.init.BCMenuTypes;
+import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -25,11 +25,11 @@ public final class ClientHandler {
         @SubscribeEvent
         static void clientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                MenuScreens.register(BCMenuTypes.FANCY_ARMOR_STAND.get(), BCMenuScreens.FancyArmorStand::new);
-                MenuScreens.register(BCMenuTypes.BOOKCASE.get(), BCMenuScreens.Bookcase::new);
-                MenuScreens.register(BCMenuTypes.POTION_SHELF.get(), BCMenuScreens.PotionShelf::new);
-                MenuScreens.register(BCMenuTypes.SHELF.get(), BCMenuScreens.Shelf::new);
-                MenuScreens.register(BCMenuTypes.TOOL_RACK.get(), BCMenuScreens.ToolRack::new);
+                MenuScreens.register(BCMenus.FANCY_ARMOR_STAND.get(), BCMenuScreens.FancyArmorStand::new);
+                MenuScreens.register(BCMenus.BOOKCASE.get(), BCMenuScreens.Bookcase::new);
+                MenuScreens.register(BCMenus.POTION_SHELF.get(), BCMenuScreens.PotionShelf::new);
+                MenuScreens.register(BCMenus.SHELF.get(), BCMenuScreens.Shelf::new);
+                MenuScreens.register(BCMenus.TOOL_RACK.get(), BCMenuScreens.ToolRack::new);
             });
         }
 
