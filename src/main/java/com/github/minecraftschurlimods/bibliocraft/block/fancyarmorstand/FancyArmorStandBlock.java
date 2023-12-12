@@ -38,14 +38,14 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class FancyArmorStandBlock extends BCInteractibleBlock {
-    private static final VoxelShape BOTTOM_NS = ShapeUtil.combine(
-            Shapes.box(0, 0, 0, 1, 0.0625, 1),
-            Shapes.box(0.375, 0.0625, 0.375, 0.625, 1, 0.625));
-    private static final VoxelShape TOP_NS = ShapeUtil.combine(
+    private static final VoxelShape BOTTOM_Z = ShapeUtil.combine(
+            Shapes.box(0, 0, 0, 1, 0.125, 1),
+            Shapes.box(0.375, 0.125, 0.375, 0.625, 1, 0.625));
+    private static final VoxelShape TOP_Z = ShapeUtil.combine(
             Shapes.box(0.375, 0, 0.375, 0.625, 0.875, 0.625),
             Shapes.box(0.0625, 0.125, 0.375, 0.9375, 0.5, 0.625));
-    private static final VoxelShape BOTTOM_EW = ShapeUtil.rotate(BOTTOM_NS, Rotation.CLOCKWISE_90);
-    private static final VoxelShape TOP_EW = ShapeUtil.rotate(TOP_NS, Rotation.CLOCKWISE_90);
+    private static final VoxelShape BOTTOM_X = ShapeUtil.rotate(BOTTOM_Z, Rotation.CLOCKWISE_90);
+    private static final VoxelShape TOP_X = ShapeUtil.rotate(TOP_Z, Rotation.CLOCKWISE_90);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     public FancyArmorStandBlock(Properties properties) {
@@ -67,9 +67,9 @@ public class FancyArmorStandBlock extends BCInteractibleBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            return state.getValue(FACING).getAxis() == Direction.Axis.X ? TOP_EW : TOP_NS;
+            return state.getValue(FACING).getAxis() == Direction.Axis.X ? TOP_X : TOP_Z;
         } else {
-            return state.getValue(FACING).getAxis() == Direction.Axis.X ? BOTTOM_EW : BOTTOM_NS;
+            return state.getValue(FACING).getAxis() == Direction.Axis.X ? BOTTOM_X : BOTTOM_Z;
         }
     }
 
@@ -154,22 +154,22 @@ public class FancyArmorStandBlock extends BCInteractibleBlock {
 
     @Override
     public int lookingAtSlot(BlockState state, BlockHitResult hit) {
-        EquipmentSlot slot = null;
+        EquipmentSlot slot;
         double y = hit.getLocation().y - hit.getBlockPos().getY();
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             if (y < 0.5) {
                 slot = EquipmentSlot.CHEST;
-            } else if (y < 0.875) {
+            } else {
                 slot = EquipmentSlot.HEAD;
             }
         } else {
-            if (y < 0.375) {
+            if (y < 0.4375) {
                 slot = EquipmentSlot.FEET;
             } else {
                 slot = EquipmentSlot.LEGS;
             }
         }
-        return slot != null ? 3 - slot.getIndex() : -1;
+        return 3 - slot.getIndex();
     }
 
     @Override

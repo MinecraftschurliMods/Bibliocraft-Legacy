@@ -19,7 +19,7 @@ public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBl
         FancyArmorStandEntity entity = blockEntity.getDisplayEntity();
         if (entity != null) {
             stack.pushPose();
-            stack.translate(0.5, 0, 0.5);
+            stack.translate(0.5, 0.0625, 0.5);
             stack.mulPose(Axis.YP.rotationDegrees(entity.getYHeadRot()));
             Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, partialTick, stack, buffer, light);
             stack.popPose();
