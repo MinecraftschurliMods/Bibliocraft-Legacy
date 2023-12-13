@@ -20,6 +20,7 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.POTION_SHELF.values());
                 addToTab(output, BCItems.SHELF.values());
                 addToTab(output, BCItems.TOOL_RACK.values());
+                output.accept(BCItems.IRON_FANCY_ARMOR_STAND.get());
             })
             .build());
 

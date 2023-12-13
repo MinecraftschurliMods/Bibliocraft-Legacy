@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-11T16:01:02.4673771	Block States: bibliocraft
+// 1.20.4	2023-12-12T21:52:01.0480746	Block States: bibliocraft
 659072bd1b446090a3a10a19573cba259369019e assets/bibliocraft/blockstates/acacia_bookcase.json
 d058f1fedcbf3371725ec1f3c766558f2050448e assets/bibliocraft/blockstates/acacia_fancy_armor_stand.json
 3344231ef52a4ef942bdc63f700ec27c731fc6b9 assets/bibliocraft/blockstates/acacia_potion_shelf.json
@@ -29,6 +29,7 @@ ba67ec9a7f8ccd302861b75962d894c688955364 assets/bibliocraft/blockstates/dark_oak
 5ee18d81aefbc069f3e4c4891068ed672e751c25 assets/bibliocraft/blockstates/dark_oak_potion_shelf.json
 53c4a7f81e773eb2b0179801d28edb74f59e08b3 assets/bibliocraft/blockstates/dark_oak_shelf.json
 83a7d8369684d59e8386d1d23ea688eace4e8b06 assets/bibliocraft/blockstates/dark_oak_tool_rack.json
+61e57ae0fe3619ced36e3630cb569669063d2c2e assets/bibliocraft/blockstates/iron_fancy_armor_stand.json
 1031378b6df7b3077ecce154dd711c782c7a8411 assets/bibliocraft/blockstates/jungle_bookcase.json
 ab7437e359ccf769752646615afdc2a6845e5d56 assets/bibliocraft/blockstates/jungle_fancy_armor_stand.json
 17daf38a261073f3c7265d1d0e5c180ce4ff5329 assets/bibliocraft/blockstates/jungle_potion_shelf.json

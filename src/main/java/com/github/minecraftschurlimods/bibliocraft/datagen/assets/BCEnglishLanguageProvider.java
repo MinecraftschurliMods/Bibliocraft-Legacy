@@ -38,6 +38,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addWoodenBlock(BCBlocks.POTION_SHELF, "Potion Shelf");
         addWoodenBlock(BCBlocks.SHELF, "Shelf");
         addWoodenBlock(BCBlocks.TOOL_RACK, "Tool Rack");
+        add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), "Iron Fancy Armor Stand");
         add("container", "bookcase", "Bookcase");
         add("container", "fancy_armor_stand", "Armor Stand");
         add("container", "potion_shelf", "Potion Shelf");

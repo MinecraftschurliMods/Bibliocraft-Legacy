@@ -42,6 +42,7 @@ public final class BCLootTableProvider extends LootTableProvider {
             dropSelf(BCBlocks.POTION_SHELF);
             dropSelf(BCBlocks.SHELF);
             dropSelf(BCBlocks.TOOL_RACK);
+            add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), createDoorTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
         }
 
         @Override

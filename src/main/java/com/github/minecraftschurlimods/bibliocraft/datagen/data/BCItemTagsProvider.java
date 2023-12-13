@@ -27,10 +27,11 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
         woodTypeTag(BCTags.Items.BOOKCASES, BCItems.BOOKCASE);
-        woodTypeTag(BCTags.Items.FANCY_ARMOR_STANDS, BCItems.FANCY_ARMOR_STAND);
+        woodTypeTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD, BCItems.FANCY_ARMOR_STAND);
         woodTypeTag(BCTags.Items.POTION_SHELVES, BCItems.POTION_SHELF);
         woodTypeTag(BCTags.Items.SHELVES, BCItems.SHELF);
         woodTypeTag(BCTags.Items.TOOL_RACKS, BCItems.TOOL_RACK);
+        tag(BCTags.Items.FANCY_ARMOR_STANDS).addTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.IRON_FANCY_ARMOR_STAND.get());
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS).addOptional(new ResourceLocation("patchouli", "guide_book"));
         tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.DRAGON_BREATH);
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);

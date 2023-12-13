@@ -23,11 +23,13 @@ public class BCBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
         woodTypeTag(BCTags.Blocks.BOOKCASES, BCBlocks.BOOKCASE);
-        woodTypeTag(BCTags.Blocks.FANCY_ARMOR_STANDS, BCBlocks.FANCY_ARMOR_STAND);
+        woodTypeTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD, BCBlocks.FANCY_ARMOR_STAND);
         woodTypeTag(BCTags.Blocks.POTION_SHELVES, BCBlocks.POTION_SHELF);
         woodTypeTag(BCTags.Blocks.SHELVES, BCBlocks.SHELF);
         woodTypeTag(BCTags.Blocks.TOOL_RACKS, BCBlocks.TOOL_RACK);
+        tag(BCTags.Blocks.FANCY_ARMOR_STANDS).addTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get());
         tag(BlockTags.MINEABLE_WITH_AXE).addTags(BCTags.Blocks.BOOKCASES, BCTags.Blocks.FANCY_ARMOR_STANDS, BCTags.Blocks.POTION_SHELVES, BCTags.Blocks.SHELVES, BCTags.Blocks.TOOL_RACKS);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get());
     }
 
     private void woodTypeTag(TagKey<Block> tag, WoodTypeDeferredHolder<Block, ? extends Block> holder) {

@@ -34,6 +34,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
         woodenBlock(BCBlocks.POTION_SHELF, "potion_shelf", TYPE_TO_PLANKS);
         woodenBlock(BCBlocks.SHELF, "shelf", TYPE_TO_PLANKS);
         woodenBlock(BCBlocks.TOOL_RACK, "tool_rack", TYPE_TO_PLANKS);
+        doubleHighBlock(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")));
     }
 
     private void horizontalBlock(Supplier<? extends Block> block, String name, ResourceLocation parent, ResourceLocation texture) {
@@ -49,18 +50,22 @@ public class BCBlockStateProvider extends BlockStateProvider {
         forEachWoodType(holder, (k, v) -> {
             ModelFile bottom = models().withExistingParent(k.name() + "_" + name + "_bottom", modLoc("block/template/" + name + "/bottom")).texture("texture", textureFunction.apply(k));
             ModelFile top = models().withExistingParent(k.name() + "_" + name + "_top", modLoc("block/template/" + name + "/top")).texture("texture", textureFunction.apply(k));
-            getVariantBuilder(v.get()).forAllStates(state -> {
-                ConfiguredModel.Builder<?> builder = ConfiguredModel.builder();
-                if (state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER) {
-                    builder.modelFile(bottom);
-                } else {
-                    builder.modelFile(top);
-                }
-                return builder
-                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                        .uvLock(true)
-                        .build();
-            });
+            doubleHighBlock(v.get(), bottom, top);
+        });
+    }
+
+    private void doubleHighBlock(Block block, ModelFile bottom, ModelFile top) {
+        getVariantBuilder(block).forAllStates(state -> {
+            ConfiguredModel.Builder<?> builder = ConfiguredModel.builder();
+            if (state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER) {
+                builder.modelFile(bottom);
+            } else {
+                builder.modelFile(top);
+            }
+            return builder
+                    .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                    .uvLock(true)
+                    .build();
         });
     }
 

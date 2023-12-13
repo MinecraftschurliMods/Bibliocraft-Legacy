@@ -23,6 +23,7 @@ public class BCItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         woodenBlock(BCItems.BOOKCASE, "bookcase");
         BCItems.FANCY_ARMOR_STAND.map().forEach((k, v) -> withExistingParent(k.name() + "_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/inventory")).texture("texture", TYPE_TO_PLANKS.apply(k)));
+        withExistingParent("iron_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/iron_inventory"));
         woodenBlock(BCItems.POTION_SHELF, "potion_shelf");
         woodenBlock(BCItems.SHELF, "shelf");
         woodenBlock(BCItems.TOOL_RACK, "tool_rack");

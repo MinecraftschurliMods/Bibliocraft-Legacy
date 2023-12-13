@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-11T16:01:02.4603775	Loot Tables
+// 1.20.4	2023-12-12T21:52:00.918763	Loot Tables
 47504c231dd994820a43e1d11a1aad884ad6ace3 data/bibliocraft/loot_tables/blocks/acacia_bookcase.json
 32c029ead67310739aa571805afe811aeca42ac4 data/bibliocraft/loot_tables/blocks/acacia_fancy_armor_stand.json
 d1f1d391d0c58c1c9087b55b5d08bba29327638f data/bibliocraft/loot_tables/blocks/acacia_potion_shelf.json
@@ -29,6 +29,7 @@ fb950d482275029bd6f1b26c880ffa51ee83d521 data/bibliocraft/loot_tables/blocks/dar
 dc4a8e27ea59fd4ec51f62a97bd071915c3e62b0 data/bibliocraft/loot_tables/blocks/dark_oak_potion_shelf.json
 602bfb075c0420f401959f498576b9098e6b443b data/bibliocraft/loot_tables/blocks/dark_oak_shelf.json
 73b37b09619e271ae67a1c6f2cec52de3345e692 data/bibliocraft/loot_tables/blocks/dark_oak_tool_rack.json
+c207a4a8da72761c7ac5cbc0bcb0d73145109f9b data/bibliocraft/loot_tables/blocks/iron_fancy_armor_stand.json
 1334af0366d503d60fbc479d26a38617544a7727 data/bibliocraft/loot_tables/blocks/jungle_bookcase.json
 973b7065ad34a41b412af626b3101759f02f7bfc data/bibliocraft/loot_tables/blocks/jungle_fancy_armor_stand.json
 fa27d275988a6e35ffa43206232cfe9a17a4779f data/bibliocraft/loot_tables/blocks/jungle_potion_shelf.json

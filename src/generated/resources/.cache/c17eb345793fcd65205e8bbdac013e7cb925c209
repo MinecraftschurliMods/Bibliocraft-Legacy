@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-11T16:01:02.4623862	Item Models: bibliocraft
+// 1.20.4	2023-12-12T21:52:00.984764	Item Models: bibliocraft
 36c2ae88060a10b2ba6510d8a8dcbdb484c8f69c assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 69b5c606e9b9c1a3a489202ec6fea0994d23f8a3 assets/bibliocraft/models/item/acacia_potion_shelf.json
@@ -29,6 +29,7 @@ b482586355828c3664c149065336c0589dfb6119 assets/bibliocraft/models/item/crimson_
 9efb8533a610922d8894f31fdac3aba99aea26fb assets/bibliocraft/models/item/dark_oak_potion_shelf.json
 db6277b1d40adaa163fbcbd1d14f3eebf29ff5b2 assets/bibliocraft/models/item/dark_oak_shelf.json
 5c4fdf480c243541990c32680c36df9d3fbf1425 assets/bibliocraft/models/item/dark_oak_tool_rack.json
+3350cab78f7879354049b4f65e8d71df64b2cccb assets/bibliocraft/models/item/iron_fancy_armor_stand.json
 3f46f5ca05ed9a0a3c3ec8dbabcd13bba78cd5f6 assets/bibliocraft/models/item/jungle_bookcase.json
 fc8ef2e2c3c4da64334c1fc4df4c6aa62df6b4dd assets/bibliocraft/models/item/jungle_fancy_armor_stand.json
 acb00830789ebaf79cb0d35bfde4b30675e8b538 assets/bibliocraft/models/item/jungle_potion_shelf.json
