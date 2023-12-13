@@ -16,7 +16,7 @@ public class ShelfMenu extends BCMenu<ShelfBlockEntity> {
     }
 
     @Override
-    protected void addSlots(Inventory inventory, ShelfBlockEntity blockEntity) {
+    protected void addSlots(Inventory inventory) {
         addSlot(new Slot(blockEntity, 0, 53, 15));
         addSlot(new Slot(blockEntity, 1, 107, 15));
         addSlot(new Slot(blockEntity, 2, 53, 53));

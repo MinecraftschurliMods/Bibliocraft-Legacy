@@ -16,7 +16,7 @@ public class PotionShelfMenu extends BCMenu<PotionShelfBlockEntity> {
     }
 
     @Override
-    protected void addSlots(Inventory inventory, PotionShelfBlockEntity blockEntity) {
+    protected void addSlots(Inventory inventory) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
                 addSlot(new TagLimitedSlot(blockEntity, i * 4 + j, 53 + j * 18, 15 + i * 19, BCTags.Items.POTION_SHELF_POTIONS));

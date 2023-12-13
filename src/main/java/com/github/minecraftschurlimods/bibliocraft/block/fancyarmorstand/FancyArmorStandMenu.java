@@ -22,7 +22,7 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
     }
 
     @Override
-    protected void addSlots(Inventory inventory, FancyArmorStandBlockEntity blockEntity) {
+    protected void addSlots(Inventory inventory) {
         addSlot(new EquipableSlot(blockEntity, 0, 80, 8, EquipmentSlot.HEAD));
         addSlot(new EquipableSlot(blockEntity, 1, 80, 26, EquipmentSlot.CHEST));
         addSlot(new EquipableSlot(blockEntity, 2, 80, 44, EquipmentSlot.LEGS));

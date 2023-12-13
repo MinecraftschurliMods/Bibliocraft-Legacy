@@ -16,7 +16,7 @@ public class BookcaseMenu extends BCMenu<BookcaseBlockEntity> {
     }
 
     @Override
-    protected void addSlots(Inventory inventory, BookcaseBlockEntity blockEntity) {
+    protected void addSlots(Inventory inventory) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
                 addSlot(new TagLimitedSlot(blockEntity, i * 8 + j, 17 + j * 18, 17 + i * 25, BCTags.Items.BOOKCASE_BOOKS));

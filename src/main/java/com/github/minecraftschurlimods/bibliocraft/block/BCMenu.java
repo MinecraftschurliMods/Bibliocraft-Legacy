@@ -30,7 +30,7 @@ public abstract class BCMenu<T extends BCBlockEntity> extends AbstractContainerM
     public BCMenu(MenuType<?> type, int id, Inventory inventory, T blockEntity) {
         super(type, id);
         this.blockEntity = blockEntity;
-        addSlots(inventory, blockEntity);
+        addSlots(inventory);
     }
 
     /**
@@ -48,9 +48,8 @@ public abstract class BCMenu<T extends BCBlockEntity> extends AbstractContainerM
      * Adds slots to this menu.
      *
      * @param inventory   The player inventory to use.
-     * @param blockEntity The block entity to use.
      */
-    protected abstract void addSlots(Inventory inventory, T blockEntity);
+    protected abstract void addSlots(Inventory inventory);
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
