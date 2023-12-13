@@ -21,8 +21,7 @@ public interface BCRegistries {
     /**
      * Central registration method. Classloads the registration classes and registers the registries to the mod bus.
      */
-    static void init() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+    static void init(IEventBus bus) {
         BCBlocks.init();
         BCItems.init();
         BCCreativeTabs.init();
