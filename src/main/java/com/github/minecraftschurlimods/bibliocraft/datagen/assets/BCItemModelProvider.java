@@ -29,6 +29,12 @@ public class BCItemModelProvider extends ItemModelProvider {
         woodenBlock(BCItems.TOOL_RACK, "tool_rack");
     }
 
+    /**
+     * Adds item models for all variants of a {@link WoodTypeDeferredHolder}.
+     *
+     * @param holder The {@link WoodTypeDeferredHolder} to add the translations for.
+     * @param suffix The suffix of the item model name.
+     */
     private void woodenBlock(WoodTypeDeferredHolder<Item, ?> holder, String suffix) {
         holder.map().forEach((k, v) -> {
             String name = k.name() + "_" + suffix;

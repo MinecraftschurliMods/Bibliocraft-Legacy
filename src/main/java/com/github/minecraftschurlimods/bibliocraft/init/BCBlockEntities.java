@@ -21,14 +21,35 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<PotionShelfBlockEntity>>     POTION_SHELF      = register("potion_shelf",      PotionShelfBlockEntity::new,     BCBlocks.POTION_SHELF.holders());
     Supplier<BlockEntityType<ToolRackBlockEntity>>        TOOL_RACK         = register("tool_rack",         ToolRackBlockEntity::new,        BCBlocks.TOOL_RACK.holders());
 
+    /**
+     * Registration helper method that takes a supplier list instead of a vararg parameter.
+     *
+     * @param name     The registry name to use.
+     * @param supplier The block entity supplier to use.
+     * @param blocks   A list of block suppliers that are associated with the block entity.
+     * @param <T>      The exact type of the block entity.
+     * @return A block entity type supplier.
+     */
     static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> supplier, Collection<? extends Supplier<? extends Block>> blocks) {
         return BCRegistries.BLOCK_ENTITIES.register(name, () -> BlockEntityType.Builder.of(supplier, blocks.stream().map(Supplier::get).toList().toArray(new Block[0])).build(null));
     }
 
+    /**
+     * Registration helper method that takes a supplier vararg parameter instead of a regular vararg parameter.
+     *
+     * @param name     The registry name to use.
+     * @param supplier The block entity supplier to use.
+     * @param blocks   A vararg of block suppliers that are associated with the block entity.
+     * @param <T>      The exact type of the block entity.
+     * @return A block entity type supplier.
+     */
     @SafeVarargs
     static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> supplier, Supplier<? extends Block>... blocks) {
         return register(name, supplier, List.of(blocks));
     }
 
+    /**
+     * Empty method, called by {@link BCRegistries#init()} to classload this class.
+     */
     static void init() {}
 }

@@ -32,6 +32,12 @@ public class BCBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get());
     }
 
+    /**
+     * Adds a tag containing all values of a {@link WoodTypeDeferredHolder}.
+     *
+     * @param tag    The {@link TagKey} to use.
+     * @param holder The {@link WoodTypeDeferredHolder} to add.
+     */
     private void woodTypeTag(TagKey<Block> tag, WoodTypeDeferredHolder<Block, ? extends Block> holder) {
         tag(tag).add(holder.values().toArray(new Block[0]));
     }

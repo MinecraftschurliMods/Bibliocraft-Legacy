@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -94,6 +95,11 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .save(output);
     }
 
+    /**
+     * @param wood The {@link WoodType} to get the {@link BlockFamily} for.
+     * @return The {@link BlockFamily} associated with the given {@link WoodType}.
+     */
+    @Nullable
     private static BlockFamily woodFamily(WoodType wood) {
         if (wood == WoodType.OAK) return BlockFamilies.OAK_PLANKS;
         if (wood == WoodType.SPRUCE) return BlockFamilies.SPRUCE_PLANKS;

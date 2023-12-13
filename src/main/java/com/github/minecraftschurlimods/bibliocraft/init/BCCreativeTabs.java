@@ -24,11 +24,19 @@ public interface BCCreativeTabs {
             })
             .build());
 
+    /**
+     * Helper method to add all {@link ItemLike}s in a list to a creative tab.
+     * @param output The {@link CreativeModeTab.Output} to add the elements to.
+     * @param list   A list of {@link ItemLike}s to add to the {@link CreativeModeTab.Output}.
+     */
     private static void addToTab(CreativeModeTab.Output output, Collection<? extends ItemLike> list) {
         for (ItemLike item : list) {
             output.accept(item);
         }
     }
 
+    /**
+     * Empty method, called by {@link BCRegistries#init()} to classload this class.
+     */
     static void init() {}
 }

@@ -14,17 +14,17 @@ import java.util.Map;
 
 public class BCEnglishLanguageProvider extends LanguageProvider {
     private static final Map<WoodType, String> WOOD_TYPE_NAMES = Util.make(new HashMap<>(), map -> {
-        map.put(WoodType.OAK,      "Oak");
-        map.put(WoodType.SPRUCE,   "Spruce");
-        map.put(WoodType.BIRCH,    "Birch");
-        map.put(WoodType.JUNGLE,   "Jungle");
-        map.put(WoodType.ACACIA,   "Acacia");
+        map.put(WoodType.OAK, "Oak");
+        map.put(WoodType.SPRUCE, "Spruce");
+        map.put(WoodType.BIRCH, "Birch");
+        map.put(WoodType.JUNGLE, "Jungle");
+        map.put(WoodType.ACACIA, "Acacia");
         map.put(WoodType.DARK_OAK, "Dark Oak");
-        map.put(WoodType.CRIMSON,  "Crimson");
-        map.put(WoodType.WARPED,   "Warped");
+        map.put(WoodType.CRIMSON, "Crimson");
+        map.put(WoodType.WARPED, "Warped");
         map.put(WoodType.MANGROVE, "Mangrove");
-        map.put(WoodType.BAMBOO,   "Bamboo");
-        map.put(WoodType.CHERRY,   "Cherry");
+        map.put(WoodType.BAMBOO, "Bamboo");
+        map.put(WoodType.CHERRY, "Cherry");
     });
 
     public BCEnglishLanguageProvider(PackOutput output) {
@@ -47,10 +47,23 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("itemGroup." + Bibliocraft.MOD_ID, "Bibliocraft");
     }
 
+    /**
+     * Adds a translation with a translation key of the format "<type>.bibliocraft.<name>".
+     *
+     * @param type        The <type> part to use.
+     * @param name        The <name> part to use.
+     * @param translation The translated string.
+     */
     private void add(String type, String name, String translation) {
         add(type + "." + Bibliocraft.MOD_ID + "." + name, translation);
     }
 
+    /**
+     * Adds translations for all variants of a {@link WoodTypeDeferredHolder}.
+     *
+     * @param block  The {@link WoodTypeDeferredHolder} to add the translations for.
+     * @param suffix The suffix of the translated string.
+     */
     private void addWoodenBlock(WoodTypeDeferredHolder<Block, ? extends Block> block, String suffix) {
         block.map().forEach((k, v) -> addBlock(v, WOOD_TYPE_NAMES.get(k) + " " + suffix));
     }

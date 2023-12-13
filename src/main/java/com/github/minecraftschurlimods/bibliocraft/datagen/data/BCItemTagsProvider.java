@@ -37,6 +37,12 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
     }
 
+    /**
+     * Adds a tag containing all values of a {@link WoodTypeDeferredHolder}.
+     *
+     * @param tag    The {@link TagKey} to use.
+     * @param holder The {@link WoodTypeDeferredHolder} to add.
+     */
     private void woodTypeTag(TagKey<Item> tag, WoodTypeDeferredHolder<Item, ? extends Item> holder) {
         tag(tag).add(holder.values().toArray(new Item[0]));
     }

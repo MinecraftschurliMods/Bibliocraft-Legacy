@@ -16,6 +16,10 @@ public interface BCTags {
         TagKey<Block> SHELVES = tag("shelves");
         TagKey<Block> TOOL_RACKS = tag("tool_racks");
 
+        /**
+         * @param name The path of the tag.
+         * @return A {@link TagKey<Block>} with this mod's namespace and the given path.
+         */
         static TagKey<Block> tag(String name) {
             return TagKey.create(BuiltInRegistries.BLOCK.key(), new ResourceLocation(Bibliocraft.MOD_ID, name));
         }
@@ -32,6 +36,10 @@ public interface BCTags {
         TagKey<Item> POTION_SHELF_POTIONS = tag("potion_shelf_potions");
         TagKey<Item> TOOL_RACK_TOOLS = tag("tool_rack_tools");
 
+        /**
+         * @param name The path of the tag.
+         * @return A {@link TagKey<Item>} with this mod's namespace and the given path.
+         */
         static TagKey<Item> tag(String name) {
             return TagKey.create(BuiltInRegistries.ITEM.key(), new ResourceLocation(Bibliocraft.MOD_ID, name));
         }

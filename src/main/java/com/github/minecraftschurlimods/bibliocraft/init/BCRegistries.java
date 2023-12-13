@@ -18,6 +18,9 @@ public interface BCRegistries {
     DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, Bibliocraft.MOD_ID);
     DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, Bibliocraft.MOD_ID);
 
+    /**
+     * Central registration method. Classloads the registration classes and registers the registries to the mod bus.
+     */
     static void init() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         BCBlocks.init();

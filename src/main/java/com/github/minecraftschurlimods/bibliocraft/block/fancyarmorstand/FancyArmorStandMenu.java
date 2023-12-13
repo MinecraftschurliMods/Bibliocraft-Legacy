@@ -101,9 +101,19 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
         return null;
     }
 
+    /**
+     * Variant of {@link Slot} that only accepts items that go in a given {@link EquipmentSlot}.
+     */
     private static class EquipableSlot extends Slot {
         private final EquipmentSlot slotType;
 
+        /**
+         * @param container The {@link Container} this slot is in.
+         * @param index     The slot index.
+         * @param x         The x position.
+         * @param y         The y position.
+         * @param slotType  The {@link EquipmentSlot} to limit slot contents with.
+         */
         public EquipableSlot(Container container, int index, int x, int y, EquipmentSlot slotType) {
             super(container, index, x, y);
             this.slotType = slotType;

@@ -6,6 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -56,6 +57,10 @@ public final class BCLootTableProvider extends LootTableProvider {
             return blocks;
         }
 
+        /**
+         * Adds drop-self loot tables all values of a {@link WoodTypeDeferredHolder}.
+         * @param holder The {@link WoodTypeDeferredHolder} to add the loot tables for.
+         */
         private void dropSelf(WoodTypeDeferredHolder<Block, ? extends Block> holder) {
             for (Block block : holder.values()) {
                 dropSelf(block);

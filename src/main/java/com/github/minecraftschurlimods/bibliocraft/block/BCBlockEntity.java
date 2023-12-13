@@ -20,11 +20,21 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Abstract superclass for most block entities this mod has.
+ */
 public abstract class BCBlockEntity extends BlockEntity implements Container, MenuProvider {
     private static final String ITEMS_TAG = "items";
     protected final ItemStackHandler items;
     private final Component title;
 
+    /**
+     * @param type          The {@link BlockEntityType} to use.
+     * @param containerSize The size of the container.
+     * @param title         The title of the title, shown in GUIs.
+     * @param pos           The position of this BE.
+     * @param state         The state of this BE.
+     */
     public BCBlockEntity(BlockEntityType<?> type, int containerSize, Component title, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.title = title;
@@ -38,6 +48,10 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, Me
         };
     }
 
+    /**
+     * @param name The name to use.
+     * @return A title component of the format "container.bibliocraft.<name>".
+     */
     public static Component title(String name) {
         return Component.translatable("container." + Bibliocraft.MOD_ID + "." + name);
     }
@@ -112,10 +126,10 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, Me
         saveTag(tag);
     }
 
+    @Nullable
     @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-        loadTag(tag);
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -123,12 +137,6 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, Me
         CompoundTag tag = super.getUpdateTag();
         saveTag(tag);
         return tag;
-    }
-
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -139,6 +147,17 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, Me
         }
     }
 
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        super.handleUpdateTag(tag);
+        loadTag(tag);
+    }
+
+    /**
+     * Helper method for loading block entity data from a {@link CompoundTag}.
+     *
+     * @param tag The {@link CompoundTag} to load from.
+     */
     protected void loadTag(CompoundTag tag) {
         if (tag.contains(ITEMS_TAG)) {
             items.deserializeNBT(tag.getCompound(ITEMS_TAG));
@@ -146,6 +165,11 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, Me
         requestModelDataUpdate();
     }
 
+    /**
+     * Helper method for saving block entity data into a {@link CompoundTag}.
+     *
+     * @param tag The {@link CompoundTag} to save into.
+     */
     protected void saveTag(CompoundTag tag) {
         tag.put(ITEMS_TAG, items.serializeNBT());
     }

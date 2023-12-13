@@ -29,6 +29,9 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.network.NetworkHooks;
 
+/**
+ * Abstract superclass for most blocks in this mod.
+ */
 @SuppressWarnings("deprecation")
 public abstract class BCBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;

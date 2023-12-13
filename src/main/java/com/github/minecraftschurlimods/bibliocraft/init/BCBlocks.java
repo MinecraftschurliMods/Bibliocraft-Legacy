@@ -63,9 +63,20 @@ public interface BCBlocks {
     //TODO Typesetting Table
     //TODO Typewriter
 
+    /**
+     * Registration helper method for {@link WoodTypeDeferredHolder}s.
+     *
+     * @param suffix  The suffix for the {@link WoodTypeDeferredHolder}.
+     * @param creator An adapted creator function for the {@link WoodTypeDeferredHolder}. Passes in a copy of the wood type's associated plank block properties.
+     * @return A {@code WoodTypeDeferredHolder<Block, T>}.
+     * @param <T> The type of the block registered.
+     */
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
         return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, WOOD_TYPES, wood -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood)).noOcclusion()));
     }
 
+    /**
+     * Empty method, called by {@link BCRegistries#init()} to classload this class.
+     */
     static void init() {}
 }

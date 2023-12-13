@@ -43,9 +43,19 @@ public interface BCItems {
     //TODO Tinted Glasses
     //TODO Waypoint Compass
 
+    /**
+     * Helper method to register a {@code WoodTypeDeferredHolder<Item, BlockItem>} for a {@code WoodTypeDeferredHolder<Block, ?>}.
+     *
+     * @param name  The name of the {@link WoodTypeDeferredHolder}.
+     * @param block The {@code WoodTypeDeferredHolder<Block, ?>} to use as a base.
+     * @return A {@code WoodTypeDeferredHolder<Item, BlockItem>} that represents the blocks in the given {@code WoodTypeDeferredHolder<Block, ?>}.
+     */
     static WoodTypeDeferredHolder<Item, BlockItem> woodenBlock(String name, WoodTypeDeferredHolder<Block, ?> block) {
         return new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, name, BCBlocks.WOOD_TYPES, wood -> new BlockItem(block.get(wood), PROPERTIES));
     }
 
+    /**
+     * Empty method, called by {@link BCRegistries#init()} to classload this class.
+     */
     static void init() {}
 }
