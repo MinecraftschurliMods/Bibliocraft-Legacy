@@ -26,6 +26,7 @@ public interface BCCreativeTabs {
 
     /**
      * Helper method to add all {@link ItemLike}s in a list to a creative tab.
+     *
      * @param output The {@link CreativeModeTab.Output} to add the elements to.
      * @param list   A list of {@link ItemLike}s to add to the {@link CreativeModeTab.Output}.
      */
@@ -36,7 +37,7 @@ public interface BCCreativeTabs {
     }
 
     /**
-     * Empty method, called by {@link BCRegistries#init()} to classload this class.
+     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
     static void init() {}
 }

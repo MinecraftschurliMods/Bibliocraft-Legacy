@@ -55,7 +55,7 @@ public interface BCItems {
     }
 
     /**
-     * Empty method, called by {@link BCRegistries#init()} to classload this class.
+     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
     static void init() {}
 }

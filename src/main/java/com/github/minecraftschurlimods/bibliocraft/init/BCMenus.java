@@ -18,7 +18,7 @@ public interface BCMenus {
     Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = BCRegistries.MENUS.register("tool_rack",         () -> IMenuTypeExtension.create(ToolRackMenu::new));
 
     /**
-     * Empty method, called by {@link BCRegistries#init()} to classload this class.
+     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
     static void init() {}
 }
