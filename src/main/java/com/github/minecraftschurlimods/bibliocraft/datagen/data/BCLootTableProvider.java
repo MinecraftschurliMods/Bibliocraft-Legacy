@@ -6,7 +6,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -44,6 +43,7 @@ public final class BCLootTableProvider extends LootTableProvider {
             dropSelf(BCBlocks.SHELF);
             dropSelf(BCBlocks.TOOL_RACK);
             add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), createDoorTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
+            dropSelf(BCBlocks.SWORD_PEDESTAL.get());
         }
 
         @Override

@@ -35,6 +35,10 @@ public class BCBlockStateProvider extends BlockStateProvider {
         woodenHorizontalBlock(BCBlocks.SHELF, "shelf", TYPE_TO_PLANKS);
         woodenHorizontalBlock(BCBlocks.TOOL_RACK, "tool_rack", TYPE_TO_PLANKS);
         doubleHighHorizontalBlock(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
+        getVariantBuilder(BCBlocks.SWORD_PEDESTAL.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(models().getExistingFile(modLoc("block/sword_pedestal")))
+                .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                .build());
     }
 
     /**

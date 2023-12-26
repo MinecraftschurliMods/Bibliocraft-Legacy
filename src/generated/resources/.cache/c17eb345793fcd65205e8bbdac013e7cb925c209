@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-12T21:52:00.984764	Item Models: bibliocraft
+// 1.20.4	2023-12-26T22:19:04.5366952	Item Models: bibliocraft
 36c2ae88060a10b2ba6510d8a8dcbdb484c8f69c assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 69b5c606e9b9c1a3a489202ec6fea0994d23f8a3 assets/bibliocraft/models/item/acacia_potion_shelf.json
@@ -50,6 +50,7 @@ fc5ce37dbdc378a805970dd42aa7a1bc84763922 assets/bibliocraft/models/item/spruce_f
 0bc3254a101326d4c72a2f0190fcde10105393fb assets/bibliocraft/models/item/spruce_potion_shelf.json
 96692da54c3bd3180a70034c9e5d214fda15fe21 assets/bibliocraft/models/item/spruce_shelf.json
 9a743e7439f9403c84b4cf994dcd03dff5d40eac assets/bibliocraft/models/item/spruce_tool_rack.json
+384f3f1f7e7535bfeb3ccbe3336132dcaec138d7 assets/bibliocraft/models/item/sword_pedestal.json
 84edc4c0abd9574af9bbc990297a0e8f1b19fb38 assets/bibliocraft/models/item/warped_bookcase.json
 aa47ca82c5391001da51ea239c34065228dbac0a assets/bibliocraft/models/item/warped_fancy_armor_stand.json
 803abfb708d2cf46aaecf23bf19e5715c38df52b assets/bibliocraft/models/item/warped_potion_shelf.json

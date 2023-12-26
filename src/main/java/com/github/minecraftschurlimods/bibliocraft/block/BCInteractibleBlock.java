@@ -35,7 +35,9 @@ public abstract class BCInteractibleBlock extends BCBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isSecondaryUseActive()) {
             if (level.isClientSide()) return InteractionResult.SUCCESS;
-            NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) level.getBlockEntity(pos), pos);
+            if (level.getBlockEntity(pos) instanceof MenuProvider provider) {
+                NetworkHooks.openScreen((ServerPlayer) player, provider, pos);
+            }
             return InteractionResult.SUCCESS;
         }
         if (canAccessFromDirection(state, hit.getDirection())) {

@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-12T21:52:00.918763	Loot Tables
+// 1.20.4	2023-12-26T22:19:04.5296952	Loot Tables
 47504c231dd994820a43e1d11a1aad884ad6ace3 data/bibliocraft/loot_tables/blocks/acacia_bookcase.json
 32c029ead67310739aa571805afe811aeca42ac4 data/bibliocraft/loot_tables/blocks/acacia_fancy_armor_stand.json
 d1f1d391d0c58c1c9087b55b5d08bba29327638f data/bibliocraft/loot_tables/blocks/acacia_potion_shelf.json
@@ -50,6 +50,7 @@ abc968f43056ded2514b90e4c6fe36e5dddebdf9 data/bibliocraft/loot_tables/blocks/oak
 f8dfb772e295a36262a801fbb3ff0c734f2672ae data/bibliocraft/loot_tables/blocks/spruce_potion_shelf.json
 4309c6e57f4acfdd517e40b40149392acc0dfea2 data/bibliocraft/loot_tables/blocks/spruce_shelf.json
 23730d712399bc12a28c9b477638219a19313b61 data/bibliocraft/loot_tables/blocks/spruce_tool_rack.json
+7921f37a21c6d931fb016d2c5b33e82325f7b8e9 data/bibliocraft/loot_tables/blocks/sword_pedestal.json
 f3adedd77a2d4e484d144fdda7bc3230cdabaf5c data/bibliocraft/loot_tables/blocks/warped_bookcase.json
 bb14bff98f08679227931acaabff459c1c73abe0 data/bibliocraft/loot_tables/blocks/warped_fancy_armor_stand.json
 27b9ab1517da9a23071365e712deed85ba1d4208 data/bibliocraft/loot_tables/blocks/warped_potion_shelf.json

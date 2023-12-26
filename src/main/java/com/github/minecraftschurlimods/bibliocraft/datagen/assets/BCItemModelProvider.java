@@ -27,6 +27,7 @@ public class BCItemModelProvider extends ItemModelProvider {
         woodenBlock(BCItems.POTION_SHELF, "potion_shelf");
         woodenBlock(BCItems.SHELF, "shelf");
         woodenBlock(BCItems.TOOL_RACK, "tool_rack");
+        withExistingParent("sword_pedestal", modLoc("block/sword_pedestal"));
     }
 
     /**

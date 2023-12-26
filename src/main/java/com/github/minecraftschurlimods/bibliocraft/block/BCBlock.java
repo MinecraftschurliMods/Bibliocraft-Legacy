@@ -82,7 +82,9 @@ public abstract class BCBlock extends BaseEntityBlock implements SimpleWaterlogg
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isSecondaryUseActive()) return InteractionResult.PASS;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
-        NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) level.getBlockEntity(pos), pos);
+        if (level.getBlockEntity(pos) instanceof MenuProvider provider) {
+            NetworkHooks.openScreen((ServerPlayer) player, provider, pos);
+        }
         return InteractionResult.SUCCESS;
     }
 
