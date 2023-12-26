@@ -34,7 +34,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
         woodenHorizontalBlock(BCBlocks.POTION_SHELF, "potion_shelf", TYPE_TO_PLANKS);
         woodenHorizontalBlock(BCBlocks.SHELF, "shelf", TYPE_TO_PLANKS);
         woodenHorizontalBlock(BCBlocks.TOOL_RACK, "tool_rack", TYPE_TO_PLANKS);
-        doubleHighHorizontalBlock(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")));
+        doubleHighHorizontalBlock(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
     }
 
     /**
@@ -65,7 +65,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
         forEachWoodType(holder, (k, v) -> {
             ModelFile bottom = models().withExistingParent(k.name() + "_" + name + "_bottom", modLoc("block/template/" + name + "/bottom")).texture("texture", textureFunction.apply(k));
             ModelFile top = models().withExistingParent(k.name() + "_" + name + "_top", modLoc("block/template/" + name + "/top")).texture("texture", textureFunction.apply(k));
-            doubleHighHorizontalBlock(v.get(), bottom, top);
+            doubleHighHorizontalBlock(v.get(), bottom, top, true);
         });
     }
 
@@ -76,7 +76,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
      * @param bottom The bottom model file.
      * @param top    The top model file.
      */
-    private void doubleHighHorizontalBlock(Block block, ModelFile bottom, ModelFile top) {
+    private void doubleHighHorizontalBlock(Block block, ModelFile bottom, ModelFile top, boolean uvlock) {
         getVariantBuilder(block).forAllStates(state -> {
             ConfiguredModel.Builder<?> builder = ConfiguredModel.builder();
             if (state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER) {
@@ -84,9 +84,11 @@ public class BCBlockStateProvider extends BlockStateProvider {
             } else {
                 builder.modelFile(top);
             }
+            if (uvlock) {
+                builder.uvLock(true);
+            }
             return builder
                     .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                    .uvLock(true)
                     .build();
         });
     }
@@ -113,6 +115,12 @@ public class BCBlockStateProvider extends BlockStateProvider {
         forEachWoodType(holder, (k, v) -> horizontalBlock(v, k.name() + "_" + name, modLoc("block/template/" + name), textureFunction.apply(k)));
     }
 
+    /**
+     * Generates a blockstate and a model file for each wood type in the given {@link WoodTypeDeferredHolder}.
+     * @param holder   The {@link WoodTypeDeferredHolder} to generate the blockstate and model files for.
+     * @param consumer The consumer to use for generating the files.
+     * @param <T> The type of the block of the {@link WoodTypeDeferredHolder}.
+     */
     private <T extends Block> void forEachWoodType(WoodTypeDeferredHolder<Block, T> holder, BiConsumer<WoodType, DeferredHolder<Block, T>> consumer) {
         for (Map.Entry<WoodType, DeferredHolder<Block, T>> t : holder.map().entrySet()) {
             consumer.accept(t.getKey(), t.getValue());
