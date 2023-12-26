@@ -1,15 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.block;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -20,45 +17,31 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 /**
  * Abstract superclass for most block entities this mod has.
  */
-public abstract class BCBlockEntity extends BlockEntity implements Container, MenuProvider {
+public abstract class BCBlockEntity extends BlockEntity implements Container {
     private static final String ITEMS_TAG = "items";
     protected final ItemStackHandler items;
-    private final Component title;
 
     /**
      * @param type          The {@link BlockEntityType} to use.
      * @param containerSize The size of the container.
-     * @param title         The title of the title, shown in GUIs.
      * @param pos           The position of this BE.
      * @param state         The state of this BE.
      */
-    public BCBlockEntity(BlockEntityType<?> type, int containerSize, Component title, BlockPos pos, BlockState state) {
+    public BCBlockEntity(BlockEntityType<?> type, int containerSize, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.title = title;
         items = new ItemStackHandler(containerSize) {
             @Override
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
                 setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+                Objects.requireNonNull(level).sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         };
-    }
-
-    /**
-     * @param name The name to use.
-     * @return A title component of the format "container.bibliocraft.<name>".
-     */
-    public static Component title(String name) {
-        return Component.translatable("container." + Bibliocraft.MOD_ID + "." + name);
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return title;
     }
 
     @Override
@@ -104,7 +87,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, Me
     @Override
     public boolean stillValid(Player player) {
         BlockPos pos = getBlockPos();
-        return level.getBlockEntity(pos) == this && player.distanceToSqr(Vec3.atCenterOf(pos)) <= 64;
+        return Objects.requireNonNull(level).getBlockEntity(pos) == this && player.distanceToSqr(Vec3.atCenterOf(pos)) <= 64;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.block.shelf;
 
-import com.github.minecraftschurlimods.bibliocraft.block.BCBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class ShelfBlockEntity extends BCBlockEntity {
+public class ShelfBlockEntity extends BCMenuBlockEntity {
     public ShelfBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.SHELF.get(), 4, title("shelf"), pos, state);
     }

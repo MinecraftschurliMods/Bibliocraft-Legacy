@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.block.bookcase;
 
-import com.github.minecraftschurlimods.bibliocraft.block.BCBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookcaseBlockEntity extends BCBlockEntity {
+public class BookcaseBlockEntity extends BCMenuBlockEntity {
     public static final List<ModelProperty<Boolean>> MODEL_PROPERTIES = Util.make(new ArrayList<>(), list -> {
         for (int i = 0; i < 16; i++) {
             list.add(new ModelProperty<>());

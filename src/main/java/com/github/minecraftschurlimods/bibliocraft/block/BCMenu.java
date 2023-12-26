@@ -18,7 +18,7 @@ import java.util.Objects;
  *
  * @param <T> The block entity this menu is associated with.
  */
-public abstract class BCMenu<T extends BCBlockEntity> extends AbstractContainerMenu {
+public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContainerMenu {
     protected final T blockEntity;
 
     /**

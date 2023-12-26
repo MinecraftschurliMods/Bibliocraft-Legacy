@@ -38,14 +38,14 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class FancyArmorStandBlock extends BCInteractibleBlock {
-    private static final VoxelShape BOTTOM_Z = ShapeUtil.combine(
+    private static final VoxelShape Z_SHAPE_BOTTOM = ShapeUtil.combine(
             Shapes.box(0, 0, 0, 1, 0.125, 1),
             Shapes.box(0.375, 0.125, 0.375, 0.625, 1, 0.625));
-    private static final VoxelShape TOP_Z = ShapeUtil.combine(
+    private static final VoxelShape Z_SHAPE_TOP = ShapeUtil.combine(
             Shapes.box(0.375, 0, 0.375, 0.625, 0.875, 0.625),
             Shapes.box(0.0625, 0.125, 0.375, 0.9375, 0.5, 0.625));
-    private static final VoxelShape BOTTOM_X = ShapeUtil.rotate(BOTTOM_Z, Rotation.CLOCKWISE_90);
-    private static final VoxelShape TOP_X = ShapeUtil.rotate(TOP_Z, Rotation.CLOCKWISE_90);
+    private static final VoxelShape X_SHAPE_BOTTOM = ShapeUtil.rotate(Z_SHAPE_BOTTOM, Rotation.CLOCKWISE_90);
+    private static final VoxelShape X_SHAPE_TOP = ShapeUtil.rotate(Z_SHAPE_TOP, Rotation.CLOCKWISE_90);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     public FancyArmorStandBlock(Properties properties) {
@@ -67,9 +67,9 @@ public class FancyArmorStandBlock extends BCInteractibleBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            return state.getValue(FACING).getAxis() == Direction.Axis.X ? TOP_X : TOP_Z;
+            return state.getValue(FACING).getAxis() == Direction.Axis.X ? X_SHAPE_TOP : Z_SHAPE_TOP;
         } else {
-            return state.getValue(FACING).getAxis() == Direction.Axis.X ? BOTTOM_X : BOTTOM_Z;
+            return state.getValue(FACING).getAxis() == Direction.Axis.X ? X_SHAPE_BOTTOM : Z_SHAPE_BOTTOM;
         }
     }
 

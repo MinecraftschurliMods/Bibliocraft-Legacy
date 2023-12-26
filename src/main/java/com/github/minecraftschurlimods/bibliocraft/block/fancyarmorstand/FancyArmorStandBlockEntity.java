@@ -1,9 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand;
 
-import com.github.minecraftschurlimods.bibliocraft.block.BCBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class FancyArmorStandBlockEntity extends BCBlockEntity implements MenuProvider {
+public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     private FancyArmorStandEntity entity;
 
     public FancyArmorStandBlockEntity(BlockPos pos, BlockState state) {
