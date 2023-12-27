@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
@@ -51,6 +52,7 @@ public final class ClientHandler {
             event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), FancyArmorStandBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(), PotionShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(), ShelfBER::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.SWORD_PEDESTAL.get(), SwordPedestalBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.TOOL_RACK.get(), ToolRackBER::new);
         }
 
