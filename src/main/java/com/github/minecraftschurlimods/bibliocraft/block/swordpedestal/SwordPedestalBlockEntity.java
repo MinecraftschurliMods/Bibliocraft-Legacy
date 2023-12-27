@@ -4,10 +4,12 @@ import com.github.minecraftschurlimods.bibliocraft.block.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SwordPedestalBlockEntity extends BCBlockEntity {
-    private static final String COLOR_KEY = "color";
+    public static final String COLOR_KEY = DyeableLeatherItem.TAG_COLOR;
     private int color = -1;
 
     /**
@@ -24,12 +26,15 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
 
     public void setColor(int color) {
         this.color = color;
+        if (level != null && level.isClientSide()) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_IMMEDIATE);
+        }
     }
 
     @Override
     protected void loadTag(CompoundTag tag) {
         if (tag.contains(COLOR_KEY)) {
-            color = tag.getInt(COLOR_KEY);
+            setColor(tag.getInt(COLOR_KEY));
         }
         super.loadTag(tag);
     }

@@ -1,11 +1,16 @@
 package com.github.minecraftschurlimods.bibliocraft.block.swordpedestal;
 
 import com.github.minecraftschurlimods.bibliocraft.block.BCInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -14,6 +19,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 public class SwordPedestalBlock extends BCInteractibleBlock {
@@ -46,6 +53,14 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
     }
 
     @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, entity, stack);
+        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe && stack.getItem() instanceof SwordPedestalItem spi && spi.hasCustomColor(stack)) {
+            spbe.setColor(spi.getColor(stack));
+        }
+    }
+
+    @Override
     public int lookingAtSlot(BlockState state, BlockHitResult hit) {
         return 0;
     }
@@ -57,8 +72,8 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return null;
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new SwordPedestalBlockEntity(pos, state);
     }
 
     @Override

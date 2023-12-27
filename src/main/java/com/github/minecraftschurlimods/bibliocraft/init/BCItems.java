@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
+import com.github.minecraftschurlimods.bibliocraft.block.swordpedestal.SwordPedestalItem;
 import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
@@ -17,7 +18,7 @@ public interface BCItems {
     WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",        BCBlocks.SHELF);
     WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",    BCBlocks.TOOL_RACK);
     Supplier<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
-    Supplier<BlockItem>           SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal",         () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), PROPERTIES));
+    Supplier<SwordPedestalItem>   SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal",         SwordPedestalItem::new);
     //TODO Atlas
     //TODO Big Book
     //TODO Clipboard

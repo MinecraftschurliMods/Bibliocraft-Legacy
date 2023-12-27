@@ -1,6 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.block.swordpedestal.SwordPedestalBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.block.swordpedestal.SwordPedestalItem;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
@@ -8,7 +10,9 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
@@ -18,6 +22,9 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+
+import java.util.Objects;
 
 public final class ClientHandler {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Bibliocraft.MOD_ID)
@@ -45,6 +52,16 @@ public final class ClientHandler {
             event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(), PotionShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(), ShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.TOOL_RACK.get(), ToolRackBER::new);
+        }
+
+        @SubscribeEvent
+        static void registerColorHandlersBlock(RegisterColorHandlersEvent.Block event) {
+            event.register((state, level, pos, tintIndex) -> tintIndex == 0 && Objects.requireNonNull(level).getBlockEntity(Objects.requireNonNull(pos)) instanceof SwordPedestalBlockEntity spbe ? spbe.getColor() : -1, BCBlocks.SWORD_PEDESTAL.get());
+        }
+
+        @SubscribeEvent
+        static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
+            event.register((stack, tintIndex) -> tintIndex == 0 && stack.getItem() instanceof SwordPedestalItem spi ? spi.getColor(stack) : -1, BCItems.SWORD_PEDESTAL.get());
         }
     }
 }
