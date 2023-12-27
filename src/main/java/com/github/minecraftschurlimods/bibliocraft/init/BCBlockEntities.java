@@ -1,11 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand.FancyArmorStandBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.shelf.ShelfBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.swordpedestal.SwordPedestalBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;

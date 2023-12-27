@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand.FancyArmorStandBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand.FancyArmorStandEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

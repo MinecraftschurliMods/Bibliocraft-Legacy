@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.block.swordpedestal.SwordPedestalBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.block.swordpedestal.SwordPedestalItem;
+import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;

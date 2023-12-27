@@ -1,10 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand.FancyArmorStandMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.shelf.ShelfMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 

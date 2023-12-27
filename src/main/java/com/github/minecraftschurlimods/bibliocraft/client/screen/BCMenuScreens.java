@@ -1,11 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.fancyarmorstand.FancyArmorStandMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.shelf.ShelfMenu;
-import com.github.minecraftschurlimods.bibliocraft.block.toolrack.ToolRackMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;

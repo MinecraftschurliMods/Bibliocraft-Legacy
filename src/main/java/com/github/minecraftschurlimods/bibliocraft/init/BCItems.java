@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.block.swordpedestal.SwordPedestalItem;
+import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
 import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;

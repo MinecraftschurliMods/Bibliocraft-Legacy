@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import java.util.Collection;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public interface BCCreativeTabs {
     Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(Bibliocraft.MOD_ID, () -> CreativeModeTab.builder()
             .icon(() -> new ItemStack(BCItems.BOOKCASE.get(WoodType.OAK)))
@@ -21,6 +22,7 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.SHELF.values());
                 addToTab(output, BCItems.TOOL_RACK.values());
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND.get());
+                output.accept(BCItems.SWORD_PEDESTAL.get());
             })
             .build());
 

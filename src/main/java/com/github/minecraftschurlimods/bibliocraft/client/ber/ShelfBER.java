@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.block.potionshelf.PotionShelfBlock;
-import com.github.minecraftschurlimods.bibliocraft.block.shelf.ShelfBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

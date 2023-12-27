@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
-import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlock;
-import com.github.minecraftschurlimods.bibliocraft.block.bookcase.BookcaseBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
