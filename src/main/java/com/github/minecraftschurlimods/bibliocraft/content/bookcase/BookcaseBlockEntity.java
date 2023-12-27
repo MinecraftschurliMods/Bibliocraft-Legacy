@@ -6,13 +6,11 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +23,11 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
     });
 
     public BookcaseBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.BOOKCASE.get(), 16, title("bookcase"), pos, state);
+        super(BCBlockEntities.BOOKCASE.get(), 16, defaultName("bookcase"), pos, state);
     }
 
-    @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+    public AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new BookcaseMenu(id, inventory, this);
     }
 

@@ -63,7 +63,7 @@ public final class ClientHandler {
 
         @SubscribeEvent
         static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
-            event.register((stack, tintIndex) -> tintIndex == 0 && stack.getItem() instanceof SwordPedestalItem spi ? spi.getColor(stack) : -1, BCItems.SWORD_PEDESTAL.get());
+            event.register((stack, tintIndex) -> tintIndex == 0 && stack.getItem() instanceof SwordPedestalItem spi ? spi.getNBTColor(stack) : -1, BCItems.SWORD_PEDESTAL.get());
         }
     }
 }

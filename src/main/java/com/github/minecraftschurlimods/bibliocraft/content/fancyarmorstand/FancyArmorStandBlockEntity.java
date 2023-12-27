@@ -5,7 +5,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +16,7 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     private FancyArmorStandEntity entity;
 
     public FancyArmorStandBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.FANCY_ARMOR_STAND.get(), 4, title("fancy_armor_stand"), pos, state);
+        super(BCBlockEntities.FANCY_ARMOR_STAND.get(), 4, defaultName("fancy_armor_stand"), pos, state);
     }
 
     @Override
@@ -26,9 +25,8 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
         entity = new FancyArmorStandEntity(level, this);
     }
 
-    @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+    public AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new FancyArmorStandMenu(id, inventory, this);
     }
 

@@ -29,7 +29,7 @@ public class BCBlockTagsProvider extends BlockTagsProvider {
         woodTypeTag(BCTags.Blocks.TOOL_RACKS, BCBlocks.TOOL_RACK);
         tag(BCTags.Blocks.FANCY_ARMOR_STANDS).addTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get());
         tag(BlockTags.MINEABLE_WITH_AXE).addTags(BCTags.Blocks.BOOKCASES, BCTags.Blocks.FANCY_ARMOR_STANDS, BCTags.Blocks.POTION_SHELVES, BCTags.Blocks.SHELVES, BCTags.Blocks.TOOL_RACKS);
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), BCBlocks.SWORD_PEDESTAL.get());
     }
 
     /**

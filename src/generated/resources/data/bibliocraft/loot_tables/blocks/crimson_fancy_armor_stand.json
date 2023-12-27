@@ -20,6 +20,12 @@
               }
             }
           ],
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            }
+          ],
           "name": "bibliocraft:crimson_fancy_armor_stand"
         }
       ],

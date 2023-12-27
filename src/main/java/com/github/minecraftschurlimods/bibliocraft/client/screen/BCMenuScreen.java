@@ -26,4 +26,9 @@ public class BCMenuScreen<T extends BCMenu<?>> extends AbstractContainerScreen<T
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }
+
+    @Override
+    public Component getTitle() {
+        return menu.getDisplayName();
+    }
 }

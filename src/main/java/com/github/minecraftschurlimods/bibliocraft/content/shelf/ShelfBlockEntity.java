@@ -4,19 +4,16 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 public class ShelfBlockEntity extends BCMenuBlockEntity {
     public ShelfBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.SHELF.get(), 4, title("shelf"), pos, state);
+        super(BCBlockEntities.SHELF.get(), 4, defaultName("shelf"), pos, state);
     }
 
-    @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+    public AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new ShelfMenu(id, inventory, this);
     }
 }

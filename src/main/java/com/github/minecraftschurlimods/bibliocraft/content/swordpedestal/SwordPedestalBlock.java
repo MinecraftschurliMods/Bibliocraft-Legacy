@@ -6,13 +6,16 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -51,8 +54,8 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         super.setPlacedBy(level, pos, state, entity, stack);
-        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe && stack.getItem() instanceof SwordPedestalItem spi && spi.hasCustomColor(stack)) {
-            spbe.setColor(spi.getColor(stack));
+        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe && SwordPedestalItem.hasNBTColor(stack)) {
+            spbe.setColor(SwordPedestalItem.getNBTColor(stack));
         }
     }
 
@@ -75,5 +78,14 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
     @Override
     protected MapCodec<SwordPedestalBlock> codec() {
         return simpleCodec(SwordPedestalBlock::new);
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+        ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
+        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe) {
+            SwordPedestalItem.setNBTColor(stack, spbe.getColor());
+        }
+        return stack;
     }
 }

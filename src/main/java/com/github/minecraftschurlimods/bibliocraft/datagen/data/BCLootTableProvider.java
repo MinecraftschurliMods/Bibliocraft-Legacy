@@ -2,20 +2,32 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
+import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 public final class BCLootTableProvider extends LootTableProvider {
     public BCLootTableProvider(PackOutput output) {
@@ -35,15 +47,20 @@ public final class BCLootTableProvider extends LootTableProvider {
 
         @Override
         protected void generate() {
-            dropSelf(BCBlocks.BOOKCASE);
-            for (Block block : BCBlocks.FANCY_ARMOR_STAND.values()) {
-                add(block, createDoorTable(block));
-            }
-            dropSelf(BCBlocks.POTION_SHELF);
-            dropSelf(BCBlocks.SHELF);
-            dropSelf(BCBlocks.TOOL_RACK);
-            add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), createDoorTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
-            dropSelf(BCBlocks.SWORD_PEDESTAL.get());
+            forEach(BCBlocks.BOOKCASE, this::createNameableBlockEntityTable);
+            forEach(BCBlocks.FANCY_ARMOR_STAND, this::createFancyArmorStandTable);
+            forEach(BCBlocks.POTION_SHELF, this::createNameableBlockEntityTable);
+            forEach(BCBlocks.SHELF, this::createNameableBlockEntityTable);
+            forEach(BCBlocks.TOOL_RACK, this::createNameableBlockEntityTable);
+            add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
+            add(BCBlocks.SWORD_PEDESTAL.get(), standardTable(BCBlocks.SWORD_PEDESTAL.get(), LootItem.lootTableItem(BCBlocks.SWORD_PEDESTAL.get())
+                    .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("color", "display.color"))
+            ));
+        }
+
+        @Override
+        protected Iterable<Block> getKnownBlocks() {
+            return blocks;
         }
 
         @Override
@@ -52,19 +69,19 @@ public final class BCLootTableProvider extends LootTableProvider {
             blocks.add(block);
         }
 
-        @Override
-        protected Iterable<Block> getKnownBlocks() {
-            return blocks;
+        private LootTable.Builder createFancyArmorStandTable(Block block) {
+            return standardTable(block, LootItem.lootTableItem(block)
+                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)))
+                    .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
+            );
         }
 
-        /**
-         * Adds drop-self loot tables all values of a {@link WoodTypeDeferredHolder}.
-         * @param holder The {@link WoodTypeDeferredHolder} to add the loot tables for.
-         */
-        private void dropSelf(WoodTypeDeferredHolder<Block, ? extends Block> holder) {
-            for (Block block : holder.values()) {
-                dropSelf(block);
-            }
+        private LootTable.Builder standardTable(Block block, LootPoolSingletonContainer.Builder<?> builder) {
+            return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(builder)));
+        }
+
+        private void forEach(WoodTypeDeferredHolder<Block, ? extends Block> holder, Function<Block, LootTable.Builder> tableFactory) {
+            holder.values().forEach(e -> add(e, tableFactory.apply(e)));
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util.block;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -90,6 +91,10 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
     @Override
     public boolean stillValid(Player player) {
         return blockEntity.stillValid(player);
+    }
+
+    public Component getDisplayName() {
+        return blockEntity.getDisplayName();
     }
 
     /**
