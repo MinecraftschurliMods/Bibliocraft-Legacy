@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -19,13 +19,7 @@ public class ToolRackBER implements BlockEntityRenderer<ToolRackBlockEntity> {
     @Override
     public void render(ToolRackBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();
-        stack.translate(0.5, 0.5, 0.5);
-        stack.mulPose(Axis.YP.rotationDegrees(switch (blockEntity.getBlockState().getValue(PotionShelfBlock.FACING)) {
-            case SOUTH -> 0;
-            case EAST -> 90;
-            default -> 180;
-            case WEST -> 270;
-        }));
+        ClientUtil.setupCenteredBER(stack, blockEntity);
         stack.translate(-0.21875f, 0.21875f, -0.03125f); // -3.5 / 16, 3.5 / 16, -1 / 32
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
         for (int i = 0; i < 2; i++) {

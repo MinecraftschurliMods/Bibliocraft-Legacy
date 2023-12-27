@@ -20,6 +20,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@SuppressWarnings("SameParameterValue")
 public class BCBlockStateProvider extends BlockStateProvider {
     private final Function<WoodType, ResourceLocation> TYPE_TO_PLANKS = wood -> mcLoc("block/" + wood.name() + "_planks");
 

@@ -18,6 +18,7 @@ import java.util.function.Function;
  * @param <R> The first type of the {@link DeferredHolder} to use. For example, for wrapping a {@code DeferredHolder<Block, DoorBlock>}, this would be {@code Block}.
  * @param <T> The second type of the {@link DeferredHolder} to use. For example, for wrapping a {@code DeferredHolder<Block, DoorBlock>}, this would be {@code DoorBlock}.
  */
+@SuppressWarnings("unused")
 public class WoodTypeDeferredHolder<R, T extends R> {
     private final Map<WoodType, DeferredHolder<R, T>> map = new LinkedHashMap<>();
 

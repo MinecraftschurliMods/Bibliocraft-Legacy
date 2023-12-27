@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.potionshelf;
 
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 

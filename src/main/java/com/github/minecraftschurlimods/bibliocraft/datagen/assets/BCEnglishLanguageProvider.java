@@ -12,6 +12,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("SameParameterValue")
 public class BCEnglishLanguageProvider extends LanguageProvider {
     private static final Map<WoodType, String> WOOD_TYPE_NAMES = Util.make(new HashMap<>(), map -> {
         map.put(WoodType.OAK, "Oak");

@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -13,19 +13,14 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class PotionShelfBER implements BlockEntityRenderer<PotionShelfBlockEntity> {
+    @SuppressWarnings("unused")
     public PotionShelfBER(BlockEntityRendererProvider.Context context) {
     }
 
     @Override
     public void render(PotionShelfBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();
-        stack.translate(0.5, 0.5, 0.5);
-        stack.mulPose(Axis.YP.rotationDegrees(switch (blockEntity.getBlockState().getValue(PotionShelfBlock.FACING)) {
-            case SOUTH -> 0;
-            case EAST -> 90;
-            default -> 180;
-            case WEST -> 270;
-        }));
+        ClientUtil.setupCenteredBER(stack, blockEntity);
         stack.translate(-0.328125f, 0.34375f, -0.375); // -(7 - 3.5 / 2) / 16, 5.5 / 16, -3 / 8
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
         for (int i = 0; i < 3; i++) {

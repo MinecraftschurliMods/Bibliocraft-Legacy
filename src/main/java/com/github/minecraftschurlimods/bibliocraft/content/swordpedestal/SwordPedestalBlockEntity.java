@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.swordpedestal;
 
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeableLeatherItem;
