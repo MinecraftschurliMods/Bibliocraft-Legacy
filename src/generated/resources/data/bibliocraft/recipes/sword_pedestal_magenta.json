@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone_slab"
+    },
+    "W": {
+      "item": "minecraft:magenta_wool"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SWS"
+  ],
+  "result": {
+    "item": "bibliocraft:sword_pedestal"
+  }
+}

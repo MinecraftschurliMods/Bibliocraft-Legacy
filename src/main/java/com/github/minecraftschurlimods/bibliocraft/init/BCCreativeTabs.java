@@ -1,8 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -22,7 +24,11 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.SHELF.values());
                 addToTab(output, BCItems.TOOL_RACK.values());
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND.get());
-                output.accept(BCItems.SWORD_PEDESTAL.get());
+                for (DyeColor color : DyeColor.values()) {
+                    ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
+                    SwordPedestalItem.setNBTColor(stack, color.getTextColor());
+                    output.accept(stack);
+                }
             })
             .build());
 
