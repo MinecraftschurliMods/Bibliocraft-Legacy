@@ -1,11 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iron_ingot": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/iron"
+            "items": [
+              "minecraft:bamboo_planks"
+            ]
           }
         ]
       },
@@ -21,7 +23,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_iron_ingot"
+      "has_planks"
     ]
   ],
   "rewards": {

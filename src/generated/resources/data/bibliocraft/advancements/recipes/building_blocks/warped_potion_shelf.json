@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_glass_bottle": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:glass_bottle"
+              "minecraft:warped_planks"
             ]
           }
         ]
@@ -23,7 +23,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_glass_bottle"
+      "has_planks"
     ]
   ],
   "rewards": {

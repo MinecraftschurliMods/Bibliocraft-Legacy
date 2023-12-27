@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_slab": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:acacia_slab"
+              "minecraft:acacia_planks"
             ]
           }
         ]
@@ -23,7 +23,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_slab"
+      "has_planks"
     ]
   ],
   "rewards": {
