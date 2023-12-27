@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.potionshelf;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
-import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,7 +18,7 @@ public class PotionShelfMenu extends BCMenu<PotionShelfBlockEntity> {
     protected void addSlots(Inventory inventory) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                addSlot(new TagLimitedSlot(blockEntity, i * 4 + j, 53 + j * 18, 15 + i * 19, BCTags.Items.POTION_SHELF_POTIONS));
+                addSlot(new BCSlot(blockEntity, i * 4 + j, 53 + j * 18, 15 + i * 19));
             }
         }
         addInventorySlots(inventory, 8, 84);

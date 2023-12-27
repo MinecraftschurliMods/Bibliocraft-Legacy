@@ -1,12 +1,14 @@
 package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.data.ModelProperty;
@@ -39,5 +41,10 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
             builder.with(MODEL_PROPERTIES.get(i), !items.getStackInSlot(i).isEmpty());
         }
         return builder.build();
+    }
+
+    @Override
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        return stack.is(BCTags.Items.BOOKCASE_BOOKS);
     }
 }

@@ -1,14 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.util.block;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
@@ -48,7 +46,7 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
     /**
      * Adds slots to this menu.
      *
-     * @param inventory   The player inventory to use.
+     * @param inventory The player inventory to use.
      */
     protected abstract void addSlots(Inventory inventory);
 
@@ -113,26 +111,22 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
     }
 
     /**
-     * Variant of {@link Slot} that only accepts items that are in the given tag.
+     * Variant of {@link Slot} that defers placement checks to the container.
      */
-    public static class TagLimitedSlot extends Slot {
-        private final TagKey<Item> tag;
-
+    public static class BCSlot extends Slot {
         /**
          * @param container The {@link Container} this slot is in.
          * @param index     The slot index.
          * @param x         The x position.
          * @param y         The y position.
-         * @param tag       The tag to limit slot contents with.
          */
-        public TagLimitedSlot(Container container, int index, int x, int y, TagKey<Item> tag) {
+        public BCSlot(Container container, int index, int x, int y) {
             super(container, index, x, y);
-            this.tag = tag;
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return stack.is(tag);
+            return container.canPlaceItem(index, stack);
         }
 
         @Override

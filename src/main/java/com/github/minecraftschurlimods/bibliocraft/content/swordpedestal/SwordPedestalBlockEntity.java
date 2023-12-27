@@ -1,10 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.content.swordpedestal;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -43,5 +45,10 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     protected void saveTag(CompoundTag tag) {
         tag.putInt(COLOR_KEY, color);
         super.saveTag(tag);
+    }
+
+    @Override
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        return stack.is(BCTags.Items.SWORD_PEDESTAL_SWORDS);
     }
 }

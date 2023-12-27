@@ -20,10 +20,10 @@ public class ToolRackMenu extends BCMenu<ToolRackBlockEntity> {
     @Override
     protected void addSlots(Inventory inventory) {
         TagKey<Item> tag = BCTags.Items.TOOL_RACK_TOOLS;
-        addSlot(new TagLimitedSlot(blockEntity, 0, 53, 15, tag));
-        addSlot(new TagLimitedSlot(blockEntity, 1, 107, 15, tag));
-        addSlot(new TagLimitedSlot(blockEntity, 2, 53, 53, tag));
-        addSlot(new TagLimitedSlot(blockEntity, 3, 107, 53, tag));
+        addSlot(new BCSlot(blockEntity, 0, 53, 15));
+        addSlot(new BCSlot(blockEntity, 1, 107, 15));
+        addSlot(new BCSlot(blockEntity, 2, 53, 53));
+        addSlot(new BCSlot(blockEntity, 3, 107, 53));
         addInventorySlots(inventory, 8, 84);
     }
 }
