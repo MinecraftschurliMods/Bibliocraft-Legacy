@@ -50,8 +50,12 @@ public class ShelfBlock extends BCInteractibleBlock {
 
     @Override
     public int lookingAtSlot(BlockState state, BlockHitResult hit) {
-        Direction.Axis axis = state.getValue(FACING).getClockWise().getAxis();
-        double hitX = 1 - (hit.getLocation().get(axis) - hit.getBlockPos().get(axis));
+        Direction direction = state.getValue(FACING).getClockWise();
+        Direction.Axis axis = direction.getAxis();
+        double hitX = hit.getLocation().get(axis) - hit.getBlockPos().get(axis);
+        if (direction.getStepX() > 0 || direction.getStepZ() > 0) {
+            hitX = 1 - hitX;
+        }
         double hitY = hit.getLocation().y - hit.getBlockPos().getY();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {

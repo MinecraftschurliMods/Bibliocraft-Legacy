@@ -53,8 +53,12 @@ public class PotionShelfBlock extends BCInteractibleBlock {
 
     @Override
     public int lookingAtSlot(BlockState state, BlockHitResult hit) {
-        Direction.Axis axis = state.getValue(FACING).getClockWise().getAxis();
-        double hitX = 1.125 - (hit.getLocation().get(axis) - hit.getBlockPos().get(axis));
+        Direction direction = state.getValue(FACING).getClockWise();
+        Direction.Axis axis = direction.getAxis();
+        double hitX = hit.getLocation().get(axis) - hit.getBlockPos().get(axis) + 0.125;
+        if (direction.getStepX() > 0 || direction.getStepZ() > 0) {
+            hitX = 1.25 - hitX;
+        }
         double hitY = hit.getLocation().y - hit.getBlockPos().getY();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
