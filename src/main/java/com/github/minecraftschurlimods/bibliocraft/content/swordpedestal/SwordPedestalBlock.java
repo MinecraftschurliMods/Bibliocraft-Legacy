@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.swordpedestal;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCInteractibleBlock;
 import com.mojang.serialization.MapCodec;
@@ -7,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -42,8 +44,8 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         super.setPlacedBy(level, pos, state, entity, stack);
-        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe && SwordPedestalItem.hasNBTColor(stack)) {
-            spbe.setColor(SwordPedestalItem.getNBTColor(stack));
+        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe && BCUtil.hasNBTColor(stack)) {
+            spbe.setColor(BCUtil.getNBTColor(stack, DyeColor.GREEN.getTextColor()));
         }
     }
 
@@ -67,7 +69,7 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
         if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe) {
-            SwordPedestalItem.setNBTColor(stack, spbe.getColor());
+            BCUtil.setNBTColor(stack, spbe.getColor());
         }
         return stack;
     }

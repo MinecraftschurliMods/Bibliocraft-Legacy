@@ -27,6 +27,7 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
         woodTypeTag(BCTags.Items.BOOKCASES, BCItems.BOOKCASE);
+        woodTypeTag(BCTags.Items.DISPLAY_CASES, BCItems.DISPLAY_CASE);
         woodTypeTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD, BCItems.FANCY_ARMOR_STAND);
         woodTypeTag(BCTags.Items.POTION_SHELVES, BCItems.POTION_SHELF);
         woodTypeTag(BCTags.Items.SHELVES, BCItems.SHELF);

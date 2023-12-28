@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlock;
@@ -36,6 +37,7 @@ public interface BCBlocks {
     });
 
     WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
+    WoodTypeDeferredHolder<Block, DisplayCaseBlock>     DISPLAY_CASE      = woodenBlock("display_case",      DisplayCaseBlock::new);
     WoodTypeDeferredHolder<Block, FancyArmorStandBlock> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
     WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf",             ShelfBlock::new);
@@ -48,7 +50,6 @@ public interface BCBlocks {
     //TODO Desk Bell
     //TODO Dinner Plate
     //TODO Disc Rack
-    //TODO Display Case
     //TODO Fancy Lamp
     //TODO Fancy Lantern
     //TODO Fancy Sign
@@ -59,7 +60,6 @@ public interface BCBlocks {
     //TODO Painting Press
     //TODO Printing Press
     //TODO Seat
-    //TODO Sword Pedestal
     //TODO Table
     //TODO Typesetting Table
     //TODO Typewriter

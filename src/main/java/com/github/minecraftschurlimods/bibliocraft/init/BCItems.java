@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
+import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
 import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
 import net.minecraft.world.item.BlockItem;
@@ -13,6 +14,7 @@ public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
     WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",     BCBlocks.BOOKCASE);
+    WoodTypeDeferredHolder<Item, DisplayCaseItem>     DISPLAY_CASE      = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "display_case", BCBlocks.WOOD_TYPES, DisplayCaseItem::new);
     WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_armor_stand", BCBlocks.WOOD_TYPES, wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
     WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf", BCBlocks.POTION_SHELF);
     WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",        BCBlocks.SHELF);

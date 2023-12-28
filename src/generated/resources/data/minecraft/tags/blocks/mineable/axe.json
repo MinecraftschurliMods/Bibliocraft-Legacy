@@ -1,7 +1,8 @@
 {
   "values": [
     "#bibliocraft:bookcases",
-    "#bibliocraft:fancy_armor_stands",
+    "#bibliocraft:display_cases",
+    "#bibliocraft:fancy_armor_stands/wood",
     "#bibliocraft:potion_shelves",
     "#bibliocraft:shelves",
     "#bibliocraft:tool_racks"

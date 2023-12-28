@@ -21,6 +21,7 @@ import java.util.function.Function;
 @SuppressWarnings("unused")
 public class WoodTypeDeferredHolder<R, T extends R> {
     private final Map<WoodType, DeferredHolder<R, T>> map = new LinkedHashMap<>();
+    private final List<WoodType> types;
 
     /**
      * Creates a new instance of this class.
@@ -31,6 +32,7 @@ public class WoodTypeDeferredHolder<R, T extends R> {
      * @param creator  A function of {@link WoodType} to {@code T}, responsible for actually creating the {@link DeferredHolder}.
      */
     public WoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, List<WoodType> types, Function<WoodType, ? extends T> creator) {
+        this.types = types;
         for (WoodType type : types) {
             map.put(type, register.register(type.name() + "_" + suffix, () -> creator.apply(type)));
         }
@@ -79,6 +81,13 @@ public class WoodTypeDeferredHolder<R, T extends R> {
      */
     public Collection<ResourceLocation> ids() {
         return map.values().stream().map(DeferredHolder::getId).toList();
+    }
+
+    /**
+     * @return An immutable list of all {@link WoodType}s this object has associations for.
+     */
+    public List<WoodType> types() {
+        return Collections.unmodifiableList(types);
     }
 
     /**

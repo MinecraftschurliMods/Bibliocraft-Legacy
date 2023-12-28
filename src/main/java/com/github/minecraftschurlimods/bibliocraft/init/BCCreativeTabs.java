@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
@@ -19,6 +19,13 @@ public interface BCCreativeTabs {
             .title(Component.translatable("itemGroup." + Bibliocraft.MOD_ID))
             .displayItems((display, output) -> {
                 addToTab(output, BCItems.BOOKCASE.values());
+                BCItems.DISPLAY_CASE.values().forEach(item -> {
+                    for (DyeColor color : DyeColor.values()) {
+                        ItemStack stack = new ItemStack(item);
+                        BCUtil.setNBTColor(stack, color.getTextColor());
+                        output.accept(stack);
+                    }
+                });
                 addToTab(output, BCItems.FANCY_ARMOR_STAND.values());
                 addToTab(output, BCItems.POTION_SHELF.values());
                 addToTab(output, BCItems.SHELF.values());
@@ -26,7 +33,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND.get());
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-                    SwordPedestalItem.setNBTColor(stack, color.getTextColor());
+                    BCUtil.setNBTColor(stack, color.getTextColor());
                     output.accept(stack);
                 }
             })
@@ -39,9 +46,7 @@ public interface BCCreativeTabs {
      * @param list   A list of {@link ItemLike}s to add to the {@link CreativeModeTab.Output}.
      */
     private static void addToTab(CreativeModeTab.Output output, Collection<? extends ItemLike> list) {
-        for (ItemLike item : list) {
-            output.accept(item);
-        }
+        list.forEach(output::accept);
     }
 
     /**

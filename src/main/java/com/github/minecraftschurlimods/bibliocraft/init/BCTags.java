@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 public interface BCTags {
     interface Blocks {
         TagKey<Block> BOOKCASES = tag("bookcases");
+        TagKey<Block> DISPLAY_CASES = tag("display_cases");
         TagKey<Block> FANCY_ARMOR_STANDS_WOOD = tag("fancy_armor_stands/wood");
         TagKey<Block> FANCY_ARMOR_STANDS = tag("fancy_armor_stands");
         TagKey<Block> POTION_SHELVES = tag("potion_shelves");
@@ -27,6 +28,7 @@ public interface BCTags {
 
     interface Items {
         TagKey<Item> BOOKCASES = tag("bookcases");
+        TagKey<Item> DISPLAY_CASES = tag("display_cases");
         TagKey<Item> FANCY_ARMOR_STANDS_WOOD = tag("fancy_armor_stands/wood");
         TagKey<Item> FANCY_ARMOR_STANDS = tag("fancy_armor_stands");
         TagKey<Item> POTION_SHELVES = tag("potion_shelves");

@@ -48,6 +48,9 @@ public final class BCLootTableProvider extends LootTableProvider {
         @Override
         protected void generate() {
             forEach(BCBlocks.BOOKCASE, this::createNameableBlockEntityTable);
+            forEach(BCBlocks.DISPLAY_CASE, block -> standardTable(block, LootItem.lootTableItem(block)
+                    .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("color", "display.color"))
+            ));
             forEach(BCBlocks.FANCY_ARMOR_STAND, this::createFancyArmorStandTable);
             forEach(BCBlocks.POTION_SHELF, this::createNameableBlockEntityTable);
             forEach(BCBlocks.SHELF, this::createNameableBlockEntityTable);

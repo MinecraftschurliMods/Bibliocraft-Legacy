@@ -35,6 +35,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addWoodenBlock(BCBlocks.BOOKCASE, "Bookcase");
+        addWoodenBlock(BCBlocks.DISPLAY_CASE, "Bookcase");
         addWoodenBlock(BCBlocks.FANCY_ARMOR_STAND, "Fancy Armor Stand");
         addWoodenBlock(BCBlocks.POTION_SHELF, "Potion Shelf");
         addWoodenBlock(BCBlocks.SHELF, "Shelf");

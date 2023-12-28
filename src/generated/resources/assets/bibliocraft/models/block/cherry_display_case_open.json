@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/display_case_open",
+  "textures": {
+    "texture": "minecraft:block/cherry_planks"
+  }
+}

@@ -41,32 +41,50 @@ public final class BCRecipeProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(RecipeOutput output) {
         this.output = output;
-        forEachWoodType(BCItems.BOOKCASE, (builder, family) -> builder
+        forEachWoodTypeShaped(BCItems.BOOKCASE, (builder, family) -> builder
                 .pattern("PSP")
                 .pattern("PSP")
                 .pattern("PSP")
                 .define('P', family.getBaseBlock())
                 .define('S', family.get(BlockFamily.Variant.SLAB)));
-        forEachWoodType(BCItems.FANCY_ARMOR_STAND, (builder, family) -> builder
+        for (DyeColor color : DyeColor.values()) {
+            for (Map.Entry<WoodType, ? extends DeferredHolder<Item, ? extends Item>> entry : BCItems.DISPLAY_CASE.map().entrySet()) {
+                BlockFamily family = woodFamily(entry.getKey());
+                if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
+                DeferredHolder<Item, ? extends Item> value = entry.getValue();
+                ItemStack result = new ItemStack(value);
+                DyeableLeatherItem.dyeArmor(result, List.of(DyeItem.byColor(color)));
+                ShapedNBTRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result)
+                        .pattern("SGS")
+                        .pattern("SWS")
+                        .pattern("SSS")
+                        .define('S', family.get(BlockFamily.Variant.SLAB))
+                        .define('G', Tags.Items.GLASS)
+                        .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool")))
+                        .unlockedBy("has_planks", has(family.getBaseBlock()))
+                        .save(output, new ResourceLocation(Bibliocraft.MOD_ID, value.getId().getPath() + "_" + color.getName()));
+            }
+        }
+        forEachWoodTypeShaped(BCItems.FANCY_ARMOR_STAND, (builder, family) -> builder
                 .pattern(" R ")
                 .pattern(" R ")
                 .pattern("SSS")
                 .define('S', family.get(BlockFamily.Variant.SLAB))
                 .define('R', Tags.Items.RODS_WOODEN));
-        forEachWoodType(BCItems.POTION_SHELF, (builder, family) -> builder
+        forEachWoodTypeShaped(BCItems.POTION_SHELF, (builder, family) -> builder
                 .pattern("SSS")
                 .pattern("PBP")
                 .pattern("SSS")
                 .define('S', family.get(BlockFamily.Variant.SLAB))
                 .define('P', family.getBaseBlock())
                 .define('B', Items.GLASS_BOTTLE));
-        forEachWoodType(BCItems.SHELF, (builder, family) -> builder
+        forEachWoodTypeShaped(BCItems.SHELF, (builder, family) -> builder
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern("SSS")
                 .define('P', family.getBaseBlock())
                 .define('S', family.get(BlockFamily.Variant.SLAB)));
-        forEachWoodType(BCItems.TOOL_RACK, (builder, family) -> builder
+        forEachWoodTypeShaped(BCItems.TOOL_RACK, (builder, family) -> builder
                 .pattern("SSS")
                 .pattern("SIS")
                 .pattern("SSS")
@@ -117,11 +135,13 @@ public final class BCRecipeProvider extends RecipeProvider {
      * @param holder            The {@link WoodTypeDeferredHolder} to generate the recipes for.
      * @param recipeTransformer The function to generate the recipe with.
      */
-    private void forEachWoodType(WoodTypeDeferredHolder<Item, ? extends Item> holder, BiFunction<ShapedRecipeBuilder, BlockFamily, ShapedRecipeBuilder> recipeTransformer) {
+    private void forEachWoodTypeShaped(WoodTypeDeferredHolder<Item, ? extends Item> holder, BiFunction<ShapedRecipeBuilder, BlockFamily, ShapedRecipeBuilder> recipeTransformer) {
         for (Map.Entry<WoodType, ? extends DeferredHolder<Item, ? extends Item>> entry : holder.map().entrySet()) {
             BlockFamily family = woodFamily(entry.getKey());
             if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
-            recipeTransformer.apply(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get()), family).unlockedBy("has_planks", has(family.getBaseBlock())).save(output);
+            recipeTransformer.apply(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get()), family)
+                    .unlockedBy("has_planks", has(family.getBaseBlock()))
+                    .save(output);
         }
     }
 }
