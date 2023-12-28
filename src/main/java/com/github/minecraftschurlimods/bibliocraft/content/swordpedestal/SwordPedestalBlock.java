@@ -78,4 +78,16 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
     protected MapCodec<SwordPedestalBlock> codec() {
         return simpleCodec(SwordPedestalBlock::new);
     }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe))
+            return super.getAnalogOutputSignal(state, level, pos);
+        return spbe.getItem(0).isEmpty() ? 0 : 15;
+    }
 }
