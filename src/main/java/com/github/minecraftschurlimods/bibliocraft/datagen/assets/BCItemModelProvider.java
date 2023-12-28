@@ -21,6 +21,7 @@ public class BCItemModelProvider extends ItemModelProvider {
         woodenBlock(BCItems.BOOKCASE, "bookcase");
         BCItems.DISPLAY_CASE.map().forEach((wood, colorHolder) -> colorHolder.map().forEach((color, holder) -> withExistingParent(holder.getId().getPath(), modLoc("block/" + holder.getId().getPath() + "_open"))));
         BCItems.FANCY_ARMOR_STAND.types().forEach(wood -> withExistingParent(wood.name() + "_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/inventory")).texture("texture", BCBlockStateProvider.TYPE_TO_PLANKS.apply(wood)));
+        woodenBlock(BCItems.LABEL, "label");
         woodenBlock(BCItems.POTION_SHELF, "potion_shelf");
         woodenBlock(BCItems.SHELF, "shelf");
         woodenBlock(BCItems.TOOL_RACK, "tool_rack");

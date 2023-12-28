@@ -1,8 +1,9 @@
-// 1.20.4	2023-12-28T07:45:44.8594995	Tags for minecraft:block mod id bibliocraft
+// 1.20.4	2023-12-28T13:20:56.2651721	Tags for minecraft:block mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/blocks/bookcases.json
 152eeb950a4197b03deef3430f44d21c4482e0aa data/bibliocraft/tags/blocks/display_cases.json
 474090b2b5b40b58b63496e56ed06e543323d894 data/bibliocraft/tags/blocks/fancy_armor_stands.json
 b46d2615e18035acc6efa4ddc52a0f55fea31342 data/bibliocraft/tags/blocks/fancy_armor_stands/wood.json
+14d642f0d86f6b40718c71567ab81868405d8a71 data/bibliocraft/tags/blocks/labels.json
 4a0b4fae70ed78371f6a1c5ea90d375fea121692 data/bibliocraft/tags/blocks/potion_shelves.json
 b36437d21d0432b2ab7edfd7edff70b4ffa6e53b data/bibliocraft/tags/blocks/shelves.json
 45344246afda217d9e4e32c8437cf25b49cf9e9d data/bibliocraft/tags/blocks/tool_racks.json

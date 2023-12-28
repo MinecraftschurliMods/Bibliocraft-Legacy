@@ -27,6 +27,7 @@ public class BCBlockTagsProvider extends BlockTagsProvider {
         woodenTag(BCTags.Blocks.BOOKCASES, BCBlocks.BOOKCASE);
         coloredWoodenTag(BCTags.Blocks.DISPLAY_CASES, BCBlocks.DISPLAY_CASE, BCBlocks.WALL_DISPLAY_CASE);
         woodenTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD, BCBlocks.FANCY_ARMOR_STAND);
+        woodenTag(BCTags.Blocks.LABELS, BCBlocks.LABEL);
         woodenTag(BCTags.Blocks.POTION_SHELVES, BCBlocks.POTION_SHELF);
         woodenTag(BCTags.Blocks.SHELVES, BCBlocks.SHELF);
         woodenTag(BCTags.Blocks.TOOL_RACKS, BCBlocks.TOOL_RACK);

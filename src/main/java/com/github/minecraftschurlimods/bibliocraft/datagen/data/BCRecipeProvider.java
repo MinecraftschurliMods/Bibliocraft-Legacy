@@ -72,6 +72,10 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .pattern("SSS")
                 .define('S', family.get(BlockFamily.Variant.SLAB))
                 .define('R', Tags.Items.RODS_WOODEN));
+        forEachWoodTypeShaped(BCItems.LABEL, (builder, family) -> builder
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', family.get(BlockFamily.Variant.SLAB)));
         forEachWoodTypeShaped(BCItems.POTION_SHELF, (builder, family) -> builder
                 .pattern("SSS")
                 .pattern("PBP")

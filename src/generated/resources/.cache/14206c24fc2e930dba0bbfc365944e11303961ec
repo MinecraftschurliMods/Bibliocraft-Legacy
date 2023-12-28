@@ -1,9 +1,10 @@
-// 1.20.4	2023-12-28T09:31:56.0159539	Tags for minecraft:item mod id bibliocraft
+// 1.20.4	2023-12-28T13:20:56.2641722	Tags for minecraft:item mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/items/bookcases.json
 8c21eecc9ff3212b039c2ccadcebce2ef5e04510 data/bibliocraft/tags/items/bookcase_books.json
 89057f18fe8255a1a50953beaeaa02f75b41c2b9 data/bibliocraft/tags/items/display_cases.json
 474090b2b5b40b58b63496e56ed06e543323d894 data/bibliocraft/tags/items/fancy_armor_stands.json
 b46d2615e18035acc6efa4ddc52a0f55fea31342 data/bibliocraft/tags/items/fancy_armor_stands/wood.json
+14d642f0d86f6b40718c71567ab81868405d8a71 data/bibliocraft/tags/items/labels.json
 3fe7a170a64b09c30b245eed6f6b10990edf59f3 data/bibliocraft/tags/items/potion_shelf_potions.json
 4a0b4fae70ed78371f6a1c5ea90d375fea121692 data/bibliocraft/tags/items/potion_shelves.json
 b36437d21d0432b2ab7edfd7edff70b4ffa6e53b data/bibliocraft/tags/items/shelves.json

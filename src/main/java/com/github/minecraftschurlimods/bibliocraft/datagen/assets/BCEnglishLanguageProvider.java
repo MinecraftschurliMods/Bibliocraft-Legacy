@@ -60,6 +60,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addColoredWoodenBlock(BCBlocks.DISPLAY_CASE, "Display Case");
         addColoredWoodenBlock(BCBlocks.WALL_DISPLAY_CASE, "Display Case");
         addWoodenBlock(BCBlocks.FANCY_ARMOR_STAND, "Fancy Armor Stand");
+        addWoodenBlock(BCBlocks.LABEL, "Label");
         addWoodenBlock(BCBlocks.POTION_SHELF, "Potion Shelf");
         addWoodenBlock(BCBlocks.SHELF, "Shelf");
         addWoodenBlock(BCBlocks.TOOL_RACK, "Tool Rack");

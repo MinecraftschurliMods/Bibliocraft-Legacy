@@ -54,6 +54,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
             ModelFile top = models().withExistingParent(wood.name() + "_fancy_armor_stand_top", modLoc("block/template/fancy_armor_stand/top")).texture("texture", TYPE_TO_PLANKS.apply(wood));
             doubleHighHorizontalBlock(holder, bottom, top, true);
         });
+        forEachWoodType(BCBlocks.LABEL, (wood, holder) -> horizontalBlock(holder, wood.name() + "_label", modLoc("block/template/label"), TYPE_TO_PLANKS.apply(wood)));
         forEachWoodType(BCBlocks.POTION_SHELF, (wood, holder) -> horizontalBlock(holder, wood.name() + "_potion_shelf", modLoc("block/template/potion_shelf"), TYPE_TO_PLANKS.apply(wood)));
         forEachWoodType(BCBlocks.SHELF, (wood, holder) -> horizontalBlock(holder, wood.name() + "_shelf", modLoc("block/template/shelf"), TYPE_TO_PLANKS.apply(wood)));
         forEachWoodType(BCBlocks.TOOL_RACK, (wood, holder) -> horizontalBlock(holder, wood.name() + "_tool_rack", modLoc("block/template/tool_rack"), TYPE_TO_PLANKS.apply(wood)));

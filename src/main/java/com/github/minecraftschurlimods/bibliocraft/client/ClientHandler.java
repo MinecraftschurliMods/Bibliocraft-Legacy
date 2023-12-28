@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
@@ -35,8 +36,9 @@ public final class ClientHandler {
         @SubscribeEvent
         static void clientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                MenuScreens.register(BCMenus.FANCY_ARMOR_STAND.get(), BCMenuScreens.FancyArmorStand::new);
                 MenuScreens.register(BCMenus.BOOKCASE.get(), BCMenuScreens.Bookcase::new);
+                MenuScreens.register(BCMenus.FANCY_ARMOR_STAND.get(), BCMenuScreens.FancyArmorStand::new);
+                MenuScreens.register(BCMenus.LABEL.get(), BCMenuScreens.Label::new);
                 MenuScreens.register(BCMenus.POTION_SHELF.get(), BCMenuScreens.PotionShelf::new);
                 MenuScreens.register(BCMenus.SHELF.get(), BCMenuScreens.Shelf::new);
                 MenuScreens.register(BCMenus.TOOL_RACK.get(), BCMenuScreens.ToolRack::new);
@@ -53,6 +55,7 @@ public final class ClientHandler {
             event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
             event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(), DisplayCaseBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), FancyArmorStandBER::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(), LabelBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(), PotionShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(), ShelfBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.SWORD_PEDESTAL.get(), SwordPedestalBER::new);

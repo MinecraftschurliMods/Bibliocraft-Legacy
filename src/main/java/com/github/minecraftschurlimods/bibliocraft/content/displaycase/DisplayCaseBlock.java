@@ -14,10 +14,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 @SuppressWarnings("deprecation")
 public class DisplayCaseBlock extends AbstractDisplayCaseBlock {
-    private static final VoxelShape NORTH_SHAPE = Shapes.box(0.0625, 0, 0, 0.9375, 0.5, 1);
-    private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
-    private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);
-    private static final VoxelShape WEST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.COUNTERCLOCKWISE_90);
+    private static final VoxelShape Z_SHAPE = Shapes.box(0.0625, 0, 0, 0.9375, 0.5, 1);
+    private static final VoxelShape X_SHAPE = ShapeUtil.rotate(Z_SHAPE, Rotation.CLOCKWISE_90);
 
     public DisplayCaseBlock(Properties properties) {
         super(properties);
@@ -30,12 +28,7 @@ public class DisplayCaseBlock extends AbstractDisplayCaseBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return switch (state.getValue(FACING)) {
-            default -> NORTH_SHAPE;
-            case EAST -> EAST_SHAPE;
-            case SOUTH -> SOUTH_SHAPE;
-            case WEST -> WEST_SHAPE;
-        };
+        return state.getValue(FACING).getAxis() == Direction.Axis.X ? X_SHAPE : Z_SHAPE;
     }
 
     @Override
