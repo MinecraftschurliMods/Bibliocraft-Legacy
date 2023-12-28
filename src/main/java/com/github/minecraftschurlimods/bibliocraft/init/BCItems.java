@@ -2,7 +2,8 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
-import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
@@ -14,11 +15,11 @@ public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
     WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",     BCBlocks.BOOKCASE);
-    WoodTypeDeferredHolder<Item, DisplayCaseItem>     DISPLAY_CASE      = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "display_case", BCBlocks.WOOD_TYPES, DisplayCaseItem::new);
     WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_armor_stand", BCBlocks.WOOD_TYPES, wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
     WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf", BCBlocks.POTION_SHELF);
     WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",        BCBlocks.SHELF);
     WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",    BCBlocks.TOOL_RACK);
+    ColoredWoodTypeDeferredHolder<Item, BlockItem>    DISPLAY_CASE      = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "display_case", BCBlocks.WOOD_TYPES, DisplayCaseItem::new);
     Supplier<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     Supplier<SwordPedestalItem>   SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal",         SwordPedestalItem::new);
     //TODO Atlas

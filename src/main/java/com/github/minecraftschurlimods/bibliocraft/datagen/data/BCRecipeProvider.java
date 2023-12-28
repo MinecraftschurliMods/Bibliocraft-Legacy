@@ -3,7 +3,8 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapedNBTRecipeBuilder;
-import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.BlockFamilies;
@@ -47,14 +48,13 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .pattern("PSP")
                 .define('P', family.getBaseBlock())
                 .define('S', family.get(BlockFamily.Variant.SLAB)));
-        for (DyeColor color : DyeColor.values()) {
-            for (Map.Entry<WoodType, ? extends DeferredHolder<Item, ? extends Item>> entry : BCItems.DISPLAY_CASE.map().entrySet()) {
-                BlockFamily family = woodFamily(entry.getKey());
-                if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
-                DeferredHolder<Item, ? extends Item> value = entry.getValue();
-                ItemStack result = new ItemStack(value);
-                DyeableLeatherItem.dyeArmor(result, List.of(DyeItem.byColor(color)));
-                ShapedNBTRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result)
+        for (Map.Entry<WoodType, ? extends ColoredDeferredHolder<Item, ? extends Item>> woodEntry : BCItems.DISPLAY_CASE.map().entrySet()) {
+            BlockFamily family = woodFamily(woodEntry.getKey());
+            if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
+            for (Map.Entry<DyeColor, ? extends DeferredHolder<Item, ? extends Item>> colorEntry : woodEntry.getValue().map().entrySet()) {
+                DyeColor color = colorEntry.getKey();
+                DeferredHolder<Item, ? extends Item> value = colorEntry.getValue();
+                ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, value.get())
                         .pattern("SGS")
                         .pattern("SWS")
                         .pattern("SSS")
@@ -62,7 +62,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                         .define('G', Tags.Items.GLASS)
                         .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool")))
                         .unlockedBy("has_planks", has(family.getBaseBlock()))
-                        .save(output, new ResourceLocation(Bibliocraft.MOD_ID, value.getId().getPath() + "_" + color.getName()));
+                        .save(output);
             }
         }
         forEachWoodTypeShaped(BCItems.FANCY_ARMOR_STAND, (builder, family) -> builder

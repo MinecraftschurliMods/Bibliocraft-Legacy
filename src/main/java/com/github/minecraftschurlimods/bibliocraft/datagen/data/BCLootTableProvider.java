@@ -1,7 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
-import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -51,6 +52,9 @@ public final class BCLootTableProvider extends LootTableProvider {
             forEach(BCBlocks.DISPLAY_CASE, block -> standardTable(block, LootItem.lootTableItem(block)
                     .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("color", "display.color"))
             ));
+            forEach(BCBlocks.WALL_DISPLAY_CASE, block -> standardTable(block, LootItem.lootTableItem(block)
+                    .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("color", "display.color"))
+            ));
             forEach(BCBlocks.FANCY_ARMOR_STAND, this::createFancyArmorStandTable);
             forEach(BCBlocks.POTION_SHELF, this::createNameableBlockEntityTable);
             forEach(BCBlocks.SHELF, this::createNameableBlockEntityTable);
@@ -81,6 +85,10 @@ public final class BCLootTableProvider extends LootTableProvider {
 
         private LootTable.Builder standardTable(Block block, LootPoolSingletonContainer.Builder<?> builder) {
             return LootTable.lootTable().withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(builder)));
+        }
+
+        private void forEach(ColoredWoodTypeDeferredHolder<Block, ? extends Block> holder, Function<Block, LootTable.Builder> tableFactory) {
+            holder.values().forEach(e -> add(e, tableFactory.apply(e)));
         }
 
         private void forEach(WoodTypeDeferredHolder<Block, ? extends Block> holder, Function<Block, LootTable.Builder> tableFactory) {

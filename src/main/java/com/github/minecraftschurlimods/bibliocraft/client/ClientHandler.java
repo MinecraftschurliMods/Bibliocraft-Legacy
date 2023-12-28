@@ -8,9 +8,6 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
-import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlock;
-import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
@@ -62,17 +59,11 @@ public final class ClientHandler {
 
         @SubscribeEvent
         static void registerColorHandlersBlock(RegisterColorHandlersEvent.Block event) {
-            for (DisplayCaseBlock block : BCBlocks.DISPLAY_CASE.values()) {
-                event.register((state, level, pos, tintIndex) -> tintIndex == 0 && Objects.requireNonNull(level).getBlockEntity(Objects.requireNonNull(pos)) instanceof DisplayCaseBlockEntity dcbe ? dcbe.getColor() : -1, block);
-            }
             event.register((state, level, pos, tintIndex) -> tintIndex == 0 && Objects.requireNonNull(level).getBlockEntity(Objects.requireNonNull(pos)) instanceof SwordPedestalBlockEntity spbe ? spbe.getColor() : -1, BCBlocks.SWORD_PEDESTAL.get());
         }
 
         @SubscribeEvent
         static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
-            for (DisplayCaseItem item : BCItems.DISPLAY_CASE.values()) {
-                event.register((stack, tintIndex) -> tintIndex == 0 ? BCUtil.getNBTColor(stack, DyeColor.WHITE.getTextColor()) : -1, item);
-            }
             event.register((stack, tintIndex) -> tintIndex == 0 ? BCUtil.getNBTColor(stack, DyeColor.GREEN.getTextColor()) : -1, BCItems.SWORD_PEDESTAL.get());
         }
     }

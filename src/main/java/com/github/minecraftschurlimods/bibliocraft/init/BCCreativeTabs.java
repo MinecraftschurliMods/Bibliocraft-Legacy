@@ -19,13 +19,7 @@ public interface BCCreativeTabs {
             .title(Component.translatable("itemGroup." + Bibliocraft.MOD_ID))
             .displayItems((display, output) -> {
                 addToTab(output, BCItems.BOOKCASE.values());
-                BCItems.DISPLAY_CASE.values().forEach(item -> {
-                    for (DyeColor color : DyeColor.values()) {
-                        ItemStack stack = new ItemStack(item);
-                        BCUtil.setNBTColor(stack, color.getTextColor());
-                        output.accept(stack);
-                    }
-                });
+                BCItems.DISPLAY_CASE.values().forEach(output::accept);
                 addToTab(output, BCItems.FANCY_ARMOR_STAND.values());
                 addToTab(output, BCItems.POTION_SHELF.values());
                 addToTab(output, BCItems.SHELF.values());

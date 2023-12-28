@@ -2,9 +2,11 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
-import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.Util;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -27,6 +29,24 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         map.put(WoodType.BAMBOO, "Bamboo");
         map.put(WoodType.CHERRY, "Cherry");
     });
+    private static final Map<DyeColor, String> COLOR_NAMES = Util.make(new HashMap<>(), map -> {
+        map.put(DyeColor.BLACK, "Black");
+        map.put(DyeColor.BLUE, "Blue");
+        map.put(DyeColor.BROWN, "Brown");
+        map.put(DyeColor.CYAN, "Cyan");
+        map.put(DyeColor.GRAY, "Gray");
+        map.put(DyeColor.GREEN, "Green");
+        map.put(DyeColor.LIGHT_BLUE, "Light Blue");
+        map.put(DyeColor.LIGHT_GRAY, "Light Gray");
+        map.put(DyeColor.LIME, "Lime");
+        map.put(DyeColor.MAGENTA, "Magenta");
+        map.put(DyeColor.ORANGE, "Orange");
+        map.put(DyeColor.PINK, "Pink");
+        map.put(DyeColor.PURPLE, "Purple");
+        map.put(DyeColor.RED, "Red");
+        map.put(DyeColor.WHITE, "White");
+        map.put(DyeColor.YELLOW, "Yellow");
+    });
 
     public BCEnglishLanguageProvider(PackOutput output) {
         super(output, Bibliocraft.MOD_ID, "en_us");
@@ -35,7 +55,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addWoodenBlock(BCBlocks.BOOKCASE, "Bookcase");
-        addWoodenBlock(BCBlocks.DISPLAY_CASE, "Bookcase");
+        addColoredWoodenBlock(BCBlocks.DISPLAY_CASE, "Display Case");
+        addColoredWoodenBlock(BCBlocks.WALL_DISPLAY_CASE, "Display Case");
         addWoodenBlock(BCBlocks.FANCY_ARMOR_STAND, "Fancy Armor Stand");
         addWoodenBlock(BCBlocks.POTION_SHELF, "Potion Shelf");
         addWoodenBlock(BCBlocks.SHELF, "Shelf");
@@ -68,6 +89,16 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
      * @param suffix The suffix of the translated string.
      */
     private void addWoodenBlock(WoodTypeDeferredHolder<Block, ? extends Block> block, String suffix) {
-        block.map().forEach((k, v) -> addBlock(v, WOOD_TYPE_NAMES.get(k) + " " + suffix));
+        block.map().forEach((wood, holder) -> addBlock(holder, WOOD_TYPE_NAMES.get(wood) + " " + suffix));
+    }
+
+    /**
+     * Adds translations for all variants of a {@link ColoredWoodTypeDeferredHolder}.
+     *
+     * @param block  The {@link ColoredWoodTypeDeferredHolder} to add the translations for.
+     * @param suffix The suffix of the translated string.
+     */
+    private void addColoredWoodenBlock(ColoredWoodTypeDeferredHolder<Block, ? extends Block> block, String suffix) {
+        block.map().forEach((wood, colorHolder) -> colorHolder.map().forEach((color, holder) -> addBlock(holder, COLOR_NAMES.get(color) + " " + WOOD_TYPE_NAMES.get(wood) + " " + suffix)));
     }
 }

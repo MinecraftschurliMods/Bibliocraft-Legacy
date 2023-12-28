@@ -3,7 +3,8 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
-import com.github.minecraftschurlimods.bibliocraft.util.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 public final class BCItemTagsProvider extends ItemTagsProvider {
@@ -26,12 +28,12 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
-        woodTypeTag(BCTags.Items.BOOKCASES, BCItems.BOOKCASE);
-        woodTypeTag(BCTags.Items.DISPLAY_CASES, BCItems.DISPLAY_CASE);
-        woodTypeTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD, BCItems.FANCY_ARMOR_STAND);
-        woodTypeTag(BCTags.Items.POTION_SHELVES, BCItems.POTION_SHELF);
-        woodTypeTag(BCTags.Items.SHELVES, BCItems.SHELF);
-        woodTypeTag(BCTags.Items.TOOL_RACKS, BCItems.TOOL_RACK);
+        woodenTag(BCTags.Items.BOOKCASES, BCItems.BOOKCASE);
+        coloredWoodenTag(BCTags.Items.DISPLAY_CASES, BCItems.DISPLAY_CASE);
+        woodenTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD, BCItems.FANCY_ARMOR_STAND);
+        woodenTag(BCTags.Items.POTION_SHELVES, BCItems.POTION_SHELF);
+        woodenTag(BCTags.Items.SHELVES, BCItems.SHELF);
+        woodenTag(BCTags.Items.TOOL_RACKS, BCItems.TOOL_RACK);
         tag(BCTags.Items.FANCY_ARMOR_STANDS).addTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.IRON_FANCY_ARMOR_STAND.get());
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS).addOptional(new ResourceLocation("patchouli", "guide_book"));
         tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.DRAGON_BREATH);
@@ -40,12 +42,25 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
     }
 
     /**
-     * Adds a tag containing all values of a {@link WoodTypeDeferredHolder}.
+     * Adds a tag containing all values of one or multiple {@link WoodTypeDeferredHolder}s.
      *
-     * @param tag    The {@link TagKey} to use.
-     * @param holder The {@link WoodTypeDeferredHolder} to add.
+     * @param tag     The {@link TagKey} to use.
+     * @param holders The {@link WoodTypeDeferredHolder}s to add.
      */
-    private void woodTypeTag(TagKey<Item> tag, WoodTypeDeferredHolder<Item, ? extends Item> holder) {
-        tag(tag).add(holder.values().toArray(new Item[0]));
+    @SafeVarargs
+    private void woodenTag(TagKey<Item> tag, WoodTypeDeferredHolder<Item, ? extends Item>... holders) {
+        tag(tag).add(Arrays.stream(holders).flatMap(e -> e.values().stream()).toList().toArray(new Item[0]));
+    }
+
+    /**
+     * Adds a tag containing all values of one or multiple {@link ColoredWoodTypeDeferredHolder}s.
+     *
+     * @param tag     The {@link TagKey} to use.
+     * @param holders The {@link ColoredWoodTypeDeferredHolder}s to add.
+     */
+    @SuppressWarnings("SameParameterValue")
+    @SafeVarargs
+    private void coloredWoodenTag(TagKey<Item> tag, ColoredWoodTypeDeferredHolder<Item, ? extends Item>... holders) {
+        tag(tag).add(Arrays.stream(holders).flatMap(e -> e.values().stream()).toList().toArray(new Item[0]));
     }
 }

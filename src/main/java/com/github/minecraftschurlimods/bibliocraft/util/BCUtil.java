@@ -27,9 +27,37 @@ public final class BCUtil {
      */
     @SafeVarargs
     public static <T> Collection<T> merge(Collection<T> collection, T... others) {
+        return merge(collection, Arrays.stream(others).toList());
+    }
+
+    /**
+     * Merges two collections. Does not mutate the original collections.
+     *
+     * @param collections The collections to merge.
+     * @param <T>         The type of the collection.
+     * @return A new collection with the contents of the given collections.
+     */
+    @SafeVarargs
+    public static <T> Collection<T> merge(Collection<T>... collections) {
         List<T> list = new ArrayList<>();
-        list.addAll(collection);
-        list.addAll(Arrays.stream(others).toList());
+        for (Collection<T> collection : collections) {
+            list.addAll(collection);
+        }
+        return list;
+    }
+
+    /**
+     * Merges two collections, disregarding their types. Does not mutate the original collections.
+     *
+     * @param collections The collections to merge.
+     * @return A new collection with the contents of the given collections.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static <T> Collection<T> mergeRaw(Collection... collections) {
+        List<T> list = new ArrayList<>();
+        for (Collection collection : collections) {
+            list.addAll(collection);
+        }
         return list;
     }
 
