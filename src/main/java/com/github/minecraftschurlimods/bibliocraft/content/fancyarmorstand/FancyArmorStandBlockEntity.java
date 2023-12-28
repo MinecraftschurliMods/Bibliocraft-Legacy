@@ -46,4 +46,9 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     public FancyArmorStandEntity getDisplayEntity() {
         return entity;
     }
+
+    @Override
+    public int getMaxStackSize() {
+        return 1;
+    }
 }

@@ -23,4 +23,9 @@ public class ToolRackBlockEntity extends BCMenuBlockEntity {
     public boolean canPlaceItem(int slot, ItemStack stack) {
         return stack.is(BCTags.Items.TOOL_RACK_TOOLS);
     }
+
+    @Override
+    public int getMaxStackSize() {
+        return 1;
+    }
 }

@@ -23,4 +23,9 @@ public class PotionShelfBlockEntity extends BCMenuBlockEntity {
     public boolean canPlaceItem(int slot, ItemStack stack) {
         return stack.is(BCTags.Items.POTION_SHELF_POTIONS);
     }
+
+    @Override
+    public int getMaxStackSize() {
+        return 1;
+    }
 }

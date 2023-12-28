@@ -51,4 +51,9 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     public boolean canPlaceItem(int slot, ItemStack stack) {
         return stack.is(BCTags.Items.SWORD_PEDESTAL_SWORDS);
     }
+
+    @Override
+    public int getMaxStackSize() {
+        return 1;
+    }
 }

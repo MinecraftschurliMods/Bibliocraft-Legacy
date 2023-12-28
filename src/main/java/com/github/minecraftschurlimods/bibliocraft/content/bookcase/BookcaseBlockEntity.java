@@ -44,4 +44,9 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
     public boolean canPlaceItem(int slot, ItemStack stack) {
         return stack.is(BCTags.Items.BOOKCASE_BOOKS);
     }
+
+    @Override
+    public int getMaxStackSize() {
+        return 1;
+    }
 }
