@@ -24,7 +24,7 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
     /**
      * @param type          The {@link BlockEntityType} to use.
      * @param containerSize The size of the container.
-     * @param defaultName         The title of the title, shown in GUIs.
+     * @param defaultName   The title of the title, shown in GUIs.
      * @param pos           The position of this BE.
      * @param state         The state of this BE.
      */

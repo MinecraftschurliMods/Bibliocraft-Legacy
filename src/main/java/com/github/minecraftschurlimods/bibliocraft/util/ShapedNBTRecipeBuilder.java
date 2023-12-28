@@ -102,7 +102,7 @@ public class ShapedNBTRecipeBuilder implements RecipeBuilder {
 
     @Override
     public Item getResult() {
-            return stack.getItem();
+        return stack.getItem();
     }
 
     @Override

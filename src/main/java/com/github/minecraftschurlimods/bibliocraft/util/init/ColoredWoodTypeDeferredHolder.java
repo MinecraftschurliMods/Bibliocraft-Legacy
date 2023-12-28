@@ -48,7 +48,7 @@ public class ColoredWoodTypeDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @param type The {@link WoodType} to get the {@link DeferredHolder} for.
+     * @param type  The {@link WoodType} to get the {@link DeferredHolder} for.
      * @param color The {@link DyeColor} to get the {@link DeferredHolder} for.
      * @return The {@link DeferredHolder} for the given {@link WoodType}.
      */
@@ -57,7 +57,7 @@ public class ColoredWoodTypeDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @param type The {@link WoodType} to get the value of the {@link DeferredHolder} for.
+     * @param type  The {@link WoodType} to get the value of the {@link DeferredHolder} for.
      * @param color The {@link DyeColor} to get the value of the {@link DeferredHolder} for.
      * @return The value of the {@link DeferredHolder} for the given {@link WoodType}. This is equivalent to calling {@code holder(type).get()}.
      */
@@ -66,7 +66,7 @@ public class ColoredWoodTypeDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @param type The {@link WoodType} to get the id of the {@link DeferredHolder} for.
+     * @param type  The {@link WoodType} to get the id of the {@link DeferredHolder} for.
      * @param color The {@link DyeColor} to get the id of the {@link DeferredHolder} for.
      * @return The id of the {@link DeferredHolder} for the given {@link WoodType}. This is equivalent to calling {@code holder(type).getId()}.
      */

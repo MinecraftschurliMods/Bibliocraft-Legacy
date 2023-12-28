@@ -15,8 +15,8 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     private int color = -1;
 
     /**
-     * @param pos           The position of this BE.
-     * @param state         The state of this BE.
+     * @param pos   The position of this BE.
+     * @param state The state of this BE.
      */
     public SwordPedestalBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.SWORD_PEDESTAL.get(), 1, pos, state);

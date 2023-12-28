@@ -7,8 +7,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class DisplayCaseBlockEntity extends BCBlockEntity {
     /**
-     * @param pos           The position of this BE.
-     * @param state         The state of this BE.
+     * @param pos   The position of this BE.
+     * @param state The state of this BE.
      */
     public DisplayCaseBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.DISPLAY_CASE.get(), 1, pos, state);
