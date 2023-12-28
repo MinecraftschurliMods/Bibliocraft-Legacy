@@ -30,6 +30,7 @@ public interface BCCreativeTabs {
                     BCUtil.setNBTColor(stack, color.getTextColor());
                     output.accept(stack);
                 }
+                output.accept(BCItems.REDSTONE_BOOK.get());
             })
             .build());
 

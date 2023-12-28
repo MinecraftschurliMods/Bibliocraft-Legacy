@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -50,5 +51,21 @@ public class BookcaseBlock extends BCBlock {
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
         };
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        if (level.isClientSide()) return super.getAnalogOutputSignal(state, level, pos);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof BookcaseBlockEntity bcbe)) return super.getAnalogOutputSignal(state, level, pos);
+        for (int i = 15; i >= 0; i--) {
+            if (bcbe.getItem(i).getItem() instanceof RedstoneBookItem) return i;
+        }
+        return super.getAnalogOutputSignal(state, level, pos);
     }
 }

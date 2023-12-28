@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.RedstoneBookItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
@@ -21,7 +22,8 @@ public interface BCItems {
     WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",    BCBlocks.TOOL_RACK);
     ColoredWoodTypeDeferredHolder<Item, BlockItem>    DISPLAY_CASE      = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "display_case", BCBlocks.WOOD_TYPES, DisplayCaseItem::new);
     Supplier<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
-    Supplier<SwordPedestalItem>   SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal",         SwordPedestalItem::new);
+    Supplier<SwordPedestalItem>   SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", SwordPedestalItem::new);
+    Supplier<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
     //TODO Atlas
     //TODO Big Book
     //TODO Clipboard
@@ -39,7 +41,6 @@ public interface BCItems {
     //TODO Print Press Plate
     //TODO Reading Glasses
     //TODO Recipe Book
-    //TODO Redstone Book
     //TODO Seat Back
     //TODO Screw Gun
     //TODO Slotted Book

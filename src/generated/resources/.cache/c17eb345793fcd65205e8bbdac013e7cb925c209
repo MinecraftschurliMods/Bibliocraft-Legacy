@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-28T07:45:44.8114996	Item Models: bibliocraft
+// 1.20.4	2023-12-28T09:31:56.0039486	Item Models: bibliocraft
 36c2ae88060a10b2ba6510d8a8dcbdb484c8f69c assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 69b5c606e9b9c1a3a489202ec6fea0994d23f8a3 assets/bibliocraft/models/item/acacia_potion_shelf.json
@@ -188,6 +188,7 @@ ea820036e2762597db02c05edcc692c82647fb1a assets/bibliocraft/models/item/purple_d
 3fe7b17785eb18b936c48e94c724f06c89cc9ca2 assets/bibliocraft/models/item/purple_oak_display_case.json
 5706cab5c81425c4ea06a4372cbdb9b79ad42017 assets/bibliocraft/models/item/purple_spruce_display_case.json
 7a74add39f2fc38ec0a314d42a78bf7d78080e14 assets/bibliocraft/models/item/purple_warped_display_case.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/bibliocraft/models/item/redstone_book.json
 1a0789e1f4144989213b60086555cda435a65b5f assets/bibliocraft/models/item/red_acacia_display_case.json
 3e19a438c906e3f0ba6de367e32609d54087e0aa assets/bibliocraft/models/item/red_bamboo_display_case.json
 84a39bfb208bca97f8388d025e94e076c9c6a6e6 assets/bibliocraft/models/item/red_birch_display_case.json

@@ -26,6 +26,7 @@ public class BCItemModelProvider extends ItemModelProvider {
         woodenBlock(BCItems.TOOL_RACK, "tool_rack");
         withExistingParent("iron_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/iron_inventory"));
         withExistingParent("sword_pedestal", modLoc("block/sword_pedestal"));
+        withExistingParent("redstone_book", mcLoc("item/written_book"));
     }
 
     /**

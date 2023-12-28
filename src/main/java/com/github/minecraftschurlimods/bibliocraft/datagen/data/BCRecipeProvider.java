@@ -14,6 +14,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -109,6 +110,11 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                     .save(output, new ResourceLocation(Bibliocraft.MOD_ID, "sword_pedestal_" + color.getName()));
         }
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK.get())
+                .requires(Items.BOOK)
+                .requires(Items.REDSTONE_TORCH)
+                .unlockedBy("has_book", has(Items.BOOK))
+                .save(output);
     }
 
     /**
