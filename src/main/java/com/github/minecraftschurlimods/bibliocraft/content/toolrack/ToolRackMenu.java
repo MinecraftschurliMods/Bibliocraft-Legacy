@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.toolrack;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;

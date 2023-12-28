@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.util.block;
+package com.github.minecraftschurlimods.bibliocraft.util.content;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import net.minecraft.core.BlockPos;

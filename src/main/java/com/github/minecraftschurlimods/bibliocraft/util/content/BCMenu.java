@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.util.block;
+package com.github.minecraftschurlimods.bibliocraft.util.content;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;

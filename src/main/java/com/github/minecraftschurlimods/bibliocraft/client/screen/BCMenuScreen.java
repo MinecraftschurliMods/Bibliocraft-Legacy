@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

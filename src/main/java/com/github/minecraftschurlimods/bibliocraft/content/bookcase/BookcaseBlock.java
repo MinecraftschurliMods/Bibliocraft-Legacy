@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;

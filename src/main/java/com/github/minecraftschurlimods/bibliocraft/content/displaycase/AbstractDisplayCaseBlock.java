@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
