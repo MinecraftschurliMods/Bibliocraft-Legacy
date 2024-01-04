@@ -69,6 +69,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
         add("container", "bookcase", "Bookcase");
         add("container", "fancy_armor_stand", "Armor Stand");
+        add("container", "label", "Label");
         add("container", "potion_shelf", "Potion Shelf");
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");

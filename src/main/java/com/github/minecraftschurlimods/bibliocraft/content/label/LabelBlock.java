@@ -4,15 +4,26 @@ import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.stream.IntStream;
 
 @SuppressWarnings("deprecation")
 public class LabelBlock extends BCBlock {
@@ -33,7 +44,7 @@ public class LabelBlock extends BCBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new LabelBlockEntity(pos, state);
     }
 
     @Override
@@ -49,5 +60,27 @@ public class LabelBlock extends BCBlock {
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return simpleCodec(LabelBlock::new);
+    }
+
+    @Override
+    public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof LabelBlockEntity label) return Math.min(15, IntStream.range(0, 3)
+                .map(e -> label.getItem(e).getItem() instanceof BlockItem blockItem ? blockItem.getBlock().defaultBlockState().getLightEmission(level, pos) : 0)
+                .sum());
+        return super.getLightEmission(state, level, pos);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
+        if (!player.isSecondaryUseActive() || !player.getItemInHand(hand).isEmpty()) {
+            BlockPos newPos = pos.offset(state.getValue(FACING).getOpposite().getNormal());
+            return level.getBlockState(newPos).use(level, player, hand, hit.withPosition(newPos));
+        }
+        if (level.getBlockEntity(pos) instanceof MenuProvider provider) {
+            NetworkHooks.openScreen((ServerPlayer) player, provider, pos);
+        }
+        return InteractionResult.SUCCESS;
     }
 }
