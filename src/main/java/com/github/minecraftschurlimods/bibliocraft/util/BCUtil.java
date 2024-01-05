@@ -1,8 +1,13 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +64,21 @@ public final class BCUtil {
             list.addAll(collection);
         }
         return list;
+    }
+
+    /**
+     * Shorthand to open a menu for the block entity at the given position and return {@link InteractionResult#SUCCESS}.
+     *
+     * @param player The player to open the menu for.
+     * @param level  The level of the block entity.
+     * @param pos    The position of the block entity.
+     * @return {@link InteractionResult#SUCCESS}
+     */
+    public static InteractionResult openBEMenu(Player player, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof MenuProvider menu) {
+            player.openMenu(menu);
+        }
+        return InteractionResult.SUCCESS;
     }
 
     //region Static variants of the methods in DyeableLeatherItem.

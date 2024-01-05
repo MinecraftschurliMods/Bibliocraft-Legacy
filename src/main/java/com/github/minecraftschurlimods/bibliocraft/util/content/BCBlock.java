@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.util.content;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -29,7 +29,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -91,12 +90,7 @@ public abstract class BCBlock extends BaseEntityBlock implements SimpleWaterlogg
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.isSecondaryUseActive()) return InteractionResult.PASS;
-        if (level.isClientSide()) return InteractionResult.SUCCESS;
-        if (level.getBlockEntity(pos) instanceof MenuProvider provider) {
-            NetworkHooks.openScreen((ServerPlayer) player, provider, pos);
-        }
-        return InteractionResult.SUCCESS;
+        return player.isSecondaryUseActive() ? InteractionResult.PASS : BCUtil.openBEMenu(player, level, pos);
     }
 
     @Override
