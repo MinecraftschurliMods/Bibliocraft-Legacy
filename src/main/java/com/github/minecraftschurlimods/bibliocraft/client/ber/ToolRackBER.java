@@ -4,15 +4,12 @@ import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBloc
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
 
 public class ToolRackBER implements BlockEntityRenderer<ToolRackBlockEntity> {
+    @SuppressWarnings("unused")
     public ToolRackBER(BlockEntityRendererProvider.Context context) {
     }
 
@@ -21,15 +18,13 @@ public class ToolRackBER implements BlockEntityRenderer<ToolRackBlockEntity> {
         stack.pushPose();
         ClientUtil.setupCenteredBER(stack, blockEntity);
         stack.translate(-0.21875f, 0.21875f, -0.03125f); // -3.5 / 16, 3.5 / 16, -1 / 32
-        ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
                 stack.pushPose();
                 stack.translate(j * 0.4375f, -i * 0.4375f, 0); // j * 7 / 16, -i * 7 / 16
                 stack.scale(0.4375f, 0.4375f, 0.4375f); // 7 / 16
                 stack.mulPose(Axis.YP.rotationDegrees(180));
-                ItemStack item = blockEntity.getItem(i * 2 + j);
-                renderer.render(item, ItemDisplayContext.FIXED, false, stack, buffer, light, overlay, renderer.getModel(item, blockEntity.getLevel(), null, 0));
+                ClientUtil.renderFixedItem(blockEntity.getItem(i * 2 + j), stack, buffer, light, overlay);
                 stack.popPose();
             }
         }

@@ -6,6 +6,10 @@ import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
@@ -32,5 +36,20 @@ public class ClientUtil {
             default -> 180;
             case WEST -> 270;
         }));
+    }
+
+    /**
+     * Renders an {@link ItemStack} in the {@link ItemDisplayContext#FIXED} pose.
+     *
+     * @param item    The {@link ItemStack} to render.
+     * @param stack   The {@link PoseStack} to use.
+     * @param buffer  The {@link MultiBufferSource} to use.
+     * @param light   The light value to use.
+     * @param overlay The overlay value to use.
+     */
+    public static void renderFixedItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
+        Minecraft minecraft = Minecraft.getInstance();
+        ItemRenderer renderer = minecraft.getItemRenderer();
+        renderer.render(item, ItemDisplayContext.FIXED, false, stack, buffer, light, overlay, renderer.getModel(item, minecraft.level, null, 0));
     }
 }
