@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.toolrack;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -38,11 +39,6 @@ public class ToolRackBlock extends BCInteractibleBlock {
 
     public ToolRackBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(ToolRackBlock::new);
     }
 
     @Nullable

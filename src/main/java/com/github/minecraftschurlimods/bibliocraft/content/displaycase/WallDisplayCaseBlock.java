@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,11 +53,6 @@ public class WallDisplayCaseBlock extends AbstractDisplayCaseBlock {
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
         };
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(WallDisplayCaseBlock::new);
     }
 
     @Override

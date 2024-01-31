@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.shelf;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -25,11 +26,6 @@ public class ShelfBlock extends BCInteractibleBlock {
 
     public ShelfBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(ShelfBlock::new);
     }
 
     @Nullable

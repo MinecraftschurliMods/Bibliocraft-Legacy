@@ -56,11 +56,6 @@ public class LabelBlock extends BCBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(LabelBlock::new);
-    }
-
-    @Override
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof LabelBlockEntity label) return Math.min(15, IntStream.range(0, 3)

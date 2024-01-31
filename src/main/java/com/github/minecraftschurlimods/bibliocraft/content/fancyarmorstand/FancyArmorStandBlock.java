@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
 import com.mojang.serialization.MapCodec;
@@ -51,11 +52,6 @@ public class FancyArmorStandBlock extends BCInteractibleBlock {
     public FancyArmorStandBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(HALF, DoubleBlockHalf.LOWER));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(FancyArmorStandBlock::new);
     }
 
     @Override
