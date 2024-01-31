@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "P": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "W": {
+      "item": "minecraft:green_wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    "PPP",
+    "S S"
+  ],
+  "result": {
+    "item": "bibliocraft:green_dark_oak_seat"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "facing=east,occupied=false,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=east,occupied=false,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=east,occupied=true,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=east,occupied=true,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=north,occupied=false,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=north,occupied=false,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=north,occupied=true,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=north,occupied=true,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=south,occupied=false,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=south,occupied=false,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=south,occupied=true,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=south,occupied=true,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=west,occupied=false,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=west,occupied=false,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=west,occupied=true,waterlogged=false": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    },
+    "facing=west,occupied=true,waterlogged=true": {
+      "model": "bibliocraft:block/cyan_spruce_seat"
+    }
+  }
+}
