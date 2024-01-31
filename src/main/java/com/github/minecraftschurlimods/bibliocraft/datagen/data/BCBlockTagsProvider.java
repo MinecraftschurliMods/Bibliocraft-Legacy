@@ -29,6 +29,7 @@ public class BCBlockTagsProvider extends BlockTagsProvider {
         woodenTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD, BCBlocks.FANCY_ARMOR_STAND);
         woodenTag(BCTags.Blocks.LABELS, BCBlocks.LABEL);
         woodenTag(BCTags.Blocks.POTION_SHELVES, BCBlocks.POTION_SHELF);
+        coloredWoodenTag(BCTags.Blocks.SEATS, BCBlocks.SEAT);
         woodenTag(BCTags.Blocks.SHELVES, BCBlocks.SHELF);
         woodenTag(BCTags.Blocks.TOOL_RACKS, BCBlocks.TOOL_RACK);
         tag(BCTags.Blocks.FANCY_ARMOR_STANDS).addTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get());

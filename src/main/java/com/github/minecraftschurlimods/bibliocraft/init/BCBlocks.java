@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.displaycase.WallDispl
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlock;
@@ -45,8 +46,9 @@ public interface BCBlocks {
     WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
     WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf",             ShelfBlock::new);
     WoodTypeDeferredHolder<Block, ToolRackBlock>        TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
-    ColoredWoodTypeDeferredHolder<Block, DisplayCaseBlock>     DISPLAY_CASE      = coloredWoodenBlock("display_case", DisplayCaseBlock::new);
-    ColoredWoodTypeDeferredHolder<Block, WallDisplayCaseBlock> WALL_DISPLAY_CASE = new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, "wall_display_case", WOOD_TYPES, (wood, color) -> new WallDisplayCaseBlock(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood)).noOcclusion(), wood, color));
+    ColoredWoodTypeDeferredHolder<Block, DisplayCaseBlock>     DISPLAY_CASE      = coloredWoodenBlock("display_case",      DisplayCaseBlock::new);
+    ColoredWoodTypeDeferredHolder<Block, WallDisplayCaseBlock> WALL_DISPLAY_CASE = coloredWoodenBlock("wall_display_case", WallDisplayCaseBlock::new);
+    ColoredWoodTypeDeferredHolder<Block, SeatBlock>            SEAT              = coloredWoodenBlock("seat",              SeatBlock::new);
     DeferredHolder<Block, FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredHolder<Block, SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
     //TODO Clock
@@ -63,7 +65,6 @@ public interface BCBlocks {
     //TODO Painting Frame
     //TODO Painting Press
     //TODO Printing Press
-    //TODO Seat
     //TODO Table
     //TODO Typesetting Table
     //TODO Typewriter

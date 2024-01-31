@@ -56,6 +56,9 @@ public class BCBlockStateProvider extends BlockStateProvider {
         });
         forEachWoodType(BCBlocks.LABEL, (wood, holder) -> horizontalBlock(holder, wood.name() + "_label", modLoc("block/template/label"), TYPE_TO_PLANKS.apply(wood)));
         forEachWoodType(BCBlocks.POTION_SHELF, (wood, holder) -> horizontalBlock(holder, wood.name() + "_potion_shelf", modLoc("block/template/potion_shelf"), TYPE_TO_PLANKS.apply(wood)));
+        forEachColoredWoodType(BCBlocks.SEAT, (wood, color, holder) -> getVariantBuilder(holder.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(models().withExistingParent(holder.getId().getPath(), modLoc("block/template/seat/seat")).texture("texture", TYPE_TO_PLANKS.apply(wood)).texture("color", COLOR_TO_WOOL.apply(color)))
+                .build()));
         forEachWoodType(BCBlocks.SHELF, (wood, holder) -> horizontalBlock(holder, wood.name() + "_shelf", modLoc("block/template/shelf"), TYPE_TO_PLANKS.apply(wood)));
         forEachWoodType(BCBlocks.TOOL_RACK, (wood, holder) -> horizontalBlock(holder, wood.name() + "_tool_rack", modLoc("block/template/tool_rack"), TYPE_TO_PLANKS.apply(wood)));
         doubleHighHorizontalBlock(BCBlocks.IRON_FANCY_ARMOR_STAND, models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);

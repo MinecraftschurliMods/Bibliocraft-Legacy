@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeBlockItem;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -10,14 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import org.jetbrains.annotations.Nullable;
 
-public class DisplayCaseItem extends BlockItem {
-    private final WoodType woodType;
-    private final DyeColor color;
-
+public class DisplayCaseItem extends ColoredWoodTypeBlockItem {
     public DisplayCaseItem(WoodType woodType, DyeColor color) {
-        super(BCBlocks.DISPLAY_CASE.get(woodType, color), new Properties());
-        this.woodType = woodType;
-        this.color = color;
+        super(BCBlocks.DISPLAY_CASE, woodType, color);
     }
 
     @Nullable

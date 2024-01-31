@@ -53,6 +53,7 @@ public final class ClientHandler {
         @SubscribeEvent
         static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
+            event.registerEntityRenderer(BCEntities.SEAT.get(), EmptyEntityRenderer::new);
             event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(), DisplayCaseBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), FancyArmorStandBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(), LabelBER::new);

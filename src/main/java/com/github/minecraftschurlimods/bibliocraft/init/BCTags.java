@@ -15,6 +15,7 @@ public interface BCTags {
         TagKey<Block> FANCY_ARMOR_STANDS = tag("fancy_armor_stands");
         TagKey<Block> LABELS = tag("labels");
         TagKey<Block> POTION_SHELVES = tag("potion_shelves");
+        TagKey<Block> SEATS = tag("seats");
         TagKey<Block> SHELVES = tag("shelves");
         TagKey<Block> TOOL_RACKS = tag("tool_racks");
 
@@ -34,6 +35,7 @@ public interface BCTags {
         TagKey<Item> FANCY_ARMOR_STANDS = tag("fancy_armor_stands");
         TagKey<Item> LABELS = tag("labels");
         TagKey<Item> POTION_SHELVES = tag("potion_shelves");
+        TagKey<Item> SEATS = tag("seats");
         TagKey<Item> SHELVES = tag("shelves");
         TagKey<Item> TOOL_RACKS = tag("tool_racks");
         TagKey<Item> BOOKCASE_BOOKS = tag("bookcase_books");

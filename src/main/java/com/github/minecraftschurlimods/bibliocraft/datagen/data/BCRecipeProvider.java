@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapedNBTRecipeBuilder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,6 +26,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -49,23 +51,13 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .pattern("PSP")
                 .define('P', family.getBaseBlock())
                 .define('S', family.get(BlockFamily.Variant.SLAB)));
-        for (Map.Entry<WoodType, ? extends ColoredDeferredHolder<Item, ? extends Item>> woodEntry : BCItems.DISPLAY_CASE.map().entrySet()) {
-            BlockFamily family = woodFamily(woodEntry.getKey());
-            if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
-            for (Map.Entry<DyeColor, ? extends DeferredHolder<Item, ? extends Item>> colorEntry : woodEntry.getValue().map().entrySet()) {
-                DyeColor color = colorEntry.getKey();
-                DeferredHolder<Item, ? extends Item> value = colorEntry.getValue();
-                ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, value.get())
-                        .pattern("SGS")
-                        .pattern("SWS")
-                        .pattern("SSS")
-                        .define('S', family.get(BlockFamily.Variant.SLAB))
-                        .define('G', Tags.Items.GLASS)
-                        .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool")))
-                        .unlockedBy("has_planks", has(family.getBaseBlock()))
-                        .save(output);
-            }
-        }
+        forEachColoredWoodTypeShaped(BCItems.DISPLAY_CASE, (builder, family, color) -> builder
+                .pattern("SGS")
+                .pattern("SWS")
+                .pattern("SSS")
+                .define('S', family.get(BlockFamily.Variant.SLAB))
+                .define('G', Tags.Items.GLASS)
+                .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool"))));
         forEachWoodTypeShaped(BCItems.FANCY_ARMOR_STAND, (builder, family) -> builder
                 .pattern(" R ")
                 .pattern(" R ")
@@ -83,6 +75,13 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('S', family.get(BlockFamily.Variant.SLAB))
                 .define('P', family.getBaseBlock())
                 .define('B', Items.GLASS_BOTTLE));
+        forEachColoredWoodTypeShaped(BCItems.SEAT, (builder, family, color) -> builder
+                .pattern(" W ")
+                .pattern("PPP")
+                .pattern("S S")
+                .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool")))
+                .define('P', family.getBaseBlock())
+                .define('S', Tags.Items.RODS_WOODEN));
         forEachWoodTypeShaped(BCItems.SHELF, (builder, family) -> builder
                 .pattern("SSS")
                 .pattern(" P ")
@@ -152,6 +151,24 @@ public final class BCRecipeProvider extends RecipeProvider {
             recipeTransformer.apply(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get()), family)
                     .unlockedBy("has_planks", has(family.getBaseBlock()))
                     .save(output);
+        }
+    }
+
+    /**
+     * @param holder            The {@link ColoredWoodTypeDeferredHolder} to generate the recipes for.
+     * @param recipeTransformer The function to generate the recipe with.
+     */
+    private void forEachColoredWoodTypeShaped(ColoredWoodTypeDeferredHolder<Item, ? extends Item> holder, TriFunction<ShapedRecipeBuilder, BlockFamily, DyeColor, ShapedRecipeBuilder> recipeTransformer) {
+        for (Map.Entry<WoodType, ? extends ColoredDeferredHolder<Item, ? extends Item>> woodEntry : holder.map().entrySet()) {
+            BlockFamily family = woodFamily(woodEntry.getKey());
+            if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
+            for (Map.Entry<DyeColor, ? extends DeferredHolder<Item, ? extends Item>> colorEntry : woodEntry.getValue().map().entrySet()) {
+                DyeColor color = colorEntry.getKey();
+                DeferredHolder<Item, ? extends Item> value = colorEntry.getValue();
+                recipeTransformer.apply(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, value.get()), family, color)
+                        .unlockedBy("has_planks", has(family.getBaseBlock()))
+                        .save(output);
+            }
         }
     }
 }

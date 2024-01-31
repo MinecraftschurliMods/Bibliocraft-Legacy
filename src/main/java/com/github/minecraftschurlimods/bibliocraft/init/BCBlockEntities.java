@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCa
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlockEntity;
@@ -23,6 +24,7 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<FancyArmorStandBlockEntity>> FANCY_ARMOR_STAND = register("fancy_armor_stand", FancyArmorStandBlockEntity::new, BCUtil.merge(BCBlocks.FANCY_ARMOR_STAND.holders(), BCBlocks.IRON_FANCY_ARMOR_STAND));
     Supplier<BlockEntityType<LabelBlockEntity>>           LABEL             = register("label",             LabelBlockEntity::new,           BCBlocks.LABEL.holders());
     Supplier<BlockEntityType<PotionShelfBlockEntity>>     POTION_SHELF      = register("potion_shelf",      PotionShelfBlockEntity::new,     BCBlocks.POTION_SHELF.holders());
+    Supplier<BlockEntityType<SeatBlockEntity>>            SEAT              = register("seat",              SeatBlockEntity::new,            BCBlocks.SEAT.holders());
     Supplier<BlockEntityType<ShelfBlockEntity>>           SHELF             = register("shelf",             ShelfBlockEntity::new,           BCBlocks.SHELF.holders());
     Supplier<BlockEntityType<SwordPedestalBlockEntity>>   SWORD_PEDESTAL    = register("sword_pedestal",    SwordPedestalBlockEntity::new,   BCBlocks.SWORD_PEDESTAL);
     Supplier<BlockEntityType<ToolRackBlockEntity>>        TOOL_RACK         = register("tool_rack",         ToolRackBlockEntity::new,        BCBlocks.TOOL_RACK.holders());

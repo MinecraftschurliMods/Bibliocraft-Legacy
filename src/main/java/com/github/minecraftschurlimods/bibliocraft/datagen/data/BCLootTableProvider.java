@@ -58,6 +58,7 @@ public final class BCLootTableProvider extends LootTableProvider {
             forEach(BCBlocks.FANCY_ARMOR_STAND, this::createFancyArmorStandTable);
             forEach(BCBlocks.LABEL, this::createNameableBlockEntityTable);
             forEach(BCBlocks.POTION_SHELF, this::createNameableBlockEntityTable);
+            forEach(BCBlocks.SEAT, block -> standardTable(block, LootItem.lootTableItem(block)));
             forEach(BCBlocks.SHELF, this::createNameableBlockEntityTable);
             forEach(BCBlocks.TOOL_RACK, this::createNameableBlockEntityTable);
             add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));

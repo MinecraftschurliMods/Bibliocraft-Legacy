@@ -33,6 +33,7 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
         woodenTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD, BCItems.FANCY_ARMOR_STAND);
         woodenTag(BCTags.Items.LABELS, BCItems.LABEL);
         woodenTag(BCTags.Items.POTION_SHELVES, BCItems.POTION_SHELF);
+        coloredWoodenTag(BCTags.Items.SEATS, BCItems.SEAT);
         woodenTag(BCTags.Items.SHELVES, BCItems.SHELF);
         woodenTag(BCTags.Items.TOOL_RACKS, BCItems.TOOL_RACK);
         tag(BCTags.Items.FANCY_ARMOR_STANDS).addTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.IRON_FANCY_ARMOR_STAND.get());
