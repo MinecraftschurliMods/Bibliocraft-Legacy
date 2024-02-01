@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.data.PackOutput;
@@ -20,7 +21,7 @@ public class BCItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         woodenBlock(BCItems.BOOKCASE, "bookcase");
         BCItems.DISPLAY_CASE.map().forEach((wood, colorHolder) -> colorHolder.map().forEach((color, holder) -> withExistingParent(holder.getId().getPath(), modLoc("block/" + holder.getId().getPath() + "_open"))));
-        BCItems.FANCY_ARMOR_STAND.types().forEach(wood -> withExistingParent(wood.name() + "_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/inventory")).texture("texture", BCBlockStateProvider.TYPE_TO_PLANKS.apply(wood)));
+        BibliocraftWoodType.getAll().forEach(wood -> withExistingParent(wood.woodType.name() + "_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/inventory")).texture("texture", wood.texture));
         woodenBlock(BCItems.LABEL, "label");
         woodenBlock(BCItems.POTION_SHELF, "potion_shelf");
         BCItems.SEAT.map().forEach((wood, colorHolder) -> colorHolder.map().forEach((color, holder) -> withExistingParent(holder.getId().getPath(), modLoc("block/" + holder.getId().getPath()))));
@@ -50,7 +51,7 @@ public class BCItemModelProvider extends ItemModelProvider {
      */
     private void woodenBlock(WoodTypeDeferredHolder<Item, ?> holder, String suffix, Function<String, ResourceLocation> parentFactory) {
         holder.map().forEach((k, v) -> {
-            String name = k.name() + "_" + suffix;
+            String name = k.getRegistrationPrefix() + "_" + suffix;
             withExistingParent(name, parentFactory.apply(name));
         });
     }

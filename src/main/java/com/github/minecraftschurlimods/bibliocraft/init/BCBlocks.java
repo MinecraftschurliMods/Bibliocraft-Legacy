@@ -20,12 +20,10 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 public interface BCBlocks {
-    List<WoodType> WOOD_TYPES = List.of(WoodType.OAK, WoodType.SPRUCE, WoodType.BIRCH, WoodType.JUNGLE, WoodType.ACACIA, WoodType.DARK_OAK, WoodType.CRIMSON, WoodType.WARPED, WoodType.MANGROVE, WoodType.BAMBOO, WoodType.CHERRY);
     Map<WoodType, Block> PLANKS = Util.make(new HashMap<>(), map -> {
         map.put(WoodType.OAK,      Blocks.OAK_PLANKS);
         map.put(WoodType.SPRUCE,   Blocks.SPRUCE_PLANKS);
@@ -78,7 +76,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, WOOD_TYPES, wood -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood)).noOcclusion()));
+        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, wood -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood.woodType)).noOcclusion()));
     }
 
     /**
@@ -90,7 +88,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> ColoredWoodTypeDeferredHolder<Block, T> coloredWoodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, WOOD_TYPES, (wood, color) -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood)).noOcclusion()));
+        return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, (wood, color) -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood.woodType)).noOcclusion()));
     }
 
     /**

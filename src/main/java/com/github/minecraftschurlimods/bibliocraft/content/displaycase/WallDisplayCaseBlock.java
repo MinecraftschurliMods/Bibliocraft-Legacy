@@ -1,9 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +10,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -27,14 +25,14 @@ public class WallDisplayCaseBlock extends AbstractDisplayCaseBlock {
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.COUNTERCLOCKWISE_90);
-    private final WoodType woodType;
+    private final BibliocraftWoodType woodType;
     private final DyeColor color;
 
     public WallDisplayCaseBlock(Properties properties) {
         this(properties, null, null);
     }
 
-    public WallDisplayCaseBlock(Properties properties, @Nullable WoodType woodType, @Nullable DyeColor color) {
+    public WallDisplayCaseBlock(Properties properties, @Nullable BibliocraftWoodType woodType, @Nullable DyeColor color) {
         super(properties);
         this.woodType = woodType;
         this.color = color;

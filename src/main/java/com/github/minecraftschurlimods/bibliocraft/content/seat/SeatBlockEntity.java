@@ -3,10 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.seat;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 public class SeatBlockEntity extends BCBlockEntity {
     /**

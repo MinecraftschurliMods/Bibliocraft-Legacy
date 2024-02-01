@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.util.init;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -9,7 +10,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -21,56 +21,53 @@ import java.util.function.BiFunction;
  */
 @SuppressWarnings("unused")
 public class ColoredWoodTypeDeferredHolder<R, T extends R> {
-    private final Map<WoodType, ColoredDeferredHolder<R, T>> map = new LinkedHashMap<>();
-    private final List<WoodType> types;
+    private final Map<BibliocraftWoodType, ColoredDeferredHolder<R, T>> map = new LinkedHashMap<>();
 
     /**
      * Creates a new instance of this class.
      *
      * @param register The registry to use.
      * @param suffix   The suffix to use for the registry names to use. Will be combined with the wood type and the color for the final registry name.
-     * @param types    The wood types to use.
-     * @param creator  A function of {@link WoodType} and {@link DyeColor} to {@code T}, responsible for actually creating the {@link DeferredHolder}.
+     * @param creator  A function of {@link BibliocraftWoodType} and {@link DyeColor} to {@code T}, responsible for actually creating the {@link DeferredHolder}.
      */
-    public ColoredWoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, List<WoodType> types, BiFunction<WoodType, DyeColor, ? extends T> creator) {
-        this.types = types;
-        for (WoodType type : types) {
-            map.put(type, new ColoredDeferredHolder<>(register, type.name() + "_" + suffix, color -> creator.apply(type, color)));
+    public ColoredWoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, BiFunction<BibliocraftWoodType, DyeColor, ? extends T> creator) {
+        for (BibliocraftWoodType type : BibliocraftWoodType.getAll()) {
+            map.put(type, new ColoredDeferredHolder<>(register, type.getRegistrationPrefix() + "_" + suffix, color -> creator.apply(type, color)));
         }
     }
 
     /**
-     * @param type The {@link WoodType} to get the {@link ColoredDeferredHolder} for.
-     * @return The {@link ColoredDeferredHolder} for the given {@link WoodType}.
+     * @param type The {@link BibliocraftWoodType} to get the {@link ColoredDeferredHolder} for.
+     * @return The {@link ColoredDeferredHolder} for the given {@link BibliocraftWoodType}.
      */
-    public ColoredDeferredHolder<R, T> element(WoodType type) {
+    public ColoredDeferredHolder<R, T> element(BibliocraftWoodType type) {
         return map.get(type);
     }
 
     /**
-     * @param type  The {@link WoodType} to get the {@link DeferredHolder} for.
+     * @param type  The {@link BibliocraftWoodType} to get the {@link DeferredHolder} for.
      * @param color The {@link DyeColor} to get the {@link DeferredHolder} for.
-     * @return The {@link DeferredHolder} for the given {@link WoodType}.
+     * @return The {@link DeferredHolder} for the given {@link BibliocraftWoodType}.
      */
-    public DeferredHolder<R, T> holder(WoodType type, DyeColor color) {
+    public DeferredHolder<R, T> holder(BibliocraftWoodType type, DyeColor color) {
         return map.get(type).holder(color);
     }
 
     /**
-     * @param type  The {@link WoodType} to get the value of the {@link DeferredHolder} for.
+     * @param type  The {@link BibliocraftWoodType} to get the value of the {@link DeferredHolder} for.
      * @param color The {@link DyeColor} to get the value of the {@link DeferredHolder} for.
-     * @return The value of the {@link DeferredHolder} for the given {@link WoodType}. This is equivalent to calling {@code holder(type).get()}.
+     * @return The value of the {@link DeferredHolder} for the given {@link BibliocraftWoodType}. This is equivalent to calling {@code holder(type).get()}.
      */
-    public T get(WoodType type, DyeColor color) {
+    public T get(BibliocraftWoodType type, DyeColor color) {
         return map.get(type).get(color);
     }
 
     /**
-     * @param type  The {@link WoodType} to get the id of the {@link DeferredHolder} for.
+     * @param type  The {@link BibliocraftWoodType} to get the id of the {@link DeferredHolder} for.
      * @param color The {@link DyeColor} to get the id of the {@link DeferredHolder} for.
-     * @return The id of the {@link DeferredHolder} for the given {@link WoodType}. This is equivalent to calling {@code holder(type).getId()}.
+     * @return The id of the {@link DeferredHolder} for the given {@link BibliocraftWoodType}. This is equivalent to calling {@code holder(type).getId()}.
      */
-    public ResourceLocation id(WoodType type, DyeColor color) {
+    public ResourceLocation id(BibliocraftWoodType type, DyeColor color) {
         return map.get(type).id(color);
     }
 
@@ -103,16 +100,9 @@ public class ColoredWoodTypeDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @return An immutable list of all {@link WoodType}s this object has associations for.
+     * @return An immutable map of all {@link BibliocraftWoodType} to {@link DeferredHolder} associations in this object.
      */
-    public List<WoodType> types() {
-        return Collections.unmodifiableList(types);
-    }
-
-    /**
-     * @return An immutable map of all {@link WoodType} to {@link DeferredHolder} associations in this object.
-     */
-    public Map<WoodType, ColoredDeferredHolder<R, T>> map() {
+    public Map<BibliocraftWoodType, ColoredDeferredHolder<R, T>> map() {
         return Collections.unmodifiableMap(map);
     }
 }

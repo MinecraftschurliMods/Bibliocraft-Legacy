@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapedNBTRecipeBuilder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
@@ -145,8 +146,8 @@ public final class BCRecipeProvider extends RecipeProvider {
      * @param recipeTransformer The function to generate the recipe with.
      */
     private void forEachWoodTypeShaped(WoodTypeDeferredHolder<Item, ? extends Item> holder, BiFunction<ShapedRecipeBuilder, BlockFamily, ShapedRecipeBuilder> recipeTransformer) {
-        for (Map.Entry<WoodType, ? extends DeferredHolder<Item, ? extends Item>> entry : holder.map().entrySet()) {
-            BlockFamily family = woodFamily(entry.getKey());
+        for (Map.Entry<BibliocraftWoodType, ? extends DeferredHolder<Item, ? extends Item>> entry : holder.map().entrySet()) {
+            BlockFamily family = woodFamily(entry.getKey().woodType);
             if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
             recipeTransformer.apply(ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, entry.getValue().get()), family)
                     .unlockedBy("has_planks", has(family.getBaseBlock()))
@@ -159,8 +160,8 @@ public final class BCRecipeProvider extends RecipeProvider {
      * @param recipeTransformer The function to generate the recipe with.
      */
     private void forEachColoredWoodTypeShaped(ColoredWoodTypeDeferredHolder<Item, ? extends Item> holder, TriFunction<ShapedRecipeBuilder, BlockFamily, DyeColor, ShapedRecipeBuilder> recipeTransformer) {
-        for (Map.Entry<WoodType, ? extends ColoredDeferredHolder<Item, ? extends Item>> woodEntry : holder.map().entrySet()) {
-            BlockFamily family = woodFamily(woodEntry.getKey());
+        for (Map.Entry<BibliocraftWoodType, ? extends ColoredDeferredHolder<Item, ? extends Item>> woodEntry : holder.map().entrySet()) {
+            BlockFamily family = woodFamily(woodEntry.getKey().woodType);
             if (family == null) throw new RuntimeException("Tried to generate a recipe with an unknown wood type");
             for (Map.Entry<DyeColor, ? extends DeferredHolder<Item, ? extends Item>> colorEntry : woodEntry.getValue().map().entrySet()) {
                 DyeColor color = colorEntry.getKey();

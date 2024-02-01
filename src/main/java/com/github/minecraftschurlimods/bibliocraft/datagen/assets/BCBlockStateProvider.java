@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
@@ -27,7 +28,6 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("SameParameterValue")
 public class BCBlockStateProvider extends BlockStateProvider {
-    public static final Function<WoodType, ResourceLocation> TYPE_TO_PLANKS = wood -> new ResourceLocation("block/" + wood.name() + "_planks");
     public static final Function<DyeColor, ResourceLocation> COLOR_TO_WOOL = color -> new ResourceLocation("block/" + color.getName() + "_wool");
 
     public BCBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -36,31 +36,31 @@ public class BCBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        forEachWoodType(BCBlocks.BOOKCASE, (wood, holder) -> horizontalBlock(holder, wood.name() + "_bookcase", modLoc("block/template/bookcase/bookcase"), TYPE_TO_PLANKS.apply(wood)));
+        forEachWoodType(BCBlocks.BOOKCASE, (wood, holder) -> horizontalBlock(holder, wood.getRegistrationPrefix() + "_bookcase", modLoc("block/template/bookcase/bookcase"), wood.texture));
         forEachColoredWoodType(BCBlocks.DISPLAY_CASE, (wood, color, holder) -> {
             String path = holder.getId().getPath();
-            ModelFile open = models().withExistingParent(path + "_open", modLoc("block/template/display_case/open")).texture("texture", TYPE_TO_PLANKS.apply(wood)).texture("color", COLOR_TO_WOOL.apply(color));
-            ModelFile closed = models().withExistingParent(path + "_closed", modLoc("block/template/display_case/closed")).texture("texture", TYPE_TO_PLANKS.apply(wood)).texture("color", COLOR_TO_WOOL.apply(color));
+            ModelFile open = models().withExistingParent(path + "_open", modLoc("block/template/display_case/open")).texture("texture", wood.texture).texture("color", COLOR_TO_WOOL.apply(color));
+            ModelFile closed = models().withExistingParent(path + "_closed", modLoc("block/template/display_case/closed")).texture("texture", wood.texture).texture("color", COLOR_TO_WOOL.apply(color));
             openClosedHorizontalBlock(holder, open, closed, false);
         });
         forEachColoredWoodType(BCBlocks.WALL_DISPLAY_CASE, (wood, color, holder) -> {
             String path = holder.getId().getPath();
-            ModelFile open = models().withExistingParent(path + "_open", modLoc("block/template/display_case/wall_open")).texture("texture", TYPE_TO_PLANKS.apply(wood)).texture("color", COLOR_TO_WOOL.apply(color));
-            ModelFile closed = models().withExistingParent(path + "_closed", modLoc("block/template/display_case/wall_closed")).texture("texture", TYPE_TO_PLANKS.apply(wood)).texture("color", COLOR_TO_WOOL.apply(color));
+            ModelFile open = models().withExistingParent(path + "_open", modLoc("block/template/display_case/wall_open")).texture("texture", wood.texture).texture("color", COLOR_TO_WOOL.apply(color));
+            ModelFile closed = models().withExistingParent(path + "_closed", modLoc("block/template/display_case/wall_closed")).texture("texture", wood.texture).texture("color", COLOR_TO_WOOL.apply(color));
             openClosedHorizontalBlock(holder, open, closed, true);
         });
         forEachWoodType(BCBlocks.FANCY_ARMOR_STAND, (wood, holder) -> {
-            ModelFile bottom = models().withExistingParent(wood.name() + "_fancy_armor_stand_bottom", modLoc("block/template/fancy_armor_stand/bottom")).texture("texture", TYPE_TO_PLANKS.apply(wood));
-            ModelFile top = models().withExistingParent(wood.name() + "_fancy_armor_stand_top", modLoc("block/template/fancy_armor_stand/top")).texture("texture", TYPE_TO_PLANKS.apply(wood));
+            ModelFile bottom = models().withExistingParent(wood.getRegistrationPrefix() + "_fancy_armor_stand_bottom", modLoc("block/template/fancy_armor_stand/bottom")).texture("texture", wood.texture);
+            ModelFile top = models().withExistingParent(wood.getRegistrationPrefix() + "_fancy_armor_stand_top", modLoc("block/template/fancy_armor_stand/top")).texture("texture", wood.texture);
             doubleHighHorizontalBlock(holder, bottom, top, true);
         });
-        forEachWoodType(BCBlocks.LABEL, (wood, holder) -> horizontalBlock(holder, wood.name() + "_label", modLoc("block/template/label"), TYPE_TO_PLANKS.apply(wood)));
-        forEachWoodType(BCBlocks.POTION_SHELF, (wood, holder) -> horizontalBlock(holder, wood.name() + "_potion_shelf", modLoc("block/template/potion_shelf"), TYPE_TO_PLANKS.apply(wood)));
+        forEachWoodType(BCBlocks.LABEL, (wood, holder) -> horizontalBlock(holder, wood.getRegistrationPrefix() + "_label", modLoc("block/template/label"), wood.texture));
+        forEachWoodType(BCBlocks.POTION_SHELF, (wood, holder) -> horizontalBlock(holder, wood.getRegistrationPrefix() + "_potion_shelf", modLoc("block/template/potion_shelf"), wood.texture));
         forEachColoredWoodType(BCBlocks.SEAT, (wood, color, holder) -> getVariantBuilder(holder.get()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(models().withExistingParent(holder.getId().getPath(), modLoc("block/template/seat/seat")).texture("texture", TYPE_TO_PLANKS.apply(wood)).texture("color", COLOR_TO_WOOL.apply(color)))
+                .modelFile(models().withExistingParent(holder.getId().getPath(), modLoc("block/template/seat/seat")).texture("texture", wood.texture).texture("color", COLOR_TO_WOOL.apply(color)))
                 .build()));
-        forEachWoodType(BCBlocks.SHELF, (wood, holder) -> horizontalBlock(holder, wood.name() + "_shelf", modLoc("block/template/shelf"), TYPE_TO_PLANKS.apply(wood)));
-        forEachWoodType(BCBlocks.TOOL_RACK, (wood, holder) -> horizontalBlock(holder, wood.name() + "_tool_rack", modLoc("block/template/tool_rack"), TYPE_TO_PLANKS.apply(wood)));
+        forEachWoodType(BCBlocks.SHELF, (wood, holder) -> horizontalBlock(holder, wood.getRegistrationPrefix() + "_shelf", modLoc("block/template/shelf"), wood.texture));
+        forEachWoodType(BCBlocks.TOOL_RACK, (wood, holder) -> horizontalBlock(holder, wood.getRegistrationPrefix() + "_tool_rack", modLoc("block/template/tool_rack"), wood.texture));
         doubleHighHorizontalBlock(BCBlocks.IRON_FANCY_ARMOR_STAND, models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
         horizontalBlock(BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);
     }
@@ -133,8 +133,8 @@ public class BCBlockStateProvider extends BlockStateProvider {
      * @param consumer The consumer to use for generating the files.
      * @param <T>      The type of the block of the {@link WoodTypeDeferredHolder}.
      */
-    private <T extends Block> void forEachWoodType(WoodTypeDeferredHolder<Block, T> holder, BiConsumer<WoodType, DeferredHolder<Block, T>> consumer) {
-        for (Map.Entry<WoodType, DeferredHolder<Block, T>> t : holder.map().entrySet()) {
+    private <T extends Block> void forEachWoodType(WoodTypeDeferredHolder<Block, T> holder, BiConsumer<BibliocraftWoodType, DeferredHolder<Block, T>> consumer) {
+        for (Map.Entry<BibliocraftWoodType, DeferredHolder<Block, T>> t : holder.map().entrySet()) {
             consumer.accept(t.getKey(), t.getValue());
         }
     }
@@ -146,8 +146,8 @@ public class BCBlockStateProvider extends BlockStateProvider {
      * @param consumer The consumer to use for generating the files.
      * @param <T>      The type of the block of the {@link WoodTypeDeferredHolder}.
      */
-    private <T extends Block> void forEachColoredWoodType(ColoredWoodTypeDeferredHolder<Block, T> holder, TriConsumer<WoodType, DyeColor, DeferredHolder<Block, T>> consumer) {
-        for (Map.Entry<WoodType, ColoredDeferredHolder<Block, T>> woodEntry : holder.map().entrySet()) {
+    private <T extends Block> void forEachColoredWoodType(ColoredWoodTypeDeferredHolder<Block, T> holder, TriConsumer<BibliocraftWoodType, DyeColor, DeferredHolder<Block, T>> consumer) {
+        for (Map.Entry<BibliocraftWoodType, ColoredDeferredHolder<Block, T>> woodEntry : holder.map().entrySet()) {
             for (Map.Entry<DyeColor, DeferredHolder<Block, T>> colorEntry : woodEntry.getValue().map().entrySet()) {
                 consumer.accept(woodEntry.getKey(), colorEntry.getKey(), colorEntry.getValue());
             }
