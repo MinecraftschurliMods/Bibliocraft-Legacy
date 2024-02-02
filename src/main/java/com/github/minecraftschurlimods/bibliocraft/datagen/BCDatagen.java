@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Bibliocraft.MOD_ID)
 public final class BCDatagen {
     @SubscribeEvent
-    static void gatherData(GatherDataEvent event) {
+    private static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
@@ -34,7 +34,7 @@ public final class BCDatagen {
         generator.addProvider(event.includeClient(), new BCItemModelProvider(output, existingFileHelper));
 
         generator.addProvider(event.includeServer(), new BCLootTableProvider(output));
-        generator.addProvider(event.includeServer(), new BCRecipeProvider(output, lookupProvider));
+        generator.addProvider(event.includeServer(), new BCRecipeProvider(output));
         BCBlockTagsProvider blockTags = generator.addProvider(event.includeServer(), new BCBlockTagsProvider(output, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new BCItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
     }

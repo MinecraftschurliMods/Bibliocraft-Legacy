@@ -16,7 +16,7 @@ public final class EventHandler {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Bibliocraft.MOD_ID)
     public static final class ModBus {
         @SubscribeEvent
-        public static void constructMod(FMLConstructModEvent event) {
+        private static void constructMod(FMLConstructModEvent event) {
             event.enqueueWork(() -> {
                 BibliocraftWoodType.postRegister();
                 BCRegistries.init(Objects.requireNonNull(ModList.get().getModContainerById(Bibliocraft.MOD_ID).orElseThrow().getEventBus()));
@@ -24,7 +24,7 @@ public final class EventHandler {
         }
 
         @SubscribeEvent
-        public static void entityAttributeCreation(EntityAttributeCreationEvent event) {
+        private static void entityAttributeCreation(EntityAttributeCreationEvent event) {
             event.put(BCEntities.FANCY_ARMOR_STAND.get(), LivingEntity.createLivingAttributes().build());
         }
     }

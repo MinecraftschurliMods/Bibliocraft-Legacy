@@ -3,13 +3,13 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
-import com.github.minecraftschurlimods.bibliocraft.util.ShapedNBTRecipeBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public final class BCRecipeProvider extends RecipeProvider {
-    public BCRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(output, lookupProvider);
+    public BCRecipeProvider(PackOutput output) {
+        super(output);
     }
 
     @Override
@@ -32,7 +32,7 @@ public final class BCRecipeProvider extends RecipeProvider {
         for (DyeColor color : DyeColor.values()) {
             ItemStack result = new ItemStack(BCItems.SWORD_PEDESTAL.get());
             DyeableLeatherItem.dyeArmor(result, List.of(DyeItem.byColor(color)));
-            ShapedNBTRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result)
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result)
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
