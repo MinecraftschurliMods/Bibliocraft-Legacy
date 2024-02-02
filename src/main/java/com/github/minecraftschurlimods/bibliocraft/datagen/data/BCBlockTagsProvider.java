@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
@@ -24,14 +25,7 @@ public class BCBlockTagsProvider extends BlockTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
-        woodenTag(BCTags.Blocks.BOOKCASES, BCBlocks.BOOKCASE);
-        coloredWoodenTag(BCTags.Blocks.DISPLAY_CASES, BCBlocks.DISPLAY_CASE, BCBlocks.WALL_DISPLAY_CASE);
-        woodenTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD, BCBlocks.FANCY_ARMOR_STAND);
-        woodenTag(BCTags.Blocks.LABELS, BCBlocks.LABEL);
-        woodenTag(BCTags.Blocks.POTION_SHELVES, BCBlocks.POTION_SHELF);
-        coloredWoodenTag(BCTags.Blocks.SEATS, BCBlocks.SEAT);
-        woodenTag(BCTags.Blocks.SHELVES, BCBlocks.SHELF);
-        woodenTag(BCTags.Blocks.TOOL_RACKS, BCBlocks.TOOL_RACK);
+        BibliocraftDatagenAPI.get().generateBlockTags(this::tag);
         tag(BCTags.Blocks.FANCY_ARMOR_STANDS).addTag(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get());
         tag(BlockTags.MINEABLE_WITH_AXE).addTags(BCTags.Blocks.BOOKCASES, BCTags.Blocks.DISPLAY_CASES, BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD, BCTags.Blocks.POTION_SHELVES, BCTags.Blocks.SHELVES, BCTags.Blocks.TOOL_RACKS);
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), BCBlocks.SWORD_PEDESTAL.get());

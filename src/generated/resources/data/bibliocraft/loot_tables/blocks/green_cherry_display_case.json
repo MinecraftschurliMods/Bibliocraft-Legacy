@@ -11,19 +11,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:copy_nbt",
-              "ops": [
-                {
-                  "op": "replace",
-                  "source": "color",
-                  "target": "display.color"
-                }
-              ],
-              "source": "block_entity"
-            }
-          ],
           "name": "bibliocraft:green_cherry_display_case"
         }
       ],

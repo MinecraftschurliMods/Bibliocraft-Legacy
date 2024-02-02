@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * This class represents a wood type in Bibliocraft. All wooden blocks exist in every wood type.
+ * To add your own wood type, call {@link BibliocraftWoodType#register(ResourceLocation, WoodType, Supplier, ResourceLocation, BlockFamily)} from your mod's constructor.
+ * Make sure to put this call behind a {@code ModList.isLoaded("bibliocraft")} check and in a separate class to prevent accidental classloading.
+ */
 public final class BibliocraftWoodType {
     private static List<BibliocraftWoodType> values = new ArrayList<>();
     private static boolean stillRegistering = true;
