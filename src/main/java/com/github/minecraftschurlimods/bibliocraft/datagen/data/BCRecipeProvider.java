@@ -28,9 +28,7 @@ public final class BCRecipeProvider extends RecipeProvider {
     protected void buildRecipes(RecipeOutput output) {
         BibliocraftDatagenHelper.get().generateRecipes(output);
         for (DyeColor color : DyeColor.values()) {
-            ItemStack result = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-            DyeableLeatherItem.dyeArmor(result, List.of(DyeItem.byColor(color)));
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result)
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DyeableLeatherItem.dyeArmor(new ItemStack(BCItems.SWORD_PEDESTAL.get()), List.of(DyeItem.byColor(color))))
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
