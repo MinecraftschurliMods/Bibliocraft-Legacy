@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
@@ -16,7 +16,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        BibliocraftDatagenAPI.get().generateEnglishTranslations(this);
+        BibliocraftDatagenHelper.get().generateEnglishTranslations(this);
         add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), "Iron Fancy Armor Stand");
         add(BCBlocks.SWORD_PEDESTAL.get(), "Sword Pedestal");
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");

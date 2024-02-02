@@ -58,8 +58,8 @@ public class SwordPedestalBlock extends BCInteractibleBlock {
         return direction != Direction.DOWN;
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SwordPedestalBlockEntity(pos, state);
     }

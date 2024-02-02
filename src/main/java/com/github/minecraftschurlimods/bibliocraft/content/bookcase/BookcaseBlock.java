@@ -30,8 +30,8 @@ public class BookcaseBlock extends BCBlock {
         super(properties);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new BookcaseBlockEntity(pos, state);
     }

@@ -15,8 +15,8 @@ public class DisplayCaseItem extends ColoredWoodTypeBlockItem {
         super(BCBlocks.DISPLAY_CASE, woodType, color);
     }
 
-    @Nullable
     @Override
+    @Nullable
     protected BlockState getPlacementState(BlockPlaceContext context) {
         Block block = context.getClickedFace() == Direction.UP ? BCBlocks.DISPLAY_CASE.get(woodType, color) : BCBlocks.WALL_DISPLAY_CASE.get(woodType, color);
         BlockState state = block.defaultBlockState().setValue(AbstractDisplayCaseBlock.FACING, context.getHorizontalDirection().getOpposite());

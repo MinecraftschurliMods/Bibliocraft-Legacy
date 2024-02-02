@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import net.minecraft.data.PackOutput;
@@ -15,7 +15,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        BibliocraftDatagenAPI.get().generateBlockStates(this);
+        BibliocraftDatagenHelper.get().generateBlockStates(this);
         DatagenUtil.doubleHighHorizontalBlockModel(this, BCBlocks.IRON_FANCY_ARMOR_STAND, models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
         DatagenUtil.horizontalBlockModel(this, BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);
     }

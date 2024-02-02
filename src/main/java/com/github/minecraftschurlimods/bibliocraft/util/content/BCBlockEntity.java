@@ -109,8 +109,8 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
         saveTag(tag);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }

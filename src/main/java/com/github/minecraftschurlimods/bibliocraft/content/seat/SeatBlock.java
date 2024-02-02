@@ -42,8 +42,8 @@ public class SeatBlock extends BCBlock {
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(OCCUPIED, false));
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SeatBlockEntity(pos, state);
     }

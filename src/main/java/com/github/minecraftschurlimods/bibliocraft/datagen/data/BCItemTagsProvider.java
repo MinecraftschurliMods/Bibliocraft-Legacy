@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.core.HolderLookup;
@@ -24,7 +24,7 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
-        BibliocraftDatagenAPI.get().generateItemTags(this::tag);
+        BibliocraftDatagenHelper.get().generateItemTags(this::tag);
         tag(BCTags.Items.FANCY_ARMOR_STANDS).addTag(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.IRON_FANCY_ARMOR_STAND.get());
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS).add(BCItems.REDSTONE_BOOK.get()).addOptional(new ResourceLocation("patchouli", "guide_book"));
         tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.DRAGON_BREATH);

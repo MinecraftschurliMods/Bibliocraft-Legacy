@@ -1,10 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -22,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 public final class BCLootTableProvider extends LootTableProvider {
     public BCLootTableProvider(PackOutput output) {
@@ -42,7 +39,7 @@ public final class BCLootTableProvider extends LootTableProvider {
 
         @Override
         protected void generate() {
-            BibliocraftDatagenAPI.get().generateLootTables(this::add);
+            BibliocraftDatagenHelper.get().generateLootTables(this::add);
             add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), DatagenUtil.createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
             add(BCBlocks.SWORD_PEDESTAL.get(), DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.SWORD_PEDESTAL.get()).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("color", "display.color"))));
         }
@@ -56,14 +53,6 @@ public final class BCLootTableProvider extends LootTableProvider {
         protected void add(Block block, LootTable.Builder builder) {
             super.add(block, builder);
             blocks.add(block);
-        }
-
-        private void forEach(ColoredWoodTypeDeferredHolder<Block, ? extends Block> holder, Function<Block, LootTable.Builder> tableFactory) {
-            holder.values().forEach(e -> add(e, tableFactory.apply(e)));
-        }
-
-        private void forEach(WoodTypeDeferredHolder<Block, ? extends Block> holder, Function<Block, LootTable.Builder> tableFactory) {
-            holder.values().forEach(e -> add(e, tableFactory.apply(e)));
         }
     }
 }

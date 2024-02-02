@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -29,7 +30,7 @@ public class WoodTypeDeferredHolder<R, T extends R> {
      * @param creator  A function of {@link BibliocraftWoodType} to {@code T}, responsible for actually creating the {@link DeferredHolder}.
      */
     public WoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, Function<BibliocraftWoodType, ? extends T> creator) {
-        for (BibliocraftWoodType type : BibliocraftWoodType.getAll()) {
+        for (BibliocraftWoodType type : BibliocraftWoodTypeRegistry.get().getAll()) {
             map.put(type, register.register(type.getRegistrationPrefix() + "_" + suffix, () -> creator.apply(type)));
         }
     }

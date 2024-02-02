@@ -47,8 +47,8 @@ public abstract class AbstractDisplayCaseBlock extends BCInteractibleBlock {
         return super.use(state, level, pos, player, hand, hit);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new DisplayCaseBlockEntity(pos, state);
     }

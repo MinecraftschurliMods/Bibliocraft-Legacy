@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public interface BCCreativeTabs {
     Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(Bibliocraft.MOD_ID, () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftWoodType.get("minecraft:oak"))))
+            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftWoodTypeRegistry.get().get("minecraft:oak"))))
             .title(Component.translatable("itemGroup." + Bibliocraft.MOD_ID))
             .displayItems((display, output) -> {
                 addToTab(output, BCItems.BOOKCASE.values());

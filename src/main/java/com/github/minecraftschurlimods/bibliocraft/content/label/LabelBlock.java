@@ -37,8 +37,8 @@ public class LabelBlock extends BCBlock {
         super(properties);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new LabelBlockEntity(pos, state);
     }

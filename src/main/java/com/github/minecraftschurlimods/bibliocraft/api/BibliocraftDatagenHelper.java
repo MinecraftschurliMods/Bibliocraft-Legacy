@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.api;
 
-import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenAPIImpl;
+import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
@@ -24,11 +24,7 @@ import java.util.function.Function;
  * Then, call whatever methods you need from the respective providers. Always pass in your mod's corresponding data provider.
  */
 @SuppressWarnings("JavadocReference")
-public interface BibliocraftDatagenAPI {
-    static BibliocraftDatagenAPIImpl get() {
-        return BibliocraftDatagenAPIImpl.get();
-    }
-
+public interface BibliocraftDatagenHelper {
     /**
      * Marks a {@link BibliocraftWoodType} as to-be-datagenned. This method is thread-safe.
      *
@@ -37,20 +33,83 @@ public interface BibliocraftDatagenAPI {
     void addWoodTypeToGenerate(BibliocraftWoodType woodType);
 
     /**
+     * @return An unmodifiable list of all {@link BibliocraftWoodType}s to datagen.
+     */
+    List<BibliocraftWoodType> getWoodTypesToGenerate();
+
+    /**
+     * Generates the English (en_us) translation files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
+     *
+     * @param provider The {@link LanguageProvider} to use.
+     * @param woodType The {@link BibliocraftWoodType} to generate the translations for.
+     */
+    void generateEnglishTranslationsFor(LanguageProvider provider, BibliocraftWoodType woodType);
+
+    /**
+     * Generates the blockstates and block model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
+     *
+     * @param provider The {@link BlockStateProvider} to use.
+     * @param woodType The {@link BibliocraftWoodType} to generate the blockstates and block models for.
+     */
+    void generateBlockStatesFor(BlockStateProvider provider, BibliocraftWoodType woodType);
+
+    /**
+     * Generates the item model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
+     *
+     * @param provider The {@link ItemModelProvider} to use.
+     * @param woodType The {@link BibliocraftWoodType} to generate the item models for.
+     */
+    void generateItemModelsFor(ItemModelProvider provider, BibliocraftWoodType woodType);
+
+    /**
+     * Generates the block tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
+     *
+     * @param tagAccessor A reference to your mod's {@link BlockTagsProvider#tag(TagKey)} method, as it is protected for some reason.
+     * @param woodType    The {@link BibliocraftWoodType} to generate the block tags for.
+     */
+    void generateBlockTagsFor(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor, BibliocraftWoodType woodType);
+
+    /**
+     * Generates the item tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
+     *
+     * @param tagAccessor A reference to your mod's {@link ItemTagsProvider#tag(TagKey)} method, as it is protected for some reason.
+     * @param woodType    The {@link BibliocraftWoodType} to generate the item tags for.
+     */
+    void generateItemTagsFor(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor, BibliocraftWoodType woodType);
+
+    /**
+     * Generates the loot table files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
+     *
+     * @param lootTableAdder A reference to your mod's {@link BlockLootSubProvider#add(Block, LootTable.Builder)} method, as it is protected for some reason.
+     * @param woodType       The {@link BibliocraftWoodType} to generate the loot tables for.
+     */
+    void generateLootTablesFor(BiConsumer<Block, LootTable.Builder> lootTableAdder, BibliocraftWoodType woodType);
+
+    /**
+     * Generates the recipe files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
+     *
+     * @param output   The {@link RecipeOutput} to use.
+     * @param woodType The {@link BibliocraftWoodType} to generate the recipes for.
+     */
+    void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType);
+
+    /**
+     * @return The only instance of this class.
+     */
+    static BibliocraftDatagenHelper get() {
+        return BibliocraftDatagenHelperImpl.get();
+    }
+
+    /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
      *
      * @param modid The id of the mod to mark the {@link BibliocraftWoodType}s of.
      */
     default void addWoodTypesToGenerateByModid(String modid) {
-        BibliocraftWoodType.getAll().stream()
-                .filter(e -> e.id.getNamespace().equals(modid))
+        BibliocraftWoodTypeRegistry.get().getAll().stream()
+                .filter(e -> e.getNamespace().equals(modid))
                 .forEach(this::addWoodTypeToGenerate);
     }
-
-    /**
-     * @return An unmodifiable list of all {@link BibliocraftWoodType}s to datagen.
-     */
-    List<BibliocraftWoodType> getWoodTypesToGenerate();
 
     /**
      * Generates the English (en_us) translation files for Bibliocraft blocks with your mod's wood type(s).
@@ -62,14 +121,6 @@ public interface BibliocraftDatagenAPI {
     }
 
     /**
-     * Generates the English (en_us) translation files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param provider The {@link LanguageProvider} to use.
-     * @param woodType The {@link BibliocraftWoodType} to generate the translations for.
-     */
-    void generateEnglishTranslationsFor(LanguageProvider provider, BibliocraftWoodType woodType);
-
-    /**
      * Generates the blockstates and block model files for Bibliocraft blocks with your mod's wood type(s).
      *
      * @param provider Your mod's {@link BlockStateProvider}.
@@ -77,14 +128,6 @@ public interface BibliocraftDatagenAPI {
     default void generateBlockStates(BlockStateProvider provider) {
         getWoodTypesToGenerate().forEach(woodType -> generateBlockStatesFor(provider, woodType));
     }
-
-    /**
-     * Generates the blockstates and block model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param provider The {@link BlockStateProvider} to use.
-     * @param woodType The {@link BibliocraftWoodType} to generate the blockstates and block models for.
-     */
-    void generateBlockStatesFor(BlockStateProvider provider, BibliocraftWoodType woodType);
 
     /**
      * Generates the item model files for Bibliocraft items with your mod's wood type(s).
@@ -96,14 +139,6 @@ public interface BibliocraftDatagenAPI {
     }
 
     /**
-     * Generates the item model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param provider The {@link ItemModelProvider} to use.
-     * @param woodType The {@link BibliocraftWoodType} to generate the item models for.
-     */
-    void generateItemModelsFor(ItemModelProvider provider, BibliocraftWoodType woodType);
-
-    /**
      * Generates the block tag files for Bibliocraft blocks with your mod's wood type(s).
      *
      * @param tagAccessor A reference to your mod's {@link BlockTagsProvider#tag(TagKey)} method, as it is protected for some reason.
@@ -111,14 +146,6 @@ public interface BibliocraftDatagenAPI {
     default void generateBlockTags(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor) {
         getWoodTypesToGenerate().forEach(woodType -> generateBlockTagsFor(tagAccessor, woodType));
     }
-
-    /**
-     * Generates the block tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param tagAccessor A reference to your mod's {@link BlockTagsProvider#tag(TagKey)} method, as it is protected for some reason.
-     * @param woodType    The {@link BibliocraftWoodType} to generate the block tags for.
-     */
-    void generateBlockTagsFor(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor, BibliocraftWoodType woodType);
 
     /**
      * Generates the item tag files for Bibliocraft blocks with your mod's wood type(s).
@@ -130,14 +157,6 @@ public interface BibliocraftDatagenAPI {
     }
 
     /**
-     * Generates the item tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param tagAccessor A reference to your mod's {@link ItemTagsProvider#tag(TagKey)} method, as it is protected for some reason.
-     * @param woodType    The {@link BibliocraftWoodType} to generate the item tags for.
-     */
-    void generateItemTagsFor(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor, BibliocraftWoodType woodType);
-
-    /**
      * Generates the loot table files for Bibliocraft blocks with your mod's wood type(s).
      *
      * @param lootTableAdder A reference to your mod's {@link BlockLootSubProvider#add(Block, LootTable.Builder)} method, as it is protected for some reason.
@@ -147,14 +166,6 @@ public interface BibliocraftDatagenAPI {
     }
 
     /**
-     * Generates the loot table files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param lootTableAdder A reference to your mod's {@link BlockLootSubProvider#add(Block, LootTable.Builder)} method, as it is protected for some reason.
-     * @param woodType       The {@link BibliocraftWoodType} to generate the loot tables for.
-     */
-    void generateLootTablesFor(BiConsumer<Block, LootTable.Builder> lootTableAdder, BibliocraftWoodType woodType);
-
-    /**
      * Generates the recipe files for Bibliocraft blocks with your mod's wood type(s).
      *
      * @param output Your mod's {@link RecipeOutput}.
@@ -162,12 +173,4 @@ public interface BibliocraftDatagenAPI {
     default void generateRecipes(RecipeOutput output) {
         getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, woodType));
     }
-
-    /**
-     * Generates the recipe files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param output   The {@link RecipeOutput} to use.
-     * @param woodType The {@link BibliocraftWoodType} to generate the recipes for.
-     */
-    void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType);
 }

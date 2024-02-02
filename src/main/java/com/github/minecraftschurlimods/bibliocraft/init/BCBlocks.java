@@ -12,32 +12,14 @@ import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPe
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
-import net.minecraft.Util;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 public interface BCBlocks {
-    Map<WoodType, Block> PLANKS = Util.make(new HashMap<>(), map -> {
-        map.put(WoodType.OAK,      Blocks.OAK_PLANKS);
-        map.put(WoodType.SPRUCE,   Blocks.SPRUCE_PLANKS);
-        map.put(WoodType.BIRCH,    Blocks.BIRCH_PLANKS);
-        map.put(WoodType.JUNGLE,   Blocks.JUNGLE_PLANKS);
-        map.put(WoodType.ACACIA,   Blocks.ACACIA_PLANKS);
-        map.put(WoodType.DARK_OAK, Blocks.DARK_OAK_PLANKS);
-        map.put(WoodType.CRIMSON,  Blocks.CRIMSON_PLANKS);
-        map.put(WoodType.WARPED,   Blocks.WARPED_PLANKS);
-        map.put(WoodType.MANGROVE, Blocks.MANGROVE_PLANKS);
-        map.put(WoodType.BAMBOO,   Blocks.BAMBOO_PLANKS);
-        map.put(WoodType.CHERRY,   Blocks.CHERRY_PLANKS);
-    });
-
     WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
     WoodTypeDeferredHolder<Block, FancyArmorStandBlock> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
     WoodTypeDeferredHolder<Block, LabelBlock>           LABEL             = woodenBlock("label",             LabelBlock::new);
@@ -76,7 +58,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, wood -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood.woodType)).noOcclusion()));
+        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, wood -> creator.apply(wood.getProperties().get().noOcclusion()));
     }
 
     /**
@@ -88,7 +70,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> ColoredWoodTypeDeferredHolder<Block, T> coloredWoodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, (wood, color) -> creator.apply(BlockBehaviour.Properties.ofFullCopy(PLANKS.get(wood.woodType)).noOcclusion()));
+        return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, (wood, color) -> creator.apply(wood.getProperties().get().noOcclusion()));
     }
 
     /**

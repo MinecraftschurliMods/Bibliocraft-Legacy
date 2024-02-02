@@ -170,8 +170,8 @@ public class FancyArmorStandBlock extends BCInteractibleBlock {
         return direction.getAxis() != Direction.Axis.Y;
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FancyArmorStandBlockEntity(pos, state);
     }

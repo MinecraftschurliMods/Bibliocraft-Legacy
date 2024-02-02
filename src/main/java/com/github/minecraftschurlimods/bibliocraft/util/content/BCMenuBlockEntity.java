@@ -71,8 +71,8 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
         return getName();
     }
 
-    @Nullable
     @Override
+    @Nullable
     public Component getCustomName() {
         return name;
     }
@@ -81,8 +81,8 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
         return true;
     }
 
-    @Nullable
     @Override
+    @Nullable
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
         return this.canOpen(player) ? this.createMenu(id, inventory) : null;
     }

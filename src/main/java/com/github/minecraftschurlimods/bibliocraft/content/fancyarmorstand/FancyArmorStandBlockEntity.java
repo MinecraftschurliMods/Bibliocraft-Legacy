@@ -42,13 +42,16 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
         return stack.isEmpty() || (stack.getItem() instanceof Equipable equipable && equipable.getEquipmentSlot().isArmor() && equipable.getEquipmentSlot().getIndex() == 3 - index && super.canPlaceItem(index, stack));
     }
 
-    @Nullable
-    public FancyArmorStandEntity getDisplayEntity() {
-        return entity;
-    }
-
     @Override
     public int getMaxStackSize() {
         return 1;
+    }
+
+    /**
+     * @return The {@link FancyArmorStandEntity} used for actually displaying the armor.
+     */
+    @Nullable
+    public FancyArmorStandEntity getDisplayEntity() {
+        return entity;
     }
 }

@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +18,7 @@ public final class EventHandler {
         @SubscribeEvent
         private static void constructMod(FMLConstructModEvent event) {
             event.enqueueWork(() -> {
-                BibliocraftWoodType.postRegister();
+                BibliocraftWoodTypeRegistryImpl.get().postRegister();
                 BCRegistries.init(Objects.requireNonNull(ModList.get().getModContainerById(Bibliocraft.MOD_ID).orElseThrow().getEventBus()));
             });
         }

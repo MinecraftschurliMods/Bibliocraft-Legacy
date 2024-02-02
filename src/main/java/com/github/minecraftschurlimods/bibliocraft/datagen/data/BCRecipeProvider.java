@@ -1,9 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public final class BCRecipeProvider extends RecipeProvider {
     public BCRecipeProvider(PackOutput output) {
@@ -28,7 +26,7 @@ public final class BCRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput output) {
-        BibliocraftDatagenAPI.get().generateRecipes(output);
+        BibliocraftDatagenHelper.get().generateRecipes(output);
         for (DyeColor color : DyeColor.values()) {
             ItemStack result = new ItemStack(BCItems.SWORD_PEDESTAL.get());
             DyeableLeatherItem.dyeArmor(result, List.of(DyeItem.byColor(color)));

@@ -14,18 +14,22 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     public static final String COLOR_KEY = DyeableLeatherItem.TAG_COLOR;
     private int color = -1;
 
-    /**
-     * @param pos   The position of this BE.
-     * @param state The state of this BE.
-     */
     public SwordPedestalBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.SWORD_PEDESTAL.get(), 1, pos, state);
     }
 
+    /**
+     * @return The color of this sword pedestal.
+     */
     public int getColor() {
         return color;
     }
 
+    /**
+     * Sets the color of this sword pedestal.
+     *
+     * @param color The color to set.
+     */
     public void setColor(int color) {
         this.color = color;
         if (level != null && level.isClientSide()) {

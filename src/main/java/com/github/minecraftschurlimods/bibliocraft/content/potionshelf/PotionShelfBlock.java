@@ -28,8 +28,8 @@ public class PotionShelfBlock extends BCInteractibleBlock {
         super(properties);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new PotionShelfBlockEntity(pos, state);
     }

@@ -25,8 +25,8 @@ public class ShelfBlock extends BCInteractibleBlock {
         super(properties);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new ShelfBlockEntity(pos, state);
     }

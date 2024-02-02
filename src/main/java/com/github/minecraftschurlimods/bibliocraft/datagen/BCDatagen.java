@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenAPI;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCBlockStateProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCEnglishLanguageProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCItemModelProvider;
@@ -27,7 +27,7 @@ public final class BCDatagen {
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-        BibliocraftDatagenAPI.get().addWoodTypesToGenerateByModid("minecraft");
+        BibliocraftDatagenHelper.get().addWoodTypesToGenerateByModid("minecraft");
 
         generator.addProvider(event.includeClient(), new BCEnglishLanguageProvider(output));
         generator.addProvider(event.includeClient(), new BCBlockStateProvider(output, existingFileHelper));

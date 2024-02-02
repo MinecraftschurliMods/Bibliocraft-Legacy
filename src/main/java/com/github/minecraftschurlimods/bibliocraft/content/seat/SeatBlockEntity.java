@@ -6,10 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SeatBlockEntity extends BCBlockEntity {
-    /**
-     * @param pos   The position of this BE.
-     * @param state The state of this BE.
-     */
     public SeatBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.SEAT.get(), 1, pos, state);
     }
