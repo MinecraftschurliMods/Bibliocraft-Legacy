@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public interface BCEntities {
     Supplier<EntityType<FancyArmorStandEntity>> FANCY_ARMOR_STAND = BCRegistries.ENTITIES.register("fancy_armor_stand", () -> EntityType.Builder.<FancyArmorStandEntity>of(FancyArmorStandEntity::new, MobCategory.MISC).noSummon().build("fancy_armor_stand"));
-    Supplier<EntityType<SeatEntity>>            SEAT              = BCRegistries.ENTITIES.register("seat",              () -> EntityType.Builder.<SeatEntity>of(SeatEntity::new, MobCategory.MISC).sized(0, 1).noSummon().build("seat"));
+    Supplier<EntityType<SeatEntity>>            SEAT              = BCRegistries.ENTITIES.register("seat",              () -> EntityType.Builder.<SeatEntity>of(SeatEntity::new, MobCategory.MISC).sized(0, 0.875f).noSummon().build("seat"));
 
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.

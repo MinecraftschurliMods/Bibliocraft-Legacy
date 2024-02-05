@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -75,8 +76,8 @@ public final class BCUtil {
      * @return {@link InteractionResult#SUCCESS}
      */
     public static InteractionResult openBEMenu(Player player, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof MenuProvider menu) {
-            player.openMenu(menu);
+        if (level.getBlockEntity(pos) instanceof MenuProvider menu && player instanceof ServerPlayer sp) {
+            sp.openMenu(menu, buf -> buf.writeBlockPos(pos));
         }
         return InteractionResult.SUCCESS;
     }

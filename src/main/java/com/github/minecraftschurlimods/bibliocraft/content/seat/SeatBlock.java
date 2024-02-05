@@ -25,16 +25,16 @@ import org.jetbrains.annotations.Nullable;
 @SuppressWarnings("deprecation")
 public class SeatBlock extends BCBlock {
     private static final VoxelShape SHAPE = ShapeUtil.combine(
-            Shapes.box(0.125, 0.75, 0.125, 0.875, 0.9375, 0.875),
-            Shapes.box(0.1875, 0.9375, 0.1875, 0.8125, 1, 0.8125),
-            Shapes.box(0.25, 0, 0.25, 0.375, 0.75, 0.375),
-            Shapes.box(0.625, 0, 0.25, 0.75, 0.75, 0.375),
-            Shapes.box(0.625, 0, 0.625, 0.75, 0.75, 0.75),
-            Shapes.box(0.25, 0, 0.625, 0.375, 0.75, 0.75),
-            Shapes.box(0.28125, 0.28125, 0.375, 0.34375, 0.34375, 0.625),
-            Shapes.box(0.65625, 0.28125, 0.375, 0.71875, 0.34375, 0.625),
-            Shapes.box(0.375, 0.28125, 0.28125, 0.625, 0.34375, 0.34375),
-            Shapes.box(0.375, 0.28125, 0.65625, 0.625, 0.34375, 0.71875));
+            Shapes.box(0.0625, 0.625, 0.0625, 0.9375, 0.8125, 0.9375),
+            Shapes.box(0.125, 0.8125, 0.125, 0.875, 0.875, 0.875),
+            Shapes.box(0.1875, 0, 0.1875, 0.3125, 0.625, 0.3125),
+            Shapes.box(0.6875, 0, 0.1875, 0.8125, 0.625, 0.3125),
+            Shapes.box(0.6875, 0, 0.6875, 0.8125, 0.625, 0.8125),
+            Shapes.box(0.1875, 0, 0.6875, 0.3125, 0.625, 0.8125),
+            Shapes.box(0.21875, 0.28125, 0.3125, 0.28125, 0.34375, 0.6875),
+            Shapes.box(0.71875, 0.28125, 0.3125, 0.78125, 0.34375, 0.6875),
+            Shapes.box(0.3125, 0.28125, 0.21875, 0.6875, 0.34375, 0.28125),
+            Shapes.box(0.3125, 0.28125, 0.71875, 0.6875, 0.34375, 0.78125));
     public static final BooleanProperty OCCUPIED = BlockStateProperties.OCCUPIED;
 
     public SeatBlock(Properties properties) {
