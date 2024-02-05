@@ -14,4 +14,12 @@ public class ColoredWoodTypeBlockItem extends BlockItem {
         this.woodType = woodType;
         this.color = color;
     }
+
+    public BibliocraftWoodType getWoodType() {
+        return woodType;
+    }
+
+    public DyeColor getColor() {
+        return color;
+    }
 }

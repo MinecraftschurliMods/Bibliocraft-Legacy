@@ -24,8 +24,13 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.POTION_SHELF.values());
                 addToTab(output, BCItems.SHELF.values());
                 addToTab(output, BCItems.TOOL_RACK.values());
-                BCItems.DISPLAY_CASE.values().forEach(output::accept);
-                BCItems.SEAT.values().forEach(output::accept);
+                addToTab(output, BCItems.DISPLAY_CASE.values());
+                addToTab(output, BCItems.SEAT.values());
+                addToTab(output, BCItems.SMALL_SEAT_BACK.values());
+                addToTab(output, BCItems.RAISED_SEAT_BACK.values());
+                addToTab(output, BCItems.FLAT_SEAT_BACK.values());
+                addToTab(output, BCItems.TALL_SEAT_BACK.values());
+                addToTab(output, BCItems.FANCY_SEAT_BACK.values());
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND.get());
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
