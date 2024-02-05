@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:brown_mangrove_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:mangrove_slab"
+    }
+  },
+  "pattern": [
+    "S",
+    "#"
+  ],
+  "result": {
+    "item": "bibliocraft:brown_mangrove_tall_seat_back"
+  }
+}

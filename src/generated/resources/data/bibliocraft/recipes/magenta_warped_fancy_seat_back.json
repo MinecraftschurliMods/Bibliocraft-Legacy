@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:magenta_warped_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:warped_slab"
+    }
+  },
+  "pattern": [
+    "S#S"
+  ],
+  "result": {
+    "item": "bibliocraft:magenta_warped_fancy_seat_back"
+  }
+}

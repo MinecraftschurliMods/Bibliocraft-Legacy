@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:magenta_cherry_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:cherry_slab"
+    }
+  },
+  "pattern": [
+    "S#S"
+  ],
+  "result": {
+    "item": "bibliocraft:magenta_cherry_fancy_seat_back"
+  }
+}

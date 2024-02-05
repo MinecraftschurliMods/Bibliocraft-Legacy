@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "minecraft:acacia_planks"
+    "R": {
+      "tag": "forge:rods/wooden"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "item": "minecraft:acacia_slab"
     },
     "W": {
       "item": "minecraft:red_wool"
@@ -14,8 +14,8 @@
   },
   "pattern": [
     " W ",
-    "PPP",
-    "S S"
+    " S ",
+    "RSR"
   ],
   "result": {
     "item": "bibliocraft:red_acacia_seat"

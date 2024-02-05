@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "B": {
+    "#": {
       "item": "minecraft:glass_bottle"
     },
     "P": {
@@ -14,7 +14,7 @@
   },
   "pattern": [
     "SSS",
-    "PBP",
+    "P#P",
     "SSS"
   ],
   "result": {

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:blue_jungle_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    }
+  },
+  "pattern": [
+    "S#S"
+  ],
+  "result": {
+    "item": "bibliocraft:blue_jungle_fancy_seat_back"
+  }
+}

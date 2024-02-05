@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:cherry_slab"
+    },
+    "W": {
+      "item": "minecraft:brown_wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    " S ",
+    "R R"
+  ],
+  "result": {
+    "item": "bibliocraft:brown_cherry_raised_seat_back"
+  }
+}

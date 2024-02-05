@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:blue_dark_oak_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    }
+  },
+  "pattern": [
+    "S#S"
+  ],
+  "result": {
+    "item": "bibliocraft:blue_dark_oak_fancy_seat_back"
+  }
+}

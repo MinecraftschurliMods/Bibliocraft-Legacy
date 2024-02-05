@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "item": "minecraft:birch_slab"
+    },
+    "W": {
+      "item": "minecraft:blue_wool"
+    }
+  },
+  "pattern": [
+    "W",
+    "S"
+  ],
+  "result": {
+    "item": "bibliocraft:blue_birch_small_seat_back"
+  }
+}

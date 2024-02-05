@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:green_crimson_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:crimson_slab"
+    }
+  },
+  "pattern": [
+    "S",
+    "#"
+  ],
+  "result": {
+    "item": "bibliocraft:green_crimson_tall_seat_back"
+  }
+}

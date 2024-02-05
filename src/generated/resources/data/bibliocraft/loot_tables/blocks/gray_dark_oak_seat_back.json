@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:gray_dark_oak_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "small"
+              }
+            }
+          ],
+          "name": "bibliocraft:gray_dark_oak_small_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:gray_dark_oak_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "raised"
+              }
+            }
+          ],
+          "name": "bibliocraft:gray_dark_oak_raised_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:gray_dark_oak_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "flat"
+              }
+            }
+          ],
+          "name": "bibliocraft:gray_dark_oak_flat_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:gray_dark_oak_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "tall"
+              }
+            }
+          ],
+          "name": "bibliocraft:gray_dark_oak_tall_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:gray_dark_oak_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "fancy"
+              }
+            }
+          ],
+          "name": "bibliocraft:gray_dark_oak_fancy_seat_back"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bibliocraft:blocks/gray_dark_oak_seat_back"
+}

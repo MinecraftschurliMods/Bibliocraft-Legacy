@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:magenta_spruce_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:spruce_slab"
+    }
+  },
+  "pattern": [
+    "S",
+    "#"
+  ],
+  "result": {
+    "item": "bibliocraft:magenta_spruce_tall_seat_back"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:acacia_slab"
+    },
+    "W": {
+      "item": "minecraft:cyan_wool"
+    }
+  },
+  "pattern": [
+    "RWR",
+    "RSR",
+    "R R"
+  ],
+  "result": {
+    "item": "bibliocraft:cyan_acacia_flat_seat_back"
+  }
+}

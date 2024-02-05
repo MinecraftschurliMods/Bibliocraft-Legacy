@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "item": "minecraft:spruce_slab"
+    },
+    "W": {
+      "item": "minecraft:purple_wool"
+    }
+  },
+  "pattern": [
+    "W",
+    "S"
+  ],
+  "result": {
+    "item": "bibliocraft:purple_spruce_small_seat_back"
+  }
+}

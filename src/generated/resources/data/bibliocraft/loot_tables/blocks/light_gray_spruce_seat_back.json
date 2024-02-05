@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:light_gray_spruce_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "small"
+              }
+            }
+          ],
+          "name": "bibliocraft:light_gray_spruce_small_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:light_gray_spruce_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "raised"
+              }
+            }
+          ],
+          "name": "bibliocraft:light_gray_spruce_raised_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:light_gray_spruce_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "flat"
+              }
+            }
+          ],
+          "name": "bibliocraft:light_gray_spruce_flat_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:light_gray_spruce_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "tall"
+              }
+            }
+          ],
+          "name": "bibliocraft:light_gray_spruce_tall_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:light_gray_spruce_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "fancy"
+              }
+            }
+          ],
+          "name": "bibliocraft:light_gray_spruce_fancy_seat_back"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bibliocraft:blocks/light_gray_spruce_seat_back"
+}

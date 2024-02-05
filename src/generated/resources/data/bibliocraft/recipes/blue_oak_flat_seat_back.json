@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:oak_slab"
+    },
+    "W": {
+      "item": "minecraft:blue_wool"
+    }
+  },
+  "pattern": [
+    "RWR",
+    "RSR",
+    "R R"
+  ],
+  "result": {
+    "item": "bibliocraft:blue_oak_flat_seat_back"
+  }
+}

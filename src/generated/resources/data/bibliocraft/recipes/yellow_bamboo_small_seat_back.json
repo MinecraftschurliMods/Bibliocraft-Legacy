@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "item": "minecraft:bamboo_slab"
+    },
+    "W": {
+      "item": "minecraft:yellow_wool"
+    }
+  },
+  "pattern": [
+    "W",
+    "S"
+  ],
+  "result": {
+    "item": "bibliocraft:yellow_bamboo_small_seat_back"
+  }
+}

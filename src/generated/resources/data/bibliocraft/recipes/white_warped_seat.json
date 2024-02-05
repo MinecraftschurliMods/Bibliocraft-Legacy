@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "minecraft:warped_planks"
+    "R": {
+      "tag": "forge:rods/wooden"
     },
     "S": {
-      "tag": "forge:rods/wooden"
+      "item": "minecraft:warped_slab"
     },
     "W": {
       "item": "minecraft:white_wool"
@@ -14,8 +14,8 @@
   },
   "pattern": [
     " W ",
-    "PPP",
-    "S S"
+    " S ",
+    "RSR"
   ],
   "result": {
     "item": "bibliocraft:white_warped_seat"

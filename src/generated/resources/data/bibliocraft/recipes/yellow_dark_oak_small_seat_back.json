@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    },
+    "W": {
+      "item": "minecraft:yellow_wool"
+    }
+  },
+  "pattern": [
+    "W",
+    "S"
+  ],
+  "result": {
+    "item": "bibliocraft:yellow_dark_oak_small_seat_back"
+  }
+}

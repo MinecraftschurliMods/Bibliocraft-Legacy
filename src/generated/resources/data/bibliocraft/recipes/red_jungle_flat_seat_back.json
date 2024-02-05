@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    },
+    "W": {
+      "item": "minecraft:red_wool"
+    }
+  },
+  "pattern": [
+    "RWR",
+    "RSR",
+    "R R"
+  ],
+  "result": {
+    "item": "bibliocraft:red_jungle_flat_seat_back"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:yellow_acacia_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:acacia_slab"
+    }
+  },
+  "pattern": [
+    "S",
+    "#"
+  ],
+  "result": {
+    "item": "bibliocraft:yellow_acacia_tall_seat_back"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:spruce_slab"
+    },
+    "W": {
+      "item": "minecraft:light_gray_wool"
+    }
+  },
+  "pattern": [
+    "RWR",
+    "RSR",
+    "R R"
+  ],
+  "result": {
+    "item": "bibliocraft:light_gray_spruce_flat_seat_back"
+  }
+}

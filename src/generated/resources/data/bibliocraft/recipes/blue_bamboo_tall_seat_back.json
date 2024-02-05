@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "bibliocraft:blue_bamboo_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:bamboo_slab"
+    }
+  },
+  "pattern": [
+    "S",
+    "#"
+  ],
+  "result": {
+    "item": "bibliocraft:blue_bamboo_tall_seat_back"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "bibliocraft:block/template/seat/flat_seat_back",
+  "textures": {
+    "color": "minecraft:block/magenta_wool",
+    "texture": "minecraft:block/dark_oak_planks"
+  }
+}
