@@ -327,8 +327,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
             if (c == '_') {
                 builder.append(' ');
                 first = true;
-            }
-            if (first) {
+            } else if (first) {
                 builder.append(Character.toUpperCase(c));
                 first = false;
             } else {
