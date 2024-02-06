@@ -2,8 +2,8 @@ package com.github.minecraftschurlimods.bibliocraft.content.seat;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCSimpleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCWaterloggedBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +25,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 @SuppressWarnings("deprecation")
-public class SeatBlock extends BCSimpleBlock {
+public class SeatBlock extends BCWaterloggedBlock {
     public static final BooleanProperty OCCUPIED = BlockStateProperties.OCCUPIED;
     private static final VoxelShape SHAPE = ShapeUtil.combine(
             Shapes.box(0.0625, 0.625, 0.0625, 0.9375, 0.8125, 0.9375),
@@ -68,7 +68,7 @@ public class SeatBlock extends BCSimpleBlock {
 
     public SeatBlock(Properties properties) {
         super(properties);
-        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(OCCUPIED, false));
+        registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, false).setValue(OCCUPIED, false));
     }
 
     @Override
@@ -100,28 +100,28 @@ public class SeatBlock extends BCSimpleBlock {
         BlockState back = level.getBlockState(pos.above());
         if (!(back.getBlock() instanceof SeatBackBlock)) return SHAPE;
         return switch (back.getValue(SeatBackBlock.TYPE)) {
-            case SMALL -> switch (back.getValue(FACING)) {
+            case SMALL -> switch (back.getValue(BCSimpleBlock.FACING)) {
                 case NORTH -> SHAPE_SMALL_NORTH;
                 case EAST -> SHAPE_SMALL_EAST;
                 case SOUTH -> SHAPE_SMALL_SOUTH;
                 case WEST -> SHAPE_SMALL_WEST;
                 default -> SHAPE;
             };
-            case RAISED -> switch (back.getValue(FACING)) {
+            case RAISED -> switch (back.getValue(BCSimpleBlock.FACING)) {
                 case NORTH -> SHAPE_RAISED_NORTH;
                 case EAST -> SHAPE_RAISED_EAST;
                 case SOUTH -> SHAPE_RAISED_SOUTH;
                 case WEST -> SHAPE_RAISED_WEST;
                 default -> SHAPE;
             };
-            case FLAT, TALL -> switch (back.getValue(FACING)) {
+            case FLAT, TALL -> switch (back.getValue(BCSimpleBlock.FACING)) {
                 case NORTH -> SHAPE_FLAT_NORTH;
                 case EAST -> SHAPE_FLAT_EAST;
                 case SOUTH -> SHAPE_FLAT_SOUTH;
                 case WEST -> SHAPE_FLAT_WEST;
                 default -> SHAPE;
             };
-            case FANCY -> switch (back.getValue(FACING)) {
+            case FANCY -> switch (back.getValue(BCSimpleBlock.FACING)) {
                 case NORTH -> SHAPE_FANCY_NORTH;
                 case EAST -> SHAPE_FANCY_EAST;
                 case SOUTH -> SHAPE_FANCY_SOUTH;
@@ -141,6 +141,7 @@ public class SeatBlock extends BCSimpleBlock {
         BlockPos above = pos.above();
         BlockState back = level.getBlockState(above);
         if (back.getBlock() instanceof SeatBackBlock) {
+            Block.dropResources(back, level, above);
             level.setBlockAndUpdate(above, Blocks.AIR.defaultBlockState());
             level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, above, Block.getId(back));
         }
