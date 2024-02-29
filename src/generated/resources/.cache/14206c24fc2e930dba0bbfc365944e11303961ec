@@ -1,4 +1,4 @@
-// 1.20.4	2024-02-29T21:48:16.4303591	Tags for minecraft:item mod id bibliocraft
+// 1.20.4	2024-02-29T22:46:48.1741486	Tags for minecraft:item mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/items/bookcases.json
 8c21eecc9ff3212b039c2ccadcebce2ef5e04510 data/bibliocraft/tags/items/bookcase_books.json
 89057f18fe8255a1a50953beaeaa02f75b41c2b9 data/bibliocraft/tags/items/display_cases.json
@@ -16,5 +16,6 @@ d22758ca7a6685c3be148414b48e5d7aadcb0dfd data/bibliocraft/tags/items/seat_backs/
 9eb908d9f7561d971197435e0258825db37099ae data/bibliocraft/tags/items/seat_backs/tall.json
 b36437d21d0432b2ab7edfd7edff70b4ffa6e53b data/bibliocraft/tags/items/shelves.json
 e6756cdd6fb03cf772eba210ae3f93335e83dcd6 data/bibliocraft/tags/items/sword_pedestal_swords.json
+70a350b86a4e5ad8cd8eb0f62e66e6b83e927781 data/bibliocraft/tags/items/tables.json
 45344246afda217d9e4e32c8437cf25b49cf9e9d data/bibliocraft/tags/items/tool_racks.json
 1b31ef4ac79216db58ec9c632189d50e6af0f69b data/bibliocraft/tags/items/tool_rack_tools.json

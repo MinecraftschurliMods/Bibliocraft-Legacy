@@ -84,6 +84,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         woodenBlockTranslation(provider, woodType, BCBlocks.LABEL, "Label");
         woodenBlockTranslation(provider, woodType, BCBlocks.POTION_SHELF, "Potion Shelf");
         woodenBlockTranslation(provider, woodType, BCBlocks.SHELF, "Shelf");
+        woodenBlockTranslation(provider, woodType, BCBlocks.TABLE, "Table");
         woodenBlockTranslation(provider, woodType, BCBlocks.TOOL_RACK, "Tool Rack");
         for (DyeColor color : DyeColor.values()) {
             coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.DISPLAY_CASE, "Display Case");
@@ -193,6 +194,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         tagAccessor.apply(BCTags.Blocks.LABELS).add(BCBlocks.LABEL.get(woodType));
         tagAccessor.apply(BCTags.Blocks.POTION_SHELVES).add(BCBlocks.POTION_SHELF.get(woodType));
         tagAccessor.apply(BCTags.Blocks.SHELVES).add(BCBlocks.SHELF.get(woodType));
+        tagAccessor.apply(BCTags.Blocks.TABLES).add(BCBlocks.TABLE.get(woodType));
         tagAccessor.apply(BCTags.Blocks.TOOL_RACKS).add(BCBlocks.TOOL_RACK.get(woodType));
         DatagenUtil.addColorVariants(woodType, BCBlocks.DISPLAY_CASE, tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
         DatagenUtil.addColorVariants(woodType, BCBlocks.WALL_DISPLAY_CASE, tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
@@ -207,6 +209,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         tagAccessor.apply(BCTags.Items.LABELS).add(BCItems.LABEL.get(woodType));
         tagAccessor.apply(BCTags.Items.POTION_SHELVES).add(BCItems.POTION_SHELF.get(woodType));
         tagAccessor.apply(BCTags.Items.SHELVES).add(BCItems.SHELF.get(woodType));
+        tagAccessor.apply(BCTags.Items.TABLES).add(BCItems.TABLE.get(woodType));
         tagAccessor.apply(BCTags.Items.TOOL_RACKS).add(BCItems.TOOL_RACK.get(woodType));
         DatagenUtil.addColorVariants(woodType, BCItems.DISPLAY_CASE, tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
         DatagenUtil.addColorVariants(woodType, BCItems.SEAT, tagAccessor.apply(BCTags.Items.SEATS));
@@ -224,6 +227,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         loot(lootTableAdder, BCBlocks.LABEL.get(woodType), DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.POTION_SHELF.get(woodType), DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.SHELF.get(woodType), DatagenUtil::createNameableTable);
+        loot(lootTableAdder, BCBlocks.TABLE.get(woodType), DatagenUtil::createDefaultTable);
         loot(lootTableAdder, BCBlocks.TOOL_RACK.get(woodType), DatagenUtil::createNameableTable);
         for (DyeColor color : DyeColor.values()) {
             loot(lootTableAdder, BCBlocks.DISPLAY_CASE.get(woodType, color), DatagenUtil::createDefaultTable);
@@ -270,6 +274,12 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern("SSS")
+                .define('P', planks)
+                .define('S', slab));
+        shapedRecipe(output, BCItems.TABLE.get(woodType), woodType, builder -> builder
+                .pattern("SSS")
+                .pattern(" P ")
+                .pattern(" P ")
                 .define('P', planks)
                 .define('S', slab));
         shapedRecipe(output, BCItems.TOOL_RACK.get(woodType), woodType, builder -> builder

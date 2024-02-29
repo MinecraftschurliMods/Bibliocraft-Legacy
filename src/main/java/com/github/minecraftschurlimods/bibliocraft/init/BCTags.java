@@ -18,6 +18,7 @@ public interface BCTags {
         TagKey<Block> SEATS                   = tag("seats");
         TagKey<Block> SEAT_BACKS              = tag("seat_backs");
         TagKey<Block> SHELVES                 = tag("shelves");
+        TagKey<Block> TABLES                  = tag("tables");
         TagKey<Block> TOOL_RACKS              = tag("tool_racks");
 
         /**
@@ -44,6 +45,7 @@ public interface BCTags {
         TagKey<Item> SEAT_BACKS_FANCY        = tag("seat_backs/fancy");
         TagKey<Item> SEAT_BACKS              = tag("seat_backs");
         TagKey<Item> SHELVES                 = tag("shelves");
+        TagKey<Item> TABLES                  = tag("tables");
         TagKey<Item> TOOL_RACKS              = tag("tool_racks");
         TagKey<Item> BOOKCASE_BOOKS          = tag("bookcase_books");
         TagKey<Item> POTION_SHELF_POTIONS    = tag("potion_shelf_potions");
