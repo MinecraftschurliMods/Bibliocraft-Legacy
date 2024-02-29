@@ -102,7 +102,7 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
             for (TableBlock.Type type : TableBlock.Type.values()) {
                 Map<DyeColor, BakedModel> map = new HashMap<>();
                 for (DyeColor color : DyeColor.values()) {
-                    map.put(color, models.getModel(new ResourceLocation(Bibliocraft.MOD_ID, "table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName())));
+                    map.put(color, models.getModel(new ResourceLocation(Bibliocraft.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName())));
                 }
                 CLOTH_MAP.put(type, map);
             }
@@ -154,6 +154,7 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
         }
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public static class LoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
         private final Map<TableBlock.Type, JsonObject> modelMap = new HashMap<>();
         private ResourceLocation particle;

@@ -19,20 +19,21 @@ public class TableBlockEntity extends BCBlockEntity {
         super(BCBlockEntities.TABLE.get(), 2, pos, state);
     }
 
-    public ItemStack getCarpet() {
-        return getItem(1);
-    }
-
-    public void setCarpet(ItemStack stack) {
-        setItem(1, stack);
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        super.setItem(slot, stack);
+        if (slot == 1) {
+            requestModelDataUpdate();
+        }
     }
 
     @Override
     public ModelData getModelData() {
         ModelData.Builder builder = ModelData.builder();
         builder.with(TYPE_PROPERTY, getBlockState().getValue(TableBlock.TYPE));
-        if (getCarpet().getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof WoolCarpetBlock carpet) {
-            builder.with(COLOR_PROPERTY, carpet.getColor());
+        DyeColor color = TableBlock.getCarpetColor(getItem(1));
+        if (color != null) {
+            builder.with(COLOR_PROPERTY, color);
         }
         return builder.build();
     }

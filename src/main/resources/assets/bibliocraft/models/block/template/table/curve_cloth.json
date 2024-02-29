@@ -57,19 +57,6 @@
 				"up": {"uv": [0, 0, 10, 0], "texture": "#missing"},
 				"down": {"uv": [0, 0, 10, 0], "texture": "#missing"}
 			}
-		},
-		{
-			"name": "cloth_west",
-			"from": [0, 13, 0],
-			"to": [0, 16, 13],
-			"faces": {
-				"north": {"uv": [0, 0, 0, 3], "texture": "#missing"},
-				"east": {"uv": [3, 0, 16, 3], "texture": "#1"},
-				"south": {"uv": [0, 0, 0, 3], "texture": "#missing"},
-				"west": {"uv": [0, 0, 13, 3], "texture": "#1"},
-				"up": {"uv": [0, 0, 0, 10], "texture": "#missing"},
-				"down": {"uv": [0, 0, 0, 10], "texture": "#missing"}
-			}
 		}
 	]
 }

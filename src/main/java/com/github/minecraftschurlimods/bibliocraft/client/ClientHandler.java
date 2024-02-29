@@ -49,9 +49,6 @@ public final class ClientHandler {
         @SubscribeEvent
         private static void registerAdditional(ModelEvent.RegisterAdditional event) {
             for (TableBlock.Type type : TableBlock.Type.values()) {
-                for (BibliocraftWoodType woodType : BibliocraftWoodTypeRegistry.get().getAll()) {
-                    event.register(new ResourceLocation(Bibliocraft.MOD_ID, "block/" + woodType.getRegistrationPrefix() + "_table_" + type.getSerializedName()));
-                }
                 for (DyeColor color : DyeColor.values()) {
                     event.register(new ResourceLocation(Bibliocraft.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()));
                 }
