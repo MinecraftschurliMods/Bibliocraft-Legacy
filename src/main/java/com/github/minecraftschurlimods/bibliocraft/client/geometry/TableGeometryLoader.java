@@ -1,8 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.geometry;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
-import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.google.gson.JsonDeserializationContext;
@@ -21,17 +19,12 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.WoolCarpetBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
 import net.neoforged.neoforge.client.model.SimpleModelState;
@@ -162,24 +155,20 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
     }
 
     public static class LoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
-        private final Map<TableBlock.Type, ResourceLocation> modelMap = new HashMap<>();
+        private final Map<TableBlock.Type, JsonObject> modelMap = new HashMap<>();
 
         public LoaderBuilder(BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
             super(new ResourceLocation(Bibliocraft.MOD_ID, "table"), parent, existingFileHelper, false);
         }
 
-        public LoaderBuilder withModelForType(TableBlock.Type type, ResourceLocation model) {
+        public LoaderBuilder withModelForType(TableBlock.Type type, JsonObject model) {
             modelMap.put(type, model);
             return this;
         }
 
         @Override
         public JsonObject toJson(JsonObject json) {
-            modelMap.forEach((k, v) -> {
-                JsonObject model = new JsonObject();
-                model.addProperty("parent", v.toString());
-                json.add(k.getSerializedName(), model);
-            });
+            modelMap.forEach((k, v) -> json.add(k.getSerializedName(), v));
             return super.toJson(json);
         }
     }

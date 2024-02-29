@@ -14,6 +14,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
+import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -124,9 +125,12 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         TableGeometryLoader.LoaderBuilder tableBuilder = models.getBuilder(prefix + "_table").customLoader(TableGeometryLoader.LoaderBuilder::new);
         for (TableBlock.Type type : TableBlock.Type.values()) {
             String name = type.getSerializedName();
-            String fullName = prefix + "_table_" + name;
-            models.withExistingParent(fullName, bcLoc("block/template/table/" + name)).texture("texture", woodType.getTexture());
-            tableBuilder.withModelForType(type, provider.modLoc("block/" + fullName));
+            JsonObject model = new JsonObject();
+            model.addProperty("parent", bcLoc("block/template/table/" + name).toString());
+            JsonObject textures = new JsonObject();
+            textures.addProperty("texture", woodType.getTexture().toString());
+            model.add("textures", textures);
+            tableBuilder.withModelForType(type, model);
         }
         models.withExistingParent(prefix + "_table_inventory", bcLoc("block/template/table/none")).texture("texture", woodType.getTexture());
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(provider.modLoc(prefix + "_table")));

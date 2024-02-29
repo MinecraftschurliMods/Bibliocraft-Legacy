@@ -1,21 +1,39 @@
 {
   "all": {
-    "parent": "bibliocraft:block/oak_table_all"
+    "parent": "bibliocraft:block/template/table/all",
+    "textures": {
+      "texture": "minecraft:block/oak_planks"
+    }
   },
   "curve": {
-    "parent": "bibliocraft:block/oak_table_curve"
+    "parent": "bibliocraft:block/template/table/curve",
+    "textures": {
+      "texture": "minecraft:block/oak_planks"
+    }
   },
   "loader": "bibliocraft:table",
   "none": {
-    "parent": "bibliocraft:block/oak_table_none"
+    "parent": "bibliocraft:block/template/table/none",
+    "textures": {
+      "texture": "minecraft:block/oak_planks"
+    }
   },
   "one": {
-    "parent": "bibliocraft:block/oak_table_one"
+    "parent": "bibliocraft:block/template/table/one",
+    "textures": {
+      "texture": "minecraft:block/oak_planks"
+    }
   },
   "straight": {
-    "parent": "bibliocraft:block/oak_table_straight"
+    "parent": "bibliocraft:block/template/table/straight",
+    "textures": {
+      "texture": "minecraft:block/oak_planks"
+    }
   },
   "three": {
-    "parent": "bibliocraft:block/oak_table_three"
+    "parent": "bibliocraft:block/template/table/three",
+    "textures": {
+      "texture": "minecraft:block/oak_planks"
+    }
   }
 }
