@@ -10,6 +10,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
@@ -26,6 +27,7 @@ public interface BCBlocks {
     WoodTypeDeferredHolder<Block, LabelBlock>           LABEL             = woodenBlock("label",             LabelBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
     WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf",             ShelfBlock::new);
+    WoodTypeDeferredHolder<Block, TableBlock>           TABLE             = woodenBlock("table",             TableBlock::new);
     WoodTypeDeferredHolder<Block, ToolRackBlock>        TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
     ColoredWoodTypeDeferredHolder<Block, DisplayCaseBlock>     DISPLAY_CASE      = coloredWoodenBlock("display_case",      DisplayCaseBlock::new);
     ColoredWoodTypeDeferredHolder<Block, WallDisplayCaseBlock> WALL_DISPLAY_CASE = coloredWoodenBlock("wall_display_case", WallDisplayCaseBlock::new);

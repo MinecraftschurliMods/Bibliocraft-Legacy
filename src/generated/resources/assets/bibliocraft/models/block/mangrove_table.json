@@ -1,0 +1,21 @@
+{
+  "all": {
+    "parent": "bibliocraft:block/mangrove_table_all"
+  },
+  "curve": {
+    "parent": "bibliocraft:block/mangrove_table_curve"
+  },
+  "loader": "bibliocraft:table",
+  "none": {
+    "parent": "bibliocraft:block/mangrove_table_none"
+  },
+  "one": {
+    "parent": "bibliocraft:block/mangrove_table_one"
+  },
+  "straight": {
+    "parent": "bibliocraft:block/mangrove_table_straight"
+  },
+  "three": {
+    "parent": "bibliocraft:block/mangrove_table_three"
+  }
+}

@@ -1,0 +1,101 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"1": "#color",
+		"particle": "#color"
+	},
+	"elements": [
+		{
+			"name": "cloth_1",
+			"from": [3, 16, 0],
+			"to": [13, 16, 3],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"up": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"down": {"uv": [3, 0, 13, 3], "texture": "#1"}
+			}
+		},
+		{
+			"name": "cloth_2",
+			"from": [0, 16, 3],
+			"to": [16, 16, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"up": {"uv": [0, 3, 16, 13], "texture": "#1"},
+				"down": {"uv": [0, 3, 16, 13], "texture": "#1"}
+			}
+		},
+		{
+			"name": "cloth_3",
+			"from": [3, 16, 13],
+			"to": [13, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"up": {"uv": [3, 13, 13, 16], "texture": "#1"},
+				"down": {"uv": [3, 13, 13, 16], "texture": "#1"}
+			}
+		},
+		{
+			"name": "cloth_north",
+			"from": [3, 13, 0],
+			"to": [13, 16, 0],
+			"faces": {
+				"north": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"east": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"south": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"west": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"up": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"down": {"uv": [0, 0, 10, 0], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "cloth_east",
+			"from": [16, 13, 3],
+			"to": [16, 16, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"east": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"south": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"west": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"up": {"uv": [0, 0, 0, 10], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0, 10], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "cloth_south",
+			"from": [3, 13, 16],
+			"to": [13, 16, 16],
+			"faces": {
+				"north": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"east": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"south": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"west": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"up": {"uv": [0, 0, 10, 0], "texture": "#missing"},
+				"down": {"uv": [0, 0, 10, 0], "texture": "#missing"}
+			}
+		},
+		{
+			"name": "cloth_west",
+			"from": [0, 13, 3],
+			"to": [0, 16, 13],
+			"faces": {
+				"north": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"east": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"south": {"uv": [0, 0, 0, 3], "texture": "#missing"},
+				"west": {"uv": [3, 0, 13, 3], "texture": "#1"},
+				"up": {"uv": [0, 0, 0, 10], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0, 10], "texture": "#missing"}
+			}
+		}
+	]
+}

@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.client.model;
+package com.github.minecraftschurlimods.bibliocraft.client.geometry;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
@@ -50,8 +50,7 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
         BlockModel base = context.deserialize(jsonObject, BlockModel.class);
         BlockModel[] books = new BlockModel[16];
         for (int i = 0; i < 16; i++) {
-            String book = "book_" + i;
-            books[i] = context.deserialize(GsonHelper.getAsJsonObject(jsonObject, book), BlockModel.class);
+            books[i] = context.deserialize(GsonHelper.getAsJsonObject(jsonObject, "book_" + i), BlockModel.class);
         }
         return new BookcaseGeometry(base, books);
     }

@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/table/straight",
+  "textures": {
+    "texture": "minecraft:block/spruce_planks"
+  }
+}

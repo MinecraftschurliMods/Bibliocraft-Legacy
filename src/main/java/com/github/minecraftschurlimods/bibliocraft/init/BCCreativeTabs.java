@@ -23,6 +23,7 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FANCY_ARMOR_STAND.values());
                 addToTab(output, BCItems.POTION_SHELF.values());
                 addToTab(output, BCItems.SHELF.values());
+                addToTab(output, BCItems.TABLE.values());
                 addToTab(output, BCItems.TOOL_RACK.values());
                 addToTab(output, BCItems.DISPLAY_CASE.values());
                 addToTab(output, BCItems.SEAT.values());

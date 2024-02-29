@@ -7,6 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlockEntit
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.world.level.block.Block;
@@ -25,6 +26,7 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<PotionShelfBlockEntity>>     POTION_SHELF      = register("potion_shelf",      PotionShelfBlockEntity::new,     BCBlocks.POTION_SHELF.holders());
     Supplier<BlockEntityType<ShelfBlockEntity>>           SHELF             = register("shelf",             ShelfBlockEntity::new,           BCBlocks.SHELF.holders());
     Supplier<BlockEntityType<SwordPedestalBlockEntity>>   SWORD_PEDESTAL    = register("sword_pedestal",    SwordPedestalBlockEntity::new,   BCBlocks.SWORD_PEDESTAL);
+    Supplier<BlockEntityType<TableBlockEntity>>           TABLE             = register("table",             TableBlockEntity::new,           BCBlocks.TABLE.holders());
     Supplier<BlockEntityType<ToolRackBlockEntity>>        TOOL_RACK         = register("tool_rack",         ToolRackBlockEntity::new,        BCBlocks.TOOL_RACK.holders());
 
     /**

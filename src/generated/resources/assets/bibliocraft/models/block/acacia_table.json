@@ -1,0 +1,21 @@
+{
+  "all": {
+    "parent": "bibliocraft:block/acacia_table_all"
+  },
+  "curve": {
+    "parent": "bibliocraft:block/acacia_table_curve"
+  },
+  "loader": "bibliocraft:table",
+  "none": {
+    "parent": "bibliocraft:block/acacia_table_none"
+  },
+  "one": {
+    "parent": "bibliocraft:block/acacia_table_one"
+  },
+  "straight": {
+    "parent": "bibliocraft:block/acacia_table_straight"
+  },
+  "three": {
+    "parent": "bibliocraft:block/acacia_table_three"
+  }
+}

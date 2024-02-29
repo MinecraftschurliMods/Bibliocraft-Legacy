@@ -3,9 +3,11 @@ package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.client.geometry.TableGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
+import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
@@ -34,6 +36,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.neoforged.neoforge.client.model.generators.BlockModelProvider;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
@@ -47,11 +50,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
+@SuppressWarnings("UnusedReturnValue")
 public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     private static final BibliocraftDatagenHelperImpl INSTANCE = new BibliocraftDatagenHelperImpl();
     private static final List<BibliocraftWoodType> WOOD_TYPES = new ArrayList<>();
@@ -98,13 +100,14 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     @Override
     public void generateBlockStatesFor(BlockStateProvider provider, BibliocraftWoodType woodType) {
         String prefix = woodType.getRegistrationPrefix();
+        BlockModelProvider models = provider.models();
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.BOOKCASE.holder(woodType),
                 prefix + "_bookcase",
                 bcLoc("block/template/bookcase/bookcase"),
                 woodType.getTexture());
         DatagenUtil.doubleHighHorizontalBlockModel(provider, BCBlocks.FANCY_ARMOR_STAND.holder(woodType),
-                provider.models().withExistingParent(prefix + "_fancy_armor_stand_bottom", bcLoc("block/template/fancy_armor_stand/bottom")).texture("texture", woodType.getTexture()),
-                provider.models().withExistingParent(prefix + "_fancy_armor_stand_top", bcLoc("block/template/fancy_armor_stand/top")).texture("texture", woodType.getTexture()),
+                models.withExistingParent(prefix + "_fancy_armor_stand_bottom", bcLoc("block/template/fancy_armor_stand/bottom")).texture("texture", woodType.getTexture()),
+                models.withExistingParent(prefix + "_fancy_armor_stand_top", bcLoc("block/template/fancy_armor_stand/top")).texture("texture", woodType.getTexture()),
                 true);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.LABEL.holder(woodType),
                 prefix + "_label",
@@ -118,6 +121,15 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 prefix + "_shelf",
                 bcLoc("block/template/shelf"),
                 woodType.getTexture());
+        TableGeometryLoader.LoaderBuilder tableBuilder = models.getBuilder(prefix + "_table").customLoader(TableGeometryLoader.LoaderBuilder::new);
+        for (TableBlock.Type type : TableBlock.Type.values()) {
+            String name = type.getSerializedName();
+            String fullName = prefix + "_table_" + name;
+            models.withExistingParent(fullName, bcLoc("block/template/table/" + name)).texture("texture", woodType.getTexture());
+            tableBuilder.withModelForType(type, provider.modLoc("block/" + fullName));
+        }
+        models.withExistingParent(prefix + "_table_inventory", bcLoc("block/template/table/none")).texture("texture", woodType.getTexture());
+        DatagenUtil.horizontalBlockModel(provider, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(provider.modLoc(prefix + "_table")));
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.TOOL_RACK.holder(woodType),
                 prefix + "_tool_rack",
                 bcLoc("block/template/tool_rack"),
@@ -127,24 +139,24 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
             DeferredHolder<Block, ?> holder = BCBlocks.DISPLAY_CASE.holder(woodType, color);
             String path = holder.getId().getPath();
             DatagenUtil.openClosedHorizontalBlockModel(provider, holder,
-                    provider.models().withExistingParent(path + "_open", bcLoc("block/template/display_case/open")).texture("texture", woodType.getTexture()).texture("color", wool),
-                    provider.models().withExistingParent(path + "_closed", bcLoc("block/template/display_case/closed")).texture("texture", woodType.getTexture()).texture("color", wool),
+                    models.withExistingParent(path + "_open", bcLoc("block/template/display_case/open")).texture("texture", woodType.getTexture()).texture("color", wool),
+                    models.withExistingParent(path + "_closed", bcLoc("block/template/display_case/closed")).texture("texture", woodType.getTexture()).texture("color", wool),
                     false);
             holder = BCBlocks.WALL_DISPLAY_CASE.holder(woodType, color);
             path = holder.getId().getPath();
             DatagenUtil.openClosedHorizontalBlockModel(provider, holder,
-                    provider.models().withExistingParent(path + "_open", bcLoc("block/template/display_case/wall_open")).texture("texture", woodType.getTexture()).texture("color", wool),
-                    provider.models().withExistingParent(path + "_closed", bcLoc("block/template/display_case/wall_closed")).texture("texture", woodType.getTexture()).texture("color", wool),
+                    models.withExistingParent(path + "_open", bcLoc("block/template/display_case/wall_open")).texture("texture", woodType.getTexture()).texture("color", wool),
+                    models.withExistingParent(path + "_closed", bcLoc("block/template/display_case/wall_closed")).texture("texture", woodType.getTexture()).texture("color", wool),
                     true);
             holder = BCBlocks.SEAT.holder(woodType, color);
             path = holder.getId().getPath();
             final String finalPath = path; // I love Java
             provider.getVariantBuilder(holder.get()).forAllStates(state -> ConfiguredModel.builder()
-                    .modelFile(provider.models().withExistingParent(finalPath, bcLoc("block/template/seat/seat")).texture("texture", woodType.getTexture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color)))
+                    .modelFile(models.withExistingParent(finalPath, bcLoc("block/template/seat/seat")).texture("texture", woodType.getTexture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color)))
                     .build());
             DatagenUtil.horizontalBlockModel(provider, BCBlocks.SEAT_BACK.holder(woodType, color), state -> {
                 String suffix = state.getValue(SeatBackBlock.TYPE).getSerializedName() + "_seat_back";
-                return provider.models().withExistingParent(color.getName() + "_" + woodType.getRegistrationPrefix() + "_" + suffix, new ResourceLocation(Bibliocraft.MOD_ID, "block/template/seat/" + suffix)).texture("texture", woodType.getTexture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color));
+                return models.withExistingParent(color.getName() + "_" + woodType.getRegistrationPrefix() + "_" + suffix, new ResourceLocation(Bibliocraft.MOD_ID, "block/template/seat/" + suffix)).texture("texture", woodType.getTexture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color));
             }, true);
         }
     }
@@ -157,9 +169,10 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         withParentBlock(provider, prefix + "_label");
         withParentBlock(provider, prefix + "_potion_shelf");
         withParentBlock(provider, prefix + "_shelf");
+        withParent(provider, prefix + "_table", n -> provider.modLoc("block/" + n + "_inventory"));
         withParentBlock(provider, prefix + "_tool_rack");
         for (DyeColor color : DyeColor.values()) {
-            withParent(provider, BCItems.DISPLAY_CASE.holder(woodType, color).getId().getPath(), n -> bcLoc("block/" + n + "_open"));
+            withParent(provider, BCItems.DISPLAY_CASE.holder(woodType, color).getId().getPath(), n -> provider.modLoc("block/" + n + "_open"));
             withParentBlock(provider, BCItems.SEAT.holder(woodType, color).getId().getPath());
             seatBackItemModel(provider, BCItems.SMALL_SEAT_BACK.get(woodType, color));
             seatBackItemModel(provider, BCItems.RAISED_SEAT_BACK.get(woodType, color));

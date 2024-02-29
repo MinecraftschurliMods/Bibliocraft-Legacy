@@ -1,6 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
@@ -8,9 +10,11 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
-import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseGeometryLoader;
+import com.github.minecraftschurlimods.bibliocraft.client.geometry.BookcaseGeometryLoader;
+import com.github.minecraftschurlimods.bibliocraft.client.geometry.TableGeometryLoader;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
@@ -43,8 +47,26 @@ public final class ClientHandler {
         }
 
         @SubscribeEvent
+        private static void registerAdditional(ModelEvent.RegisterAdditional event) {
+            for (TableBlock.Type type : TableBlock.Type.values()) {
+                for (BibliocraftWoodType woodType : BibliocraftWoodTypeRegistry.get().getAll()) {
+                    event.register(new ResourceLocation(Bibliocraft.MOD_ID, "block/" + woodType.getRegistrationPrefix() + "_table_" + type.getSerializedName()));
+                }
+                for (DyeColor color : DyeColor.values()) {
+                    event.register(new ResourceLocation(Bibliocraft.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()));
+                }
+            }
+        }
+
+        @SubscribeEvent
+        private static void bakingCompleted(ModelEvent.BakingCompleted event) {
+            TableGeometryLoader.TableDynamicModel.rebuildClothModelCache();
+        }
+
+        @SubscribeEvent
         private static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
             event.register(new ResourceLocation(Bibliocraft.MOD_ID, "bookcase"), BookcaseGeometryLoader.INSTANCE);
+            event.register(new ResourceLocation(Bibliocraft.MOD_ID, "table"), TableGeometryLoader.INSTANCE);
         }
 
         @SubscribeEvent

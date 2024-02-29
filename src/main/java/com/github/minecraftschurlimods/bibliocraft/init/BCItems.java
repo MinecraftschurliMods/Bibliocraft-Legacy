@@ -23,6 +23,7 @@ public interface BCItems {
     WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",        BCBlocks.LABEL);
     WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf", BCBlocks.POTION_SHELF);
     WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",        BCBlocks.SHELF);
+    WoodTypeDeferredHolder<Item, BlockItem>           TABLE             = woodenBlock("table",        BCBlocks.TABLE);
     WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",    BCBlocks.TOOL_RACK);
     ColoredWoodTypeDeferredHolder<Item, BlockItem>    DISPLAY_CASE      = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "display_case", DisplayCaseItem::new);
     ColoredWoodTypeDeferredHolder<Item, BlockItem>    SEAT              = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "seat", (wood, color) -> new ColoredWoodTypeBlockItem(BCBlocks.SEAT, wood, color));

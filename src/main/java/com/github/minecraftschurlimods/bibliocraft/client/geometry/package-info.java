@@ -1,6 +1,6 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-package com.github.minecraftschurlimods.bibliocraft.client.model;
+package com.github.minecraftschurlimods.bibliocraft.client.geometry;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 
