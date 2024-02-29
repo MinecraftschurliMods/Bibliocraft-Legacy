@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
+import java.util.Locale;
+
 public class TableBlock extends BCBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
 
@@ -20,7 +22,7 @@ public class TableBlock extends BCBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;//new TableBlockEntity(pos, state);
+        return new TableBlockEntity(pos, state);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class TableBlock extends BCBlock {
 
         @Override
         public String getSerializedName() {
-            return name().toLowerCase();
+            return name().toLowerCase(Locale.ROOT);
         }
     }
 }

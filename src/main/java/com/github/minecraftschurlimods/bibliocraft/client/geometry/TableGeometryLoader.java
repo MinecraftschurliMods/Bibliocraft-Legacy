@@ -1,6 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client.geometry;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.google.gson.JsonDeserializationContext;
@@ -19,12 +21,17 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.WoolCarpetBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
 import net.neoforged.neoforge.client.model.SimpleModelState;
@@ -111,7 +118,7 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
         @Override
         public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
             TableBlock.Type type = extraData.get(TableBlockEntity.TYPE_PROPERTY);
-                List<BakedQuad> quads = new ArrayList<>(baseMap.get(type).getQuads(state, side, rand, extraData, renderType));
+            List<BakedQuad> quads = new ArrayList<>(baseMap.get(type).getQuads(state, side, rand, extraData, renderType));
             if (extraData.has(TableBlockEntity.COLOR_PROPERTY)) {
                 quads.addAll(CLOTH_MAP.get(type).get(extraData.get(TableBlockEntity.COLOR_PROPERTY)).getQuads(state, side, rand, extraData, renderType));
             }

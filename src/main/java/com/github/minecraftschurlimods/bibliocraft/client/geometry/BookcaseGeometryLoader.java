@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.client.geometry;
 
-import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
@@ -16,14 +15,11 @@ import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.ElementsModel;
 import net.neoforged.neoforge.client.model.IDynamicBakedModel;
@@ -147,18 +143,6 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
         @Override
         public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
             return base.applyTransform(transformType, poseStack, applyLeftHandTransform);
-        }
-
-        @Override
-        public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData) {
-            if (!(state.getBlock() instanceof BookcaseBlock)) return modelData;
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (!(blockEntity instanceof BookcaseBlockEntity be)) return modelData;
-            ModelData.Builder builder = ModelData.builder();
-            for (int i = 0; i < BookcaseBlockEntity.MODEL_PROPERTIES.size(); i++) {
-                builder.with(BookcaseBlockEntity.MODEL_PROPERTIES.get(i), !be.getItem(i).isEmpty());
-            }
-            return builder.build();
         }
     }
 }

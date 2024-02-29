@@ -2,6 +2,8 @@ package com.github.minecraftschurlimods.bibliocraft.content.seat;
 
 import net.minecraft.util.StringRepresentable;
 
+import java.util.Locale;
+
 public enum SeatBackType implements StringRepresentable {
     SMALL,
     RAISED,
@@ -11,6 +13,6 @@ public enum SeatBackType implements StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ROOT);
     }
 }
