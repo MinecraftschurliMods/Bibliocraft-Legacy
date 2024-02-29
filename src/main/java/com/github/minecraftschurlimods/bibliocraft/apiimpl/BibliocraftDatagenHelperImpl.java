@@ -122,7 +122,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 prefix + "_shelf",
                 bcLoc("block/template/shelf"),
                 woodType.getTexture());
-        TableGeometryLoader.LoaderBuilder tableBuilder = models.getBuilder(prefix + "_table").customLoader(TableGeometryLoader.LoaderBuilder::new);
+        TableGeometryLoader.LoaderBuilder tableBuilder = models.getBuilder(prefix + "_table").customLoader(TableGeometryLoader.LoaderBuilder::new).withParticle(woodType.getTexture());
         for (TableBlock.Type type : TableBlock.Type.values()) {
             String name = type.getSerializedName();
             JsonObject model = new JsonObject();

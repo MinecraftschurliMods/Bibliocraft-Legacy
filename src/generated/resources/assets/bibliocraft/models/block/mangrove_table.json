@@ -30,6 +30,9 @@
       "texture": "minecraft:block/mangrove_planks"
     }
   },
+  "textures": {
+    "particle": "minecraft:block/mangrove_planks"
+  },
   "three": {
     "parent": "bibliocraft:block/template/table/three",
     "textures": {

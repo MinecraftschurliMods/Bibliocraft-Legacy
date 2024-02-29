@@ -30,6 +30,9 @@
       "texture": "minecraft:block/birch_planks"
     }
   },
+  "textures": {
+    "particle": "minecraft:block/birch_planks"
+  },
   "three": {
     "parent": "bibliocraft:block/template/table/three",
     "textures": {

@@ -156,6 +156,7 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
 
     public static class LoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
         private final Map<TableBlock.Type, JsonObject> modelMap = new HashMap<>();
+        private ResourceLocation particle;
 
         public LoaderBuilder(BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
             super(new ResourceLocation(Bibliocraft.MOD_ID, "table"), parent, existingFileHelper, false);
@@ -166,8 +167,17 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
             return this;
         }
 
+        public LoaderBuilder withParticle(ResourceLocation particle) {
+            this.particle = particle;
+            return this;
+        }
+
         @Override
         public JsonObject toJson(JsonObject json) {
+            if (particle == null) throw new IllegalStateException("Block particle was not specified!");
+            JsonObject textures = new JsonObject();
+            textures.addProperty("particle", particle.toString());
+            json.add("textures", textures);
             modelMap.forEach((k, v) -> json.add(k.getSerializedName(), v));
             return super.toJson(json);
         }

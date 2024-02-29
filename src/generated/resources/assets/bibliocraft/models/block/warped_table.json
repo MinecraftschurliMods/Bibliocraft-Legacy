@@ -30,6 +30,9 @@
       "texture": "minecraft:block/warped_planks"
     }
   },
+  "textures": {
+    "particle": "minecraft:block/warped_planks"
+  },
   "three": {
     "parent": "bibliocraft:block/template/table/three",
     "textures": {

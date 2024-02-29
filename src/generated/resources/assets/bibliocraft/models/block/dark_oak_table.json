@@ -30,6 +30,9 @@
       "texture": "minecraft:block/dark_oak_planks"
     }
   },
+  "textures": {
+    "particle": "minecraft:block/dark_oak_planks"
+  },
   "three": {
     "parent": "bibliocraft:block/template/table/three",
     "textures": {

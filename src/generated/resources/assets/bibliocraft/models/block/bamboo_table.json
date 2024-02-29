@@ -30,6 +30,9 @@
       "texture": "minecraft:block/bamboo_planks"
     }
   },
+  "textures": {
+    "particle": "minecraft:block/bamboo_planks"
+  },
   "three": {
     "parent": "bibliocraft:block/template/table/three",
     "textures": {

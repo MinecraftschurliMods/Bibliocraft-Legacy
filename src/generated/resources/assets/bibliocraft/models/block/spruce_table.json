@@ -30,6 +30,9 @@
       "texture": "minecraft:block/spruce_planks"
     }
   },
+  "textures": {
+    "particle": "minecraft:block/spruce_planks"
+  },
   "three": {
     "parent": "bibliocraft:block/template/table/three",
     "textures": {

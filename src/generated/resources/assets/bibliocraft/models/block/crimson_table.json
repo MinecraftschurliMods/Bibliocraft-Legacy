@@ -30,6 +30,9 @@
       "texture": "minecraft:block/crimson_planks"
     }
   },
+  "textures": {
+    "particle": "minecraft:block/crimson_planks"
+  },
   "three": {
     "parent": "bibliocraft:block/template/table/three",
     "textures": {
