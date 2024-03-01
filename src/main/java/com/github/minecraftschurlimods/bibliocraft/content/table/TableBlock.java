@@ -4,6 +4,8 @@ import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,9 +13,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.WoolCarpetBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -21,12 +27,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 public class TableBlock extends BCBlock {
@@ -109,13 +118,25 @@ public class TableBlock extends BCBlock {
     }
 
     @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        return getNewState(level, pos, Objects.requireNonNull(super.getStateForPlacement(context)));
+    }
+
+    @Override
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+        return getNewState(level, pos, defaultBlockState());
+    }
+
+    @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof TableBlockEntity table)) return super.use(state, level, pos, player, hand, hit);
         Direction direction = hit.getDirection();
         if (direction == Direction.DOWN) return super.use(state, level, pos, player, hand, hit);
         ItemStack stack = player.getItemInHand(hand);
-        boolean useCarpet = direction != Direction.UP && (getCarpetColor(stack) != null || stack.isEmpty());
+        boolean useCarpet = direction != Direction.UP && (getCarpetColor(stack) != null || (stack.isEmpty() && !table.getItem(1).isEmpty()));
         ItemStack originalStack = table.getItem(useCarpet ? 1 : 0);
         if (ItemStack.isSameItem(stack, originalStack)) return InteractionResult.FAIL;
         table.setItem(useCarpet ? 1 : 0, stack.copyWithCount(1));
@@ -128,6 +149,38 @@ public class TableBlock extends BCBlock {
             }
         }
         return InteractionResult.SUCCESS;
+    }
+
+    private BlockState getNewState(LevelAccessor level, BlockPos pos, BlockState state) {
+        boolean north = level.getBlockState(pos.north()).getBlock() instanceof TableBlock;
+        boolean east = level.getBlockState(pos.east()).getBlock() instanceof TableBlock;
+        boolean south = level.getBlockState(pos.south()).getBlock() instanceof TableBlock;
+        boolean west = level.getBlockState(pos.west()).getBlock() instanceof TableBlock;
+        if (north && east && south && west) return state.setValue(TYPE, Type.ALL);
+        if (north && south && west) return state.setValue(TYPE, Type.THREE).setValue(FACING, Direction.WEST);
+        if (east && west && north) return state.setValue(TYPE, Type.THREE).setValue(FACING, Direction.NORTH);
+        if (south && north && east) return state.setValue(TYPE, Type.THREE).setValue(FACING, Direction.EAST);
+        if (west && east && south) return state.setValue(TYPE, Type.THREE).setValue(FACING, Direction.SOUTH);
+        if (north && south) return state.setValue(TYPE, Type.STRAIGHT).setValue(FACING, Direction.NORTH);
+        if (east && west) return state.setValue(TYPE, Type.STRAIGHT).setValue(FACING, Direction.EAST);
+        if (north && east) return state.setValue(TYPE, Type.CURVE).setValue(FACING, Direction.EAST);
+        if (east && south) return state.setValue(TYPE, Type.CURVE).setValue(FACING, Direction.SOUTH);
+        if (south && west) return state.setValue(TYPE, Type.CURVE).setValue(FACING, Direction.WEST);
+        if (west && north) return state.setValue(TYPE, Type.CURVE).setValue(FACING, Direction.NORTH);
+        if (north) return state.setValue(TYPE, Type.ONE).setValue(FACING, Direction.NORTH);
+        if (east) return state.setValue(TYPE, Type.ONE).setValue(FACING, Direction.EAST);
+        if (south) return state.setValue(TYPE, Type.ONE).setValue(FACING, Direction.SOUTH);
+        if (west) return state.setValue(TYPE, Type.ONE).setValue(FACING, Direction.WEST);
+        return state;
+    }
+
+    @Override
+    public void onBlockStateChange(LevelReader level, BlockPos pos, BlockState oldState, BlockState newState) {
+        super.onBlockStateChange(level, pos, oldState, newState);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof TableBlockEntity) {
+            blockEntity.requestModelDataUpdate();
+        }
     }
 
     public enum Type implements StringRepresentable {
