@@ -134,7 +134,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
             tableBuilder.withModelForType(type, model);
         }
         models.withExistingParent(prefix + "_table_inventory", bcLoc("block/template/table/none")).texture("texture", woodType.getTexture());
-        DatagenUtil.horizontalBlockModel(provider, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(provider.modLoc(prefix + "_table")));
+        DatagenUtil.horizontalBlockModel(provider, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(provider.modLoc(prefix + "_table"))); //TODO: fix uvlock not working
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.TOOL_RACK.holder(woodType),
                 prefix + "_tool_rack",
                 bcLoc("block/template/tool_rack"),
