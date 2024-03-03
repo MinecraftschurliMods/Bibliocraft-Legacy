@@ -1,6 +1,7 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
+#services=["com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper", "com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry"]
 
 [[mods]]
 modId="${mod_id}"

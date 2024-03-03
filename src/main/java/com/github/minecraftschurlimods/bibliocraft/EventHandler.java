@@ -4,18 +4,20 @@ import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRe
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
 import java.util.Objects;
 
 public final class EventHandler {
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Bibliocraft.MOD_ID)
     public static final class ModBus {
-        @SubscribeEvent
+        @SubscribeEvent(priority = EventPriority.LOWEST)
         private static void constructMod(FMLConstructModEvent event) {
             event.enqueueWork(() -> {
                 BibliocraftWoodTypeRegistryImpl.get().postRegister();

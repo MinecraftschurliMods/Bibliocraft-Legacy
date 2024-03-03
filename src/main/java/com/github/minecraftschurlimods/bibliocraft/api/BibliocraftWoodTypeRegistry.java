@@ -1,13 +1,19 @@
 package com.github.minecraftschurlimods.bibliocraft.api;
 
-import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.common.util.Lazy;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
 /**
@@ -42,7 +48,7 @@ public interface BibliocraftWoodTypeRegistry {
      * @return The only instance of this class.
      */
     static BibliocraftWoodTypeRegistry get() {
-        return BibliocraftWoodTypeRegistryImpl.get();
+        return InstanceHolder.LAZY_INSTANCE.get();
     }
 
     /**
@@ -52,5 +58,25 @@ public interface BibliocraftWoodTypeRegistry {
     @Nullable
     default BibliocraftWoodType get(String id) {
         return get(new ResourceLocation(id));
+    }
+
+    @ApiStatus.Internal
+    final class InstanceHolder {
+        private InstanceHolder() {}
+
+        private static final Lazy<BibliocraftWoodTypeRegistry> LAZY_INSTANCE = Lazy.concurrentOf(() -> {
+            Optional<BibliocraftWoodTypeRegistry> impl = ServiceLoader.load(FMLLoader.getGameLayer(), BibliocraftWoodTypeRegistry.class).findFirst();
+            if (!FMLEnvironment.production) {
+                return impl.orElseThrow(() -> {
+                    IllegalStateException exception = new IllegalStateException("Unable to find implementation for BibliocraftWoodTypeRegistry!");
+                    LoggerFactory.getLogger("bibliocraft").error(exception.getMessage(), exception);
+                    return exception;
+                });
+            }
+            return impl.orElseGet(() -> {
+                LoggerFactory.getLogger("bibliocraft").error("Unable to find implementation for IArsMagicaAPI!");
+                return null;
+            });
+        });
     }
 }

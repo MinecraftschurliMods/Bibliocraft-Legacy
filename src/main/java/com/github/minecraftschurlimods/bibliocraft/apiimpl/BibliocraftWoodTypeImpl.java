@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings("ClassCanBeRecord")
 public class BibliocraftWoodTypeImpl implements BibliocraftWoodType {
     private final ResourceLocation id;
     private final WoodType woodType;
@@ -18,9 +17,9 @@ public class BibliocraftWoodTypeImpl implements BibliocraftWoodType {
     private final BlockFamily family;
 
     /**
-     * Private constructor. Call {@link BibliocraftWoodTypeRegistry#register(ResourceLocation, WoodType, Supplier, ResourceLocation, BlockFamily)} instead.
+     * Internal constructor. Call {@link BibliocraftWoodTypeRegistry#register(ResourceLocation, WoodType, Supplier, ResourceLocation, BlockFamily)} instead.
      */
-    public BibliocraftWoodTypeImpl(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
+    BibliocraftWoodTypeImpl(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
         this.id = id;
         this.woodType = woodType;
         this.properties = properties;

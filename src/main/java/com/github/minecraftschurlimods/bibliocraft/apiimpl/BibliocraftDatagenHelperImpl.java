@@ -45,6 +45,7 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +60,8 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     private static final BibliocraftDatagenHelperImpl INSTANCE = new BibliocraftDatagenHelperImpl();
     private static final List<BibliocraftWoodType> WOOD_TYPES = new ArrayList<>();
 
-    private BibliocraftDatagenHelperImpl() {}
+    @ApiStatus.Internal
+    public BibliocraftDatagenHelperImpl() {}
 
     /**
      * @return The only instance of this class.

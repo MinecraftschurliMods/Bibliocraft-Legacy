@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.api;
 
-import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
@@ -9,12 +8,19 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.util.Lazy;
+import org.jetbrains.annotations.ApiStatus;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.ServiceLoader;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -97,7 +103,7 @@ public interface BibliocraftDatagenHelper {
      * @return The only instance of this class.
      */
     static BibliocraftDatagenHelper get() {
-        return BibliocraftDatagenHelperImpl.get();
+        return InstanceHolder.LAZY_INSTANCE.get();
     }
 
     /**
@@ -172,5 +178,25 @@ public interface BibliocraftDatagenHelper {
      */
     default void generateRecipes(RecipeOutput output) {
         getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, woodType));
+    }
+
+    @ApiStatus.Internal
+    final class InstanceHolder {
+        private InstanceHolder() {}
+
+        private static final Lazy<BibliocraftDatagenHelper> LAZY_INSTANCE = Lazy.concurrentOf(() -> {
+            Optional<BibliocraftDatagenHelper> impl = ServiceLoader.load(FMLLoader.getGameLayer(), BibliocraftDatagenHelper.class).findFirst();
+            if (!FMLEnvironment.production) {
+                return impl.orElseThrow(() -> {
+                    IllegalStateException exception = new IllegalStateException("Unable to find implementation for BibliocraftDatagenHelper!");
+                    LoggerFactory.getLogger("bibliocraft").error(exception.getMessage(), exception);
+                    return exception;
+                });
+            }
+            return impl.orElseGet(() -> {
+                LoggerFactory.getLogger("bibliocraft").error("Unable to find implementation for IArsMagicaAPI!");
+                return null;
+            });
+        });
     }
 }

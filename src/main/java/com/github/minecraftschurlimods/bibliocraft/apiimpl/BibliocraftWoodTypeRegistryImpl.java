@@ -6,6 +6,7 @@ import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class BibliocraftWoodTypeRegistryImpl implements BibliocraftWoodTypeRegis
     private List<BibliocraftWoodType> values = new ArrayList<>();
     private boolean stillRegistering = true;
 
-    private BibliocraftWoodTypeRegistryImpl() {}
+    @ApiStatus.Internal
+    public BibliocraftWoodTypeRegistryImpl() {}
 
     /**
      * @return The only instance of this class.
