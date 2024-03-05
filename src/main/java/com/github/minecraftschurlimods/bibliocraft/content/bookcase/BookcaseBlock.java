@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -14,7 +14,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class BookcaseBlock extends BCBlock {
+public class BookcaseBlock extends BCFacingEntityBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0.0625, 0, 0.5, 0.9375, 0.0625, 0.9375),
             Shapes.box(0, 0, 0.9375, 1, 1, 1),

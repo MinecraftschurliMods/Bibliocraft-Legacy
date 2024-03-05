@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AbstractDisplayCaseBlock extends BCInteractibleBlock {
+public abstract class AbstractDisplayCaseBlock extends BCFacingInteractibleBlock {
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
     public AbstractDisplayCaseBlock(Properties properties) {

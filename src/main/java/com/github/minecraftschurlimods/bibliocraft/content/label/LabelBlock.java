@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.label;
 
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.stream.IntStream;
 
 @SuppressWarnings("deprecation")
-public class LabelBlock extends BCBlock {
+public class LabelBlock extends BCFacingEntityBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0.1875, 0.0625, 0.96875, 0.8125, 0.4375, 1),
             Shapes.box(0.78125, 0.0625, 0.9375, 0.8125, 0.4375, 0.96875),

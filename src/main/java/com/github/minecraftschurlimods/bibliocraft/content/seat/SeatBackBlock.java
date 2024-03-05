@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.seat;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCSimpleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +19,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 @SuppressWarnings("deprecation")
-public class SeatBackBlock extends BCSimpleBlock {
+public class SeatBackBlock extends BCFacingBlock {
     public static final EnumProperty<SeatBackType> TYPE = EnumProperty.create("type", SeatBackType.class);
     private static final VoxelShape SHAPE_SMALL_NORTH = Shapes.box(0.125, 0, 0.8125, 0.875, 0.296875, 0.9375);
     private static final VoxelShape SHAPE_SMALL_EAST = ShapeUtil.rotate(SHAPE_SMALL_NORTH, Rotation.CLOCKWISE_90);

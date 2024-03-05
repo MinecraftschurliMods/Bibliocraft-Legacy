@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.seat;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCSimpleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCWaterloggedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -100,28 +100,28 @@ public class SeatBlock extends BCWaterloggedBlock {
         BlockState back = level.getBlockState(pos.above());
         if (!(back.getBlock() instanceof SeatBackBlock)) return SHAPE;
         return switch (back.getValue(SeatBackBlock.TYPE)) {
-            case SMALL -> switch (back.getValue(BCSimpleBlock.FACING)) {
+            case SMALL -> switch (back.getValue(BCFacingBlock.FACING)) {
                 case NORTH -> SHAPE_SMALL_NORTH;
                 case EAST -> SHAPE_SMALL_EAST;
                 case SOUTH -> SHAPE_SMALL_SOUTH;
                 case WEST -> SHAPE_SMALL_WEST;
                 default -> SHAPE;
             };
-            case RAISED -> switch (back.getValue(BCSimpleBlock.FACING)) {
+            case RAISED -> switch (back.getValue(BCFacingBlock.FACING)) {
                 case NORTH -> SHAPE_RAISED_NORTH;
                 case EAST -> SHAPE_RAISED_EAST;
                 case SOUTH -> SHAPE_RAISED_SOUTH;
                 case WEST -> SHAPE_RAISED_WEST;
                 default -> SHAPE;
             };
-            case FLAT, TALL -> switch (back.getValue(BCSimpleBlock.FACING)) {
+            case FLAT, TALL -> switch (back.getValue(BCFacingBlock.FACING)) {
                 case NORTH -> SHAPE_FLAT_NORTH;
                 case EAST -> SHAPE_FLAT_EAST;
                 case SOUTH -> SHAPE_FLAT_SOUTH;
                 case WEST -> SHAPE_FLAT_WEST;
                 default -> SHAPE;
             };
-            case FANCY -> switch (back.getValue(BCSimpleBlock.FACING)) {
+            case FANCY -> switch (back.getValue(BCFacingBlock.FACING)) {
                 case NORTH -> SHAPE_FANCY_NORTH;
                 case EAST -> SHAPE_FANCY_EAST;
                 case SOUTH -> SHAPE_FANCY_SOUTH;

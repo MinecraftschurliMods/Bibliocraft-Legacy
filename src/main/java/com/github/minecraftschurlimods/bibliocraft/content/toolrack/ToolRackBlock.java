@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.toolrack;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class ToolRackBlock extends BCInteractibleBlock {
+public class ToolRackBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0.0625, 0.9375, 0.5, 0.9375, 1, 1),
             Shapes.box(0.9375, 0, 0.5, 1, 1, 1),

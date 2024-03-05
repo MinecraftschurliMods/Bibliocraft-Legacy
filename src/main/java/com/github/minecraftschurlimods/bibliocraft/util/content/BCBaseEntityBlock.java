@@ -11,62 +11,48 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Abstract superclass for blocks with a block entity in this mod.
+ * Superinterface for reducing code duplication across {@link BCEntityBlock} and {@link BCFacingEntityBlock}.
  */
-@SuppressWarnings("deprecation")
-public abstract class BCBlock extends BCSimpleBlock implements EntityBlock {
-    public BCBlock(Properties properties) {
-        super(properties);
-    }
-
-    @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-        super.setPlacedBy(level, pos, state, entity, stack);
+@SuppressWarnings("unused")
+public interface BCBaseEntityBlock extends EntityBlock {
+    default void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack, Runnable supermethod) {
+        supermethod.run();
         if (level.getBlockEntity(pos) instanceof BCMenuBlockEntity blockEntity && stack.hasCustomHoverName()) {
             blockEntity.setCustomName(stack.getHoverName());
         }
     }
 
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.BLOCK;
-    }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean flag) {
+    default void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean flag, Block self, Runnable supermethod) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockentity = level.getBlockEntity(pos);
             if (blockentity instanceof Container container) {
                 Containers.dropContents(level, pos, container);
-                level.updateNeighbourForOutputSignal(pos, this);
+                level.updateNeighbourForOutputSignal(pos, self);
             }
-            super.onRemove(state, level, pos, newState, flag);
+            supermethod.run();
         }
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    default InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         return player.isSecondaryUseActive() ? InteractionResult.PASS : BCUtil.openBEMenu(player, level, pos);
     }
 
-    @Override
-    public boolean triggerEvent(BlockState state, Level level, BlockPos pos, int id, int param) {
-        super.triggerEvent(state, level, pos, id, param);
+    default boolean triggerEvent(BlockState state, Level level, BlockPos pos, int id, int param, Runnable supermethod) {
+        supermethod.run();
         BlockEntity blockentity = level.getBlockEntity(pos);
         return blockentity != null && blockentity.triggerEvent(id, param);
     }
 
-    @Override
     @Nullable
-    public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+    default MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         BlockEntity blockentity = level.getBlockEntity(pos);
         return blockentity instanceof MenuProvider ? (MenuProvider) blockentity : null;
     }

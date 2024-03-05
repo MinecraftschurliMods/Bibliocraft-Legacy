@@ -13,10 +13,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
- * Abstract superclass for blocks that have in-world interactions.
+ * Abstract superclass for rotatable entity blocks that have in-world interactions.
  */
-public abstract class BCInteractibleBlock extends BCBlock {
-    public BCInteractibleBlock(Properties properties) {
+@SuppressWarnings("deprecation")
+public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
+    public BCFacingInteractibleBlock(Properties properties) {
         super(properties);
     }
 

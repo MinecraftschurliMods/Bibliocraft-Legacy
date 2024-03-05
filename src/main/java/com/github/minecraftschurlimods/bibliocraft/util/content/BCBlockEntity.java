@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 /**
- * Abstract superclass for most block entities this mod has.
+ * Abstract superclass for all block entities in this mod.
  */
 public abstract class BCBlockEntity extends BlockEntity implements Container {
     private static final String ITEMS_TAG = "items";

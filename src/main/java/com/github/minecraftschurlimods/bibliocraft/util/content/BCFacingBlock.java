@@ -11,13 +11,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 /**
- * Abstract superclass for most blocks in this mod.
+ * Abstract superclass for rotatable blocks in this mod.
  */
 @SuppressWarnings("deprecation")
-public abstract class BCSimpleBlock extends BCWaterloggedBlock {
+public abstract class BCFacingBlock extends BCWaterloggedBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    public BCSimpleBlock(Properties properties) {
+    public BCFacingBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }

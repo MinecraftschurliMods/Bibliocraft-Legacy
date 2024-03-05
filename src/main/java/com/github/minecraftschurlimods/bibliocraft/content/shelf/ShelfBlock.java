@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.shelf;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class ShelfBlock extends BCInteractibleBlock {
+public class ShelfBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape NORTH_SHAPE = Shapes.box(0, 0, 0.5, 1, 1, 1);
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);

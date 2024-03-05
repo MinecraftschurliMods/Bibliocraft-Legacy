@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.potionshelf;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class PotionShelfBlock extends BCInteractibleBlock {
+public class PotionShelfBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0, 0.0625, 0.75, 1, 1, 1),
             Shapes.box(0, 0, 0.75, 0.0625, 0.0625, 1),

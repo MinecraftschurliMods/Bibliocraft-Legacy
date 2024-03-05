@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +35,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
-public class FancyArmorStandBlock extends BCInteractibleBlock {
+public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape Z_SHAPE_BOTTOM = ShapeUtil.combine(
             Shapes.box(0, 0, 0, 1, 0.125, 1),
             Shapes.box(0.375, 0.125, 0.375, 0.625, 1, 0.625));

@@ -15,6 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
+/**
+ * Abstract superclass for block entities with an associated menu.
+ */
 @SuppressWarnings("unused")
 public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuProvider, Nameable {
     private static final String NAME_KEY = "CustomName";
@@ -34,11 +37,55 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
     }
 
     /**
+     * Creates a menu instance for this block entity.
+     *
+     * @param id        The menu id.
+     * @param inventory The player inventory to use.
+     * @return A menu instance for this block entity.
+     */
+    protected abstract AbstractContainerMenu createMenu(int id, Inventory inventory);
+
+    @Override
+    public Component getName() {
+        return name != null ? name : defaultName;
+    }
+
+    @Override
+    @Nullable
+    public Component getCustomName() {
+        return name;
+    }
+
+    /**
+     * Sets a custom name for this block entity.
+     *
+     * @param name The name to set.
+     */
+    public void setCustomName(Component name) {
+        this.name = name;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return getName();
+    }
+
+    /**
      * @param name The name to use.
      * @return A title component of the format "container.bibliocraft.<name>".
      */
     public static Component defaultName(String name) {
         return Component.translatable("container." + Bibliocraft.MOD_ID + "." + name);
+    }
+
+    public boolean canOpen(Player player) {
+        return true;
+    }
+
+    @Override
+    @Nullable
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+        return this.canOpen(player) ? this.createMenu(id, inventory) : null;
     }
 
     @Override
@@ -56,36 +103,4 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
             tag.putString(NAME_KEY, Component.Serializer.toJson(name));
         }
     }
-
-    public void setCustomName(Component name) {
-        this.name = name;
-    }
-
-    @Override
-    public Component getName() {
-        return name != null ? name : defaultName;
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return getName();
-    }
-
-    @Override
-    @Nullable
-    public Component getCustomName() {
-        return name;
-    }
-
-    public boolean canOpen(Player player) {
-        return true;
-    }
-
-    @Override
-    @Nullable
-    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return this.canOpen(player) ? this.createMenu(id, inventory) : null;
-    }
-
-    protected abstract AbstractContainerMenu createMenu(int id, Inventory inventory);
 }

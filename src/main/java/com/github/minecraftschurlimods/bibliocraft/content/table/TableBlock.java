@@ -1,11 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.content.table;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.WoolCarpetBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -27,18 +24,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
 @SuppressWarnings("deprecation")
-public class TableBlock extends BCBlock {
+public class TableBlock extends BCFacingEntityBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
     private static final VoxelShape NONE_SHAPE = ShapeUtil.combine(
             Shapes.box(0.0625, 0.875, 0, 0.9375, 1, 1),

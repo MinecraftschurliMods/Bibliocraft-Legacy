@@ -13,7 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Objects;
 
 /**
- * Abstract superclass for most menus of this mod.
+ * Abstract superclass for all menus of this mod.
  *
  * @param <T> The block entity this menu is associated with.
  */
@@ -90,6 +90,9 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
         return blockEntity.stillValid(player);
     }
 
+    /**
+     * @return The block entity's display name.
+     */
     public Component getDisplayName() {
         return blockEntity.getDisplayName();
     }
