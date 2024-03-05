@@ -14,6 +14,7 @@ public class BCItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         BibliocraftDatagenHelper.get().generateItemModels(this);
+        withExistingParent("cookie_jar", modLoc("block/template/cookie_jar"));
         withExistingParent("iron_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/iron_inventory"));
         withExistingParent("sword_pedestal", modLoc("block/sword_pedestal"));
         withExistingParent("redstone_book", mcLoc("item/written_book"));

@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
+	"render_type": "cutout",
 	"textures": {
 		"0": "block/iron_block",
 		"1": "bibliocraft:block/cookie_jar_bottom",

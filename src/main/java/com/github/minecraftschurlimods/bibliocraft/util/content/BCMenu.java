@@ -51,6 +51,13 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
      */
     protected abstract void addSlots(Inventory inventory);
 
+    /**
+     * @return The block entity this menu is associated with.
+     */
+    public T getBlockEntity() {
+        return blockEntity;
+    }
+
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         int slotCount = blockEntity.items.getSlots();

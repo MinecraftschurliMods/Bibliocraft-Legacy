@@ -2,12 +2,14 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
+import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class BCBlockStateProvider extends BlockStateProvider {
@@ -18,6 +20,9 @@ public class BCBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         BibliocraftDatagenHelper.get().generateBlockStates(this);
+        getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(models().getExistingFile(modLoc("block/template/cookie_jar" + (state.getValue(CookieJarBlock.OPEN) ? "_open" : ""))))
+                .build());
         DatagenUtil.doubleHighHorizontalBlockModel(this, BCBlocks.IRON_FANCY_ARMOR_STAND, models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
         DatagenUtil.horizontalBlockModel(this, BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);
         for (TableBlock.Type type : TableBlock.Type.values()) {

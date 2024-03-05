@@ -40,6 +40,7 @@ public final class BCLootTableProvider extends LootTableProvider {
         @Override
         protected void generate() {
             BibliocraftDatagenHelper.get().generateLootTables(this::add);
+            add(BCBlocks.COOKIE_JAR.get(), DatagenUtil.createNameableTable(BCBlocks.COOKIE_JAR.get()));
             add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), DatagenUtil.createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
             add(BCBlocks.SWORD_PEDESTAL.get(), DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.SWORD_PEDESTAL.get()).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("color", "display.color"))));
         }

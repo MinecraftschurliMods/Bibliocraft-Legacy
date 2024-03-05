@@ -16,6 +16,7 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
 
@@ -36,6 +37,24 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                     .save(output, new ResourceLocation(Bibliocraft.MOD_ID, "sword_pedestal_" + color.getName()));
         }
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.COOKIE_JAR.get())
+                .pattern(" I ")
+                .pattern("GCG")
+                .pattern("GRG")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('G', Tags.Items.GLASS_PANES_COLORLESS)
+                .define('C', Items.COOKIE)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND.get())
+                .pattern(" I ")
+                .pattern(" I ")
+                .pattern("SSS")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('S', Items.SMOOTH_STONE_SLAB)
+                .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
+                .save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK.get())
                 .requires(Items.BOOK)
                 .requires(Items.REDSTONE_TORCH)

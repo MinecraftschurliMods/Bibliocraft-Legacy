@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
@@ -13,6 +14,7 @@ import java.util.function.Supplier;
 
 public interface BCMenus {
     Supplier<MenuType<BookcaseMenu>>        BOOKCASE          = BCRegistries.MENUS.register("bookcase",          () -> IMenuTypeExtension.create(BookcaseMenu::new));
+    Supplier<MenuType<CookieJarMenu>>       COOKIE_JAR        = BCRegistries.MENUS.register("cookie_jar",        () -> IMenuTypeExtension.create(CookieJarMenu::new));
     Supplier<MenuType<FancyArmorStandMenu>> FANCY_ARMOR_STAND = BCRegistries.MENUS.register("fancy_armor_stand", () -> IMenuTypeExtension.create(FancyArmorStandMenu::new));
     Supplier<MenuType<LabelMenu>>           LABEL             = BCRegistries.MENUS.register("label",             () -> IMenuTypeExtension.create(LabelMenu::new));
     Supplier<MenuType<PotionShelfMenu>>     POTION_SHELF      = BCRegistries.MENUS.register("potion_shelf",      () -> IMenuTypeExtension.create(PotionShelfMenu::new));

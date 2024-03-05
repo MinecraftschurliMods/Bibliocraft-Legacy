@@ -17,10 +17,12 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         BibliocraftDatagenHelper.get().generateEnglishTranslations(this);
+        add(BCBlocks.COOKIE_JAR.get(), "Cookie Jar");
         add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), "Iron Fancy Armor Stand");
         add(BCBlocks.SWORD_PEDESTAL.get(), "Sword Pedestal");
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
         add("container", "bookcase", "Bookcase");
+        add("container", "cookie_jar", "Cookie Jar");
         add("container", "fancy_armor_stand", "Armor Stand");
         add("container", "label", "Label");
         add("container", "potion_shelf", "Potion Shelf");
