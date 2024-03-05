@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlockEntity;
@@ -20,6 +21,7 @@ import java.util.function.Supplier;
 
 public interface BCBlockEntities {
     Supplier<BlockEntityType<BookcaseBlockEntity>>        BOOKCASE          = register("bookcase",          BookcaseBlockEntity::new,        BCBlocks.BOOKCASE.holders());
+    Supplier<BlockEntityType<CookieJarBlockEntity>>       COOKIE_JAR        = register("cookie_jar",        CookieJarBlockEntity::new,       BCBlocks.COOKIE_JAR);
     Supplier<BlockEntityType<DisplayCaseBlockEntity>>     DISPLAY_CASE      = register("display_case",      DisplayCaseBlockEntity::new,     BCUtil.mergeRaw(BCBlocks.DISPLAY_CASE.holders(), BCBlocks.WALL_DISPLAY_CASE.holders()));
     Supplier<BlockEntityType<FancyArmorStandBlockEntity>> FANCY_ARMOR_STAND = register("fancy_armor_stand", FancyArmorStandBlockEntity::new, BCUtil.merge(BCBlocks.FANCY_ARMOR_STAND.holders(), BCBlocks.IRON_FANCY_ARMOR_STAND));
     Supplier<BlockEntityType<LabelBlockEntity>>           LABEL             = register("label",             LabelBlockEntity::new,           BCBlocks.LABEL.holders());
