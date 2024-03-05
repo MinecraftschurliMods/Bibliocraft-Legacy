@@ -67,7 +67,7 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
 
         @Override
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-            ModelState simpleState = new SimpleModelState(modelState.getRotation(), false);
+            ModelState simpleState = new SimpleModelState(modelState.getRotation(), modelState.isUvLocked());
             boolean useBlockLight = context.useBlockLight();
             Map<TableBlock.Type, BakedModel> newBaseMap = new HashMap<>();
             baseMap.forEach((k, v) -> newBaseMap.put(k, v.bake(baker, v, spriteGetter, simpleState, modelLocation, useBlockLight)));

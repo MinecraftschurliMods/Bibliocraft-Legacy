@@ -49,7 +49,6 @@ public interface BCBlocks {
     //TODO Painting Frame
     //TODO Painting Press
     //TODO Printing Press
-    //TODO Table
     //TODO Typesetting Table
     //TODO Typewriter
 
