@@ -53,4 +53,14 @@ public class CookieJarBlock extends BCEntityBlock {
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new CookieJarBlockEntity(pos, state);
     }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        return state.getValue(OPEN) ? 15 : 0;
+    }
 }
