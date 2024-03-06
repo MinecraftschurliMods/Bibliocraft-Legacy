@@ -1,6 +1,7 @@
-// 1.20.4	2024-02-29T22:46:48.1741486	Tags for minecraft:item mod id bibliocraft
+// 1.20.4	2024-03-06T15:27:13.5046437	Tags for minecraft:item mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/items/bookcases.json
 8c21eecc9ff3212b039c2ccadcebce2ef5e04510 data/bibliocraft/tags/items/bookcase_books.json
+a62188adba8d65fe5971b95f4c552a1072086c31 data/bibliocraft/tags/items/cookie_jar_cookies.json
 89057f18fe8255a1a50953beaeaa02f75b41c2b9 data/bibliocraft/tags/items/display_cases.json
 474090b2b5b40b58b63496e56ed06e543323d894 data/bibliocraft/tags/items/fancy_armor_stands.json
 b46d2615e18035acc6efa4ddc52a0f55fea31342 data/bibliocraft/tags/items/fancy_armor_stands/wood.json

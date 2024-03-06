@@ -48,6 +48,7 @@ public interface BCTags {
         TagKey<Item> TABLES                  = tag("tables");
         TagKey<Item> TOOL_RACKS              = tag("tool_racks");
         TagKey<Item> BOOKCASE_BOOKS          = tag("bookcase_books");
+        TagKey<Item> COOKIE_JAR_COOKIES      = tag("cookie_jar_cookies");
         TagKey<Item> POTION_SHELF_POTIONS    = tag("potion_shelf_potions");
         TagKey<Item> SWORD_PEDESTAL_SWORDS   = tag("sword_pedestal_swords");
         TagKey<Item> TOOL_RACK_TOOLS         = tag("tool_rack_tools");

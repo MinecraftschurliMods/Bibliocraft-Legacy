@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
@@ -16,6 +17,14 @@ public final class BCMenuScreens {
         private static final ResourceLocation BACKGROUND = new ResourceLocation(Bibliocraft.MOD_ID, "textures/gui/bookcase.png");
 
         public Bookcase(BookcaseMenu menu, Inventory inventory, Component title) {
+            super(menu, inventory, title, BACKGROUND);
+        }
+    }
+
+    public static class CookieJar extends BCMenuScreen<CookieJarMenu> {
+        private static final ResourceLocation BACKGROUND = new ResourceLocation(Bibliocraft.MOD_ID, "textures/gui/cookie_jar.png");
+
+        public CookieJar(CookieJarMenu menu, Inventory inventory, Component title) {
             super(menu, inventory, title, BACKGROUND);
         }
     }

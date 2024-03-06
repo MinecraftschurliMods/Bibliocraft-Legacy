@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client;
 import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
@@ -40,6 +41,7 @@ public final class ClientHandler {
         @SubscribeEvent
         private static void registerMenuScreens(RegisterMenuScreensEvent event) {
             event.register(BCMenus.BOOKCASE.get(), BCMenuScreens.Bookcase::new);
+            event.register(BCMenus.COOKIE_JAR.get(), BCMenuScreens.CookieJar::new);
             event.register(BCMenus.FANCY_ARMOR_STAND.get(), BCMenuScreens.FancyArmorStand::new);
             event.register(BCMenus.LABEL.get(), BCMenuScreens.Label::new);
             event.register(BCMenus.POTION_SHELF.get(), BCMenuScreens.PotionShelf::new);
@@ -71,6 +73,7 @@ public final class ClientHandler {
         private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
             event.registerEntityRenderer(BCEntities.SEAT.get(), EmptyEntityRenderer::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(), CookieJarBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(), DisplayCaseBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), FancyArmorStandBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(), LabelBER::new);

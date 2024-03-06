@@ -19,7 +19,11 @@ public class CookieJarMenu extends BCMenu<CookieJarBlockEntity> {
 
     @Override
     protected void addSlots(Inventory inventory) {
-
+        for (int j = 0; j < 4; j++) {
+            addSlot(new BCSlot(blockEntity, j, j * 32 + 32, 22));
+            addSlot(new BCSlot(blockEntity, j + 4, j * 32 + 32, 51));
+        }
+        addInventorySlots(inventory, 8, 84);
     }
 
     @Override
