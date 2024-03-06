@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
+import com.github.minecraftschurlimods.bibliocraft.content.DeskBellBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlock;
@@ -35,12 +36,11 @@ public interface BCBlocks {
     ColoredWoodTypeDeferredHolder<Block, SeatBlock>            SEAT              = coloredWoodenBlock("seat",              SeatBlock::new);
     ColoredWoodTypeDeferredHolder<Block, SeatBackBlock>        SEAT_BACK         = coloredWoodenBlock("seat_back",         SeatBackBlock::new);
     DeferredHolder<Block, CookieJarBlock>       COOKIE_JAR             = BCRegistries.BLOCKS.register("cookie_jar",             () -> new CookieJarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
+    DeferredHolder<Block, DeskBellBlock>        DESK_BELL              = BCRegistries.BLOCKS.register("desk_bell",              () -> new DeskBellBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredHolder<Block, FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredHolder<Block, SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
     //TODO Clock
-    //TODO Cookie Jar
     //TODO Desk
-    //TODO Desk Bell
     //TODO Dinner Plate
     //TODO Disc Rack
     //TODO Fancy Lamp

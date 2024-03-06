@@ -47,6 +47,15 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DESK_BELL.get())
+                .pattern(" B ")
+                .pattern(" I ")
+                .pattern("IRI")
+                .define('B', Items.STONE_BUTTON)
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND.get())
                 .pattern(" I ")
                 .pattern(" I ")

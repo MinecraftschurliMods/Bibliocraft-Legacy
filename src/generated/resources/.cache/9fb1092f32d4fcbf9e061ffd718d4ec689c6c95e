@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-06T00:41:06.7985133	Recipes
+// 1.20.4	2024-03-06T16:24:28.2664769	Recipes
 4b0d99f7f8ad3b6d25efd913add7ad2c43782562 data/bibliocraft/advancements/recipes/building_blocks/acacia_bookcase.json
 bcab4008a31a765a736701f9350bc541c42c3e11 data/bibliocraft/advancements/recipes/building_blocks/acacia_fancy_armor_stand.json
 793b249d2c89d24fc3149266e599d48eddf6b258 data/bibliocraft/advancements/recipes/building_blocks/acacia_label.json
@@ -1326,6 +1326,7 @@ d9d63cae79d895e741f5a7f29c05483994245c84 data/bibliocraft/advancements/recipes/b
 cac5cf356e5c2ffcb5d2d619bdb96c8b67081d68 data/bibliocraft/advancements/recipes/building_blocks/yellow_warped_small_seat_back.json
 47778c307fac204d24b824229f2b6528d8424468 data/bibliocraft/advancements/recipes/building_blocks/yellow_warped_tall_seat_back.json
 f8fc40806586e76190152f0c70ab3fd2c635872c data/bibliocraft/advancements/recipes/decorations/cookie_jar.json
+3e79301426a7ce43cf3571a395d3a9b1c4ee9612 data/bibliocraft/advancements/recipes/decorations/desk_bell.json
 6c0d34e3be551f780ed81f1ad2d4730908cc655f data/bibliocraft/advancements/recipes/redstone/redstone_book.json
 2ff19c78d83abf77878ba97461d9b326db8597a1 data/bibliocraft/recipes/acacia_bookcase.json
 e3c48e6258684e929fb86964fb7667bfbedb8ce6 data/bibliocraft/recipes/acacia_fancy_armor_stand.json
@@ -1678,6 +1679,7 @@ bb5a7486115a2976e09932f1d266d63cd66fdbe5 data/bibliocraft/recipes/dark_oak_potio
 1786a0d744c74ef60757498df7da5cef8ceecf0b data/bibliocraft/recipes/dark_oak_shelf.json
 a4c19352c66ad06dff4d63ee879177a72ad4299a data/bibliocraft/recipes/dark_oak_table.json
 2e6eb8da8b99b22b36a32577226b5bdfb5e65668 data/bibliocraft/recipes/dark_oak_tool_rack.json
+7494c23fc5bdb1733e15b2caaa3c88655e781d67 data/bibliocraft/recipes/desk_bell.json
 47475cdb9a586ded92a87cf2eb73eedada0809f5 data/bibliocraft/recipes/gray_acacia_display_case.json
 8cb3fe2b226bd5591ee9c133a5c4b6b32c67bd76 data/bibliocraft/recipes/gray_acacia_fancy_seat_back.json
 d1701e0814847bb71bd2b0af47e0a8b2aff5d441 data/bibliocraft/recipes/gray_acacia_flat_seat_back.json

@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-06T00:41:06.964533	Block States: bibliocraft
+// 1.20.4	2024-03-06T16:24:28.3124765	Block States: bibliocraft
 659072bd1b446090a3a10a19573cba259369019e assets/bibliocraft/blockstates/acacia_bookcase.json
 d058f1fedcbf3371725ec1f3c766558f2050448e assets/bibliocraft/blockstates/acacia_fancy_armor_stand.json
 e70228355b54ccf1cdeea621bc1ddd9b614ef4ef assets/bibliocraft/blockstates/acacia_label.json
@@ -218,6 +218,7 @@ aac309de26f2c9a8f39f825482b5b015386aa925 assets/bibliocraft/blockstates/dark_oak
 53c4a7f81e773eb2b0179801d28edb74f59e08b3 assets/bibliocraft/blockstates/dark_oak_shelf.json
 0e4c42cad7a2d08ae005bc2c7889d675b21340e2 assets/bibliocraft/blockstates/dark_oak_table.json
 83a7d8369684d59e8386d1d23ea688eace4e8b06 assets/bibliocraft/blockstates/dark_oak_tool_rack.json
+73b556a04d812f19dc8e886e061f1a02248ccba8 assets/bibliocraft/blockstates/desk_bell.json
 11162091f4e08ca742bf71397b1fcc9280b22f28 assets/bibliocraft/blockstates/gray_acacia_display_case.json
 9fb3aec139680da0cb359c143f11af27031a7382 assets/bibliocraft/blockstates/gray_acacia_seat.json
 0c7e02af9cd96467fab254679d570ed16ea57d89 assets/bibliocraft/blockstates/gray_acacia_seat_back.json

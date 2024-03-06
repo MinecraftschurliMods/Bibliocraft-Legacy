@@ -23,6 +23,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(models().getExistingFile(modLoc("block/template/cookie_jar" + (state.getValue(CookieJarBlock.OPEN) ? "_open" : ""))))
                 .build());
+        simpleBlock(BCBlocks.DESK_BELL.get(), models().getExistingFile(modLoc("block/desk_bell")));
         DatagenUtil.doubleHighHorizontalBlockModel(this, BCBlocks.IRON_FANCY_ARMOR_STAND, models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
         DatagenUtil.horizontalBlockModel(this, BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);
         for (TableBlock.Type type : TableBlock.Type.values()) {
