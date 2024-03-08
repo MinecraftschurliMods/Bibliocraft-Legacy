@@ -39,14 +39,15 @@ public interface BCBlocks {
     DeferredHolder<Block, DeskBellBlock>        DESK_BELL              = BCRegistries.BLOCKS.register("desk_bell",              () -> new DeskBellBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredHolder<Block, FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredHolder<Block, SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
-    //TODO Clock
-    //TODO Desk
+    //TODO Clipboard
     //TODO Dinner Plate
     //TODO Disc Rack
     //TODO Fancy Lamp
     //TODO Fancy Lantern
     //TODO Fancy Sign
     //TODO Fancy Workbench
+    //TODO Clock
+    //TODO Desk
     //TODO Map Frame
     //TODO Painting Frame
     //TODO Painting Press

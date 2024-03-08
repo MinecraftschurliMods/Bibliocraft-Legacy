@@ -37,29 +37,24 @@ public interface BCItems {
     Supplier<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     Supplier<SwordPedestalItem>   SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", SwordPedestalItem::new);
     Supplier<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
-    //TODO Atlas
     //TODO Big Book
-    //TODO Clipboard
-    //TODO Drafting Compass
-    //TODO Eternal Compass
-    //TODO Framing Board
-    //TODO Framing Saw
-    //TODO Framing Sheet
     //TODO Hand Drill
     //TODO Lock and Key
     //TODO Monocle
-    //TODO Painting Canvas
     //TODO Plumb Line
-    //TODO Print Press Chase
-    //TODO Print Press Plate
     //TODO Reading Glasses
     //TODO Recipe Book
-    //TODO Seat Back
     //TODO Screw Gun
     //TODO Slotted Book
     //TODO Stockroom Catalog
     //TODO Tape Measure
     //TODO Tinted Glasses
+    //TODO Atlas
+    //TODO Drafting Compass
+    //TODO Eternal Compass
+    //TODO Painting Canvas
+    //TODO Print Press Chase
+    //TODO Print Press Plate
     //TODO Waypoint Compass
 
     /**
