@@ -1,0 +1,58 @@
+name: "Build Release"
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+"
+      - "[0-9]+.[0-9]+-[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  build:
+    uses: MinecraftschurliMods/.github/.github/workflows/build.yml@main
+    with:
+      maven-url: ${{ vars.MAVEN_URL }}
+      maven-user: ${{ vars.MAVEN_USER }}
+      upload-artifacts: true
+      artifact-retention: 1
+      publish-to-maven: true
+      release-type: release
+      datagen-folder: src/main/generated/
+    secrets:
+      MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+
+  publish:
+    uses: MinecraftschurliMods/.github/.github/workflows/publish.yml@main
+    needs:
+      - build
+    strategy:
+      fail-fast: true
+      matrix:
+        platform:
+          - GitHub
+          - CurseForge
+          - Modrinth
+    with:
+      platform: ${{ matrix.platform }}
+      modid: ${{ needs.build.outputs.modid }}
+      version: ${{ needs.build.outputs.version }}
+    secrets:
+      GH_TOKEN: ${{ matrix.platform == 'GitHub' && secrets.GITHUB_TOKEN || null }}
+      CF_API_TOKEN: ${{ matrix.platform == 'CurseForge' && secrets.CF_API_TOKEN || null }}
+      MODRINTH_TOKEN: ${{ matrix.platform == 'Modrinth' && secrets.MODRINTH_TOKEN || null }}
+
+  notify-discord:
+    uses: MinecraftschurliMods/.github/.github/workflows/notify_discord.yml@main
+    needs:
+      - build
+      - publish
+    with:
+      project_name: "Bibliocraft Legacy"
+      version: ${{ needs.build.outputs.version }}
+      summary: ${{ needs.build.outputs.summary }}
+      curseforge_url: ${{ needs.publish.outputs.curseforge-url }}
+      modrinth_url: ${{ needs.publish.outputs.modrinth-url }}
+      github_url: ${{ needs.publish.outputs.github-url }}
+      logo_url: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/src/main/resources/logo_small.png
+      update_ping: "&1216425616858153062"
+    secrets:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
