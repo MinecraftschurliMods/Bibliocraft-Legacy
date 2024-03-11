@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.util.content;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -72,10 +72,10 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
 
     /**
      * @param name The name to use.
-     * @return A title component of the format "container.bibliocraft.<name>".
+     * @return A title component of the format {@code "container.bibliocraft.<name>"}.
      */
     public static Component defaultName(String name) {
-        return Component.translatable("container." + Bibliocraft.MOD_ID + "." + name);
+        return Component.translatable("container." + BibliocraftApi.MOD_ID + "." + name);
     }
 
     public boolean canOpen(Player player) {

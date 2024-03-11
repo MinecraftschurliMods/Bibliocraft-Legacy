@@ -1,8 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
@@ -36,7 +34,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import java.util.Objects;
 
 public final class ClientHandler {
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Bibliocraft.MOD_ID)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
     public static final class ModBus {
         @SubscribeEvent
         private static void registerMenuScreens(RegisterMenuScreensEvent event) {
@@ -53,7 +51,7 @@ public final class ClientHandler {
         private static void registerAdditional(ModelEvent.RegisterAdditional event) {
             for (TableBlock.Type type : TableBlock.Type.values()) {
                 for (DyeColor color : DyeColor.values()) {
-                    event.register(new ResourceLocation(Bibliocraft.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()));
+                    event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()));
                 }
             }
         }
@@ -65,8 +63,8 @@ public final class ClientHandler {
 
         @SubscribeEvent
         private static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
-            event.register(new ResourceLocation(Bibliocraft.MOD_ID, "bookcase"), BookcaseGeometryLoader.INSTANCE);
-            event.register(new ResourceLocation(Bibliocraft.MOD_ID, "table"), TableGeometryLoader.INSTANCE);
+            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "bookcase"), BookcaseGeometryLoader.INSTANCE);
+            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "table"), TableGeometryLoader.INSTANCE);
         }
 
         @SubscribeEvent

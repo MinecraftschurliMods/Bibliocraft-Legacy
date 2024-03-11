@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import net.minecraft.data.PackOutput;
@@ -39,7 +39,7 @@ public final class BCLootTableProvider extends LootTableProvider {
 
         @Override
         protected void generate() {
-            BibliocraftDatagenHelper.get().generateLootTables(this::add);
+            BibliocraftApi.getDatagenHelper().generateLootTables(this::add);
             add(BCBlocks.COOKIE_JAR.get(), DatagenUtil.createNameableTable(BCBlocks.COOKIE_JAR.get()));
             add(BCBlocks.DESK_BELL.get(), DatagenUtil.createDefaultTable(BCBlocks.DESK_BELL.get()));
             add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), DatagenUtil.createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));

@@ -64,7 +64,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, wood -> creator.apply(wood.getProperties().get().noOcclusion()));
+        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, wood -> creator.apply(wood.properties().get().noOcclusion()));
     }
 
     /**
@@ -76,7 +76,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> ColoredWoodTypeDeferredHolder<Block, T> coloredWoodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, (wood, color) -> creator.apply(wood.getProperties().get().noOcclusion()));
+        return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, (wood, color) -> creator.apply(wood.properties().get().noOcclusion()));
     }
 
     /**

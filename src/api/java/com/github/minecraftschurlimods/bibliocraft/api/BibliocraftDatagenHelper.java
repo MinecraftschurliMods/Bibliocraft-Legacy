@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.api;
 
-import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
@@ -94,19 +93,12 @@ public interface BibliocraftDatagenHelper {
     void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType);
 
     /**
-     * @return The only instance of this class.
-     */
-    static BibliocraftDatagenHelper get() {
-        return BibliocraftDatagenHelperImpl.get();
-    }
-
-    /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
      *
      * @param modid The id of the mod to mark the {@link BibliocraftWoodType}s of.
      */
     default void addWoodTypesToGenerateByModid(String modid) {
-        BibliocraftWoodTypeRegistry.get().getAll().stream()
+        BibliocraftApi.getWoodTypeRegistry().getAll().stream()
                 .filter(e -> e.getNamespace().equals(modid))
                 .forEach(this::addWoodTypeToGenerate);
     }

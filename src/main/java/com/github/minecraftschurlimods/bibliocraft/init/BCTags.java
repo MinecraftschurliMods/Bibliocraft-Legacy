@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -26,7 +26,7 @@ public interface BCTags {
          * @return A {@link TagKey<Block>} with this mod's namespace and the given path.
          */
         static TagKey<Block> tag(String name) {
-            return TagKey.create(BuiltInRegistries.BLOCK.key(), new ResourceLocation(Bibliocraft.MOD_ID, name));
+            return TagKey.create(BuiltInRegistries.BLOCK.key(), new ResourceLocation(BibliocraftApi.MOD_ID, name));
         }
     }
 
@@ -58,7 +58,7 @@ public interface BCTags {
          * @return A {@link TagKey<Item>} with this mod's namespace and the given path.
          */
         static TagKey<Item> tag(String name) {
-            return TagKey.create(BuiltInRegistries.ITEM.key(), new ResourceLocation(Bibliocraft.MOD_ID, name));
+            return TagKey.create(BuiltInRegistries.ITEM.key(), new ResourceLocation(BibliocraftApi.MOD_ID, name));
         }
     }
 }

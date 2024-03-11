@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCBlockStateProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCEnglishLanguageProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCItemModelProvider;
@@ -20,7 +19,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Bibliocraft.MOD_ID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
 public final class BCDatagen {
     @SubscribeEvent
     private static void gatherData(GatherDataEvent event) {
@@ -28,7 +27,7 @@ public final class BCDatagen {
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-        BibliocraftDatagenHelper.get().addWoodTypesToGenerateByModid("minecraft");
+        BibliocraftApi.getDatagenHelper().addWoodTypesToGenerateByModid("minecraft");
 
         generator.addProvider(event.includeClient(), new BCEnglishLanguageProvider(output));
         generator.addProvider(event.includeClient(), new BCBlockStateProvider(output, existingFileHelper));

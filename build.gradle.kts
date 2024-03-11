@@ -3,6 +3,9 @@ plugins {
     id("com.github.minecraftschurlimods.helperplugin")
 }
 
+helper.withApiSourceSet()
+helper.withDataGenSourceSet()
+
 dependencies {
     implementation(helper.neoforge())
 }

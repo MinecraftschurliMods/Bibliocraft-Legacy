@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
@@ -14,12 +13,12 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class BCBlockStateProvider extends BlockStateProvider {
     public BCBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, Bibliocraft.MOD_ID, exFileHelper);
+        super(output, BibliocraftApi.MOD_ID, exFileHelper);
     }
 
     @Override
     protected void registerStatesAndModels() {
-        BibliocraftDatagenHelper.get().generateBlockStates(this);
+        BibliocraftApi.getDatagenHelper().generateBlockStates(this);
         getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(models().getExistingFile(modLoc("block/template/cookie_jar" + (state.getValue(CookieJarBlock.OPEN) ? "_open" : ""))))
                 .build());

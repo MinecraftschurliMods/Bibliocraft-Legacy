@@ -1,22 +1,23 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.Collection;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 public interface BCCreativeTabs {
-    Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(Bibliocraft.MOD_ID, () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftWoodTypeRegistry.get().get("minecraft:oak"))))
-            .title(Component.translatable("itemGroup." + Bibliocraft.MOD_ID))
+    Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(BibliocraftApi.MOD_ID, () -> CreativeModeTab.builder()
+            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(WoodType.OAK))))
+            .title(Component.translatable("itemGroup." + BibliocraftApi.MOD_ID))
+            .withSearchBar()
             .displayItems((display, output) -> {
                 addToTab(output, BCItems.BOOKCASE.values());
                 addToTab(output, BCItems.LABEL.values());
@@ -32,15 +33,15 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FLAT_SEAT_BACK.values());
                 addToTab(output, BCItems.TALL_SEAT_BACK.values());
                 addToTab(output, BCItems.FANCY_SEAT_BACK.values());
-                output.accept(BCItems.COOKIE_JAR.get());
-                output.accept(BCItems.DESK_BELL.get());
-                output.accept(BCItems.IRON_FANCY_ARMOR_STAND.get());
+                output.accept(BCItems.COOKIE_JAR);
+                output.accept(BCItems.DESK_BELL);
+                output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
                     BCUtil.setNBTColor(stack, color.getTextColor());
                     output.accept(stack);
                 }
-                output.accept(BCItems.REDSTONE_BOOK.get());
+                output.accept(BCItems.REDSTONE_BOOK);
             })
             .build());
 

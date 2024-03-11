@@ -2,62 +2,56 @@ package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
-import net.minecraft.data.BlockFamily;
+import com.github.minecraftschurlimods.bibliocraft.api.RegisterBibliocraftWoodTypesEvent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.fml.ModLoader;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
+import java.util.Collection;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-public class BibliocraftWoodTypeRegistryImpl implements BibliocraftWoodTypeRegistry {
-    private static final BibliocraftWoodTypeRegistryImpl INSTANCE = new BibliocraftWoodTypeRegistryImpl();
-    private List<BibliocraftWoodType> values = new ArrayList<>();
-    private boolean stillRegistering = true;
+public final class BibliocraftWoodTypeRegistryImpl implements BibliocraftWoodTypeRegistry {
+    private final SortedMap<ResourceLocation, BibliocraftWoodType> values;
+    private boolean loaded = false;
 
-    private BibliocraftWoodTypeRegistryImpl() {}
-
-    /**
-     * @return The only instance of this class.
-     */
-    public static BibliocraftWoodTypeRegistryImpl get() {
-        return INSTANCE;
+    @ApiStatus.Internal
+    public BibliocraftWoodTypeRegistryImpl() {
+        this.values = new TreeMap<>(BibliocraftWoodTypeRegistryImpl::compareRLMinecraftFirst);
     }
 
-    @Override
-    public synchronized void register(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
-        values.add(new BibliocraftWoodTypeImpl(id, woodType, properties, texture, family));
+    @ApiStatus.Internal
+    public void register() {
+        System.out.println("Posting Bibliocraft Wood Types registry event");
+        ModLoader.get().postEvent(new RegisterBibliocraftWoodTypesEvent(this.values));
+        this.loaded = true;
     }
 
     @Override
     @Nullable
     public BibliocraftWoodType get(ResourceLocation id) {
-        if (stillRegistering)
-            throw new IllegalStateException("Tried to access BibliocraftWoodType#get() while registration was still in progress!");
-        return values.stream().filter(e -> e.getId().equals(id)).findFirst().orElse(null);
+        if (!this.loaded) throw new IllegalStateException("Tried to access BibliocraftWoodType#get() before registration was done!");
+        return this.values.get(id);
     }
 
     @Override
-    public List<BibliocraftWoodType> getAll() {
-        if (stillRegistering)
-            throw new IllegalStateException("Tried to access BibliocraftWoodType#getAll() while registration was still in progress!");
-        return values;
+    public Collection<BibliocraftWoodType> getAll() {
+        if (!this.loaded) throw new IllegalStateException("Tried to access BibliocraftWoodType#getAll() before registration was done!");
+        return this.values.values();
     }
 
-    /**
-     * After everything is registered, sorts the registered wood types based on the mod id, beginning with minecraft and then sorting alphabetically.
-     * Within one and the same mod, the order is kept. So for example, if a mod registers "somewood" and "anywood" (in that order), "somewood" will remain first.
-     */
-    public void postRegister() {
-        values = values.stream().sorted((a, b) -> {
-            String namespaceA = a.getNamespace();
-            String namespaceB = b.getNamespace();
-            if (namespaceA.equals("minecraft")) return 1;
-            if (namespaceB.equals("minecraft")) return -1;
-            return namespaceA.compareTo(namespaceB);
-        }).toList();
-        stillRegistering = false;
+    private static int compareRLMinecraftFirst(ResourceLocation a, ResourceLocation b) {
+        if (a.equals(b)) return 0;
+        int i = compareNamespace(a.getNamespace(), b.getNamespace());
+        return i != 0 ? i : a.getPath().compareTo(b.getPath());
+    }
+
+    private static int compareNamespace(String namespaceA, String namespaceB) {
+        int i = namespaceA.compareTo(namespaceB);
+        if (i == 0) return 0;
+        if (namespaceA.equals("minecraft")) return 1;
+        if (namespaceB.equals("minecraft")) return -1;
+        return i;
     }
 }

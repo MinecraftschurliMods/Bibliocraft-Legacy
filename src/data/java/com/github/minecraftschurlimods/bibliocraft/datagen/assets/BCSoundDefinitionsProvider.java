@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -10,16 +10,16 @@ import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 
 public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
     public BCSoundDefinitionsProvider(PackOutput output, ExistingFileHelper helper) {
-        super(output, Bibliocraft.MOD_ID, helper);
+        super(output, BibliocraftApi.MOD_ID, helper);
     }
 
     @Override
     public void registerSounds() {
         add(BCSoundEvents.DESK_BELL.get(), SoundDefinition.definition().with(
-                sound(new ResourceLocation(Bibliocraft.MOD_ID, "desk_bell_1")),
-                sound(new ResourceLocation(Bibliocraft.MOD_ID, "desk_bell_2")),
-                sound(new ResourceLocation(Bibliocraft.MOD_ID, "desk_bell_3")),
-                sound(new ResourceLocation(Bibliocraft.MOD_ID, "desk_bell_4"))
+                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_1")),
+                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_2")),
+                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_3")),
+                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_4"))
         ));
     }
 }
