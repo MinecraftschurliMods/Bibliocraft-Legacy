@@ -5,13 +5,16 @@ plugins {
 
 helper.withApiSourceSet()
 helper.withDataGenSourceSet()
+helper.withTestSourceSet()
 
 dependencies {
     implementation(helper.neoforge())
+    testImplementation("net.neoforged:testframework:${helper.neoVersion.get()}")
 }
 
 helper.withCommonRuns()
 helper.withDataGenRuns()
+helper.withGameTestRuns()
 
 helper.publication.pom {
     organization {

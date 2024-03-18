@@ -30,7 +30,6 @@ public class WoodTypeDeferredHolder<R, T extends R> {
      * @param creator  A function of {@link BibliocraftWoodType} to {@code T}, responsible for actually creating the {@link DeferredHolder}.
      */
     public WoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, Function<BibliocraftWoodType, ? extends T> creator) {
-        System.out.println("Creating " + suffix);
         for (BibliocraftWoodType type : BibliocraftApi.getWoodTypeRegistry().getAll()) {
             map.put(type, register.register(type.getRegistrationPrefix() + "_" + suffix, () -> creator.apply(type)));
         }

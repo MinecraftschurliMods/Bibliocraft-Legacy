@@ -23,7 +23,6 @@ public final class BibliocraftWoodTypeRegistryImpl implements BibliocraftWoodTyp
 
     @ApiStatus.Internal
     public void register() {
-        System.out.println("Posting Bibliocraft Wood Types registry event");
         ModLoader.get().postEvent(new RegisterBibliocraftWoodTypesEvent(this.values));
         this.loaded = true;
     }

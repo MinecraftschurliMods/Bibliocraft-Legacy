@@ -35,7 +35,6 @@ public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusE
     public void register(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
         if (this.woodTypes.containsKey(id))
             throw new IllegalStateException("Wood type " + id + " is already registered");
-        System.out.println("Registering wood type " + woodType.name());
         this.woodTypes.put(id, new BibliocraftWoodType(id, woodType, properties, texture, family));
     }
 }

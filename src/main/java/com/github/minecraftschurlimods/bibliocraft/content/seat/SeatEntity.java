@@ -23,15 +23,14 @@ public class SeatEntity extends Entity {
 
     @Override
     public void tick() {
-        super.tick();
         BlockPos pos = blockPosition();
         BlockState state = level().getBlockState(pos);
         if (level().isClientSide()) return;
         if (!(state.getBlock() instanceof SeatBlock)) {
             getPassengers().forEach(Entity::stopRiding);
-            removeAfterChangingDimensions();
+            discard();
         } else if (getPassengers().isEmpty()) {
-            removeAfterChangingDimensions();
+            discard();
             if (state.getBlock() instanceof SeatBlock) {
                 level().setBlockAndUpdate(pos, state.setValue(SeatBlock.OCCUPIED, false));
             }

@@ -37,7 +37,6 @@ public final class EventHandler {
 
         @SubscribeEvent
         private static void registerBibliocraftWoodTypes(RegisterBibliocraftWoodTypesEvent event) {
-            System.out.println("registering vanilla bibliocraft wood types");
             registerVanilla(event, WoodType.OAK, Blocks.OAK_PLANKS, BlockFamilies.OAK_PLANKS);
             registerVanilla(event, WoodType.SPRUCE, Blocks.SPRUCE_PLANKS, BlockFamilies.SPRUCE_PLANKS);
             registerVanilla(event, WoodType.BIRCH, Blocks.BIRCH_PLANKS, BlockFamilies.BIRCH_PLANKS);
