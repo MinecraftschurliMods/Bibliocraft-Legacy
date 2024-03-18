@@ -18,7 +18,6 @@ import net.neoforged.testframework.conf.Feature;
 import net.neoforged.testframework.conf.FrameworkConfiguration;
 import net.neoforged.testframework.impl.MutableTestFramework;
 import net.neoforged.testframework.summary.GitHubActionsStepSummaryDumper;
-import net.neoforged.testframework.summary.GitHubActionsStepSummaryFormatter;
 import org.lwjgl.glfw.GLFW;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
