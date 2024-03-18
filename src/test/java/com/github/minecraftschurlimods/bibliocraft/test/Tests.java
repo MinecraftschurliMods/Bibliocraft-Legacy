@@ -17,6 +17,7 @@ import net.neoforged.testframework.conf.ClientConfiguration;
 import net.neoforged.testframework.conf.Feature;
 import net.neoforged.testframework.conf.FrameworkConfiguration;
 import net.neoforged.testframework.impl.MutableTestFramework;
+import net.neoforged.testframework.summary.GitHubActionsStepSummaryDumper;
 import net.neoforged.testframework.summary.GitHubActionsStepSummaryFormatter;
 import org.lwjgl.glfw.GLFW;
 
@@ -34,7 +35,7 @@ public final class Tests {
                         .openManagerKey(GLFW.GLFW_KEY_N)
                         .build())
                 .enable(Feature.CLIENT_SYNC, Feature.CLIENT_MODIFICATIONS, Feature.TEST_STORE)
-                .formatters(new GitHubActionsStepSummaryFormatter("Bibliocraft Gametest Summary"))
+                .dumpers(new GitHubActionsStepSummaryDumper("Bibliocraft Gametest Summary"))
                 .build().create();
 
         framework.init(container.getEventBus(), container);
