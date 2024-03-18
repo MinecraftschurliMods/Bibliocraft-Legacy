@@ -65,7 +65,7 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
         public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
             BakedModel base = new ElementsModel(this.base.getElements()).bake(context, baker, spriteGetter, modelState, overrides, modelLocation);
             BakedModel[] books = new BakedModel[16];
-            ModelState bookState = new SimpleModelState(modelState.getRotation(), false);
+            ModelState bookState = new SimpleModelState(modelState.getRotation(), modelState.isUvLocked());
             boolean useBlockLight = context.useBlockLight();
             for (int j = 0; j < books.length; j++) {
                 books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, bookState, modelLocation, useBlockLight);
