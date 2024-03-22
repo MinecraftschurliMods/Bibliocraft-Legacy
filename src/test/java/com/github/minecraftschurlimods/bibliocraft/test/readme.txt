@@ -1,0 +1,12 @@
+todo:
+  - add tests for interactions
+    - bookcase
+    - display case
+    - fancy armor stand
+    - potion shelf
+    - seat
+    - shelf
+    - sword pedestal
+    - table
+    - toolrack
+  - add tests for automation (hoppers etc.)

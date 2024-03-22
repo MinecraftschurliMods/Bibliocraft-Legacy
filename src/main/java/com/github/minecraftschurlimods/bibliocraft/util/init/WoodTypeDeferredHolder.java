@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util.init;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -30,7 +30,7 @@ public class WoodTypeDeferredHolder<R, T extends R> {
      * @param creator  A function of {@link BibliocraftWoodType} to {@code T}, responsible for actually creating the {@link DeferredHolder}.
      */
     public WoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, Function<BibliocraftWoodType, ? extends T> creator) {
-        for (BibliocraftWoodType type : BibliocraftWoodTypeRegistry.get().getAll()) {
+        for (BibliocraftWoodType type : BibliocraftApi.getWoodTypeRegistry().getAll()) {
             map.put(type, register.register(type.getRegistrationPrefix() + "_" + suffix, () -> creator.apply(type)));
         }
     }
@@ -48,7 +48,9 @@ public class WoodTypeDeferredHolder<R, T extends R> {
      * @return The value of the {@link DeferredHolder} for the given {@link BibliocraftWoodType}. This is equivalent to calling {@code holder(type).get()}.
      */
     public T get(BibliocraftWoodType type) {
-        return map.get(type).get();
+        DeferredHolder<R, T> holder = holder(type);
+        if (holder == null) return null;
+        return holder.get();
     }
 
     /**
@@ -56,7 +58,9 @@ public class WoodTypeDeferredHolder<R, T extends R> {
      * @return The id of the {@link DeferredHolder} for the given {@link BibliocraftWoodType}. This is equivalent to calling {@code holder(type).getId()}.
      */
     public ResourceLocation id(BibliocraftWoodType type) {
-        return map.get(type).getId();
+        DeferredHolder<R, T> holder = holder(type);
+        if (holder == null) return null;
+        return holder.getId();
     }
 
     /**

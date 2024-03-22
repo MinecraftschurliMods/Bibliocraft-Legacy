@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.geometry;
 
-import com.github.minecraftschurlimods.bibliocraft.Bibliocraft;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.google.gson.JsonDeserializationContext;
@@ -102,7 +102,7 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
             for (TableBlock.Type type : TableBlock.Type.values()) {
                 Map<DyeColor, BakedModel> map = new HashMap<>();
                 for (DyeColor color : DyeColor.values()) {
-                    map.put(color, models.getModel(new ResourceLocation(Bibliocraft.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName())));
+                    map.put(color, models.getModel(new ResourceLocation(BibliocraftApi.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName())));
                 }
                 CLOTH_MAP.put(type, map);
             }
@@ -160,7 +160,7 @@ public class TableGeometryLoader implements IGeometryLoader<TableGeometryLoader.
         private ResourceLocation particle;
 
         public LoaderBuilder(BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
-            super(new ResourceLocation(Bibliocraft.MOD_ID, "table"), parent, existingFileHelper, false);
+            super(new ResourceLocation(BibliocraftApi.MOD_ID, "table"), parent, existingFileHelper, false);
         }
 
         public LoaderBuilder withModelForType(TableBlock.Type type, JsonObject model) {

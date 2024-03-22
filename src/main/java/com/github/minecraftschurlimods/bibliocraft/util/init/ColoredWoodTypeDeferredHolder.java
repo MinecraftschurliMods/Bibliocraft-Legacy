@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util.init;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -32,7 +32,7 @@ public class ColoredWoodTypeDeferredHolder<R, T extends R> {
      * @param creator  A function of {@link BibliocraftWoodType} and {@link DyeColor} to {@code T}, responsible for actually creating the {@link DeferredHolder}.
      */
     public ColoredWoodTypeDeferredHolder(DeferredRegister<R> register, String suffix, BiFunction<BibliocraftWoodType, DyeColor, ? extends T> creator) {
-        for (BibliocraftWoodType type : BibliocraftWoodTypeRegistry.get().getAll()) {
+        for (BibliocraftWoodType type : BibliocraftApi.getWoodTypeRegistry().getAll()) {
             map.put(type, new ColoredDeferredHolder<>(register, type.getRegistrationPrefix() + "_" + suffix, color -> creator.apply(type, color)));
         }
     }
