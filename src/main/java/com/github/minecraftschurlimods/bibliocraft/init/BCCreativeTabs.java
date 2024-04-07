@@ -33,6 +33,7 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FLAT_SEAT_BACK.values());
                 addToTab(output, BCItems.TALL_SEAT_BACK.values());
                 addToTab(output, BCItems.FANCY_SEAT_BACK.values());
+                output.accept(BCItems.CLIPBOARD);
                 output.accept(BCItems.COOKIE_JAR);
                 output.accept(BCItems.DESK_BELL);
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND);

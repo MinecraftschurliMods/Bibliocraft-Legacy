@@ -8,7 +8,9 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public interface BCRegistries {
     DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
@@ -18,6 +20,7 @@ public interface BCRegistries {
     DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, BibliocraftApi.MOD_ID);
     DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, BibliocraftApi.MOD_ID);
     DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT, BibliocraftApi.MOD_ID);
+    DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, BibliocraftApi.MOD_ID);
 
     /**
      * Central registration method. Classloads the registration classes and registers the registries to the mod bus.
@@ -30,6 +33,7 @@ public interface BCRegistries {
         BCEntities.init();
         BCMenus.init();
         BCSoundEvents.init();
+        BCAttachments.init();
         BLOCKS.register(bus);
         ITEMS.register(bus);
         CREATIVE_TABS.register(bus);
@@ -37,5 +41,6 @@ public interface BCRegistries {
         ENTITIES.register(bus);
         MENUS.register(bus);
         SOUND_EVENTS.register(bus);
+        ATTACHMENT_TYPES.register(bus);
     }
 }

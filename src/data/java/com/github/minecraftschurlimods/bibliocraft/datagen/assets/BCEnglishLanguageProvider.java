@@ -16,6 +16,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         BibliocraftApi.getDatagenHelper().generateEnglishTranslations(this);
+        add(BCItems.CLIPBOARD.get(), "Clipboard");
         add(BCBlocks.COOKIE_JAR.get(), "Cookie Jar");
         add(BCBlocks.DESK_BELL.get(), "Desk Bell");
         add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), "Iron Fancy Armor Stand");

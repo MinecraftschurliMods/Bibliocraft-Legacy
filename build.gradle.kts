@@ -12,6 +12,8 @@ dependencies {
     testImplementation("net.neoforged:testframework:${helper.neoVersion.get()}")
 }
 
+minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
+
 helper.withCommonRuns()
 helper.withDataGenRuns()
 helper.withGameTestRuns()

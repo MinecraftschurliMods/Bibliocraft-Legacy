@@ -1,4 +1,4 @@
-// 1.20.4	2024-03-10T23:25:32.8288696	Item Models: bibliocraft
+// 1.20.4	2024-04-07T15:45:49.609325	Item Models: bibliocraft
 36c2ae88060a10b2ba6510d8a8dcbdb484c8f69c assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 36e85fc9a78d924c13cb53669ed5d5544119084a assets/bibliocraft/models/item/acacia_label.json
@@ -258,6 +258,7 @@ b08fe8136cc085c878bed8d9acb6db06593f0bb4 assets/bibliocraft/models/item/brown_wa
 8e76dca2c6d35ed0af807eddbd53965ecc94966d assets/bibliocraft/models/item/cherry_shelf.json
 280b032d3408fc00c3bded61f574b9ddc175fd73 assets/bibliocraft/models/item/cherry_table.json
 b0ef7c64f4be72952c949e9ed177b5123ab303e6 assets/bibliocraft/models/item/cherry_tool_rack.json
+b31e17ff00c92aad5fa6502d41171ca81ead86e5 assets/bibliocraft/models/item/clipboard.json
 dec223724e1344f80c230608a3e872d66d764d76 assets/bibliocraft/models/item/cookie_jar.json
 22c99e89d234181c3f87fe58171ae9d25ab0b877 assets/bibliocraft/models/item/crimson_bookcase.json
 78059d6311d3e675a8eeb38824f1eaa3d687b7f8 assets/bibliocraft/models/item/crimson_fancy_armor_stand.json

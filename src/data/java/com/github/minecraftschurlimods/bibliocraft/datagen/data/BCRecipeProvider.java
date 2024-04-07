@@ -10,6 +10,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.DyeableLeatherItem;
@@ -36,6 +37,14 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                     .save(output, new ResourceLocation(BibliocraftApi.MOD_ID, "sword_pedestal_" + color.getName()));
         }
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD.get())
+                .pattern("I F")
+                .pattern("PPP")
+                .pattern(" L ")
+                .define('I', Tags.Items.DYES_BLACK)
+                .define('F', Tags.Items.FEATHERS)
+                .define('P', Items.PAPER)
+                .define('L', ItemTags.WOODEN_PRESSURE_PLATES);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.COOKIE_JAR.get())
                 .pattern(" I ")
                 .pattern("GCG")

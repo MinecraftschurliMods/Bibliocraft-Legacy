@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
+import com.github.minecraftschurlimods.bibliocraft.client.screen.ClipboardScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
-import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -10,11 +10,21 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 /**
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
 public class ClientUtil {
+    /**
+     * Opens a {@link ClipboardScreen} on the client.
+     *
+     * @param stack The owning {@link ItemStack} of the screen.
+     */
+    public static void openClipboardScreen(ItemStack stack) {
+        Minecraft.getInstance().setScreen(new ClipboardScreen(stack));
+    }
+
     /**
      * Opens a {@link RedstoneBookScreen} on the client.
      */
@@ -30,7 +40,7 @@ public class ClientUtil {
      */
     public static void setupCenteredBER(PoseStack stack, BCBlockEntity blockEntity) {
         stack.translate(0.5, 0.5, 0.5);
-        stack.mulPose(Axis.YP.rotationDegrees(switch (blockEntity.getBlockState().getValue(PotionShelfBlock.FACING)) {
+        stack.mulPose(Axis.YP.rotationDegrees(switch (blockEntity.getBlockState().getValue(BlockStateProperties.FACING)) {
             case SOUTH -> 0;
             case EAST -> 90;
             default -> 180;
