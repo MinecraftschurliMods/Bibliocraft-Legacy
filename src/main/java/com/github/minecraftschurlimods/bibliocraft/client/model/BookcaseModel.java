@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.client.geometry;
+package com.github.minecraftschurlimods.bibliocraft.client.model;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
 import com.google.gson.JsonDeserializationContext;
@@ -22,7 +22,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.ElementsModel;
-import net.neoforged.neoforge.client.model.IDynamicBakedModel;
 import net.neoforged.neoforge.client.model.SimpleModelState;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
@@ -34,14 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryLoader.BookcaseGeometry> {
-    public static final BookcaseGeometryLoader INSTANCE = new BookcaseGeometryLoader();
-
-    private BookcaseGeometryLoader() {
-    }
-
-    @Override
-    public BookcaseGeometry read(JsonObject jsonObject, JsonDeserializationContext context) throws JsonParseException {
+public class BookcaseModel extends DynamicBlockModel {
+    public static final IGeometryLoader<BookcaseGeometry> LOADER = (jsonObject, context) -> {
         jsonObject.remove("loader");
         BlockModel base = context.deserialize(jsonObject, BlockModel.class);
         BlockModel[] books = new BlockModel[16];
@@ -49,6 +42,30 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
             books[i] = context.deserialize(GsonHelper.getAsJsonObject(jsonObject, "book_" + i), BlockModel.class);
         }
         return new BookcaseGeometry(base, books);
+    };
+    private final BakedModel base;
+    private final BakedModel[] books;
+
+    public BookcaseModel(boolean useAmbientOcclusion, boolean isGui3d, boolean usesBlockLight, TextureAtlasSprite particle, BakedModel base, BakedModel[] books) {
+        super(useAmbientOcclusion, isGui3d, usesBlockLight, particle);
+        this.base = base;
+        this.books = books;
+    }
+
+    @Override
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
+        List<BakedQuad> quads = new ArrayList<>(base.getQuads(state, side, rand, extraData, renderType));
+        for (int i = 0; i < books.length; i++) {
+            Boolean book = extraData.get(BookcaseBlockEntity.MODEL_PROPERTIES.get(i));
+            if (book == null || !book) continue;
+            quads.addAll(books[i].getQuads(state, side, rand, extraData, renderType));
+        }
+        return quads;
+    }
+
+    @Override
+    public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
+        return base.applyTransform(transformType, poseStack, applyLeftHandTransform);
     }
 
     public static class BookcaseGeometry implements IUnbakedGeometry<BookcaseGeometry> {
@@ -70,7 +87,7 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
             for (int j = 0; j < books.length; j++) {
                 books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, bookState, modelLocation, useBlockLight);
             }
-            return new BookcaseDynamicModel(context.useAmbientOcclusion(), context.isGui3d(), useBlockLight, spriteGetter.apply(context.getMaterial("particle")), base, books);
+            return new BookcaseModel(context.useAmbientOcclusion(), context.isGui3d(), useBlockLight, spriteGetter.apply(context.getMaterial("particle")), base, books);
         }
 
         @Override
@@ -79,70 +96,6 @@ public class BookcaseGeometryLoader implements IGeometryLoader<BookcaseGeometryL
             for (BlockModel book : books) {
                 book.resolveParents(modelGetter);
             }
-        }
-    }
-
-    public static class BookcaseDynamicModel implements IDynamicBakedModel {
-        private final boolean useAmbientOcclusion;
-        private final boolean isGui3d;
-        private final boolean usesBlockLight;
-        private final TextureAtlasSprite particle;
-        private final BakedModel base;
-        private final BakedModel[] books;
-
-        public BookcaseDynamicModel(boolean useAmbientOcclusion, boolean isGui3d, boolean usesBlockLight, TextureAtlasSprite particle, BakedModel base, BakedModel[] books) {
-            this.useAmbientOcclusion = useAmbientOcclusion;
-            this.isGui3d = isGui3d;
-            this.usesBlockLight = usesBlockLight;
-            this.particle = particle;
-            this.base = base;
-            this.books = books;
-        }
-
-        @Override
-        public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
-            List<BakedQuad> quads = new ArrayList<>(base.getQuads(state, side, rand, extraData, renderType));
-            for (int i = 0; i < books.length; i++) {
-                Boolean book = extraData.get(BookcaseBlockEntity.MODEL_PROPERTIES.get(i));
-                if (book == null || !book) continue;
-                quads.addAll(books[i].getQuads(state, side, rand, extraData, renderType));
-            }
-            return quads;
-        }
-
-        @Override
-        public boolean useAmbientOcclusion() {
-            return useAmbientOcclusion;
-        }
-
-        @Override
-        public boolean isGui3d() {
-            return isGui3d;
-        }
-
-        @Override
-        public boolean usesBlockLight() {
-            return usesBlockLight;
-        }
-
-        @Override
-        public boolean isCustomRenderer() {
-            return false;
-        }
-
-        @Override
-        public TextureAtlasSprite getParticleIcon() {
-            return particle;
-        }
-
-        @Override
-        public ItemOverrides getOverrides() {
-            return ItemOverrides.EMPTY;
-        }
-
-        @Override
-        public BakedModel applyTransform(ItemDisplayContext transformType, PoseStack poseStack, boolean applyLeftHandTransform) {
-            return base.applyTransform(transformType, poseStack, applyLeftHandTransform);
         }
     }
 }

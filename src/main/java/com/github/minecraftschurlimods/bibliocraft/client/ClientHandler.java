@@ -10,8 +10,8 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.TableBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
-import com.github.minecraftschurlimods.bibliocraft.client.geometry.BookcaseGeometryLoader;
-import com.github.minecraftschurlimods.bibliocraft.client.geometry.TableGeometryLoader;
+import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseModel;
+import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
@@ -58,13 +58,13 @@ public final class ClientHandler {
 
         @SubscribeEvent
         private static void bakingCompleted(ModelEvent.BakingCompleted event) {
-            TableGeometryLoader.TableDynamicModel.rebuildClothModelCache();
+            TableModel.rebuildClothModelCache();
         }
 
         @SubscribeEvent
         private static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
-            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "bookcase"), BookcaseGeometryLoader.INSTANCE);
-            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "table"), TableGeometryLoader.INSTANCE);
+            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "bookcase"), BookcaseModel.LOADER);
+            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "table"), TableModel.LOADER);
         }
 
         @SubscribeEvent

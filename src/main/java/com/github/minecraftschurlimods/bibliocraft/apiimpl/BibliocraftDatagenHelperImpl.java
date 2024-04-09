@@ -3,7 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.client.geometry.TableGeometryLoader;
+import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
@@ -117,7 +117,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 prefix + "_shelf",
                 bcLoc("block/template/shelf"),
                 woodType.texture());
-        TableGeometryLoader.LoaderBuilder tableBuilder = models.getBuilder(prefix + "_table").customLoader(TableGeometryLoader.LoaderBuilder::new).withParticle(woodType.texture());
+        TableModel.Builder tableBuilder = models.getBuilder(prefix + "_table").customLoader(TableModel.Builder::new).withParticle(woodType.texture());
         for (TableBlock.Type type : TableBlock.Type.values()) {
             String name = type.getSerializedName();
             JsonObject model = new JsonObject();
