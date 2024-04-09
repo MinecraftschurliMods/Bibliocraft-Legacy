@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -37,7 +38,7 @@ public final class BCUtil {
      * @return A {@link ResourceLocation} with the "bibliocraft" namespace and the given path.
      */
     public static ResourceLocation modLoc(String path) {
-        return BCUtil.modLoc(path);
+        return new ResourceLocation(BibliocraftApi.MOD_ID, path);
     }
 
     /**

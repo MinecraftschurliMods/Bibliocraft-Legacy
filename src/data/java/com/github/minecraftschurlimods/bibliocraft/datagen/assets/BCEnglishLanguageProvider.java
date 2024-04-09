@@ -19,6 +19,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCItems.CLIPBOARD.get(), "Clipboard");
         add(BCBlocks.COOKIE_JAR.get(), "Cookie Jar");
         add(BCBlocks.DESK_BELL.get(), "Desk Bell");
+        add(BCBlocks.DINNER_PLATE.get(), "Dinner Plate");
         add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), "Iron Fancy Armor Stand");
         add(BCBlocks.SWORD_PEDESTAL.get(), "Sword Pedestal");
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");

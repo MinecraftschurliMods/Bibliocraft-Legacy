@@ -35,6 +35,7 @@ public interface BCItems {
     DeferredItem<ClipboardItem>       CLIPBOARD              = BCRegistries.ITEMS.register("clipboard", ClipboardItem::new);
     DeferredItem<BlockItem>           COOKIE_JAR             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.COOKIE_JAR);
     DeferredItem<BlockItem>           DESK_BELL              = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DESK_BELL);
+    DeferredItem<BlockItem>           DINNER_PLATE           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DINNER_PLATE);
     DeferredItem<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     DeferredItem<SwordPedestalItem>   SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", SwordPedestalItem::new);
     DeferredItem<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);

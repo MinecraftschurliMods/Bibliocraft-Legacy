@@ -36,6 +36,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.CLIPBOARD);
                 output.accept(BCItems.COOKIE_JAR);
                 output.accept(BCItems.DESK_BELL);
+                output.accept(BCItems.DINNER_PLATE);
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());

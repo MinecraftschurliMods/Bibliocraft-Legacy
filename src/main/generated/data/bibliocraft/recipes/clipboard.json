@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "forge:feathers"
+    },
+    "I": {
+      "tag": "forge:dyes/black"
+    },
+    "L": {
+      "tag": "minecraft:wooden_pressure_plates"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "I F",
+    "PPP",
+    " L "
+  ],
+  "result": {
+    "item": "bibliocraft:clipboard"
+  }
+}

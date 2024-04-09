@@ -44,7 +44,9 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('I', Tags.Items.DYES_BLACK)
                 .define('F', Tags.Items.FEATHERS)
                 .define('P', Items.PAPER)
-                .define('L', ItemTags.WOODEN_PRESSURE_PLATES);
+                .define('L', ItemTags.WOODEN_PRESSURE_PLATES)
+                .unlockedBy("has_paper", has(Items.PAPER))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.COOKIE_JAR.get())
                 .pattern(" I ")
                 .pattern("GCG")
@@ -63,6 +65,11 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DINNER_PLATE.get())
+                .pattern("SSS")
+                .define('S', Items.SMOOTH_QUARTZ_SLAB)
+                .unlockedBy("has_smooth_quartz", has(Items.SMOOTH_QUARTZ_SLAB))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND.get())
                 .pattern(" I ")
