@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.RegisterBibliocraftWoodTypesEvent;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import net.minecraft.data.BlockFamilies;
@@ -18,6 +19,8 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
 import java.util.Objects;
 
@@ -33,6 +36,12 @@ public final class EventHandler {
         @SubscribeEvent
         private static void entityAttributeCreation(EntityAttributeCreationEvent event) {
             event.put(BCEntities.FANCY_ARMOR_STAND.get(), LivingEntity.createLivingAttributes().build());
+        }
+
+        @SubscribeEvent
+        private static void registerPayloadHandlers(RegisterPayloadHandlerEvent event) {
+            event.registrar(BibliocraftApi.MOD_ID)
+                    .play(ClipboardItemSyncPacket.ID, ClipboardItemSyncPacket::new, builder -> builder.server(ClipboardItemSyncPacket::handle));
         }
 
         @SubscribeEvent

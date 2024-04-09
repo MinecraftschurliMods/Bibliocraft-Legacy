@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardAttachment;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardPage;
 import com.github.minecraftschurlimods.bibliocraft.init.BCAttachments;
 import net.minecraft.Util;
@@ -19,7 +20,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public class ClipboardScreen extends Screen {
@@ -28,6 +31,7 @@ public class ClipboardScreen extends Screen {
     private final ClipboardAttachment data;
     private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardPage.LINES];
     private final EditBox[] lines = new EditBox[ClipboardPage.LINES];
+    private EditBox titleBox;
     private PageButton forwardButton;
     private PageButton backButton;
 
@@ -39,24 +43,33 @@ public class ClipboardScreen extends Screen {
 
     @Override
     public void onClose() {
-        stack.setData(BCAttachments.CLIPBOARD, data);
-        // TODO sync to server
         super.onClose();
+        close();
     }
 
     @Override
     protected void init() {
         int x = (width - 192) / 2;
-        addRenderableWidget(new NoShadowEditBox(x + 57, 14, 72, e -> data.title = e));
+        titleBox = addRenderableWidget(new NoShadowEditBox(x + 57, 14, 72, e -> data.title = e));
         for (int i = 0; i < ClipboardPage.LINES; i++) {
             final int j = i; // I love Java
             checkboxes[i] = new CheckboxButton(x + 30, 15 * i + 26, e -> data.getActivePage().checkboxes[j] = ((CheckboxButton) e).getState());
             addRenderableWidget(checkboxes[i]);
             lines[i] = addRenderableWidget(new NoShadowEditBox(x + 45, 15 * i + 28, 109, e -> data.getActivePage().lines[j] = e));
         }
-        forwardButton = addRenderableWidget(new PageButton(x + 116, 159, true, $ -> pageForward(), false));
-        backButton = addRenderableWidget(new PageButton(x + 43, 159, false, $ -> pageBack(), false));
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, p -> onClose()).bounds(width / 2 - 100, 196, 200, 20).build());
+        forwardButton = addRenderableWidget(new PageButton(x + 116, 159, true, $ -> {
+            data.nextPage();
+            updateContents();
+        }, false));
+        backButton = addRenderableWidget(new PageButton(x + 43, 159, false, $ -> {
+            data.prevPage();
+            updateContents();
+        }, false));
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
+            close();
+            Objects.requireNonNull(minecraft).setScreen(null);
+        }).bounds(width / 2 - 100, 196, 200, 20).build());
+        updateContents();
     }
 
     @Override
@@ -65,18 +78,14 @@ public class ClipboardScreen extends Screen {
         graphics.blit(BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192);
     }
 
-    private void pageBack() {
-        data.prevPage();
-        updateContents();
-    }
-
-    private void pageForward() {
-        data.nextPage();
-        updateContents();
+    private void close() {
+        stack.setData(BCAttachments.CLIPBOARD, data);
+        PacketDistributor.SERVER.noArg().send(new ClipboardItemSyncPacket(data.serializeNBT()));
     }
 
     private void updateContents() {
         backButton.visible = data.getActivePageIndex() > 0;
+        titleBox.setValue(data.title);
         ClipboardPage page = data.getActivePage();
         for (int i = 0; i < checkboxes.length; i++) {
             checkboxes[i].setState(page.checkboxes[i]);
@@ -132,7 +141,7 @@ public class ClipboardScreen extends Screen {
             }
         }
     }
-    
+
     private static class CheckboxButton extends Button {
         private static final ResourceLocation CHECK_TEXTURE = new ResourceLocation(BibliocraftApi.MOD_ID, "check");
         private static final ResourceLocation X_TEXTURE = new ResourceLocation(BibliocraftApi.MOD_ID, "x");
