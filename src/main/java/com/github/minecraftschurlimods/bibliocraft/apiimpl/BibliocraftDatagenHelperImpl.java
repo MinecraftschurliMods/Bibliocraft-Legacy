@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
@@ -11,6 +10,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
@@ -155,7 +155,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                     .build());
             DatagenUtil.horizontalBlockModel(provider, BCBlocks.SEAT_BACK.holder(woodType, color), state -> {
                 String suffix = state.getValue(SeatBackBlock.TYPE).getSerializedName() + "_seat_back";
-                return models.withExistingParent(color.getName() + "_" + woodType.getRegistrationPrefix() + "_" + suffix, new ResourceLocation(BibliocraftApi.MOD_ID, "block/template/seat/" + suffix)).texture("texture", woodType.texture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color));
+                return models.withExistingParent(color.getName() + "_" + woodType.getRegistrationPrefix() + "_" + suffix, BCUtil.modLoc("block/template/seat/" + suffix)).texture("texture", woodType.texture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color));
             }, true);
         }
     }
@@ -334,7 +334,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
      * @return A new {@link ResourceLocation} with Bibliocraft's namespace and the given path.
      */
     private static ResourceLocation bcLoc(String path) {
-        return new ResourceLocation(BibliocraftApi.MOD_ID, path);
+        return BCUtil.modLoc(path);
     }
 
     /**

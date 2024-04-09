@@ -1,11 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardAttachment;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardPage;
 import com.github.minecraftschurlimods.bibliocraft.init.BCAttachments;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class ClipboardScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = new ResourceLocation(BibliocraftApi.MOD_ID, "textures/gui/clipboard.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
     private final ClipboardAttachment data;
     private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardPage.LINES];
@@ -143,8 +143,8 @@ public class ClipboardScreen extends Screen {
     }
 
     private static class CheckboxButton extends Button {
-        private static final ResourceLocation CHECK_TEXTURE = new ResourceLocation(BibliocraftApi.MOD_ID, "check");
-        private static final ResourceLocation X_TEXTURE = new ResourceLocation(BibliocraftApi.MOD_ID, "x");
+        private static final ResourceLocation CHECK_TEXTURE = BCUtil.modLoc("check");
+        private static final ResourceLocation X_TEXTURE = BCUtil.modLoc("x");
         private CheckboxState state = CheckboxState.EMPTY;
 
         public CheckboxButton(int x, int y, OnPress onPress) {

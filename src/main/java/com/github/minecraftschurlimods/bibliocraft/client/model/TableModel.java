@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -62,7 +62,7 @@ public class TableModel extends DynamicBlockModel {
         for (TableBlock.Type type : TableBlock.Type.values()) {
             Map<DyeColor, BakedModel> map = new HashMap<>();
             for (DyeColor color : DyeColor.values()) {
-                map.put(color, models.getModel(new ResourceLocation(BibliocraftApi.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName())));
+                map.put(color, models.getModel(BCUtil.modLoc("block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName())));
             }
             CLOTH_MAP.put(type, map);
         }
@@ -111,7 +111,7 @@ public class TableModel extends DynamicBlockModel {
         private ResourceLocation particle;
 
         public Builder(BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
-            super(new ResourceLocation(BibliocraftApi.MOD_ID, "table"), parent, existingFileHelper, false);
+            super(BCUtil.modLoc("table"), parent, existingFileHelper, false);
         }
 
         public Builder withModelForType(TableBlock.Type type, JsonObject model) {

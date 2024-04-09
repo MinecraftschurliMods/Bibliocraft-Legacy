@@ -22,7 +22,6 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -51,7 +50,7 @@ public final class ClientHandler {
         private static void registerAdditional(ModelEvent.RegisterAdditional event) {
             for (TableBlock.Type type : TableBlock.Type.values()) {
                 for (DyeColor color : DyeColor.values()) {
-                    event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()));
+                    event.register(BCUtil.modLoc("block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()));
                 }
             }
         }
@@ -63,8 +62,8 @@ public final class ClientHandler {
 
         @SubscribeEvent
         private static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
-            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "bookcase"), BookcaseModel.LOADER);
-            event.register(new ResourceLocation(BibliocraftApi.MOD_ID, "table"), TableModel.LOADER);
+            event.register(BCUtil.modLoc("bookcase"), BookcaseModel.LOADER);
+            event.register(BCUtil.modLoc("table"), TableModel.LOADER);
         }
 
         @SubscribeEvent

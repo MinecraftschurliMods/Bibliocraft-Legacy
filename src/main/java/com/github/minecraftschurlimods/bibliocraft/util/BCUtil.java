@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -22,6 +23,22 @@ import java.util.List;
 public final class BCUtil {
     private static final String TAG_COLOR = "color";
     private static final String TAG_DISPLAY = "display";
+
+    /**
+     * @param path The path to use.
+     * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
+     */
+    public static ResourceLocation mcLoc(String path) {
+        return new ResourceLocation("minecraft", path);
+    }
+
+    /**
+     * @param path The path to use.
+     * @return A {@link ResourceLocation} with the "bibliocraft" namespace and the given path.
+     */
+    public static ResourceLocation modLoc(String path) {
+        return BCUtil.modLoc(path);
+    }
 
     /**
      * Merges a given collection with the given elements. Does not mutate the original collection.

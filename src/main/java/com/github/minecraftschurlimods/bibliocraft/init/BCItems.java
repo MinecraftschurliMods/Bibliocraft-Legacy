@@ -15,8 +15,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredItem;
 
-import java.util.function.Supplier;
-
 public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
