@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +25,7 @@ public class WallDisplayCaseBlock extends AbstractDisplayCaseBlock {
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.COUNTERCLOCKWISE_90);
+    public static final MapCodec<WallDisplayCaseBlock> CODEC = simpleCodec(WallDisplayCaseBlock::new);
     private final BibliocraftWoodType woodType;
     private final DyeColor color;
 
@@ -35,6 +37,11 @@ public class WallDisplayCaseBlock extends AbstractDisplayCaseBlock {
         super(properties);
         this.woodType = woodType;
         this.color = color;
+    }
+
+    @Override
+    protected MapCodec<WallDisplayCaseBlock> codec() {
+        return CODEC;
     }
 
     @Override

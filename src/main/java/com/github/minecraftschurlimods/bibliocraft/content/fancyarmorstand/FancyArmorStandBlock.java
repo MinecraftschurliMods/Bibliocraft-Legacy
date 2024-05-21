@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -44,11 +45,17 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
             Shapes.box(0.0625, 0.125, 0.375, 0.9375, 0.5, 0.625));
     private static final VoxelShape X_SHAPE_BOTTOM = ShapeUtil.rotate(Z_SHAPE_BOTTOM, Rotation.CLOCKWISE_90);
     private static final VoxelShape X_SHAPE_TOP = ShapeUtil.rotate(Z_SHAPE_TOP, Rotation.CLOCKWISE_90);
+    public static final MapCodec<FancyArmorStandBlock> CODEC = simpleCodec(FancyArmorStandBlock::new);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     public FancyArmorStandBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    @Override
+    protected MapCodec<FancyArmorStandBlock> codec() {
+        return CODEC;
     }
 
     @Override

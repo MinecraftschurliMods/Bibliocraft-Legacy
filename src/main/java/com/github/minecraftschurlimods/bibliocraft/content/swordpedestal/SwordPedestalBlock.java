@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.swordpedestal;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,6 +31,7 @@ public class SwordPedestalBlock extends BCFacingInteractibleBlock {
             Shapes.box(0.125, 0.125, 0.25, 0.875, 0.1875, 0.75),
             Shapes.box(0.1875, 0.1875, 0.25, 0.8125, 0.25, 0.75));
     private static final VoxelShape X_SHAPE = ShapeUtil.rotate(Z_SHAPE, Rotation.CLOCKWISE_90);
+    public static final MapCodec<SwordPedestalBlock> CODEC = simpleCodec(SwordPedestalBlock::new);
 
     public SwordPedestalBlock(Properties properties) {
         super(properties);

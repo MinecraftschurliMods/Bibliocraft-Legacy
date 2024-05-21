@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.content.DeskBellBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.deskbell.DeskBellBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.dinnerplate.DinnerPlateBlock;
@@ -21,6 +21,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBloc
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -29,29 +30,46 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static com.github.minecraftschurlimods.bibliocraft.init.BCRegistries.*;
+
 public interface BCBlocks {
-    WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
+    Supplier<MapCodec<BookcaseBlock>>        BOOKCASE_TYPE          = BLOCK_TYPES.register("bookcase", () -> BookcaseBlock.CODEC);
+    Supplier<MapCodec<FancyArmorStandBlock>> FANCY_ARMOR_STAND_TYPE = BLOCK_TYPES.register("fancy_armor_stand", () -> FancyArmorStandBlock.CODEC);
+    Supplier<MapCodec<LabelBlock>>           LABEL_TYPE             = BLOCK_TYPES.register("label", () -> LabelBlock.CODEC);
+    Supplier<MapCodec<PotionShelfBlock>>     POTION_SHELF_TYPE      = BLOCK_TYPES.register("potion_shelf", () -> PotionShelfBlock.CODEC);
+    Supplier<MapCodec<ShelfBlock>>           SHELF_TYPE             = BLOCK_TYPES.register("shelf", () -> ShelfBlock.CODEC);
+    Supplier<MapCodec<TableBlock>>           TABLE_TYPE             = BLOCK_TYPES.register("table", () -> TableBlock.CODEC);
+    Supplier<MapCodec<ToolRackBlock>>        TOOL_RACK_TYPE         = BLOCK_TYPES.register("tool_rack", () -> ToolRackBlock.CODEC);
+    Supplier<MapCodec<DisplayCaseBlock>>     DISPLAY_CASE_TYPE      = BLOCK_TYPES.register("display_case", () -> DisplayCaseBlock.CODEC);
+    Supplier<MapCodec<WallDisplayCaseBlock>> WALL_DISPLAY_CASE_TYPE = BLOCK_TYPES.register("wall_display_case", () -> WallDisplayCaseBlock.CODEC);
+    Supplier<MapCodec<SeatBlock>>            SEAT_TYPE              = BLOCK_TYPES.register("seat", () -> SeatBlock.CODEC);
+    Supplier<MapCodec<SeatBackBlock>>        SEAT_BACK_TYPE         = BLOCK_TYPES.register("seat_back", () -> SeatBackBlock.CODEC);
+    Supplier<MapCodec<CookieJarBlock>>       COOKIE_JAR_TYPE        = BLOCK_TYPES.register("cookie_jar", () -> CookieJarBlock.CODEC);
+    Supplier<MapCodec<DeskBellBlock>>        DESK_BELL_TYPE         = BLOCK_TYPES.register("desk_bell", () -> DeskBellBlock.CODEC);
+    Supplier<MapCodec<DinnerPlateBlock>>     DINNER_PLATE_TYPE      = BLOCK_TYPES.register("dinner_plate", () -> DinnerPlateBlock.CODEC);
+    Supplier<MapCodec<SwordPedestalBlock>>   SWORD_PEDESTAL_TYPE    = BLOCK_TYPES.register("sword_pedestal", () -> SwordPedestalBlock.CODEC);
+    WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase", BookcaseBlock::new);
     WoodTypeDeferredHolder<Block, FancyArmorStandBlock> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
-    WoodTypeDeferredHolder<Block, LabelBlock>           LABEL             = woodenBlock("label",             LabelBlock::new);
-    WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
-    WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf",             ShelfBlock::new);
-    WoodTypeDeferredHolder<Block, TableBlock>           TABLE             = woodenBlock("table",             TableBlock::new);
-    WoodTypeDeferredHolder<Block, ToolRackBlock>        TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
-    ColoredWoodTypeDeferredHolder<Block, DisplayCaseBlock>     DISPLAY_CASE      = coloredWoodenBlock("display_case",      DisplayCaseBlock::new);
+    WoodTypeDeferredHolder<Block, LabelBlock>           LABEL             = woodenBlock("label", LabelBlock::new);
+    WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf", PotionShelfBlock::new);
+    WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf", ShelfBlock::new);
+    WoodTypeDeferredHolder<Block, TableBlock>           TABLE             = woodenBlock("table", TableBlock::new);
+    WoodTypeDeferredHolder<Block, ToolRackBlock>        TOOL_RACK         = woodenBlock("tool_rack", ToolRackBlock::new);
+    ColoredWoodTypeDeferredHolder<Block, DisplayCaseBlock>     DISPLAY_CASE      = coloredWoodenBlock("display_case", DisplayCaseBlock::new);
     ColoredWoodTypeDeferredHolder<Block, WallDisplayCaseBlock> WALL_DISPLAY_CASE = coloredWoodenBlock("wall_display_case", WallDisplayCaseBlock::new);
-    ColoredWoodTypeDeferredHolder<Block, SeatBlock>            SEAT              = coloredWoodenBlock("seat",              SeatBlock::new);
-    ColoredWoodTypeDeferredHolder<Block, SeatBackBlock>        SEAT_BACK         = coloredWoodenBlock("seat_back",         SeatBackBlock::new);
-    DeferredBlock<FancyLampBlock> CLEAR_FANCY_GOLD_LAMP = BCRegistries.BLOCKS.register("clear_fancy_gold_lamp", () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).lightLevel($ -> 15).noOcclusion()));
-    ColoredDeferredHolder<Block, FancyLampBlock> FANCY_GOLD_LAMP = coloredBlock(       "fancy_gold_lamp",       () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).lightLevel($ -> 15).noOcclusion()));
-    DeferredBlock<FancyLampBlock> CLEAR_FANCY_IRON_LAMP = BCRegistries.BLOCKS.register("clear_fancy_iron_lamp", () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).lightLevel($ -> 15).noOcclusion()));
-    ColoredDeferredHolder<Block, FancyLampBlock> FANCY_IRON_LAMP = coloredBlock(       "fancy_iron_lamp",       () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).lightLevel($ -> 15).noOcclusion()));
-    DeferredBlock<CookieJarBlock>       COOKIE_JAR             = BCRegistries.BLOCKS.register("cookie_jar",             () -> new CookieJarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
-    DeferredBlock<DeskBellBlock>        DESK_BELL              = BCRegistries.BLOCKS.register("desk_bell",              () -> new DeskBellBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
-    DeferredBlock<DinnerPlateBlock>     DINNER_PLATE           = BCRegistries.BLOCKS.register("dinner_plate",           () -> new DinnerPlateBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ).noOcclusion()));
-    DeferredBlock<DiscRackBlock>        DISC_RACK              = BCRegistries.BLOCKS.register("disc_rack",              () -> new DiscRackBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
-    DeferredBlock<WallDiscRackBlock>    WALL_DISC_RACK         = BCRegistries.BLOCKS.register("wall_disc_rack",         () -> new WallDiscRackBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
-    DeferredBlock<FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
-    DeferredBlock<SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
+    ColoredWoodTypeDeferredHolder<Block, SeatBlock>            SEAT              = coloredWoodenBlock("seat", SeatBlock::new);
+    ColoredWoodTypeDeferredHolder<Block, SeatBackBlock>        SEAT_BACK         = coloredWoodenBlock("seat_back", SeatBackBlock::new);
+    DeferredBlock<FancyLampBlock>                CLEAR_FANCY_GOLD_LAMP  = BCRegistries.BLOCKS.register("clear_fancy_gold_lamp", () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).lightLevel($ -> 15).noOcclusion()));
+    ColoredDeferredHolder<Block, FancyLampBlock> FANCY_GOLD_LAMP        = coloredBlock("fancy_gold_lamp", () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).lightLevel($ -> 15).noOcclusion()));
+    DeferredBlock<FancyLampBlock>                CLEAR_FANCY_IRON_LAMP  = BCRegistries.BLOCKS.register("clear_fancy_iron_lamp", () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).lightLevel($ -> 15).noOcclusion()));
+    ColoredDeferredHolder<Block, FancyLampBlock> FANCY_IRON_LAMP        = coloredBlock("fancy_iron_lamp", () -> new FancyLampBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).lightLevel($ -> 15).noOcclusion()));
+    DeferredBlock<CookieJarBlock>                COOKIE_JAR             = BLOCKS.register("cookie_jar", () -> new CookieJarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
+    DeferredBlock<DeskBellBlock>                 DESK_BELL              = BLOCKS.register("desk_bell", () -> new DeskBellBlock(BCSoundEvents.DESK_BELL, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    DeferredBlock<DinnerPlateBlock>              DINNER_PLATE           = BLOCKS.register("dinner_plate", () -> new DinnerPlateBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ).noOcclusion()));
+    DeferredBlock<DiscRackBlock>                 DISC_RACK              = BCRegistries.BLOCKS.register("disc_rack", () -> new DiscRackBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
+    DeferredBlock<WallDiscRackBlock>             WALL_DISC_RACK         = BCRegistries.BLOCKS.register("wall_disc_rack", () -> new WallDiscRackBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
+    DeferredBlock<FancyArmorStandBlock>          IRON_FANCY_ARMOR_STAND = BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    DeferredBlock<SwordPedestalBlock>            SWORD_PEDESTAL         = BLOCKS.register("sword_pedestal", () -> new SwordPedestalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
     //TODO Clipboard
     //TODO Fancy Lantern
     //TODO Fancy Sign
@@ -74,7 +92,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, wood -> creator.apply(wood.properties().get().noOcclusion()));
+        return new WoodTypeDeferredHolder<>(BLOCKS, suffix, wood -> creator.apply(wood.properties().get().noOcclusion()));
     }
 
     /**
@@ -98,7 +116,7 @@ public interface BCBlocks {
      * @param <T> The type of the block registered.
      */
     static <T extends Block> ColoredWoodTypeDeferredHolder<Block, T> coloredWoodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
-        return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, (wood, color) -> creator.apply(wood.properties().get().noOcclusion()));
+        return new ColoredWoodTypeDeferredHolder<>(BLOCKS, suffix, (wood, color) -> creator.apply(wood.properties().get().noOcclusion()));
     }
 
     /**

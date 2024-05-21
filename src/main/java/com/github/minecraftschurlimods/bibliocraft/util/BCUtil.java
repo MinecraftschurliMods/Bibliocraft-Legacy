@@ -20,7 +20,6 @@ import java.util.List;
 /**
  * Utility class holding various helper methods.
  */
-@SuppressWarnings("DataFlowIssue")
 public final class BCUtil {
     private static final String TAG_COLOR = "color";
     private static final String TAG_DISPLAY = "display";
@@ -110,19 +109,16 @@ public final class BCUtil {
 
     //region Static variants of the methods in DyeableLeatherItem.
     public static boolean hasNBTColor(ItemStack stack) {
-        if (!stack.hasTag() || !stack.getTag().contains(TAG_DISPLAY)) return false;
         CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
         return tag != null && tag.contains(TAG_COLOR, Tag.TAG_ANY_NUMERIC);
     }
 
     public static int getNBTColor(ItemStack stack, int other) {
-        if (!stack.hasTag() || !stack.getTag().contains(TAG_DISPLAY)) return other;
         CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
         return tag != null && tag.contains(TAG_COLOR, Tag.TAG_ANY_NUMERIC) ? tag.getInt(TAG_COLOR) : other;
     }
 
     public static void clearNBTColor(ItemStack stack) {
-        if (!stack.hasTag() || !stack.getTag().contains(TAG_DISPLAY)) return;
         CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
         if (tag != null && tag.contains(TAG_COLOR)) {
             tag.remove(TAG_COLOR);

@@ -10,8 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-import java.util.Objects;
-
 public class ClipboardItem extends Item {
     public ClipboardItem() {
         super(new Properties().stacksTo(1));
@@ -28,8 +26,7 @@ public class ClipboardItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        Player player = Objects.requireNonNull(context.getPlayer());
-        if (player.isSecondaryUseActive()) {
+        if (context.getPlayer() != null && context.getPlayer().isSecondaryUseActive()) {
             // TODO place block
         }
         return super.useOn(context);

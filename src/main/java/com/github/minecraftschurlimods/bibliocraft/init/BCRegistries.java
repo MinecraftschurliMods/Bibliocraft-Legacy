@@ -1,11 +1,13 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -13,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public interface BCRegistries {
+    DeferredRegister<MapCodec<? extends Block>> BLOCK_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, BibliocraftApi.MOD_ID);
     DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
     DeferredRegister.Items ITEMS = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
     DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, BibliocraftApi.MOD_ID);
@@ -34,6 +37,7 @@ public interface BCRegistries {
         BCMenus.init();
         BCSoundEvents.init();
         BCAttachments.init();
+        BLOCK_TYPES.register(bus);
         BLOCKS.register(bus);
         ITEMS.register(bus);
         CREATIVE_TABS.register(bus);

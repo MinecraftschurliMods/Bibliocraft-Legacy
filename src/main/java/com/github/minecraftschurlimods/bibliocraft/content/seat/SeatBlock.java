@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.seat;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCWaterloggedBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -65,10 +66,16 @@ public class SeatBlock extends BCWaterloggedBlock {
     private static final VoxelShape SHAPE_FANCY_EAST = ShapeUtil.rotate(SHAPE_FANCY_NORTH, Rotation.CLOCKWISE_90);
     private static final VoxelShape SHAPE_FANCY_SOUTH = ShapeUtil.rotate(SHAPE_FANCY_NORTH, Rotation.CLOCKWISE_180);
     private static final VoxelShape SHAPE_FANCY_WEST = ShapeUtil.rotate(SHAPE_FANCY_NORTH, Rotation.COUNTERCLOCKWISE_90);
+    public static final MapCodec<SeatBlock> CODEC = simpleCodec(SeatBlock::new);
 
     public SeatBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, false).setValue(OCCUPIED, false));
+    }
+
+    @Override
+    protected MapCodec<SeatBlock> codec() {
+        return CODEC;
     }
 
     @Override

@@ -18,6 +18,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 
@@ -56,6 +57,11 @@ public final class EventHandler {
             registerVanilla(event, WoodType.MANGROVE, Blocks.MANGROVE_PLANKS, BlockFamilies.MANGROVE_PLANKS);
             registerVanilla(event, WoodType.BAMBOO, Blocks.BAMBOO_PLANKS, BlockFamilies.BAMBOO_PLANKS);
             registerVanilla(event, WoodType.CHERRY, Blocks.CHERRY_PLANKS, BlockFamilies.CHERRY_PLANKS);
+        }
+
+        @SubscribeEvent
+        private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+            //event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.BOOKCASE.get(), (be, dir) -> be.getBlockState().getValue(BookcaseBlock.FACING) != dir ? new InvWrapper(be) : null);
         }
 
         /**

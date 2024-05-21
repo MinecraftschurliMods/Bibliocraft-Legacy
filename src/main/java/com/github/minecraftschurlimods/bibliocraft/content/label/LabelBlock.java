@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.label;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,9 +33,15 @@ public class LabelBlock extends BCFacingEntityBlock {
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.COUNTERCLOCKWISE_90);
+    public static final MapCodec<LabelBlock> CODEC = simpleCodec(LabelBlock::new);
 
     public LabelBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<LabelBlock> codec() {
+        return CODEC;
     }
 
     @Override
