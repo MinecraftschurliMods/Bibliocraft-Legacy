@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -19,10 +18,6 @@ import java.util.stream.IntStream;
 
 public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity> {
     private final RandomSource random = new LegacyRandomSource(0);
-
-    @SuppressWarnings("unused")
-    public CookieJarBER(BlockEntityRendererProvider.Context context) {
-    }
 
     @Override
     public void render(CookieJarBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {

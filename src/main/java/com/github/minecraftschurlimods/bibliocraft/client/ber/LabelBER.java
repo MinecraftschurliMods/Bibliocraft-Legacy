@@ -9,10 +9,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class LabelBER implements BlockEntityRenderer<LabelBlockEntity> {
-    @SuppressWarnings("unused")
-    public LabelBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(LabelBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();

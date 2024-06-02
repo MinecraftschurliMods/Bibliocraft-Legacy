@@ -9,10 +9,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class ToolRackBER implements BlockEntityRenderer<ToolRackBlockEntity> {
-    @SuppressWarnings("unused")
-    public ToolRackBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(ToolRackBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();

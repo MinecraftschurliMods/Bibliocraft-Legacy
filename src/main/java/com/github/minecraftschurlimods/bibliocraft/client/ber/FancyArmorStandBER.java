@@ -11,10 +11,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.phys.AABB;
 
 public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBlockEntity> {
-    @SuppressWarnings("unused")
-    public FancyArmorStandBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(FancyArmorStandBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         FancyArmorStandEntity entity = blockEntity.getDisplayEntity();

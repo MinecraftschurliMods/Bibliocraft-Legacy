@@ -23,10 +23,6 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
     private static final RenderType MAP_BACKGROUND = RenderType.text(new ResourceLocation("textures/map/map_background.png"));
     private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType.text(new ResourceLocation("textures/map/map_background_checkerboard.png"));
 
-    @SuppressWarnings("unused")
-    public TableBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(TableBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         ItemStack item = blockEntity.getItem(0);

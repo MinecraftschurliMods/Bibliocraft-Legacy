@@ -9,10 +9,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class PotionShelfBER implements BlockEntityRenderer<PotionShelfBlockEntity> {
-    @SuppressWarnings("unused")
-    public PotionShelfBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(PotionShelfBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();

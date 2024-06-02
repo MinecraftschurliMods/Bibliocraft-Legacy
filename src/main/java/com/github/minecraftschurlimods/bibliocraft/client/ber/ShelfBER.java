@@ -9,10 +9,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class ShelfBER implements BlockEntityRenderer<ShelfBlockEntity> {
-    @SuppressWarnings("unused")
-    public ShelfBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(ShelfBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();

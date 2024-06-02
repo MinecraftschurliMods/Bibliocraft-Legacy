@@ -9,10 +9,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class SwordPedestalBER implements BlockEntityRenderer<SwordPedestalBlockEntity> {
-    @SuppressWarnings("unused")
-    public SwordPedestalBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(SwordPedestalBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();

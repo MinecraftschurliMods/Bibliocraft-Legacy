@@ -12,10 +12,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.Block;
 
 public class DisplayCaseBER implements BlockEntityRenderer<DisplayCaseBlockEntity> {
-    @SuppressWarnings("unused")
-    public DisplayCaseBER(BlockEntityRendererProvider.Context context) {
-    }
-
     @Override
     public void render(DisplayCaseBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         stack.pushPose();
