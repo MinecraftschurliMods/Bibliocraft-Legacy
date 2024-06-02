@@ -1,7 +1,7 @@
 pluginManagement {
     plugins {
         id("net.neoforged.gradle.userdev") version "7.0.+"
-        id("com.github.minecraftschurlimods.helperplugin") version "1.10"
+        id("com.github.minecraftschurlimods.helperplugin") version "1.13"
     }
     repositories {
         mavenLocal()

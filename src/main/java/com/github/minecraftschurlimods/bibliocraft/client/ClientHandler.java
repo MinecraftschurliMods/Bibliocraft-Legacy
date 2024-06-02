@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.DinnerPlateBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
@@ -71,6 +72,7 @@ public final class ClientHandler {
             event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
             event.registerEntityRenderer(BCEntities.SEAT.get(), EmptyEntityRenderer::new);
             event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(),        $ -> new CookieJarBER());
+            event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(),      $ -> new DinnerPlateBER());
             event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(),      $ -> new DisplayCaseBER());
             event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), $ -> new FancyArmorStandBER());
             event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(),             $ -> new LabelBER());

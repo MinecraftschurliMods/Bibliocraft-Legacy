@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 /**
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
-public class ClientUtil {
+public final class ClientUtil {
     /**
      * Opens a {@link ClipboardScreen} on the client.
      *
