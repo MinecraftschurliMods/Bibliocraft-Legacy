@@ -43,6 +43,8 @@ public final class BCLootTableProvider extends LootTableProvider {
             add(BCBlocks.COOKIE_JAR.get(), DatagenUtil.createNameableTable(BCBlocks.COOKIE_JAR.get()));
             add(BCBlocks.DESK_BELL.get(), DatagenUtil.createDefaultTable(BCBlocks.DESK_BELL.get()));
             add(BCBlocks.DINNER_PLATE.get(), DatagenUtil.createDefaultTable(BCBlocks.DINNER_PLATE.get()));
+            add(BCBlocks.DISC_RACK.get(), DatagenUtil.createNameableTable(BCBlocks.DISC_RACK.get()));
+            add(BCBlocks.WALL_DISC_RACK.get(), DatagenUtil.createNameableTable(BCBlocks.DISC_RACK.get()));
             add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), DatagenUtil.createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
             add(BCBlocks.SWORD_PEDESTAL.get(), DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.SWORD_PEDESTAL.get()).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("color", "display.color"))));
         }

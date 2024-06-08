@@ -24,6 +24,8 @@ public class BCBlockStateProvider extends BlockStateProvider {
                 .build());
         simpleBlock(BCBlocks.DESK_BELL.get(), models().getExistingFile(modLoc("block/desk_bell")));
         simpleBlock(BCBlocks.DINNER_PLATE.get(), models().getExistingFile(modLoc("block/dinner_plate")));
+        horizontalBlock(BCBlocks.DISC_RACK.get(), models().getExistingFile(modLoc("block/disc_rack")));
+        horizontalBlock(BCBlocks.WALL_DISC_RACK.get(), models().getExistingFile(modLoc("block/wall_disc_rack")));
         DatagenUtil.doubleHighHorizontalBlockModel(this, BCBlocks.IRON_FANCY_ARMOR_STAND, models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
         DatagenUtil.horizontalBlockModel(this, BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);
         for (TableBlock.Type type : TableBlock.Type.values()) {

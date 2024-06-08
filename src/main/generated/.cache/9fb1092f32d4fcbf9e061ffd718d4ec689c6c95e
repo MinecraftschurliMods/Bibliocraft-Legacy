@@ -1,4 +1,4 @@
-// 1.20.4	2024-04-09T21:38:47.142763	Recipes
+// 1.20.4	2024-06-04T16:53:02.2385817	Recipes
 4b0d99f7f8ad3b6d25efd913add7ad2c43782562 data/bibliocraft/advancements/recipes/building_blocks/acacia_bookcase.json
 bcab4008a31a765a736701f9350bc541c42c3e11 data/bibliocraft/advancements/recipes/building_blocks/acacia_fancy_armor_stand.json
 793b249d2c89d24fc3149266e599d48eddf6b258 data/bibliocraft/advancements/recipes/building_blocks/acacia_label.json
@@ -1328,6 +1328,7 @@ cac5cf356e5c2ffcb5d2d619bdb96c8b67081d68 data/bibliocraft/advancements/recipes/b
 f8fc40806586e76190152f0c70ab3fd2c635872c data/bibliocraft/advancements/recipes/decorations/cookie_jar.json
 3e79301426a7ce43cf3571a395d3a9b1c4ee9612 data/bibliocraft/advancements/recipes/decorations/desk_bell.json
 93842d45200d0c9299e984181448249c17cd4937 data/bibliocraft/advancements/recipes/decorations/dinner_plate.json
+0d88026f31052decce892c3676d28b9de504cbb3 data/bibliocraft/advancements/recipes/decorations/disc_rack.json
 6bfa53b6fce6d45683be632e2617ccbc3e1c366a data/bibliocraft/advancements/recipes/misc/clipboard.json
 6c0d34e3be551f780ed81f1ad2d4730908cc655f data/bibliocraft/advancements/recipes/redstone/redstone_book.json
 2ff19c78d83abf77878ba97461d9b326db8597a1 data/bibliocraft/recipes/acacia_bookcase.json
@@ -1684,6 +1685,7 @@ a4c19352c66ad06dff4d63ee879177a72ad4299a data/bibliocraft/recipes/dark_oak_table
 2e6eb8da8b99b22b36a32577226b5bdfb5e65668 data/bibliocraft/recipes/dark_oak_tool_rack.json
 7494c23fc5bdb1733e15b2caaa3c88655e781d67 data/bibliocraft/recipes/desk_bell.json
 7e43f6023e20331833a503a9136f569233dc945e data/bibliocraft/recipes/dinner_plate.json
+25b296fe8fbffeab6d0aaed0351ee8acbcc00876 data/bibliocraft/recipes/disc_rack.json
 47475cdb9a586ded92a87cf2eb73eedada0809f5 data/bibliocraft/recipes/gray_acacia_display_case.json
 8cb3fe2b226bd5591ee9c133a5c4b6b32c67bd76 data/bibliocraft/recipes/gray_acacia_fancy_seat_back.json
 d1701e0814847bb71bd2b0af47e0a8b2aff5d441 data/bibliocraft/recipes/gray_acacia_flat_seat_back.json

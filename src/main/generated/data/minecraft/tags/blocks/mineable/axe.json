@@ -7,6 +7,8 @@
     "#bibliocraft:potion_shelves",
     "#bibliocraft:seats",
     "#bibliocraft:shelves",
-    "#bibliocraft:tool_racks"
+    "#bibliocraft:tool_racks",
+    "bibliocraft:disc_rack",
+    "bibliocraft:wall_disc_rack"
   ]
 }

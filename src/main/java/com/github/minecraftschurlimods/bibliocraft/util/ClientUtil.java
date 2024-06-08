@@ -40,7 +40,7 @@ public final class ClientUtil {
      */
     public static void setupCenteredBER(PoseStack stack, BCBlockEntity blockEntity) {
         stack.translate(0.5, 0.5, 0.5);
-        stack.mulPose(Axis.YP.rotationDegrees(switch (blockEntity.getBlockState().getValue(BlockStateProperties.FACING)) {
+        stack.mulPose(Axis.YP.rotationDegrees(switch (blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)) {
             case SOUTH -> 0;
             case EAST -> 90;
             default -> 180;

@@ -1,4 +1,4 @@
-// 1.20.4	2024-06-02T03:06:12.2634348	Tags for minecraft:block mod id bibliocraft
+// 1.20.4	2024-06-04T16:53:02.2843439	Tags for minecraft:block mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/blocks/bookcases.json
 5a8af07da9101bc61f37664975dbd42ea97db36b data/bibliocraft/tags/blocks/display_cases.json
 474090b2b5b40b58b63496e56ed06e543323d894 data/bibliocraft/tags/blocks/fancy_armor_stands.json
@@ -10,5 +10,5 @@ f22106c0553586c34d2dfb552ddea11a245606c3 data/bibliocraft/tags/blocks/seat_backs
 b36437d21d0432b2ab7edfd7edff70b4ffa6e53b data/bibliocraft/tags/blocks/shelves.json
 70a350b86a4e5ad8cd8eb0f62e66e6b83e927781 data/bibliocraft/tags/blocks/tables.json
 45344246afda217d9e4e32c8437cf25b49cf9e9d data/bibliocraft/tags/blocks/tool_racks.json
-590462d66e70ff61bbd9051470046192d8fce7d3 data/minecraft/tags/blocks/mineable/axe.json
+36220ce02af19705aa60d05053e7275a0ac9d8a4 data/minecraft/tags/blocks/mineable/axe.json
 a7fbdbce035ee9426512338f93b27fda0b8a3d11 data/minecraft/tags/blocks/mineable/pickaxe.json

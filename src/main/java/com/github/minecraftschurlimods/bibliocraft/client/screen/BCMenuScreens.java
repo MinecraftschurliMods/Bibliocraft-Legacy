@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
@@ -25,6 +26,14 @@ public final class BCMenuScreens {
         private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/cookie_jar.png");
 
         public CookieJar(CookieJarMenu menu, Inventory inventory, Component title) {
+            super(menu, inventory, title, BACKGROUND);
+        }
+    }
+
+    public static class DiscRack extends BCMenuScreen<DiscRackMenu> {
+        private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/disc_rack.png");
+
+        public DiscRack(DiscRackMenu menu, Inventory inventory, Component title) {
             super(menu, inventory, title, BACKGROUND);
         }
     }

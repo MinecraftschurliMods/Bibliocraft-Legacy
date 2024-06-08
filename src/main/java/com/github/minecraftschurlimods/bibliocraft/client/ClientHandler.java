@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DinnerPlateBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.DiscRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
@@ -40,6 +41,7 @@ public final class ClientHandler {
         private static void registerMenuScreens(RegisterMenuScreensEvent event) {
             event.register(BCMenus.BOOKCASE.get(),          BCMenuScreens.Bookcase::new);
             event.register(BCMenus.COOKIE_JAR.get(),        BCMenuScreens.CookieJar::new);
+            event.register(BCMenus.DISC_RACK.get(),         BCMenuScreens.DiscRack::new);
             event.register(BCMenus.FANCY_ARMOR_STAND.get(), BCMenuScreens.FancyArmorStand::new);
             event.register(BCMenus.LABEL.get(),             BCMenuScreens.Label::new);
             event.register(BCMenus.POTION_SHELF.get(),      BCMenuScreens.PotionShelf::new);
@@ -74,6 +76,7 @@ public final class ClientHandler {
             event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(),        $ -> new CookieJarBER());
             event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(),      $ -> new DinnerPlateBER());
             event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(),      $ -> new DisplayCaseBER());
+            event.registerBlockEntityRenderer(BCBlockEntities.DISC_RACK.get(),         $ -> new DiscRackBER());
             event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), $ -> new FancyArmorStandBER());
             event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(),             $ -> new LabelBER());
             event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(),      $ -> new PotionShelfBER());

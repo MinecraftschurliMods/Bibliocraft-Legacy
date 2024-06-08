@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,7 +16,7 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public interface BCCreativeTabs {
     Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(BibliocraftApi.MOD_ID, () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(WoodType.OAK))))
+            //.icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(WoodType.OAK)))) //fixme
             .title(Component.translatable("itemGroup." + BibliocraftApi.MOD_ID))
             .withSearchBar()
             .displayItems((display, output) -> {
@@ -37,6 +38,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.COOKIE_JAR);
                 output.accept(BCItems.DESK_BELL);
                 output.accept(BCItems.DINNER_PLATE);
+                //output.accept(BCItems.DISC_RACK);
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());

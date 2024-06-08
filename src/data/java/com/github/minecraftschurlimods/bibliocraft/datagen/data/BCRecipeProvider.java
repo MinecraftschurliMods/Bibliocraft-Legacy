@@ -71,6 +71,13 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('S', Items.SMOOTH_QUARTZ_SLAB)
                 .unlockedBy("has_smooth_quartz", has(Items.SMOOTH_QUARTZ_SLAB))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DISC_RACK.get())
+                .pattern("RRR")
+                .pattern("SSS")
+                .define('R', Tags.Items.RODS_WOODEN)
+                .define('S', ItemTags.WOODEN_SLABS)
+                .unlockedBy("has_wooden_slab", has(ItemTags.WOODEN_SLABS))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND.get())
                 .pattern(" I ")
                 .pattern(" I ")

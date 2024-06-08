@@ -1,4 +1,4 @@
-// 1.20.4	2024-04-09T21:38:47.11197	Loot Tables
+// 1.20.4	2024-06-04T16:53:02.160019	Loot Tables
 de27c2af93e5cab5a9d4b946062ded6257a7e5d7 data/bibliocraft/loot_tables/blocks/acacia_bookcase.json
 76ad281e44358ad5de5d4b8120b7b1de0742103a data/bibliocraft/loot_tables/blocks/acacia_fancy_armor_stand.json
 318a3b2f6a21fbd5812a8d9262c53207f8fc71e0 data/bibliocraft/loot_tables/blocks/acacia_label.json
@@ -220,6 +220,7 @@ bcdf8c19ca859a4ac5bb4459adaf1e9c1358c95c data/bibliocraft/loot_tables/blocks/dar
 983390f19e35abdaf323822a20559fa5ed7dd2a1 data/bibliocraft/loot_tables/blocks/dark_oak_tool_rack.json
 3891865bc9a5cab504fc14234c7bb6959264b927 data/bibliocraft/loot_tables/blocks/desk_bell.json
 cf9121b8b07d7ee97f6af9300ec65bd2d609fc20 data/bibliocraft/loot_tables/blocks/dinner_plate.json
+d587878555ba8fd1de42ec97d2ece7c6f445c817 data/bibliocraft/loot_tables/blocks/disc_rack.json
 c1fb9db82ec1fc38dbe3b55b25ca5d9376e47424 data/bibliocraft/loot_tables/blocks/gray_acacia_display_case.json
 2a3d608d16e2c147a1b438db215ce20dbd9fe394 data/bibliocraft/loot_tables/blocks/gray_acacia_seat.json
 83f0f0752a06926b21451da2a207baa7a737120d data/bibliocraft/loot_tables/blocks/gray_acacia_seat_back.json
@@ -690,6 +691,7 @@ cde548bfd918f07658a704dc82b2dd446d6392af data/bibliocraft/loot_tables/blocks/spr
 ff863efc20553a60cf43bbc3c03b9bd8bd9f8a75 data/bibliocraft/loot_tables/blocks/spruce_table.json
 b1f4a2b470a6488cb8f1b4734de3f2bd4c76f1f5 data/bibliocraft/loot_tables/blocks/spruce_tool_rack.json
 9414c63c9fb8614a30163ade3c76f34bad795fa2 data/bibliocraft/loot_tables/blocks/sword_pedestal.json
+5ebcb55ab8f2463e032e6b9e993c4e8ce370e4dc data/bibliocraft/loot_tables/blocks/wall_disc_rack.json
 bc86a79eb93691318d1b46a0782af73dff4c9864 data/bibliocraft/loot_tables/blocks/warped_bookcase.json
 addc35fc94f437d4e31aeb6787fbfd6ef2874cd4 data/bibliocraft/loot_tables/blocks/warped_fancy_armor_stand.json
 56ecd0f748a93611d2c3f72d3ebb08034cd9dbd1 data/bibliocraft/loot_tables/blocks/warped_label.json
