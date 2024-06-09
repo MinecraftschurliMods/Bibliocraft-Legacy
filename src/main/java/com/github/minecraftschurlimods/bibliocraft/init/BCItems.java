@@ -4,9 +4,12 @@ import com.github.minecraftschurlimods.bibliocraft.content.bookcase.RedstoneBook
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
+import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
+import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeBlockItem;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
@@ -14,6 +17,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 public interface BCItems {
@@ -33,6 +39,10 @@ public interface BCItems {
     ColoredWoodTypeDeferredHolder<Item, SeatBackItem> FLAT_SEAT_BACK    = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "flat_seat_back", (wood, color) -> new SeatBackItem(BCBlocks.SEAT_BACK, wood, color, SeatBackType.FLAT));
     ColoredWoodTypeDeferredHolder<Item, SeatBackItem> TALL_SEAT_BACK    = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "tall_seat_back", (wood, color) -> new SeatBackItem(BCBlocks.SEAT_BACK, wood, color, SeatBackType.TALL));
     ColoredWoodTypeDeferredHolder<Item, SeatBackItem> FANCY_SEAT_BACK   = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_seat_back", (wood, color) -> new SeatBackItem(BCBlocks.SEAT_BACK, wood, color, SeatBackType.FANCY));
+    DeferredItem<FancyLampItem> CLEAR_FANCY_GOLD_LAMP          = BCRegistries.ITEMS.register(                    "clear_fancy_gold_lamp", () -> new FancyLampItem(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get()));
+    ColoredDeferredHolder<Item, FancyLampItem> FANCY_GOLD_LAMP = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_gold_lamp",       color -> new FancyLampItem(BCBlocks.FANCY_GOLD_LAMP.get(color)));
+    DeferredItem<FancyLampItem> CLEAR_FANCY_IRON_LAMP          = BCRegistries.ITEMS.register(                    "clear_fancy_iron_lamp", () -> new FancyLampItem(BCBlocks.CLEAR_FANCY_IRON_LAMP.get()));
+    ColoredDeferredHolder<Item, FancyLampItem> FANCY_IRON_LAMP = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_iron_lamp",       color -> new FancyLampItem(BCBlocks.FANCY_IRON_LAMP.get(color)));
     DeferredItem<ClipboardItem>       CLIPBOARD              = BCRegistries.ITEMS.register("clipboard", ClipboardItem::new);
     DeferredItem<BlockItem>           COOKIE_JAR             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.COOKIE_JAR);
     DeferredItem<BlockItem>           DESK_BELL              = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DESK_BELL);

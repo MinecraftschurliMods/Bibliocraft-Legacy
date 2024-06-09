@@ -8,6 +8,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
@@ -40,6 +41,12 @@ public final class BCLootTableProvider extends LootTableProvider {
         @Override
         protected void generate() {
             BibliocraftApi.getDatagenHelper().generateLootTables(this::add);
+            add(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get()));
+            add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_IRON_LAMP.get()));
+            for (DyeColor color : DyeColor.values()) {
+                add(BCBlocks.FANCY_GOLD_LAMP.get(color), DatagenUtil.createDefaultTable(BCBlocks.FANCY_GOLD_LAMP.get(color)));
+                add(BCBlocks.FANCY_IRON_LAMP.get(color), DatagenUtil.createDefaultTable(BCBlocks.FANCY_IRON_LAMP.get(color)));
+            }
             add(BCBlocks.COOKIE_JAR.get(), DatagenUtil.createNameableTable(BCBlocks.COOKIE_JAR.get()));
             add(BCBlocks.DESK_BELL.get(), DatagenUtil.createDefaultTable(BCBlocks.DESK_BELL.get()));
             add(BCBlocks.DINNER_PLATE.get(), DatagenUtil.createDefaultTable(BCBlocks.DINNER_PLATE.get()));

@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -11,6 +12,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.DyeableLeatherItem;
@@ -29,14 +31,55 @@ public final class BCRecipeProvider extends RecipeProvider {
     protected void buildRecipes(RecipeOutput output) {
         BibliocraftApi.getDatagenHelper().generateRecipes(output);
         for (DyeColor color : DyeColor.values()) {
+            String name = color.getSerializedName();
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DyeableLeatherItem.dyeArmor(new ItemStack(BCItems.SWORD_PEDESTAL.get()), List.of(DyeItem.byColor(color))))
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
-                    .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool")))
+                    .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(name + "_wool")))
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
-                    .save(output, new ResourceLocation(BibliocraftApi.MOD_ID, "sword_pedestal_" + color.getName()));
+                    .save(output, new ResourceLocation(BibliocraftApi.MOD_ID, "sword_pedestal_" + name));
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LAMP.get(color))
+                    .pattern("CGC")
+                    .pattern(" I ")
+                    .pattern("NIN")
+                    .define('C', TagKey.create(BuiltInRegistries.ITEM.key(), BCUtil.forgeLoc("glass/" + name)))
+                    .define('G', Items.GLOWSTONE)
+                    .define('I', Tags.Items.INGOTS_GOLD)
+                    .define('N', Tags.Items.NUGGETS_GOLD)
+                    .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                    .save(output);
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_IRON_LAMP.get(color))
+                    .pattern("CGC")
+                    .pattern(" I ")
+                    .pattern("NIN")
+                    .define('C', TagKey.create(BuiltInRegistries.ITEM.key(), BCUtil.forgeLoc("glass/" + name)))
+                    .define('G', Items.GLOWSTONE)
+                    .define('I', Tags.Items.INGOTS_IRON)
+                    .define('N', Tags.Items.NUGGETS_IRON)
+                    .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_IRON))
+                    .save(output);
         }
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LAMP.get())
+                .pattern("CGC")
+                .pattern(" I ")
+                .pattern("NIN")
+                .define('C', Tags.Items.GLASS_COLORLESS)
+                .define('G', Items.GLOWSTONE)
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_IRON_LAMP.get())
+                .pattern("CGC")
+                .pattern(" I ")
+                .pattern("NIN")
+                .define('C', Tags.Items.GLASS_COLORLESS)
+                .define('G', Items.GLOWSTONE)
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('N', Tags.Items.NUGGETS_IRON)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD.get())
                 .pattern("I F")
                 .pattern("PPP")

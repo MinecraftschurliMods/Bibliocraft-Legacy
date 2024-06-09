@@ -1,10 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
@@ -34,7 +36,29 @@ import java.util.function.Supplier;
  * Utility class holding various helper methods specifically for datagen.
  */
 public final class DatagenUtil {
+    public static final Map<DyeColor, ResourceLocation> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, new ResourceLocation("block/" + color.getName() + "_stained_glass"))));
     public static final Map<DyeColor, ResourceLocation> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, new ResourceLocation("block/" + color.getName() + "_wool"))));
+
+    /**
+     * @param s The string to create a translation for.
+     * @return A translated form of the given string.
+     */
+    public static String toTranslation(String s) {
+        StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        for (char c : s.toCharArray()) {
+            if (c == '_') {
+                builder.append(' ');
+                first = true;
+            } else if (first) {
+                builder.append(Character.toUpperCase(c));
+                first = false;
+            } else {
+                builder.append(Character.toLowerCase(c));
+            }
+        }
+        return builder.toString();
+    }
 
     /**
      * Adds a block with horizontal rotations and a parent model. Enables UV-locking.
@@ -117,6 +141,24 @@ public final class DatagenUtil {
     }
 
     /**
+     * Adds a block with a fancy light type property.
+     *
+     * @param provider Your mod's {@link BlockStateProvider}.
+     * @param block    The block to add the model for.
+     * @param standing The standing model file.
+     * @param hanging  The hanging model file.
+     * @param wall     The wall model file.
+     * @param uvLock   Whether to UV-lock the models or not.
+     */
+    public static void fancyLightBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, ModelFile standing, ModelFile hanging, ModelFile wall, boolean uvLock) {
+        horizontalBlockModel(provider, block, state -> switch (state.getValue(AbstractFancyLightBlock.TYPE)) {
+            case STANDING -> standing;
+            case HANGING -> hanging;
+            case WALL -> wall;
+        }, uvLock);
+    }
+
+    /**
      * Creates a standard loot table with the given entry builder.
      *
      * @param builder The entry builder to use.
@@ -163,7 +205,7 @@ public final class DatagenUtil {
      *
      * @param woodType The given {@link BibliocraftWoodType}.
      * @param holder   The given {@link ColoredWoodTypeDeferredHolder}.
-     * @param tag      The given {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}, obtainable through {@link net.minecraft.data.tags.TagsProvider#tag(TagKey)}.
+     * @param tag      The given {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
      * @param <T>      The type of the {@link ColoredWoodTypeDeferredHolder}.
      */
     @SuppressWarnings("JavadocReference")

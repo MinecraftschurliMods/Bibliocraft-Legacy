@@ -3,9 +3,14 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 @SuppressWarnings("SameParameterValue")
 public class BCEnglishLanguageProvider extends LanguageProvider {
@@ -16,14 +21,20 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         BibliocraftApi.getDatagenHelper().generateEnglishTranslations(this);
-        add(BCItems.CLIPBOARD.get(), "Clipboard");
-        add(BCBlocks.COOKIE_JAR.get(), "Cookie Jar");
-        add(BCBlocks.DESK_BELL.get(), "Desk Bell");
-        add(BCBlocks.DINNER_PLATE.get(), "Dinner Plate");
-        add(BCBlocks.DISC_RACK.get(), "Disc Rack");
+        addDefaultBlock(BCBlocks.CLEAR_FANCY_GOLD_LAMP);
+        addDefaultBlock(BCBlocks.CLEAR_FANCY_IRON_LAMP);
+        for (DyeColor color : DyeColor.values()) {
+            addDefaultBlock(BCBlocks.FANCY_GOLD_LAMP.holder(color));
+            addDefaultBlock(BCBlocks.FANCY_IRON_LAMP.holder(color));
+        }
+        addDefaultItem(BCItems.CLIPBOARD);
+        addDefaultBlock(BCBlocks.COOKIE_JAR);
+        addDefaultBlock(BCBlocks.DESK_BELL);
+        addDefaultBlock(BCBlocks.DINNER_PLATE);
+        addDefaultBlock(BCBlocks.DISC_RACK);
         add(BCBlocks.WALL_DISC_RACK.get(), "Disc Rack");
-        add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), "Iron Fancy Armor Stand");
-        add(BCBlocks.SWORD_PEDESTAL.get(), "Sword Pedestal");
+        addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
+        addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
@@ -47,5 +58,23 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
      */
     private void add(String type, String name, String translation) {
         add(type + "." + BibliocraftApi.MOD_ID + "." + name, translation);
+    }
+
+    /**
+     * Adds an automatically-generated translation for a block.
+     *
+     * @param block The block to add the translation for.
+     */
+    private void addDefaultBlock(DeferredHolder<Block, ?> block) {
+        add(block.get(), DatagenUtil.toTranslation(block.getId().getPath()));
+    }
+
+    /**
+     * Adds an automatically-generated translation for a item.
+     *
+     * @param item The item to add the translation for.
+     */
+    private void addDefaultItem(DeferredHolder<Item, ?> item) {
+        add(item.get(), DatagenUtil.toTranslation(item.getId().getPath()));
     }
 }

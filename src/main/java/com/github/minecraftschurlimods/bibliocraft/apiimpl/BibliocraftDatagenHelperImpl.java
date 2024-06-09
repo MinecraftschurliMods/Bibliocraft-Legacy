@@ -338,27 +338,6 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     }
 
     /**
-     * @param s The string to create a translation for.
-     * @return A translated form of the given string.
-     */
-    private static String toTranslation(String s) {
-        StringBuilder builder = new StringBuilder();
-        boolean first = true;
-        for (char c : s.toCharArray()) {
-            if (c == '_') {
-                builder.append(' ');
-                first = true;
-            } else if (first) {
-                builder.append(Character.toUpperCase(c));
-                first = false;
-            } else {
-                builder.append(Character.toLowerCase(c));
-            }
-        }
-        return builder.toString();
-    }
-
-    /**
      * Adds an English (en_us) translation to the given {@link LanguageProvider}.
      *
      * @param provider The {@link LanguageProvider} to add the translation to.
@@ -367,7 +346,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
      * @param suffix   The suffix of the translation.
      */
     private static void woodenBlockTranslation(LanguageProvider provider, BibliocraftWoodType woodType, WoodTypeDeferredHolder<Block, ?> holder, String suffix) {
-        provider.add(holder.get(woodType), toTranslation(woodType.getPath()) + " " + suffix);
+        provider.add(holder.get(woodType), DatagenUtil.toTranslation(woodType.getPath()) + " " + suffix);
     }
 
     /**
@@ -380,7 +359,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
      * @param suffix   The suffix of the translation.
      */
     private static void coloredWoodenBlockTranslation(LanguageProvider provider, BibliocraftWoodType woodType, DyeColor color, ColoredWoodTypeDeferredHolder<Block, ?> holder, String suffix) {
-        provider.add(holder.get(woodType, color), toTranslation(color.getName()) + " " + toTranslation(woodType.getPath()) + " " + suffix);
+        provider.add(holder.get(woodType, color), DatagenUtil.toTranslation(color.getName()) + " " + DatagenUtil.toTranslation(woodType.getPath()) + " " + suffix);
     }
 
     /**
@@ -393,7 +372,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
      * @param suffix   The suffix of the translation.
      */
     private static void coloredWoodenItemTranslation(LanguageProvider provider, BibliocraftWoodType woodType, DyeColor color, ColoredWoodTypeDeferredHolder<Item, ?> holder, String suffix) {
-        provider.add(holder.get(woodType, color), toTranslation(color.getName()) + " " + toTranslation(woodType.getPath()) + " " + suffix);
+        provider.add(holder.get(woodType, color), DatagenUtil.toTranslation(color.getName()) + " " + DatagenUtil.toTranslation(woodType.getPath()) + " " + suffix);
     }
 
     /**

@@ -35,6 +35,14 @@ public final class BCUtil {
 
     /**
      * @param path The path to use.
+     * @return A {@link ResourceLocation} with the "forge" namespace and the given path.
+     */
+    public static ResourceLocation forgeLoc(String path) {
+        return new ResourceLocation("forge", path);
+    }
+
+    /**
+     * @param path The path to use.
      * @return A {@link ResourceLocation} with the "bibliocraft" namespace and the given path.
      */
     public static ResourceLocation modLoc(String path) {

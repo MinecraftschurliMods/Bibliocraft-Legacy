@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
@@ -19,6 +20,34 @@ public class BCBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         BibliocraftApi.getDatagenHelper().generateBlockStates(this);
+        DatagenUtil.fancyLightBlockModel(this, BCBlocks.CLEAR_FANCY_GOLD_LAMP, 
+                models().withExistingParent("clear_fancy_gold_lamp_standing", modLoc("block/template/fancy_lamp/standing_gold")).texture("color", mcLoc("block/glass")),
+                models().withExistingParent("clear_fancy_gold_lamp_hanging", modLoc("block/template/fancy_lamp/hanging_gold")).texture("color", mcLoc("block/glass")),
+                models().withExistingParent("clear_fancy_gold_lamp_wall", modLoc("block/template/fancy_lamp/wall_gold")).texture("color", mcLoc("block/glass")),
+                false);
+        for (DyeColor color : DyeColor.values()) {
+            String name = color.getSerializedName();
+            ResourceLocation texture = DatagenUtil.GLASS_TEXTURES.get(color);
+            DatagenUtil.fancyLightBlockModel(this, BCBlocks.FANCY_GOLD_LAMP.holder(color),
+                    models().withExistingParent(name + "_fancy_gold_lamp_standing", modLoc("block/template/fancy_lamp/standing_gold")).texture("color", texture),
+                    models().withExistingParent(name + "_fancy_gold_lamp_hanging", modLoc("block/template/fancy_lamp/hanging_gold")).texture("color", texture),
+                    models().withExistingParent(name + "_fancy_gold_lamp_wall", modLoc("block/template/fancy_lamp/wall_gold")).texture("color", texture),
+                    false);
+        }
+        DatagenUtil.fancyLightBlockModel(this, BCBlocks.CLEAR_FANCY_IRON_LAMP,
+                models().withExistingParent("clear_fancy_iron_lamp_standing", modLoc("block/template/fancy_lamp/standing_iron")).texture("color", mcLoc("block/glass")),
+                models().withExistingParent("clear_fancy_iron_lamp_hanging", modLoc("block/template/fancy_lamp/hanging_iron")).texture("color", mcLoc("block/glass")),
+                models().withExistingParent("clear_fancy_iron_lamp_wall", modLoc("block/template/fancy_lamp/wall_iron")).texture("color", mcLoc("block/glass")),
+                false);
+        for (DyeColor color : DyeColor.values()) {
+            String name = color.getSerializedName();
+            ResourceLocation texture = DatagenUtil.GLASS_TEXTURES.get(color);
+            DatagenUtil.fancyLightBlockModel(this, BCBlocks.FANCY_IRON_LAMP.holder(color),
+                    models().withExistingParent(name + "_fancy_iron_lamp_standing", modLoc("block/template/fancy_lamp/standing_iron")).texture("color", texture),
+                    models().withExistingParent(name + "_fancy_iron_lamp_hanging", modLoc("block/template/fancy_lamp/hanging_iron")).texture("color", texture),
+                    models().withExistingParent(name + "_fancy_iron_lamp_wall", modLoc("block/template/fancy_lamp/wall_iron")).texture("color", texture),
+                    false);
+        }
         getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(models().getExistingFile(modLoc("block/template/cookie_jar" + (state.getValue(CookieJarBlock.OPEN) ? "_open" : ""))))
                 .build());
