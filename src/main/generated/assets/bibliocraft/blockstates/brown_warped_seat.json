@@ -1,16 +1,16 @@
 {
   "variants": {
     "occupied=false,waterlogged=false": {
-      "model": "bibliocraft:block/brown_warped_seat"
+      "model": "bibliocraft:block/color/brown/wood/warped/seat"
     },
     "occupied=false,waterlogged=true": {
-      "model": "bibliocraft:block/brown_warped_seat"
+      "model": "bibliocraft:block/color/brown/wood/warped/seat"
     },
     "occupied=true,waterlogged=false": {
-      "model": "bibliocraft:block/brown_warped_seat"
+      "model": "bibliocraft:block/color/brown/wood/warped/seat"
     },
     "occupied=true,waterlogged=true": {
-      "model": "bibliocraft:block/brown_warped_seat"
+      "model": "bibliocraft:block/color/brown/wood/warped/seat"
     }
   }
 }

@@ -20,8 +20,8 @@ public interface BCTags {
         TagKey<Block> TABLES                  = tag("tables");
         TagKey<Block> TOOL_RACKS              = tag("tool_racks");
         TagKey<Block> FANCY_LANTERNS          = tag("fancy_lanterns");
-        TagKey<Block> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns_gold");
-        TagKey<Block> FANCY_LANTERNS_IRON     = tag("fancy_lanterns_iron");
+        TagKey<Block> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
+        TagKey<Block> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
 
         /**
          * @param name The path of the tag.
@@ -50,8 +50,8 @@ public interface BCTags {
         TagKey<Item> TABLES                  = tag("tables");
         TagKey<Item> TOOL_RACKS              = tag("tool_racks");
         TagKey<Item> FANCY_LANTERNS          = tag("fancy_lanterns");
-        TagKey<Item> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns_gold");
-        TagKey<Item> FANCY_LANTERNS_IRON     = tag("fancy_lanterns_iron");
+        TagKey<Item> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
+        TagKey<Item> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
         TagKey<Item> BOOKCASE_BOOKS          = tag("bookcase_books");
         TagKey<Item> COOKIE_JAR_COOKIES      = tag("cookie_jar_cookies");
         TagKey<Item> POTION_SHELF_POTIONS    = tag("potion_shelf_potions");

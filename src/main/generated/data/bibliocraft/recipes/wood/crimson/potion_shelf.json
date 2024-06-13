@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:crimson_planks"
+    },
+    "S": {
+      "item": "minecraft:crimson_slab"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "P#P",
+    "SSS"
+  ],
+  "result": {
+    "item": "bibliocraft:crimson_potion_shelf"
+  }
+}

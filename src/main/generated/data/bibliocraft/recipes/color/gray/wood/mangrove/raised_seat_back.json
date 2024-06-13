@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:mangrove_slab"
+    },
+    "W": {
+      "item": "minecraft:gray_wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    " S ",
+    "R R"
+  ],
+  "result": {
+    "item": "bibliocraft:gray_mangrove_raised_seat_back"
+  }
+}

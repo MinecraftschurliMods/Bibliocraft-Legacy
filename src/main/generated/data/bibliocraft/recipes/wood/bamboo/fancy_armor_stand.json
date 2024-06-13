@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:bamboo_slab"
+    }
+  },
+  "pattern": [
+    " R ",
+    " R ",
+    "SSS"
+  ],
+  "result": {
+    "item": "bibliocraft:bamboo_fancy_armor_stand"
+  }
+}

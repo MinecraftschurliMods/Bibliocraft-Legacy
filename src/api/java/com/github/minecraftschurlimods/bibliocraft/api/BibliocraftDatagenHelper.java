@@ -89,8 +89,9 @@ public interface BibliocraftDatagenHelper {
      *
      * @param output   The {@link RecipeOutput} to use.
      * @param woodType The {@link BibliocraftWoodType} to generate the recipes for.
+     * @param modId    The namespace to store the recipes under.
      */
-    void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType);
+    void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType, String modId);
 
     /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
@@ -161,8 +162,9 @@ public interface BibliocraftDatagenHelper {
      * Generates the recipe files for Bibliocraft blocks with your mod's wood type(s).
      *
      * @param output Your mod's {@link RecipeOutput}.
+     * @param modId  Your mod's namespace.
      */
-    default void generateRecipes(RecipeOutput output) {
-        getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, woodType));
+    default void generateRecipes(RecipeOutput output, String modId) {
+        getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, woodType, modId));
     }
 }

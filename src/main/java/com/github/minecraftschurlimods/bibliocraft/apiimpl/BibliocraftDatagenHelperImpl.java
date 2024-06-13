@@ -40,9 +40,9 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.neoforge.client.model.generators.BlockModelProvider;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.ApiStatus;
@@ -52,7 +52,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 @SuppressWarnings("UnusedReturnValue")
@@ -95,67 +94,66 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
 
     @Override
     public void generateBlockStatesFor(BlockStateProvider provider, BibliocraftWoodType woodType) {
-        String prefix = woodType.getRegistrationPrefix();
         BlockModelProvider models = provider.models();
+        ResourceLocation woodTexture = woodType.texture();
+        String prefix = "block/wood/" + woodType.getRegistrationPrefix() + "/";
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.BOOKCASE.holder(woodType),
-                prefix + "_bookcase",
+                prefix + "bookcase",
                 bcLoc("block/template/bookcase/bookcase"),
-                woodType.texture());
+                woodTexture);
         DatagenUtil.doubleHighHorizontalBlockModel(provider, BCBlocks.FANCY_ARMOR_STAND.holder(woodType),
-                models.withExistingParent(prefix + "_fancy_armor_stand_bottom", bcLoc("block/template/fancy_armor_stand/bottom")).texture("texture", woodType.texture()),
-                models.withExistingParent(prefix + "_fancy_armor_stand_top", bcLoc("block/template/fancy_armor_stand/top")).texture("texture", woodType.texture()),
+                models.withExistingParent(prefix + "fancy_armor_stand_bottom", bcLoc("block/template/fancy_armor_stand/bottom")).texture("texture", woodTexture),
+                models.withExistingParent(prefix + "fancy_armor_stand_top", bcLoc("block/template/fancy_armor_stand/top")).texture("texture", woodTexture),
                 true);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.LABEL.holder(woodType),
-                prefix + "_label",
+                prefix + "label",
                 bcLoc("block/template/label"),
-                woodType.texture());
+                woodTexture);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.POTION_SHELF.holder(woodType),
-                prefix + "_potion_shelf",
+                prefix + "potion_shelf",
                 bcLoc("block/template/potion_shelf"),
-                woodType.texture());
+                woodTexture);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.SHELF.holder(woodType),
-                prefix + "_shelf",
+                prefix + "shelf",
                 bcLoc("block/template/shelf"),
-                woodType.texture());
-        TableModel.Builder tableBuilder = models.getBuilder(prefix + "_table").customLoader(TableModel.Builder::new).withParticle(woodType.texture());
+                woodTexture);
+        TableModel.Builder tableBuilder = models.getBuilder(prefix + "table").customLoader(TableModel.Builder::new).withParticle(woodTexture);
         for (TableBlock.Type type : TableBlock.Type.values()) {
             String name = type.getSerializedName();
             JsonObject model = new JsonObject();
             model.addProperty("parent", bcLoc("block/template/table/" + name).toString());
             JsonObject textures = new JsonObject();
-            textures.addProperty("texture", woodType.texture().toString());
+            textures.addProperty("texture", woodTexture.toString());
             model.add("textures", textures);
             tableBuilder.withModelForType(type, model);
         }
-        models.withExistingParent(prefix + "_table_inventory", bcLoc("block/template/table/none")).texture("texture", woodType.texture());
-        DatagenUtil.horizontalBlockModel(provider, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(provider.modLoc(prefix + "_table")));
+        models.withExistingParent(prefix + "table_inventory", bcLoc("block/template/table/none")).texture("texture", woodTexture);
+        DatagenUtil.horizontalBlockModel(provider, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(provider.modLoc(prefix + "table")));
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.TOOL_RACK.holder(woodType),
-                prefix + "_tool_rack",
+                prefix + "tool_rack",
                 bcLoc("block/template/tool_rack"),
-                woodType.texture());
+                woodTexture);
         for (DyeColor color : DyeColor.values()) {
             ResourceLocation wool = DatagenUtil.WOOL_TEXTURES.get(color);
             DeferredHolder<Block, ?> holder = BCBlocks.DISPLAY_CASE.holder(woodType, color);
-            String path = holder.getId().getPath();
+            String colorPrefix = "block/color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/";
+            final String finalColorPrefix = colorPrefix; // I love Java
             DatagenUtil.openClosedHorizontalBlockModel(provider, holder,
-                    models.withExistingParent(path + "_open", bcLoc("block/template/display_case/open")).texture("texture", woodType.texture()).texture("color", wool),
-                    models.withExistingParent(path + "_closed", bcLoc("block/template/display_case/closed")).texture("texture", woodType.texture()).texture("color", wool),
+                    models.withExistingParent(colorPrefix + "display_case_open", bcLoc("block/template/display_case/open")).texture("texture", woodTexture).texture("color", wool),
+                    models.withExistingParent(colorPrefix + "display_case_closed", bcLoc("block/template/display_case/closed")).texture("texture", woodTexture).texture("color", wool),
                     false);
             holder = BCBlocks.WALL_DISPLAY_CASE.holder(woodType, color);
-            path = holder.getId().getPath();
             DatagenUtil.openClosedHorizontalBlockModel(provider, holder,
-                    models.withExistingParent(path + "_open", bcLoc("block/template/display_case/wall_open")).texture("texture", woodType.texture()).texture("color", wool),
-                    models.withExistingParent(path + "_closed", bcLoc("block/template/display_case/wall_closed")).texture("texture", woodType.texture()).texture("color", wool),
+                    models.withExistingParent(colorPrefix + "wall_display_case_open", bcLoc("block/template/display_case/wall_open")).texture("texture", woodTexture).texture("color", wool),
+                    models.withExistingParent(colorPrefix + "wall_display_case_closed", bcLoc("block/template/display_case/wall_closed")).texture("texture", woodTexture).texture("color", wool),
                     true);
             holder = BCBlocks.SEAT.holder(woodType, color);
-            path = holder.getId().getPath();
-            final String finalPath = path; // I love Java
             provider.getVariantBuilder(holder.get()).forAllStates(state -> ConfiguredModel.builder()
-                    .modelFile(models.withExistingParent(finalPath, bcLoc("block/template/seat/seat")).texture("texture", woodType.texture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color)))
+                    .modelFile(models.withExistingParent(finalColorPrefix + "seat", bcLoc("block/template/seat/seat")).texture("texture", woodTexture).texture("color", DatagenUtil.WOOL_TEXTURES.get(color)))
                     .build());
             DatagenUtil.horizontalBlockModel(provider, BCBlocks.SEAT_BACK.holder(woodType, color), state -> {
                 String suffix = state.getValue(SeatBackBlock.TYPE).getSerializedName() + "_seat_back";
-                return models.withExistingParent(color.getName() + "_" + woodType.getRegistrationPrefix() + "_" + suffix, BCUtil.modLoc("block/template/seat/" + suffix)).texture("texture", woodType.texture()).texture("color", DatagenUtil.WOOL_TEXTURES.get(color));
+                return models.withExistingParent(finalColorPrefix + suffix, BCUtil.modLoc("block/template/seat/" + suffix)).texture("texture", woodTexture).texture("color", DatagenUtil.WOOL_TEXTURES.get(color));
             }, true);
         }
     }
@@ -163,16 +161,16 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     @Override
     public void generateItemModelsFor(ItemModelProvider provider, BibliocraftWoodType woodType) {
         String prefix = woodType.getRegistrationPrefix();
-        withParentBlock(provider, prefix + "_bookcase");
+        provider.withExistingParent(prefix + "_bookcase", bcLoc("block/wood/" + prefix + "/bookcase"));
         provider.withExistingParent(prefix + "_fancy_armor_stand", bcLoc("block/template/fancy_armor_stand/inventory")).texture("texture", woodType.texture());
-        withParentBlock(provider, prefix + "_label");
-        withParentBlock(provider, prefix + "_potion_shelf");
-        withParentBlock(provider, prefix + "_shelf");
-        withParent(provider, prefix + "_table", n -> provider.modLoc("block/" + n + "_inventory"));
-        withParentBlock(provider, prefix + "_tool_rack");
+        provider.withExistingParent(prefix + "_label", bcLoc("block/wood/" + prefix + "/label"));
+        provider.withExistingParent(prefix + "_potion_shelf", bcLoc("block/wood/" + prefix + "/potion_shelf"));
+        provider.withExistingParent(prefix + "_shelf", bcLoc("block/wood/" + prefix + "/shelf"));
+        provider.withExistingParent(prefix + "_table", bcLoc("block/wood/" + prefix + "/table_inventory"));
+        provider.withExistingParent(prefix + "_tool_rack", bcLoc("block/wood/" + prefix + "/tool_rack"));
         for (DyeColor color : DyeColor.values()) {
-            withParent(provider, BCItems.DISPLAY_CASE.holder(woodType, color).getId().getPath(), n -> provider.modLoc("block/" + n + "_open"));
-            withParentBlock(provider, BCItems.SEAT.holder(woodType, color).getId().getPath());
+            provider.withExistingParent(BCItems.DISPLAY_CASE.holder(woodType, color).getId().getPath(), bcLoc("block/color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/display_case_open"));
+            provider.withExistingParent(BCItems.SEAT.holder(woodType, color).getId().getPath(), bcLoc("block/color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/seat"));
             seatBackItemModel(provider, BCItems.SMALL_SEAT_BACK.get(woodType, color));
             seatBackItemModel(provider, BCItems.RAISED_SEAT_BACK.get(woodType, color));
             seatBackItemModel(provider, BCItems.FLAT_SEAT_BACK.get(woodType, color));
@@ -237,95 +235,114 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     }
 
     @Override
-    public void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType) {
+    public void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType, String modId) {
+        if (!woodType.getNamespace().equals("minecraft")) {
+            output = output.withConditions(new ModLoadedCondition(woodType.getNamespace()));
+        }
+        String prefix = "wood/" + woodType.getRegistrationPrefix() + "/";
         Block planks = woodType.family().getBaseBlock();
         Block slab = woodType.family().get(BlockFamily.Variant.SLAB);
         TagKey<Item> stick = Tags.Items.RODS_WOODEN;
-        shapedRecipe(output, BCItems.BOOKCASE.get(woodType), woodType, builder -> builder
+        shapedRecipe(BCItems.BOOKCASE.get(woodType), woodType)
                 .pattern("PSP")
                 .pattern("PSP")
                 .pattern("PSP")
                 .define('P', planks)
-                .define('S', slab));
-        shapedRecipe(output, BCItems.FANCY_ARMOR_STAND.get(woodType), woodType, builder -> builder
+                .define('S', slab)
+                .save(output, new ResourceLocation(modId, prefix + "bookcase"));
+        shapedRecipe(BCItems.FANCY_ARMOR_STAND.get(woodType), woodType)
                 .pattern(" R ")
                 .pattern(" R ")
                 .pattern("SSS")
                 .define('S', slab)
-                .define('R', Tags.Items.RODS_WOODEN));
-        shapedRecipe(output, BCItems.LABEL.get(woodType), woodType, builder -> builder
+                .define('R', Tags.Items.RODS_WOODEN)
+                .save(output, new ResourceLocation(modId, prefix + "fancy_armor_stand"));
+        shapedRecipe(BCItems.LABEL.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern("SSS")
-                .define('S', slab));
-        shapedRecipe(output, BCItems.POTION_SHELF.get(woodType), woodType, builder -> builder
+                .define('S', slab)
+                .save(output, new ResourceLocation(modId, prefix + "label"));
+        shapedRecipe(BCItems.POTION_SHELF.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern("P#P")
                 .pattern("SSS")
                 .define('P', planks)
                 .define('S', slab)
-                .define('#', Items.GLASS_BOTTLE));
-        shapedRecipe(output, BCItems.SHELF.get(woodType), woodType, builder -> builder
+                .define('#', Items.GLASS_BOTTLE)
+                .save(output, new ResourceLocation(modId, prefix + "potion_shelf"));
+        shapedRecipe(BCItems.SHELF.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern("SSS")
                 .define('P', planks)
-                .define('S', slab));
-        shapedRecipe(output, BCItems.TABLE.get(woodType), woodType, builder -> builder
+                .define('S', slab)
+                .save(output, new ResourceLocation(modId, prefix + "shelf"));
+        shapedRecipe(BCItems.TABLE.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern(" P ")
                 .define('P', planks)
-                .define('S', slab));
-        shapedRecipe(output, BCItems.TOOL_RACK.get(woodType), woodType, builder -> builder
+                .define('S', slab)
+                .save(output, new ResourceLocation(modId, prefix + "table"));
+        shapedRecipe(BCItems.TOOL_RACK.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern("S#S")
                 .pattern("SSS")
                 .define('S', slab)
-                .define('#', Tags.Items.INGOTS_IRON));
+                .define('#', Tags.Items.INGOTS_IRON)
+                .save(output, new ResourceLocation(modId, prefix + "tool_rack"));
         for (DyeColor color : DyeColor.values()) {
             Item wool = BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool"));
-            shapedRecipe(output, BCItems.DISPLAY_CASE.get(woodType, color), woodType, builder -> builder
+            prefix = "color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/";
+            shapedRecipe(BCItems.DISPLAY_CASE.get(woodType, color), woodType)
                     .pattern("SGS")
                     .pattern("SWS")
                     .pattern("SSS")
                     .define('S', slab)
                     .define('W', wool)
-                    .define('G', Tags.Items.GLASS));
-            shapedRecipe(output, BCItems.SEAT.get(woodType, color), woodType, builder -> builder
+                    .define('G', Tags.Items.GLASS)
+                    .save(output, new ResourceLocation(modId, prefix + "display_case"));
+            shapedRecipe(BCItems.SEAT.get(woodType, color), woodType)
                     .pattern(" W ")
                     .pattern(" S ")
                     .pattern("RSR")
                     .define('S', slab)
                     .define('R', stick)
-                    .define('W', wool));
-            shapedRecipe(output, BCItems.SMALL_SEAT_BACK.get(woodType, color), woodType, builder -> builder
+                    .define('W', wool)
+                    .save(output, new ResourceLocation(modId, prefix + "seat"));
+            shapedRecipe(BCItems.SMALL_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("W")
                     .pattern("S")
                     .define('S', slab)
-                    .define('W', wool));
-            shapedRecipe(output, BCItems.RAISED_SEAT_BACK.get(woodType, color), woodType, builder -> builder
+                    .define('W', wool)
+                    .save(output, new ResourceLocation(modId, prefix + "small_seat_back"));
+            shapedRecipe(BCItems.RAISED_SEAT_BACK.get(woodType, color), woodType)
                     .pattern(" W ")
                     .pattern(" S ")
                     .pattern("R R")
                     .define('S', slab)
                     .define('R', stick)
-                    .define('W', wool));
-            shapedRecipe(output, BCItems.FLAT_SEAT_BACK.get(woodType, color), woodType, builder -> builder
+                    .define('W', wool)
+                    .save(output, new ResourceLocation(modId, prefix + "raised_seat_back"));
+            shapedRecipe(BCItems.FLAT_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("RWR")
                     .pattern("RSR")
                     .pattern("R R")
                     .define('S', slab)
                     .define('R', stick)
-                    .define('W', wool));
-            shapedRecipe(output, BCItems.TALL_SEAT_BACK.get(woodType, color), woodType, builder -> builder
+                    .define('W', wool)
+                    .save(output, new ResourceLocation(modId, prefix + "flat_seat_back"));
+            shapedRecipe(BCItems.TALL_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("S")
                     .pattern("#")
                     .define('S', slab)
-                    .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color)));
-            shapedRecipe(output, BCItems.FANCY_SEAT_BACK.get(woodType, color), woodType, builder -> builder
+                    .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
+                    .save(output, new ResourceLocation(modId, prefix + "tall_seat_back"));
+            shapedRecipe(BCItems.FANCY_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("S#S")
                     .define('S', slab)
-                    .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color)));
+                    .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
+                    .save(output, new ResourceLocation(modId, prefix + "fancy_seat_back"));
         }
     }
 
@@ -376,36 +393,13 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     }
 
     /**
-     * Adds an item with a parent block model of the same name.
-     *
-     * @param provider Your mod's {@link ItemModelProvider}.
-     * @param name     The name of the item model.
-     * @return The {@link ItemModelBuilder}, for chaining.
-     */
-    private static ItemModelBuilder withParentBlock(ItemModelProvider provider, String name) {
-        return withParent(provider, name, n -> bcLoc("block/" + n));
-    }
-
-    /**
-     * Adds an item with a parent model provided by the given factory.
-     *
-     * @param provider      Your mod's {@link ItemModelProvider}.
-     * @param name          The name of the item model.
-     * @param parentFactory The factory for the parent model. Receives the name as input.
-     * @return The {@link ItemModelBuilder}, for chaining.
-     */
-    private static ItemModelBuilder withParent(ItemModelProvider provider, String name, Function<String, ResourceLocation> parentFactory) {
-        return provider.withExistingParent(name, parentFactory.apply(name));
-    }
-
-    /**
      * Generates an item with a seat back model.
      *
      * @param provider Your mod's {@link ItemModelProvider}.
      * @param item     The item to generate the models for.
      */
     private static void seatBackItemModel(ItemModelProvider provider, SeatBackItem item) {
-        withParentBlock(provider, item.getColor().getName() + "_" + item.getWoodType().getRegistrationPrefix() + "_" + item.type.getSerializedName() + "_seat_back");
+        provider.withExistingParent(item.getColor().getName() + "_" + item.getWoodType().getRegistrationPrefix() + "_" + item.type.getSerializedName() + "_seat_back", bcLoc("block/color/" + item.getColor().getName() + "/wood/" + item.getWoodType().getRegistrationPrefix() + "/" + item.type.getSerializedName() + "_seat_back"));
     }
 
     /**
@@ -422,14 +416,11 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     /**
      * Adds a shaped recipe for an item.
      *
-     * @param output            The {@link RecipeOutput} to use.
-     * @param item              The item.
-     * @param woodType          The {@link BibliocraftWoodType}.
-     * @param recipeTransformer A consumer that adds the actual recipe to the provided {@link ShapedRecipeBuilder}.
+     * @param item     The item.
+     * @param woodType The {@link BibliocraftWoodType}.
+     * @return A {@link ShapedRecipeBuilder} with the
      */
-    private static void shapedRecipe(RecipeOutput output, Item item, BibliocraftWoodType woodType, Consumer<ShapedRecipeBuilder> recipeTransformer) {
-        ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, item);
-        recipeTransformer.accept(builder);
-        builder.unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().getBaseBlock()).build())))).save(output);
+    private static ShapedRecipeBuilder shapedRecipe(Item item, BibliocraftWoodType woodType) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, item).unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().getBaseBlock()).build()))));
     }
 }

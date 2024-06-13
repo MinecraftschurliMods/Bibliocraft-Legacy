@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "forge:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:warped_slab"
+    }
+  },
+  "pattern": [
+    " R ",
+    " R ",
+    "SSS"
+  ],
+  "result": {
+    "item": "bibliocraft:warped_fancy_armor_stand"
+  }
+}

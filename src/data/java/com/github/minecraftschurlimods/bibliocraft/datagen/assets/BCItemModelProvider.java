@@ -20,10 +20,10 @@ public class BCItemModelProvider extends ItemModelProvider {
         withExistingParent("clear_fancy_iron_lamp", modLoc("block/clear_fancy_iron_lamp_standing"));
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
-            withExistingParent(name + "_fancy_gold_lamp", modLoc("block/" + name + "_fancy_gold_lamp_standing"));
-            withExistingParent(name + "_fancy_iron_lamp", modLoc("block/" + name + "_fancy_iron_lamp_standing"));
+            withExistingParent(name + "_fancy_gold_lamp", modLoc("block/color/" + name + "/fancy_gold_lamp_standing"));
+            withExistingParent(name + "_fancy_iron_lamp", modLoc("block/color/" + name + "/fancy_iron_lamp_standing"));
         }
-        withExistingParent("cookie_jar", modLoc("block/template/cookie_jar"));
+        withExistingParent("cookie_jar", modLoc("block/cookie_jar"));
         withExistingParent("desk_bell", modLoc("block/desk_bell"));
         withExistingParent("dinner_plate", modLoc("block/dinner_plate"));
         withExistingParent("disc_rack", modLoc("block/disc_rack"));

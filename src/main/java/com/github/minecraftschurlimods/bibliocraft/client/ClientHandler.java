@@ -53,7 +53,7 @@ public final class ClientHandler {
         private static void registerAdditional(ModelEvent.RegisterAdditional event) {
             for (TableBlock.Type type : TableBlock.Type.values()) {
                 for (DyeColor color : DyeColor.values()) {
-                    event.register(BCUtil.modLoc("block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()));
+                    event.register(BCUtil.modLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName()));
                 }
             }
         }

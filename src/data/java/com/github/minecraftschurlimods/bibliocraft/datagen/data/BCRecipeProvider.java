@@ -29,7 +29,7 @@ public final class BCRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput output) {
-        BibliocraftApi.getDatagenHelper().generateRecipes(output);
+        BibliocraftApi.getDatagenHelper().generateRecipes(output, BibliocraftApi.MOD_ID);
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DyeableLeatherItem.dyeArmor(new ItemStack(BCItems.SWORD_PEDESTAL.get()), List.of(DyeItem.byColor(color))))
@@ -38,7 +38,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('S', Items.SMOOTH_STONE_SLAB)
                     .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(name + "_wool")))
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
-                    .save(output, new ResourceLocation(BibliocraftApi.MOD_ID, "sword_pedestal_" + name));
+                    .save(output, BCUtil.modLoc("color/" + name + "/sword_pedestal"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LAMP.get(color))
                     .pattern("CGC")
                     .pattern(" I ")
@@ -48,7 +48,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('I', Tags.Items.INGOTS_GOLD)
                     .define('N', Tags.Items.NUGGETS_GOLD)
                     .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
-                    .save(output);
+                    .save(output, BCUtil.modLoc("color/" + name + "/fancy_gold_lamp"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_IRON_LAMP.get(color))
                     .pattern("CGC")
                     .pattern(" I ")
@@ -58,7 +58,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('I', Tags.Items.INGOTS_IRON)
                     .define('N', Tags.Items.NUGGETS_IRON)
                     .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_IRON))
-                    .save(output);
+                    .save(output, BCUtil.modLoc("color/" + name + "/fancy_iron_lamp"));
         }
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LAMP.get())
                 .pattern("CGC")

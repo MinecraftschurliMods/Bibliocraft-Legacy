@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "minecraft:mangrove_planks"
+    },
+    "S": {
+      "item": "minecraft:mangrove_slab"
+    }
+  },
+  "pattern": [
+    "SSS",
+    " P ",
+    " P "
+  ],
+  "result": {
+    "item": "bibliocraft:mangrove_table"
+  }
+}

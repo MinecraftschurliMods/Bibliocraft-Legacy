@@ -1,16 +1,16 @@
 {
   "variants": {
     "open=false,waterlogged=false": {
-      "model": "bibliocraft:block/template/cookie_jar"
+      "model": "bibliocraft:block/cookie_jar"
     },
     "open=false,waterlogged=true": {
-      "model": "bibliocraft:block/template/cookie_jar"
+      "model": "bibliocraft:block/cookie_jar"
     },
     "open=true,waterlogged=false": {
-      "model": "bibliocraft:block/template/cookie_jar_open"
+      "model": "bibliocraft:block/cookie_jar_open"
     },
     "open=true,waterlogged=true": {
-      "model": "bibliocraft:block/template/cookie_jar_open"
+      "model": "bibliocraft:block/cookie_jar_open"
     }
   }
 }
