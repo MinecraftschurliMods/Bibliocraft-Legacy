@@ -11,6 +11,12 @@ import org.jetbrains.annotations.ApiStatus;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * Register your own {@link BibliocraftWoodType}s here.
+ *
+ * This event is not cancelable. This event is fired on the {@link net.neoforged.fml.common.Mod.EventBusSubscriber.Bus.MOD}.
+ */
+@SuppressWarnings({"JavadocBlankLines", "JavadocReference"})
 public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusEvent {
     private final Map<ResourceLocation, BibliocraftWoodType> woodTypes;
 

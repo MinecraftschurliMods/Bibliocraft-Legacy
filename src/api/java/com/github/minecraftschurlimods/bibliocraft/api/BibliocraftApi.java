@@ -10,24 +10,35 @@ import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
+/**
+ * The main accessor class for Bibliocraft's API. Use this to get references to the singleton instances of {@link BibliocraftWoodTypeRegistry} and {@link BibliocraftDatagenHelper}.
+ */
 @ApiStatus.NonExtendable
 public interface BibliocraftApi {
     String MOD_ID = "bibliocraft";
 
+    /**
+     * @return The only instance of {@link BibliocraftDatagenHelper}.
+     */
     static BibliocraftDatagenHelper getDatagenHelper() {
         return InstanceHolder.DATAGEN_HELPER.get();
     }
 
+    /**
+     * @return The only instance of {@link BibliocraftWoodTypeRegistry}.
+     */
     static BibliocraftWoodTypeRegistry getWoodTypeRegistry() {
         return InstanceHolder.WOOD_TYPE_REGISTRY.get();
     }
 
+    /**
+     * The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
+     */
     @ApiStatus.Internal
     final class InstanceHolder {
-        private InstanceHolder() {}
-
         private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.concurrentOf(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.concurrentOf(fromServiceLoader(BibliocraftWoodTypeRegistry.class));
+        private InstanceHolder() {}
 
         private static <T> Supplier<T> fromServiceLoader(Class<T> clazz) {
             return () -> {

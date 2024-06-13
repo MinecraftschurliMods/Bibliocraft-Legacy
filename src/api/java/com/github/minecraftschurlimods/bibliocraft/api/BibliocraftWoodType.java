@@ -7,6 +7,15 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.function.Supplier;
 
+/**
+ * Holds all information Bibliocraft needs about a wood type.
+ *
+ * @param id The id of the wood type.
+ * @param woodType   The corresponding vanilla {@link WoodType}.
+ * @param properties A supplier for the wood type's {@link BlockBehaviour.Properties}.
+ * @param texture    The location of the wood type's plank texture. Used in datagen.
+ * @param family     The corresponding {@link BlockFamily}. Used in datagen.
+ */
 public record BibliocraftWoodType(
         ResourceLocation id,
         WoodType woodType,

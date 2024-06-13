@@ -11,7 +11,6 @@ import java.util.Collection;
  * Make sure to put this call behind a {@code ModList.isLoaded("bibliocraft")} check, and in a separate class, to prevent accidental classloading (like you would with client classes).
  */
 public interface BibliocraftWoodTypeRegistry {
-
     /**
      * @param id The id of the wood type to get.
      * @return The wood type with the given id. May return null if no wood type with the given id exists.
