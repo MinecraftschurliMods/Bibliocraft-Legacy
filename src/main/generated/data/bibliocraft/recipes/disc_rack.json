@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "R": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     },
     "S": {
       "tag": "minecraft:wooden_slabs"
@@ -14,6 +14,7 @@
     "SSS"
   ],
   "result": {
-    "item": "bibliocraft:disc_rack"
+    "count": 1,
+    "id": "bibliocraft:disc_rack"
   }
 }

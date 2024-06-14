@@ -8,7 +8,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -124,7 +123,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
             if (slot != -1) {
@@ -139,7 +138,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
                         bcbe.setItem(slot, stack);
                         player.getInventory().setItem(39 - slot, slotStack);
                         if (slotStack.getItem() instanceof Equipable equipable) {
-                            level.playSound(null, player, equipable.getEquipSound(), SoundSource.PLAYERS, 1, 1);
+                            level.playSound(null, player, equipable.getEquipSound().value(), SoundSource.PLAYERS, 1f, 1f);
                         }
                         return InteractionResult.SUCCESS;
                     }
@@ -149,7 +148,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useWithoutItem(state, level, pos, player, hit);
     }
 
     @Override

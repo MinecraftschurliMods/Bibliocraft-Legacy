@@ -5,7 +5,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCWaterloggedBlock;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -79,9 +78,9 @@ public class SeatBlock extends BCWaterloggedBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (state.getValue(OCCUPIED) || player.getVehicle() != null || !(level.getBlockState(pos.above()).isAir() || level.getBlockState(pos.above()).getBlock() instanceof SeatBackBlock))
-            return super.use(state, level, pos, player, hand, hit);
+            return super.useWithoutItem(state, level, pos, player, hit);
         if (!level.isClientSide()) {
             SeatEntity entity = new SeatEntity(level);
             entity.setPos(Vec3.atBottomCenterOf(pos));

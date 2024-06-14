@@ -3,6 +3,8 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -13,18 +15,20 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
-import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public final class BCRecipeProvider extends RecipeProvider {
-    public BCRecipeProvider(PackOutput output) {
-        super(output);
+    public BCRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
+        super(output, lookup);
     }
 
     @Override
@@ -32,7 +36,10 @@ public final class BCRecipeProvider extends RecipeProvider {
         BibliocraftApi.getDatagenHelper().generateRecipes(output, BibliocraftApi.MOD_ID);
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, DyeableLeatherItem.dyeArmor(new ItemStack(BCItems.SWORD_PEDESTAL.get()), List.of(DyeItem.byColor(color))))
+            ItemStack result = new ItemStack(BCItems.SWORD_PEDESTAL.get());
+            float[] c = color.getTextureDiffuseColors();
+            result.set(DataComponents.DYED_COLOR, new DyedItemColor(FastColor.ARGB32.colorFromFloat(1, c[0], c[1], c[2]), false));
+            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, result)
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
@@ -64,7 +71,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .pattern("CGC")
                 .pattern(" I ")
                 .pattern("NIN")
-                .define('C', Tags.Items.GLASS_COLORLESS)
+                .define('C', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('G', Items.GLOWSTONE)
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .define('N', Tags.Items.NUGGETS_GOLD)
@@ -74,7 +81,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .pattern("CGC")
                 .pattern(" I ")
                 .pattern("NIN")
-                .define('C', Tags.Items.GLASS_COLORLESS)
+                .define('C', Tags.Items.GLASS_BLOCKS_COLORLESS)
                 .define('G', Items.GLOWSTONE)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('N', Tags.Items.NUGGETS_IRON)

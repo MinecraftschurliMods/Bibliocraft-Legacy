@@ -9,7 +9,13 @@ helper.withTestSourceSet()
 
 dependencies {
     implementation(helper.neoforge())
-    testImplementation("net.neoforged:testframework:${helper.neoVersion.get()}")
+    testImplementation(helper.testframework())
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
 
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")

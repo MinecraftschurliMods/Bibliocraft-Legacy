@@ -15,7 +15,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.apache.commons.lang3.function.TriFunction;
@@ -23,7 +23,7 @@ import org.apache.commons.lang3.function.TriFunction;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
 public final class BCDatagen {
     @SubscribeEvent
     private static void gatherData(GatherDataEvent event) {
@@ -39,10 +39,10 @@ public final class BCDatagen {
         client.addProvider(wrapWith(BCItemModelProvider::new, existingFileHelper));
         client.addProvider(wrapWith(BCSoundDefinitionsProvider::new, existingFileHelper));
 
-        server.addProvider(BCLootTableProvider::new);
-        server.addProvider(BCRecipeProvider::new);
+        server.addProvider(wrapWith(BCLootTableProvider::new, lookupProvider));
         BCBlockTagsProvider blockTags = server.addProvider(wrapWith(BCBlockTagsProvider::new, lookupProvider, existingFileHelper));
         server.addProvider(wrapWith(BCItemTagsProvider::new, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
+        server.addProvider(wrapWith(BCRecipeProvider::new, lookupProvider));
     }
 
     private static <T extends DataProvider, S> DataProvider.Factory<T> wrapWith(BiFunction<PackOutput, S, T> factory, S s) {

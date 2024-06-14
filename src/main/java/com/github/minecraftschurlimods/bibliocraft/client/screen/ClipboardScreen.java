@@ -1,10 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardAttachment;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardPage;
-import com.github.minecraftschurlimods.bibliocraft.init.BCAttachments;
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -15,30 +14,40 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.common.MutableDataComponentHolder;
 
 import java.util.Objects;
 import java.util.function.Consumer;
 
 public class ClipboardScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard.png");
-    private final ItemStack stack;
-    private final ClipboardAttachment data;
-    private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardPage.LINES];
-    private final EditBox[] lines = new EditBox[ClipboardPage.LINES];
+    private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardContent.ClipboardPage.LINES];
+    private final EditBox[] lines = new EditBox[ClipboardContent.ClipboardPage.LINES];
+    private final PatchedDataComponentMap components;
+    private final Consumer<DataComponentPatch> onClose;
     private EditBox titleBox;
     private PageButton forwardButton;
     private PageButton backButton;
 
-    public ClipboardScreen(ItemStack stack) {
-        super(stack.getHoverName());
-        this.stack = stack;
-        this.data = stack.getData(BCAttachments.CLIPBOARD);
+    public ClipboardScreen(DataComponentMap initial, Consumer<DataComponentPatch> onClose) {
+        super(initial.getOrDefault(DataComponents.ITEM_NAME, Component.empty()));
+        this.components = new PatchedDataComponentMap(initial);
+        this.onClose = onClose;
+    }
+
+    public ClipboardScreen(MutableDataComponentHolder holder) {
+        this(holder.getComponents(), patch -> {
+            holder.applyComponents(patch);
+            ClipboardItemSyncPacket.sync(patch);
+        });
     }
 
     @Override
@@ -47,50 +56,85 @@ public class ClipboardScreen extends Screen {
         close();
     }
 
+    public void close() {
+        this.onClose.accept(this.components.asPatch());
+    }
+
     @Override
     protected void init() {
-        int x = (width - 192) / 2;
-        titleBox = addRenderableWidget(new NoShadowEditBox(x + 57, 14, 72, e -> data.title = e));
-        for (int i = 0; i < ClipboardPage.LINES; i++) {
+        int x = (this.width - 192) / 2;
+        this.titleBox = addRenderableWidget(new NoShadowEditBox(x + 57, 14, 72, this::setTitle));
+        for (int i = 0; i < ClipboardContent.ClipboardPage.LINES; i++) {
             final int j = i; // I love Java
-            checkboxes[i] = new CheckboxButton(x + 30, 15 * i + 26, e -> data.getActivePage().checkboxes[j] = ((CheckboxButton) e).getState());
-            addRenderableWidget(checkboxes[i]);
-            lines[i] = addRenderableWidget(new NoShadowEditBox(x + 45, 15 * i + 28, 109, e -> data.getActivePage().lines[j] = e));
+            this.checkboxes[i] = addRenderableWidget(new CheckboxButton(x + 30, 15 * i + 26, e -> setState(j, e)));
+            this.lines[i] = addRenderableWidget(new NoShadowEditBox(x + 45, 15 * i + 28, 109, e -> setText(j, e)));
         }
-        forwardButton = addRenderableWidget(new PageButton(x + 116, 159, true, $ -> {
-            data.nextPage();
+        this.forwardButton = addRenderableWidget(new PageButton(x + 116, 159, true, $ -> {
+            nextPage();
             updateContents();
         }, false));
-        backButton = addRenderableWidget(new PageButton(x + 43, 159, false, $ -> {
-            data.prevPage();
+        this.backButton = addRenderableWidget(new PageButton(x + 43, 159, false, $ -> {
+            prevPage();
             updateContents();
         }, false));
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
             close();
-            Objects.requireNonNull(minecraft).setScreen(null);
-        }).bounds(width / 2 - 100, 196, 200, 20).build());
+            Objects.requireNonNull(this.minecraft).setScreen(null);
+        }).bounds(this.width / 2 - 100, 196, 200, 20).build());
         updateContents();
+    }
+
+    private void setTitle(String title) {
+        this.components.set(BCDataComponents.CLIPBOARD_CONTENT.get(), getClipboardContent().setTitle(title));
+    }
+
+    private void setState(int lineIndex, CheckboxState state) {
+        this.components.set(BCDataComponents.CLIPBOARD_CONTENT.get(), getClipboardContent().setState(getActivePageIndex(), lineIndex, state));
+    }
+
+    private void setText(int lineIndex, String text) {
+        this.components.set(BCDataComponents.CLIPBOARD_CONTENT.get(), getClipboardContent().setText(getActivePageIndex(), lineIndex, text));
+    }
+
+    private void prevPage() {
+        this.components.set(BCDataComponents.CLIPBOARD_ACTIVE_PAGE.get(), Mth.clamp(getActivePageIndex() - 1, 0, ClipboardContent.MAX_PAGES));
+    }
+
+    private void nextPage() {
+        this.components.set(BCDataComponents.CLIPBOARD_ACTIVE_PAGE.get(), Mth.clamp(getActivePageIndex() + 1, 0, ClipboardContent.MAX_PAGES));
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192);
-    }
-
-    private void close() {
-        stack.setData(BCAttachments.CLIPBOARD, data);
-        PacketDistributor.SERVER.noArg().send(new ClipboardItemSyncPacket(data.serializeNBT()));
+        graphics.blit(BACKGROUND, (this.width - 192) / 2, 2, 0, 0, 192, 192);
     }
 
     private void updateContents() {
-        backButton.visible = data.getActivePageIndex() > 0;
-        titleBox.setValue(data.title);
-        ClipboardPage page = data.getActivePage();
-        for (int i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].setState(page.checkboxes[i]);
-            lines[i].setValue(page.lines[i]);
+        this.backButton.visible = getActivePageIndex() > 0;
+        this.forwardButton.visible = getActivePageIndex() < ClipboardContent.MAX_PAGES;
+        this.titleBox.setValue(getClipboardTitle());
+        ClipboardContent.ClipboardPage page = getActivePage();
+        for (int i = 0; i < this.checkboxes.length; i++) {
+            this.checkboxes[i].setState(page.getState(i));
+            this.lines[i].setValue(page.getText(i));
         }
+    }
+
+    private ClipboardContent.ClipboardPage getActivePage() {
+        return getClipboardContent().getPage(getActivePageIndex());
+    }
+
+    private String getClipboardTitle() {
+        return getClipboardContent().title();
+    }
+
+    private int getActivePageIndex() {
+        return this.components.getOrDefault(BCDataComponents.CLIPBOARD_ACTIVE_PAGE.get(), 0);
+    }
+
+    private ClipboardContent getClipboardContent() {
+        return this.components.getOrDefault(BCDataComponents.CLIPBOARD_CONTENT.get(), ClipboardContent.EMPTY);
     }
 
     // Necessary to allow rendering the text without a shadow.
@@ -106,16 +150,16 @@ public class ClipboardScreen extends Screen {
         public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
             if (!isVisible()) return;
             Font font = Minecraft.getInstance().font;
-            int posOnScreen = getCursorPosition() - displayPos;
-            String visibleText = font.plainSubstrByWidth(getValue().substring(displayPos), getInnerWidth());
+            int posOnScreen = getCursorPosition() - this.displayPos;
+            String visibleText = font.plainSubstrByWidth(getValue().substring(this.displayPos), getInnerWidth());
             boolean cursorInside = posOnScreen >= 0 && posOnScreen <= visibleText.length();
             boolean shouldDrawCursor = isFocused() && cursorInside && (Util.getMillis() - focusedTime) / 300L % 2L == 0L;
             int x = getX();
             int y = getY();
             int width = x;
-            int highlightStart = Mth.clamp(highlightPos - displayPos, 0, visibleText.length());
+            int highlightStart = Mth.clamp(this.highlightPos - this.displayPos, 0, visibleText.length());
             if (!visibleText.isEmpty()) {
-                width = graphics.drawString(font, formatter.apply(cursorInside ? visibleText.substring(0, posOnScreen) : visibleText, displayPos), x, y, TEXT_COLOR, false);
+                width = graphics.drawString(font, this.formatter.apply(cursorInside ? visibleText.substring(0, posOnScreen) : visibleText, this.displayPos), x, y, TEXT_COLOR, false);
             }
             boolean eol = getCursorPosition() < getValue().length() || getValue().length() >= getMaxLength();
             int cursorX = width;
@@ -126,11 +170,11 @@ public class ClipboardScreen extends Screen {
                 width--;
             }
             if (!visibleText.isEmpty() && cursorInside && posOnScreen < visibleText.length()) {
-                graphics.drawString(font, formatter.apply(visibleText.substring(posOnScreen), getCursorPosition()), width, y, TEXT_COLOR, false);
+                graphics.drawString(font, this.formatter.apply(visibleText.substring(posOnScreen), getCursorPosition()), width, y, TEXT_COLOR, false);
             }
             if (shouldDrawCursor) {
                 if (eol) {
-                    graphics.fill(RenderType.guiOverlay(), cursorX, y - 1, cursorX + 1, y + 1 + 9, -3092272);
+                    graphics.fill(RenderType.guiOverlay(), cursorX, y - 1, cursorX + 1, y + 1 + 9, 0xffd0d0d0);
                 } else {
                     graphics.drawString(font, "_", cursorX, y, TEXT_COLOR, false);
                 }
@@ -147,12 +191,12 @@ public class ClipboardScreen extends Screen {
         private static final ResourceLocation X_TEXTURE = BCUtil.modLoc("x");
         private CheckboxState state = CheckboxState.EMPTY;
 
-        public CheckboxButton(int x, int y, OnPress onPress) {
-            super(new Builder(Component.empty(), onPress).bounds(x, y, 14, 14));
+        public CheckboxButton(int x, int y, Consumer<CheckboxState> onPress) {
+            super(new Builder(Component.empty(), e -> onPress.accept(((CheckboxButton) e).getState())).bounds(x, y, 14, 14));
         }
 
         public CheckboxState getState() {
-            return state;
+            return this.state;
         }
 
         public void setState(CheckboxState state) {
@@ -161,19 +205,15 @@ public class ClipboardScreen extends Screen {
 
         @Override
         public void onClick(double mouseX, double mouseY, int button) {
-            state = switch (state) {
-                case EMPTY -> CheckboxState.CHECK;
-                case CHECK -> CheckboxState.X;
-                case X -> CheckboxState.EMPTY;
-            };
+            this.state = this.state.next();
             super.onClick(mouseX, mouseY, button);
         }
 
         @Override
         protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-            if (state == CheckboxState.CHECK) {
+            if (this.state == CheckboxState.CHECK) {
                 graphics.blitSprite(CHECK_TEXTURE, getX(), getY(), getWidth(), getHeight());
-            } else if (state == CheckboxState.X) {
+            } else if (this.state == CheckboxState.CROSS) {
                 graphics.blitSprite(X_TEXTURE, getX(), getY(), getWidth(), getHeight());
             }
         }

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "R": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     },
     "S": {
       "item": "minecraft:warped_slab"
@@ -15,6 +15,7 @@
     "SSS"
   ],
   "result": {
-    "item": "bibliocraft:warped_fancy_armor_stand"
+    "count": 1,
+    "id": "bibliocraft:warped_fancy_armor_stand"
   }
 }

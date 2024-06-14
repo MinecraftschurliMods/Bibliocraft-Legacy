@@ -9,10 +9,10 @@
       "item": "minecraft:glowstone"
     },
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "N": {
-      "tag": "forge:nuggets/iron"
+      "tag": "c:nuggets/iron"
     }
   },
   "pattern": [
@@ -21,6 +21,7 @@
     "NIN"
   ],
   "result": {
-    "item": "bibliocraft:light_blue_fancy_iron_lamp"
+    "count": 1,
+    "id": "bibliocraft:light_blue_fancy_iron_lamp"
   }
 }

@@ -25,8 +25,10 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.component.DyedItemColor;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -35,7 +37,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import java.util.Objects;
 
 public final class ClientHandler {
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID, value = Dist.CLIENT)
     public static final class ModBus {
         @SubscribeEvent
         private static void registerMenuScreens(RegisterMenuScreensEvent event) {
@@ -93,7 +95,7 @@ public final class ClientHandler {
 
         @SubscribeEvent
         private static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
-            event.register((stack, tintIndex) -> tintIndex == 0 ? BCUtil.getNBTColor(stack, DyeColor.GREEN.getTextColor()) : -1, BCItems.SWORD_PEDESTAL.get());
+            event.register((stack, tintIndex) -> tintIndex == 0 ? DyedItemColor.getOrDefault(stack, DyeColor.GREEN.getTextColor()) : -1, BCItems.SWORD_PEDESTAL.get());
         }
     }
 }

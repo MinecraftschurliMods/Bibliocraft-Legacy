@@ -16,16 +16,16 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 import java.util.Objects;
 
 public final class EventHandler {
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
     public static final class ModBus {
         @SubscribeEvent
         private static void constructMod(FMLConstructModEvent event) {
@@ -39,9 +39,9 @@ public final class EventHandler {
         }
 
         @SubscribeEvent
-        private static void registerPayloadHandlers(RegisterPayloadHandlerEvent event) {
+        private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
             event.registrar(BibliocraftApi.MOD_ID)
-                    .play(ClipboardItemSyncPacket.ID, ClipboardItemSyncPacket::new, builder -> builder.server(ClipboardItemSyncPacket::handle));
+                    .playToServer(ClipboardItemSyncPacket.TYPE, ClipboardItemSyncPacket.STREAM_CODEC, ClipboardItemSyncPacket::handle);
         }
 
         @SubscribeEvent

@@ -2,15 +2,14 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +20,6 @@ import java.util.List;
  * Utility class holding various helper methods.
  */
 public final class BCUtil {
-    private static final String TAG_COLOR = "color";
-    private static final String TAG_DISPLAY = "display";
-
     /**
      * @param path The path to use.
      * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
@@ -107,26 +103,14 @@ public final class BCUtil {
         return InteractionResult.SUCCESS;
     }
 
-    //region Static variants of the methods in DyeableLeatherItem.
-    public static boolean hasNBTColor(ItemStack stack) {
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        return tag != null && tag.contains(TAG_COLOR, Tag.TAG_ANY_NUMERIC);
+    @NotNull
+    public static ItemInteractionResult getItemInteractionResult(InteractionResult interactionResult) {
+        return switch (interactionResult) {
+            case SUCCESS, SUCCESS_NO_ITEM_USED -> ItemInteractionResult.SUCCESS;
+            case CONSUME -> ItemInteractionResult.CONSUME;
+            case CONSUME_PARTIAL -> ItemInteractionResult.CONSUME_PARTIAL;
+            case PASS -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            case FAIL -> ItemInteractionResult.FAIL;
+        };
     }
-
-    public static int getNBTColor(ItemStack stack, int other) {
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        return tag != null && tag.contains(TAG_COLOR, Tag.TAG_ANY_NUMERIC) ? tag.getInt(TAG_COLOR) : other;
-    }
-
-    public static void clearNBTColor(ItemStack stack) {
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        if (tag != null && tag.contains(TAG_COLOR)) {
-            tag.remove(TAG_COLOR);
-        }
-    }
-
-    public static void setNBTColor(ItemStack stack, int color) {
-        stack.getOrCreateTagElement(TAG_DISPLAY).putInt(TAG_COLOR, color);
-    }
-    //endregion
 }

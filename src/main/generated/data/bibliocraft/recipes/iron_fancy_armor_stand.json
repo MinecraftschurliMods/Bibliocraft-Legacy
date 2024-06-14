@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "I": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "S": {
       "item": "minecraft:smooth_stone_slab"
@@ -15,6 +15,7 @@
     "SSS"
   ],
   "result": {
-    "item": "bibliocraft:iron_fancy_armor_stand"
+    "count": 1,
+    "id": "bibliocraft:iron_fancy_armor_stand"
   }
 }

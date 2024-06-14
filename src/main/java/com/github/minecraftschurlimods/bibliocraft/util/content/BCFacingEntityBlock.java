@@ -33,14 +33,6 @@ public abstract class BCFacingEntityBlock extends BCFacingBlock implements Entit
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-        super.setPlacedBy(level, pos, state, entity, stack);
-        if (level.getBlockEntity(pos) instanceof BCMenuBlockEntity blockEntity && stack.hasCustomHoverName()) {
-            blockEntity.setCustomName(stack.getHoverName());
-        }
-    }
-
-    @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean flag) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockentity = level.getBlockEntity(pos);
@@ -53,7 +45,7 @@ public abstract class BCFacingEntityBlock extends BCFacingBlock implements Entit
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         return player.isSecondaryUseActive() ? InteractionResult.PASS : BCUtil.openBEMenu(player, level, pos);
     }
 

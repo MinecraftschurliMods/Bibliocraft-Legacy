@@ -2,6 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft.util.content;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -10,6 +13,7 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -56,15 +60,6 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
         return name;
     }
 
-    /**
-     * Sets a custom name for this block entity.
-     *
-     * @param name The name to set.
-     */
-    public void setCustomName(Component name) {
-        this.name = name;
-    }
-
     @Override
     public Component getDisplayName() {
         return getName();
@@ -89,18 +84,36 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
     }
 
     @Override
-    protected void loadTag(CompoundTag tag) {
-        super.loadTag(tag);
+    protected void loadTag(CompoundTag tag, HolderLookup.Provider lookup) {
+        super.loadTag(tag, lookup);
         if (tag.contains(NAME_KEY, Tag.TAG_STRING)) {
-            this.name = Component.Serializer.fromJson(tag.getString(NAME_KEY));
+            this.name = Component.Serializer.fromJson(tag.getString(NAME_KEY), lookup);
         }
     }
 
     @Override
-    protected void saveTag(CompoundTag tag) {
-        super.saveTag(tag);
-        if (name != null) {
-            tag.putString(NAME_KEY, Component.Serializer.toJson(name));
+    protected void saveTag(CompoundTag tag, HolderLookup.Provider lookup) {
+        super.saveTag(tag, lookup);
+        if (this.name != null) {
+            tag.putString(NAME_KEY, Component.Serializer.toJson(this.name, lookup));
         }
+    }
+
+    @Override
+    protected void applyImplicitComponents(BlockEntity.DataComponentInput input) {
+        super.applyImplicitComponents(input);
+        this.name = input.get(DataComponents.CUSTOM_NAME);
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+        builder.set(DataComponents.CUSTOM_NAME, this.name);
+    }
+
+    @Override
+    public void removeComponentsFromTag(CompoundTag tag) {
+        super.removeComponentsFromTag(tag);
+        tag.remove(NAME_KEY);
     }
 }

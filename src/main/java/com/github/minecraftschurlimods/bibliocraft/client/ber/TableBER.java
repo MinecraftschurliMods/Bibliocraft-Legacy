@@ -10,10 +10,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
+import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.joml.Matrix4f;
 
@@ -32,7 +34,7 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
             stack.scale(0.0078125f, 0.0078125f, 0.0078125f);
             stack.mulPose(Axis.XP.rotationDegrees(90));
             Minecraft minecraft = Minecraft.getInstance();
-            Integer mapId = MapItem.getMapId(item);
+            MapId mapId = item.get(DataComponents.MAP_ID);
             MapItemSavedData mapData = MapItem.getSavedData(mapId, Objects.requireNonNull(minecraft.level));
             VertexConsumer vc = buffer.getBuffer(mapData == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
             Matrix4f matrix4f = stack.last().pose();

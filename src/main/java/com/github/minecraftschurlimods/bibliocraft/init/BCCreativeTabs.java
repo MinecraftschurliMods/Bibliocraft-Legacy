@@ -2,11 +2,12 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
@@ -16,7 +17,7 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public interface BCCreativeTabs {
     Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(BibliocraftApi.MOD_ID, () -> CreativeModeTab.builder()
-            //.icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(WoodType.OAK)))) //fixme
+            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(WoodType.OAK))))
             .title(Component.translatable("itemGroup." + BibliocraftApi.MOD_ID))
             .withSearchBar()
             .displayItems((display, output) -> {
@@ -46,7 +47,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-                    BCUtil.setNBTColor(stack, color.getTextColor());
+                    stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextColor(), true));
                     output.accept(stack);
                 }
                 output.accept(BCItems.REDSTONE_BOOK);
