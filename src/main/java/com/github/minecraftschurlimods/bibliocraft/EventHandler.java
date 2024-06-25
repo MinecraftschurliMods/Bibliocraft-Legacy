@@ -14,22 +14,25 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 import java.util.Objects;
 
 public final class EventHandler {
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
     public static final class ModBus {
-        @SubscribeEvent
+        @SubscribeEvent(priority = EventPriority.LOWEST)
         private static void constructMod(FMLConstructModEvent event) {
-            ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register();
-            BCRegistries.init(Objects.requireNonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus()));
+            IEventBus bus = Objects.requireNonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus());
+            ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register(bus);
+            BCRegistries.init(Objects.requireNonNull(bus));
         }
 
         @SubscribeEvent
@@ -38,9 +41,9 @@ public final class EventHandler {
         }
 
         @SubscribeEvent
-        private static void registerPayloadHandlers(RegisterPayloadHandlerEvent event) {
+        private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
             event.registrar(BibliocraftApi.MOD_ID)
-                    .play(ClipboardItemSyncPacket.ID, ClipboardItemSyncPacket::new, builder -> builder.server(ClipboardItemSyncPacket::handle));
+                    .playToServer(ClipboardItemSyncPacket.TYPE, ClipboardItemSyncPacket.STREAM_CODEC, ClipboardItemSyncPacket::handle);
         }
 
         @SubscribeEvent
@@ -62,7 +65,7 @@ public final class EventHandler {
          * Private helper for registering the vanilla variants.
          */
         private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
-            event.register(woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), new ResourceLocation("block/" + woodType.name() + "_planks"), family);
+            event.register(new ResourceLocation("minecraft", woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), new ResourceLocation("minecraft", "block/" + woodType.name() + "_planks"), family);
         }
     }
 }

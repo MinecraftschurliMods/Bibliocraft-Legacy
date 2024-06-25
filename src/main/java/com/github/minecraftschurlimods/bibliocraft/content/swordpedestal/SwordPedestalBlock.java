@@ -5,10 +5,12 @@ import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -24,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SwordPedestalBlock extends BCFacingInteractibleBlock {
+    public static final DyedItemColor DEFAULT_COLOR = new DyedItemColor(BCUtil.getTextureColor(DyeColor.GREEN), true);
     private static final VoxelShape Z_SHAPE = ShapeUtil.combine(
             Shapes.box(0, 0, 0.25, 1, 0.0625, 0.75),
             Shapes.box(0.0625, 0.0625, 0.25, 0.9375, 0.125, 0.75),
@@ -43,8 +46,8 @@ public class SwordPedestalBlock extends BCFacingInteractibleBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         super.setPlacedBy(level, pos, state, entity, stack);
-        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe && BCUtil.hasNBTColor(stack)) {
-            spbe.setColor(BCUtil.getNBTColor(stack, DyeColor.GREEN.getTextColor()));
+        if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe) {
+            spbe.setColor(stack.getOrDefault(DataComponents.DYED_COLOR, DEFAULT_COLOR).rgb());
         }
     }
 
@@ -68,7 +71,7 @@ public class SwordPedestalBlock extends BCFacingInteractibleBlock {
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         ItemStack stack = super.getCloneItemStack(state, target, level, pos, player);
         if (level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe) {
-            BCUtil.setNBTColor(stack, spbe.getColor());
+            stack.set(DataComponents.DYED_COLOR, new DyedItemColor(spbe.getColor(), true));
         }
         return stack;
     }

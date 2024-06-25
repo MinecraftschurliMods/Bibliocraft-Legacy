@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "R": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     },
     "S": {
       "item": "minecraft:jungle_slab"
@@ -15,6 +15,7 @@
     "SSS"
   ],
   "result": {
-    "item": "bibliocraft:jungle_fancy_armor_stand"
+    "count": 1,
+    "id": "bibliocraft:jungle_fancy_armor_stand"
   }
 }

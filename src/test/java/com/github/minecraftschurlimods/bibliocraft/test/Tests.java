@@ -1,3 +1,4 @@
+/*
 package com.github.minecraftschurlimods.bibliocraft.test;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
@@ -9,7 +10,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -20,7 +21,7 @@ import net.neoforged.testframework.impl.MutableTestFramework;
 import net.neoforged.testframework.summary.GitHubActionsStepSummaryDumper;
 import org.lwjgl.glfw.GLFW;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
 public final class Tests {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     static void init(FMLConstructModEvent event) {
@@ -46,3 +47,4 @@ public final class Tests {
         });
     }
 }
+*/

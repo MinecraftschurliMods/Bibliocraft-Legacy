@@ -14,7 +14,12 @@
     "SWS"
   ],
   "result": {
-    "item": "bibliocraft:sword_pedestal",
-    "nbt": "{display:{color:13061821}}"
+    "components": {
+      "minecraft:dyed_color": {
+        "rgb": -3715395
+      }
+    },
+    "count": 1,
+    "id": "bibliocraft:sword_pedestal"
   }
 }

@@ -4,22 +4,19 @@ import com.github.minecraftschurlimods.bibliocraft.content.bookcase.RedstoneBook
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
-import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
-import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalItem;
+import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeBlockItem;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 public interface BCItems {
@@ -49,7 +46,7 @@ public interface BCItems {
     DeferredItem<BlockItem>           DINNER_PLATE           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DINNER_PLATE);
     DeferredItem<DiscRackItem>        DISC_RACK              = BCRegistries.ITEMS.registerItem("disc_rack", DiscRackItem::new);
     DeferredItem<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
-    DeferredItem<SwordPedestalItem>   SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", SwordPedestalItem::new);
+    DeferredItem<BlockItem>           SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
     DeferredItem<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
     //TODO Big Book
     //TODO Hand Drill

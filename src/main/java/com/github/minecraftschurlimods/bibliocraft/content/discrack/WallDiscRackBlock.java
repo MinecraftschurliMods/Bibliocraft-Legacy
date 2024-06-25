@@ -17,7 +17,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("deprecation")
 public class WallDiscRackBlock extends AbstractDiscRackBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0.3125, 0.1875, 0.9375, 0.6875, 0.8125, 1),

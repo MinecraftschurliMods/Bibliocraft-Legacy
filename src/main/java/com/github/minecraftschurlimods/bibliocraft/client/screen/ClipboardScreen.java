@@ -1,10 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardAttachment;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardPage;
-import com.github.minecraftschurlimods.bibliocraft.init.BCAttachments;
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -22,15 +21,17 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 public class ClipboardScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
-    private final ClipboardAttachment data;
-    private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardPage.LINES];
-    private final EditBox[] lines = new EditBox[ClipboardPage.LINES];
+    private ClipboardContent data;
+    private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardContent.MAX_LINES];
+    private final EditBox[] lines = new EditBox[ClipboardContent.MAX_LINES];
     private EditBox titleBox;
     private PageButton forwardButton;
     private PageButton backButton;
@@ -38,7 +39,7 @@ public class ClipboardScreen extends Screen {
     public ClipboardScreen(ItemStack stack) {
         super(stack.getHoverName());
         this.stack = stack;
-        this.data = stack.getData(BCAttachments.CLIPBOARD);
+        this.data = stack.get(BCDataComponents.CLIPBOARD);
     }
 
     @Override
@@ -50,19 +51,32 @@ public class ClipboardScreen extends Screen {
     @Override
     protected void init() {
         int x = (width - 192) / 2;
-        titleBox = addRenderableWidget(new NoShadowEditBox(x + 57, 14, 72, e -> data.title = e));
-        for (int i = 0; i < ClipboardPage.LINES; i++) {
+        titleBox = addRenderableWidget(new NoShadowEditBox(x + 57, 14, 72, e -> data.setTitle(e)));
+        for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
             final int j = i; // I love Java
-            checkboxes[i] = new CheckboxButton(x + 30, 15 * i + 26, e -> data.getActivePage().checkboxes[j] = ((CheckboxButton) e).getState());
-            addRenderableWidget(checkboxes[i]);
-            lines[i] = addRenderableWidget(new NoShadowEditBox(x + 45, 15 * i + 28, 109, e -> data.getActivePage().lines[j] = e));
+            checkboxes[i] = addRenderableWidget(new CheckboxButton(x + 30, 15 * i + 26, e -> {
+                List<ClipboardContent.Page> pages = new ArrayList<>(data.pages());
+                ClipboardContent.Page page = pages.get(data.active());
+                List<CheckboxState> checkboxes = new ArrayList<>(page.checkboxes());
+                checkboxes.set(j, ((CheckboxButton) e).getState());
+                pages.set(data.active(), page.setCheckboxes(checkboxes));
+                data = data.setPages(pages);
+            }));
+            lines[i] = addRenderableWidget(new NoShadowEditBox(x + 45, 15 * i + 28, 109, e -> {
+                List<ClipboardContent.Page> pages = new ArrayList<>(data.pages());
+                ClipboardContent.Page page = pages.get(data.active());
+                List<String> lines = new ArrayList<>(page.lines());
+                lines.set(j, e);
+                pages.set(data.active(), page.setLines(lines));
+                data = data.setPages(pages);
+            }));
         }
         forwardButton = addRenderableWidget(new PageButton(x + 116, 159, true, $ -> {
-            data.nextPage();
+            data = data.nextPage();
             updateContents();
         }, false));
         backButton = addRenderableWidget(new PageButton(x + 43, 159, false, $ -> {
-            data.prevPage();
+            data = data.prevPage();
             updateContents();
         }, false));
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
@@ -79,17 +93,17 @@ public class ClipboardScreen extends Screen {
     }
 
     private void close() {
-        stack.setData(BCAttachments.CLIPBOARD, data);
-        PacketDistributor.SERVER.noArg().send(new ClipboardItemSyncPacket(data.serializeNBT()));
+        stack.set(BCDataComponents.CLIPBOARD, data);
+        PacketDistributor.sendToServer(new ClipboardItemSyncPacket(data));
     }
 
     private void updateContents() {
-        backButton.visible = data.getActivePageIndex() > 0;
-        titleBox.setValue(data.title);
-        ClipboardPage page = data.getActivePage();
+        backButton.visible = data.active() > 0;
+        titleBox.setValue(data.title());
+        ClipboardContent.Page page = data.pages().get(data.active());
         for (int i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].setState(page.checkboxes[i]);
-            lines[i].setValue(page.lines[i]);
+            checkboxes[i].setState(page.checkboxes().get(i));
+            lines[i].setValue(page.lines().get(i));
         }
     }
 

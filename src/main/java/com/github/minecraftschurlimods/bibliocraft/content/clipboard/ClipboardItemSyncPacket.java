@@ -1,46 +1,33 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clipboard;
 
-import com.github.minecraftschurlimods.bibliocraft.init.BCAttachments;
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.Objects;
+public record ClipboardItemSyncPacket(ClipboardContent content) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ClipboardItemSyncPacket> TYPE = new CustomPacketPayload.Type<>(BCUtil.modLoc("clipboard_item_sync"));
+    public static final StreamCodec<FriendlyByteBuf, ClipboardItemSyncPacket> STREAM_CODEC = StreamCodec.composite(ClipboardContent.STREAM_CODEC, ClipboardItemSyncPacket::content, ClipboardItemSyncPacket::new);
 
-public record ClipboardItemSyncPacket(CompoundTag tag) implements CustomPacketPayload {
-    public static final ResourceLocation ID = BCUtil.modLoc("clipboard_item_sync");
-
-    public ClipboardItemSyncPacket(FriendlyByteBuf buf) {
-        this(Objects.requireNonNull(buf.readNbt()));
-    }
-
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeNbt(tag);
-    }
-
-    @Override
-    public ResourceLocation id() {
-        return ID;
-    }
-
-    public void handle(PlayPayloadContext context) {
-        context.workHandler().execute(() -> {
-            Player player = context.player().orElseThrow();
+    public static void handle(ClipboardItemSyncPacket packet, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            Player player = context.player();
             ItemStack stack = player.getMainHandItem();
             if (!stack.is(BCItems.CLIPBOARD)) {
                 stack = player.getOffhandItem();
                 if (!stack.is(BCItems.CLIPBOARD)) return;
             }
-            ClipboardAttachment attachment = new ClipboardAttachment();
-            attachment.deserializeNBT(tag);
-            stack.setData(BCAttachments.CLIPBOARD, attachment);
+            stack.set(BCDataComponents.CLIPBOARD, packet.content);
         });
+    }
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 }

@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -32,7 +32,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 import java.util.Objects;
 
-@SuppressWarnings("deprecation")
 public class TableBlock extends BCFacingEntityBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
     private static final VoxelShape NONE_SHAPE = ShapeUtil.combine(
@@ -125,15 +124,14 @@ public class TableBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof TableBlockEntity table)) return super.use(state, level, pos, player, hand, hit);
+        if (!(blockEntity instanceof TableBlockEntity table)) return super.useItemOn(stack, state, level, pos, player, hand, hit);
         Direction direction = hit.getDirection();
-        if (direction == Direction.DOWN) return super.use(state, level, pos, player, hand, hit);
-        ItemStack stack = player.getItemInHand(hand);
+        if (direction == Direction.DOWN) return super.useItemOn(stack, state, level, pos, player, hand, hit);
         boolean useCarpet = direction != Direction.UP && (getCarpetColor(stack) != null || (stack.isEmpty() && !table.getItem(1).isEmpty()));
         ItemStack originalStack = table.getItem(useCarpet ? 1 : 0);
-        if (ItemStack.isSameItem(stack, originalStack)) return InteractionResult.FAIL;
+        if (ItemStack.isSameItem(stack, originalStack)) return ItemInteractionResult.FAIL;
         table.setItem(useCarpet ? 1 : 0, stack.copyWithCount(1));
         stack.shrink(1);
         if (!originalStack.isEmpty()) {
@@ -143,7 +141,7 @@ public class TableBlock extends BCFacingEntityBlock {
                 player.getInventory().add(originalStack);
             }
         }
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 
     private BlockState getNewState(LevelAccessor level, BlockPos pos, BlockState state) {

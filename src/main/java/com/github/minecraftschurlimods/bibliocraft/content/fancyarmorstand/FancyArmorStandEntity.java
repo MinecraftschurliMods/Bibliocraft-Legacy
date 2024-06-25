@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -34,7 +35,9 @@ public class FancyArmorStandEntity extends ArmorStand {
 
     @Override
     public float getYHeadRot() {
-        return blockEntity != null ? blockEntity.getBlockState().getValue(FancyArmorStandBlock.FACING).getOpposite().toYRot() : super.getYHeadRot();
+        if (blockEntity == null) return super.getYHeadRot();
+        Direction facing = blockEntity.getBlockState().getValue(FancyArmorStandBlock.FACING);
+        return facing.getAxis() == Direction.Axis.Z ? facing.getOpposite().toYRot() : facing.toYRot();
     }
 
     @Override

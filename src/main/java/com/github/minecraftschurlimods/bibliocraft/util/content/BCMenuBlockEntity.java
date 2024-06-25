@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.util.content;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -89,18 +90,18 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
     }
 
     @Override
-    protected void loadTag(CompoundTag tag) {
-        super.loadTag(tag);
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         if (tag.contains(NAME_KEY, Tag.TAG_STRING)) {
-            this.name = Component.Serializer.fromJson(tag.getString(NAME_KEY));
+            this.name = Component.Serializer.fromJson(tag.getString(NAME_KEY), registries);
         }
     }
 
     @Override
-    protected void saveTag(CompoundTag tag) {
-        super.saveTag(tag);
+    public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         if (name != null) {
-            tag.putString(NAME_KEY, Component.Serializer.toJson(name));
+            tag.putString(NAME_KEY, Component.Serializer.toJson(name, registries));
         }
     }
 }

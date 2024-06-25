@@ -7,7 +7,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.phys.AABB;
 
 public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBlockEntity> {

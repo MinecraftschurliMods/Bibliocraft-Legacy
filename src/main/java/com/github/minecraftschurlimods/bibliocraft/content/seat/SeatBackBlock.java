@@ -18,7 +18,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("deprecation")
 public class SeatBackBlock extends BCFacingBlock {
     public static final EnumProperty<SeatBackType> TYPE = EnumProperty.create("type", SeatBackType.class);
     private static final VoxelShape SHAPE_SMALL_NORTH = Shapes.box(0.125, 0, 0.8125, 0.875, 0.296875, 0.9375);

@@ -300,7 +300,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                     .pattern("SSS")
                     .define('S', slab)
                     .define('W', wool)
-                    .define('G', Tags.Items.GLASS)
+                    .define('G', Tags.Items.GLASS_BLOCKS)
                     .save(output, new ResourceLocation(modId, prefix + "display_case"));
             shapedRecipe(BCItems.SEAT.get(woodType, color), woodType)
                     .pattern(" W ")

@@ -14,7 +14,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class ShelfBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape NORTH_SHAPE = Shapes.box(0, 0, 0.5, 1, 1, 1);
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);

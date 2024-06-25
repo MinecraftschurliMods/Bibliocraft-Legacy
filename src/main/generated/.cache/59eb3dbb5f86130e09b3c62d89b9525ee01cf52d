@@ -1,4 +1,4 @@
-// 1.20.4	2024-06-13T17:27:19.0434885	Loot Tables
+// 1.20.6	2024-06-16T14:01:37.7751969	Loot Tables
 de27c2af93e5cab5a9d4b946062ded6257a7e5d7 data/bibliocraft/loot_tables/blocks/acacia_bookcase.json
 76ad281e44358ad5de5d4b8120b7b1de0742103a data/bibliocraft/loot_tables/blocks/acacia_fancy_armor_stand.json
 318a3b2f6a21fbd5812a8d9262c53207f8fc71e0 data/bibliocraft/loot_tables/blocks/acacia_label.json
@@ -720,7 +720,7 @@ f4d6c047bb70d33314f415ef5c91d36f94f588e2 data/bibliocraft/loot_tables/blocks/spr
 cde548bfd918f07658a704dc82b2dd446d6392af data/bibliocraft/loot_tables/blocks/spruce_shelf.json
 ff863efc20553a60cf43bbc3c03b9bd8bd9f8a75 data/bibliocraft/loot_tables/blocks/spruce_table.json
 b1f4a2b470a6488cb8f1b4734de3f2bd4c76f1f5 data/bibliocraft/loot_tables/blocks/spruce_tool_rack.json
-9414c63c9fb8614a30163ade3c76f34bad795fa2 data/bibliocraft/loot_tables/blocks/sword_pedestal.json
+69741813bc3ee58714ac018f36b1e63565e07ed9 data/bibliocraft/loot_tables/blocks/sword_pedestal.json
 5ebcb55ab8f2463e032e6b9e993c4e8ce370e4dc data/bibliocraft/loot_tables/blocks/wall_disc_rack.json
 bc86a79eb93691318d1b46a0782af73dff4c9864 data/bibliocraft/loot_tables/blocks/warped_bookcase.json
 addc35fc94f437d4e31aeb6787fbfd6ef2874cd4 data/bibliocraft/loot_tables/blocks/warped_fancy_armor_stand.json

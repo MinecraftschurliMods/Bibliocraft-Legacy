@@ -14,7 +14,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class ToolRackBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0.0625, 0.9375, 0.5, 0.9375, 1, 1),

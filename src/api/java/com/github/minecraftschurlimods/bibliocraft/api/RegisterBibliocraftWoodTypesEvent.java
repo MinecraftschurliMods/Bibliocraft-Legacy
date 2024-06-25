@@ -8,6 +8,7 @@ import net.neoforged.bus.api.Event;
 import net.neoforged.fml.event.IModBusEvent;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -18,23 +19,14 @@ import java.util.function.Supplier;
  */
 @SuppressWarnings({"JavadocBlankLines", "JavadocReference"})
 public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusEvent {
-    private final Map<ResourceLocation, BibliocraftWoodType> woodTypes;
+    // We have two distinct collections here because of implementation details
+    private final Map<ResourceLocation, BibliocraftWoodType> values;
+    private final List<BibliocraftWoodType> list;
 
     @ApiStatus.Internal
-    public RegisterBibliocraftWoodTypesEvent(Map<ResourceLocation, BibliocraftWoodType> woodTypes) {
-        this.woodTypes = woodTypes;
-    }
-
-    /**
-     * Registers a new wood type.
-     *
-     * @param woodType   The vanilla {@link WoodType} associated with this wood type.
-     * @param properties A supplier for the {@link BlockBehaviour.Properties} associated with this wood type. Typically, this is a copy of the wood type's planks' properties.
-     * @param texture    The location of the wood type's planks texture, for use in datagen.
-     * @param family     The {@link BlockFamily} for the associated wood type, for use in datagen.
-     */
-    public void register(WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
-        register(new ResourceLocation(woodType.name()), woodType, properties, texture, family);
+    public RegisterBibliocraftWoodTypesEvent(Map<ResourceLocation, BibliocraftWoodType> values, List<BibliocraftWoodType> list) {
+        this.values = values;
+        this.list = list;
     }
 
     /**
@@ -47,8 +39,10 @@ public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusE
      * @param family     The {@link BlockFamily} for the associated wood type, for use in datagen.
      */
     public void register(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
-        if (this.woodTypes.containsKey(id))
+        if (values.containsKey(id))
             throw new IllegalStateException("Wood type " + id + " is already registered");
-        this.woodTypes.put(id, new BibliocraftWoodType(id, woodType, properties, texture, family));
+        BibliocraftWoodType type = new BibliocraftWoodType(id, woodType, properties, texture, family);
+        values.put(id, type);
+        list.add(type);
     }
 }

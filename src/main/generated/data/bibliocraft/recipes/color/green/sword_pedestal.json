@@ -14,7 +14,7 @@
     "SWS"
   ],
   "result": {
-    "item": "bibliocraft:sword_pedestal",
-    "nbt": "{display:{color:6192150}}"
+    "count": 1,
+    "id": "bibliocraft:sword_pedestal"
   }
 }

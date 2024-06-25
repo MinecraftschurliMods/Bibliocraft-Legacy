@@ -7,7 +7,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
@@ -25,7 +25,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class DinnerPlateBlock extends BCEntityBlock {
     public static final IntegerProperty PROGRESS = IntegerProperty.create("progress", 0, 3);
     public static final VoxelShape SHAPE = ShapeUtil.combine(
@@ -55,19 +54,18 @@ public class DinnerPlateBlock extends BCEntityBlock {
         return SHAPE;
     }
 
-    @Nullable
     @Override
+    @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new DinnerPlateBlockEntity(pos, state);
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockState newState = state;
-        ItemStack stack = player.getItemInHand(hand);
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof DinnerPlateBlockEntity plate))
-            return super.use(state, level, pos, player, hand, hit);
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
         ItemStack slotStack = plate.getItem(0);
         if (stack.getFoodProperties(player) != null) {
             if (slotStack.isEmpty()) {
@@ -80,10 +78,10 @@ public class DinnerPlateBlock extends BCEntityBlock {
                 newState = newState.setValue(PROGRESS, newState.getValue(PROGRESS) + 1);
                 triggerItemUseEffects(player, slotStack, 5);
             }
-        } else {
+        } else if (!slotStack.isEmpty()) {
             newState = newState.setValue(PROGRESS, newState.getValue(PROGRESS) + 1);
             triggerItemUseEffects(player, slotStack, 5);
-        }
+        } else return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (newState.getValue(PROGRESS) == 3) {
             newState = newState.setValue(PROGRESS, 0);
             triggerItemUseEffects(player, slotStack, 16);
@@ -91,7 +89,7 @@ public class DinnerPlateBlock extends BCEntityBlock {
             plate.setItem(0, ItemStack.EMPTY);
         }
         level.setBlock(pos, newState, Block.UPDATE_ALL);
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 
     @Override

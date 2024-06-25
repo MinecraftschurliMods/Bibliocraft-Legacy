@@ -1,11 +1,11 @@
-// 1.20.4	2024-06-13T17:27:19.2404882	Tags for minecraft:block mod id bibliocraft
+// 1.20.6	2024-06-16T14:01:37.871198	Tags for minecraft:block mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/blocks/bookcases.json
 5a8af07da9101bc61f37664975dbd42ea97db36b data/bibliocraft/tags/blocks/display_cases.json
 474090b2b5b40b58b63496e56ed06e543323d894 data/bibliocraft/tags/blocks/fancy_armor_stands.json
 b46d2615e18035acc6efa4ddc52a0f55fea31342 data/bibliocraft/tags/blocks/fancy_armor_stands/wood.json
-6ac8d48a2cc1ed0b14ac2e3254f7eb8926a60092 data/bibliocraft/tags/blocks/fancy_lanterns.json
-53d44f143dd8f7e50509ebc4926dfbd0a31cf7e0 data/bibliocraft/tags/blocks/fancy_lanterns_gold.json
-a5e6fb155579a7a94c91190890e99abe0dc2988d data/bibliocraft/tags/blocks/fancy_lanterns_iron.json
+ccb0f9b3682cd5adf9f9d42d8ff56af77730be38 data/bibliocraft/tags/blocks/fancy_lanterns.json
+53d44f143dd8f7e50509ebc4926dfbd0a31cf7e0 data/bibliocraft/tags/blocks/fancy_lanterns/gold.json
+a5e6fb155579a7a94c91190890e99abe0dc2988d data/bibliocraft/tags/blocks/fancy_lanterns/iron.json
 14d642f0d86f6b40718c71567ab81868405d8a71 data/bibliocraft/tags/blocks/labels.json
 4a0b4fae70ed78371f6a1c5ea90d375fea121692 data/bibliocraft/tags/blocks/potion_shelves.json
 dec79a033859bbe6fa55cf03b32c500d2c27d595 data/bibliocraft/tags/blocks/seats.json

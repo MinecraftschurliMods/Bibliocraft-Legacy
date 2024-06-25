@@ -1,30 +1,31 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.util.FastColor;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Utility class holding various helper methods.
  */
-@SuppressWarnings("DataFlowIssue")
 public final class BCUtil {
-    private static final String TAG_COLOR = "color";
-    private static final String TAG_DISPLAY = "display";
-
     /**
      * @param path The path to use.
      * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
@@ -94,43 +95,43 @@ public final class BCUtil {
     }
 
     /**
-     * Shorthand to open a menu for the block entity at the given position and return {@link InteractionResult#SUCCESS}.
+     * Shorthand to open a menu for the block entity at the given position.
      *
      * @param player The player to open the menu for.
      * @param level  The level of the block entity.
      * @param pos    The position of the block entity.
-     * @return {@link InteractionResult#SUCCESS}
      */
-    public static InteractionResult openBEMenu(Player player, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof MenuProvider menu && player instanceof ServerPlayer sp) {
-            sp.openMenu(menu, buf -> buf.writeBlockPos(pos));
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    //region Static variants of the methods in DyeableLeatherItem.
-    public static boolean hasNBTColor(ItemStack stack) {
-        if (!stack.hasTag() || !stack.getTag().contains(TAG_DISPLAY)) return false;
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        return tag != null && tag.contains(TAG_COLOR, Tag.TAG_ANY_NUMERIC);
-    }
-
-    public static int getNBTColor(ItemStack stack, int other) {
-        if (!stack.hasTag() || !stack.getTag().contains(TAG_DISPLAY)) return other;
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        return tag != null && tag.contains(TAG_COLOR, Tag.TAG_ANY_NUMERIC) ? tag.getInt(TAG_COLOR) : other;
-    }
-
-    public static void clearNBTColor(ItemStack stack) {
-        if (!stack.hasTag() || !stack.getTag().contains(TAG_DISPLAY)) return;
-        CompoundTag tag = stack.getTagElement(TAG_DISPLAY);
-        if (tag != null && tag.contains(TAG_COLOR)) {
-            tag.remove(TAG_COLOR);
+    public static void openBEMenu(Player player, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof MenuProvider mp && player instanceof ServerPlayer sp) {
+            sp.openMenu(mp, buf -> buf.writeBlockPos(pos));
         }
     }
 
-    public static void setNBTColor(ItemStack stack, int color) {
-        stack.getOrCreateTagElement(TAG_DISPLAY).putInt(TAG_COLOR, color);
+    /**
+     * @param color The {@link DyeColor} to get the texture color for.
+     * @return The texture dye color for the given {@link DyeColor}, as used in leather armor dyeing.
+     */
+    public static int getTextureColor(DyeColor color) {
+        float[] colors = color.getTextureDiffuseColors();
+        return FastColor.ARGB32.colorFromFloat(1, colors[0], colors[1], colors[2]);
     }
-    //endregion
+
+    /**
+     * @param valuesSupplier The enum's {@code values()} method.
+     * @return An enum codec.
+     * @param <E> The enum type.
+     */
+    public static <E extends Enum<E> & StringRepresentable> Codec<E> enumCodec(Supplier<E[]> valuesSupplier) {
+        return StringRepresentable.fromEnum(valuesSupplier);
+    }
+
+    /**
+     * @param valuesSupplier  The enum's {@code values()} method.
+     * @param ordinalSupplier The enum's {@code ordinal()} method.
+     * @return An enum stream codec.
+     * @param <E> The enum type.
+     */
+    public static <E extends Enum<E>> StreamCodec<ByteBuf, E> enumStreamCodec(Supplier<E[]> valuesSupplier, Function<E, Integer> ordinalSupplier) {
+        return ByteBufCodecs.INT.map(e -> valuesSupplier.get()[e], ordinalSupplier);
+    }
 }

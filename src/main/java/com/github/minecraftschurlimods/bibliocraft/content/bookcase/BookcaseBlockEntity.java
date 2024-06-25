@@ -46,6 +46,12 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
     }
 
     @Override
+    public void setItem(int slot, ItemStack stack) {
+        super.setItem(slot, stack);
+        requestModelDataUpdate();
+    }
+
+    @Override
     public int getMaxStackSize() {
         return 1;
     }

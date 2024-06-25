@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -21,7 +20,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.IntStream;
 
-@SuppressWarnings("deprecation")
 public class LabelBlock extends BCFacingEntityBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0.1875, 0.0625, 0.96875, 0.8125, 0.4375, 1),
@@ -63,11 +61,12 @@ public class LabelBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!player.isSecondaryUseActive() || !player.getItemInHand(hand).isEmpty()) {
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (!player.isSecondaryUseActive()) {
             BlockPos newPos = pos.offset(state.getValue(FACING).getOpposite().getNormal());
-            return level.getBlockState(newPos).use(level, player, hand, hit.withPosition(newPos));
+            return level.getBlockState(newPos).useWithoutItem(level, player, hit.withPosition(newPos));
         }
-        return BCUtil.openBEMenu(player, level, pos);
+        BCUtil.openBEMenu(player, level, pos);
+        return InteractionResult.SUCCESS;
     }
 }

@@ -28,15 +28,6 @@ public interface BibliocraftWoodTypeRegistry {
     }
 
     /**
-     * @param woodType The vanilla wood type to get the wood type for.
-     * @return The wood type for the given vanilla wood type. May return null if no wood type for it exists.
-     */
-    @Nullable
-    default BibliocraftWoodType get(WoodType woodType) {
-        return get(woodType.name());
-    }
-
-    /**
      * @return An unmodifiable list of all registered wood types. Must only be called after registration is finished.
      */
     Collection<BibliocraftWoodType> getAll();

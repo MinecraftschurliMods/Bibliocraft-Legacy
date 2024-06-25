@@ -10,7 +10,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("deprecation")
 public class DisplayCaseBlock extends AbstractDisplayCaseBlock {
     private static final VoxelShape Z_SHAPE = Shapes.box(0.0625, 0, 0, 0.9375, 0.5, 1);
     private static final VoxelShape X_SHAPE = ShapeUtil.rotate(Z_SHAPE, Rotation.CLOCKWISE_90);

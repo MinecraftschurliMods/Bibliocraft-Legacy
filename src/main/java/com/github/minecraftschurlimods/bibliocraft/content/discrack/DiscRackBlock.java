@@ -12,7 +12,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-@SuppressWarnings("deprecation")
 public class DiscRackBlock extends AbstractDiscRackBlock {
     private static final VoxelShape Z_SHAPE = ShapeUtil.combine(
             Shapes.box(0.3125, 0, 0.1875, 0.6875, 0.0625, 0.8125),

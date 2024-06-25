@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.util.content;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -98,15 +98,18 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        loadTag(tag);
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        if (tag.contains(ITEMS_TAG)) {
+            items.deserializeNBT(registries, tag.getCompound(ITEMS_TAG));
+        }
+        requestModelDataUpdate();
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveTag(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.put(ITEMS_TAG, items.serializeNBT(registries));
     }
 
     @Override
@@ -116,44 +119,9 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveTag(tag);
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        saveAdditional(tag, registries);
         return tag;
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        CompoundTag tag = pkt.getTag();
-        if (tag != null) {
-            handleUpdateTag(tag);
-        }
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-        loadTag(tag);
-    }
-
-    /**
-     * Helper method for loading block entity data from a {@link CompoundTag}.
-     *
-     * @param tag The {@link CompoundTag} to load from.
-     */
-    protected void loadTag(CompoundTag tag) {
-        if (tag.contains(ITEMS_TAG)) {
-            items.deserializeNBT(tag.getCompound(ITEMS_TAG));
-        }
-        requestModelDataUpdate();
-    }
-
-    /**
-     * Helper method for saving block entity data into a {@link CompoundTag}.
-     *
-     * @param tag The {@link CompoundTag} to save into.
-     */
-    protected void saveTag(CompoundTag tag) {
-        tag.put(ITEMS_TAG, items.serializeNBT());
     }
 }

@@ -1,10 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.util.content;
 
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -15,7 +14,6 @@ import net.minecraft.world.phys.BlockHitResult;
 /**
  * Abstract superclass for rotatable entity blocks that have in-world interactions.
  */
-@SuppressWarnings("deprecation")
 public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
     public BCFacingInteractibleBlock(Properties properties) {
         super(properties);
@@ -31,10 +29,9 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
     public abstract int lookingAtSlot(BlockState state, BlockHitResult hit);
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.isSecondaryUseActive()) return BCUtil.openBEMenu(player, level, pos);
-        if (!canAccessFromDirection(state, hit.getDirection())) return super.use(state, level, pos, player, hand, hit);
-        ItemStack stack = player.getItemInHand(hand);
+    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (player.isSecondaryUseActive()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (!canAccessFromDirection(state, hit.getDirection())) return super.useItemOn(stack, state, level, pos, player, hand, hit);
         int slot = lookingAtSlot(state, hit);
         if (slot != -1) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -43,11 +40,11 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
                 if ((!stack.isEmpty() && bcbe.canPlaceItem(slot, stack)) || !slotStack.isEmpty()) {
                     bcbe.setItem(slot, stack);
                     player.setItemInHand(hand, slotStack);
-                    return InteractionResult.SUCCESS;
+                    return ItemInteractionResult.SUCCESS;
                 }
             }
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
 
     /**

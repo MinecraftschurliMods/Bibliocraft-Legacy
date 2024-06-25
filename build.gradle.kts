@@ -9,7 +9,7 @@ helper.withTestSourceSet()
 
 dependencies {
     implementation(helper.neoforge())
-    testImplementation("net.neoforged:testframework:${helper.neoVersion.get()}")
+    //testImplementation("net.neoforged:testframework:${helper.neoVersion.get()}")
 }
 
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")

@@ -2,9 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft.util.content;
 
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,7 +35,7 @@ public abstract class BCFacingEntityBlock extends BCFacingBlock implements Entit
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         super.setPlacedBy(level, pos, state, entity, stack);
-        if (level.getBlockEntity(pos) instanceof BCMenuBlockEntity blockEntity && stack.hasCustomHoverName()) {
+        if (level.getBlockEntity(pos) instanceof BCMenuBlockEntity blockEntity && stack.has(DataComponents.CUSTOM_NAME)) {
             blockEntity.setCustomName(stack.getHoverName());
         }
     }
@@ -53,8 +53,10 @@ public abstract class BCFacingEntityBlock extends BCFacingBlock implements Entit
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return player.isSecondaryUseActive() ? InteractionResult.PASS : BCUtil.openBEMenu(player, level, pos);
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (player.isSecondaryUseActive()) return InteractionResult.PASS;
+        BCUtil.openBEMenu(player, level, pos);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -64,8 +66,8 @@ public abstract class BCFacingEntityBlock extends BCFacingBlock implements Entit
         return blockentity != null && blockentity.triggerEvent(id, param);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
         BlockEntity blockentity = level.getBlockEntity(pos);
         return blockentity instanceof MenuProvider ? (MenuProvider) blockentity : null;

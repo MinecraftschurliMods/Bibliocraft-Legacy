@@ -9,10 +9,10 @@
       "item": "minecraft:glowstone"
     },
     "I": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     "N": {
-      "tag": "forge:nuggets/gold"
+      "tag": "c:nuggets/gold"
     }
   },
   "pattern": [
@@ -21,6 +21,7 @@
     "NIN"
   ],
   "result": {
-    "item": "bibliocraft:gray_fancy_gold_lamp"
+    "count": 1,
+    "id": "bibliocraft:gray_fancy_gold_lamp"
   }
 }

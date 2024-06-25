@@ -12,7 +12,6 @@ import net.minecraft.world.level.material.Fluids;
 /**
  * Abstract superclass for all blocks in this mod.
  */
-@SuppressWarnings("deprecation")
 public class BCWaterloggedBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 

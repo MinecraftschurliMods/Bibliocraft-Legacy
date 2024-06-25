@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.core.HolderLookup;

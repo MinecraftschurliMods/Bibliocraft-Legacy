@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "#": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "S": {
       "item": "minecraft:warped_slab"
@@ -15,6 +15,7 @@
     "SSS"
   ],
   "result": {
-    "item": "bibliocraft:warped_tool_rack"
+    "count": 1,
+    "id": "bibliocraft:warped_tool_rack"
   }
 }
