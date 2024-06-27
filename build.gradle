@@ -12,6 +12,10 @@ sourceSets {
     data
 }
 
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
 dependencies {
     implementation sourceSets.api.output
     dataImplementation sourceSets.api.output
