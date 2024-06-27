@@ -38,6 +38,7 @@ public interface BibliocraftApi {
     final class InstanceHolder {
         private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.of(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.of(fromServiceLoader(BibliocraftWoodTypeRegistry.class));
+
         private InstanceHolder() {}
 
         private static <T> Supplier<T> fromServiceLoader(Class<T> clazz) {

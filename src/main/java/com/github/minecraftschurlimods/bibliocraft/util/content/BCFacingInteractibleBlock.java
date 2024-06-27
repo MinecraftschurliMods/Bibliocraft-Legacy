@@ -31,7 +31,8 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
     @Override
     public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isSecondaryUseActive()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        if (!canAccessFromDirection(state, hit.getDirection())) return super.useItemOn(stack, state, level, pos, player, hand, hit);
+        if (!canAccessFromDirection(state, hit.getDirection()))
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
         int slot = lookingAtSlot(state, hit);
         if (slot != -1) {
             BlockEntity blockEntity = level.getBlockEntity(pos);

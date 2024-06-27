@@ -35,13 +35,15 @@ public final class BibliocraftWoodTypeRegistryImpl implements BibliocraftWoodTyp
     @Override
     @Nullable
     public BibliocraftWoodType get(ResourceLocation id) {
-        if (!loaded) throw new IllegalStateException("Tried to access BibliocraftWoodType#get() before registration was done!");
+        if (!loaded)
+            throw new IllegalStateException("Tried to access BibliocraftWoodType#get() before registration was done!");
         return values.get(id);
     }
 
     @Override
     public Collection<BibliocraftWoodType> getAll() {
-        if (!loaded) throw new IllegalStateException("Tried to access BibliocraftWoodType#getAll() before registration was done!");
+        if (!loaded)
+            throw new IllegalStateException("Tried to access BibliocraftWoodType#getAll() before registration was done!");
         return Collections.unmodifiableList(sortedValues);
     }
 

@@ -126,7 +126,8 @@ public class TableBlock extends BCFacingEntityBlock {
     @Override
     public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof TableBlockEntity table)) return super.useItemOn(stack, state, level, pos, player, hand, hit);
+        if (!(blockEntity instanceof TableBlockEntity table))
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
         Direction direction = hit.getDirection();
         if (direction == Direction.DOWN) return super.useItemOn(stack, state, level, pos, player, hand, hit);
         boolean useCarpet = direction != Direction.UP && (getCarpetColor(stack) != null || (stack.isEmpty() && !table.getItem(1).isEmpty()));
