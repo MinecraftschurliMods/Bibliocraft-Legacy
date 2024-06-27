@@ -76,13 +76,13 @@ public class BookcaseModel extends DynamicBlockModel {
 
         @SuppressWarnings("deprecation")
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
-            BakedModel base = new ElementsModel(this.base.getElements()).bake(context, baker, spriteGetter, modelState, overrides, modelLocation);
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
+            BakedModel base = new ElementsModel(this.base.getElements()).bake(context, baker, spriteGetter, modelState, overrides);
             BakedModel[] books = new BakedModel[16];
             ModelState bookState = new SimpleModelState(modelState.getRotation(), modelState.isUvLocked());
             boolean useBlockLight = context.useBlockLight();
             for (int j = 0; j < books.length; j++) {
-                books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, bookState, modelLocation, useBlockLight);
+                books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, bookState, useBlockLight);
             }
             return new BookcaseModel(context.useAmbientOcclusion(), context.isGui3d(), useBlockLight, spriteGetter.apply(context.getMaterial("particle")), base, books);
         }

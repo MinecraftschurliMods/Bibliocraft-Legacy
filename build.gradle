@@ -1,0 +1,65 @@
+plugins {
+    id 'net.neoforged.moddev' version '0.1.112'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets {
+    api
+    data
+}
+
+dependencies {
+    implementation sourceSets.api.output
+    dataImplementation sourceSets.api.output
+    dataImplementation sourceSets.main.output
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation "net.neoforged:testframework:${project.neo_version}"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+neoForge {
+    version = project.neo_version
+    addModdingDependenciesTo(sourceSets.api)
+    addModdingDependenciesTo(sourceSets.data)
+
+    runs {
+        configureEach {
+            systemProperty 'forge.logging.console.level', 'debug'
+        }
+        client {
+            client()
+        }
+        data {
+            data()
+            sourceSet = sourceSets.data
+        }
+        server {
+            server()
+        }
+    }
+
+    mods {
+        bibliocraft {
+            sourceSet sourceSets.api
+            sourceSet sourceSets.main
+        }
+        bibliocraftdata {
+            sourceSet sourceSets.api
+            sourceSet sourceSets.main
+            sourceSet sourceSets.data
+        }
+    }
+
+    unitTest {
+        enable()
+        testedMod = mods.bibliocraft
+    }
+}
+
+test {
+    useJUnitPlatform()
+}

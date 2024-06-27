@@ -1,6 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/table/curve_cloth",
-  "textures": {
-    "color": "minecraft:block/yellow_wool"
-  }
-}

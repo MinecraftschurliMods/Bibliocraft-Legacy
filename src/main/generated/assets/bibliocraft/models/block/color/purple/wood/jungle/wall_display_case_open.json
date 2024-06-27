@@ -1,7 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/display_case/wall_open",
-  "textures": {
-    "color": "minecraft:block/purple_wool",
-    "texture": "minecraft:block/jungle_planks"
-  }
-}

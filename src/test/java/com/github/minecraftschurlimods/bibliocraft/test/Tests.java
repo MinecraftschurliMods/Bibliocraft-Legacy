@@ -29,7 +29,7 @@ public final class Tests {
     }
 
     private static void init(ModContainer container) {
-        final MutableTestFramework framework = FrameworkConfiguration.builder(new ResourceLocation(container.getModId(), "tests"))
+        final MutableTestFramework framework = FrameworkConfiguration.builder(ResourceLocation.fromNamespaceAndPath(container.getModId(), "tests"))
                 .clientConfiguration(() -> ClientConfiguration.builder()
                         .toggleOverlayKey(GLFW.GLFW_KEY_J)
                         .openManagerKey(GLFW.GLFW_KEY_N)

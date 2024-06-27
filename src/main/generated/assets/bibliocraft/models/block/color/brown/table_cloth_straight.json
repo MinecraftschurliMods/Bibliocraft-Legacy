@@ -1,6 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/table/straight_cloth",
-  "textures": {
-    "color": "minecraft:block/brown_wool"
-  }
-}

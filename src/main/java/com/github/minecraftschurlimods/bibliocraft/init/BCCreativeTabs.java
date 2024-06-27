@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +9,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.Collection;
 import java.util.function.Supplier;
@@ -18,7 +16,7 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public interface BCCreativeTabs {
     Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(BibliocraftApi.MOD_ID, () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(new ResourceLocation("minecraft", "oak"))))) //fixme
+            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(ResourceLocation.fromNamespaceAndPath("minecraft", "oak"))))) //fixme
             .title(Component.translatable("itemGroup." + BibliocraftApi.MOD_ID))
             .withSearchBar()
             .displayItems((display, output) -> {
@@ -48,7 +46,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-                    stack.set(DataComponents.DYED_COLOR, new DyedItemColor(BCUtil.getTextureColor(color), true));
+                    stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor(), true));
                     output.accept(stack);
                 }
                 output.accept(BCItems.REDSTONE_BOOK);

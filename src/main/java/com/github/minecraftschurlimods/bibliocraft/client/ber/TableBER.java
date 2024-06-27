@@ -21,8 +21,8 @@ import org.joml.Matrix4f;
 import java.util.Objects;
 
 public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
-    private static final RenderType MAP_BACKGROUND = RenderType.text(new ResourceLocation("textures/map/map_background.png"));
-    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType.text(new ResourceLocation("textures/map/map_background_checkerboard.png"));
+    private static final RenderType MAP_BACKGROUND = RenderType.text(ResourceLocation.withDefaultNamespace("textures/map/map_background.png"));
+    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType.text(ResourceLocation.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
 
     @Override
     public void render(TableBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
@@ -37,10 +37,10 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
             MapItemSavedData mapData = MapItem.getSavedData(mapId, Objects.requireNonNull(minecraft.level));
             VertexConsumer vc = buffer.getBuffer(mapData == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
             Matrix4f matrix4f = stack.last().pose();
-            vc.vertex(matrix4f, -7f, 135f, 0f).color(255, 255, 255, 255).uv(0f, 1f).uv2(light).endVertex();
-            vc.vertex(matrix4f, 135f, 135f, 0f).color(255, 255, 255, 255).uv(1f, 1f).uv2(light).endVertex();
-            vc.vertex(matrix4f, 135f, -7f, 0f).color(255, 255, 255, 255).uv(1f, 0f).uv2(light).endVertex();
-            vc.vertex(matrix4f, -7f, -7f, 0f).color(255, 255, 255, 255).uv(0f, 0f).uv2(light).endVertex();
+            vc.addVertex(matrix4f, -7f, 135f, 0f).setColor(-1).setUv(0f, 1f).setLight(light);
+            vc.addVertex(matrix4f, 135f, 135f, 0f).setColor(-1).setUv(1f, 1f).setLight(light);
+            vc.addVertex(matrix4f, 135f, -7f, 0f).setColor(-1).setUv(1f, 0f).setLight(light);
+            vc.addVertex(matrix4f, -7f, -7f, 0f).setColor(-1).setUv(0f, 0f).setLight(light);
             if (mapData != null) {
                 minecraft.gameRenderer.getMapRenderer().render(stack, buffer, mapId, mapData, false, light);
             }

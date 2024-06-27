@@ -65,7 +65,7 @@ public final class EventHandler {
          * Private helper for registering the vanilla variants.
          */
         private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
-            event.register(new ResourceLocation("minecraft", woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), new ResourceLocation("minecraft", "block/" + woodType.name() + "_planks"), family);
+            event.register(ResourceLocation.fromNamespaceAndPath("minecraft", woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), ResourceLocation.fromNamespaceAndPath("minecraft", "block/" + woodType.name() + "_planks"), family);
         }
     }
 }

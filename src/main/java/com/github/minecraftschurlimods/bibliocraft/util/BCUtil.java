@@ -8,11 +8,9 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.FastColor;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
@@ -31,7 +29,7 @@ public final class BCUtil {
      * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
      */
     public static ResourceLocation mcLoc(String path) {
-        return new ResourceLocation("minecraft", path);
+        return ResourceLocation.fromNamespaceAndPath("minecraft", path);
     }
 
     /**
@@ -39,7 +37,7 @@ public final class BCUtil {
      * @return A {@link ResourceLocation} with the "forge" namespace and the given path.
      */
     public static ResourceLocation forgeLoc(String path) {
-        return new ResourceLocation("forge", path);
+        return ResourceLocation.fromNamespaceAndPath("forge", path);
     }
 
     /**
@@ -47,7 +45,7 @@ public final class BCUtil {
      * @return A {@link ResourceLocation} with the "bibliocraft" namespace and the given path.
      */
     public static ResourceLocation modLoc(String path) {
-        return new ResourceLocation(BibliocraftApi.MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, path);
     }
 
     /**
@@ -105,15 +103,6 @@ public final class BCUtil {
         if (level.getBlockEntity(pos) instanceof MenuProvider mp && player instanceof ServerPlayer sp) {
             sp.openMenu(mp, buf -> buf.writeBlockPos(pos));
         }
-    }
-
-    /**
-     * @param color The {@link DyeColor} to get the texture color for.
-     * @return The texture dye color for the given {@link DyeColor}, as used in leather armor dyeing.
-     */
-    public static int getTextureColor(DyeColor color) {
-        float[] colors = color.getTextureDiffuseColors();
-        return FastColor.ARGB32.colorFromFloat(1, colors[0], colors[1], colors[2]);
     }
 
     /**

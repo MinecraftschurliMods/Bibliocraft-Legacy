@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.content.swordpedestal;
 
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
@@ -26,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class SwordPedestalBlock extends BCFacingInteractibleBlock {
-    public static final DyedItemColor DEFAULT_COLOR = new DyedItemColor(BCUtil.getTextureColor(DyeColor.GREEN), true);
+    public static final DyedItemColor DEFAULT_COLOR = new DyedItemColor(DyeColor.GREEN.getTextureDiffuseColor(), true);
     private static final VoxelShape Z_SHAPE = ShapeUtil.combine(
             Shapes.box(0, 0, 0.25, 1, 0.0625, 0.75),
             Shapes.box(0.0625, 0.0625, 0.25, 0.9375, 0.125, 0.75),

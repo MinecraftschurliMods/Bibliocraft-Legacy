@@ -249,19 +249,19 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 .pattern("PSP")
                 .define('P', planks)
                 .define('S', slab)
-                .save(output, new ResourceLocation(modId, prefix + "bookcase"));
+                .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "bookcase"));
         shapedRecipe(BCItems.FANCY_ARMOR_STAND.get(woodType), woodType)
                 .pattern(" R ")
                 .pattern(" R ")
                 .pattern("SSS")
                 .define('S', slab)
                 .define('R', Tags.Items.RODS_WOODEN)
-                .save(output, new ResourceLocation(modId, prefix + "fancy_armor_stand"));
+                .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "fancy_armor_stand"));
         shapedRecipe(BCItems.LABEL.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern("SSS")
                 .define('S', slab)
-                .save(output, new ResourceLocation(modId, prefix + "label"));
+                .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "label"));
         shapedRecipe(BCItems.POTION_SHELF.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern("P#P")
@@ -269,30 +269,30 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 .define('P', planks)
                 .define('S', slab)
                 .define('#', Items.GLASS_BOTTLE)
-                .save(output, new ResourceLocation(modId, prefix + "potion_shelf"));
+                .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "potion_shelf"));
         shapedRecipe(BCItems.SHELF.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern("SSS")
                 .define('P', planks)
                 .define('S', slab)
-                .save(output, new ResourceLocation(modId, prefix + "shelf"));
+                .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "shelf"));
         shapedRecipe(BCItems.TABLE.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern(" P ")
                 .define('P', planks)
                 .define('S', slab)
-                .save(output, new ResourceLocation(modId, prefix + "table"));
+                .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "table"));
         shapedRecipe(BCItems.TOOL_RACK.get(woodType), woodType)
                 .pattern("SSS")
                 .pattern("S#S")
                 .pattern("SSS")
                 .define('S', slab)
                 .define('#', Tags.Items.INGOTS_IRON)
-                .save(output, new ResourceLocation(modId, prefix + "tool_rack"));
+                .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "tool_rack"));
         for (DyeColor color : DyeColor.values()) {
-            Item wool = BuiltInRegistries.ITEM.get(new ResourceLocation(color.getName() + "_wool"));
+            Item wool = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_wool"));
             prefix = "color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/";
             shapedRecipe(BCItems.DISPLAY_CASE.get(woodType, color), woodType)
                     .pattern("SGS")
@@ -301,7 +301,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                     .define('S', slab)
                     .define('W', wool)
                     .define('G', Tags.Items.GLASS_BLOCKS)
-                    .save(output, new ResourceLocation(modId, prefix + "display_case"));
+                    .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "display_case"));
             shapedRecipe(BCItems.SEAT.get(woodType, color), woodType)
                     .pattern(" W ")
                     .pattern(" S ")
@@ -309,13 +309,13 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                     .define('S', slab)
                     .define('R', stick)
                     .define('W', wool)
-                    .save(output, new ResourceLocation(modId, prefix + "seat"));
+                    .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "seat"));
             shapedRecipe(BCItems.SMALL_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("W")
                     .pattern("S")
                     .define('S', slab)
                     .define('W', wool)
-                    .save(output, new ResourceLocation(modId, prefix + "small_seat_back"));
+                    .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "small_seat_back"));
             shapedRecipe(BCItems.RAISED_SEAT_BACK.get(woodType, color), woodType)
                     .pattern(" W ")
                     .pattern(" S ")
@@ -323,7 +323,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                     .define('S', slab)
                     .define('R', stick)
                     .define('W', wool)
-                    .save(output, new ResourceLocation(modId, prefix + "raised_seat_back"));
+                    .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "raised_seat_back"));
             shapedRecipe(BCItems.FLAT_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("RWR")
                     .pattern("RSR")
@@ -331,18 +331,18 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                     .define('S', slab)
                     .define('R', stick)
                     .define('W', wool)
-                    .save(output, new ResourceLocation(modId, prefix + "flat_seat_back"));
+                    .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "flat_seat_back"));
             shapedRecipe(BCItems.TALL_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("S")
                     .pattern("#")
                     .define('S', slab)
                     .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
-                    .save(output, new ResourceLocation(modId, prefix + "tall_seat_back"));
+                    .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "tall_seat_back"));
             shapedRecipe(BCItems.FANCY_SEAT_BACK.get(woodType, color), woodType)
                     .pattern("S#S")
                     .define('S', slab)
                     .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
-                    .save(output, new ResourceLocation(modId, prefix + "fancy_seat_back"));
+                    .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "fancy_seat_back"));
         }
     }
 

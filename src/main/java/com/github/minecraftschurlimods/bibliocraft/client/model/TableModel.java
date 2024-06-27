@@ -15,6 +15,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelManager;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
@@ -62,7 +63,7 @@ public class TableModel extends DynamicBlockModel {
         for (TableBlock.Type type : TableBlock.Type.values()) {
             Map<DyeColor, BakedModel> map = new HashMap<>();
             for (DyeColor color : DyeColor.values()) {
-                map.put(color, models.getModel(BCUtil.modLoc("block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName())));
+                map.put(color, models.getModel(ModelResourceLocation.standalone(BCUtil.modLoc("block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()))));
             }
             CLOTH_MAP.put(type, map);
         }
@@ -91,11 +92,11 @@ public class TableModel extends DynamicBlockModel {
         }
 
         @Override
-        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides, ResourceLocation modelLocation) {
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides overrides) {
             ModelState simpleState = new SimpleModelState(modelState.getRotation(), modelState.isUvLocked());
             boolean useBlockLight = context.useBlockLight();
             Map<TableBlock.Type, BakedModel> newBaseMap = new HashMap<>();
-            baseMap.forEach((k, v) -> newBaseMap.put(k, v.bake(baker, v, spriteGetter, simpleState, modelLocation, useBlockLight)));
+            baseMap.forEach((k, v) -> newBaseMap.put(k, v.bake(baker, v, spriteGetter, simpleState, useBlockLight)));
             return new TableModel(context.useAmbientOcclusion(), context.isGui3d(), useBlockLight, spriteGetter.apply(context.getMaterial("particle")), newBaseMap);
         }
 

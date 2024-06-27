@@ -16,10 +16,10 @@ public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
     @Override
     public void registerSounds() {
         add(BCSoundEvents.DESK_BELL.get(), SoundDefinition.definition().with(
-                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_1")),
-                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_2")),
-                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_3")),
-                sound(new ResourceLocation(BibliocraftApi.MOD_ID, "desk_bell_4"))
+                sound(ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, "desk_bell_1")),
+                sound(ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, "desk_bell_2")),
+                sound(ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, "desk_bell_3")),
+                sound(ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, "desk_bell_4"))
         ));
     }
 }

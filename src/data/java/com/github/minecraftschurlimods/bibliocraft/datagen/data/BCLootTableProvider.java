@@ -34,8 +34,8 @@ public final class BCLootTableProvider extends LootTableProvider {
     }
 
     private static final class BCBlockLootProvider extends BlockLootSubProvider {
-        private BCBlockLootProvider() {
-            super(Set.of(), FeatureFlags.DEFAULT_FLAGS);
+        private BCBlockLootProvider(HolderLookup.Provider registries) {
+            super(Set.of(), FeatureFlags.DEFAULT_FLAGS, registries);
         }
 
         @Override

@@ -25,6 +25,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -55,7 +56,7 @@ public final class ClientHandler {
         private static void registerAdditional(ModelEvent.RegisterAdditional event) {
             for (TableBlock.Type type : TableBlock.Type.values()) {
                 for (DyeColor color : DyeColor.values()) {
-                    event.register(BCUtil.modLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName()));
+                    event.register(ModelResourceLocation.standalone(BCUtil.modLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName())));
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.api;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.state.properties.WoodType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -24,7 +23,7 @@ public interface BibliocraftWoodTypeRegistry {
      */
     @Nullable
     default BibliocraftWoodType get(String id) {
-        return get(new ResourceLocation(id));
+        return get(ResourceLocation.parse(id));
     }
 
     /**

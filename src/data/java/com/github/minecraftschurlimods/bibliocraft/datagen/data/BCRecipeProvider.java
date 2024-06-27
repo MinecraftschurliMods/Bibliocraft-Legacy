@@ -34,12 +34,12 @@ public final class BCRecipeProvider extends RecipeProvider {
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
             ItemStack swordPedestal = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-            swordPedestal.set(DataComponents.DYED_COLOR, new DyedItemColor(BCUtil.getTextureColor(color), true));
+            swordPedestal.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor(), true));
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, swordPedestal)
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
-                    .define('W', BuiltInRegistries.ITEM.get(new ResourceLocation(name + "_wool")))
+                    .define('W', BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_wool")))
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                     .save(output, BCUtil.modLoc("color/" + name + "/sword_pedestal"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LAMP.get(color))
