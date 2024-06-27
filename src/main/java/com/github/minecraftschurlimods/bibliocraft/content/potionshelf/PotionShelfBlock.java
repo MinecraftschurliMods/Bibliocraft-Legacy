@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.potionshelf;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -22,9 +23,15 @@ public class PotionShelfBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.COUNTERCLOCKWISE_90);
+    public static final MapCodec<PotionShelfBlock> CODEC = simpleCodec(PotionShelfBlock::new);
 
     public PotionShelfBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<PotionShelfBlock> codec() {
+        return CODEC;
     }
 
     @Override
