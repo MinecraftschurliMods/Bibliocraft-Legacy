@@ -16,7 +16,7 @@ dependencies {
     implementation sourceSets.api.output
     dataImplementation sourceSets.api.output
     dataImplementation sourceSets.main.output
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation "org.junit.jupiter:junit-jupiter:${project.junit_version}"
     testImplementation "net.neoforged:testframework:${project.neo_version}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -25,22 +25,6 @@ neoForge {
     version = project.neo_version
     addModdingDependenciesTo(sourceSets.api)
     addModdingDependenciesTo(sourceSets.data)
-
-    runs {
-        configureEach {
-            systemProperty 'forge.logging.console.level', 'debug'
-        }
-        client {
-            client()
-        }
-        data {
-            data()
-            sourceSet = sourceSets.data
-        }
-        server {
-            server()
-        }
-    }
 
     mods {
         bibliocraft {
@@ -54,9 +38,48 @@ neoForge {
         }
     }
 
+    runs {
+        configureEach {
+            systemProperty 'forge.logging.console.level', 'debug'
+        }
+        client {
+            client()
+        }
+        data {
+            data()
+            sourceSet = sourceSets.data
+            mods = [neoForge.mods.bibliocraftdata]
+        }
+        server {
+            server()
+        }
+    }
+
     unitTest {
         enable()
         testedMod = mods.bibliocraft
+    }
+}
+
+tasks.named('processResources', ProcessResources) {
+    var replaceProperties = [
+            mc_version       : mc_version,
+            mc_version_range : mc_version_range,
+            neo_version      : neo_version,
+            neo_version_range: neo_version_range,
+            loader_version   : loader_version,
+            mod_id           : mod_id,
+            mod_version      : mod_version,
+            mod_name         : mod_name,
+            mod_authors      : mod_authors,
+            mod_credits      : mod_credits,
+            mod_logo         : mod_logo,
+            mod_description  : mod_description,
+            mod_license      : mod_license,
+    ]
+    inputs.properties replaceProperties
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand replaceProperties
     }
 }
 
