@@ -63,7 +63,7 @@ public final class ClientHandler {
 
         @SubscribeEvent
         private static void bakingCompleted(ModelEvent.BakingCompleted event) {
-            TableModel.rebuildClothModelCache();
+            TableBER.rebuildClothModelCache();
         }
 
         @SubscribeEvent
