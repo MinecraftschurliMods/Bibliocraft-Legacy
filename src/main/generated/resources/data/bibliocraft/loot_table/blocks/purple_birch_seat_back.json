@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:purple_birch_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "small"
+              }
+            }
+          ],
+          "name": "bibliocraft:purple_birch_small_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:purple_birch_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "raised"
+              }
+            }
+          ],
+          "name": "bibliocraft:purple_birch_raised_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:purple_birch_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "flat"
+              }
+            }
+          ],
+          "name": "bibliocraft:purple_birch_flat_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:purple_birch_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "tall"
+              }
+            }
+          ],
+          "name": "bibliocraft:purple_birch_tall_seat_back"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "bibliocraft:purple_birch_seat_back",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "type": "fancy"
+              }
+            }
+          ],
+          "name": "bibliocraft:purple_birch_fancy_seat_back"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bibliocraft:blocks/purple_birch_seat_back"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bibliocraft:light_gray_oak_seat"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "bibliocraft:blocks/light_gray_oak_seat"
+}

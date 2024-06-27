@@ -49,6 +49,12 @@ neoForge {
             data()
             sourceSet = sourceSets.data
             mods = [neoForge.mods.bibliocraftdata]
+            programArguments = [
+                    '--mod', 'bibliocraft',
+                    '--all',
+                    '--output', file('src/generated/resources/').absolutePath,
+                    '--existing', file('src/main/resources').absolutePath
+            ]
         }
         server {
             server()

@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/table/all_cloth",
+  "textures": {
+    "color": "minecraft:block/white_wool"
+  }
+}
