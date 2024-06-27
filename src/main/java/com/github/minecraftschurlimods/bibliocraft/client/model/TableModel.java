@@ -5,7 +5,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntit
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -14,15 +13,12 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.SimpleModelState;
@@ -49,7 +45,6 @@ public class TableModel extends DynamicBlockModel {
         }
         return new Geometry(map);
     };
-    private static final Map<TableBlock.Type, Map<DyeColor, BakedModel>> CLOTH_MAP = new HashMap<>();
     private final Map<TableBlock.Type, BakedModel> baseMap;
 
     public TableModel(boolean useAmbientOcclusion, boolean isGui3d, boolean usesBlockLight, TextureAtlasSprite particle, Map<TableBlock.Type, BakedModel> baseMap) {
@@ -57,26 +52,10 @@ public class TableModel extends DynamicBlockModel {
         this.baseMap = baseMap;
     }
 
-    public static void rebuildClothModelCache() {
-        CLOTH_MAP.clear();
-        ModelManager models = Minecraft.getInstance().getModelManager();
-        for (TableBlock.Type type : TableBlock.Type.values()) {
-            Map<DyeColor, BakedModel> map = new HashMap<>();
-            for (DyeColor color : DyeColor.values()) {
-                map.put(color, models.getModel(ModelResourceLocation.standalone(BCUtil.modLoc("block/table_cloth_" + type.getSerializedName() + "_" + color.getSerializedName()))));
-            }
-            CLOTH_MAP.put(type, map);
-        }
-    }
-
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
         TableBlock.Type type = extraData.get(TableBlockEntity.TYPE_PROPERTY);
-        List<BakedQuad> quads = new ArrayList<>(baseMap.get(type).getQuads(state, side, rand, extraData, renderType));
-        if (extraData.has(TableBlockEntity.COLOR_PROPERTY)) {
-            quads.addAll(CLOTH_MAP.get(type).get(extraData.get(TableBlockEntity.COLOR_PROPERTY)).getQuads(state, side, rand, extraData, renderType));
-        }
-        return quads;
+        return new ArrayList<>(baseMap.get(type).getQuads(state, side, rand, extraData, renderType));
     }
 
     @Override

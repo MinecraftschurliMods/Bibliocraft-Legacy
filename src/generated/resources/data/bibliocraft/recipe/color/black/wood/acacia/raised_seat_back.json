@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:acacia_slab"
+    },
+    "W": {
+      "item": "minecraft:black_wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    " S ",
+    "R R"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:black_acacia_raised_seat_back"
+  }
+}

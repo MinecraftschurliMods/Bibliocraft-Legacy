@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    }
+  },
+  "pattern": [
+    " R ",
+    " R ",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:dark_oak_fancy_armor_stand"
+  }
+}

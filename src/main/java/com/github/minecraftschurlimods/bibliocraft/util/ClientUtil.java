@@ -6,13 +6,22 @@ import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.client.RenderTypeHelper;
+import net.neoforged.neoforge.client.model.data.ModelData;
 
 /**
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
@@ -65,7 +74,27 @@ public final class ClientUtil {
         renderer.render(item, ItemDisplayContext.FIXED, false, stack, buffer, light, overlay, renderer.getModel(item, minecraft.level, null, 0));
     }
 
-    public static @Nullable Player getPlayer() {
-        return Minecraft.getInstance().player;
+    /**
+     * Renders the given {@link BakedModel} in the world.
+     *
+     * @param model     The {@link BakedModel} to render.
+     * @param stack     The {@link PoseStack} to use.
+     * @param buffer    The {@link MultiBufferSource} to use.
+     * @param level     The {@link Level} to render the model in.
+     * @param pos       The {@link BlockPos} to render the model at.
+     * @param state     The {@link BlockState} to render the model for.
+     * @param random    The {@link RandomSource} to use for random models.
+     * @param modelData The {@link ModelData} to use.
+     */
+    public static void renderBakedModel(BakedModel model, PoseStack stack, MultiBufferSource buffer, Level level, BlockPos pos, BlockState state, RandomSource random, ModelData modelData) {
+        ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
+        int color = Minecraft.getInstance().getBlockColors().getColor(state, level, pos, 0);
+        float red = (float) (color >> 16 & 255) / 255.0F;
+        float green = (float) (color >> 8 & 255) / 255.0F;
+        float blue = (float) (color & 255) / 255.0F;
+        int light = LevelRenderer.getLightColor(level, pos);
+        for (RenderType type : model.getRenderTypes(state, random, modelData)) {
+            renderer.renderModel(stack.last(), buffer.getBuffer(RenderTypeHelper.getEntityRenderType(type, false)), state, model, red, green, blue, light, OverlayTexture.NO_OVERLAY, modelData, type);
+        }
     }
 }

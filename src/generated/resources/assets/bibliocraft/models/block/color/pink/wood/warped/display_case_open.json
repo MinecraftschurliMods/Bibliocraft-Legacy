@@ -1,0 +1,7 @@
+{
+  "parent": "bibliocraft:block/template/display_case/open",
+  "textures": {
+    "color": "minecraft:block/pink_wool",
+    "texture": "minecraft:block/warped_planks"
+  }
+}

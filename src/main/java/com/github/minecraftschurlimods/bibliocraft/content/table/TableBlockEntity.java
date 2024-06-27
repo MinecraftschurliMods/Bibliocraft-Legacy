@@ -11,7 +11,6 @@ import net.neoforged.neoforge.client.model.data.ModelProperty;
 
 public class TableBlockEntity extends BCBlockEntity {
     public static final ModelProperty<TableBlock.Type> TYPE_PROPERTY = new ModelProperty<>();
-    public static final ModelProperty<DyeColor> COLOR_PROPERTY = new ModelProperty<>();
 
     public TableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.TABLE.get(), 2, pos, state);
@@ -27,12 +26,6 @@ public class TableBlockEntity extends BCBlockEntity {
 
     @Override
     public ModelData getModelData() {
-        ModelData.Builder builder = ModelData.builder();
-        builder.with(TYPE_PROPERTY, getBlockState().getValue(TableBlock.TYPE));
-        DyeColor color = TableBlock.getCarpetColor(getItem(1));
-        if (color != null) {
-            builder.with(COLOR_PROPERTY, color);
-        }
-        return builder.build();
+        return ModelData.builder().with(TYPE_PROPERTY, getBlockState().getValue(TableBlock.TYPE)).build();
     }
 }

@@ -20,7 +20,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         BibliocraftApi.getDatagenHelper().generateBlockStates(this);
-        DatagenUtil.fancyLightBlockModel(this, BCBlocks.CLEAR_FANCY_GOLD_LAMP, 
+        DatagenUtil.fancyLightBlockModel(this, BCBlocks.CLEAR_FANCY_GOLD_LAMP,
                 models().withExistingParent("block/clear_fancy_gold_lamp_standing", modLoc("block/template/fancy_lamp/standing_gold")).texture("color", mcLoc("block/glass")),
                 models().withExistingParent("block/clear_fancy_gold_lamp_hanging", modLoc("block/template/fancy_lamp/hanging_gold")).texture("color", mcLoc("block/glass")),
                 models().withExistingParent("block/clear_fancy_gold_lamp_wall", modLoc("block/template/fancy_lamp/wall_gold")).texture("color", mcLoc("block/glass")),

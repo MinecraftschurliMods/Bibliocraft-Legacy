@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/fancy_armor_stand/top",
+  "textures": {
+    "texture": "minecraft:block/crimson_planks"
+  }
+}

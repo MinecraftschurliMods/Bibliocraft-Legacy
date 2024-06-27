@@ -1,4 +1,3 @@
-/*
 package com.github.minecraftschurlimods.bibliocraft.test;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
@@ -7,7 +6,10 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegist
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import net.minecraft.gametest.framework.GameTest;
-import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.testframework.annotation.ForEachTest;
+import net.neoforged.testframework.annotation.TestHolder;
+import net.neoforged.testframework.gametest.EmptyTemplate;
+import net.neoforged.testframework.gametest.ExtendedGameTestHelper;
 
 @ForEachTest(groups = BibliocraftApi.MOD_ID + ".api")
 public class BibliocraftApiTest {
@@ -28,18 +30,17 @@ public class BibliocraftApiTest {
         BibliocraftWoodTypeRegistry woodTypeRegistry = BibliocraftApi.getWoodTypeRegistry();
         GametestAssertions.assertNotNull(woodTypeRegistry, "BibliocraftWoodTypeRegistry is not available");
         GametestAssertions.assertInstance(woodTypeRegistry, BibliocraftWoodTypeRegistryImpl.class, "BibliocraftWoodTypeRegistry implementation is replaced");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.OAK), "Oak WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.SPRUCE), "Spruce WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.BIRCH), "Birch WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.JUNGLE), "Jungle WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.ACACIA), "Acacia WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.DARK_OAK), "Dark Oak WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.CRIMSON), "Crimson WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.WARPED), "Warped WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.MANGROVE), "Mangrove WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.BAMBOO), "Bamboo WoodType is not registered");
-        GametestAssertions.assertNotNull(woodTypeRegistry.get(WoodType.CHERRY), "Cherry WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("oak"), "Oak WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("spruce"), "Spruce WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("birch"), "Birch WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("jungle"), "Jungle WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("acacia"), "Acacia WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("dark_oak"), "Dark Oak WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("crimson"), "Crimson WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("warped"), "Warped WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("mangrove"), "Mangrove WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("bamboo"), "Bamboo WoodType is not registered");
+        GametestAssertions.assertNotNull(woodTypeRegistry.get("cherry"), "Cherry WoodType is not registered");
         helper.succeed();
     }
 }
-*/

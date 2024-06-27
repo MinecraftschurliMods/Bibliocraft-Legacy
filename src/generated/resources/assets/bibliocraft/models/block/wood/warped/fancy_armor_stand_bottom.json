@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/fancy_armor_stand/bottom",
+  "textures": {
+    "texture": "minecraft:block/warped_planks"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/label",
+  "textures": {
+    "texture": "minecraft:block/cherry_planks"
+  }
+}

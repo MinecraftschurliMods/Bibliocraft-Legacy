@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -27,7 +26,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -73,11 +71,6 @@ public class TableBlock extends BCFacingEntityBlock {
     public TableBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false).setValue(TYPE, Type.NONE));
-    }
-
-    @Nullable
-    public static DyeColor getCarpetColor(ItemStack stack) {
-        return stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock carpet ? carpet.getColor() : null;
     }
 
     @Override
@@ -126,10 +119,11 @@ public class TableBlock extends BCFacingEntityBlock {
     @Override
     public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof TableBlockEntity table)) return super.useItemOn(stack, state, level, pos, player, hand, hit);
+        if (!(blockEntity instanceof TableBlockEntity table))
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
         Direction direction = hit.getDirection();
         if (direction == Direction.DOWN) return super.useItemOn(stack, state, level, pos, player, hand, hit);
-        boolean useCarpet = direction != Direction.UP && (getCarpetColor(stack) != null || (stack.isEmpty() && !table.getItem(1).isEmpty()));
+        boolean useCarpet = direction != Direction.UP && ((stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock) || (stack.isEmpty() && !table.getItem(1).isEmpty()));
         ItemStack originalStack = table.getItem(useCarpet ? 1 : 0);
         if (ItemStack.isSameItem(stack, originalStack)) return ItemInteractionResult.FAIL;
         table.setItem(useCarpet ? 1 : 0, stack.copyWithCount(1));
