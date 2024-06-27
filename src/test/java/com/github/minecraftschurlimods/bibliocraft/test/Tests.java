@@ -1,4 +1,3 @@
-/*
 package com.github.minecraftschurlimods.bibliocraft.test;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
@@ -47,4 +46,3 @@ public final class Tests {
         });
     }
 }
-*/
