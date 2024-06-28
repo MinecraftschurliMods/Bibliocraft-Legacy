@@ -3,7 +3,15 @@
   "category": "misc",
   "key": {
     "C": {
-      "tag": "forge:glass/blue"
+      "type": "neoforge:intersection",
+      "children": [
+        {
+          "tag": "c:glass_blocks"
+        },
+        {
+          "tag": "c:dyed/blue"
+        }
+      ]
     },
     "G": {
       "item": "minecraft:glowstone"

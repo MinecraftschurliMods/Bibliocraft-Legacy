@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -19,7 +20,9 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -46,7 +49,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("CGC")
                     .pattern(" I ")
                     .pattern("NIN")
-                    .define('C', TagKey.create(BuiltInRegistries.ITEM.key(), BCUtil.forgeLoc("glass/" + name)))
+                    .define('C', IntersectionIngredient.of(Ingredient.of(Tags.Items.GLASS_BLOCKS), Ingredient.of(TagKey.create(Registries.ITEM, BCUtil.cLoc("dyed/" + name)))))
                     .define('G', Items.GLOWSTONE)
                     .define('I', Tags.Items.INGOTS_GOLD)
                     .define('N', Tags.Items.NUGGETS_GOLD)
@@ -56,11 +59,11 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("CGC")
                     .pattern(" I ")
                     .pattern("NIN")
-                    .define('C', TagKey.create(BuiltInRegistries.ITEM.key(), BCUtil.forgeLoc("glass/" + name)))
+                    .define('C', IntersectionIngredient.of(Ingredient.of(Tags.Items.GLASS_BLOCKS), Ingredient.of(TagKey.create(Registries.ITEM, BCUtil.cLoc("dyed/" + name)))))
                     .define('G', Items.GLOWSTONE)
                     .define('I', Tags.Items.INGOTS_IRON)
                     .define('N', Tags.Items.NUGGETS_IRON)
-                    .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_IRON))
+                    .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_iron_lamp"));
         }
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LAMP.get())

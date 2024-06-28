@@ -34,10 +34,10 @@ public final class BCUtil {
 
     /**
      * @param path The path to use.
-     * @return A {@link ResourceLocation} with the "forge" namespace and the given path.
+     * @return A {@link ResourceLocation} with the "c" namespace and the given path.
      */
-    public static ResourceLocation forgeLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath("forge", path);
+    public static ResourceLocation cLoc(String path) {
+        return ResourceLocation.fromNamespaceAndPath("c", path);
     }
 
     /**
