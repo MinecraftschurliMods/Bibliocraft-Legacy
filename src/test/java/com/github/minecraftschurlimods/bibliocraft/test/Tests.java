@@ -23,24 +23,20 @@ import org.lwjgl.glfw.GLFW;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
 public final class Tests {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    static void init(FMLConstructModEvent event) {
+    private static void init(FMLConstructModEvent event) {
         ModList.get().getModContainerById(BibliocraftApi.MOD_ID).ifPresent(Tests::init);
     }
 
     private static void init(ModContainer container) {
-        final MutableTestFramework framework = FrameworkConfiguration.builder(ResourceLocation.fromNamespaceAndPath(container.getModId(), "tests"))
-                .clientConfiguration(() -> ClientConfiguration.builder()
-                        .toggleOverlayKey(GLFW.GLFW_KEY_J)
-                        .openManagerKey(GLFW.GLFW_KEY_N)
-                        .build())
+        MutableTestFramework framework = FrameworkConfiguration.builder(ResourceLocation.fromNamespaceAndPath(container.getModId(), "tests"))
+                .clientConfiguration(() -> ClientConfiguration.builder().toggleOverlayKey(GLFW.GLFW_KEY_J).openManagerKey(GLFW.GLFW_KEY_N).build())
                 .enable(Feature.CLIENT_SYNC, Feature.CLIENT_MODIFICATIONS, Feature.TEST_STORE)
                 .dumpers(new GitHubActionsStepSummaryDumper("Bibliocraft Gametest Summary"))
-                .build().create();
-
+                .build()
+                .create();
         framework.init(container.getEventBus(), container);
-
-        NeoForge.EVENT_BUS.addListener((final RegisterCommandsEvent event) -> {
-            final LiteralArgumentBuilder<CommandSourceStack> node = Commands.literal("tests");
+        NeoForge.EVENT_BUS.addListener((RegisterCommandsEvent event) -> {
+            LiteralArgumentBuilder<CommandSourceStack> node = Commands.literal("tests");
             framework.registerCommands(node);
             event.getDispatcher().register(node);
         });

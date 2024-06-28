@@ -1,4 +1,4 @@
-// 1.21	2024-06-28T00:18:18.6302957	Tags for minecraft:item mod id bibliocraft
+// 1.21	2024-06-28T02:44:17.6791024	Tags for minecraft:item mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/item/bookcases.json
 8c21eecc9ff3212b039c2ccadcebce2ef5e04510 data/bibliocraft/tags/item/bookcase_books.json
 a62188adba8d65fe5971b95f4c552a1072086c31 data/bibliocraft/tags/item/cookie_jar_cookies.json
@@ -23,3 +23,4 @@ e6756cdd6fb03cf772eba210ae3f93335e83dcd6 data/bibliocraft/tags/item/sword_pedest
 70a350b86a4e5ad8cd8eb0f62e66e6b83e927781 data/bibliocraft/tags/item/tables.json
 45344246afda217d9e4e32c8437cf25b49cf9e9d data/bibliocraft/tags/item/tool_racks.json
 efcb42d31e2831ec1e84fcb8b772621a665ca299 data/bibliocraft/tags/item/tool_rack_tools.json
+566e5e10e649e540db04cc1d4536bf5366c16296 data/minecraft/tags/item/dyeable.json

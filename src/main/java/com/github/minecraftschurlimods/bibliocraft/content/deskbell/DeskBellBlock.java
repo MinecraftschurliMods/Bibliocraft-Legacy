@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.content;
+package com.github.minecraftschurlimods.bibliocraft.content.deskbell;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
@@ -51,6 +51,6 @@ public class DeskBellBlock extends BCWaterloggedBlock {
     }
 
     private void playSound(Level level, BlockPos pos) {
-        level.playSound(null, pos, BCSoundEvents.DESK_BELL.get(), SoundSource.BLOCKS, 1, 1);
+        level.playSound(null, pos, BCSoundEvents.DESK_BELL.value(), SoundSource.BLOCKS, 1, 1);
     }
 }

@@ -31,9 +31,8 @@ public final class EventHandler {
     public static final class ModBus {
         @SubscribeEvent(priority = EventPriority.LOWEST)
         private static void constructMod(FMLConstructModEvent event) {
-            IEventBus bus = Objects.requireNonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus());
-            ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register(bus);
-            BCRegistries.init(Objects.requireNonNull(bus));
+            ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register();
+            BCRegistries.init(Objects.requireNonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus()));
         }
 
         @SubscribeEvent

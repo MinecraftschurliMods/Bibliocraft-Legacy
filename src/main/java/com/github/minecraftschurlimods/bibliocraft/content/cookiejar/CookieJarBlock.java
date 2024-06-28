@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.content.cookiejar;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCEntityBlock;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -25,16 +24,10 @@ public class CookieJarBlock extends BCEntityBlock {
             Shapes.box(0.25, 0.625, 0.25, 0.75, 0.75, 0.75));
     private static final VoxelShape CLOSED_SHAPE = ShapeUtil.combine(OPEN_SHAPE,
             Shapes.box(0.1875, 0.75, 0.1875, 0.8125, 0.875, 0.8125));
-    public static final MapCodec<CookieJarBlock> CODEC = simpleCodec(CookieJarBlock::new);
 
     public CookieJarBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(OPEN, false).setValue(WATERLOGGED, false));
-    }
-
-    @Override
-    protected MapCodec<CookieJarBlock> codec() {
-        return CODEC;
     }
 
     @Override

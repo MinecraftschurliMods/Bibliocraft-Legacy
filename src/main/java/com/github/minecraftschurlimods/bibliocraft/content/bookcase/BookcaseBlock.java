@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -26,15 +25,9 @@ public class BookcaseBlock extends BCFacingEntityBlock {
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.COUNTERCLOCKWISE_90);
-    public static final MapCodec<BookcaseBlock> CODEC = simpleCodec(BookcaseBlock::new);
 
     public BookcaseBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<BookcaseBlock> codec() {
-        return CODEC;
     }
 
     @Override

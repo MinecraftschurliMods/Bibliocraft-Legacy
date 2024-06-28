@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
 import com.github.minecraftschurlimods.bibliocraft.api.RegisterBibliocraftWoodTypesEvent;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoader;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,8 +27,8 @@ public final class BibliocraftWoodTypeRegistryImpl implements BibliocraftWoodTyp
     }
 
     @ApiStatus.Internal
-    public void register(IEventBus bus) {
-        bus.post(new RegisterBibliocraftWoodTypesEvent(values, sortedValues));
+    public void register() {
+        ModLoader.postEvent(new RegisterBibliocraftWoodTypesEvent(values, sortedValues));
         loaded = true;
     }
 

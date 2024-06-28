@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -14,15 +13,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class DisplayCaseBlock extends AbstractDisplayCaseBlock {
     private static final VoxelShape Z_SHAPE = Shapes.box(0.0625, 0, 0, 0.9375, 0.5, 1);
     private static final VoxelShape X_SHAPE = ShapeUtil.rotate(Z_SHAPE, Rotation.CLOCKWISE_90);
-    public static final MapCodec<DisplayCaseBlock> CODEC = simpleCodec(DisplayCaseBlock::new);
 
     public DisplayCaseBlock(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<DisplayCaseBlock> codec() {
-        return CODEC;
     }
 
     @Override

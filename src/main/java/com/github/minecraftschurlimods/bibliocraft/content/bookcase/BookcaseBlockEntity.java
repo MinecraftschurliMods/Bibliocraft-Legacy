@@ -27,12 +27,6 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
     }
 
     @Override
-    public void setChanged() {
-        super.setChanged();
-        requestModelDataUpdate();
-    }
-
-    @Override
     public AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new BookcaseMenu(id, inventory, this);
     }

@@ -31,7 +31,9 @@ public class AbstractFancyLightBlock extends BCFacingBlock {
     }
 
     public enum Type implements StringRepresentable {
-        STANDING, HANGING, WALL;
+        STANDING,
+        HANGING,
+        WALL;
 
         @Override
         public String getSerializedName() {

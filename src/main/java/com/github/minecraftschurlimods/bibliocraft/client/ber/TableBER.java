@@ -81,7 +81,8 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
         }
         stack.popPose();
         ItemStack carpet = blockEntity.getItem(1);
-        if (carpet.isEmpty() || !(carpet.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock carpetBlock)) return;
+        if (carpet.isEmpty() || !(carpet.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock carpetBlock))
+            return;
         BlockState state = blockEntity.getBlockState();
         stack.pushPose();
         stack.translate(0.5, 0, 0.5);
