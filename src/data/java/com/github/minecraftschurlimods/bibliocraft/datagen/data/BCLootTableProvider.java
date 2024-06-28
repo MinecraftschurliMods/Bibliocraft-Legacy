@@ -29,10 +29,6 @@ public final class BCLootTableProvider extends LootTableProvider {
         super(output, Set.of(), List.of(new SubProviderEntry(BCBlockLootProvider::new, LootContextParamSets.BLOCK)), lookupProvider);
     }
 
-    @Override
-    public void validate(WritableRegistry<LootTable> registry, ValidationContext context, ProblemReporter.Collector collector) {
-    }
-
     private static final class BCBlockLootProvider extends BlockLootSubProvider {
         private BCBlockLootProvider(HolderLookup.Provider registries) {
             super(Set.of(), FeatureFlags.DEFAULT_FLAGS, registries);
