@@ -36,8 +36,8 @@ import java.util.function.Supplier;
  * Utility class holding various helper methods specifically for datagen.
  */
 public final class DatagenUtil {
-    public static final Map<DyeColor, ResourceLocation> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, ResourceLocation.withDefaultNamespace("block/" + color.getName() + "_stained_glass"))));
-    public static final Map<DyeColor, ResourceLocation> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, ResourceLocation.withDefaultNamespace("block/" + color.getName() + "_wool"))));
+    public static final Map<DyeColor, ResourceLocation> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_stained_glass"))));
+    public static final Map<DyeColor, ResourceLocation> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_wool"))));
 
     /**
      * @param s The string to create a translation for.

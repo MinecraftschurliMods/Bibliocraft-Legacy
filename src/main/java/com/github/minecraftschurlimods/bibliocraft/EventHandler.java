@@ -6,21 +6,19 @@ import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRe
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
@@ -61,16 +59,11 @@ public final class EventHandler {
             registerVanilla(event, WoodType.CHERRY, Blocks.CHERRY_PLANKS, BlockFamilies.CHERRY_PLANKS);
         }
 
-        @SubscribeEvent
-        private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-            //event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.BOOKCASE.get(), (be, dir) -> be.getBlockState().getValue(BookcaseBlock.FACING) != dir ? new InvWrapper(be) : null);
-        }
-
         /**
          * Private helper for registering the vanilla variants.
          */
         private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
-            event.register(ResourceLocation.fromNamespaceAndPath("minecraft", woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), ResourceLocation.fromNamespaceAndPath("minecraft", "block/" + woodType.name() + "_planks"), family);
+            event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), family);
         }
     }
 }

@@ -29,7 +29,7 @@ public final class BCUtil {
      * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
      */
     public static ResourceLocation mcLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath("minecraft", path);
+        return ResourceLocation.withDefaultNamespace(path);
     }
 
     /**

@@ -292,7 +292,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 .define('#', Tags.Items.INGOTS_IRON)
                 .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "tool_rack"));
         for (DyeColor color : DyeColor.values()) {
-            Item wool = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_wool"));
+            Item wool = BuiltInRegistries.ITEM.get(BCUtil.mcLoc(color.getName() + "_wool"));
             prefix = "color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/";
             shapedRecipe(BCItems.DISPLAY_CASE.get(woodType, color), woodType)
                     .pattern("SGS")
