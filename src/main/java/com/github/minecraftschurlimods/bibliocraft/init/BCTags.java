@@ -19,6 +19,9 @@ public interface BCTags {
         TagKey<Block> SHELVES                 = tag("shelves");
         TagKey<Block> TABLES                  = tag("tables");
         TagKey<Block> TOOL_RACKS              = tag("tool_racks");
+        TagKey<Block> FANCY_LAMPS             = tag("fancy_lamps");
+        TagKey<Block> FANCY_LAMPS_GOLD        = tag("fancy_lamps/gold");
+        TagKey<Block> FANCY_LAMPS_IRON        = tag("fancy_lamps/iron");
         TagKey<Block> FANCY_LANTERNS          = tag("fancy_lanterns");
         TagKey<Block> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
         TagKey<Block> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
@@ -49,6 +52,9 @@ public interface BCTags {
         TagKey<Item> SHELVES                 = tag("shelves");
         TagKey<Item> TABLES                  = tag("tables");
         TagKey<Item> TOOL_RACKS              = tag("tool_racks");
+        TagKey<Item> FANCY_LAMPS             = tag("fancy_lamps");
+        TagKey<Item> FANCY_LAMPS_GOLD        = tag("fancy_lamps/gold");
+        TagKey<Item> FANCY_LAMPS_IRON        = tag("fancy_lamps/iron");
         TagKey<Item> FANCY_LANTERNS          = tag("fancy_lanterns");
         TagKey<Item> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
         TagKey<Item> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");

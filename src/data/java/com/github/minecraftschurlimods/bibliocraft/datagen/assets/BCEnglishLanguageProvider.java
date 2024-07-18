@@ -21,11 +21,15 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         BibliocraftApi.getDatagenHelper().generateEnglishTranslations(this);
-        addDefaultBlock(BCBlocks.CLEAR_FANCY_GOLD_LAMP);
-        addDefaultBlock(BCBlocks.CLEAR_FANCY_IRON_LAMP);
+        add(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get(), "Fancy Gold Lamp");
+        add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(), "Fancy Iron Lamp");
+        add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), "Fancy Gold Lantern");
+        add(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get(), "Fancy Iron Lantern");
         for (DyeColor color : DyeColor.values()) {
             addDefaultBlock(BCBlocks.FANCY_GOLD_LAMP.holder(color));
             addDefaultBlock(BCBlocks.FANCY_IRON_LAMP.holder(color));
+            addDefaultBlock(BCBlocks.FANCY_GOLD_LANTERN.holder(color));
+            addDefaultBlock(BCBlocks.FANCY_IRON_LANTERN.holder(color));
         }
         addDefaultItem(BCItems.CLIPBOARD);
         addDefaultBlock(BCBlocks.COOKIE_JAR);

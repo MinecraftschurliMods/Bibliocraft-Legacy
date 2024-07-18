@@ -38,6 +38,10 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FANCY_GOLD_LAMP.values());
                 output.accept(BCItems.CLEAR_FANCY_IRON_LAMP);
                 addToTab(output, BCItems.FANCY_IRON_LAMP.values());
+                output.accept(BCItems.CLEAR_FANCY_GOLD_LANTERN);
+                addToTab(output, BCItems.FANCY_GOLD_LANTERN.values());
+                output.accept(BCItems.CLEAR_FANCY_IRON_LANTERN);
+                addToTab(output, BCItems.FANCY_IRON_LANTERN.values());
                 output.accept(BCItems.CLIPBOARD);
                 output.accept(BCItems.COOKIE_JAR);
                 output.accept(BCItems.DESK_BELL);

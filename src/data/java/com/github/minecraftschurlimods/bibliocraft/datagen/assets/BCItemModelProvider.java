@@ -16,19 +16,23 @@ public class BCItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         BibliocraftApi.getDatagenHelper().generateItemModels(this);
         basicItem(BCItems.CLIPBOARD.get());
-        withExistingParent("clear_fancy_gold_lamp", modLoc("block/clear_fancy_gold_lamp_standing"));
-        withExistingParent("clear_fancy_iron_lamp", modLoc("block/clear_fancy_iron_lamp_standing"));
+        withExistingParent("fancy_gold_lamp",    modLoc("block/fancy_gold_lamp_standing"));
+        withExistingParent("fancy_iron_lamp",    modLoc("block/fancy_iron_lamp_standing"));
+        withExistingParent("fancy_gold_lantern", modLoc("block/fancy_gold_lantern_standing"));
+        withExistingParent("fancy_iron_lantern", modLoc("block/fancy_iron_lantern_standing"));
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
-            withExistingParent(name + "_fancy_gold_lamp", modLoc("block/color/" + name + "/fancy_gold_lamp_standing"));
-            withExistingParent(name + "_fancy_iron_lamp", modLoc("block/color/" + name + "/fancy_iron_lamp_standing"));
+            withExistingParent(name + "_fancy_gold_lamp",    modLoc("block/color/" + name + "/fancy_gold_lamp_standing"));
+            withExistingParent(name + "_fancy_iron_lamp",    modLoc("block/color/" + name + "/fancy_iron_lamp_standing"));
+            withExistingParent(name + "_fancy_gold_lantern", modLoc("block/color/" + name + "/fancy_gold_lantern_standing"));
+            withExistingParent(name + "_fancy_iron_lantern", modLoc("block/color/" + name + "/fancy_iron_lantern_standing"));
         }
-        withExistingParent("cookie_jar", modLoc("block/cookie_jar"));
-        withExistingParent("desk_bell", modLoc("block/desk_bell"));
-        withExistingParent("dinner_plate", modLoc("block/dinner_plate"));
-        withExistingParent("disc_rack", modLoc("block/disc_rack"));
+        withExistingParent("cookie_jar",             modLoc("block/cookie_jar"));
+        withExistingParent("desk_bell",              modLoc("block/desk_bell"));
+        withExistingParent("dinner_plate",           modLoc("block/dinner_plate"));
+        withExistingParent("disc_rack",              modLoc("block/disc_rack"));
         withExistingParent("iron_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/iron_inventory"));
-        withExistingParent("sword_pedestal", modLoc("block/sword_pedestal"));
-        withExistingParent("redstone_book", mcLoc("item/written_book"));
+        withExistingParent("sword_pedestal",         modLoc("block/sword_pedestal"));
+        withExistingParent("redstone_book",          mcLoc("item/written_book"));
     }
 }

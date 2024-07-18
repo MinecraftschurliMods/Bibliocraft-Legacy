@@ -1,4 +1,4 @@
-// 1.21	2024-06-28T19:32:24.8132362	Recipes
+// 1.21	2024-07-18T15:08:41.0699134	Recipes
 269deaa12a4f5857b6137aeee6f02144569207b8 data/bibliocraft/advancement/recipes/building_blocks/color/black/sword_pedestal.json
 5a59727883c9c912fc122a07031cba028cab5ec7 data/bibliocraft/advancement/recipes/building_blocks/color/blue/sword_pedestal.json
 6c38e7dbf1d245e147169dd82f86311e7874dd6d data/bibliocraft/advancement/recipes/building_blocks/color/brown/sword_pedestal.json
@@ -16,10 +16,10 @@ a47c658ce4866b1fe0697d286196552cbb674a33 data/bibliocraft/advancement/recipes/bu
 b3472268fa68fe6f037277593f6c2e439ee407c9 data/bibliocraft/advancement/recipes/building_blocks/color/white/sword_pedestal.json
 ad93f218da3d9e40a3c0b846178ac71e4d90b69b data/bibliocraft/advancement/recipes/building_blocks/color/yellow/sword_pedestal.json
 127bfd995d45c560647f57f592336110b9fd1d8d data/bibliocraft/advancement/recipes/building_blocks/iron_fancy_armor_stand.json
-b9cd89bb633ebe4eb488616bd2a4d8081158dfb8 data/bibliocraft/advancement/recipes/decorations/clear_fancy_gold_lamp.json
-c34aca609d56f97639d996bcfaffc90d30a91245 data/bibliocraft/advancement/recipes/decorations/clear_fancy_iron_lamp.json
 84da6db4eafbf3a837b1449a67c157ba810dfc6f data/bibliocraft/advancement/recipes/decorations/color/black/fancy_gold_lamp.json
+41123e583768c1f34ef2dd70d56493744a272d48 data/bibliocraft/advancement/recipes/decorations/color/black/fancy_gold_lantern.json
 ed56cef98b78be815698916009ae4f5cc4e392a4 data/bibliocraft/advancement/recipes/decorations/color/black/fancy_iron_lamp.json
+9bfb462776e85efb405de179f87b9c361722870e data/bibliocraft/advancement/recipes/decorations/color/black/fancy_iron_lantern.json
 605a22cd617d247d69a089d2057643a5d1d5139a data/bibliocraft/advancement/recipes/decorations/color/black/wood/acacia/display_case.json
 822103c8f6729bf5f7c7500f934d1a5aa0926d22 data/bibliocraft/advancement/recipes/decorations/color/black/wood/acacia/fancy_seat_back.json
 6de3ac4858445b07c3ff8c1e007938cf0c475469 data/bibliocraft/advancement/recipes/decorations/color/black/wood/acacia/flat_seat_back.json
@@ -98,7 +98,9 @@ d9fb88a0937f3cfc8112e4152f9a78e09135b83d data/bibliocraft/advancement/recipes/de
 e24faf7640830dfbc3bd1aec3ce0be1cfeb0a784 data/bibliocraft/advancement/recipes/decorations/color/black/wood/warped/small_seat_back.json
 48d866ee62dfb959578be3e00330f63906251e2d data/bibliocraft/advancement/recipes/decorations/color/black/wood/warped/tall_seat_back.json
 e2770e0d54f9a9ccb0a9acbeddd5b83dbdc79d9f data/bibliocraft/advancement/recipes/decorations/color/blue/fancy_gold_lamp.json
+b41b5fc14e024c026f746e45f31a1ce7a23a3b07 data/bibliocraft/advancement/recipes/decorations/color/blue/fancy_gold_lantern.json
 76ac6fc69454266337caf00536e4c6454c063421 data/bibliocraft/advancement/recipes/decorations/color/blue/fancy_iron_lamp.json
+5208e91a24b82e69cf37705f7ae145a3126f0d13 data/bibliocraft/advancement/recipes/decorations/color/blue/fancy_iron_lantern.json
 0f468ed56e667af45572dd38a1f20d687f598550 data/bibliocraft/advancement/recipes/decorations/color/blue/wood/acacia/display_case.json
 9c9d946cc0dee34063c47ce341144e7756f197ad data/bibliocraft/advancement/recipes/decorations/color/blue/wood/acacia/fancy_seat_back.json
 e8ccd4d5c062a6cfcfaf71808b3fad568a3cfbf9 data/bibliocraft/advancement/recipes/decorations/color/blue/wood/acacia/flat_seat_back.json
@@ -177,7 +179,9 @@ a1b3601945adcc4c327baba5a64f8dd052f2bc40 data/bibliocraft/advancement/recipes/de
 41e0b98e88d2001d8c3b522bc086daa385954651 data/bibliocraft/advancement/recipes/decorations/color/blue/wood/warped/small_seat_back.json
 e945271ab8d6850b9e6a4b06e215398790731b2b data/bibliocraft/advancement/recipes/decorations/color/blue/wood/warped/tall_seat_back.json
 5316ce34a186e4150767ee370eb2f41967805692 data/bibliocraft/advancement/recipes/decorations/color/brown/fancy_gold_lamp.json
+b29d85cbb735e9c0f23d39725e1232a9845df18c data/bibliocraft/advancement/recipes/decorations/color/brown/fancy_gold_lantern.json
 25ec02f0124416c5ff78e307d87a13ee39c08000 data/bibliocraft/advancement/recipes/decorations/color/brown/fancy_iron_lamp.json
+03edb8a6e3ee74413aef9425a3328ae84ad18aff data/bibliocraft/advancement/recipes/decorations/color/brown/fancy_iron_lantern.json
 27ba11121e69b6d335b15f55771a7f91d64c05a3 data/bibliocraft/advancement/recipes/decorations/color/brown/wood/acacia/display_case.json
 5c639995e0607fdb31d37139ef3606b5990ce86d data/bibliocraft/advancement/recipes/decorations/color/brown/wood/acacia/fancy_seat_back.json
 275feab50d853cb239540b3ca9ec6cea16fd5a36 data/bibliocraft/advancement/recipes/decorations/color/brown/wood/acacia/flat_seat_back.json
@@ -256,7 +260,9 @@ da6a46814116a34b6c8d3d2233fabf0908496305 data/bibliocraft/advancement/recipes/de
 dc26ed916c58876f58f32c8d995fbe2be591df9c data/bibliocraft/advancement/recipes/decorations/color/brown/wood/warped/small_seat_back.json
 f40ce2c37a6b1314dcfc53ed3f35afb64d0bb73d data/bibliocraft/advancement/recipes/decorations/color/brown/wood/warped/tall_seat_back.json
 a434a2c3d71220029f381a9f9a88b05186268943 data/bibliocraft/advancement/recipes/decorations/color/cyan/fancy_gold_lamp.json
+a5014010a54666339433a50b5f60fca0af8915ce data/bibliocraft/advancement/recipes/decorations/color/cyan/fancy_gold_lantern.json
 3ff473eab4ab80724e865b2ffc86287bd28f8615 data/bibliocraft/advancement/recipes/decorations/color/cyan/fancy_iron_lamp.json
+ebc043cb9eeb8e69dd99268999241b18a4e55dab data/bibliocraft/advancement/recipes/decorations/color/cyan/fancy_iron_lantern.json
 3cfa426156fe4248dc73f4726f934048c8a60247 data/bibliocraft/advancement/recipes/decorations/color/cyan/wood/acacia/display_case.json
 780d40792f10ca646617ace6cf0877676968ae07 data/bibliocraft/advancement/recipes/decorations/color/cyan/wood/acacia/fancy_seat_back.json
 768d27608eddc4dd7a88ffc2bb2d620e95ed29a4 data/bibliocraft/advancement/recipes/decorations/color/cyan/wood/acacia/flat_seat_back.json
@@ -335,7 +341,9 @@ ce5f63df0200e800ae482430cda3a196d941a1d6 data/bibliocraft/advancement/recipes/de
 7336845b82e2d305b064e5df84725dc78c039f12 data/bibliocraft/advancement/recipes/decorations/color/cyan/wood/warped/small_seat_back.json
 b6fe282c62d3d1db0997f8da93fc765139b33bdb data/bibliocraft/advancement/recipes/decorations/color/cyan/wood/warped/tall_seat_back.json
 116ea7bb0ac73208a7f129890e4e7914b70a186d data/bibliocraft/advancement/recipes/decorations/color/gray/fancy_gold_lamp.json
+0bc7c7b03efdb1174b80c2a7cee3a120a6cfa9bf data/bibliocraft/advancement/recipes/decorations/color/gray/fancy_gold_lantern.json
 0367f48a355372c14c6be20b3374fbd9c41a7c6a data/bibliocraft/advancement/recipes/decorations/color/gray/fancy_iron_lamp.json
+1250f883f07fd5357b0b2dde9a162442470838f6 data/bibliocraft/advancement/recipes/decorations/color/gray/fancy_iron_lantern.json
 81f76f208f7ad2f825b5eb22e3159a560bb7fb72 data/bibliocraft/advancement/recipes/decorations/color/gray/wood/acacia/display_case.json
 16355317944786e692d2525ffbc7ee0f23430938 data/bibliocraft/advancement/recipes/decorations/color/gray/wood/acacia/fancy_seat_back.json
 924fe63073834720aaeb3486dc761c8bf37a716e data/bibliocraft/advancement/recipes/decorations/color/gray/wood/acacia/flat_seat_back.json
@@ -414,7 +422,9 @@ dcda005d2dbca0d3c81bc1d9f7681c047c811222 data/bibliocraft/advancement/recipes/de
 99a02aba51bf0d7b3e0aafb04ba6dd5e344d1418 data/bibliocraft/advancement/recipes/decorations/color/gray/wood/warped/small_seat_back.json
 68a11a1ab0fb980278c1d73219e215aa3f0801cf data/bibliocraft/advancement/recipes/decorations/color/gray/wood/warped/tall_seat_back.json
 64612cd175acfa549e399a758e4d1a5210115aaa data/bibliocraft/advancement/recipes/decorations/color/green/fancy_gold_lamp.json
+bafd3f087749e237b08d39f6a66324373895f439 data/bibliocraft/advancement/recipes/decorations/color/green/fancy_gold_lantern.json
 defb62ce830e78d69cf7530b7f114a9a23b714a4 data/bibliocraft/advancement/recipes/decorations/color/green/fancy_iron_lamp.json
+e6fdfa0a9481fca8dda8e9b08b7185155f877b0c data/bibliocraft/advancement/recipes/decorations/color/green/fancy_iron_lantern.json
 e8eff7851b4aaf5a5643f8ef75aeb1abf76aca4f data/bibliocraft/advancement/recipes/decorations/color/green/wood/acacia/display_case.json
 67b8a8eae31678c50eedc3c764a3af17e05bec21 data/bibliocraft/advancement/recipes/decorations/color/green/wood/acacia/fancy_seat_back.json
 f63790f4616c589eeb84929ecdf15bc2b1ab4c5d data/bibliocraft/advancement/recipes/decorations/color/green/wood/acacia/flat_seat_back.json
@@ -493,7 +503,9 @@ adf096c4bb384559a73fd80913293887a8018879 data/bibliocraft/advancement/recipes/de
 d697ec26061dd9bf4ef00fc900c3f9724997ed07 data/bibliocraft/advancement/recipes/decorations/color/green/wood/warped/small_seat_back.json
 e8f482648c225708d608d2968f6661e9a1e254a8 data/bibliocraft/advancement/recipes/decorations/color/green/wood/warped/tall_seat_back.json
 0a45b4a83961c0b61e39a37fdd84d23f39bb77f8 data/bibliocraft/advancement/recipes/decorations/color/light_blue/fancy_gold_lamp.json
+55b055a84e281f0225ac645dbbd2bb466295eea0 data/bibliocraft/advancement/recipes/decorations/color/light_blue/fancy_gold_lantern.json
 8fd74f0bc54622fcf37052336ea524571aa39dca data/bibliocraft/advancement/recipes/decorations/color/light_blue/fancy_iron_lamp.json
+fff8fd338aaf901d1a22bce3076e3698f02a1a3a data/bibliocraft/advancement/recipes/decorations/color/light_blue/fancy_iron_lantern.json
 2b10ce142b5f593ac5f019254909509535ae3973 data/bibliocraft/advancement/recipes/decorations/color/light_blue/wood/acacia/display_case.json
 b96912a57331e872f30e59cc3f13e0a6bb4382a0 data/bibliocraft/advancement/recipes/decorations/color/light_blue/wood/acacia/fancy_seat_back.json
 7fcb53b8d7bfd5eba2652f0d6a07de3eb74245f6 data/bibliocraft/advancement/recipes/decorations/color/light_blue/wood/acacia/flat_seat_back.json
@@ -572,7 +584,9 @@ d580a930e43e1800c31ef06a5f056ec3391068f7 data/bibliocraft/advancement/recipes/de
 99e4c040e7328e46ed16368b8eb022671efbba44 data/bibliocraft/advancement/recipes/decorations/color/light_blue/wood/warped/small_seat_back.json
 699942a07f003966cac6c5b0f4c43634d9bf9ab2 data/bibliocraft/advancement/recipes/decorations/color/light_blue/wood/warped/tall_seat_back.json
 10026c7b32d86ef832c7d0aadd13a335d42d4fb7 data/bibliocraft/advancement/recipes/decorations/color/light_gray/fancy_gold_lamp.json
+27c3663ef71b4b862efb294c7778051efa6b77c0 data/bibliocraft/advancement/recipes/decorations/color/light_gray/fancy_gold_lantern.json
 c10dd22a2d2b189b26e9aded74ac57790fb6c8c8 data/bibliocraft/advancement/recipes/decorations/color/light_gray/fancy_iron_lamp.json
+f3f167f5b3ab453089c4ca3b1c6f3447f0099033 data/bibliocraft/advancement/recipes/decorations/color/light_gray/fancy_iron_lantern.json
 e287c213e748b5b3cddc98d37ba71acbf8b4d2b6 data/bibliocraft/advancement/recipes/decorations/color/light_gray/wood/acacia/display_case.json
 c5a97b62f9fa7bbb6783c6d1edfa1960e1f10566 data/bibliocraft/advancement/recipes/decorations/color/light_gray/wood/acacia/fancy_seat_back.json
 6be6e5e6abf1468984773d0e3f2b63b5ebfc9f66 data/bibliocraft/advancement/recipes/decorations/color/light_gray/wood/acacia/flat_seat_back.json
@@ -651,7 +665,9 @@ d6e11fcff889d6a778acfdd4bfd05866dece4567 data/bibliocraft/advancement/recipes/de
 5959d82eb7f03d96296f83979612fad074734a10 data/bibliocraft/advancement/recipes/decorations/color/light_gray/wood/warped/small_seat_back.json
 30026d9d52b4b1d52efe7a018889d680ca40b59f data/bibliocraft/advancement/recipes/decorations/color/light_gray/wood/warped/tall_seat_back.json
 d6ce4bfc10927c0679817e994688800a13ed4768 data/bibliocraft/advancement/recipes/decorations/color/lime/fancy_gold_lamp.json
+6a465fb6674d703c598f886bbf8ee80986c189a3 data/bibliocraft/advancement/recipes/decorations/color/lime/fancy_gold_lantern.json
 ac3e4dd63ee1760c43a72b0ef04bd486ddc5611b data/bibliocraft/advancement/recipes/decorations/color/lime/fancy_iron_lamp.json
+9bad49e7e939b704c47f6b2aade1ea97b1e49daf data/bibliocraft/advancement/recipes/decorations/color/lime/fancy_iron_lantern.json
 893f70ff1846ab9beab1fd565c436e582a7456bf data/bibliocraft/advancement/recipes/decorations/color/lime/wood/acacia/display_case.json
 b7d1d92842a34a80a6a4aabb32e5c8cf79468479 data/bibliocraft/advancement/recipes/decorations/color/lime/wood/acacia/fancy_seat_back.json
 7563813e9b3ed32d49d42110e27ddb224e5fafdd data/bibliocraft/advancement/recipes/decorations/color/lime/wood/acacia/flat_seat_back.json
@@ -730,7 +746,9 @@ f66e940580a59bd3a70134eac2f5782ee774e6cc data/bibliocraft/advancement/recipes/de
 a79bdc8956be7764a36e25cb34459925687e707b data/bibliocraft/advancement/recipes/decorations/color/lime/wood/warped/small_seat_back.json
 85bea00f3f32b6f02f3bb3839c9377accb18a831 data/bibliocraft/advancement/recipes/decorations/color/lime/wood/warped/tall_seat_back.json
 8d6eb8c4dd8438a1e081efe2285dba58af90225b data/bibliocraft/advancement/recipes/decorations/color/magenta/fancy_gold_lamp.json
+edbeca8d9d8c5920d6125397904d3ba27b4a1f07 data/bibliocraft/advancement/recipes/decorations/color/magenta/fancy_gold_lantern.json
 2b84e78dd0a4d0899f7c53651c03d2673fbc738b data/bibliocraft/advancement/recipes/decorations/color/magenta/fancy_iron_lamp.json
+a6107eefcb4c04b9a66eccb17576860549038477 data/bibliocraft/advancement/recipes/decorations/color/magenta/fancy_iron_lantern.json
 8f502e0f11c1a749f32ac767758fa2b53b085360 data/bibliocraft/advancement/recipes/decorations/color/magenta/wood/acacia/display_case.json
 c64f20a2847923b8b7588f7f9a1da7551353961c data/bibliocraft/advancement/recipes/decorations/color/magenta/wood/acacia/fancy_seat_back.json
 d7d3c9474379bcf333e588154818db853eccf4d0 data/bibliocraft/advancement/recipes/decorations/color/magenta/wood/acacia/flat_seat_back.json
@@ -809,7 +827,9 @@ bdf9ddc1ab3efc2d299ebf859d43eb26308e41e3 data/bibliocraft/advancement/recipes/de
 20569faa8f34e6abdd596c9d96506c75b2b453e1 data/bibliocraft/advancement/recipes/decorations/color/magenta/wood/warped/small_seat_back.json
 df1f76069830dd04021a41143a0df4710ee2b86d data/bibliocraft/advancement/recipes/decorations/color/magenta/wood/warped/tall_seat_back.json
 9d38f92b25d2f10bcee0c8aaf3adeea091c0b0c4 data/bibliocraft/advancement/recipes/decorations/color/orange/fancy_gold_lamp.json
+f9b381cf932ce46c3c3128d6df49fda93aafd9b2 data/bibliocraft/advancement/recipes/decorations/color/orange/fancy_gold_lantern.json
 6dfd4e91fd0b4ac100aa6c524dfea7b82c7e3a95 data/bibliocraft/advancement/recipes/decorations/color/orange/fancy_iron_lamp.json
+60b08c15de5dce0b9aef79f66c7f618e8ba33c54 data/bibliocraft/advancement/recipes/decorations/color/orange/fancy_iron_lantern.json
 b9b5a660e9725cb494895e3c854d8e1db6c92a1c data/bibliocraft/advancement/recipes/decorations/color/orange/wood/acacia/display_case.json
 a79b773bf4590c45bfa93998666a55006649df8c data/bibliocraft/advancement/recipes/decorations/color/orange/wood/acacia/fancy_seat_back.json
 a843847b78afdce8240d0997058233464995702a data/bibliocraft/advancement/recipes/decorations/color/orange/wood/acacia/flat_seat_back.json
@@ -888,7 +908,9 @@ e0349270764be44072be47508cbeb47214f874dd data/bibliocraft/advancement/recipes/de
 a9aeabb4f1a7c6d1ea9236627a34d942cff29945 data/bibliocraft/advancement/recipes/decorations/color/orange/wood/warped/small_seat_back.json
 6b2ca82a12b804465d450ffe177938b8035d7e81 data/bibliocraft/advancement/recipes/decorations/color/orange/wood/warped/tall_seat_back.json
 40828244b82517370690bc0569044b8870e88319 data/bibliocraft/advancement/recipes/decorations/color/pink/fancy_gold_lamp.json
+45a48b5e178a8a756a99eaecbfd11a83a539647c data/bibliocraft/advancement/recipes/decorations/color/pink/fancy_gold_lantern.json
 a7d2abe81195a56fa44881095d65512aaa90e5fa data/bibliocraft/advancement/recipes/decorations/color/pink/fancy_iron_lamp.json
+85f8e569b302a431709921276c684cfcbf11c39d data/bibliocraft/advancement/recipes/decorations/color/pink/fancy_iron_lantern.json
 aa4808ee7511a00d699001c0c4bb8d42d770eb76 data/bibliocraft/advancement/recipes/decorations/color/pink/wood/acacia/display_case.json
 39014f801ee5f5b46a62e5a3eebae787c91cfa5b data/bibliocraft/advancement/recipes/decorations/color/pink/wood/acacia/fancy_seat_back.json
 66ba85d9f9bf14ca160ac73129d77080a02ab87e data/bibliocraft/advancement/recipes/decorations/color/pink/wood/acacia/flat_seat_back.json
@@ -967,7 +989,9 @@ e3ff75939ba80c8ea569d048beb1182176c8ac12 data/bibliocraft/advancement/recipes/de
 0d2c2c8d4106db67e402333a956b667c055b89ff data/bibliocraft/advancement/recipes/decorations/color/pink/wood/warped/small_seat_back.json
 959a5a34fccbd73a3b6fcb3eb807351a8dc1c94a data/bibliocraft/advancement/recipes/decorations/color/pink/wood/warped/tall_seat_back.json
 837b48069681341bdeef6d0587eb8ab617aa028d data/bibliocraft/advancement/recipes/decorations/color/purple/fancy_gold_lamp.json
+beec6b3f4716fe92354ab42f8da2c55fb755043e data/bibliocraft/advancement/recipes/decorations/color/purple/fancy_gold_lantern.json
 04e2e42b44b78f839c6af755f9a7ea08d7dd6450 data/bibliocraft/advancement/recipes/decorations/color/purple/fancy_iron_lamp.json
+f298256c4543b818f33128c99a7b18b96eb5c19d data/bibliocraft/advancement/recipes/decorations/color/purple/fancy_iron_lantern.json
 fed085dd123c668cd45aea2b3b4a41d5e92380d3 data/bibliocraft/advancement/recipes/decorations/color/purple/wood/acacia/display_case.json
 365cb6ecef088f91fc0928743e99773f860af0c6 data/bibliocraft/advancement/recipes/decorations/color/purple/wood/acacia/fancy_seat_back.json
 44be2de458959041808a83a0034b70ae96cd7f71 data/bibliocraft/advancement/recipes/decorations/color/purple/wood/acacia/flat_seat_back.json
@@ -1046,7 +1070,9 @@ caf7c8beda588e61f2fa38ddaa9cdf53fbe6ba5e data/bibliocraft/advancement/recipes/de
 65a886b73a709ff3d3c326465ce78609aa108068 data/bibliocraft/advancement/recipes/decorations/color/purple/wood/warped/small_seat_back.json
 0f94f8ac74e4bcf9f393d5cd80fd21d392882d06 data/bibliocraft/advancement/recipes/decorations/color/purple/wood/warped/tall_seat_back.json
 c47416624e0b9bcf8a9026d63b2ae84d6e3fe8a7 data/bibliocraft/advancement/recipes/decorations/color/red/fancy_gold_lamp.json
+8ae53e3ad435b90d697001c88145f41a06e56050 data/bibliocraft/advancement/recipes/decorations/color/red/fancy_gold_lantern.json
 7a39acae20c98ac46862dadaff9794b9f70da2f0 data/bibliocraft/advancement/recipes/decorations/color/red/fancy_iron_lamp.json
+1ba0e6dff4e91b0fd7a1d8872535cf4306bdfc5b data/bibliocraft/advancement/recipes/decorations/color/red/fancy_iron_lantern.json
 e617ae8edc9b5a08ad98a8d0e4d2cc905bdaa167 data/bibliocraft/advancement/recipes/decorations/color/red/wood/acacia/display_case.json
 767b744dabb617d95d239b73610445a096d1de25 data/bibliocraft/advancement/recipes/decorations/color/red/wood/acacia/fancy_seat_back.json
 630cd0289af63be6f76b214ac52e2d89e77e76d4 data/bibliocraft/advancement/recipes/decorations/color/red/wood/acacia/flat_seat_back.json
@@ -1125,7 +1151,9 @@ ede4ca776cd26d51c2a87ecb85c4948bcb92c543 data/bibliocraft/advancement/recipes/de
 b103265bf099e40fe2c5dfc0340a32d007362fe8 data/bibliocraft/advancement/recipes/decorations/color/red/wood/warped/small_seat_back.json
 424d518607b00f6122c09f340edda513b325edd8 data/bibliocraft/advancement/recipes/decorations/color/red/wood/warped/tall_seat_back.json
 d8e6a3ae31d99f832e2d0d906b2d5b5d116a0572 data/bibliocraft/advancement/recipes/decorations/color/white/fancy_gold_lamp.json
+477fb97fbddc1e8b805e6c6d48e2ead319bf785c data/bibliocraft/advancement/recipes/decorations/color/white/fancy_gold_lantern.json
 2708085141018f73c49a3e193b0e9cc269ab3e46 data/bibliocraft/advancement/recipes/decorations/color/white/fancy_iron_lamp.json
+b61e0af91f949cfb1e26e8e87f48ff23298de353 data/bibliocraft/advancement/recipes/decorations/color/white/fancy_iron_lantern.json
 a51d1fb77a01ca9ed18e440577dd9976a845dbbd data/bibliocraft/advancement/recipes/decorations/color/white/wood/acacia/display_case.json
 d5abeb82c4b8828524867fdbfcd850aca063c384 data/bibliocraft/advancement/recipes/decorations/color/white/wood/acacia/fancy_seat_back.json
 d7bf5577e612ee93e8f637eb7c3354e75a1638ae data/bibliocraft/advancement/recipes/decorations/color/white/wood/acacia/flat_seat_back.json
@@ -1204,7 +1232,9 @@ bcd17ba1af75b5a6eb70c409e6a4c66dd28a80dc data/bibliocraft/advancement/recipes/de
 2b20f645847edac124d96c65bcd32e56dd0caead data/bibliocraft/advancement/recipes/decorations/color/white/wood/warped/small_seat_back.json
 7a6c9324b16b633c8daa699013f94a0e586c6953 data/bibliocraft/advancement/recipes/decorations/color/white/wood/warped/tall_seat_back.json
 fcbc464e3803d7c78bc7316d17bd847d76065d38 data/bibliocraft/advancement/recipes/decorations/color/yellow/fancy_gold_lamp.json
+9f2287649d26578e2b99f8663ee03db533017261 data/bibliocraft/advancement/recipes/decorations/color/yellow/fancy_gold_lantern.json
 1b7cc16026b9dfdf9d71e854dfa91e53679cd48e data/bibliocraft/advancement/recipes/decorations/color/yellow/fancy_iron_lamp.json
+7b4f26d53d5a05ea26d72894aa7c596b0bb0675c data/bibliocraft/advancement/recipes/decorations/color/yellow/fancy_iron_lantern.json
 6d6f087bfa9c2a2745b2b7bd1a0213995d7222da data/bibliocraft/advancement/recipes/decorations/color/yellow/wood/acacia/display_case.json
 b3aee1081d570653af9fb37ff8604bf725beb8da data/bibliocraft/advancement/recipes/decorations/color/yellow/wood/acacia/fancy_seat_back.json
 b97493f755fc545b84e1e098a793fec53af487fa data/bibliocraft/advancement/recipes/decorations/color/yellow/wood/acacia/flat_seat_back.json
@@ -1286,6 +1316,10 @@ f6d957d1d04c6740c04334c82dbd304ab705bd2b data/bibliocraft/advancement/recipes/de
 e7bef2483ce08dfc04ab271dd3e470134e3db752 data/bibliocraft/advancement/recipes/decorations/desk_bell.json
 09892eb6ce264c0d13c5c9edfc91a856e1eae62c data/bibliocraft/advancement/recipes/decorations/dinner_plate.json
 e4cbfe1f87ac0f537780fd5b19be25a71d202092 data/bibliocraft/advancement/recipes/decorations/disc_rack.json
+6f9b3410c4225ab2474a8bd300a97e9b622d9787 data/bibliocraft/advancement/recipes/decorations/fancy_gold_lamp.json
+f99c534a3c25ebeb1a46d18c75a05bd41d7b4893 data/bibliocraft/advancement/recipes/decorations/fancy_gold_lantern.json
+93034f77105799fa0e26f73de2d9e1844686f435 data/bibliocraft/advancement/recipes/decorations/fancy_iron_lamp.json
+0225371946372c68322911c2d6d8fd3b3da3b505 data/bibliocraft/advancement/recipes/decorations/fancy_iron_lantern.json
 977788d902aad7332bd26ee35112a89320bfb5a5 data/bibliocraft/advancement/recipes/decorations/wood/acacia/bookcase.json
 f98b72e3ad681e7f4ab3ad801016d68561432478 data/bibliocraft/advancement/recipes/decorations/wood/acacia/fancy_armor_stand.json
 7b2eed9f20df9a1c7963565a3e7c4806937eedce data/bibliocraft/advancement/recipes/decorations/wood/acacia/label.json
@@ -1365,11 +1399,11 @@ d0d58278d578e855c001939be354bce4e574f320 data/bibliocraft/advancement/recipes/de
 77be61f108270aef0796e0f2866229f2aaf748e7 data/bibliocraft/advancement/recipes/decorations/wood/warped/tool_rack.json
 7891a9fdb2a7f229f7f2af5cbf6e43cc5d5b2af9 data/bibliocraft/advancement/recipes/misc/clipboard.json
 917d6980d33b8261d4ea639e2551479b19a4ffbe data/bibliocraft/advancement/recipes/redstone/redstone_book.json
-d2ed1690c3e4327b7614e9f78e72732d3c178604 data/bibliocraft/recipe/clear_fancy_gold_lamp.json
-33acf6d013eb70546ea06f2badfc5fd54d5235bc data/bibliocraft/recipe/clear_fancy_iron_lamp.json
 11ab17bb58e437fcd80075e66a4ae02bf506618a data/bibliocraft/recipe/clipboard.json
 7bbcd900950626f8742bbee60e88f07c1333fb80 data/bibliocraft/recipe/color/black/fancy_gold_lamp.json
+cec084ee9b72f4a7d61efe740d3a2c67a034849d data/bibliocraft/recipe/color/black/fancy_gold_lantern.json
 20814f89e1df2ec14d21f318db005cddf7cd539b data/bibliocraft/recipe/color/black/fancy_iron_lamp.json
+c72362a02d9e6f900f5d6c73fd998dbbfbac543f data/bibliocraft/recipe/color/black/fancy_iron_lantern.json
 c3fc0edeeed1f795cd3a752e20f693b60238f754 data/bibliocraft/recipe/color/black/sword_pedestal.json
 c9a12da3364f633b20a9c699b24ac8077983b6b6 data/bibliocraft/recipe/color/black/wood/acacia/display_case.json
 4a6a3cd9f0bb052a5a43b2e51e31a8d61b011f8d data/bibliocraft/recipe/color/black/wood/acacia/fancy_seat_back.json
@@ -1449,7 +1483,9 @@ c99ec0769ca5a1e2050f156b44fc13afa1afd910 data/bibliocraft/recipe/color/black/woo
 0bcdc05585fcf0e71f0346d79ac74be25d9d046c data/bibliocraft/recipe/color/black/wood/warped/small_seat_back.json
 b69b435fa63535031badb204941363e889b4cef0 data/bibliocraft/recipe/color/black/wood/warped/tall_seat_back.json
 1ad6da418c6d1bc198cf8b923d36181192dbd30b data/bibliocraft/recipe/color/blue/fancy_gold_lamp.json
+0a2ffc25f92517c9825fd72fa72bf95bebede518 data/bibliocraft/recipe/color/blue/fancy_gold_lantern.json
 436643bf46162ddfa1e1cae912330b6b754abc16 data/bibliocraft/recipe/color/blue/fancy_iron_lamp.json
+ec19f5dbda5e30c89da9aadcfd181b6cf21e1d3d data/bibliocraft/recipe/color/blue/fancy_iron_lantern.json
 f8cb509a68bf7903fd70bf144616be9e67d38036 data/bibliocraft/recipe/color/blue/sword_pedestal.json
 1cf78a8900d125e75495299cad5eade547442eca data/bibliocraft/recipe/color/blue/wood/acacia/display_case.json
 cd661c37f7fb5f1cbfd47911ea78f6b4fc460e1d data/bibliocraft/recipe/color/blue/wood/acacia/fancy_seat_back.json
@@ -1529,7 +1565,9 @@ edfc1f3cc3f13b7e15bf537ca9ade1aa901a103d data/bibliocraft/recipe/color/blue/wood
 140ae873cc2648a49505a431f6e4da5a2f57ae5b data/bibliocraft/recipe/color/blue/wood/warped/small_seat_back.json
 78c5980823a4ca7624189f0553a4ca0acb5131e4 data/bibliocraft/recipe/color/blue/wood/warped/tall_seat_back.json
 04651d0d8e29bada9c0726185d47670e438f9f58 data/bibliocraft/recipe/color/brown/fancy_gold_lamp.json
+05a7c11946ba9e2b9e30038154f6ad84dd61f1db data/bibliocraft/recipe/color/brown/fancy_gold_lantern.json
 2dc73b4324db2a16dbf76d9b8182be85eeef4d32 data/bibliocraft/recipe/color/brown/fancy_iron_lamp.json
+1f147b12264e6c11ed662aea833efa57dd178e52 data/bibliocraft/recipe/color/brown/fancy_iron_lantern.json
 b824bc8641a3c1562741a6c5681a94e946e81825 data/bibliocraft/recipe/color/brown/sword_pedestal.json
 825d78c63883e267f720b973fab92f0d36320125 data/bibliocraft/recipe/color/brown/wood/acacia/display_case.json
 709a2ed4bc6f949d038b0bf829d61b16e34e5eb7 data/bibliocraft/recipe/color/brown/wood/acacia/fancy_seat_back.json
@@ -1609,7 +1647,9 @@ f9a99340d1d0c080ffea2303f0722b6ac14a7efc data/bibliocraft/recipe/color/brown/woo
 a0eb748e702e9f4dc7fd66a05c1f810f2995f074 data/bibliocraft/recipe/color/brown/wood/warped/small_seat_back.json
 49c74b97d96b91c55a93ad5287f0fe511d82e76b data/bibliocraft/recipe/color/brown/wood/warped/tall_seat_back.json
 ace9e3e48af59b5aa11e4d6a234c9e840ae30c3d data/bibliocraft/recipe/color/cyan/fancy_gold_lamp.json
+147e8e993c6b9694ad7055a51a180c3924cd49c5 data/bibliocraft/recipe/color/cyan/fancy_gold_lantern.json
 6f12423109b44d66ba710017aef734c6279714e9 data/bibliocraft/recipe/color/cyan/fancy_iron_lamp.json
+8017180169100cdbe2de71124a1b2dababea3e0b data/bibliocraft/recipe/color/cyan/fancy_iron_lantern.json
 d49b8f2ffffee1d38849b58c256239240a90d1e1 data/bibliocraft/recipe/color/cyan/sword_pedestal.json
 83c4512bbda6ffa76bb83d999df10cf5ee7d4f0d data/bibliocraft/recipe/color/cyan/wood/acacia/display_case.json
 157ad8efe7afb815147503bb3eaaf048ddfb6803 data/bibliocraft/recipe/color/cyan/wood/acacia/fancy_seat_back.json
@@ -1689,7 +1729,9 @@ fd9d9b567c23774adbd5764c93722626c32e92a0 data/bibliocraft/recipe/color/cyan/wood
 ad3b40049c30e6c36b2a8760ca41ed2ffe79a41a data/bibliocraft/recipe/color/cyan/wood/warped/small_seat_back.json
 24293b7d64b961b3a0e4ce6655d0e8390bbb01bb data/bibliocraft/recipe/color/cyan/wood/warped/tall_seat_back.json
 90bf19d5ce7f26b5d6ba0f3c0f07d4efb9f345c1 data/bibliocraft/recipe/color/gray/fancy_gold_lamp.json
+7cd68702d51dc42c681e367955423a8ad34e3ccd data/bibliocraft/recipe/color/gray/fancy_gold_lantern.json
 e5b9be717072dcccd60054ca986d8b411aa05fc0 data/bibliocraft/recipe/color/gray/fancy_iron_lamp.json
+773f6fd1db0ba508507ba74d466e6889dddad3f6 data/bibliocraft/recipe/color/gray/fancy_iron_lantern.json
 c2d96f19cc07536f557151d1df6cfa31f89d377d data/bibliocraft/recipe/color/gray/sword_pedestal.json
 46d29eb767eb48dbaa6abca3828168ccfacfff49 data/bibliocraft/recipe/color/gray/wood/acacia/display_case.json
 11fa1a7cd684a27455ff31aac5f827866e65d4a9 data/bibliocraft/recipe/color/gray/wood/acacia/fancy_seat_back.json
@@ -1769,7 +1811,9 @@ b802c07d7102b1516345f5b800f6648fcca652bb data/bibliocraft/recipe/color/gray/wood
 6deb7bbadbbd7e2360e6022f1017bd9f1ed44691 data/bibliocraft/recipe/color/gray/wood/warped/small_seat_back.json
 e2a8280e4e7be1d0e788767665531220568e7466 data/bibliocraft/recipe/color/gray/wood/warped/tall_seat_back.json
 96b6d995809dfd70a9f851bd2820dd1291109f36 data/bibliocraft/recipe/color/green/fancy_gold_lamp.json
+424d48665e4977f37d42c0fa0ec37a54adfabe9b data/bibliocraft/recipe/color/green/fancy_gold_lantern.json
 3d97996334666b079283fd08b6d302de866b22e9 data/bibliocraft/recipe/color/green/fancy_iron_lamp.json
+4076d1f67c9fab91715e08f486205fbef25ad139 data/bibliocraft/recipe/color/green/fancy_iron_lantern.json
 53cdff375741bc5aeb649b13398b32ded5a82e32 data/bibliocraft/recipe/color/green/sword_pedestal.json
 488b8cf484ae4228d5efc7835c81b3d9218ae716 data/bibliocraft/recipe/color/green/wood/acacia/display_case.json
 a92234a1bf253aa3f01b7ae497e6fca26c73b9d1 data/bibliocraft/recipe/color/green/wood/acacia/fancy_seat_back.json
@@ -1849,7 +1893,9 @@ ac2a6b7d03f4440bf5864a0116036b655d097120 data/bibliocraft/recipe/color/green/woo
 9d54863777211d33378e7bf8369aeebf0b67a676 data/bibliocraft/recipe/color/green/wood/warped/small_seat_back.json
 ebf6fa8018cd4034d865d24f644e360788fa2706 data/bibliocraft/recipe/color/green/wood/warped/tall_seat_back.json
 548773d49dfa94d860da9a91ae602500d59cf651 data/bibliocraft/recipe/color/light_blue/fancy_gold_lamp.json
+da088c596fe52ea554335ef65056b3a36a7114f6 data/bibliocraft/recipe/color/light_blue/fancy_gold_lantern.json
 b73147507253150fa4900162aaf27bf5e02525da data/bibliocraft/recipe/color/light_blue/fancy_iron_lamp.json
+bced6dc7f9a270de9bad2043c0904123d920649c data/bibliocraft/recipe/color/light_blue/fancy_iron_lantern.json
 329bda803880d1c262ebc7c8c58a6cfc6b125fe8 data/bibliocraft/recipe/color/light_blue/sword_pedestal.json
 2dbd7ea841a290b446af8517ab18d790bc6c3e25 data/bibliocraft/recipe/color/light_blue/wood/acacia/display_case.json
 b8616384789ccaa1364acc08c881071120e5249a data/bibliocraft/recipe/color/light_blue/wood/acacia/fancy_seat_back.json
@@ -1929,7 +1975,9 @@ f48843542c94ef632a9f681d8025b2756b88f931 data/bibliocraft/recipe/color/light_blu
 3eb89a18c57819ebd3bf60eae15529f64dc83b81 data/bibliocraft/recipe/color/light_blue/wood/warped/small_seat_back.json
 7b41a9f53710a81fbad53647f847b73d007596a3 data/bibliocraft/recipe/color/light_blue/wood/warped/tall_seat_back.json
 f990b9ad1536c14ca853b2310c8798d3c409b0cd data/bibliocraft/recipe/color/light_gray/fancy_gold_lamp.json
+d91e0096bd3bb8ed7609a6aa0db916c1c3a4dc8a data/bibliocraft/recipe/color/light_gray/fancy_gold_lantern.json
 e38dd1ad03853d17b1ad7e04c116736dd0e60211 data/bibliocraft/recipe/color/light_gray/fancy_iron_lamp.json
+23a8bd5f0aa756854d8f1b46ba0d9eac715d8cd1 data/bibliocraft/recipe/color/light_gray/fancy_iron_lantern.json
 0a69f881c1ea25ccfad556f29b4b779fb1383419 data/bibliocraft/recipe/color/light_gray/sword_pedestal.json
 7a4184775eaee8ecb9813bb3b56fa398e00e8a8e data/bibliocraft/recipe/color/light_gray/wood/acacia/display_case.json
 5bd2a8ac122e721c35545f1aa0d2e6a56f0be364 data/bibliocraft/recipe/color/light_gray/wood/acacia/fancy_seat_back.json
@@ -2009,7 +2057,9 @@ a59f2d62c45f6fb7c430b50118fc63042a89d78c data/bibliocraft/recipe/color/light_gra
 581e311e6df6c547922fb530be1ba73d508cd0b3 data/bibliocraft/recipe/color/light_gray/wood/warped/small_seat_back.json
 632f677a7c7ffb32bd62e3a44c1c82423d6c5fbc data/bibliocraft/recipe/color/light_gray/wood/warped/tall_seat_back.json
 9b532e6cf42e30a68e3d30cdd72287725a51d9ec data/bibliocraft/recipe/color/lime/fancy_gold_lamp.json
+3ba2747aefdac5b683d5919e0e927a47b94c5897 data/bibliocraft/recipe/color/lime/fancy_gold_lantern.json
 3a3cd9ca0529ce7bf7dad7edce4c0a1433bbf239 data/bibliocraft/recipe/color/lime/fancy_iron_lamp.json
+57923de4fde254fcf2f7e1a24f6c1f124c3cdcdb data/bibliocraft/recipe/color/lime/fancy_iron_lantern.json
 1127a1417782fc234df1019484e375b17862574f data/bibliocraft/recipe/color/lime/sword_pedestal.json
 c4edaf81e943f29e6afe81821bb3c7449161a1d0 data/bibliocraft/recipe/color/lime/wood/acacia/display_case.json
 dd8a011048eee8e99f80b64d87778066310e1ef3 data/bibliocraft/recipe/color/lime/wood/acacia/fancy_seat_back.json
@@ -2089,7 +2139,9 @@ f39298fe08ef895b9b2585e4b99a801b1c02bdda data/bibliocraft/recipe/color/lime/wood
 c8ca40dd410f6d9defd87c33ee31ebaa1ec67214 data/bibliocraft/recipe/color/lime/wood/warped/small_seat_back.json
 8d75a0afb2f59d127732049dabd22d64356a042f data/bibliocraft/recipe/color/lime/wood/warped/tall_seat_back.json
 6cb9617131607b1d9b78e9e5a371776d310e6bac data/bibliocraft/recipe/color/magenta/fancy_gold_lamp.json
+1b05a4b62c9d49e7788d884f13b284a2c700a24e data/bibliocraft/recipe/color/magenta/fancy_gold_lantern.json
 1b37a4b20e6f3fb191c668421f60869decf6205f data/bibliocraft/recipe/color/magenta/fancy_iron_lamp.json
+a183c540d32c3d6c03b8fc83db3e7490076543e2 data/bibliocraft/recipe/color/magenta/fancy_iron_lantern.json
 79ff48853d0fb850134688e138e305bf13ffed28 data/bibliocraft/recipe/color/magenta/sword_pedestal.json
 ae8bd892154bc023c5eb1cc955c429350814e9b3 data/bibliocraft/recipe/color/magenta/wood/acacia/display_case.json
 e21ffa0af418a44560286d48f21ae2fba2d66f39 data/bibliocraft/recipe/color/magenta/wood/acacia/fancy_seat_back.json
@@ -2169,7 +2221,9 @@ db69f368db176d54287acb25cccb7ac6112537d5 data/bibliocraft/recipe/color/magenta/w
 cb5ffda1ab10ec43127124c9ae4c9858fd465071 data/bibliocraft/recipe/color/magenta/wood/warped/small_seat_back.json
 be1e8b8978543b86e661bc934d1ea13cc6e87243 data/bibliocraft/recipe/color/magenta/wood/warped/tall_seat_back.json
 bc43eaf5e01a7773e9b7a6868d0ae4bb2ee9978a data/bibliocraft/recipe/color/orange/fancy_gold_lamp.json
+ec8b357e8ba3f9949fec254f3060d5378531c088 data/bibliocraft/recipe/color/orange/fancy_gold_lantern.json
 556a187d087236e538c0649ac191ae250b362f62 data/bibliocraft/recipe/color/orange/fancy_iron_lamp.json
+eac99a1853ce491047962fddf1f35857b751ef76 data/bibliocraft/recipe/color/orange/fancy_iron_lantern.json
 6762a8771662281a5cdac3a78dc0c0e149582c99 data/bibliocraft/recipe/color/orange/sword_pedestal.json
 8ce8715df4cfeb673b1a2c4312bd94be3271bc47 data/bibliocraft/recipe/color/orange/wood/acacia/display_case.json
 8952fa4a7364947c54b0bb2b1d2b8ac11c164e9a data/bibliocraft/recipe/color/orange/wood/acacia/fancy_seat_back.json
@@ -2249,7 +2303,9 @@ aa1e9e6ffb458dde980f3d4c914d7f619103c502 data/bibliocraft/recipe/color/orange/wo
 c1008f906e8b1c097b5779359676599b8c1c60c8 data/bibliocraft/recipe/color/orange/wood/warped/small_seat_back.json
 a715fa8988ed48d1022d1badc1a565970ca49b24 data/bibliocraft/recipe/color/orange/wood/warped/tall_seat_back.json
 aaf15f47ab181e71b34c2d535f3a9c645889556c data/bibliocraft/recipe/color/pink/fancy_gold_lamp.json
+0888a426dad54265faaf3e2dbae9a626393ea4e0 data/bibliocraft/recipe/color/pink/fancy_gold_lantern.json
 154cdf168853749b54fdfde6d3e6c40648fa91fb data/bibliocraft/recipe/color/pink/fancy_iron_lamp.json
+06375ea7498e7cfe1908188329c348f816d42c9f data/bibliocraft/recipe/color/pink/fancy_iron_lantern.json
 8957b04c8d6772d5f06a64ca4ec5b8a43d1a0e09 data/bibliocraft/recipe/color/pink/sword_pedestal.json
 51a11b145d729090f795c2a7d97ca1fa1877144a data/bibliocraft/recipe/color/pink/wood/acacia/display_case.json
 3fcc8c8b9af2cc8f4a43dff9eeca690b446f796f data/bibliocraft/recipe/color/pink/wood/acacia/fancy_seat_back.json
@@ -2329,7 +2385,9 @@ b378b763811e96fee00ae1365cb8c5ff26a21a47 data/bibliocraft/recipe/color/pink/wood
 4fdbb339059225821eba1aedbca94c4a89d11000 data/bibliocraft/recipe/color/pink/wood/warped/small_seat_back.json
 6ff97466a7c990c1a98595638c84bafb27acdd78 data/bibliocraft/recipe/color/pink/wood/warped/tall_seat_back.json
 0713675b352707d85bfe7730fea33cca65f0ca34 data/bibliocraft/recipe/color/purple/fancy_gold_lamp.json
+d997cea9f18533004ffe15e82fae3cc9a76259c5 data/bibliocraft/recipe/color/purple/fancy_gold_lantern.json
 7584c1df38745dc73a7e6389c33412080a851820 data/bibliocraft/recipe/color/purple/fancy_iron_lamp.json
+2f75b488f484df28a6fcea3285d0ee58e013fd21 data/bibliocraft/recipe/color/purple/fancy_iron_lantern.json
 6d3e6b0b3f8f065ca358728e56f894b7c2a2e10b data/bibliocraft/recipe/color/purple/sword_pedestal.json
 e889e7b4e110c841fb9564ef46c81231eb0d3d6a data/bibliocraft/recipe/color/purple/wood/acacia/display_case.json
 c1789416b2cd37b091344c4b7797baac13899beb data/bibliocraft/recipe/color/purple/wood/acacia/fancy_seat_back.json
@@ -2409,7 +2467,9 @@ c159acb8672b7eae44e6c3e4397932b939136aec data/bibliocraft/recipe/color/purple/wo
 1943fca32204428c4d923d26842d557a6c4fd04c data/bibliocraft/recipe/color/purple/wood/warped/small_seat_back.json
 7c630867183ef9c363e2d35a65371ebdc8692c68 data/bibliocraft/recipe/color/purple/wood/warped/tall_seat_back.json
 85110bdb2554e48eb66ba51ecdff27b05cf9d292 data/bibliocraft/recipe/color/red/fancy_gold_lamp.json
+e96d2a6c94875e3702ce05a5ad8a4e92fd75e137 data/bibliocraft/recipe/color/red/fancy_gold_lantern.json
 90f1564501eb7ed599746698cfdf5632a66b9cf9 data/bibliocraft/recipe/color/red/fancy_iron_lamp.json
+9e7ec2b3343a0a119f9694b494e6f18311b0bb73 data/bibliocraft/recipe/color/red/fancy_iron_lantern.json
 f5ce094cce44455d434f48daf94714b6e8462a2c data/bibliocraft/recipe/color/red/sword_pedestal.json
 73b6c03cd2ad612a21d74760d9826e99b7e23e90 data/bibliocraft/recipe/color/red/wood/acacia/display_case.json
 0c0a35bfc97b7685c46c3048413de377f1821d9f data/bibliocraft/recipe/color/red/wood/acacia/fancy_seat_back.json
@@ -2489,7 +2549,9 @@ dc654df41584bdec08d0f131f4bfa18404e27281 data/bibliocraft/recipe/color/red/wood/
 529d136ba8718cd2ef948492a550dec8f4827f7a data/bibliocraft/recipe/color/red/wood/warped/small_seat_back.json
 1b315e6cdb6564a991693225f79f546734c7908b data/bibliocraft/recipe/color/red/wood/warped/tall_seat_back.json
 31255419127f2bf5e71c4dfa144d8faff38b50eb data/bibliocraft/recipe/color/white/fancy_gold_lamp.json
+fe8888b9527d38008fe373ed4675ab84db5910e6 data/bibliocraft/recipe/color/white/fancy_gold_lantern.json
 0d80c6a926b4158c4259a4bb87c5e3d6b1c1acc4 data/bibliocraft/recipe/color/white/fancy_iron_lamp.json
+efd01bf32048060dba29fe51e731bac51ef07555 data/bibliocraft/recipe/color/white/fancy_iron_lantern.json
 64105183a5ac3040f2effab609bdbef2f69ea508 data/bibliocraft/recipe/color/white/sword_pedestal.json
 6d7dc7feba74d1bca3d4f5b73e74022724485e23 data/bibliocraft/recipe/color/white/wood/acacia/display_case.json
 fa04d413063903b76d653af25fe2dd52135ac65d data/bibliocraft/recipe/color/white/wood/acacia/fancy_seat_back.json
@@ -2569,7 +2631,9 @@ ab699b6734b18932e72a2a92f8a355931a07cb02 data/bibliocraft/recipe/color/white/woo
 d2577e30f6c6ae8871b98057e5480a4609d4c063 data/bibliocraft/recipe/color/white/wood/warped/small_seat_back.json
 a3cc1ee258739ae07c149f1d258842c6f8b686da data/bibliocraft/recipe/color/white/wood/warped/tall_seat_back.json
 b2608a2aca764cc2fa1f54f5fd7f63fc4a6292fa data/bibliocraft/recipe/color/yellow/fancy_gold_lamp.json
+ba76c5c666094c3e83b0dc959f3c27120a80a3d7 data/bibliocraft/recipe/color/yellow/fancy_gold_lantern.json
 32c6489a8f0f12fb55c2abdfc28c4190549de8e1 data/bibliocraft/recipe/color/yellow/fancy_iron_lamp.json
+05f854f5c152b98460e9dd84a6ff67eddedb0f37 data/bibliocraft/recipe/color/yellow/fancy_iron_lantern.json
 783c34e85e35c718e163cff23335332bcead42dc data/bibliocraft/recipe/color/yellow/sword_pedestal.json
 b5fd7740cbc43c1d25553268ebd8bbd781603778 data/bibliocraft/recipe/color/yellow/wood/acacia/display_case.json
 5c8e015355f721106f24c3fc0dd6a340d5d973a4 data/bibliocraft/recipe/color/yellow/wood/acacia/fancy_seat_back.json
@@ -2652,6 +2716,10 @@ cb4c81284e10e2c736a90cd2ccdc54b46fbdcb3c data/bibliocraft/recipe/color/yellow/wo
 8ae29ae6ec56eb14b31d598130fe1ab6c151ae47 data/bibliocraft/recipe/desk_bell.json
 ab2426309cd0111a1d6412779a358a850d53b0bd data/bibliocraft/recipe/dinner_plate.json
 33320f971c44f3a5d86593688e124073c73baeef data/bibliocraft/recipe/disc_rack.json
+c23f8327280a6fe5317820a8b1ff5e3f5244c959 data/bibliocraft/recipe/fancy_gold_lamp.json
+6365e0853de85a0fdd09d68b7eef48f3f8bf43f3 data/bibliocraft/recipe/fancy_gold_lantern.json
+d831ca4c26a942cd487fd3b1659edd24a12d0672 data/bibliocraft/recipe/fancy_iron_lamp.json
+b50ec25806b003ee56d8a2d4f1cec23e14ec849d data/bibliocraft/recipe/fancy_iron_lantern.json
 0db8826f068f2cb63ae171b8d0f4cc15c878c24f data/bibliocraft/recipe/iron_fancy_armor_stand.json
 f0583eb232b6f310d7e4f1f397aa3f88da36c195 data/bibliocraft/recipe/redstone_book.json
 b277312279cd10d36327954b4eabd7385e8de37e data/bibliocraft/recipe/wood/acacia/bookcase.json
