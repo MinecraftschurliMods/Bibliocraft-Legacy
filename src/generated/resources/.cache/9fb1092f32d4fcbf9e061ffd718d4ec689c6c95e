@@ -1,4 +1,4 @@
-// 1.21	2024-07-18T15:08:41.0699134	Recipes
+// 1.21	2024-07-18T15:11:48.0352186	Recipes
 269deaa12a4f5857b6137aeee6f02144569207b8 data/bibliocraft/advancement/recipes/building_blocks/color/black/sword_pedestal.json
 5a59727883c9c912fc122a07031cba028cab5ec7 data/bibliocraft/advancement/recipes/building_blocks/color/blue/sword_pedestal.json
 6c38e7dbf1d245e147169dd82f86311e7874dd6d data/bibliocraft/advancement/recipes/building_blocks/color/brown/sword_pedestal.json
@@ -1319,7 +1319,7 @@ e4cbfe1f87ac0f537780fd5b19be25a71d202092 data/bibliocraft/advancement/recipes/de
 6f9b3410c4225ab2474a8bd300a97e9b622d9787 data/bibliocraft/advancement/recipes/decorations/fancy_gold_lamp.json
 f99c534a3c25ebeb1a46d18c75a05bd41d7b4893 data/bibliocraft/advancement/recipes/decorations/fancy_gold_lantern.json
 93034f77105799fa0e26f73de2d9e1844686f435 data/bibliocraft/advancement/recipes/decorations/fancy_iron_lamp.json
-0225371946372c68322911c2d6d8fd3b3da3b505 data/bibliocraft/advancement/recipes/decorations/fancy_iron_lantern.json
+64a8af53811aadb5a27fc3eee71309990c67f6c1 data/bibliocraft/advancement/recipes/decorations/fancy_iron_lantern.json
 977788d902aad7332bd26ee35112a89320bfb5a5 data/bibliocraft/advancement/recipes/decorations/wood/acacia/bookcase.json
 f98b72e3ad681e7f4ab3ad801016d68561432478 data/bibliocraft/advancement/recipes/decorations/wood/acacia/fancy_armor_stand.json
 7b2eed9f20df9a1c7963565a3e7c4806937eedce data/bibliocraft/advancement/recipes/decorations/wood/acacia/label.json

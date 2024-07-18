@@ -120,7 +120,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('C', Ingredient.of(Items.CANDLE))
-                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_IRON))
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD.get())
                 .pattern("I F")
