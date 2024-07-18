@@ -22,7 +22,7 @@ public record ClipboardItemSyncPacket(ClipboardContent content) implements Custo
                 stack = player.getOffhandItem();
                 if (!stack.is(BCItems.CLIPBOARD)) return;
             }
-            stack.set(BCDataComponents.CLIPBOARD, packet.content);
+            stack.set(BCDataComponents.CLIPBOARD_CONTENT, packet.content);
         });
     }
 

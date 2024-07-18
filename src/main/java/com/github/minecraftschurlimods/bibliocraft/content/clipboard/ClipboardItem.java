@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clipboard;
 
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.Level;
 
 public class ClipboardItem extends Item {
     public ClipboardItem() {
-        super(new Properties().stacksTo(1));
+        super(new Properties().stacksTo(1).component(BCDataComponents.CLIPBOARD_CONTENT.get(), ClipboardContent.DEFAULT));
     }
 
     @Override

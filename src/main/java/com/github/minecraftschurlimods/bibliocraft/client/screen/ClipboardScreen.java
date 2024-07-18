@@ -39,7 +39,7 @@ public class ClipboardScreen extends Screen {
     public ClipboardScreen(ItemStack stack) {
         super(stack.getHoverName());
         this.stack = stack;
-        this.data = stack.get(BCDataComponents.CLIPBOARD);
+        this.data = stack.get(BCDataComponents.CLIPBOARD_CONTENT);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ClipboardScreen extends Screen {
     }
 
     private void close() {
-        stack.set(BCDataComponents.CLIPBOARD, data);
+        stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
         PacketDistributor.sendToServer(new ClipboardItemSyncPacket(data));
     }
 
