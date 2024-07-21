@@ -3,8 +3,6 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancylight;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,8 +25,7 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
             Shapes.box(0.3125, 0.6875, 0.3125, 0.6875, 0.75, 0.6875),
             Shapes.box(0.375, 0.75, 0.375, 0.625, 0.8125, 0.625));
     private static final VoxelShape HANGING_SHAPE = ShapeUtil.combine(STANDING_SHAPE,
-            Shapes.box(0.46875, 0.8125, 0.46875, 0.53125, 0.9375, 0.53125),
-            Shapes.box(0.375, 0.9375, 0.375, 0.625, 1, 0.625));
+            Shapes.box(0.40625, 0.8125, 0.40625, 0.59375, 1.0, 0.59375));
     private static final VoxelShape NORTH_WALL_SHAPE = ShapeUtil.combine(STANDING_SHAPE,
             Shapes.box(0.4375, 0.65625, 0.9375, 0.5625, 0.90625, 1),
             Shapes.box(0.46875, 0.70625, 0.875, 0.53125, 0.83125, 0.9375),

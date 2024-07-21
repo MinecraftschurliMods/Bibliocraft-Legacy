@@ -1,6 +1,7 @@
 {
   "parent": "bibliocraft:block/template/fancy_lantern/hanging",
   "textures": {
-    "metal": "minecraft:block/iron_block"
+    "metal": "minecraft:block/iron_block",
+    "chain": "minecraft:block/chain"
   }
 }

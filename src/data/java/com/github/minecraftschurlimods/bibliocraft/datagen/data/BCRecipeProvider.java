@@ -163,6 +163,16 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('S', ItemTags.WOODEN_SLABS)
                 .unlockedBy("has_wooden_slab", has(ItemTags.WOODEN_SLABS))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.GOLD_CHAIN.get())
+                .pattern("N")
+                .pattern("I")
+                .pattern("N")
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
+                .unlockedBy("has_gold_chain", has(BCItems.GOLD_CHAIN))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND.get())
                 .pattern(" I ")
                 .pattern(" I ")

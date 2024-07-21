@@ -1,4 +1,4 @@
-// 1.21	2024-07-18T15:08:41.0228802	Loot Tables
+// 1.21	2024-07-21T18:06:41.33968	Loot Tables
 de27c2af93e5cab5a9d4b946062ded6257a7e5d7 data/bibliocraft/loot_table/blocks/acacia_bookcase.json
 76ad281e44358ad5de5d4b8120b7b1de0742103a data/bibliocraft/loot_table/blocks/acacia_fancy_armor_stand.json
 318a3b2f6a21fbd5812a8d9262c53207f8fc71e0 data/bibliocraft/loot_table/blocks/acacia_label.json
@@ -241,6 +241,7 @@ d587878555ba8fd1de42ec97d2ece7c6f445c817 data/bibliocraft/loot_table/blocks/disc
 03e6415f571c7b6ca4f6cc611d6edf65f5ec6c4d data/bibliocraft/loot_table/blocks/fancy_gold_lantern.json
 cc3fa71a854770468fd0de03fd312d9680e062e2 data/bibliocraft/loot_table/blocks/fancy_iron_lamp.json
 b7fb44b811acb31b5fe8bd84fd26e166ac2c6c3c data/bibliocraft/loot_table/blocks/fancy_iron_lantern.json
+1a10d7fdceda498503e9bb89cc129bb18887f104 data/bibliocraft/loot_table/blocks/gold_chain.json
 c1fb9db82ec1fc38dbe3b55b25ca5d9376e47424 data/bibliocraft/loot_table/blocks/gray_acacia_display_case.json
 2a3d608d16e2c147a1b438db215ce20dbd9fe394 data/bibliocraft/loot_table/blocks/gray_acacia_seat.json
 83f0f0752a06926b21451da2a207baa7a737120d data/bibliocraft/loot_table/blocks/gray_acacia_seat_back.json

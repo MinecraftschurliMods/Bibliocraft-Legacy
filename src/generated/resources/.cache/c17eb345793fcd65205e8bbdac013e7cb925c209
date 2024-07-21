@@ -1,4 +1,4 @@
-// 1.21	2024-07-18T15:08:41.0489109	Item Models: bibliocraft
+// 1.21	2024-07-21T18:22:11.1665865	Item Models: bibliocraft
 4f9e90140d7161f62b8e8c1fcf9e6d67fb404ff2 assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 90285e3e9d48b221e35a0ef303eb59bb455d98f9 assets/bibliocraft/models/item/acacia_label.json
@@ -374,6 +374,7 @@ bc76e81625d3ba09706eefdd4b3fdc63eb90cb24 assets/bibliocraft/models/item/fancy_go
 97b090f654d3c5b75d237b87f2d8f4f4f8209105 assets/bibliocraft/models/item/fancy_gold_lantern.json
 8325f2e5eb25fc4c263dee280940107d0809c172 assets/bibliocraft/models/item/fancy_iron_lamp.json
 469a848a3d448464045b192ec5a6598a9bf45c9a assets/bibliocraft/models/item/fancy_iron_lantern.json
+e6f2247586f0771c1862b07c9af5bccaaff35389 assets/bibliocraft/models/item/gold_chain.json
 fe63431d94208b5ed78b0468a41010d25132866d assets/bibliocraft/models/item/gray_acacia_display_case.json
 f4e4c3cd4d89e99dd504671754c1447b15dfb22e assets/bibliocraft/models/item/gray_acacia_fancy_seat_back.json
 3a2e75d9da41539578a977d2c7a9b7b6c8a9cd10 assets/bibliocraft/models/item/gray_acacia_flat_seat_back.json

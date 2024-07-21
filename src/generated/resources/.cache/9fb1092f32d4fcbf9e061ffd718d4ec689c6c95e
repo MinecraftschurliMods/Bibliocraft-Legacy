@@ -1,4 +1,4 @@
-// 1.21	2024-07-18T15:11:48.0352186	Recipes
+// 1.21	2024-07-21T18:06:41.4376781	Recipes
 269deaa12a4f5857b6137aeee6f02144569207b8 data/bibliocraft/advancement/recipes/building_blocks/color/black/sword_pedestal.json
 5a59727883c9c912fc122a07031cba028cab5ec7 data/bibliocraft/advancement/recipes/building_blocks/color/blue/sword_pedestal.json
 6c38e7dbf1d245e147169dd82f86311e7874dd6d data/bibliocraft/advancement/recipes/building_blocks/color/brown/sword_pedestal.json
@@ -1320,6 +1320,7 @@ e4cbfe1f87ac0f537780fd5b19be25a71d202092 data/bibliocraft/advancement/recipes/de
 f99c534a3c25ebeb1a46d18c75a05bd41d7b4893 data/bibliocraft/advancement/recipes/decorations/fancy_gold_lantern.json
 93034f77105799fa0e26f73de2d9e1844686f435 data/bibliocraft/advancement/recipes/decorations/fancy_iron_lamp.json
 64a8af53811aadb5a27fc3eee71309990c67f6c1 data/bibliocraft/advancement/recipes/decorations/fancy_iron_lantern.json
+27febb026838fe7d5c00b9261b6e677ad73267a8 data/bibliocraft/advancement/recipes/decorations/gold_chain.json
 977788d902aad7332bd26ee35112a89320bfb5a5 data/bibliocraft/advancement/recipes/decorations/wood/acacia/bookcase.json
 f98b72e3ad681e7f4ab3ad801016d68561432478 data/bibliocraft/advancement/recipes/decorations/wood/acacia/fancy_armor_stand.json
 7b2eed9f20df9a1c7963565a3e7c4806937eedce data/bibliocraft/advancement/recipes/decorations/wood/acacia/label.json
@@ -2720,6 +2721,7 @@ c23f8327280a6fe5317820a8b1ff5e3f5244c959 data/bibliocraft/recipe/fancy_gold_lamp
 6365e0853de85a0fdd09d68b7eef48f3f8bf43f3 data/bibliocraft/recipe/fancy_gold_lantern.json
 d831ca4c26a942cd487fd3b1659edd24a12d0672 data/bibliocraft/recipe/fancy_iron_lamp.json
 b50ec25806b003ee56d8a2d4f1cec23e14ec849d data/bibliocraft/recipe/fancy_iron_lantern.json
+7c3bddca5773e3dff7dcf5af58fdaacc1f4211e9 data/bibliocraft/recipe/gold_chain.json
 0db8826f068f2cb63ae171b8d0f4cc15c878c24f data/bibliocraft/recipe/iron_fancy_armor_stand.json
 f0583eb232b6f310d7e4f1f397aa3f88da36c195 data/bibliocraft/recipe/redstone_book.json
 b277312279cd10d36327954b4eabd7385e8de37e data/bibliocraft/recipe/wood/acacia/bookcase.json
