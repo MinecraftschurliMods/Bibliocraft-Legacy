@@ -22,13 +22,14 @@ import net.neoforged.neoforge.registries.DeferredItem;
 public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
-    WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",     BCBlocks.BOOKCASE);
+    WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",        BCBlocks.BOOKCASE);
     WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_armor_stand", wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
-    WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",        BCBlocks.LABEL);
-    WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf", BCBlocks.POTION_SHELF);
-    WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",        BCBlocks.SHELF);
-    WoodTypeDeferredHolder<Item, BlockItem>           TABLE             = woodenBlock("table",        BCBlocks.TABLE);
-    WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",    BCBlocks.TOOL_RACK);
+    WoodTypeDeferredHolder<Item, BlockItem>           FANCY_WORKBENCH   = woodenBlock("fancy_workbench", BCBlocks.FANCY_WORKBENCH);
+    WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",           BCBlocks.LABEL);
+    WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf",    BCBlocks.POTION_SHELF);
+    WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",           BCBlocks.SHELF);
+    WoodTypeDeferredHolder<Item, BlockItem>           TABLE             = woodenBlock("table",           BCBlocks.TABLE);
+    WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",       BCBlocks.TOOL_RACK);
     ColoredWoodTypeDeferredHolder<Item, BlockItem>    DISPLAY_CASE      = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "display_case",     DisplayCaseItem::new);
     ColoredWoodTypeDeferredHolder<Item, BlockItem>    SEAT              = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "seat",             (wood, color) -> new ColoredWoodTypeBlockItem(BCBlocks.SEAT, wood, color));
     ColoredWoodTypeDeferredHolder<Item, SeatBackItem> SMALL_SEAT_BACK   = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "small_seat_back",  (wood, color) -> new SeatBackItem(BCBlocks.SEAT_BACK, wood, color, SeatBackType.SMALL));

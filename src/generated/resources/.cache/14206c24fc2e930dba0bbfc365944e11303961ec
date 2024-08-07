@@ -1,4 +1,4 @@
-// 1.21	2024-07-18T15:08:41.1295261	Tags for minecraft:item mod id bibliocraft
+// 1.21	2024-08-07T20:04:21.2475438	Tags for minecraft:item mod id bibliocraft
 dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/item/bookcases.json
 8c21eecc9ff3212b039c2ccadcebce2ef5e04510 data/bibliocraft/tags/item/bookcase_books.json
 a62188adba8d65fe5971b95f4c552a1072086c31 data/bibliocraft/tags/item/cookie_jar_cookies.json
@@ -11,6 +11,7 @@ f52a6043b740f88d1e4bef40d56f654500ab0c60 data/bibliocraft/tags/item/fancy_lamps/
 ccb0f9b3682cd5adf9f9d42d8ff56af77730be38 data/bibliocraft/tags/item/fancy_lanterns.json
 dcb821040ea6560b722ddfcb0e52323bc43bbdf7 data/bibliocraft/tags/item/fancy_lanterns/gold.json
 648145b117a4cff2f89ae2171e664cf4cb7e018e data/bibliocraft/tags/item/fancy_lanterns/iron.json
+7523bc89e1d5e4f12abebe03dc17c0cffe056c31 data/bibliocraft/tags/item/fancy_workbenches.json
 14d642f0d86f6b40718c71567ab81868405d8a71 data/bibliocraft/tags/item/labels.json
 3fe7a170a64b09c30b245eed6f6b10990edf59f3 data/bibliocraft/tags/item/potion_shelf_potions.json
 4a0b4fae70ed78371f6a1c5ea90d375fea121692 data/bibliocraft/tags/item/potion_shelves.json

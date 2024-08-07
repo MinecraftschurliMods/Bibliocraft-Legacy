@@ -72,23 +72,24 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     }
 
     public void generateEnglishTranslationsFor(LanguageProvider provider, BibliocraftWoodType woodType) {
-        woodenBlockTranslation(provider, woodType, BCBlocks.BOOKCASE, "Bookcase");
+        woodenBlockTranslation(provider, woodType, BCBlocks.BOOKCASE,          "Bookcase");
         woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_ARMOR_STAND, "Fancy Armor Stand");
-        woodenBlockTranslation(provider, woodType, BCBlocks.LABEL, "Label");
-        woodenBlockTranslation(provider, woodType, BCBlocks.POTION_SHELF, "Potion Shelf");
-        woodenBlockTranslation(provider, woodType, BCBlocks.SHELF, "Shelf");
-        woodenBlockTranslation(provider, woodType, BCBlocks.TABLE, "Table");
-        woodenBlockTranslation(provider, woodType, BCBlocks.TOOL_RACK, "Tool Rack");
+        woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_WORKBENCH,   "Fancy Workbench");
+        woodenBlockTranslation(provider, woodType, BCBlocks.LABEL,             "Label");
+        woodenBlockTranslation(provider, woodType, BCBlocks.POTION_SHELF,      "Potion Shelf");
+        woodenBlockTranslation(provider, woodType, BCBlocks.SHELF,             "Shelf");
+        woodenBlockTranslation(provider, woodType, BCBlocks.TABLE,             "Table");
+        woodenBlockTranslation(provider, woodType, BCBlocks.TOOL_RACK,         "Tool Rack");
         for (DyeColor color : DyeColor.values()) {
-            coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.DISPLAY_CASE, "Display Case");
+            coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.DISPLAY_CASE,      "Display Case");
             coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.WALL_DISPLAY_CASE, "Display Case");
-            coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.SEAT, "Seat");
-            coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.SEAT_BACK, "Seat Back");
-            coloredWoodenItemTranslation(provider, woodType, color, BCItems.SMALL_SEAT_BACK, "Small Seat Back");
-            coloredWoodenItemTranslation(provider, woodType, color, BCItems.RAISED_SEAT_BACK, "Raised Seat Back");
-            coloredWoodenItemTranslation(provider, woodType, color, BCItems.FLAT_SEAT_BACK, "Flat Seat Back");
-            coloredWoodenItemTranslation(provider, woodType, color, BCItems.TALL_SEAT_BACK, "Tall Seat Back");
-            coloredWoodenItemTranslation(provider, woodType, color, BCItems.FANCY_SEAT_BACK, "Fancy Seat Back");
+            coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.SEAT,              "Seat");
+            coloredWoodenBlockTranslation(provider, woodType, color, BCBlocks.SEAT_BACK,         "Seat Back");
+            coloredWoodenItemTranslation(provider, woodType, color, BCItems.SMALL_SEAT_BACK,     "Small Seat Back");
+            coloredWoodenItemTranslation(provider, woodType, color, BCItems.RAISED_SEAT_BACK,    "Raised Seat Back");
+            coloredWoodenItemTranslation(provider, woodType, color, BCItems.FLAT_SEAT_BACK,      "Flat Seat Back");
+            coloredWoodenItemTranslation(provider, woodType, color, BCItems.TALL_SEAT_BACK,      "Tall Seat Back");
+            coloredWoodenItemTranslation(provider, woodType, color, BCItems.FANCY_SEAT_BACK,     "Fancy Seat Back");
         }
     }
 
@@ -105,6 +106,10 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 models.withExistingParent(prefix + "fancy_armor_stand_bottom", bcLoc("block/template/fancy_armor_stand/bottom")).texture("texture", woodTexture),
                 models.withExistingParent(prefix + "fancy_armor_stand_top", bcLoc("block/template/fancy_armor_stand/top")).texture("texture", woodTexture),
                 true);
+        DatagenUtil.horizontalBlockModel(provider, BCBlocks.FANCY_WORKBENCH.holder(woodType),
+                prefix + "fancy_workbench",
+                bcLoc("block/template/fancy_workbench"),
+                woodTexture);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.LABEL.holder(woodType),
                 prefix + "label",
                 bcLoc("block/template/label"),
@@ -163,6 +168,7 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         String prefix = woodType.getRegistrationPrefix();
         provider.withExistingParent(prefix + "_bookcase", bcLoc("block/wood/" + prefix + "/bookcase"));
         provider.withExistingParent(prefix + "_fancy_armor_stand", bcLoc("block/template/fancy_armor_stand/inventory")).texture("texture", woodType.texture());
+        provider.withExistingParent(prefix + "_fancy_workbench", bcLoc("block/wood/" + prefix + "/fancy_workbench"));
         provider.withExistingParent(prefix + "_label", bcLoc("block/wood/" + prefix + "/label"));
         provider.withExistingParent(prefix + "_potion_shelf", bcLoc("block/wood/" + prefix + "/potion_shelf"));
         provider.withExistingParent(prefix + "_shelf", bcLoc("block/wood/" + prefix + "/shelf"));
@@ -181,56 +187,59 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
 
     @Override
     public void generateBlockTagsFor(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor, BibliocraftWoodType woodType) {
-        tagAccessor.apply(BCTags.Blocks.BOOKCASES).add(BCBlocks.BOOKCASE.get(woodType));
+        tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .add(BCBlocks.BOOKCASE.get(woodType));
         tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.FANCY_ARMOR_STAND.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.LABELS).add(BCBlocks.LABEL.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.POTION_SHELVES).add(BCBlocks.POTION_SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.SHELVES).add(BCBlocks.SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.TABLES).add(BCBlocks.TABLE.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.TOOL_RACKS).add(BCBlocks.TOOL_RACK.get(woodType));
-        DatagenUtil.addColorVariants(woodType, BCBlocks.DISPLAY_CASE, tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+        tagAccessor.apply(BCTags.Blocks.FANCY_WORKBENCHES)      .add(BCBlocks.FANCY_WORKBENCH.get(woodType));
+        tagAccessor.apply(BCTags.Blocks.LABELS)                 .add(BCBlocks.LABEL.get(woodType));
+        tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .add(BCBlocks.POTION_SHELF.get(woodType));
+        tagAccessor.apply(BCTags.Blocks.SHELVES)                .add(BCBlocks.SHELF.get(woodType));
+        tagAccessor.apply(BCTags.Blocks.TABLES)                 .add(BCBlocks.TABLE.get(woodType));
+        tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .add(BCBlocks.TOOL_RACK.get(woodType));
+        DatagenUtil.addColorVariants(woodType, BCBlocks.DISPLAY_CASE,      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
         DatagenUtil.addColorVariants(woodType, BCBlocks.WALL_DISPLAY_CASE, tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-        DatagenUtil.addColorVariants(woodType, BCBlocks.SEAT, tagAccessor.apply(BCTags.Blocks.SEATS));
-        DatagenUtil.addColorVariants(woodType, BCBlocks.SEAT_BACK, tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
+        DatagenUtil.addColorVariants(woodType, BCBlocks.SEAT,              tagAccessor.apply(BCTags.Blocks.SEATS));
+        DatagenUtil.addColorVariants(woodType, BCBlocks.SEAT_BACK,         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
     }
 
     @Override
     public void generateItemTagsFor(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor, BibliocraftWoodType woodType) {
-        tagAccessor.apply(BCTags.Items.BOOKCASES).add(BCItems.BOOKCASE.get(woodType));
+        tagAccessor.apply(BCTags.Items.BOOKCASES)              .add(BCItems.BOOKCASE.get(woodType));
         tagAccessor.apply(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.FANCY_ARMOR_STAND.get(woodType));
-        tagAccessor.apply(BCTags.Items.LABELS).add(BCItems.LABEL.get(woodType));
-        tagAccessor.apply(BCTags.Items.POTION_SHELVES).add(BCItems.POTION_SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Items.SHELVES).add(BCItems.SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Items.TABLES).add(BCItems.TABLE.get(woodType));
-        tagAccessor.apply(BCTags.Items.TOOL_RACKS).add(BCItems.TOOL_RACK.get(woodType));
-        DatagenUtil.addColorVariants(woodType, BCItems.DISPLAY_CASE, tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
-        DatagenUtil.addColorVariants(woodType, BCItems.SEAT, tagAccessor.apply(BCTags.Items.SEATS));
-        DatagenUtil.addColorVariants(woodType, BCItems.SMALL_SEAT_BACK, tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
+        tagAccessor.apply(BCTags.Items.FANCY_WORKBENCHES)      .add(BCItems.FANCY_WORKBENCH.get(woodType));
+        tagAccessor.apply(BCTags.Items.LABELS)                 .add(BCItems.LABEL.get(woodType));
+        tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .add(BCItems.POTION_SHELF.get(woodType));
+        tagAccessor.apply(BCTags.Items.SHELVES)                .add(BCItems.SHELF.get(woodType));
+        tagAccessor.apply(BCTags.Items.TABLES)                 .add(BCItems.TABLE.get(woodType));
+        tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .add(BCItems.TOOL_RACK.get(woodType));
+        DatagenUtil.addColorVariants(woodType, BCItems.DISPLAY_CASE,     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
+        DatagenUtil.addColorVariants(woodType, BCItems.SEAT,             tagAccessor.apply(BCTags.Items.SEATS));
+        DatagenUtil.addColorVariants(woodType, BCItems.SMALL_SEAT_BACK,  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
         DatagenUtil.addColorVariants(woodType, BCItems.RAISED_SEAT_BACK, tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
-        DatagenUtil.addColorVariants(woodType, BCItems.FLAT_SEAT_BACK, tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
-        DatagenUtil.addColorVariants(woodType, BCItems.TALL_SEAT_BACK, tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
-        DatagenUtil.addColorVariants(woodType, BCItems.FANCY_SEAT_BACK, tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
+        DatagenUtil.addColorVariants(woodType, BCItems.FLAT_SEAT_BACK,   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
+        DatagenUtil.addColorVariants(woodType, BCItems.TALL_SEAT_BACK,   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
+        DatagenUtil.addColorVariants(woodType, BCItems.FANCY_SEAT_BACK,  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
     }
 
     @Override
     public void generateLootTablesFor(BiConsumer<Block, LootTable.Builder> lootTableAdder, BibliocraftWoodType woodType) {
-        loot(lootTableAdder, BCBlocks.BOOKCASE.get(woodType), DatagenUtil::createNameableTable);
+        loot(lootTableAdder, BCBlocks.BOOKCASE.get(woodType),          DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.FANCY_ARMOR_STAND.get(woodType), DatagenUtil::createFancyArmorStandTable);
-        loot(lootTableAdder, BCBlocks.LABEL.get(woodType), DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.POTION_SHELF.get(woodType), DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.SHELF.get(woodType), DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.TABLE.get(woodType), DatagenUtil::createDefaultTable);
-        loot(lootTableAdder, BCBlocks.TOOL_RACK.get(woodType), DatagenUtil::createNameableTable);
+        loot(lootTableAdder, BCBlocks.FANCY_WORKBENCH.get(woodType),   DatagenUtil::createNameableTable);
+        loot(lootTableAdder, BCBlocks.LABEL.get(woodType),             DatagenUtil::createNameableTable);
+        loot(lootTableAdder, BCBlocks.POTION_SHELF.get(woodType),      DatagenUtil::createNameableTable);
+        loot(lootTableAdder, BCBlocks.SHELF.get(woodType),             DatagenUtil::createNameableTable);
+        loot(lootTableAdder, BCBlocks.TABLE.get(woodType),             DatagenUtil::createDefaultTable);
+        loot(lootTableAdder, BCBlocks.TOOL_RACK.get(woodType),         DatagenUtil::createNameableTable);
         for (DyeColor color : DyeColor.values()) {
-            loot(lootTableAdder, BCBlocks.DISPLAY_CASE.get(woodType, color), DatagenUtil::createDefaultTable);
+            loot(lootTableAdder, BCBlocks.DISPLAY_CASE.get(woodType, color),      DatagenUtil::createDefaultTable);
             loot(lootTableAdder, BCBlocks.WALL_DISPLAY_CASE.get(woodType, color), DatagenUtil::createDefaultTable);
-            loot(lootTableAdder, BCBlocks.SEAT.get(woodType, color), DatagenUtil::createDefaultTable);
+            loot(lootTableAdder, BCBlocks.SEAT.get(woodType, color),              DatagenUtil::createDefaultTable);
             loot(lootTableAdder, BCBlocks.SEAT_BACK.get(woodType, color), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(ExplosionCondition.survivesExplosion())
-                    .add(LootItem.lootTableItem(BCItems.SMALL_SEAT_BACK.get(woodType, color)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.SMALL))))
+                    .add(LootItem.lootTableItem(BCItems.SMALL_SEAT_BACK.get(woodType, color)) .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.SMALL))))
                     .add(LootItem.lootTableItem(BCItems.RAISED_SEAT_BACK.get(woodType, color)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.RAISED))))
-                    .add(LootItem.lootTableItem(BCItems.FLAT_SEAT_BACK.get(woodType, color)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.FLAT))))
-                    .add(LootItem.lootTableItem(BCItems.TALL_SEAT_BACK.get(woodType, color)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.TALL))))
-                    .add(LootItem.lootTableItem(BCItems.FANCY_SEAT_BACK.get(woodType, color)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.FANCY))))));
+                    .add(LootItem.lootTableItem(BCItems.FLAT_SEAT_BACK.get(woodType, color))  .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.FLAT))))
+                    .add(LootItem.lootTableItem(BCItems.TALL_SEAT_BACK.get(woodType, color))  .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.TALL))))
+                    .add(LootItem.lootTableItem(BCItems.FANCY_SEAT_BACK.get(woodType, color)) .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.FANCY))))));
         }
     }
 
