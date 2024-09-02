@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.dinnerplate.DinnerPla
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyworkbench.FancyWorkbenchBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlockEntity;
@@ -28,6 +29,7 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<DiscRackBlockEntity>>        DISC_RACK         = register("disc_rack",         DiscRackBlockEntity::new,        BCBlocks.DISC_RACK, BCBlocks.WALL_DISC_RACK);
     Supplier<BlockEntityType<DisplayCaseBlockEntity>>     DISPLAY_CASE      = register("display_case",      DisplayCaseBlockEntity::new,     BCUtil.mergeRaw(BCBlocks.DISPLAY_CASE.holders(), BCBlocks.WALL_DISPLAY_CASE.holders()));
     Supplier<BlockEntityType<FancyArmorStandBlockEntity>> FANCY_ARMOR_STAND = register("fancy_armor_stand", FancyArmorStandBlockEntity::new, BCUtil.merge(BCBlocks.FANCY_ARMOR_STAND.holders(), BCBlocks.IRON_FANCY_ARMOR_STAND));
+    Supplier<BlockEntityType<FancyWorkbenchBlockEntity>>  FANCY_WORKBENCH   = register("fancy_workbench",   FancyWorkbenchBlockEntity::new,  BCBlocks.FANCY_WORKBENCH.holders());
     Supplier<BlockEntityType<LabelBlockEntity>>           LABEL             = register("label",             LabelBlockEntity::new,           BCBlocks.LABEL.holders());
     Supplier<BlockEntityType<PotionShelfBlockEntity>>     POTION_SHELF      = register("potion_shelf",      PotionShelfBlockEntity::new,     BCBlocks.POTION_SHELF.holders());
     Supplier<BlockEntityType<ShelfBlockEntity>>           SHELF             = register("shelf",             ShelfBlockEntity::new,           BCBlocks.SHELF.holders());

@@ -14,6 +14,6 @@ public class FancyWorkbenchBlock extends BCFacingEntityBlock {
     @Override
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new FancyWorkbenchBlockEntity(pos, state);
     }
 }

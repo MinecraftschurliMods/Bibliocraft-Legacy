@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseMenu
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyworkbench.FancyWorkbenchMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
@@ -18,6 +19,7 @@ public interface BCMenus {
     Supplier<MenuType<CookieJarMenu>>       COOKIE_JAR        = BCRegistries.MENUS.register("cookie_jar",        () -> IMenuTypeExtension.create(CookieJarMenu::new));
     Supplier<MenuType<DiscRackMenu>>        DISC_RACK         = BCRegistries.MENUS.register("disc_rack",         () -> IMenuTypeExtension.create(DiscRackMenu::new));
     Supplier<MenuType<FancyArmorStandMenu>> FANCY_ARMOR_STAND = BCRegistries.MENUS.register("fancy_armor_stand", () -> IMenuTypeExtension.create(FancyArmorStandMenu::new));
+    Supplier<MenuType<FancyWorkbenchMenu>>  FANCY_WORKBENCH   = BCRegistries.MENUS.register("fancy_workbench",   () -> IMenuTypeExtension.create(FancyWorkbenchMenu::new));
     Supplier<MenuType<LabelMenu>>           LABEL             = BCRegistries.MENUS.register("label",             () -> IMenuTypeExtension.create(LabelMenu::new));
     Supplier<MenuType<PotionShelfMenu>>     POTION_SHELF      = BCRegistries.MENUS.register("potion_shelf",      () -> IMenuTypeExtension.create(PotionShelfMenu::new));
     Supplier<MenuType<ShelfMenu>>           SHELF             = BCRegistries.MENUS.register("shelf",             () -> IMenuTypeExtension.create(ShelfMenu::new));

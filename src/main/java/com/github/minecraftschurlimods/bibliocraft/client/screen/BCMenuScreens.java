@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseMenu
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyworkbench.FancyWorkbenchMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
@@ -42,6 +43,14 @@ public final class BCMenuScreens {
         private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_armor_stand.png");
 
         public FancyArmorStand(FancyArmorStandMenu menu, Inventory inventory, Component title) {
+            super(menu, inventory, title, BACKGROUND);
+        }
+    }
+
+    public static class FancyWorkbench extends BCMenuScreen<FancyWorkbenchMenu> {
+        private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_workbench.png");
+
+        public FancyWorkbench(FancyWorkbenchMenu menu, Inventory inventory, Component title) {
             super(menu, inventory, title, BACKGROUND);
         }
     }
