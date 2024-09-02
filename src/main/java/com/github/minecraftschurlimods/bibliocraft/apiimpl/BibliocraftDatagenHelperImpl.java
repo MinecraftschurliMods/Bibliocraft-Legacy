@@ -163,7 +163,6 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         String prefix = woodType.getRegistrationPrefix();
         provider.withExistingParent(prefix + "_bookcase", bcLoc("block/wood/" + prefix + "/bookcase"));
         provider.withExistingParent(prefix + "_fancy_armor_stand", bcLoc("block/template/fancy_armor_stand/inventory")).texture("texture", woodType.texture());
-        provider.withExistingParent(prefix + "_fancy_workbench", bcLoc("block/wood/" + prefix + "/fancy_workbench"));
         provider.withExistingParent(prefix + "_label", bcLoc("block/wood/" + prefix + "/label"));
         provider.withExistingParent(prefix + "_potion_shelf", bcLoc("block/wood/" + prefix + "/potion_shelf"));
         provider.withExistingParent(prefix + "_shelf", bcLoc("block/wood/" + prefix + "/shelf"));
@@ -189,10 +188,10 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         tagAccessor.apply(BCTags.Blocks.SHELVES)                .add(BCBlocks.SHELF.get(woodType));
         tagAccessor.apply(BCTags.Blocks.TABLES)                 .add(BCBlocks.TABLE.get(woodType));
         tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .add(BCBlocks.TOOL_RACK.get(woodType));
-        DatagenUtil.addColorVariants(woodType, BCBlocks.DISPLAY_CASE,      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-        DatagenUtil.addColorVariants(woodType, BCBlocks.WALL_DISPLAY_CASE, tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-        DatagenUtil.addColorVariants(woodType, BCBlocks.SEAT,              tagAccessor.apply(BCTags.Blocks.SEATS));
-        DatagenUtil.addColorVariants(woodType, BCBlocks.SEAT_BACK,         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
+        DatagenUtil.addAll(BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+        DatagenUtil.addAll(BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+        DatagenUtil.addAll(BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
+        DatagenUtil.addAll(BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
     }
 
     @Override
@@ -204,13 +203,13 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
         tagAccessor.apply(BCTags.Items.SHELVES)                .add(BCItems.SHELF.get(woodType));
         tagAccessor.apply(BCTags.Items.TABLES)                 .add(BCItems.TABLE.get(woodType));
         tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .add(BCItems.TOOL_RACK.get(woodType));
-        DatagenUtil.addColorVariants(woodType, BCItems.DISPLAY_CASE,     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
-        DatagenUtil.addColorVariants(woodType, BCItems.SEAT,             tagAccessor.apply(BCTags.Items.SEATS));
-        DatagenUtil.addColorVariants(woodType, BCItems.SMALL_SEAT_BACK,  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
-        DatagenUtil.addColorVariants(woodType, BCItems.RAISED_SEAT_BACK, tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
-        DatagenUtil.addColorVariants(woodType, BCItems.FLAT_SEAT_BACK,   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
-        DatagenUtil.addColorVariants(woodType, BCItems.TALL_SEAT_BACK,   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
-        DatagenUtil.addColorVariants(woodType, BCItems.FANCY_SEAT_BACK,  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
+        DatagenUtil.addAll(BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
+        DatagenUtil.addAll(BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
+        DatagenUtil.addAll(BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
+        DatagenUtil.addAll(BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
+        DatagenUtil.addAll(BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
+        DatagenUtil.addAll(BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
+        DatagenUtil.addAll(BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
     }
 
     @Override

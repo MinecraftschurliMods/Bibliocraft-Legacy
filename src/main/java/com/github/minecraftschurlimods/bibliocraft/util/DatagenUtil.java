@@ -1,12 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
-import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.Registry;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
@@ -27,6 +27,7 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -202,15 +203,26 @@ public final class DatagenUtil {
     }
 
     /**
-     * Adds all color variants for a given {@link ColoredWoodTypeDeferredHolder} and a given {@link BibliocraftWoodType} to the given {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}.
+     * Adds all elements of the given collection to the {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}.
      *
-     * @param woodType The given {@link BibliocraftWoodType}.
-     * @param holder   The given {@link ColoredWoodTypeDeferredHolder}.
-     * @param tag      The given {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
-     * @param <T>      The type of the {@link ColoredWoodTypeDeferredHolder}.
+     * @param collection The collection containing the elements to add.
+     * @param tag        The given {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
+     * @param <T>        The type of the collection elements.
      */
-    @SuppressWarnings("JavadocReference")
-    public static <T> void addColorVariants(BibliocraftWoodType woodType, ColoredWoodTypeDeferredHolder<T, ?> holder, IntrinsicHolderTagsProvider.IntrinsicTagAppender<T> tag) {
-        holder.element(woodType).values().forEach(tag::add);
+    public static <T> void addAll(Collection<? extends T> collection, IntrinsicHolderTagsProvider.IntrinsicTagAppender<T> tag) {
+        collection.forEach(tag::add);
+    }
+
+    /**
+     * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
+     *
+     * @param collection The collection containing the elements to add.
+     * @param tag        The given {@link TagsProvider.TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
+     * @param registry   The {@link Registry} associated with the collection elements.
+     * @param <T>        The type of the collection elements.
+     */
+    @SuppressWarnings("DataFlowIssue")
+    public static <T> void addAll(Collection<? extends T> collection, TagsProvider.TagAppender<T> tag, Registry<T> registry) {
+        collection.stream().map(e -> ResourceKey.create(registry.key(), registry.getKey(e))).forEach(tag::add);
     }
 }

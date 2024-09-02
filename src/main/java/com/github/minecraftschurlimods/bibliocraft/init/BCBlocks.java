@@ -11,7 +11,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.displaycase.WallDispl
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLanternBlock;
-import com.github.minecraftschurlimods.bibliocraft.content.fancyworkbench.FancyWorkbenchBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
