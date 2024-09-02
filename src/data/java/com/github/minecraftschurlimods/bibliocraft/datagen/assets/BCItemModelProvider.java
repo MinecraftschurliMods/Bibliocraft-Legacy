@@ -17,6 +17,8 @@ public class BCItemModelProvider extends ItemModelProvider {
         BibliocraftApi.getDatagenHelper().generateItemModels(this);
         basicItem(BCItems.CLIPBOARD.get());
         basicItem(BCItems.GOLD_CHAIN.get());
+        basicItem(BCItems.GOLD_LANTERN.get());
+        basicItem(BCItems.GOLD_SOUL_LANTERN.get());
         withExistingParent("fancy_gold_lamp",    modLoc("block/fancy_gold_lamp_standing"));
         withExistingParent("fancy_iron_lamp",    modLoc("block/fancy_iron_lamp_standing"));
         withExistingParent("fancy_gold_lantern", modLoc("block/fancy_gold_lantern_standing"));

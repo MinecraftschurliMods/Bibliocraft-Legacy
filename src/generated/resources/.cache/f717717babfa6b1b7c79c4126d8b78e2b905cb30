@@ -1,4 +1,4 @@
-// 1.21	2024-09-02T19:00:58.6427873	Block States: bibliocraft
+// 1.21	2024-09-02T19:34:03.4082229	Block States: bibliocraft
 23f86a6b339d2fdc9c4dda555aa0311610f87d20 assets/bibliocraft/blockstates/acacia_bookcase.json
 6c10a69af472e9dd59ec2c95c9c8a0898273dac2 assets/bibliocraft/blockstates/acacia_fancy_armor_stand.json
 2a6c75a0b4b782b05656eb3b3c907447c3bfe6be assets/bibliocraft/blockstates/acacia_label.json
@@ -242,6 +242,8 @@ a19b70a065650e78ee7408cd4fc39deba06b7255 assets/bibliocraft/blockstates/fancy_go
 64cd29c0cb60b5a4709f3ae3393317caef9a2027 assets/bibliocraft/blockstates/fancy_iron_lamp.json
 5400c566f7d5bd5ec9fe3a203c53490e2da0f789 assets/bibliocraft/blockstates/fancy_iron_lantern.json
 5a50d968aca84c2ecd6906a3c73878554492ea84 assets/bibliocraft/blockstates/gold_chain.json
+753fc82a946acba1c2486637d2a5007d25223a7c assets/bibliocraft/blockstates/gold_lantern.json
+ca648a80027276b30c4fac7a78e7af20fba682c6 assets/bibliocraft/blockstates/gold_soul_lantern.json
 b12d25fc7f1669f452afd2ec25bbb4514e6e4f6f assets/bibliocraft/blockstates/gray_acacia_display_case.json
 ad1d75a1ef2cd4c814bc55f66274a8efc9d82955 assets/bibliocraft/blockstates/gray_acacia_seat.json
 f9da8f51f17f1b09eb1791f87b53f2406e674ebc assets/bibliocraft/blockstates/gray_acacia_seat_back.json
@@ -2917,6 +2919,8 @@ d4a70da018bae919a1970ec5f1f0e3fbc9310334 assets/bibliocraft/models/block/fancy_i
 8499958cfabed00b358eae6ef32e6c54482452bf assets/bibliocraft/models/block/fancy_iron_lantern_standing.json
 2e56365948b632bf31cb5eaf38d0ba318219e00f assets/bibliocraft/models/block/fancy_iron_lantern_wall.json
 8a61fe5bebfedf81577002b9b35978cf7d61a216 assets/bibliocraft/models/block/gold_chain.json
+e53a41a459c46766c1b77474dee211f315a3281a assets/bibliocraft/models/block/gold_lantern.json
+0cc947e3c2d672b042263a3d98830882f31f8003 assets/bibliocraft/models/block/gold_soul_lantern.json
 f565dd47bde8164edb39ced75ef80a93c2bf6191 assets/bibliocraft/models/block/wood/acacia/bookcase.json
 a4bc30162f2f879a83ab4d3d8e87ab003097b1f9 assets/bibliocraft/models/block/wood/acacia/fancy_armor_stand_bottom.json
 bdaf02c4a758bec5bc2366e106499934e2a3d948 assets/bibliocraft/models/block/wood/acacia/fancy_armor_stand_top.json

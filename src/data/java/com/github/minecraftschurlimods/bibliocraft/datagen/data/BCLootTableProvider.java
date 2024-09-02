@@ -49,6 +49,8 @@ public final class BCLootTableProvider extends LootTableProvider {
             add(BCBlocks.DISC_RACK.get(),              DatagenUtil.createNameableTable(BCBlocks.DISC_RACK.get()));
             add(BCBlocks.WALL_DISC_RACK.get(),         DatagenUtil.createNameableTable(BCBlocks.DISC_RACK.get()));
             add(BCBlocks.GOLD_CHAIN.get(),             DatagenUtil.createDefaultTable(BCBlocks.GOLD_CHAIN.get()));
+            add(BCBlocks.GOLD_LANTERN.get(),           DatagenUtil.createDefaultTable(BCBlocks.GOLD_LANTERN.get()));
+            add(BCBlocks.GOLD_SOUL_LANTERN.get(),      DatagenUtil.createDefaultTable(BCBlocks.GOLD_SOUL_LANTERN.get()));
             add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), DatagenUtil.createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
             add(BCBlocks.SWORD_PEDESTAL.get(),         DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.SWORD_PEDESTAL.get()).apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(DataComponents.DYED_COLOR))));
         }

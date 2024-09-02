@@ -50,6 +50,8 @@ public interface BCItems {
     DeferredItem<BlockItem>           DINNER_PLATE           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DINNER_PLATE);
     DeferredItem<DiscRackItem>        DISC_RACK              = BCRegistries.ITEMS.registerItem("disc_rack", DiscRackItem::new);
     DeferredItem<BlockItem>           GOLD_CHAIN             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_CHAIN);
+    DeferredItem<BlockItem>           GOLD_LANTERN           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_LANTERN);
+    DeferredItem<BlockItem>           GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
     DeferredItem<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     DeferredItem<BlockItem>           SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
     DeferredItem<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);

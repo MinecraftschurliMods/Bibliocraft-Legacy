@@ -38,6 +38,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultBlock(BCBlocks.DISC_RACK);
         add(BCBlocks.WALL_DISC_RACK.get(), "Disc Rack");
         addDefaultBlock(BCBlocks.GOLD_CHAIN);
+        addDefaultBlock(BCBlocks.GOLD_LANTERN);
+        addDefaultBlock(BCBlocks.GOLD_SOUL_LANTERN);
         addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
         addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");

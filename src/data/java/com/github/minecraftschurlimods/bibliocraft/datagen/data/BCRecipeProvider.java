@@ -173,6 +173,22 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
                 .unlockedBy("has_gold_chain", has(BCItems.GOLD_CHAIN))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.GOLD_LANTERN.get())
+                .pattern("NNN")
+                .pattern("NTN")
+                .pattern("NNN")
+                .define('T', Items.TORCH)
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.GOLD_SOUL_LANTERN.get())
+                .pattern("NNN")
+                .pattern("NTN")
+                .pattern("NNN")
+                .define('T', Items.SOUL_TORCH)
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND.get())
                 .pattern(" I ")
                 .pattern(" I ")
