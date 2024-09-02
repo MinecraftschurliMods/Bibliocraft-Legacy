@@ -74,7 +74,6 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     public void generateEnglishTranslationsFor(LanguageProvider provider, BibliocraftWoodType woodType) {
         woodenBlockTranslation(provider, woodType, BCBlocks.BOOKCASE,          "Bookcase");
         woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_ARMOR_STAND, "Fancy Armor Stand");
-        woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_WORKBENCH,   "Fancy Workbench");
         woodenBlockTranslation(provider, woodType, BCBlocks.LABEL,             "Label");
         woodenBlockTranslation(provider, woodType, BCBlocks.POTION_SHELF,      "Potion Shelf");
         woodenBlockTranslation(provider, woodType, BCBlocks.SHELF,             "Shelf");
@@ -106,10 +105,6 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
                 models.withExistingParent(prefix + "fancy_armor_stand_bottom", bcLoc("block/template/fancy_armor_stand/bottom")).texture("texture", woodTexture),
                 models.withExistingParent(prefix + "fancy_armor_stand_top", bcLoc("block/template/fancy_armor_stand/top")).texture("texture", woodTexture),
                 true);
-        DatagenUtil.horizontalBlockModel(provider, BCBlocks.FANCY_WORKBENCH.holder(woodType),
-                prefix + "fancy_workbench",
-                bcLoc("block/template/fancy_workbench"),
-                woodTexture);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.LABEL.holder(woodType),
                 prefix + "label",
                 bcLoc("block/template/label"),
@@ -189,7 +184,6 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     public void generateBlockTagsFor(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor, BibliocraftWoodType woodType) {
         tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .add(BCBlocks.BOOKCASE.get(woodType));
         tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.FANCY_ARMOR_STAND.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.FANCY_WORKBENCHES)      .add(BCBlocks.FANCY_WORKBENCH.get(woodType));
         tagAccessor.apply(BCTags.Blocks.LABELS)                 .add(BCBlocks.LABEL.get(woodType));
         tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .add(BCBlocks.POTION_SHELF.get(woodType));
         tagAccessor.apply(BCTags.Blocks.SHELVES)                .add(BCBlocks.SHELF.get(woodType));
@@ -205,7 +199,6 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     public void generateItemTagsFor(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor, BibliocraftWoodType woodType) {
         tagAccessor.apply(BCTags.Items.BOOKCASES)              .add(BCItems.BOOKCASE.get(woodType));
         tagAccessor.apply(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.FANCY_ARMOR_STAND.get(woodType));
-        tagAccessor.apply(BCTags.Items.FANCY_WORKBENCHES)      .add(BCItems.FANCY_WORKBENCH.get(woodType));
         tagAccessor.apply(BCTags.Items.LABELS)                 .add(BCItems.LABEL.get(woodType));
         tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .add(BCItems.POTION_SHELF.get(woodType));
         tagAccessor.apply(BCTags.Items.SHELVES)                .add(BCItems.SHELF.get(woodType));
@@ -224,7 +217,6 @@ public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     public void generateLootTablesFor(BiConsumer<Block, LootTable.Builder> lootTableAdder, BibliocraftWoodType woodType) {
         loot(lootTableAdder, BCBlocks.BOOKCASE.get(woodType),          DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.FANCY_ARMOR_STAND.get(woodType), DatagenUtil::createFancyArmorStandTable);
-        loot(lootTableAdder, BCBlocks.FANCY_WORKBENCH.get(woodType),   DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.LABEL.get(woodType),             DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.POTION_SHELF.get(woodType),      DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.SHELF.get(woodType),             DatagenUtil::createNameableTable);
