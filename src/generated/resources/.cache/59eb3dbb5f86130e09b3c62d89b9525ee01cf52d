@@ -1,4 +1,4 @@
-// 1.21	2024-09-02T19:34:03.1911401	Loot Tables
+// 1.21	2024-09-03T15:32:45.5382046	Loot Tables
 de27c2af93e5cab5a9d4b946062ded6257a7e5d7 data/bibliocraft/loot_table/blocks/acacia_bookcase.json
 76ad281e44358ad5de5d4b8120b7b1de0742103a data/bibliocraft/loot_table/blocks/acacia_fancy_armor_stand.json
 318a3b2f6a21fbd5812a8d9262c53207f8fc71e0 data/bibliocraft/loot_table/blocks/acacia_label.json
@@ -171,6 +171,7 @@ d67932e824a769ac05262918442c9bd421f88a5a data/bibliocraft/loot_table/blocks/cher
 433f8bb0efb18e175b49770c8b59e7c2d86b403d data/bibliocraft/loot_table/blocks/cherry_shelf.json
 e027b902b5f1a0a001d3568b30f8cf23d51b9363 data/bibliocraft/loot_table/blocks/cherry_table.json
 f7f1e67057d25de50e13df8054ece2b2e3a1b1c9 data/bibliocraft/loot_table/blocks/cherry_tool_rack.json
+f5faab7040096767a2d1355b5a980c705a8da7b9 data/bibliocraft/loot_table/blocks/clipboard.json
 956f1a72b951e152cc1359066cc26d6c7f25a77d data/bibliocraft/loot_table/blocks/cookie_jar.json
 2e9dffe65bf36260f0132ce67dbaa6981803fc75 data/bibliocraft/loot_table/blocks/crimson_bookcase.json
 fc0caa87ab48b9c7b6857336cb208e89ee043e90 data/bibliocraft/loot_table/blocks/crimson_fancy_armor_stand.json

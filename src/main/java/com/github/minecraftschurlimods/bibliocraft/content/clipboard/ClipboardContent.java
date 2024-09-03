@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clipboard;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
@@ -57,6 +58,11 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
     }
 
     public record Page(List<CheckboxState> checkboxes, List<String> lines) {
+        public Page(List<CheckboxState> checkboxes, List<String> lines) {
+            this.checkboxes = BCUtil.extend(checkboxes, MAX_LINES, CheckboxState.EMPTY);
+            this.lines = BCUtil.extend(lines, MAX_LINES, "");
+        }
+        
         public static final Page DEFAULT = new Page(new ArrayList<>(MAX_LINES), new ArrayList<>(MAX_LINES));
         public static final Codec<Page> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                 CheckboxState.CODEC.listOf().fieldOf("checkboxes").forGetter(Page::checkboxes),

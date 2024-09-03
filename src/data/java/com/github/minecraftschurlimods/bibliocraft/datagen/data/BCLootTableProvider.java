@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import net.minecraft.core.HolderLookup;
@@ -43,6 +44,7 @@ public final class BCLootTableProvider extends LootTableProvider {
                 add(BCBlocks.FANCY_GOLD_LANTERN.get(color), DatagenUtil.createDefaultTable(BCBlocks.FANCY_GOLD_LANTERN.get(color)));
                 add(BCBlocks.FANCY_IRON_LANTERN.get(color), DatagenUtil.createDefaultTable(BCBlocks.FANCY_IRON_LANTERN.get(color)));
             }
+            add(BCBlocks.CLIPBOARD.get(),              DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.CLIPBOARD.get()).apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(BCDataComponents.CLIPBOARD_CONTENT.get()))));
             add(BCBlocks.COOKIE_JAR.get(),             DatagenUtil.createNameableTable(BCBlocks.COOKIE_JAR.get()));
             add(BCBlocks.DESK_BELL.get(),              DatagenUtil.createDefaultTable(BCBlocks.DESK_BELL.get()));
             add(BCBlocks.DINNER_PLATE.get(),           DatagenUtil.createDefaultTable(BCBlocks.DINNER_PLATE.get()));

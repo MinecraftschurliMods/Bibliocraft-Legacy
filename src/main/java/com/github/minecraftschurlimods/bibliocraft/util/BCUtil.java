@@ -93,6 +93,21 @@ public final class BCUtil {
     }
 
     /**
+     * Extends the given {@link List} to the given size, filling the new spaces with the provided values.
+     * @param list The {@link List} to extend.
+     * @param size The size the {@link List} should be extended to.
+     * @param fill The value to fill the new spots with.
+     * @return The given {@link List}, extended to the given size.
+     * @param <T> The generic type of the list.
+     */
+    public static <T> List<T> extend(List<T> list, int size, T fill) {
+        for (int i = list.size(); i < size; i++) {
+            list.add(fill);
+        }
+        return list;
+    }
+
+    /**
      * Shorthand to open a menu for the block entity at the given position.
      *
      * @param player The player to open the menu for.

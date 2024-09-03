@@ -31,7 +31,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
             addDefaultBlock(BCBlocks.FANCY_GOLD_LANTERN.holder(color));
             addDefaultBlock(BCBlocks.FANCY_IRON_LANTERN.holder(color));
         }
-        addDefaultItem(BCItems.CLIPBOARD);
+        addDefaultBlock(BCBlocks.CLIPBOARD);
         addDefaultBlock(BCBlocks.COOKIE_JAR);
         addDefaultBlock(BCBlocks.DESK_BELL);
         addDefaultBlock(BCBlocks.DINNER_PLATE);

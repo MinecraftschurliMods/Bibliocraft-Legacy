@@ -79,6 +79,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
                     models().withExistingParent("block/color/" + name + "/fancy_iron_lantern_wall", modLoc("block/template/fancy_lantern/wall_iron")).texture("color", texture),
                     false);
         }
+        horizontalBlock(BCBlocks.CLIPBOARD.get(), models().getExistingFile(modLoc("block/clipboard")));
         getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(models().getExistingFile(modLoc("block/cookie_jar" + (state.getValue(CookieJarBlock.OPEN) ? "_open" : ""))))
                 .build());

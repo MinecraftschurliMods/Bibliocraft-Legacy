@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.deskbell.DeskBellBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.dinnerplate.DinnerPlateBlock;
@@ -54,6 +55,7 @@ public interface BCBlocks {
     DeferredBlock<FancyLanternBlock>                CLEAR_FANCY_IRON_LANTERN  = BCRegistries.BLOCKS.register("fancy_iron_lantern", () -> new FancyLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel($ -> 15).noOcclusion()));
     ColoredDeferredHolder<Block, FancyLanternBlock> FANCY_IRON_LANTERN        = coloredBlock(                "fancy_iron_lantern", () -> new FancyLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel($ -> 15).noOcclusion()));
     DeferredBlock<CookieJarBlock>       COOKIE_JAR             = BCRegistries.BLOCKS.register("cookie_jar",             () -> new CookieJarBlock      (BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
+    DeferredBlock<ClipboardBlock>       CLIPBOARD              = BCRegistries.BLOCKS.register("clipboard",              () -> new ClipboardBlock      (BlockBehaviour.Properties.of().instabreak().sound(SoundType.WOOD).ignitedByLava()));
     DeferredBlock<DeskBellBlock>        DESK_BELL              = BCRegistries.BLOCKS.register("desk_bell",              () -> new DeskBellBlock       (BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredBlock<DinnerPlateBlock>     DINNER_PLATE           = BCRegistries.BLOCKS.register("dinner_plate",           () -> new DinnerPlateBlock    (BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ).noOcclusion()));
     DeferredBlock<DiscRackBlock>        DISC_RACK              = BCRegistries.BLOCKS.register("disc_rack",              () -> new DiscRackBlock       (BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));

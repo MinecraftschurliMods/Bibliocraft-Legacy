@@ -1,4 +1,4 @@
-// 1.21	2024-09-02T19:34:03.4082229	Block States: bibliocraft
+// 1.21	2024-09-03T15:32:45.6252042	Block States: bibliocraft
 23f86a6b339d2fdc9c4dda555aa0311610f87d20 assets/bibliocraft/blockstates/acacia_bookcase.json
 6c10a69af472e9dd59ec2c95c9c8a0898273dac2 assets/bibliocraft/blockstates/acacia_fancy_armor_stand.json
 2a6c75a0b4b782b05656eb3b3c907447c3bfe6be assets/bibliocraft/blockstates/acacia_label.json
@@ -171,6 +171,7 @@ aef20f63e0673d529a3eb0c33cc27f915db49c0a assets/bibliocraft/blockstates/cherry_b
 81349c731340b47abf2d02361bd4c942d7bfc1ce assets/bibliocraft/blockstates/cherry_shelf.json
 ade3eb9f0ae5a2bbc66330d844d2cf7d01154a86 assets/bibliocraft/blockstates/cherry_table.json
 0bc87852fd5bd0a6b954e7addf3b370829c65a88 assets/bibliocraft/blockstates/cherry_tool_rack.json
+d4435025a7ea3983d5ef88472082862379dcf93c assets/bibliocraft/blockstates/clipboard.json
 9882334ac44493711e9579629416866b3d30d2ad assets/bibliocraft/blockstates/cookie_jar.json
 a10bea9d968fa0927e8797bf1621eabab93a0aa5 assets/bibliocraft/blockstates/crimson_bookcase.json
 4dafd0f50a7ffa72b99a7e1e50d93f4456a8649c assets/bibliocraft/blockstates/crimson_fancy_armor_stand.json
