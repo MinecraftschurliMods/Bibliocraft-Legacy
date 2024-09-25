@@ -12,7 +12,9 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClipboardItemSyncPacket(ClipboardContent content) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<ClipboardItemSyncPacket> TYPE = new CustomPacketPayload.Type<>(BCUtil.modLoc("clipboard_item_sync"));
-    public static final StreamCodec<FriendlyByteBuf, ClipboardItemSyncPacket> STREAM_CODEC = StreamCodec.composite(ClipboardContent.STREAM_CODEC, ClipboardItemSyncPacket::content, ClipboardItemSyncPacket::new);
+    public static final StreamCodec<FriendlyByteBuf, ClipboardItemSyncPacket> STREAM_CODEC = StreamCodec.composite(
+            ClipboardContent.STREAM_CODEC, ClipboardItemSyncPacket::content,
+            ClipboardItemSyncPacket::new);
 
     public static void handle(ClipboardItemSyncPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {

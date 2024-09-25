@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.RegisterBibliocraftWoodTypesEvent;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardBESyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
@@ -41,7 +42,8 @@ public final class EventHandler {
         @SubscribeEvent
         private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
             event.registrar(BibliocraftApi.MOD_ID)
-                    .playToServer(ClipboardItemSyncPacket.TYPE, ClipboardItemSyncPacket.STREAM_CODEC, ClipboardItemSyncPacket::handle);
+                    .playToServer(ClipboardItemSyncPacket.TYPE, ClipboardItemSyncPacket.STREAM_CODEC, ClipboardItemSyncPacket::handle)
+                    .playToClient(ClipboardBESyncPacket.TYPE, ClipboardBESyncPacket.STREAM_CODEC, ClipboardBESyncPacket::handle);
         }
 
         @SubscribeEvent

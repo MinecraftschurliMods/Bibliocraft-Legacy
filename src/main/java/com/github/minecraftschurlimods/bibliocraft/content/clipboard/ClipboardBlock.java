@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clipboard;
 
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
@@ -46,8 +47,8 @@ public class ClipboardBlock extends BCFacingEntityBlock {
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         super.setPlacedBy(level, pos, state, entity, stack);
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof ClipboardBlockEntity clipboard) {
+        if (level.getBlockEntity(pos) instanceof ClipboardBlockEntity clipboard) {
+            clipboard.setContent(stack.getOrDefault(BCDataComponents.CLIPBOARD_CONTENT, ClipboardContent.DEFAULT));
             clipboard.setComponents(stack.getComponents());
         }
     }

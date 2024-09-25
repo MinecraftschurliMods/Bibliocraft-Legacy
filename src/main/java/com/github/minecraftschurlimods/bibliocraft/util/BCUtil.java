@@ -4,6 +4,9 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
@@ -137,5 +140,27 @@ public final class BCUtil {
      */
     public static <E extends Enum<E>> StreamCodec<ByteBuf, E> enumStreamCodec(Supplier<E[]> valuesSupplier, Function<E, Integer> ordinalSupplier) {
         return ByteBufCodecs.INT.map(e -> valuesSupplier.get()[e], ordinalSupplier);
+    }
+
+    /**
+     * Encodes the given value to NBT using the given codec.
+     * @param codec The codec to use for encoding.
+     * @param value The value to encode to NBT.
+     * @return The NBT representation of the given value.
+     * @param <T> The type of the value and the codec.
+     */
+    public static <T> Tag encodeNbt(Codec<T> codec, T value) {
+        return codec.encodeStart(NbtOps.INSTANCE, value).getOrThrow();
+    }
+
+    /**
+     * Decodes the given value from NBT using the given codec.
+     * @param codec The codec to use for decoding.
+     * @param tag The NBT representation to decode.
+     * @return The decoded value.
+     * @param <T> The type of the value and the codec.
+     */
+    public static <T> T decodeNbt(Codec<T> codec, Tag tag) {
+        return codec.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
     }
 }

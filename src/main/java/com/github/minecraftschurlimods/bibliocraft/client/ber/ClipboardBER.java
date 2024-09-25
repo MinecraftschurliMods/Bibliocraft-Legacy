@@ -20,7 +20,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity> {
         stack.translate(0, 0, -0.00001);
         float scale = 1 / 256f;
         stack.scale(scale, scale, 0);
-        ClipboardReadOnlyRenderer.render(stack, buffer, blockEntity.components().getOrDefault(BCDataComponents.CLIPBOARD_CONTENT.get(), ClipboardContent.DEFAULT), 128, 148);
+        ClipboardReadOnlyRenderer.render(stack, buffer, blockEntity.getContent(), 128, 148);
         stack.popPose();
     }
 }

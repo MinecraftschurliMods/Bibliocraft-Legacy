@@ -49,7 +49,7 @@ public class ClipboardScreen extends Screen {
         titleBox.setTextColor(0);
         titleBox.setBordered(false);
         titleBox.setTextShadow(false);
-        titleBox.setResponder(e -> data.setTitle(e));
+        titleBox.setResponder(e -> data = data.setTitle(e));
         for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
             final int j = i; // I love Java
             checkboxes[i] = addRenderableWidget(new CheckboxButton(x + 30, 15 * i + 26, e -> {
