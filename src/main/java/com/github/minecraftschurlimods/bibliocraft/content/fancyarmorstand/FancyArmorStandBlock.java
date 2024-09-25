@@ -7,9 +7,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
@@ -119,29 +122,26 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
-            if (slot != -1) {
-                if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-                    pos = pos.below();
-                }
-                BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (blockEntity instanceof BCBlockEntity bcbe) {
-                    ItemStack stack = player.getInventory().getArmor(3 - slot);
-                    ItemStack slotStack = bcbe.getItem(slot);
-                    if (bcbe.canPlaceItem(slot, stack)) {
-                        bcbe.setItem(slot, stack);
-                        player.getInventory().setItem(39 - slot, slotStack);
-                        if (slotStack.getItem() instanceof Equipable equipable) {
-                            level.playSound(null, player, equipable.getEquipSound().value(), SoundSource.PLAYERS, 1, 1);
-                        }
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-            }
+            if (slot != -1 && trySwapArmor(player.getInventory().getArmor(3 - slot), slot, 39 - slot, state, level, pos, player))
+                return InteractionResult.SUCCESS;
         }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();
         }
         return super.useWithoutItem(state, level, pos, player, hit);
+    }
+
+    @Override
+    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
+            int slot = lookingAtSlot(state, hit);
+            if (slot != -1 && trySwapArmor(stack, slot, hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : Inventory.SLOT_OFFHAND, state, level, pos, player))
+                return ItemInteractionResult.SUCCESS;
+        }
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            pos = pos.below();
+        }
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
 
     @Override
@@ -172,6 +172,33 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     @Override
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new FancyArmorStandBlockEntity(pos, state);
+        return state.getValue(HALF) == DoubleBlockHalf.LOWER ? new FancyArmorStandBlockEntity(pos, state) : null;
+    }
+
+    /**
+     * Attempts to swap the armor in the given slot with the given armor stack.
+     * @param stack The armor stack from the player inventory that should be swapped with.
+     * @param slot The slot index. A result from {@link FancyArmorStandBlock#lookingAtSlot(BlockState, BlockHitResult)}.
+     * @param playerSlot The player inventory slot the armor stack (first parameter) is in, and where a swapped item will end up.
+     * @param state The {@link BlockState} to use.
+     * @param level The {@link Level} to use.
+     * @param pos The {@link BlockPos} to use.
+     * @param player The {@link Player} attempting to swap the items.
+     * @return Whether swapping the items was successful or not.
+     */
+    private boolean trySwapArmor(ItemStack stack, int slot, int playerSlot, BlockState state, Level level, BlockPos pos, Player player) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            pos = pos.below();
+        }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof BCBlockEntity bcbe)) return false;
+        ItemStack slotStack = bcbe.getItem(slot);
+        if (!bcbe.canPlaceItem(slot, stack)) return false;
+        bcbe.setItem(slot, stack);
+        player.getInventory().setItem(playerSlot, slotStack);
+        if (slotStack.getItem() instanceof Equipable equipable) {
+            level.playSound(null, player, equipable.getEquipSound().value(), SoundSource.PLAYERS, 1, 1);
+        }
+        return true;
     }
 }
