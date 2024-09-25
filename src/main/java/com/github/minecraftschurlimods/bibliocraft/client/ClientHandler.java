@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.ClipboardBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DinnerPlateBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DiscRackBER;
@@ -77,6 +78,7 @@ public final class ClientHandler {
         private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
             event.registerEntityRenderer(BCEntities.SEAT.get(), EmptyEntityRenderer::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.CLIPBOARD.get(), $ -> new ClipboardBER());
             event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(), $ -> new CookieJarBER());
             event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(), $ -> new DinnerPlateBER());
             event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(), $ -> new DisplayCaseBER());

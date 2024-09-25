@@ -46,6 +46,7 @@ public class ClipboardScreen extends Screen {
     protected void init() {
         int x = (width - 192) / 2;
         titleBox = addRenderableWidget(new EditBox(getMinecraft().font, x + 57, 14, 72, 8, Component.empty()));
+        titleBox.setTextColor(0);
         titleBox.setBordered(false);
         titleBox.setTextShadow(false);
         titleBox.setResponder(e -> data.setTitle(e));
@@ -60,6 +61,7 @@ public class ClipboardScreen extends Screen {
                 data = data.setPages(pages);
             }));
             lines[i] = addRenderableWidget(new EditBox(getMinecraft().font, x + 45, 15 * i + 28, 109, 8, Component.empty()));
+            lines[i].setTextColor(0);
             lines[i].setBordered(false);
             lines[i].setTextShadow(false);
             lines[i].setResponder(e -> {

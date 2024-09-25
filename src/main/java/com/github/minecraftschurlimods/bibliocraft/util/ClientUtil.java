@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClipboardScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -18,6 +17,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.RenderTypeHelper;
@@ -49,14 +49,17 @@ public final class ClientUtil {
      * @param stack       The pose stack to transform.
      * @param blockEntity The block entity to get the rotation from.
      */
-    public static void setupCenteredBER(PoseStack stack, BCBlockEntity blockEntity) {
+    public static void setupCenteredBER(PoseStack stack, BlockEntity blockEntity) {
         stack.translate(0.5, 0.5, 0.5);
-        stack.mulPose(Axis.YP.rotationDegrees(switch (blockEntity.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING)) {
-            case SOUTH -> 0;
-            case EAST -> 90;
-            default -> 180;
-            case WEST -> 270;
-        }));
+        BlockState state = blockEntity.getBlockState();
+        if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+            stack.mulPose(Axis.YP.rotationDegrees(switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
+                case SOUTH -> 0;
+                case EAST -> 90;
+                default -> 180;
+                case WEST -> 270;
+            }));
+        }
     }
 
     /**
