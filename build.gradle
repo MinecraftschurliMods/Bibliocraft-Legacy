@@ -51,8 +51,10 @@ neoForge {
         }
         data {
             data()
-            loadedMods = [neoForge.mods."${mod_id}data"]
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            loadedMods = [mods."${mod_id}data"]
+            programArguments.addAll '--mod', "${mod_id}", '--all',
+                    '--output',   file('src/generated/resources/').getAbsolutePath(),
+                    '--existing', file('src/main/resources/').getAbsolutePath()
         }
         server {
             server()

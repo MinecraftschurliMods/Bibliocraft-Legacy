@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardIt
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLightItem;
+import com.github.minecraftschurlimods.bibliocraft.content.lockandkey.LockAndKeyItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
@@ -54,26 +55,25 @@ public interface BCItems {
     DeferredItem<BlockItem>           GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
     DeferredItem<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     DeferredItem<BlockItem>           SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
+    DeferredItem<LockAndKeyItem>      LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
     DeferredItem<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
-    //TODO Big Book
-    //TODO Hand Drill
     //TODO Lock and Key
-    //TODO Monocle
     //TODO Plumb Line
-    //TODO Reading Glasses
-    //TODO Recipe Book
-    //TODO Screw Gun
     //TODO Slotted Book
     //TODO Stockroom Catalog
     //TODO Tape Measure
+    //TODO Big Book
+    //TODO Hand Drill
+    //TODO Screw Gun
+    //TODO Monocle
+    //TODO Reading Glasses
     //TODO Tinted Glasses
     //TODO Atlas
     //TODO Drafting Compass
-    //TODO Eternal Compass
     //TODO Painting Canvas
     //TODO Print Press Chase
     //TODO Print Press Plate
-    //TODO Waypoint Compass
+    //TODO Recipe Book
 
     /**
      * Helper method to register a {@code WoodTypeDeferredHolder<Item, BlockItem>} for a {@code WoodTypeDeferredHolder<Block, ?>}.

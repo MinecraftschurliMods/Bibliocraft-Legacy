@@ -56,6 +56,7 @@ public interface BCCreativeTabs {
                     stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor(), true));
                     output.accept(stack);
                 }
+                output.accept(BCItems.LOCK_AND_KEY);
                 output.accept(BCItems.REDSTONE_BOOK);
             })
             .build());

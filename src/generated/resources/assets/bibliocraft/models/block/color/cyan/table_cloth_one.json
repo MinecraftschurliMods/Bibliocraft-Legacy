@@ -1,6 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/table/one_cloth",
-  "textures": {
-    "color": "minecraft:block/cyan_wool"
-  }
-}

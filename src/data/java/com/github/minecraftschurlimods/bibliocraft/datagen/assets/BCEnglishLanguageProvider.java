@@ -42,6 +42,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultBlock(BCBlocks.GOLD_SOUL_LANTERN);
         addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
         addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
+        add(BCItems.LOCK_AND_KEY.get(), "Lock and Key");
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
@@ -52,6 +53,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");
         add("itemGroup." + BibliocraftApi.MOD_ID, "Bibliocraft");
+        add(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME, "You must rename this lock and key before you can apply it to a block!");
         add(Translations.REDSTONE_BOOK_TITLE, "Redstone: Volume 1");
         add(Translations.REDSTONE_BOOK_TEXT, "When putting this book into a bookcase, the bookcase will emit a redstone signal. The strength of the signal depends on the slot it is placed in. Slot 1 (top left) yields no signal. Slot 2 yields a signal strength of 1. Each slot after that increases the signal strength by one, all the way to slot 16 (bottom right), which yields a signal strength of 15.");
     }

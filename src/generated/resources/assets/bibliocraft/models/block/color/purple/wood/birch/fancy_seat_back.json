@@ -1,7 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/seat/fancy_seat_back",
-  "textures": {
-    "color": "minecraft:block/purple_wool",
-    "texture": "minecraft:block/birch_planks"
-  }
-}

@@ -197,6 +197,14 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('S', Items.SMOOTH_STONE_SLAB)
                 .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.LOCK_AND_KEY.get())
+                .pattern("NI")
+                .pattern("NI")
+                .pattern(" I")
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK.get())
                 .requires(Items.BOOK)
                 .requires(Items.REDSTONE_TORCH)

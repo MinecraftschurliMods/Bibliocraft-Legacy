@@ -7,6 +7,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
+import net.minecraft.world.LockCode;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -25,6 +26,7 @@ import java.util.Objects;
 public abstract class BCBlockEntity extends BlockEntity implements Container {
     private static final String ITEMS_TAG = "items";
     protected final ItemStackHandler items;
+    private LockCode lockKey = LockCode.NO_LOCK;
 
     /**
      * @param type          The {@link BlockEntityType} to use.
@@ -42,6 +44,16 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
                 Objects.requireNonNull(level).sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         };
+    }
+
+    public LockCode getLockKey() {
+        return lockKey;
+    }
+
+    public void setLockKey(LockCode lockKey) {
+        this.lockKey = lockKey;
+        setChanged();
+        Objects.requireNonNull(level).sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     @Override
@@ -100,6 +112,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
+        lockKey = LockCode.fromTag(tag);
         if (tag.contains(ITEMS_TAG)) {
             items.deserializeNBT(registries, tag.getCompound(ITEMS_TAG));
         }
@@ -109,6 +122,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
+        lockKey.addToTag(tag);
         tag.put(ITEMS_TAG, items.serializeNBT(registries));
     }
 
