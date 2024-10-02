@@ -1,5 +1,5 @@
 plugins {
-    id 'net.neoforged.moddev' version '0.1.112'
+    id 'net.neoforged.moddev' version '2.0.32-beta'
 }
 
 repositories {
@@ -31,11 +31,11 @@ neoForge {
     addModdingDependenciesTo(sourceSets.data)
 
     mods {
-        bibliocraft {
+        "${mod_id}" {
             sourceSet sourceSets.api
             sourceSet sourceSets.main
         }
-        bibliocraftdata {
+        "${mod_id}data" {
             sourceSet sourceSets.api
             sourceSet sourceSets.main
             sourceSet sourceSets.data
@@ -51,17 +51,12 @@ neoForge {
         }
         data {
             data()
-            sourceSet = sourceSets.data
-            mods = [neoForge.mods.bibliocraftdata]
-            programArguments = [
-                    '--mod', 'bibliocraft',
-                    '--all',
-                    '--output', file('src/generated/resources/').absolutePath,
-                    '--existing', file('src/main/resources').absolutePath
-            ]
+            loadedMods = [neoForge.mods."${mod_id}data"]
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
         server {
             server()
+            programArgument '--nogui'
         }
     }
 
