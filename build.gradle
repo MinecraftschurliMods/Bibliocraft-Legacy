@@ -62,7 +62,7 @@ neoForge {
 
     unitTest {
         enable()
-        testedMod = mods.bibliocraft
+        testedMod = mods."${mod_id}"
     }
 }
 
