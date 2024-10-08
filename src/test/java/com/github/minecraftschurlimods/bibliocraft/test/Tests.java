@@ -20,6 +20,8 @@ import net.neoforged.testframework.impl.MutableTestFramework;
 import net.neoforged.testframework.summary.GitHubActionsStepSummaryDumper;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.Objects;
+
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
 public final class Tests {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -34,7 +36,7 @@ public final class Tests {
                 .dumpers(new GitHubActionsStepSummaryDumper("Bibliocraft Gametest Summary"))
                 .build()
                 .create();
-        framework.init(container.getEventBus(), container);
+        framework.init(Objects.requireNonNull(container.getEventBus()), container);
         NeoForge.EVENT_BUS.addListener((RegisterCommandsEvent event) -> {
             LiteralArgumentBuilder<CommandSourceStack> node = Commands.literal("tests");
             framework.registerCommands(node);

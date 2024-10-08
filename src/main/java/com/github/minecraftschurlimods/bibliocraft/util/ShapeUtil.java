@@ -27,6 +27,7 @@ public final class ShapeUtil {
      * @param side The side to rotate it to.
      * @return The rotated {@link AABB}.
      */
+    @SuppressWarnings("SuspiciousNameCombination")
     public static AABB rotate(AABB box, Direction side) {
         return switch (side) {
             case DOWN -> box;

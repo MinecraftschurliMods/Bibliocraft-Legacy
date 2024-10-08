@@ -2,8 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
 import com.github.minecraftschurlimods.bibliocraft.client.ClipboardReadOnlyRenderer;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
-import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

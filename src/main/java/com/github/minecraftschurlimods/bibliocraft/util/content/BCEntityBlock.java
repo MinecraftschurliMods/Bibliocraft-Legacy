@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Abstract superclass for non-rotatable entity blocks in this mod.
  */
-@SuppressWarnings({"deprecation", "DuplicatedCode"})
+@SuppressWarnings({"DuplicatedCode"})
 public abstract class BCEntityBlock extends BCWaterloggedBlock implements EntityBlock {
     public BCEntityBlock(Properties properties) {
         super(properties);

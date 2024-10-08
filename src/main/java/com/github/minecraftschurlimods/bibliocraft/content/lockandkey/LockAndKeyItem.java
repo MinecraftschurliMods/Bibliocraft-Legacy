@@ -2,26 +2,18 @@ package com.github.minecraftschurlimods.bibliocraft.content.lockandkey;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.LockAndKeyBehavior;
-import com.github.minecraftschurlimods.bibliocraft.api.LockAndKeyBehaviors;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.LockCode;
-import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 public class LockAndKeyItem extends Item {
     public LockAndKeyItem(Properties properties) {
