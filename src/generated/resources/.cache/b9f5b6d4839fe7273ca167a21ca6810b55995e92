@@ -1,0 +1,20 @@
+// 1.21.1	2024-10-08T15:03:43.7698418	Tags for minecraft:block mod id bibliocraft
+dc932537352be3adc3e92269d526190a3da02a50 data/bibliocraft/tags/block/bookcases.json
+5a8af07da9101bc61f37664975dbd42ea97db36b data/bibliocraft/tags/block/display_cases.json
+474090b2b5b40b58b63496e56ed06e543323d894 data/bibliocraft/tags/block/fancy_armor_stands.json
+b46d2615e18035acc6efa4ddc52a0f55fea31342 data/bibliocraft/tags/block/fancy_armor_stands/wood.json
+6e9d566c3dfde32a15e1b023145c037453daa631 data/bibliocraft/tags/block/fancy_lamps.json
+26a8860cc111ab5cda36adcf051d9355b0929af5 data/bibliocraft/tags/block/fancy_lamps/gold.json
+f52a6043b740f88d1e4bef40d56f654500ab0c60 data/bibliocraft/tags/block/fancy_lamps/iron.json
+ccb0f9b3682cd5adf9f9d42d8ff56af77730be38 data/bibliocraft/tags/block/fancy_lanterns.json
+dcb821040ea6560b722ddfcb0e52323bc43bbdf7 data/bibliocraft/tags/block/fancy_lanterns/gold.json
+648145b117a4cff2f89ae2171e664cf4cb7e018e data/bibliocraft/tags/block/fancy_lanterns/iron.json
+14d642f0d86f6b40718c71567ab81868405d8a71 data/bibliocraft/tags/block/labels.json
+4a0b4fae70ed78371f6a1c5ea90d375fea121692 data/bibliocraft/tags/block/potion_shelves.json
+dec79a033859bbe6fa55cf03b32c500d2c27d595 data/bibliocraft/tags/block/seats.json
+f22106c0553586c34d2dfb552ddea11a245606c3 data/bibliocraft/tags/block/seat_backs.json
+b36437d21d0432b2ab7edfd7edff70b4ffa6e53b data/bibliocraft/tags/block/shelves.json
+70a350b86a4e5ad8cd8eb0f62e66e6b83e927781 data/bibliocraft/tags/block/tables.json
+45344246afda217d9e4e32c8437cf25b49cf9e9d data/bibliocraft/tags/block/tool_racks.json
+36220ce02af19705aa60d05053e7275a0ac9d8a4 data/minecraft/tags/block/mineable/axe.json
+c3325da3dad6334f7097bcbc0aae469e226bd452 data/minecraft/tags/block/mineable/pickaxe.json

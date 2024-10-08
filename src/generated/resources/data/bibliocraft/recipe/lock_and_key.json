@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "tag": "c:ingots/gold"
+    },
+    "N": {
+      "tag": "c:nuggets/gold"
+    }
+  },
+  "pattern": [
+    "NI",
+    "NI",
+    " I"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:lock_and_key"
+  }
+}

@@ -1,5 +1,5 @@
 plugins {
-    id 'net.neoforged.moddev' version '2.0.32-beta'
+    id 'net.neoforged.moddev' version '1.0.20'
 }
 
 repositories {
@@ -51,7 +51,8 @@ neoForge {
         }
         data {
             data()
-            loadedMods = [mods."${mod_id}data"]
+            sourceSet = sourceSets.data
+            mods = [neoForge.mods."${mod_id}data"]
             programArguments.addAll '--mod', "${mod_id}", '--all',
                     '--output',   file('src/generated/resources/').getAbsolutePath(),
                     '--existing', file('src/main/resources/').getAbsolutePath()

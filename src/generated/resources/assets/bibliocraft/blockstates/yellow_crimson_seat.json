@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "occupied=false,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/wood/crimson/seat"
+    },
+    "occupied=false,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/wood/crimson/seat"
+    },
+    "occupied=true,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/wood/crimson/seat"
+    },
+    "occupied=true,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/wood/crimson/seat"
+    }
+  }
+}
