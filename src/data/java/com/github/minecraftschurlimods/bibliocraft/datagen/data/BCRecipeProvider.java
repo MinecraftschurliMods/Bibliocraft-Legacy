@@ -205,6 +205,14 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.PLUMB_LINE.get())
+                .pattern("SSS")
+                .pattern("S S")
+                .pattern("I S")
+                .define('S', Tags.Items.STRINGS)
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK.get())
                 .requires(Items.BOOK)
                 .requires(Items.REDSTONE_TORCH)

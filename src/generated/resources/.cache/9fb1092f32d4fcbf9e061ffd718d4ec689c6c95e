@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-08T15:03:43.7130778	Recipes
+// 1.21.1	2024-10-08T17:16:13.3465866	Recipes
 269deaa12a4f5857b6137aeee6f02144569207b8 data/bibliocraft/advancement/recipes/building_blocks/color/black/sword_pedestal.json
 5a59727883c9c912fc122a07031cba028cab5ec7 data/bibliocraft/advancement/recipes/building_blocks/color/blue/sword_pedestal.json
 6c38e7dbf1d245e147169dd82f86311e7874dd6d data/bibliocraft/advancement/recipes/building_blocks/color/brown/sword_pedestal.json
@@ -1403,6 +1403,7 @@ d0d58278d578e855c001939be354bce4e574f320 data/bibliocraft/advancement/recipes/de
 7891a9fdb2a7f229f7f2af5cbf6e43cc5d5b2af9 data/bibliocraft/advancement/recipes/misc/clipboard.json
 917d6980d33b8261d4ea639e2551479b19a4ffbe data/bibliocraft/advancement/recipes/redstone/redstone_book.json
 cb18a6575cc45ca309291a57b3662543343a35ae data/bibliocraft/advancement/recipes/tools/lock_and_key.json
+33fd6e485cc970eb5cea8085b2d0227c6f6cb312 data/bibliocraft/advancement/recipes/tools/plumb_line.json
 11ab17bb58e437fcd80075e66a4ae02bf506618a data/bibliocraft/recipe/clipboard.json
 7bbcd900950626f8742bbee60e88f07c1333fb80 data/bibliocraft/recipe/color/black/fancy_gold_lamp.json
 cec084ee9b72f4a7d61efe740d3a2c67a034849d data/bibliocraft/recipe/color/black/fancy_gold_lantern.json
@@ -2729,6 +2730,7 @@ b50ec25806b003ee56d8a2d4f1cec23e14ec849d data/bibliocraft/recipe/fancy_iron_lant
 b583df21f59ab3a665ad989913c78d0d53039832 data/bibliocraft/recipe/gold_soul_lantern.json
 0db8826f068f2cb63ae171b8d0f4cc15c878c24f data/bibliocraft/recipe/iron_fancy_armor_stand.json
 1acedcfb60a98190934648fe0b7cf26e55b0d1d0 data/bibliocraft/recipe/lock_and_key.json
+7703c59f3f35a48b3129dc82cdc1250a7abb6db5 data/bibliocraft/recipe/plumb_line.json
 f0583eb232b6f310d7e4f1f397aa3f88da36c195 data/bibliocraft/recipe/redstone_book.json
 b277312279cd10d36327954b4eabd7385e8de37e data/bibliocraft/recipe/wood/acacia/bookcase.json
 022421654ef5f0729d56e99a108b07fdf822439c data/bibliocraft/recipe/wood/acacia/fancy_armor_stand.json

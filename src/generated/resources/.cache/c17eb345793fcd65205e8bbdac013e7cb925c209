@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-08T15:03:43.6932175	Item Models: bibliocraft
+// 1.21.1	2024-10-08T17:16:13.3027228	Item Models: bibliocraft
 4f9e90140d7161f62b8e8c1fcf9e6d67fb404ff2 assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 90285e3e9d48b221e35a0ef303eb59bb455d98f9 assets/bibliocraft/models/item/acacia_label.json
@@ -1048,6 +1048,7 @@ e01fca1bcd72d37027271931b77f8765b09aab5a assets/bibliocraft/models/item/pink_war
 f2d7f1ba0de26757b3412409f38d2a587bc75f72 assets/bibliocraft/models/item/pink_warped_seat.json
 16b8af190ebe8240e73942edeb646a3821e6b999 assets/bibliocraft/models/item/pink_warped_small_seat_back.json
 cb306fa279ece31715b92d1f8c399f0f0ecc5d9e assets/bibliocraft/models/item/pink_warped_tall_seat_back.json
+e85bfbe8c68374fa1a0a891c217ddb5b3f975b45 assets/bibliocraft/models/item/plumb_line.json
 f8f39213983f0c026827256e9009a116c6efe3f1 assets/bibliocraft/models/item/purple_acacia_display_case.json
 89cd4332ac7dc375a0a01c78723344e4eac02393 assets/bibliocraft/models/item/purple_acacia_fancy_seat_back.json
 5766245abea1fb2daf20c5fb2c1003cc7a819f0d assets/bibliocraft/models/item/purple_acacia_flat_seat_back.json
