@@ -1,5 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.lockandkey;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.api.LockAndKeyBehavior;
+import com.github.minecraftschurlimods.bibliocraft.api.LockAndKeyBehaviors;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
 import net.minecraft.core.component.DataComponents;
@@ -17,6 +20,9 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+
 public class LockAndKeyItem extends Item {
     public LockAndKeyItem(Properties properties) {
         super(properties);
@@ -29,38 +35,27 @@ public class LockAndKeyItem extends Item {
         Player player = context.getPlayer();
         if (blockEntity == null || player == null) return super.useOn(context);
         ItemStack stack = context.getItemInHand();
-        if (blockEntity instanceof BaseContainerBlockEntity container) {
-            if (hasNoCustomName(player, stack, container.getDisplayName())) return InteractionResult.FAIL;
-            if (container.lockKey == LockCode.NO_LOCK) {
-                container.lockKey = newLockCode(context);
-                container.setChanged();
-            } else if (container.lockKey.unlocksWith(stack)) {
-                container.lockKey = LockCode.NO_LOCK;
-                container.setChanged();
-            }
-        } else if (blockEntity instanceof BeaconBlockEntity beacon) {
-            if (hasNoCustomName(player, stack, beacon.getDisplayName())) return InteractionResult.FAIL;
-            if (beacon.lockKey == LockCode.NO_LOCK) {
-                beacon.lockKey = newLockCode(context);
-                beacon.setChanged();
-            } else if (beacon.lockKey.unlocksWith(stack)) {
-                beacon.lockKey = LockCode.NO_LOCK;
-                beacon.setChanged();
-            }
-        } else if (blockEntity instanceof BCBlockEntity bcbe) {
-            if (hasNoCustomName(player, stack, bcbe instanceof Nameable nameable ? nameable.getDisplayName() : bcbe.getBlockState().getBlock().getName()))
-                return InteractionResult.FAIL;
-            if (bcbe.getLockKey() == LockCode.NO_LOCK) {
-                bcbe.setLockKey(newLockCode(context));
-            } else if (bcbe.getLockKey().unlocksWith(stack)) {
-                bcbe.setLockKey(LockCode.NO_LOCK);
-            }
+        LockAndKeyBehavior<BlockEntity> behavior = BibliocraftApi.getLockAndKeyBehaviors().get(blockEntity);
+        if (behavior == null) return super.useOn(context);
+        Component name = behavior.nameGetter().apply(blockEntity);
+        if (hasNoCustomName(player, stack, name)) return InteractionResult.FAIL;
+        LockCode lock = behavior.lockGetter().apply(blockEntity);
+        if (lock == LockCode.NO_LOCK) {
+            behavior.lockSetter().accept(blockEntity, newLockCode(stack));
+            blockEntity.setChanged();
+            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_LOCKED, name), true);
+            return InteractionResult.SUCCESS;
+        } else if (lock.unlocksWith(stack)) {
+            behavior.lockSetter().accept(blockEntity, LockCode.NO_LOCK);
+            blockEntity.setChanged();
+            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_UNLOCKED, name), true);
+            return InteractionResult.SUCCESS;
         }
         return super.useOn(context);
     }
 
-    private LockCode newLockCode(UseOnContext context) {
-        return new LockCode(context.getItemInHand().getOrDefault(DataComponents.CUSTOM_NAME, Component.empty()).getString());
+    private LockCode newLockCode(ItemStack stack) {
+        return new LockCode(stack.getOrDefault(DataComponents.CUSTOM_NAME, Component.empty()).getString());
     }
 
     private boolean hasNoCustomName(Player player, ItemStack stack, Component displayName) {

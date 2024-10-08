@@ -32,12 +32,20 @@ public interface BibliocraftApi {
     }
 
     /**
+     * @return The only instance of {@link LockAndKeyBehaviors}.
+     */
+    static LockAndKeyBehaviors getLockAndKeyBehaviors() {
+        return InstanceHolder.LOCK_AND_KEY_BEHAVIORS.get();
+    }
+
+    /**
      * The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
      */
     @ApiStatus.Internal
     final class InstanceHolder {
         private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.of(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.of(fromServiceLoader(BibliocraftWoodTypeRegistry.class));
+        private static final Lazy<LockAndKeyBehaviors> LOCK_AND_KEY_BEHAVIORS = Lazy.of(fromServiceLoader(LockAndKeyBehaviors.class));
 
         private InstanceHolder() {}
 
