@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.api;
+package com.github.minecraftschurlimods.bibliocraft.api.lockandkey;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.LockCode;

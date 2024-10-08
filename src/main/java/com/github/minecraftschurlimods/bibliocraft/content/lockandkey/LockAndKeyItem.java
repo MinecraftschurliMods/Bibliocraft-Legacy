@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.lockandkey;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.api.LockAndKeyBehavior;
+import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.LockAndKeyBehavior;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;

@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.api;
+package com.github.minecraftschurlimods.bibliocraft.api.woodtype;
 
 import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.ResourceLocation;

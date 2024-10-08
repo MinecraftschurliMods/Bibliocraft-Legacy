@@ -1,5 +1,6 @@
-package com.github.minecraftschurlimods.bibliocraft.api;
+package com.github.minecraftschurlimods.bibliocraft.api.woodtype;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

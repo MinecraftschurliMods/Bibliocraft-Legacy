@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
-import com.github.minecraftschurlimods.bibliocraft.api.LockAndKeyBehavior;
-import com.github.minecraftschurlimods.bibliocraft.api.LockAndKeyBehaviors;
-import com.github.minecraftschurlimods.bibliocraft.api.RegisterLockAndKeyBehaviorEvent;
+import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.LockAndKeyBehavior;
+import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.LockAndKeyBehaviors;
+import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.RegisterLockAndKeyBehaviorEvent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.fml.ModLoader;
 import org.jetbrains.annotations.ApiStatus;

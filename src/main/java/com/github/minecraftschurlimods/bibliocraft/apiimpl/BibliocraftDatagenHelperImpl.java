@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;

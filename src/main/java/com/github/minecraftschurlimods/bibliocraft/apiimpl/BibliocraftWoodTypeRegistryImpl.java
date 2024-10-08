@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
-import com.github.minecraftschurlimods.bibliocraft.api.RegisterBibliocraftWoodTypesEvent;
+import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
+import com.github.minecraftschurlimods.bibliocraft.api.woodtype.RegisterBibliocraftWoodTypesEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.ModLoader;
 import org.jetbrains.annotations.ApiStatus;
