@@ -6,7 +6,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 
 /**
- * The registry for {@link BibliocraftWoodType}s. Register a new wood type by subscribing to {@link RegisterBibliocraftWoodTypesEvent} and calling {@code register(...)} on it.
+ * The registry for {@link BibliocraftWoodType}s. Get via {@link BibliocraftApi#getWoodTypeRegistry()}.
+ * Register a new wood type by subscribing to {@link RegisterBibliocraftWoodTypesEvent} and calling {@code register(...)} on it.
  * Make sure to put this call behind a {@code ModList.isLoaded("bibliocraft")} check, and in a separate class, to prevent accidental classloading (like you would with client classes).
  */
 public interface BibliocraftWoodTypeRegistry {

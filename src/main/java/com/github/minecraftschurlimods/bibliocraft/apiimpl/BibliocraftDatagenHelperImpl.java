@@ -55,7 +55,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 @SuppressWarnings("UnusedReturnValue")
-public class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
+public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     private static final List<BibliocraftWoodType> WOOD_TYPES = new ArrayList<>();
 
     @ApiStatus.Internal

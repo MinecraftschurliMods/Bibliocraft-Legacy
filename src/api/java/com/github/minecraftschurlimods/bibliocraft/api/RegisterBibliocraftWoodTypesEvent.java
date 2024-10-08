@@ -8,29 +8,25 @@ import net.neoforged.bus.api.Event;
 import net.neoforged.fml.event.IModBusEvent;
 import org.jetbrains.annotations.ApiStatus;
 
-import java.util.List;
-import java.util.Map;
+import java.util.SequencedMap;
 import java.util.function.Supplier;
 
 /**
  * Register your own {@link BibliocraftWoodType}s here.
  *
- * This event is not cancelable. This event is fired on the {@link net.neoforged.fml.common.Mod.EventBusSubscriber.Bus.MOD}.
+ * This event is not cancelable. This event is fired on the {@link net.neoforged.fml.common.EventBusSubscriber.Bus#MOD mod event bus}.
  */
-@SuppressWarnings({"JavadocBlankLines", "JavadocReference"})
+@SuppressWarnings("JavadocBlankLines")
 public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusEvent {
-    // We have two distinct collections here because of implementation details
-    private final Map<ResourceLocation, BibliocraftWoodType> values;
-    private final List<BibliocraftWoodType> list;
+    private final SequencedMap<ResourceLocation, BibliocraftWoodType> values;
 
     @ApiStatus.Internal
-    public RegisterBibliocraftWoodTypesEvent(Map<ResourceLocation, BibliocraftWoodType> values, List<BibliocraftWoodType> list) {
+    public RegisterBibliocraftWoodTypesEvent(SequencedMap<ResourceLocation, BibliocraftWoodType> values) {
         this.values = values;
-        this.list = list;
     }
 
     /**
-     * Registers a new wood type.
+     * Registers a new {@link BibliocraftWoodType}.
      *
      * @param id         The id of the wood type. Should be the id of the mod the wood type comes from, and the name of the wood type.
      * @param woodType   The vanilla {@link WoodType} associated with this wood type.
@@ -41,8 +37,6 @@ public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusE
     public void register(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
         if (values.containsKey(id))
             throw new IllegalStateException("Wood type " + id + " is already registered");
-        BibliocraftWoodType type = new BibliocraftWoodType(id, woodType, properties, texture, family);
-        values.put(id, type);
-        list.add(type);
+        values.put(id, new BibliocraftWoodType(id, woodType, properties, texture, family));
     }
 }

@@ -18,11 +18,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
- * This class provides helper methods to generate datagen entries for Bibliocraft blocks with your mod's wood type(s).
+ * This class provides helper methods to generate datagen entries for Bibliocraft blocks with your mod's wood type(s). Get via {@link BibliocraftApi#getDatagenHelper()}.
  * To use this class, during {@link net.neoforged.neoforge.data.event.GatherDataEvent}, create a new instance of this class with your mod id.
  * Then, call whatever methods you need from the respective providers. Always pass in your mod's corresponding data provider.
  */
-@SuppressWarnings("JavadocReference")
 public interface BibliocraftDatagenHelper {
     /**
      * Marks a {@link BibliocraftWoodType} as to-be-datagenned. This method is thread-safe.
