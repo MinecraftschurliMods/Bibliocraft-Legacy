@@ -39,6 +39,6 @@ public class RedstoneBookScreen extends Screen {
 
     @Override
     protected void init() {
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, p -> onClose()).bounds(width / 2 - 100, 196, 200, 20).build());
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 - 100, 196, 200, 20).build());
     }
 }

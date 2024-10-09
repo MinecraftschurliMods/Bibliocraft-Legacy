@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.woodtype.RegisterBibliocr
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -53,7 +54,8 @@ public final class EventHandler {
         @SubscribeEvent
         private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
             event.registrar(BibliocraftApi.MOD_ID)
-                    .playToServer(ClipboardSyncPacket.TYPE, ClipboardSyncPacket.STREAM_CODEC, ClipboardSyncPacket::handle);
+                    .playToServer(ClipboardSyncPacket.TYPE, ClipboardSyncPacket.STREAM_CODEC, ClipboardSyncPacket::handle)
+                    .playToServer(StockroomCatalogSyncPacket.TYPE, StockroomCatalogSyncPacket.STREAM_CODEC, StockroomCatalogSyncPacket::handle);
         }
 
         @SubscribeEvent

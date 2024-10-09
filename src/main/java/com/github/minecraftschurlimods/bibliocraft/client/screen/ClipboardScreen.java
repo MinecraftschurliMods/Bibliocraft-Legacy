@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
+import com.github.minecraftschurlimods.bibliocraft.client.SpriteButton;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
@@ -15,10 +16,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class ClipboardScreen extends Screen {
@@ -40,7 +41,8 @@ public class ClipboardScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        close();
+        stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
+        PacketDistributor.sendToServer(new ClipboardSyncPacket(data));
     }
 
     @Override
@@ -82,10 +84,7 @@ public class ClipboardScreen extends Screen {
             data = data.prevPage();
             updateContents();
         }, false));
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
-            close();
-            Objects.requireNonNull(minecraft).setScreen(null);
-        }).bounds(width / 2 - 100, 196, 200, 20).build());
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 - 100, 196, 200, 20).build());
         updateContents();
     }
 
@@ -93,11 +92,6 @@ public class ClipboardScreen extends Screen {
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192);
-    }
-
-    private void close() {
-        stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
-        PacketDistributor.sendToServer(new ClipboardSyncPacket(data));
     }
 
     private void updateContents() {
@@ -110,13 +104,13 @@ public class ClipboardScreen extends Screen {
         }
     }
 
-    private static class CheckboxButton extends Button {
+    private static class CheckboxButton extends SpriteButton {
         private static final ResourceLocation CHECK_TEXTURE = BCUtil.modLoc("check");
         private static final ResourceLocation X_TEXTURE = BCUtil.modLoc("x");
         private CheckboxState state = CheckboxState.EMPTY;
 
         public CheckboxButton(int x, int y, OnPress onPress) {
-            super(new Builder(Component.empty(), onPress).bounds(x, y, 14, 14));
+            super(x, y, 14, 14, onPress);
         }
 
         public CheckboxState getState() {
@@ -138,12 +132,13 @@ public class ClipboardScreen extends Screen {
         }
 
         @Override
-        protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-            if (state == CheckboxState.CHECK) {
-                graphics.blitSprite(CHECK_TEXTURE, getX(), getY(), getWidth(), getHeight());
-            } else if (state == CheckboxState.X) {
-                graphics.blitSprite(X_TEXTURE, getX(), getY(), getWidth(), getHeight());
-            }
+        @Nullable
+        protected ResourceLocation getSprite() {
+            return switch (state) {
+                case EMPTY -> null;
+                case CHECK -> CHECK_TEXTURE;
+                case X -> X_TEXTURE;
+            };
         }
     }
 }

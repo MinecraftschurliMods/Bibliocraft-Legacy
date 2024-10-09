@@ -56,6 +56,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");
         add("itemGroup." + BibliocraftApi.MOD_ID, "Bibliocraft");
+        add(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS, "Show Containers");
+        add(Translations.STOCKROOM_CATALOG_SHOW_ITEMS, "Show Items");
         add(Translations.LOCK_AND_KEY_LOCKED, "Successfully locked %s!");
         add(Translations.LOCK_AND_KEY_UNLOCKED, "Successfully unlocked %s!");
         add(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME, "You must rename this lock and key before you can apply it to a block!");
@@ -64,6 +66,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.REDSTONE_BOOK_TITLE, "Redstone: Volume 1");
         add(Translations.SLOTTED_BOOK_TEXT, "This book can be used to hide your valuables among many books.");
         add(Translations.SLOTTED_BOOK_TITLE, "Slotted Book");
+        add(Translations.STOCKROOM_CATALOG_ADD, "Started listing contents of %s in the Stockroom Catalog!");
+        add(Translations.STOCKROOM_CATALOG_REMOVE, "Stopped listing contents of %s in the Stockroom Catalog!");
     }
 
     /**

@@ -60,7 +60,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.PLUMB_LINE);
                 output.accept(BCItems.REDSTONE_BOOK);
                 output.accept(BCItems.SLOTTED_BOOK);
-                output.accept(BCItems.SLOTTED_BOOK);
+                output.accept(BCItems.STOCKROOM_CATALOG);
             })
             .build());
 

@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClipboardScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.StockroomCatalogScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -41,6 +42,15 @@ public final class ClientUtil {
      */
     public static void openRedstoneBookScreen() {
         Minecraft.getInstance().setScreen(new RedstoneBookScreen());
+    }
+
+    /**
+     * Opens a {@link StockroomCatalogScreen} on the client.
+     *
+     * @param stack The owning {@link ItemStack} of the screen.
+     */
+    public static void openStockroomCatalogScreen(ItemStack stack) {
+        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack));
     }
 
     /**
