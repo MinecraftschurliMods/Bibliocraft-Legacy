@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:tables",
   "key": {
     "P": {
       "item": "minecraft:warped_planks"

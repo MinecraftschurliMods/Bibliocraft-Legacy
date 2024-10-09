@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
@@ -243,26 +244,26 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         Block planks = woodType.family().getBaseBlock();
         Block slab = woodType.family().get(BlockFamily.Variant.SLAB);
         TagKey<Item> stick = Tags.Items.RODS_WOODEN;
-        shapedRecipe(BCItems.BOOKCASE.get(woodType), woodType)
+        shapedRecipe(BCItems.BOOKCASE.get(woodType), woodType, "bookcases")
                 .pattern("PSP")
                 .pattern("PSP")
                 .pattern("PSP")
                 .define('P', planks)
                 .define('S', slab)
                 .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "bookcase"));
-        shapedRecipe(BCItems.FANCY_ARMOR_STAND.get(woodType), woodType)
+        shapedRecipe(BCItems.FANCY_ARMOR_STAND.get(woodType), woodType, "fancy_armor_stands")
                 .pattern(" R ")
                 .pattern(" R ")
                 .pattern("SSS")
                 .define('S', slab)
                 .define('R', Tags.Items.RODS_WOODEN)
                 .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "fancy_armor_stand"));
-        shapedRecipe(BCItems.LABEL.get(woodType), woodType)
+        shapedRecipe(BCItems.LABEL.get(woodType), woodType, "labels")
                 .pattern("SSS")
                 .pattern("SSS")
                 .define('S', slab)
                 .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "label"));
-        shapedRecipe(BCItems.POTION_SHELF.get(woodType), woodType)
+        shapedRecipe(BCItems.POTION_SHELF.get(woodType), woodType, "potion_shelves")
                 .pattern("SSS")
                 .pattern("P#P")
                 .pattern("SSS")
@@ -270,21 +271,21 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 .define('S', slab)
                 .define('#', Items.GLASS_BOTTLE)
                 .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "potion_shelf"));
-        shapedRecipe(BCItems.SHELF.get(woodType), woodType)
+        shapedRecipe(BCItems.SHELF.get(woodType), woodType, "shelves")
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern("SSS")
                 .define('P', planks)
                 .define('S', slab)
                 .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "shelf"));
-        shapedRecipe(BCItems.TABLE.get(woodType), woodType)
+        shapedRecipe(BCItems.TABLE.get(woodType), woodType, "tables")
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern(" P ")
                 .define('P', planks)
                 .define('S', slab)
                 .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "table"));
-        shapedRecipe(BCItems.TOOL_RACK.get(woodType), woodType)
+        shapedRecipe(BCItems.TOOL_RACK.get(woodType), woodType, "tool_racks")
                 .pattern("SSS")
                 .pattern("S#S")
                 .pattern("SSS")
@@ -294,7 +295,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         for (DyeColor color : DyeColor.values()) {
             Item wool = BuiltInRegistries.ITEM.get(BCUtil.mcLoc(color.getName() + "_wool"));
             prefix = "color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/";
-            shapedRecipe(BCItems.DISPLAY_CASE.get(woodType, color), woodType)
+            shapedRecipe(BCItems.DISPLAY_CASE.get(woodType, color), woodType, "display_cases")
                     .pattern("SGS")
                     .pattern("SWS")
                     .pattern("SSS")
@@ -302,7 +303,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                     .define('W', wool)
                     .define('G', Tags.Items.GLASS_BLOCKS)
                     .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "display_case"));
-            shapedRecipe(BCItems.SEAT.get(woodType, color), woodType)
+            shapedRecipe(BCItems.SEAT.get(woodType, color), woodType, "seats")
                     .pattern(" W ")
                     .pattern(" S ")
                     .pattern("RSR")
@@ -310,13 +311,13 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                     .define('R', stick)
                     .define('W', wool)
                     .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "seat"));
-            shapedRecipe(BCItems.SMALL_SEAT_BACK.get(woodType, color), woodType)
+            shapedRecipe(BCItems.SMALL_SEAT_BACK.get(woodType, color), woodType, "small_seat_backs")
                     .pattern("W")
                     .pattern("S")
                     .define('S', slab)
                     .define('W', wool)
                     .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "small_seat_back"));
-            shapedRecipe(BCItems.RAISED_SEAT_BACK.get(woodType, color), woodType)
+            shapedRecipe(BCItems.RAISED_SEAT_BACK.get(woodType, color), woodType, "raised_seat_backs")
                     .pattern(" W ")
                     .pattern(" S ")
                     .pattern("R R")
@@ -324,7 +325,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                     .define('R', stick)
                     .define('W', wool)
                     .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "raised_seat_back"));
-            shapedRecipe(BCItems.FLAT_SEAT_BACK.get(woodType, color), woodType)
+            shapedRecipe(BCItems.FLAT_SEAT_BACK.get(woodType, color), woodType, "flat_seat_backs")
                     .pattern("RWR")
                     .pattern("RSR")
                     .pattern("R R")
@@ -332,13 +333,13 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                     .define('R', stick)
                     .define('W', wool)
                     .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "flat_seat_back"));
-            shapedRecipe(BCItems.TALL_SEAT_BACK.get(woodType, color), woodType)
+            shapedRecipe(BCItems.TALL_SEAT_BACK.get(woodType, color), woodType, "tall_seat_backs")
                     .pattern("S")
                     .pattern("#")
                     .define('S', slab)
                     .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
                     .save(output, ResourceLocation.fromNamespaceAndPath(modId, prefix + "tall_seat_back"));
-            shapedRecipe(BCItems.FANCY_SEAT_BACK.get(woodType, color), woodType)
+            shapedRecipe(BCItems.FANCY_SEAT_BACK.get(woodType, color), woodType, "fancy_seat_backs")
                     .pattern("S#S")
                     .define('S', slab)
                     .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
@@ -420,7 +421,9 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
      * @param woodType The {@link BibliocraftWoodType}.
      * @return A {@link ShapedRecipeBuilder} with the
      */
-    private static ShapedRecipeBuilder shapedRecipe(Item item, BibliocraftWoodType woodType) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, item).unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().getBaseBlock()).build()))));
+    private static ShapedRecipeBuilder shapedRecipe(Item item, BibliocraftWoodType woodType, String group) {
+        return ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, item)
+                .group(BibliocraftApi.MOD_ID + ":" + group)
+                .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().getBaseBlock()).build()))));
     }
 }

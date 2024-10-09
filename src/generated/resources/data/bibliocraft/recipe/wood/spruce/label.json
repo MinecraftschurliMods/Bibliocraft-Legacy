@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:labels",
   "key": {
     "S": {
       "item": "minecraft:spruce_slab"
