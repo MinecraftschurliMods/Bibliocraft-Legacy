@@ -12,4 +12,6 @@ public interface Translations {
     String PLUMB_LINE_DISTANCE         = "item." + BibliocraftApi.MOD_ID + ".plumb_line.distance";
     String REDSTONE_BOOK_TEXT          = "item." + BibliocraftApi.MOD_ID + ".redstone_book.text";
     String REDSTONE_BOOK_TITLE         = "item." + BibliocraftApi.MOD_ID + ".redstone_book.title";
+    String SLOTTED_BOOK_TEXT           = "item." + BibliocraftApi.MOD_ID + ".slotted_book.text";
+    String SLOTTED_BOOK_TITLE          = "item." + BibliocraftApi.MOD_ID + ".slotted_book.title";
 }

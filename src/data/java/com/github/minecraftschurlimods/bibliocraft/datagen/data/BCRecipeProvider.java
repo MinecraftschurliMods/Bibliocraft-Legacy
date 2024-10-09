@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -216,6 +217,11 @@ public final class BCRecipeProvider extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK.get())
                 .requires(Items.BOOK)
                 .requires(Items.REDSTONE_TORCH)
+                .unlockedBy("has_book", has(Items.BOOK))
+                .save(output);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, BCItems.SLOTTED_BOOK.get())
+                .requires(Items.BOOK)
+                .requires(BCTags.Items.LABELS)
                 .unlockedBy("has_book", has(Items.BOOK))
                 .save(output);
     }

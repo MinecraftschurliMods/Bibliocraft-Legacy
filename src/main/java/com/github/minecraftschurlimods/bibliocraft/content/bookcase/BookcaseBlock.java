@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
 
+import com.github.minecraftschurlimods.bibliocraft.content.redstonebook.RedstoneBookItem;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;

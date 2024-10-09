@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
+package com.github.minecraftschurlimods.bibliocraft.content.redstonebook;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import net.minecraft.world.InteractionHand;

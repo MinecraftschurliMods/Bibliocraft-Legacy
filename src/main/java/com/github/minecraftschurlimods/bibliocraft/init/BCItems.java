@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.content.bookcase.RedstoneBookItem;
+import com.github.minecraftschurlimods.bibliocraft.content.redstonebook.RedstoneBookItem;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
@@ -9,6 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.lockandkey.LockAndKey
 import com.github.minecraftschurlimods.bibliocraft.content.plumbline.PlumbLineItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
+import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeBlockItem;
@@ -59,7 +60,7 @@ public interface BCItems {
     DeferredItem<LockAndKeyItem>      LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
     DeferredItem<PlumbLineItem>       PLUMB_LINE             = BCRegistries.ITEMS.registerItem("plumb_line", PlumbLineItem::new);
     DeferredItem<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
-    //TODO Slotted Book
+    DeferredItem<SlottedBookItem>     SLOTTED_BOOK           = BCRegistries.ITEMS.registerItem("slotted_book", SlottedBookItem::new);
     //TODO Stockroom Catalog
     //TODO Tape Measure
     //TODO Big Book

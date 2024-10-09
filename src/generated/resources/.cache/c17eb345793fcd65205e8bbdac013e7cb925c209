@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-08T17:16:13.3027228	Item Models: bibliocraft
+// 1.21.1	2024-10-09T14:26:07.0559545	Item Models: bibliocraft
 4f9e90140d7161f62b8e8c1fcf9e6d67fb404ff2 assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 90285e3e9d48b221e35a0ef303eb59bb455d98f9 assets/bibliocraft/models/item/acacia_label.json
@@ -1212,6 +1212,7 @@ e29203639aa0d9c504100393c73ef2655e593841 assets/bibliocraft/models/item/red_warp
 d263f5bfb0cc242b803def90be0ae5e9fa84260f assets/bibliocraft/models/item/red_warped_seat.json
 323aac5a1c4df8d02aa244e7ce2f397f0d46974b assets/bibliocraft/models/item/red_warped_small_seat_back.json
 30deedd902addbe1d5880de40b965698823bc8b4 assets/bibliocraft/models/item/red_warped_tall_seat_back.json
+923cdaff5f13580f4d97e75ef18190eb75ecccde assets/bibliocraft/models/item/slotted_book.json
 26bdfea76b5df9b9b45edc6d93f15d622f46f8ff assets/bibliocraft/models/item/spruce_bookcase.json
 fc5ce37dbdc378a805970dd42aa7a1bc84763922 assets/bibliocraft/models/item/spruce_fancy_armor_stand.json
 a1ddf267141aa38722fd02158527a9b5c1caf431 assets/bibliocraft/models/item/spruce_label.json

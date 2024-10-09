@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "tag": "bibliocraft:labels"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:slotted_book"
+  }
+}

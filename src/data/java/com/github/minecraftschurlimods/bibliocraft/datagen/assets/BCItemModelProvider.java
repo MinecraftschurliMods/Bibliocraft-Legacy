@@ -39,5 +39,6 @@ public class BCItemModelProvider extends ItemModelProvider {
         withExistingParent("iron_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/iron_inventory"));
         withExistingParent("sword_pedestal",         modLoc("block/sword_pedestal"));
         withExistingParent("redstone_book",          mcLoc("item/written_book"));
+        withExistingParent("slotted_book",           mcLoc("item/written_book"));
     }
 }

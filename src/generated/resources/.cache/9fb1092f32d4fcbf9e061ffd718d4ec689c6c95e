@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-08T17:16:13.3465866	Recipes
+// 1.21.1	2024-10-09T14:26:07.1067843	Recipes
 269deaa12a4f5857b6137aeee6f02144569207b8 data/bibliocraft/advancement/recipes/building_blocks/color/black/sword_pedestal.json
 5a59727883c9c912fc122a07031cba028cab5ec7 data/bibliocraft/advancement/recipes/building_blocks/color/blue/sword_pedestal.json
 6c38e7dbf1d245e147169dd82f86311e7874dd6d data/bibliocraft/advancement/recipes/building_blocks/color/brown/sword_pedestal.json
@@ -1401,6 +1401,7 @@ fce16d6cacc8aef690b7607caca785c41d01c18d data/bibliocraft/advancement/recipes/de
 d0d58278d578e855c001939be354bce4e574f320 data/bibliocraft/advancement/recipes/decorations/wood/warped/table.json
 77be61f108270aef0796e0f2866229f2aaf748e7 data/bibliocraft/advancement/recipes/decorations/wood/warped/tool_rack.json
 7891a9fdb2a7f229f7f2af5cbf6e43cc5d5b2af9 data/bibliocraft/advancement/recipes/misc/clipboard.json
+1cd3e1f8ad4ae443943d019042a94956259ba5df data/bibliocraft/advancement/recipes/misc/slotted_book.json
 917d6980d33b8261d4ea639e2551479b19a4ffbe data/bibliocraft/advancement/recipes/redstone/redstone_book.json
 cb18a6575cc45ca309291a57b3662543343a35ae data/bibliocraft/advancement/recipes/tools/lock_and_key.json
 33fd6e485cc970eb5cea8085b2d0227c6f6cb312 data/bibliocraft/advancement/recipes/tools/plumb_line.json
@@ -2732,6 +2733,7 @@ b583df21f59ab3a665ad989913c78d0d53039832 data/bibliocraft/recipe/gold_soul_lante
 1acedcfb60a98190934648fe0b7cf26e55b0d1d0 data/bibliocraft/recipe/lock_and_key.json
 7703c59f3f35a48b3129dc82cdc1250a7abb6db5 data/bibliocraft/recipe/plumb_line.json
 f0583eb232b6f310d7e4f1f397aa3f88da36c195 data/bibliocraft/recipe/redstone_book.json
+a765890c3fde494bdeb39548038ce12a35a543f6 data/bibliocraft/recipe/slotted_book.json
 b277312279cd10d36327954b4eabd7385e8de37e data/bibliocraft/recipe/wood/acacia/bookcase.json
 022421654ef5f0729d56e99a108b07fdf822439c data/bibliocraft/recipe/wood/acacia/fancy_armor_stand.json
 f30bf30e2746fb14d97c54a6b9c9bb4931cc399e data/bibliocraft/recipe/wood/acacia/label.json

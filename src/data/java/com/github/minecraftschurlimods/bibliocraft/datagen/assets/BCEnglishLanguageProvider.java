@@ -45,6 +45,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCItems.LOCK_AND_KEY.get(), "Lock and Key");
         addDefaultItem(BCItems.PLUMB_LINE);
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
+        addDefaultItem(BCItems.SLOTTED_BOOK);
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
         add("container", "disc_rack", "Disc Rack");
@@ -58,8 +59,10 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.LOCK_AND_KEY_UNLOCKED, "Successfully unlocked %s!");
         add(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME, "You must rename this lock and key before you can apply it to a block!");
         add(Translations.PLUMB_LINE_DISTANCE, "Depth: %s");
-        add(Translations.REDSTONE_BOOK_TITLE, "Redstone: Volume 1");
         add(Translations.REDSTONE_BOOK_TEXT, "When putting this book into a bookcase, the bookcase will emit a redstone signal. The strength of the signal depends on the slot it is placed in. Slot 1 (top left) yields no signal. Slot 2 yields a signal strength of 1. Each slot after that increases the signal strength by one, all the way to slot 16 (bottom right), which yields a signal strength of 15.");
+        add(Translations.REDSTONE_BOOK_TITLE, "Redstone: Volume 1");
+        add(Translations.SLOTTED_BOOK_TEXT, "This book can be used to hide your valuables among many books.");
+        add(Translations.SLOTTED_BOOK_TITLE, "Slotted Book");
     }
 
     /**
