@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -97,7 +97,7 @@ public class ClipboardScreen extends Screen {
 
     private void close() {
         stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
-        PacketDistributor.sendToServer(new ClipboardItemSyncPacket(data));
+        PacketDistributor.sendToServer(new ClipboardSyncPacket(data));
     }
 
     private void updateContents() {

@@ -10,13 +10,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record ClipboardItemSyncPacket(ClipboardContent content) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<ClipboardItemSyncPacket> TYPE = new CustomPacketPayload.Type<>(BCUtil.modLoc("clipboard_item_sync"));
-    public static final StreamCodec<FriendlyByteBuf, ClipboardItemSyncPacket> STREAM_CODEC = StreamCodec.composite(
-            ClipboardContent.STREAM_CODEC, ClipboardItemSyncPacket::content,
-            ClipboardItemSyncPacket::new);
+public record ClipboardSyncPacket(ClipboardContent content) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<ClipboardSyncPacket> TYPE = new CustomPacketPayload.Type<>(BCUtil.modLoc("clipboard_sync"));
+    public static final StreamCodec<FriendlyByteBuf, ClipboardSyncPacket> STREAM_CODEC = StreamCodec.composite(
+            ClipboardContent.STREAM_CODEC, ClipboardSyncPacket::content,
+            ClipboardSyncPacket::new);
 
-    public static void handle(ClipboardItemSyncPacket packet, IPayloadContext context) {
+    public static void handle(ClipboardSyncPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
             Player player = context.player();
             ItemStack stack = player.getMainHandItem();
