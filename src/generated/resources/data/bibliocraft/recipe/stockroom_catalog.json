@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "D": {
+      "tag": "c:dyes/green"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "PDP",
+    "PBP",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:stockroom_catalog"
+  }
+}

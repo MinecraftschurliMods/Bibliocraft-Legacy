@@ -46,6 +46,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultItem(BCItems.PLUMB_LINE);
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
         addDefaultItem(BCItems.SLOTTED_BOOK);
+        addDefaultItem(BCItems.STOCKROOM_CATALOG);
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
         add("container", "disc_rack", "Disc Rack");

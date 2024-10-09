@@ -1,6 +1,7 @@
 {
   "values": [
     "bibliocraft:redstone_book",
-    "bibliocraft:slotted_book"
+    "bibliocraft:slotted_book",
+    "bibliocraft:stockroom_catalog"
   ]
 }

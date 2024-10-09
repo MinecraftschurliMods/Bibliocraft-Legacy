@@ -10,6 +10,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.plumbline.PlumbLineIt
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
 import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookItem;
+import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeBlockItem;
@@ -47,21 +48,21 @@ public interface BCItems {
     ColoredDeferredHolder<Item, FancyLightItem> FANCY_GOLD_LANTERN = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_gold_lantern", color -> new FancyLightItem(BCBlocks.FANCY_GOLD_LANTERN.get(color)));
     DeferredItem<FancyLightItem> CLEAR_FANCY_IRON_LANTERN          = BCRegistries.ITEMS.register(                    "fancy_iron_lantern", () -> new FancyLightItem(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get()));
     ColoredDeferredHolder<Item, FancyLightItem> FANCY_IRON_LANTERN = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_iron_lantern", color -> new FancyLightItem(BCBlocks.FANCY_IRON_LANTERN.get(color)));
-    DeferredItem<ClipboardItem>       CLIPBOARD              = BCRegistries.ITEMS.register("clipboard", ClipboardItem::new);
-    DeferredItem<BlockItem>           COOKIE_JAR             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.COOKIE_JAR);
-    DeferredItem<BlockItem>           DESK_BELL              = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DESK_BELL);
-    DeferredItem<BlockItem>           DINNER_PLATE           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DINNER_PLATE);
-    DeferredItem<DiscRackItem>        DISC_RACK              = BCRegistries.ITEMS.registerItem("disc_rack", DiscRackItem::new);
-    DeferredItem<BlockItem>           GOLD_CHAIN             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_CHAIN);
-    DeferredItem<BlockItem>           GOLD_LANTERN           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_LANTERN);
-    DeferredItem<BlockItem>           GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
-    DeferredItem<DoubleHighBlockItem> IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
-    DeferredItem<BlockItem>           SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
-    DeferredItem<LockAndKeyItem>      LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
-    DeferredItem<PlumbLineItem>       PLUMB_LINE             = BCRegistries.ITEMS.registerItem("plumb_line", PlumbLineItem::new);
-    DeferredItem<RedstoneBookItem>    REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
-    DeferredItem<SlottedBookItem>     SLOTTED_BOOK           = BCRegistries.ITEMS.registerItem("slotted_book", SlottedBookItem::new);
-    //TODO Stockroom Catalog
+    DeferredItem<ClipboardItem>        CLIPBOARD              = BCRegistries.ITEMS.register("clipboard", ClipboardItem::new);
+    DeferredItem<BlockItem>            COOKIE_JAR             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.COOKIE_JAR);
+    DeferredItem<BlockItem>            DESK_BELL              = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DESK_BELL);
+    DeferredItem<BlockItem>            DINNER_PLATE           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DINNER_PLATE);
+    DeferredItem<DiscRackItem>         DISC_RACK              = BCRegistries.ITEMS.registerItem("disc_rack", DiscRackItem::new);
+    DeferredItem<BlockItem>            GOLD_CHAIN             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_CHAIN);
+    DeferredItem<BlockItem>            GOLD_LANTERN           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_LANTERN);
+    DeferredItem<BlockItem>            GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
+    DeferredItem<DoubleHighBlockItem>  IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
+    DeferredItem<BlockItem>            SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
+    DeferredItem<LockAndKeyItem>       LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
+    DeferredItem<PlumbLineItem>        PLUMB_LINE             = BCRegistries.ITEMS.registerItem("plumb_line", PlumbLineItem::new);
+    DeferredItem<RedstoneBookItem>     REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
+    DeferredItem<SlottedBookItem>      SLOTTED_BOOK           = BCRegistries.ITEMS.registerItem("slotted_book", SlottedBookItem::new);
+    DeferredItem<StockroomCatalogItem> STOCKROOM_CATALOG      = BCRegistries.ITEMS.registerItem("stockroom_catalog", StockroomCatalogItem::new);
     //TODO Tape Measure
     //TODO Big Book
     //TODO Hand Drill

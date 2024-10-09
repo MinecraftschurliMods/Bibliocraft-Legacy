@@ -59,6 +59,8 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.LOCK_AND_KEY);
                 output.accept(BCItems.PLUMB_LINE);
                 output.accept(BCItems.REDSTONE_BOOK);
+                output.accept(BCItems.SLOTTED_BOOK);
+                output.accept(BCItems.SLOTTED_BOOK);
             })
             .build());
 
