@@ -1,8 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
@@ -15,14 +17,89 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.SequencedMap;
+
 public class StockroomCatalogItem extends Item {
+    private static final Comparator<BlockPos> COMPARE_DISTANCE = Comparator.comparingDouble(e -> Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(new Vec3(e.getX(), e.getY(), e.getZ())));
+    private static final Comparator<BlockPos> COMPARE_ALPHABETICAL = Comparator.comparing(e -> BCUtil.getNameAtPos(Objects.requireNonNull(Minecraft.getInstance().level), e).getString());
+    private static final Comparator<StockroomCatalogItemEntry> COMPARE_NAME = Comparator.comparing(e -> e.item().getDisplayName().getString());
+    private static final Comparator<StockroomCatalogItemEntry> COMPARE_COUNT = Comparator.comparingInt(StockroomCatalogItemEntry::count);
+
     public StockroomCatalogItem(Properties properties) {
         super(properties);
     }
 
+    @SuppressWarnings("deprecation")
+    public static List<BlockPos> calculatePositions(ItemStack stack, Level level, Player player, StockroomCatalogSorting.Container containerSorting) {
+        return stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT)
+                .positions()
+                .stream()
+                .filter(e -> e.dimension() == level.dimension())
+                .map(GlobalPos::pos)
+                .filter(level::hasChunkAt)
+                .filter(e -> level.getCapability(Capabilities.ItemHandler.BLOCK, e, null) != null)
+                .sorted(switch (containerSorting) {
+                    case ALPHABETICAL_ASC, DISTANCE_ASC -> COMPARE_DISTANCE;
+                    case ALPHABETICAL_DESC, DISTANCE_DESC -> BCUtil.reverseComparator(COMPARE_DISTANCE);
+                })
+                .sorted(switch (containerSorting) {
+                    case ALPHABETICAL_ASC -> COMPARE_ALPHABETICAL;
+                    case ALPHABETICAL_DESC -> BCUtil.reverseComparator(COMPARE_ALPHABETICAL);
+                    default -> Comparator.comparingInt($ -> 0);
+                })
+                .toList();
+    }
+
+    public static List<StockroomCatalogItemEntry> calculateItems(List<BlockPos> positions, Level level, StockroomCatalogSorting.Item itemSorting) {
+        SequencedMap<ItemStack, StockroomCatalogItemEntry> tempItems = new LinkedHashMap<>();
+        for (BlockPos pos : positions) {
+            IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+            if (cap == null) continue;
+            for (int i = 0; i < cap.getSlots(); i++) {
+                ItemStack originalStack = cap.getStackInSlot(i);
+                if (originalStack.isEmpty()) continue;
+                ItemStack stack = originalStack.copy();
+                int count = stack.getCount();
+                stack.setCount(1);
+                Optional<ItemStack> optional = tempItems
+                        .keySet()
+                        .stream()
+                        .filter(e -> ItemStack.isSameItemSameComponents(e, stack))
+                        .findFirst();
+                StockroomCatalogItemEntry entry = optional
+                        .map(itemStack -> tempItems.get(itemStack).add(count))
+                        .orElseGet(() -> new StockroomCatalogItemEntry(originalStack));
+                tempItems.put(optional.orElse(stack), entry.add(pos));
+            }
+        }
+        return tempItems.sequencedValues()
+                .stream()
+                .sorted(switch (itemSorting) {
+                    case ALPHABETICAL_ASC -> COMPARE_COUNT;
+                    case ALPHABETICAL_DESC -> BCUtil.reverseComparator(COMPARE_COUNT);
+                    case COUNT_ASC -> COMPARE_NAME;
+                    case COUNT_DESC -> BCUtil.reverseComparator(COMPARE_NAME);
+                })
+                .sorted(switch (itemSorting) {
+                    case ALPHABETICAL_ASC -> COMPARE_NAME;
+                    case ALPHABETICAL_DESC -> BCUtil.reverseComparator(COMPARE_NAME);
+                    case COUNT_ASC -> COMPARE_COUNT;
+                    case COUNT_DESC -> BCUtil.reverseComparator(COMPARE_COUNT);
+                })
+                .toList();
+    }
+    
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();

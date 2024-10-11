@@ -21,4 +21,18 @@ public abstract class SpriteButton extends Button {
             guiGraphics.blitSprite(sprite, getX(), getY(), getWidth(), getHeight());
         }
     }
+    
+    public static class SingleSprite extends SpriteButton {
+        private final ResourceLocation sprite;
+
+        public SingleSprite(ResourceLocation sprite, int x, int y, int width, int height, OnPress onPress) {
+            super(x, y, width, height, onPress);
+            this.sprite = sprite;
+        }
+
+        @Override
+        protected ResourceLocation getSprite() {
+            return sprite;
+        }
+    }
 }

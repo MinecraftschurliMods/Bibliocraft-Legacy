@@ -6,18 +6,21 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -96,11 +99,12 @@ public final class BCUtil {
 
     /**
      * Extends the given {@link List} to the given size, filling the new spaces with the provided values.
+     *
      * @param list The {@link List} to extend.
      * @param size The size the {@link List} should be extended to.
      * @param fill The value to fill the new spots with.
+     * @param <T>  The generic type of the list.
      * @return The given {@link List}, extended to the given size.
-     * @param <T> The generic type of the list.
      */
     public static <T> List<T> extend(List<T> list, int size, T fill) {
         for (int i = list.size(); i < size; i++) {
@@ -124,8 +128,8 @@ public final class BCUtil {
 
     /**
      * @param valuesSupplier The enum's {@code values()} method.
+     * @param <E>            The enum type.
      * @return An enum codec.
-     * @param <E> The enum type.
      */
     public static <E extends Enum<E> & StringRepresentable> Codec<E> enumCodec(Supplier<E[]> valuesSupplier) {
         return StringRepresentable.fromEnum(valuesSupplier);
@@ -134,8 +138,8 @@ public final class BCUtil {
     /**
      * @param valuesSupplier  The enum's {@code values()} method.
      * @param ordinalSupplier The enum's {@code ordinal()} method.
+     * @param <E>             The enum type.
      * @return An enum stream codec.
-     * @param <E> The enum type.
      */
     public static <E extends Enum<E>> StreamCodec<ByteBuf, E> enumStreamCodec(Supplier<E[]> valuesSupplier, Function<E, Integer> ordinalSupplier) {
         return ByteBufCodecs.INT.map(e -> valuesSupplier.get()[e], ordinalSupplier);
@@ -143,10 +147,11 @@ public final class BCUtil {
 
     /**
      * Encodes the given value to NBT using the given codec.
+     *
      * @param codec The codec to use for encoding.
      * @param value The value to encode to NBT.
+     * @param <T>   The type of the value and the codec.
      * @return The NBT representation of the given value.
-     * @param <T> The type of the value and the codec.
      */
     public static <T> Tag encodeNbt(Codec<T> codec, T value) {
         return codec.encodeStart(NbtOps.INSTANCE, value).getOrThrow();
@@ -154,12 +159,35 @@ public final class BCUtil {
 
     /**
      * Decodes the given value from NBT using the given codec.
+     *
      * @param codec The codec to use for decoding.
-     * @param tag The NBT representation to decode.
+     * @param tag   The NBT representation to decode.
+     * @param <T>   The type of the value and the codec.
      * @return The decoded value.
-     * @param <T> The type of the value and the codec.
      */
     public static <T> T decodeNbt(Codec<T> codec, Tag tag) {
         return codec.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
+    }
+
+    /**
+     * Returns a {@link Comparator} that is reversed, i.e. will sort elements in the reverse order of the original {@link Comparator}.
+     *
+     * @param comparator The {@link Comparator} comparator to reverse.
+     * @param <T>        The generic type of the {@link Comparator}.
+     * @return The reversed {@link Comparator}.
+     */
+    public static <T> Comparator<T> reverseComparator(Comparator<T> comparator) {
+        return (a, b) -> -comparator.compare(a, b);
+    }
+
+    /**
+     * Returns a display name for the given position. If there is a nameable block entity at the position, the block entity's name is returned, otherwise the block's name is returned.
+     *
+     * @param level The {@link Level} to get the display name for.
+     * @param pos   The {@link BlockPos} to get the display name for.
+     * @return The display name to use for the given position.
+     */
+    public static Component getNameAtPos(Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName();
     }
 }
