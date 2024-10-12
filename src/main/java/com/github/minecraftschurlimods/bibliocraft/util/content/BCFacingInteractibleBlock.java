@@ -38,7 +38,7 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BCBlockEntity bcbe) {
                 ItemStack slotStack = bcbe.getItem(slot);
-                if ((!stack.isEmpty() && bcbe.canPlaceItem(slot, stack)) || !slotStack.isEmpty()) {
+                if ((!stack.isEmpty() || !slotStack.isEmpty()) && bcbe.canPlaceItem(slot, stack)) {
                     bcbe.setItem(slot, stack);
                     player.setItemInHand(hand, slotStack);
                     return ItemInteractionResult.SUCCESS;
