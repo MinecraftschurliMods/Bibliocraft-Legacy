@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSorting;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
@@ -56,8 +57,20 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");
         add("itemGroup." + BibliocraftApi.MOD_ID, "Bibliocraft");
+        add(StockroomCatalogSorting.Container.ALPHABETICAL_ASC.getTranslationKey(), "A-Z");
+        add(StockroomCatalogSorting.Container.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
+        add(StockroomCatalogSorting.Container.DISTANCE_ASC.getTranslationKey(), "<-->");
+        add(StockroomCatalogSorting.Container.DISTANCE_DESC.getTranslationKey(), "-><-");
+        add(StockroomCatalogSorting.Item.ALPHABETICAL_ASC.getTranslationKey(), "A-Z");
+        add(StockroomCatalogSorting.Item.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
+        add(StockroomCatalogSorting.Item.COUNT_ASC.getTranslationKey(), "1-99");
+        add(StockroomCatalogSorting.Item.COUNT_DESC.getTranslationKey(), "99-1");
+        add(Translations.STOCKROOM_CATALOG_COUNT, "x%s");
+        add(Translations.STOCKROOM_CATALOG_DISTANCE, "%s blocks away");
+        add(Translations.STOCKROOM_CATALOG_SEARCH, "Search");
         add(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS, "Show Containers");
         add(Translations.STOCKROOM_CATALOG_SHOW_ITEMS, "Show Items");
+        add(Translations.STOCKROOM_CATALOG_SORT, "Sort: %s");
         add(Translations.LOCK_AND_KEY_LOCKED, "Successfully locked %s!");
         add(Translations.LOCK_AND_KEY_UNLOCKED, "Successfully unlocked %s!");
         add(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME, "You must rename this lock and key before you can apply it to a block!");

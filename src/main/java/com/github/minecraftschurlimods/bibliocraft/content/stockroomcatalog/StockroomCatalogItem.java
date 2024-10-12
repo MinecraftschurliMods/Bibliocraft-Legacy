@@ -31,7 +31,7 @@ import java.util.Optional;
 import java.util.SequencedMap;
 
 public class StockroomCatalogItem extends Item {
-    private static final Comparator<BlockPos> COMPARE_DISTANCE = Comparator.comparingDouble(e -> Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(new Vec3(e.getX(), e.getY(), e.getZ())));
+    private static final Comparator<BlockPos> COMPARE_DISTANCE = Comparator.comparingDouble(e -> Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(e)));
     private static final Comparator<BlockPos> COMPARE_ALPHABETICAL = Comparator.comparing(e -> BCUtil.getNameAtPos(Objects.requireNonNull(Minecraft.getInstance().level), e).getString());
     private static final Comparator<StockroomCatalogItemEntry> COMPARE_NAME = Comparator.comparing(e -> e.item().getDisplayName().getString());
     private static final Comparator<StockroomCatalogItemEntry> COMPARE_COUNT = Comparator.comparingInt(StockroomCatalogItemEntry::count);
@@ -111,13 +111,13 @@ public class StockroomCatalogItem extends Item {
             StockroomCatalogContent list = stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT);
             if (list.positions().contains(globalPos)) {
                 stack.update(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT, component -> component.remove(globalPos));
-                player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE, level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName()), true);
+                player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE, BCUtil.getNameAtPos(level, pos)), true);
                 return InteractionResult.SUCCESS;
             }
             IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, context.getClickedFace());
             if (cap != null) {
                 stack.update(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT, component -> component.add(globalPos));
-                player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_ADD, level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName()), true);
+                player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_ADD, BCUtil.getNameAtPos(level, pos)), true);
                 return InteractionResult.SUCCESS;
             }
         }

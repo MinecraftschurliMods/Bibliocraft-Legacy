@@ -17,11 +17,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class ClipboardScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
@@ -92,6 +92,35 @@ public class ClipboardScreen extends Screen {
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if (scrollY < 0 && forwardButton.visible) {
+            forwardButton.onPress();
+            return true;
+        }
+        if (scrollY > 0 && backButton.visible) {
+            backButton.onPress();
+            return true;
+        }
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (super.keyPressed(keyCode, scanCode, modifiers)) return true;
+        return switch (keyCode) {
+            case GLFW.GLFW_KEY_PAGE_UP -> {
+                backButton.onPress();
+                yield true;
+            }
+            case GLFW.GLFW_KEY_PAGE_DOWN -> {
+                forwardButton.onPress();
+                yield true;
+            }
+            default -> false;
+        };
     }
 
     private void updateContents() {

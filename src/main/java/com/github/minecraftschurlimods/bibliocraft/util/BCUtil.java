@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,5 +191,13 @@ public final class BCUtil {
      */
     public static Component getNameAtPos(Level level, BlockPos pos) {
         return level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName();
+    }
+
+    /**
+     * @param vec A {@link Vec3i}.
+     * @return The given {@link Vec3i}, represented as a {@link Vec3}.
+     */
+    public static Vec3 toVec3(Vec3i vec) {
+        return new Vec3(vec.getX(), vec.getY(), vec.getZ());
     }
 }

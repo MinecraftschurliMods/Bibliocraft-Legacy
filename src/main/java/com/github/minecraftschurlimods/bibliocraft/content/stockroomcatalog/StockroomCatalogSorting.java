@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -7,8 +8,10 @@ import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
 
-public final class StockroomCatalogSorting {
-    public enum Item implements StringRepresentable {
+public interface StockroomCatalogSorting {
+    String getTranslationKey();
+    
+    enum Item implements StockroomCatalogSorting, StringRepresentable {
         ALPHABETICAL_ASC,
         ALPHABETICAL_DESC,
         COUNT_ASC,
@@ -20,9 +23,14 @@ public final class StockroomCatalogSorting {
         public String getSerializedName() {
             return name().toLowerCase(Locale.ROOT);
         }
+
+        @Override
+        public String getTranslationKey() {
+            return "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.sorting.item." + getSerializedName();
+        }
     }
 
-    public enum Container implements StringRepresentable {
+    enum Container implements StockroomCatalogSorting, StringRepresentable {
         ALPHABETICAL_ASC,
         ALPHABETICAL_DESC,
         DISTANCE_ASC,
@@ -33,6 +41,11 @@ public final class StockroomCatalogSorting {
         @Override
         public String getSerializedName() {
             return name().toLowerCase(Locale.ROOT);
+        }
+
+        @Override
+        public String getTranslationKey() {
+            return "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.sorting.container." + getSerializedName();
         }
     }
 }

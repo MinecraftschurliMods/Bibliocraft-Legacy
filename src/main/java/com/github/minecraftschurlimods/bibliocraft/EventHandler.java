@@ -66,7 +66,7 @@ public final class EventHandler {
         private static void registerLockAndKeyBehaviors(RegisterLockAndKeyBehaviorEvent event) {
             event.register(BaseContainerBlockEntity.class, be -> be.lockKey, (be, lock) -> be.lockKey = lock, BaseContainerBlockEntity::getDisplayName);
             event.register(BeaconBlockEntity.class, be -> be.lockKey, (be, lock) -> be.lockKey = lock, BeaconBlockEntity::getDisplayName);
-            event.register(BCBlockEntity.class, BCBlockEntity::getLockKey, BCBlockEntity::setLockKey, be -> be instanceof Nameable nameable ? nameable.getDisplayName() : be.getBlockState().getBlock().getName());
+            event.register(BCBlockEntity.class, BCBlockEntity::getLockKey, BCBlockEntity::setLockKey, be -> BCUtil.getNameAtPos(Objects.requireNonNull(be.getLevel()), be.getBlockPos()));
         }
         
         @SubscribeEvent
