@@ -12,6 +12,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
 import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookItem;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.tapemeasure.TapeMeasureItem;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeBlockItem;
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
@@ -63,7 +64,8 @@ public interface BCItems {
     DeferredItem<RedstoneBookItem>     REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
     DeferredItem<SlottedBookItem>      SLOTTED_BOOK           = BCRegistries.ITEMS.registerItem("slotted_book", SlottedBookItem::new);
     DeferredItem<StockroomCatalogItem> STOCKROOM_CATALOG      = BCRegistries.ITEMS.registerItem("stockroom_catalog", StockroomCatalogItem::new);
-    //TODO Tape Measure
+    DeferredItem<TapeMeasureItem>      TAPE_MEASURE           = BCRegistries.ITEMS.registerItem("tape_measure", TapeMeasureItem::new);
+    DeferredItem<Item>                 TAPE_REEL              = BCRegistries.ITEMS.registerSimpleItem("tape_reel");
     //TODO Big Book
     //TODO Hand Drill
     //TODO Screw Gun

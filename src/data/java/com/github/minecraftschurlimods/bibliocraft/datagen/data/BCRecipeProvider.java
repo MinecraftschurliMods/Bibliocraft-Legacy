@@ -223,6 +223,22 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('B', Items.BOOK)
                 .unlockedBy("has_book", has(Items.BOOK))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.TAPE_MEASURE)
+                .pattern(" I ")
+                .pattern("IRI")
+                .pattern(" I ")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('R', BCItems.TAPE_REEL)
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.TAPE_REEL)
+                .pattern("SSS")
+                .pattern("SDS")
+                .pattern("SSS")
+                .define('S', Tags.Items.STRINGS)
+                .define('D', Tags.Items.DYES_YELLOW)
+                .unlockedBy("has_yellow_dye", has(Tags.Items.DYES_YELLOW))
+                .save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK)
                 .requires(Items.BOOK)
                 .requires(Items.REDSTONE_TORCH)

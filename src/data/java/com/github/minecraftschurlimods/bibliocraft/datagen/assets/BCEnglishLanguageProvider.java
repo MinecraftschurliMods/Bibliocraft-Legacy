@@ -48,6 +48,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
         addDefaultItem(BCItems.SLOTTED_BOOK);
         addDefaultItem(BCItems.STOCKROOM_CATALOG);
+        addDefaultItem(BCItems.TAPE_MEASURE);
+        addDefaultItem(BCItems.TAPE_REEL);
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
         add("container", "disc_rack", "Disc Rack");
@@ -83,6 +85,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.SLOTTED_BOOK_TITLE, "Slotted Book");
         add(Translations.STOCKROOM_CATALOG_ADD_CONTAINER, "Started listing contents of %s in the Stockroom Catalog!");
         add(Translations.STOCKROOM_CATALOG_REMOVE_CONTAINER, "Stopped listing contents of %s in the Stockroom Catalog!");
+        add(Translations.TAPE_MEASURE_DISTANCE, "Distance: %s blocks (x: %s, y: %s, z: %s)");
     }
 
     /**

@@ -1,4 +1,4 @@
-// 1.21.1	2024-10-09T16:04:19.2556513	Item Models: bibliocraft
+// 1.21.1	2024-10-14T22:25:18.1538665	Item Models: bibliocraft
 4f9e90140d7161f62b8e8c1fcf9e6d67fb404ff2 assets/bibliocraft/models/item/acacia_bookcase.json
 a785a9553cc8751ab507ae037fdaaac40d0ca475 assets/bibliocraft/models/item/acacia_fancy_armor_stand.json
 90285e3e9d48b221e35a0ef303eb59bb455d98f9 assets/bibliocraft/models/item/acacia_label.json
@@ -1222,6 +1222,8 @@ a96ffa423e0e9c67077e2a08517adb6bf5c6dc7d assets/bibliocraft/models/item/spruce_t
 09a6499f1e13f7d81a4c5edbf19e72490d1bff46 assets/bibliocraft/models/item/spruce_tool_rack.json
 2ceeae7eb821665abc4a21275f1cd19fd884777e assets/bibliocraft/models/item/stockroom_catalog.json
 384f3f1f7e7535bfeb3ccbe3336132dcaec138d7 assets/bibliocraft/models/item/sword_pedestal.json
+4ecc91681afd88f9a3554d857b544f512cb160fd assets/bibliocraft/models/item/tape_measure.json
+da16544a4d320886edd8bcf9bdb0c9a6aaf37d6b assets/bibliocraft/models/item/tape_reel.json
 79d9b11de6bfc68cd0e212a31583b7e68e4bc148 assets/bibliocraft/models/item/warped_bookcase.json
 aa47ca82c5391001da51ea239c34065228dbac0a assets/bibliocraft/models/item/warped_fancy_armor_stand.json
 40b0c3eb49836ce7bd4e0522f9e5dbbf6d2d5244 assets/bibliocraft/models/item/warped_label.json

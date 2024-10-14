@@ -25,4 +25,5 @@ public interface Translations {
     String SLOTTED_BOOK_TITLE                 = "item." + BibliocraftApi.MOD_ID + ".slotted_book.title";
     String STOCKROOM_CATALOG_ADD_CONTAINER    = "item." + BibliocraftApi.MOD_ID + ".stockroom_catalog.add_container";
     String STOCKROOM_CATALOG_REMOVE_CONTAINER = "item." + BibliocraftApi.MOD_ID + ".stockroom_catalog.remove_container";
+    String TAPE_MEASURE_DISTANCE              = "item." + BibliocraftApi.MOD_ID + ".tape_measure.distance";
 }

@@ -61,6 +61,8 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.REDSTONE_BOOK);
                 output.accept(BCItems.SLOTTED_BOOK);
                 output.accept(BCItems.STOCKROOM_CATALOG);
+                output.accept(BCItems.TAPE_MEASURE);
+                output.accept(BCItems.TAPE_REEL);
             })
             .build());
 
