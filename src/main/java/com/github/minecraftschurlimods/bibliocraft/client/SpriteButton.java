@@ -21,18 +21,20 @@ public abstract class SpriteButton extends Button {
             guiGraphics.blitSprite(sprite, getX(), getY(), getWidth(), getHeight());
         }
     }
-    
-    public static class SingleSprite extends SpriteButton {
-        private final ResourceLocation sprite;
 
-        public SingleSprite(ResourceLocation sprite, int x, int y, int width, int height, OnPress onPress) {
+    public static class RegularAndHighlightSprite extends SpriteButton {
+        private final ResourceLocation sprite;
+        private final ResourceLocation highlightedSprite;
+
+        public RegularAndHighlightSprite(ResourceLocation sprite, ResourceLocation highlightedSprite, int x, int y, int width, int height, OnPress onPress) {
             super(x, y, width, height, onPress);
             this.sprite = sprite;
+            this.highlightedSprite = highlightedSprite;
         }
 
         @Override
         protected ResourceLocation getSprite() {
-            return sprite;
+            return isHoveredOrFocused() ? highlightedSprite : sprite;
         }
     }
 }

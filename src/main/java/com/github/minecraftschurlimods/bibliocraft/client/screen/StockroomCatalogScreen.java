@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
+import com.github.minecraftschurlimods.bibliocraft.client.SpriteButton;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogContent;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogItemEntry;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
@@ -9,35 +10,46 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class StockroomCatalogScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/stockroom_catalog.png");
+    private static final ResourceLocation LOCATE = BCUtil.modLoc("locate");
+    private static final ResourceLocation LOCATE_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
+    private static final ResourceLocation REMOVE = BCUtil.modLoc("remove");
+    private static final ResourceLocation REMOVE_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
     private static final int ROWS_PER_PAGE = 11;
+    private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
     private final StockroomCatalogContent data;
+    private final RandomSource random = RandomSource.create();
+    private final List<Button> removeButtons = new ArrayList<>();
+    private final List<Button> locateButtons = new ArrayList<>();
     private boolean showContainerList = false;
     private int page = 0;
     private String search = "";
@@ -61,24 +73,34 @@ public class StockroomCatalogScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
         int x = (width - 256) / 2;
+        int y = mouseY - 29;
         int i = 0;
         if (showContainerList) {
             for (BlockPos pos : visibleContainers) {
                 ItemStack blockItem = new ItemStack(Objects.requireNonNull(Minecraft.getInstance().level).getBlockState(pos).getBlock().asItem());
                 graphics.renderItem(blockItem, x + 34, i * 19 + 29);
-                //TODO add Locate button
-                //TODO add Remove button
-                String distanceText = Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE, (int) Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(pos))).getString();
-                int distanceWidth = font.width(distanceText);
-                graphics.drawString(font, distanceText, x + 187 - distanceWidth, i * 19 + 33, 0, false);
-                String itemText = blockItem.getHoverName().getString(137 - distanceWidth);
+                String itemText = blockItem.getHoverName().getString(137);
                 graphics.drawString(font, itemText, x + 51, i * 19 + 33, 0, false);
                 i++;
+            }
+            if (mouseX >= x + 34 && mouseX < x + 50) {
+                if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
+                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE, (int) Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(visibleContainers.get(y / 19)))), mouseX, mouseY);
+                }
+            }
+            if (mouseX >= x + 189 && mouseX < x + 205) {
+                if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
+                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE), mouseX, mouseY);
+                }
+            }
+            if (mouseX >= x + 206 && mouseX < x + 222) {
+                if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
+                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY);
+                }
             }
         } else {
             for (StockroomCatalogItemEntry entry : visibleItems) {
                 graphics.renderItem(entry.item(), x + 34, i * 19 + 29);
-                graphics.renderItem(entry.item(), x + 206, i * 19 + 29); //TODO replace with Locate button
                 String countText = Component.translatable(Translations.STOCKROOM_CATALOG_COUNT, entry.count()).getString();
                 int countWidth = font.width(countText);
                 graphics.drawString(font, countText, x + 205 - countWidth, i * 19 + 33, 0, false);
@@ -87,10 +109,14 @@ public class StockroomCatalogScreen extends Screen {
                 i++;
             }
             if (mouseX >= x + 34 && mouseX < x + 50) {
-                int y = mouseY - 29;
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
                     ItemStack item = visibleItems.get(y / 19).item();
                     graphics.renderTooltip(font, getTooltipFromItem(getMinecraft(), item), item.getTooltipImage(), item, mouseX, mouseY);
+                }
+            }
+            if (mouseX >= x + 206 && mouseX < x + 222) {
+                if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
+                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY);
                 }
             }
         }
@@ -99,13 +125,14 @@ public class StockroomCatalogScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        stack.set(BCDataComponents.STOCKROOM_CATALOG_CONTENT, data);
-        PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data));
+        setDataOnStack();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected void init() {
+        locateButtons.clear();
+        removeButtons.clear();
         int x = (width - 256) / 2;
         addRenderableWidget(Button.builder(Component.translatable(showContainerList ? Translations.STOCKROOM_CATALOG_SHOW_ITEMS : Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS), $ -> toggleMode()).bounds(width / 2 - 100, 260, 98, 20).build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 + 2, 260, 98, 20).build());
@@ -126,7 +153,6 @@ public class StockroomCatalogScreen extends Screen {
             page--;
             updateContents();
         }, false));
-        updateContents();
         if (showContainerList) {
             addRenderableWidget(new SortButton<>(StockroomCatalogSorting.Container.ALPHABETICAL_ASC, x + 172, 11, 52, 14, b -> {
                 SortButton<StockroomCatalogSorting.Container> button = (SortButton<StockroomCatalogSorting.Container>) b;
@@ -140,6 +166,14 @@ public class StockroomCatalogScreen extends Screen {
                 requestPacket();
                 updateContents();
             }));
+            for (int i = 0; i < ROWS_PER_PAGE; i++) {
+                final int j = i; // I love Java
+                removeButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(REMOVE, REMOVE_HIGHLIGHTED, x + 189, i * 19 + 29, 16, 16, p -> {
+                    data.remove(new GlobalPos(Objects.requireNonNull(Minecraft.getInstance().level).dimension(), visibleContainers.get(j)));
+                    setDataOnStack();
+                })));
+                locateButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(LOCATE, LOCATE_HIGHLIGHTED, x + 206, i * 19 + 29, 16, 16, p -> addParticles(visibleContainers.get(j)))));
+            }
         } else {
             addRenderableWidget(new SortButton<>(StockroomCatalogSorting.Item.ALPHABETICAL_ASC, x + 172, 11, 52, 14, b -> {
                 SortButton<StockroomCatalogSorting.Item> button = (SortButton<StockroomCatalogSorting.Item>) b;
@@ -153,7 +187,12 @@ public class StockroomCatalogScreen extends Screen {
                 requestPacket();
                 updateContents();
             }));
+            for (int i = 0; i < ROWS_PER_PAGE; i++) {
+                final int j = i; // I love Java
+                locateButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(LOCATE, LOCATE_HIGHLIGHTED, x + 206, i * 19 + 29, 16, 16, p -> addParticles(visibleItems.get(j)))));
+            }
         }
+        updateContents();
     }
 
     @Override
@@ -205,6 +244,11 @@ public class StockroomCatalogScreen extends Screen {
         PacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting));
     }
 
+    private void setDataOnStack() {
+        stack.set(BCDataComponents.STOCKROOM_CATALOG_CONTENT, data);
+        PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data));
+    }
+
     private void toggleMode() {
         showContainerList = !showContainerList;
         page = 0;
@@ -217,6 +261,15 @@ public class StockroomCatalogScreen extends Screen {
         buildVisibleCache();
         forwardButton.visible = page < (showContainerList ? containers.size() - 1 : items.size() - 1) / ROWS_PER_PAGE;
         backButton.visible = page > 0;
+        removeButtons.forEach(e -> e.visible = true);
+        locateButtons.forEach(e -> e.visible = true);
+        if (showContainerList && visibleContainers.size() < ROWS_PER_PAGE) {
+            IntStream.range(visibleContainers.size(), ROWS_PER_PAGE).forEach(i -> removeButtons.get(i).visible = false);
+            IntStream.range(visibleContainers.size(), ROWS_PER_PAGE).forEach(i -> locateButtons.get(i).visible = false);
+        }
+        if (!showContainerList && visibleItems.size() < ROWS_PER_PAGE) {
+            IntStream.range(visibleItems.size(), ROWS_PER_PAGE).forEach(i -> locateButtons.get(i).visible = false);
+        }
     }
 
     private void buildVisibleCache() {
@@ -241,6 +294,22 @@ public class StockroomCatalogScreen extends Screen {
                 .skip((long) page * ROWS_PER_PAGE)
                 .limit(ROWS_PER_PAGE)
                 .toList();
+    }
+    
+    private void addParticles(StockroomCatalogItemEntry entry) {
+        for (BlockPos pos : entry.containers()) {
+            addParticles(pos);
+        }
+    }
+
+    private void addParticles(BlockPos pos) {
+        ParticleEngine particles = Minecraft.getInstance().particleEngine;
+        for (int i = 0; i < PARTICLE_COUNT; i++) {
+            Particle particle = particles.createParticle(ParticleTypes.POOF, pos.getX() + random.nextDouble(), pos.getY() + random.nextDouble(), pos.getZ() + random.nextDouble(), 0, 0, 0);
+            if (particle != null) {
+                particle.setLifetime((int) (random.nextDouble() * 20) + 60);
+            }
+        }
     }
 
     private static class SortButton<E extends Enum<E> & StockroomCatalogSorting> extends Button {

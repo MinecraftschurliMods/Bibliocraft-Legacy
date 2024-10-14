@@ -67,6 +67,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(StockroomCatalogSorting.Item.COUNT_DESC.getTranslationKey(), "99-1");
         add(Translations.STOCKROOM_CATALOG_COUNT, "x%s");
         add(Translations.STOCKROOM_CATALOG_DISTANCE, "%s blocks away");
+        add(Translations.STOCKROOM_CATALOG_LOCATE, "Locate");
+        add(Translations.STOCKROOM_CATALOG_REMOVE, "Remove");
         add(Translations.STOCKROOM_CATALOG_SEARCH, "Search");
         add(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS, "Show Containers");
         add(Translations.STOCKROOM_CATALOG_SHOW_ITEMS, "Show Items");
@@ -79,8 +81,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.REDSTONE_BOOK_TITLE, "Redstone: Volume 1");
         add(Translations.SLOTTED_BOOK_TEXT, "This book can be used to hide your valuables among many books.");
         add(Translations.SLOTTED_BOOK_TITLE, "Slotted Book");
-        add(Translations.STOCKROOM_CATALOG_ADD, "Started listing contents of %s in the Stockroom Catalog!");
-        add(Translations.STOCKROOM_CATALOG_REMOVE, "Stopped listing contents of %s in the Stockroom Catalog!");
+        add(Translations.STOCKROOM_CATALOG_ADD_CONTAINER, "Started listing contents of %s in the Stockroom Catalog!");
+        add(Translations.STOCKROOM_CATALOG_REMOVE_CONTAINER, "Stopped listing contents of %s in the Stockroom Catalog!");
     }
 
     /**
