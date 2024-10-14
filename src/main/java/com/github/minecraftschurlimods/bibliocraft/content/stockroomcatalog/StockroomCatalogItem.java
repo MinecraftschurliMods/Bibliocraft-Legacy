@@ -11,21 +11,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.ChestType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SequencedMap;
@@ -106,9 +105,13 @@ public class StockroomCatalogItem extends Item {
         if (player != null && context.isSecondaryUseActive()) {
             BlockPos pos = context.getClickedPos();
             Level level = context.getLevel();
-            GlobalPos globalPos = new GlobalPos(level.dimension(), pos);
+            BlockState state = level.getBlockState(pos);
             ItemStack stack = context.getItemInHand();
             StockroomCatalogContent list = stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT);
+            boolean hasNeighbor = state.hasProperty(ChestBlock.TYPE) && state.getValue(ChestBlock.TYPE) != ChestType.SINGLE;
+            GlobalPos neighborPos = hasNeighbor ? new GlobalPos(level.dimension(), pos.offset(ChestBlock.getConnectedDirection(state).getNormal())) : null;
+            boolean hasPositionAtNeighbor = hasNeighbor && list.positions().contains(neighborPos);
+            GlobalPos globalPos = hasPositionAtNeighbor ? neighborPos : new GlobalPos(level.dimension(), pos);
             if (list.positions().contains(globalPos)) {
                 stack.update(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT, component -> component.remove(globalPos));
                 player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE, BCUtil.getNameAtPos(level, pos)), true);
