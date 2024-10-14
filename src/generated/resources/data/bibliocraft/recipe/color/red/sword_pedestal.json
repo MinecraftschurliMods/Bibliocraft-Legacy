@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
+  "group": "bibliocraft:sword_pedestal",
   "key": {
     "S": {
       "item": "minecraft:smooth_stone_slab"

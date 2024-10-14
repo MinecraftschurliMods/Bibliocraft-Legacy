@@ -44,6 +44,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
                     .define('W', BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_wool")))
+                    .group("bibliocraft:sword_pedestal")
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                     .save(output, BCUtil.modLoc("color/" + name + "/sword_pedestal"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LAMP.get(color))
@@ -54,6 +55,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Items.GLOWSTONE)
                     .define('I', Tags.Items.INGOTS_GOLD)
                     .define('N', Tags.Items.NUGGETS_GOLD)
+                    .group("bibliocraft:fancy_lamp")
                     .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_gold_lamp"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_IRON_LAMP.get(color))
@@ -64,6 +66,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Items.GLOWSTONE)
                     .define('I', Tags.Items.INGOTS_IRON)
                     .define('N', Tags.Items.NUGGETS_IRON)
+                    .group("bibliocraft:fancy_lamp")
                     .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_iron_lamp"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LANTERN.get(color))
@@ -73,6 +76,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                     .define('I', Tags.Items.INGOTS_GOLD)
                     .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_candle"))))
+                    .group("bibliocraft:fancy_lantern")
                     .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_gold_lantern"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_IRON_LANTERN.get(color))
@@ -82,6 +86,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                     .define('I', Tags.Items.INGOTS_IRON)
                     .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_candle"))))
+                    .group("bibliocraft:fancy_lantern")
                     .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_iron_lantern"));
         }
@@ -93,6 +98,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('G', Items.GLOWSTONE)
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .define('N', Tags.Items.NUGGETS_GOLD)
+                .group("bibliocraft:fancy_lamp")
                 .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_IRON_LAMP)
@@ -103,6 +109,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('G', Items.GLOWSTONE)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('N', Tags.Items.NUGGETS_IRON)
+                .group("bibliocraft:fancy_lamp")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LANTERN)
@@ -112,6 +119,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .define('C', Ingredient.of(Items.CANDLE))
+                .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_IRON_LANTERN)
@@ -121,6 +129,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('C', Ingredient.of(Items.CANDLE))
+                .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD)

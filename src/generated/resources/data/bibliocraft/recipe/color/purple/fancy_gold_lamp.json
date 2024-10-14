@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:fancy_lamp",
   "key": {
     "C": {
       "type": "neoforge:intersection",

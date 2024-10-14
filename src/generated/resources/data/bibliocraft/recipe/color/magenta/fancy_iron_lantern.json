@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:fancy_lantern",
   "key": {
     "C": {
       "item": "minecraft:magenta_candle"
