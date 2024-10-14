@@ -79,6 +79,7 @@ public class StockroomCatalogScreen extends Screen {
             for (BlockPos pos : visibleContainers) {
                 ItemStack blockItem = new ItemStack(Objects.requireNonNull(Minecraft.getInstance().level).getBlockState(pos).getBlock().asItem());
                 graphics.renderItem(blockItem, x + 34, i * 19 + 29);
+                graphics.renderItemDecorations(font, blockItem, x + 34, i * 19 + 29);
                 String itemText = blockItem.getHoverName().getString(137);
                 graphics.drawString(font, itemText, x + 51, i * 19 + 33, 0, false);
                 i++;
@@ -101,6 +102,7 @@ public class StockroomCatalogScreen extends Screen {
         } else {
             for (StockroomCatalogItemEntry entry : visibleItems) {
                 graphics.renderItem(entry.item(), x + 34, i * 19 + 29);
+                graphics.renderItemDecorations(font, entry.item(), x + 34, i * 19 + 29);
                 String countText = Component.translatable(Translations.STOCKROOM_CATALOG_COUNT, entry.count()).getString();
                 int countWidth = font.width(countText);
                 graphics.drawString(font, countText, x + 205 - countWidth, i * 19 + 33, 0, false);
