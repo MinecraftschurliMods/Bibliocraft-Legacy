@@ -8,7 +8,7 @@ version="${mod_version}"
 displayName="${mod_name}"
 authors="${mod_authors}"
 credits="${mod_credits}"
-#logoFile=${mod_logo}"
+logoFile="${mod_logo}"
 description='''${mod_description}'''
 
 [[dependencies.${mod_id}]]
