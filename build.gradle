@@ -5,6 +5,7 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven { url 'https://maven.blamejared.com/' }
 }
 
 sourceSets {
@@ -23,6 +24,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter:${project.junit_version}"
     testImplementation "net.neoforged:testframework:${project.neo_version}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
 }
 
 neoForge {
