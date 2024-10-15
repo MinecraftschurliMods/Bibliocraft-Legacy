@@ -94,3 +94,38 @@ tasks.named('processResources', ProcessResources) {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    archiveBaseName = mod_id
+    archiveVersion = "${mc_version}-${mod_version}"
+    from(sourceSets.api.output)
+    from(sourceSets.main.output)
+}
+
+tasks.register('apiJar', Jar) {
+    archiveBaseName = mod_id
+    archiveVersion = "${mc_version}-${mod_version}"
+    archiveClassifier.set('api')
+    from(sourceSets.api.output)
+}
+
+tasks.register('sourcesJar', Jar) {
+    archiveBaseName = mod_id
+    archiveVersion = "${mc_version}-${mod_version}"
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
+    from sourceSets.api.allSource
+}
+
+tasks.register('apiSourcesJar', Jar) {
+    archiveBaseName = mod_id
+    archiveVersion = "${mc_version}-${mod_version}"
+    archiveClassifier.set('api-sources')
+    from sourceSets.api.allSource
+}
+
+artifacts {
+    archives apiJar
+    archives sourcesJar
+    archives apiSourcesJar
+}

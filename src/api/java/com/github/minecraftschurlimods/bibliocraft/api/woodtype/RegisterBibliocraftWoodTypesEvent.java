@@ -32,9 +32,9 @@ public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusE
      * @param woodType   The vanilla {@link WoodType} associated with this wood type.
      * @param properties A supplier for the {@link BlockBehaviour.Properties} associated with this wood type. Typically, this is a copy of the wood type's planks' properties.
      * @param texture    The location of the wood type's planks texture, for use in datagen.
-     * @param family     The {@link BlockFamily} for the associated wood type, for use in datagen.
+     * @param family     A supplier for the {@link BlockFamily} for the associated wood type, for use in datagen.
      */
-    public void register(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, BlockFamily family) {
+    public void register(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, Supplier<BlockFamily> family) {
         if (values.containsKey(id))
             throw new IllegalStateException("Wood type " + id + " is already registered");
         values.put(id, new BibliocraftWoodType(id, woodType, properties, texture, family));

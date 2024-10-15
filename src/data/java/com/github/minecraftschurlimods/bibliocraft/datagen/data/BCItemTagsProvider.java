@@ -23,7 +23,6 @@ public final class BCItemTagsProvider extends ItemTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
-        BibliocraftApi.getDatagenHelper().generateItemTags(this::tag);
         copy(BCTags.Blocks.FANCY_ARMOR_STANDS, BCTags.Items.FANCY_ARMOR_STANDS);
         copy(BCTags.Blocks.FANCY_LAMPS, BCTags.Items.FANCY_LAMPS);
         copy(BCTags.Blocks.FANCY_LAMPS_GOLD, BCTags.Items.FANCY_LAMPS_GOLD);

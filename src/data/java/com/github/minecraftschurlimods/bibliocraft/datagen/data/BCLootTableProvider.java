@@ -1,9 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
-import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -13,10 +11,12 @@ import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -27,13 +27,14 @@ public final class BCLootTableProvider extends LootTableProvider {
     }
 
     private static final class BCBlockLootProvider extends BlockLootSubProvider {
+        private final List<Block> blocks = new ArrayList<>();
+        
         private BCBlockLootProvider(HolderLookup.Provider registries) {
             super(Set.of(), FeatureFlags.DEFAULT_FLAGS, registries);
         }
 
         @Override
         protected void generate() {
-            BibliocraftApi.getDatagenHelper().generateLootTables(this::add);
             add(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get(),    DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get()));
             add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(),    DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_IRON_LAMP.get()));
             add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get()));
@@ -58,8 +59,14 @@ public final class BCLootTableProvider extends LootTableProvider {
         }
 
         @Override
+        protected void add(Block block, LootTable.Builder builder) {
+            super.add(block, builder);
+            blocks.add(block);
+        }
+
+        @Override
         protected Iterable<Block> getKnownBlocks() {
-            return BCRegistries.BLOCKS.getEntries().stream().map(e -> (Block) e.get()).toList();
+            return blocks;
         }
     }
 }

@@ -14,7 +14,6 @@ public class BCItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        BibliocraftApi.getDatagenHelper().generateItemModels(this);
         basicItem(BCItems.CLIPBOARD.get());
         basicItem(BCItems.GOLD_CHAIN.get());
         basicItem(BCItems.GOLD_LANTERN.get());

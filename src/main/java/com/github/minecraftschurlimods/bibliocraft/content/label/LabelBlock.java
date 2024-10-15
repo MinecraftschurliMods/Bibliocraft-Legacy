@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.content.label;
 
-import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;

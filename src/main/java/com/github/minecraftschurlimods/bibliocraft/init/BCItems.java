@@ -1,12 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
-import com.github.minecraftschurlimods.bibliocraft.content.redstonebook.RedstoneBookItem;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLightItem;
 import com.github.minecraftschurlimods.bibliocraft.content.lockandkey.LockAndKeyItem;
 import com.github.minecraftschurlimods.bibliocraft.content.plumbline.PlumbLineItem;
+import com.github.minecraftschurlimods.bibliocraft.content.redstonebook.RedstoneBookItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
 import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookItem;

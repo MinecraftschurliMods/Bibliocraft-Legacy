@@ -14,14 +14,14 @@ import java.util.function.Supplier;
  * @param woodType   The corresponding vanilla {@link WoodType}.
  * @param properties A supplier for the wood type's {@link BlockBehaviour.Properties}.
  * @param texture    The location of the wood type's plank texture. Used in datagen.
- * @param family     The corresponding {@link BlockFamily}. Used in datagen.
+ * @param family     A supplier for the corresponding {@link BlockFamily}. Used in datagen.
  */
 public record BibliocraftWoodType(
         ResourceLocation id,
         WoodType woodType,
         Supplier<BlockBehaviour.Properties> properties,
         ResourceLocation texture,
-        BlockFamily family
+        Supplier<BlockFamily> family
 ) {
     /**
      * @return The namespace of the id of this wood type.

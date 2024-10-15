@@ -13,6 +13,7 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -47,7 +48,7 @@ public interface BibliocraftDatagenHelper {
     /**
      * Generates the blockstates and block model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
      *
-     * @param provider The {@link BlockStateProvider} to use.
+     * @param provider The {@link BlockStateProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
      * @param woodType The {@link BibliocraftWoodType} to generate the blockstates and block models for.
      */
     void generateBlockStatesFor(BlockStateProvider provider, BibliocraftWoodType woodType);
@@ -55,7 +56,7 @@ public interface BibliocraftDatagenHelper {
     /**
      * Generates the item model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
      *
-     * @param provider The {@link ItemModelProvider} to use.
+     * @param provider The {@link ItemModelProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
      * @param woodType The {@link BibliocraftWoodType} to generate the item models for.
      */
     void generateItemModelsFor(ItemModelProvider provider, BibliocraftWoodType woodType);
@@ -92,6 +93,16 @@ public interface BibliocraftDatagenHelper {
      * @param modId    The namespace to store the recipes under.
      */
     void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType, String modId);
+
+    /**
+     * Generates block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with a {@link BibliocraftWoodType}. Call this directly from a {@link GatherDataEvent} handler!
+     * Note: Language files are not created by this method because they would overwrite each other (since they all operate on the same file). Call the language helpers from your own language provider instead.
+     *
+     * @param woodType The {@link BibliocraftWoodType} to generate the files for.
+     * @param modId    The namespace to store the files under, where applicable.
+     * @param event    The {@link GatherDataEvent} whose handler this is called from.
+     */
+    void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event);
 
     /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
@@ -166,5 +177,16 @@ public interface BibliocraftDatagenHelper {
      */
     default void generateRecipes(RecipeOutput output, String modId) {
         getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, woodType, modId));
+    }
+
+    /**
+     * Generates block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with your mod's wood type(s). Call this directly from a {@link GatherDataEvent} handler!
+     * Note: Language files are not created by this method because they would overwrite each other (since they all operate on the same file). Call the language helpers from your own language provider instead.
+     *
+     * @param modId The namespace to store the files under, where applicable.
+     * @param event The {@link GatherDataEvent} whose handler this is called from.
+     */
+    default void generateAll(String modId, GatherDataEvent event) {
+        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, event));
     }
 }

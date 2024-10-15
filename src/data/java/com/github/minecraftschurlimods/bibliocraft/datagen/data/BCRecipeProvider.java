@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -34,7 +33,6 @@ public final class BCRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput output) {
-        BibliocraftApi.getDatagenHelper().generateRecipes(output, BibliocraftApi.MOD_ID);
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
             ItemStack swordPedestal = new ItemStack(BCItems.SWORD_PEDESTAL.get());

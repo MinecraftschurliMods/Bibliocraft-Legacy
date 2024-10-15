@@ -20,14 +20,22 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.BlockFamily;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -35,6 +43,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -44,7 +53,10 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -52,12 +64,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 @SuppressWarnings("UnusedReturnValue")
 public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
-    private static final List<BibliocraftWoodType> WOOD_TYPES = new ArrayList<>();
+    private final List<BibliocraftWoodType> WOOD_TYPES = new ArrayList<>();
 
     @ApiStatus.Internal
     public BibliocraftDatagenHelperImpl() {}
@@ -72,6 +86,95 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         return Collections.unmodifiableList(WOOD_TYPES);
     }
 
+    @Override
+    public void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        PackOutput output = generator.getPackOutput();
+        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+        generator.addProvider(event.includeClient(), new BlockStateProvider(output, BibliocraftApi.MOD_ID, existingFileHelper) {
+            @Override
+            protected void registerStatesAndModels() {
+                BibliocraftApi.getDatagenHelper().generateBlockStates(this);
+            }
+
+            @Override
+            public String getName() {
+                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
+            }
+        });
+        generator.addProvider(event.includeClient(), new ItemModelProvider(output, BibliocraftApi.MOD_ID, existingFileHelper) {
+            @Override
+            protected void registerModels() {
+                BibliocraftApi.getDatagenHelper().generateItemModels(this);
+            }
+
+            @Override
+            public String getName() {
+                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
+            }
+        });
+        generator.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(provider -> new BlockLootSubProvider(Set.of(), FeatureFlags.DEFAULT_FLAGS, provider) {
+            private final List<Block> blocks = new ArrayList<>();
+            
+            @Override
+            protected void generate() {
+                BibliocraftApi.getDatagenHelper().generateLootTables(this::add);
+            }
+
+            @Override
+            protected void add(Block block, LootTable.Builder builder) {
+                super.add(block, builder);
+                blocks.add(block);
+            }
+
+            @Override
+            protected Iterable<Block> getKnownBlocks() {
+                return blocks;
+            }
+        }, LootContextParamSets.BLOCK)), lookupProvider) {
+            @Override
+            public String getName() {
+                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
+            }
+        });
+        generator.addProvider(event.includeServer(), new RecipeProvider(output, lookupProvider) {
+            @Override
+            protected void buildRecipes(RecipeOutput output) {
+                BibliocraftApi.getDatagenHelper().generateRecipes(output, modId);
+            }
+
+            @Override
+            public String getName() {
+                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
+            }
+        });
+        var blockTags = generator.addProvider(event.includeServer(), new BlockTagsProvider(output, lookupProvider, modId, existingFileHelper) {
+            @Override
+            protected void addTags(HolderLookup.Provider provider) {
+                BibliocraftApi.getDatagenHelper().generateBlockTags(this::tag);
+            }
+
+            @Override
+            public String getName() {
+                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
+            }
+        });
+        generator.addProvider(event.includeServer(), new ItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), modId, existingFileHelper) {
+            @Override
+            protected void addTags(HolderLookup.Provider provider) {
+                BibliocraftApi.getDatagenHelper().generateItemTags(this::tag);
+            }
+
+            @Override
+            public String getName() {
+                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
+            }
+        });
+    }
+
+    @Override
     public void generateEnglishTranslationsFor(LanguageProvider provider, BibliocraftWoodType woodType) {
         woodenBlockTranslation(provider, woodType, BCBlocks.BOOKCASE,          "Bookcase");
         woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_ARMOR_STAND, "Fancy Armor Stand");
@@ -241,8 +344,8 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             output = output.withConditions(new ModLoadedCondition(woodType.getNamespace()));
         }
         String prefix = "wood/" + woodType.getRegistrationPrefix() + "/";
-        Block planks = woodType.family().getBaseBlock();
-        Block slab = woodType.family().get(BlockFamily.Variant.SLAB);
+        Block planks = woodType.family().get().getBaseBlock();
+        Block slab = woodType.family().get().get(BlockFamily.Variant.SLAB);
         TagKey<Item> stick = Tags.Items.RODS_WOODEN;
         shapedRecipe(BCItems.BOOKCASE.get(woodType), woodType, "bookcases")
                 .pattern("PSP")
@@ -424,6 +527,6 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     private static ShapedRecipeBuilder shapedRecipe(Item item, BibliocraftWoodType woodType, String group) {
         return ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, item)
                 .group(BibliocraftApi.MOD_ID + ":" + group)
-                .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().getBaseBlock()).build()))));
+                .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().get().getBaseBlock()).build()))));
     }
 }

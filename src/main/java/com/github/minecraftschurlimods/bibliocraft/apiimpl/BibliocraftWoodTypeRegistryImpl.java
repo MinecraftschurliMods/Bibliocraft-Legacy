@@ -50,8 +50,8 @@ public final class BibliocraftWoodTypeRegistryImpl implements BibliocraftWoodTyp
     private static int compareRLMinecraftFirst(ResourceLocation a, ResourceLocation b) {
         if (a.equals(b)) return 0;
         String namespaceA = a.getNamespace(), namespaceB = b.getNamespace();
-        if (namespaceA.equals("minecraft")) return 1;
-        if (namespaceB.equals("minecraft")) return -1;
+        if (namespaceA.equals("minecraft")) return -1;
+        if (namespaceB.equals("minecraft")) return 1;
         int i = namespaceA.compareTo(namespaceB);
         return i == 0 ? 1 : i;
     }
