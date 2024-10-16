@@ -1,5 +1,6 @@
-package com.github.minecraftschurlimods.bibliocraft.api;
+package com.github.minecraftschurlimods.bibliocraft.api.datagen;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -95,14 +96,16 @@ public interface BibliocraftDatagenHelper {
     void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType, String modId);
 
     /**
-     * Generates block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with a {@link BibliocraftWoodType}. Call this directly from a {@link GatherDataEvent} handler!
-     * Note: Language files are not created by this method because they would overwrite each other (since they all operate on the same file). Call the language helpers from your own language provider instead.
+     * Generates language files, block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with a {@link BibliocraftWoodType}. Call this directly from a {@link GatherDataEvent} handler!
      *
-     * @param woodType The {@link BibliocraftWoodType} to generate the files for.
-     * @param modId    The namespace to store the files under, where applicable.
-     * @param event    The {@link GatherDataEvent} whose handler this is called from.
+     * @param woodType                The {@link BibliocraftWoodType} to generate the files for.
+     * @param modId                   The namespace to store the files under, where applicable.
+     * @param event                   The {@link GatherDataEvent} whose handler this is called from.
+     * @param englishLanguageProvider The {@link LanguageProvider} to use for generating english translations.
+     * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
+     * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
      */
-    void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event);
+    void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider);
 
     /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
@@ -180,13 +183,15 @@ public interface BibliocraftDatagenHelper {
     }
 
     /**
-     * Generates block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with your mod's wood type(s). Call this directly from a {@link GatherDataEvent} handler!
-     * Note: Language files are not created by this method because they would overwrite each other (since they all operate on the same file). Call the language helpers from your own language provider instead.
+     * Generates language files, block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with your mod's wood type(s). Call this directly from a {@link GatherDataEvent} handler!
      *
-     * @param modId The namespace to store the files under, where applicable.
-     * @param event The {@link GatherDataEvent} whose handler this is called from.
+     * @param modId                   The namespace to store the files under, where applicable.
+     * @param event                   The {@link GatherDataEvent} whose handler this is called from.
+     * @param englishLanguageProvider The {@link LanguageProvider} to use for generating english translations.
+     * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
+     * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
      */
-    default void generateAll(String modId, GatherDataEvent event) {
-        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, event));
+    default void generateAll(String modId, GatherDataEvent event, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider) {
+        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, event, englishLanguageProvider, blockTagsProvider, itemTagsProvider));
     }
 }

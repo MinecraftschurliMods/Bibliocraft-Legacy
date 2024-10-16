@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.api.datagen.NonClearingItemTagsProvider;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.core.HolderLookup;
@@ -15,7 +16,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-public final class BCItemTagsProvider extends ItemTagsProvider {
+public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
     public BCItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> lookup, ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, lookup, BibliocraftApi.MOD_ID, existingFileHelper);
     }

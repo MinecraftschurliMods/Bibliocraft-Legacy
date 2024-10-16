@@ -21,7 +21,6 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        BibliocraftApi.getDatagenHelper().generateEnglishTranslations(this);
         add(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get(), "Fancy Gold Lamp");
         add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(), "Fancy Iron Lamp");
         add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), "Fancy Gold Lantern");

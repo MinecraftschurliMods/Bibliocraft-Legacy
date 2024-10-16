@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
+import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
@@ -87,16 +87,17 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     }
 
     @Override
-    public void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event) {
+    public void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider) {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        generateEnglishTranslationsFor(englishLanguageProvider, woodType);
         generator.addProvider(event.includeClient(), new BlockStateProvider(output, BibliocraftApi.MOD_ID, existingFileHelper) {
             @Override
             protected void registerStatesAndModels() {
-                BibliocraftApi.getDatagenHelper().generateBlockStates(this);
+                generateBlockStatesFor(this, woodType);
             }
 
             @Override
@@ -107,7 +108,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         generator.addProvider(event.includeClient(), new ItemModelProvider(output, BibliocraftApi.MOD_ID, existingFileHelper) {
             @Override
             protected void registerModels() {
-                BibliocraftApi.getDatagenHelper().generateItemModels(this);
+                generateItemModelsFor(this, woodType);
             }
 
             @Override
@@ -120,7 +121,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             
             @Override
             protected void generate() {
-                BibliocraftApi.getDatagenHelper().generateLootTables(this::add);
+                generateLootTablesFor(this::add, woodType);
             }
 
             @Override
@@ -142,7 +143,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         generator.addProvider(event.includeServer(), new RecipeProvider(output, lookupProvider) {
             @Override
             protected void buildRecipes(RecipeOutput output) {
-                BibliocraftApi.getDatagenHelper().generateRecipes(output, modId);
+                generateRecipesFor(output, woodType, modId);
             }
 
             @Override
@@ -150,28 +151,8 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
             }
         });
-        var blockTags = generator.addProvider(event.includeServer(), new BlockTagsProvider(output, lookupProvider, modId, existingFileHelper) {
-            @Override
-            protected void addTags(HolderLookup.Provider provider) {
-                BibliocraftApi.getDatagenHelper().generateBlockTags(this::tag);
-            }
-
-            @Override
-            public String getName() {
-                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
-            }
-        });
-        generator.addProvider(event.includeServer(), new ItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), modId, existingFileHelper) {
-            @Override
-            protected void addTags(HolderLookup.Provider provider) {
-                BibliocraftApi.getDatagenHelper().generateItemTags(this::tag);
-            }
-
-            @Override
-            public String getName() {
-                return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
-            }
-        });
+        generateBlockTagsFor(blockTagsProvider::tag, woodType);
+        generateItemTagsFor(itemTagsProvider::tag, woodType);
     }
 
     @Override

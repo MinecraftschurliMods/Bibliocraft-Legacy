@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.api;
 
+import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.LockAndKeyBehaviors;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
 import net.neoforged.fml.loading.FMLEnvironment;
