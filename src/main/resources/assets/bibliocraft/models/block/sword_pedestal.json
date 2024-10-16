@@ -3,9 +3,9 @@
 	"parent": "minecraft:block/block",
 	"render_type": "cutout",
 	"textures": {
-		"0": "bibliocraft:block/sword_pedestal/base",
-		"1": "bibliocraft:block/sword_pedestal/side",
-		"2": "bibliocraft:block/sword_pedestal/overlay",
+		"0": "bibliocraft:block/sword_pedestal_base",
+		"1": "bibliocraft:block/sword_pedestal_side",
+		"2": "bibliocraft:block/sword_pedestal_overlay",
 		"particle": "bibliocraft:block/sword_pedestal/base"
 	},
 	"elements": [
