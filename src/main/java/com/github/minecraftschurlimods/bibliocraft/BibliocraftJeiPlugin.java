@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @JeiPlugin
-public class BibliocraftJeiPlugin implements IModPlugin {
+public final class BibliocraftJeiPlugin implements IModPlugin {
     private static final ResourceLocation UID = BCUtil.modLoc("jei_plugin");
     
     @Override
