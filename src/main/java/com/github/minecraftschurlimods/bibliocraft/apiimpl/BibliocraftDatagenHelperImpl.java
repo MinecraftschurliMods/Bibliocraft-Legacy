@@ -266,35 +266,66 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
 
     @Override
     public void generateBlockTagsFor(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor, BibliocraftWoodType woodType) {
-        tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .add(BCBlocks.BOOKCASE.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.FANCY_ARMOR_STAND.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.LABELS)                 .add(BCBlocks.LABEL.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .add(BCBlocks.POTION_SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.SHELVES)                .add(BCBlocks.SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.TABLES)                 .add(BCBlocks.TABLE.get(woodType));
-        tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .add(BCBlocks.TOOL_RACK.get(woodType));
-        DatagenUtil.addAll(BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-        DatagenUtil.addAll(BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-        DatagenUtil.addAll(BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
-        DatagenUtil.addAll(BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
+        if (woodType.getNamespace().equals("minecraft")) {
+            tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .add(BCBlocks.BOOKCASE.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.FANCY_ARMOR_STAND.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.LABELS)                 .add(BCBlocks.LABEL.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .add(BCBlocks.POTION_SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.SHELVES)                .add(BCBlocks.SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.TABLES)                 .add(BCBlocks.TABLE.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .add(BCBlocks.TOOL_RACK.get(woodType));
+            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
+            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
+        } else {
+            tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .addOptional(BCBlocks.BOOKCASE.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).addOptional(BCBlocks.FANCY_ARMOR_STAND.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.LABELS)                 .addOptional(BCBlocks.LABEL.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .addOptional(BCBlocks.POTION_SHELF.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.SHELVES)                .addOptional(BCBlocks.SHELF.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.TABLES)                 .addOptional(BCBlocks.TABLE.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .addOptional(BCBlocks.TOOL_RACK.id(woodType));
+            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
+            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
+        }
     }
 
     @Override
     public void generateItemTagsFor(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor, BibliocraftWoodType woodType) {
-        tagAccessor.apply(BCTags.Items.BOOKCASES)              .add(BCItems.BOOKCASE.get(woodType));
-        tagAccessor.apply(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.FANCY_ARMOR_STAND.get(woodType));
-        tagAccessor.apply(BCTags.Items.LABELS)                 .add(BCItems.LABEL.get(woodType));
-        tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .add(BCItems.POTION_SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Items.SHELVES)                .add(BCItems.SHELF.get(woodType));
-        tagAccessor.apply(BCTags.Items.TABLES)                 .add(BCItems.TABLE.get(woodType));
-        tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .add(BCItems.TOOL_RACK.get(woodType));
-        DatagenUtil.addAll(BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
-        DatagenUtil.addAll(BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
-        DatagenUtil.addAll(BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
-        DatagenUtil.addAll(BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
-        DatagenUtil.addAll(BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
-        DatagenUtil.addAll(BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
-        DatagenUtil.addAll(BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
+        if (woodType.getNamespace().equals("minecraft")) {
+            tagAccessor.apply(BCTags.Items.BOOKCASES)              .add(BCItems.BOOKCASE.get(woodType));
+            tagAccessor.apply(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).add(BCItems.FANCY_ARMOR_STAND.get(woodType));
+            tagAccessor.apply(BCTags.Items.LABELS)                 .add(BCItems.LABEL.get(woodType));
+            tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .add(BCItems.POTION_SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Items.SHELVES)                .add(BCItems.SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Items.TABLES)                 .add(BCItems.TABLE.get(woodType));
+            tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .add(BCItems.TOOL_RACK.get(woodType));
+            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
+            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
+            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
+            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
+            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
+            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
+            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
+        } else {
+            tagAccessor.apply(BCTags.Items.BOOKCASES)              .addOptional(BCItems.BOOKCASE.id(woodType));
+            tagAccessor.apply(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).addOptional(BCItems.FANCY_ARMOR_STAND.id(woodType));
+            tagAccessor.apply(BCTags.Items.LABELS)                 .addOptional(BCItems.LABEL.id(woodType));
+            tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .addOptional(BCItems.POTION_SHELF.id(woodType));
+            tagAccessor.apply(BCTags.Items.SHELVES)                .addOptional(BCItems.SHELF.id(woodType));
+            tagAccessor.apply(BCTags.Items.TABLES)                 .addOptional(BCItems.TABLE.id(woodType));
+            tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .addOptional(BCItems.TOOL_RACK.id(woodType));
+            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
+            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
+            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
+            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
+            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
+            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
+            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
+        }
     }
 
     @Override

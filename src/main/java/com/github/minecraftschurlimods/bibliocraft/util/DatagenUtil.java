@@ -203,26 +203,28 @@ public final class DatagenUtil {
     }
 
     /**
-     * Adds all elements of the given collection to the {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}.
+     * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
      *
+     * @param registry   The {@link Registry} associated with the collection elements.
      * @param collection The collection containing the elements to add.
-     * @param tag        The given {@link IntrinsicHolderTagsProvider.IntrinsicTagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
+     * @param tag        The given {@link TagsProvider.TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
      * @param <T>        The type of the collection elements.
      */
-    public static <T> void addAll(Collection<? extends T> collection, IntrinsicHolderTagsProvider.IntrinsicTagAppender<T> tag) {
-        collection.forEach(tag::add);
+    @SuppressWarnings("DataFlowIssue")
+    public static <T> void addAll(Registry<T> registry, Collection<? extends T> collection, TagsProvider.TagAppender<T> tag) {
+        collection.stream().map(e -> ResourceKey.create(registry.key(), registry.getKey(e))).forEach(tag::add);
     }
 
     /**
      * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
      *
+     * @param registry   The {@link Registry} associated with the collection elements.
      * @param collection The collection containing the elements to add.
      * @param tag        The given {@link TagsProvider.TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
-     * @param registry   The {@link Registry} associated with the collection elements.
      * @param <T>        The type of the collection elements.
      */
     @SuppressWarnings("DataFlowIssue")
-    public static <T> void addAll(Collection<? extends T> collection, TagsProvider.TagAppender<T> tag, Registry<T> registry) {
-        collection.stream().map(e -> ResourceKey.create(registry.key(), registry.getKey(e))).forEach(tag::add);
+    public static <T> void addAllOptional(Registry<T> registry, Collection<? extends T> collection, TagsProvider.TagAppender<T> tag) {
+        collection.stream().map(registry::getKey).forEach(tag::addOptional);
     }
 }

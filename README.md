@@ -23,11 +23,14 @@ repositories {
 
 dependencies {
     // At compile time, depend only on the API JAR. TODO actually make this an API jar.
-    compileOnly "curse.maven:bibliocraft-legacy-1122260:5817492"
+    compileOnly "curse.maven:bibliocraft-legacy-1122260:${bc_version}"
     // At runtime, use the full JAR.
-    runtimeOnly "curse.maven:bibliocraft-legacy-1122260:5817492"
+    runtimeOnly "curse.maven:bibliocraft-legacy-1122260:${bc_version}"
 }
 ```
+
+Get the latest version on CurseForge. Please refer to the [CurseMaven documentation](https://www.cursemaven.com) on how
+to find the latest artifact.
 
 Next, add the dependency block in your `neoforge.mods.toml` file. Note: It is crucial that your mod is set to load
 `BEFORE` Bibliocraft, to ensure that your event handlers will be fired early enough.
