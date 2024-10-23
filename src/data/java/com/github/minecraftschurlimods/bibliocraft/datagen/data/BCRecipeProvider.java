@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
@@ -33,7 +33,6 @@ public final class BCRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput output) {
-        BibliocraftApi.getDatagenHelper().generateRecipes(output, BibliocraftApi.MOD_ID);
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
             ItemStack swordPedestal = new ItemStack(BCItems.SWORD_PEDESTAL.get());
@@ -43,6 +42,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
                     .define('W', BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_wool")))
+                    .group("bibliocraft:sword_pedestal")
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                     .save(output, BCUtil.modLoc("color/" + name + "/sword_pedestal"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LAMP.get(color))
@@ -53,6 +53,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Items.GLOWSTONE)
                     .define('I', Tags.Items.INGOTS_GOLD)
                     .define('N', Tags.Items.NUGGETS_GOLD)
+                    .group("bibliocraft:fancy_lamp")
                     .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_gold_lamp"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_IRON_LAMP.get(color))
@@ -63,6 +64,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Items.GLOWSTONE)
                     .define('I', Tags.Items.INGOTS_IRON)
                     .define('N', Tags.Items.NUGGETS_IRON)
+                    .group("bibliocraft:fancy_lamp")
                     .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_iron_lamp"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LANTERN.get(color))
@@ -72,6 +74,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                     .define('I', Tags.Items.INGOTS_GOLD)
                     .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_candle"))))
+                    .group("bibliocraft:fancy_lantern")
                     .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_gold_lantern"));
             ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_IRON_LANTERN.get(color))
@@ -81,10 +84,11 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                     .define('I', Tags.Items.INGOTS_IRON)
                     .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_candle"))))
+                    .group("bibliocraft:fancy_lantern")
                     .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, BCUtil.modLoc("color/" + name + "/fancy_iron_lantern"));
         }
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LAMP.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LAMP)
                 .pattern("CGC")
                 .pattern(" I ")
                 .pattern("NIN")
@@ -92,9 +96,10 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('G', Items.GLOWSTONE)
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .define('N', Tags.Items.NUGGETS_GOLD)
+                .group("bibliocraft:fancy_lamp")
                 .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_IRON_LAMP.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_IRON_LAMP)
                 .pattern("CGC")
                 .pattern(" I ")
                 .pattern("NIN")
@@ -102,27 +107,30 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('G', Items.GLOWSTONE)
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('N', Tags.Items.NUGGETS_IRON)
+                .group("bibliocraft:fancy_lamp")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LANTERN.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LANTERN)
                 .pattern("GIG")
                 .pattern("ICI")
                 .pattern("GIG")
                 .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .define('C', Ingredient.of(Items.CANDLE))
+                .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_IRON_LANTERN.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_IRON_LANTERN)
                 .pattern("GIG")
                 .pattern("ICI")
                 .pattern("GIG")
                 .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('C', Ingredient.of(Items.CANDLE))
+                .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD)
                 .pattern("I F")
                 .pattern("PPP")
                 .pattern(" L ")
@@ -132,7 +140,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('L', ItemTags.WOODEN_PRESSURE_PLATES)
                 .unlockedBy("has_paper", has(Items.PAPER))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.COOKIE_JAR.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.COOKIE_JAR)
                 .pattern(" I ")
                 .pattern("GCG")
                 .pattern("GRG")
@@ -142,7 +150,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DESK_BELL.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DESK_BELL)
                 .pattern(" B ")
                 .pattern(" I ")
                 .pattern("IRI")
@@ -151,19 +159,19 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .unlockedBy("has_redstone", has(Tags.Items.DUSTS_REDSTONE))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DINNER_PLATE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DINNER_PLATE)
                 .pattern("SSS")
                 .define('S', Items.SMOOTH_QUARTZ_SLAB)
                 .unlockedBy("has_smooth_quartz", has(Items.SMOOTH_QUARTZ_SLAB))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DISC_RACK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.DISC_RACK)
                 .pattern("RRR")
                 .pattern("SSS")
                 .define('R', Tags.Items.RODS_WOODEN)
                 .define('S', ItemTags.WOODEN_SLABS)
                 .unlockedBy("has_wooden_slab", has(ItemTags.WOODEN_SLABS))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.GOLD_CHAIN.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.GOLD_CHAIN)
                 .pattern("N")
                 .pattern("I")
                 .pattern("N")
@@ -173,7 +181,23 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
                 .unlockedBy("has_gold_chain", has(BCItems.GOLD_CHAIN))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.GOLD_LANTERN)
+                .pattern("NNN")
+                .pattern("NTN")
+                .pattern("NNN")
+                .define('T', Items.TORCH)
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.GOLD_SOUL_LANTERN)
+                .pattern("NNN")
+                .pattern("NTN")
+                .pattern("NNN")
+                .define('T', Items.SOUL_TORCH)
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND)
                 .pattern(" I ")
                 .pattern(" I ")
                 .pattern("SSS")
@@ -181,9 +205,55 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('S', Items.SMOOTH_STONE_SLAB)
                 .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                 .save(output);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.LOCK_AND_KEY)
+                .pattern("NI")
+                .pattern("NI")
+                .pattern(" I")
+                .define('N', Tags.Items.NUGGETS_GOLD)
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.PLUMB_LINE)
+                .pattern("SSS")
+                .pattern("S S")
+                .pattern("I S")
+                .define('S', Tags.Items.STRINGS)
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.STOCKROOM_CATALOG)
+                .pattern("PDP")
+                .pattern("PBP")
+                .pattern("PPP")
+                .define('P', Items.PAPER)
+                .define('D', Tags.Items.DYES_GREEN)
+                .define('B', Items.BOOK)
+                .unlockedBy("has_book", has(Items.BOOK))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.TAPE_MEASURE)
+                .pattern(" I ")
+                .pattern("IRI")
+                .pattern(" I ")
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('R', BCItems.TAPE_REEL)
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.TAPE_REEL)
+                .pattern("SSS")
+                .pattern("SDS")
+                .pattern("SSS")
+                .define('S', Tags.Items.STRINGS)
+                .define('D', Tags.Items.DYES_YELLOW)
+                .unlockedBy("has_yellow_dye", has(Tags.Items.DYES_YELLOW))
+                .save(output);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK)
                 .requires(Items.BOOK)
                 .requires(Items.REDSTONE_TORCH)
+                .unlockedBy("has_book", has(Items.BOOK))
+                .save(output);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, BCItems.SLOTTED_BOOK)
+                .requires(Items.BOOK)
+                .requires(BCTags.Items.LABELS)
                 .unlockedBy("has_book", has(Items.BOOK))
                 .save(output);
     }

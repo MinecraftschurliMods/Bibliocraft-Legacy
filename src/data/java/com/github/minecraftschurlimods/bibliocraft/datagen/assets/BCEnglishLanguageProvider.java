@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSorting;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
@@ -20,7 +21,6 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        BibliocraftApi.getDatagenHelper().generateEnglishTranslations(this);
         add(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get(), "Fancy Gold Lamp");
         add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(), "Fancy Iron Lamp");
         add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), "Fancy Gold Lantern");
@@ -31,16 +31,24 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
             addDefaultBlock(BCBlocks.FANCY_GOLD_LANTERN.holder(color));
             addDefaultBlock(BCBlocks.FANCY_IRON_LANTERN.holder(color));
         }
-        addDefaultItem(BCItems.CLIPBOARD);
+        addDefaultBlock(BCBlocks.CLIPBOARD);
         addDefaultBlock(BCBlocks.COOKIE_JAR);
         addDefaultBlock(BCBlocks.DESK_BELL);
         addDefaultBlock(BCBlocks.DINNER_PLATE);
         addDefaultBlock(BCBlocks.DISC_RACK);
         add(BCBlocks.WALL_DISC_RACK.get(), "Disc Rack");
         addDefaultBlock(BCBlocks.GOLD_CHAIN);
+        addDefaultBlock(BCBlocks.GOLD_LANTERN);
+        addDefaultBlock(BCBlocks.GOLD_SOUL_LANTERN);
         addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
         addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
+        add(BCItems.LOCK_AND_KEY.get(), "Lock and Key");
+        addDefaultItem(BCItems.PLUMB_LINE);
         add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
+        addDefaultItem(BCItems.SLOTTED_BOOK);
+        addDefaultItem(BCItems.STOCKROOM_CATALOG);
+        addDefaultItem(BCItems.TAPE_MEASURE);
+        addDefaultItem(BCItems.TAPE_REEL);
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
         add("container", "disc_rack", "Disc Rack");
@@ -51,8 +59,33 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");
         add("itemGroup." + BibliocraftApi.MOD_ID, "Bibliocraft");
-        add(Translations.REDSTONE_BOOK_TITLE, "Redstone: Volume 1");
+        add(StockroomCatalogSorting.Container.ALPHABETICAL_ASC.getTranslationKey(), "A-Z");
+        add(StockroomCatalogSorting.Container.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
+        add(StockroomCatalogSorting.Container.DISTANCE_ASC.getTranslationKey(), "<-->");
+        add(StockroomCatalogSorting.Container.DISTANCE_DESC.getTranslationKey(), "-><-");
+        add(StockroomCatalogSorting.Item.ALPHABETICAL_ASC.getTranslationKey(), "A-Z");
+        add(StockroomCatalogSorting.Item.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
+        add(StockroomCatalogSorting.Item.COUNT_ASC.getTranslationKey(), "1-99");
+        add(StockroomCatalogSorting.Item.COUNT_DESC.getTranslationKey(), "99-1");
+        add(Translations.STOCKROOM_CATALOG_COUNT, "x%s");
+        add(Translations.STOCKROOM_CATALOG_DISTANCE, "%s blocks away");
+        add(Translations.STOCKROOM_CATALOG_LOCATE, "Locate");
+        add(Translations.STOCKROOM_CATALOG_REMOVE, "Remove");
+        add(Translations.STOCKROOM_CATALOG_SEARCH, "Search");
+        add(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS, "Show Containers");
+        add(Translations.STOCKROOM_CATALOG_SHOW_ITEMS, "Show Items");
+        add(Translations.STOCKROOM_CATALOG_SORT, "Sort: %s");
+        add(Translations.LOCK_AND_KEY_LOCKED, "Successfully locked %s!");
+        add(Translations.LOCK_AND_KEY_UNLOCKED, "Successfully unlocked %s!");
+        add(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME, "You must rename this lock and key before you can apply it to a block!");
+        add(Translations.PLUMB_LINE_DISTANCE, "Depth: %s");
         add(Translations.REDSTONE_BOOK_TEXT, "When putting this book into a bookcase, the bookcase will emit a redstone signal. The strength of the signal depends on the slot it is placed in. Slot 1 (top left) yields no signal. Slot 2 yields a signal strength of 1. Each slot after that increases the signal strength by one, all the way to slot 16 (bottom right), which yields a signal strength of 15.");
+        add(Translations.REDSTONE_BOOK_TITLE, "Redstone: Volume 1");
+        add(Translations.SLOTTED_BOOK_TEXT, "This book can be used to hide your valuables among many books.");
+        add(Translations.SLOTTED_BOOK_TITLE, "Slotted Book");
+        add(Translations.STOCKROOM_CATALOG_ADD_CONTAINER, "Started listing contents of %s in the Stockroom Catalog!");
+        add(Translations.STOCKROOM_CATALOG_REMOVE_CONTAINER, "Stopped listing contents of %s in the Stockroom Catalog!");
+        add(Translations.TAPE_MEASURE_DISTANCE, "Distance: %s blocks (x: %s, y: %s, z: %s)");
     }
 
     /**

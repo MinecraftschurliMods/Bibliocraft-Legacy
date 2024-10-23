@@ -55,7 +55,11 @@ public class LabelBlock extends BCFacingEntityBlock {
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof LabelBlockEntity label) return Math.min(15, IntStream.range(0, 3)
-                .map(e -> label.getItem(e).getItem() instanceof BlockItem blockItem ? blockItem.getBlock().defaultBlockState().getLightEmission(level, pos) : 0)
+                .map(e -> label.getItem(e).getItem() instanceof BlockItem blockItem
+                        ? blockItem.getBlock() instanceof LabelBlock
+                        ? 0
+                        : blockItem.getBlock().defaultBlockState().getLightEmission(level, pos)
+                        : 0)
                 .sum());
         return super.getLightEmission(state, level, pos);
     }

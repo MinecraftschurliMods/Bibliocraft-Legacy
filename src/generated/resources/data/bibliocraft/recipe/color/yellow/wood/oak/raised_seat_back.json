@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:raised_seat_backs",
   "key": {
     "R": {
       "tag": "c:rods/wooden"

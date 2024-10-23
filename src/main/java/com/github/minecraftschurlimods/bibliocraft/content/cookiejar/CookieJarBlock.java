@@ -16,7 +16,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class CookieJarBlock extends BCEntityBlock {
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     private static final VoxelShape OPEN_SHAPE = ShapeUtil.combine(

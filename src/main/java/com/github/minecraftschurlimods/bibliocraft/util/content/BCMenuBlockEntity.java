@@ -11,6 +11,7 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -79,14 +80,10 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
         return Component.translatable("container." + BibliocraftApi.MOD_ID + "." + name);
     }
 
-    public boolean canOpen(Player player) {
-        return true;
-    }
-
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return this.canOpen(player) ? this.createMenu(id, inventory) : null;
+        return BaseContainerBlockEntity.canUnlock(player, getLockKey(), getDisplayName()) ? this.createMenu(id, inventory) : null;
     }
 
     @Override

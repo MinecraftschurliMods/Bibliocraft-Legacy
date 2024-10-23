@@ -22,7 +22,6 @@ public interface BCCreativeTabs {
             .displayItems((display, output) -> {
                 addToTab(output, BCItems.BOOKCASE.values());
                 addToTab(output, BCItems.FANCY_ARMOR_STAND.values());
-                addToTab(output, BCItems.FANCY_WORKBENCH.values());
                 addToTab(output, BCItems.LABEL.values());
                 addToTab(output, BCItems.POTION_SHELF.values());
                 addToTab(output, BCItems.SHELF.values());
@@ -49,13 +48,21 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.DINNER_PLATE);
                 output.accept(BCItems.DISC_RACK);
                 output.accept(BCItems.GOLD_CHAIN);
+                output.accept(BCItems.GOLD_LANTERN);
+                output.accept(BCItems.GOLD_SOUL_LANTERN);
                 output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
                     stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor(), true));
                     output.accept(stack);
                 }
+                output.accept(BCItems.LOCK_AND_KEY);
+                output.accept(BCItems.PLUMB_LINE);
                 output.accept(BCItems.REDSTONE_BOOK);
+                output.accept(BCItems.SLOTTED_BOOK);
+                output.accept(BCItems.STOCKROOM_CATALOG);
+                output.accept(BCItems.TAPE_MEASURE);
+                output.accept(BCItems.TAPE_REEL);
             })
             .build());
 

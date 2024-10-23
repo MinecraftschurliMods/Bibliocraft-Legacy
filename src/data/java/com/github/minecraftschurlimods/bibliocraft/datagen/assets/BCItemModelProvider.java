@@ -14,9 +14,15 @@ public class BCItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        BibliocraftApi.getDatagenHelper().generateItemModels(this);
         basicItem(BCItems.CLIPBOARD.get());
         basicItem(BCItems.GOLD_CHAIN.get());
+        basicItem(BCItems.GOLD_LANTERN.get());
+        basicItem(BCItems.GOLD_SOUL_LANTERN.get());
+        basicItem(BCItems.LOCK_AND_KEY.get());
+        basicItem(BCItems.PLUMB_LINE.get());
+        basicItem(BCItems.STOCKROOM_CATALOG.get());
+        basicItem(BCItems.TAPE_MEASURE.get());
+        basicItem(BCItems.TAPE_REEL.get());
         withExistingParent("fancy_gold_lamp",    modLoc("block/fancy_gold_lamp_standing"));
         withExistingParent("fancy_iron_lamp",    modLoc("block/fancy_iron_lamp_standing"));
         withExistingParent("fancy_gold_lantern", modLoc("block/fancy_gold_lantern_standing"));
@@ -35,5 +41,6 @@ public class BCItemModelProvider extends ItemModelProvider {
         withExistingParent("iron_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/iron_inventory"));
         withExistingParent("sword_pedestal",         modLoc("block/sword_pedestal"));
         withExistingParent("redstone_book",          mcLoc("item/written_book"));
+        withExistingParent("slotted_book",           mcLoc("item/written_book"));
     }
 }

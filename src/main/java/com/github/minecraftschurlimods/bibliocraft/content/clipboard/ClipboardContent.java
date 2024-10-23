@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clipboard;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
@@ -16,7 +17,7 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
     public static final Codec<ClipboardContent> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.STRING.fieldOf("title").forGetter(ClipboardContent::title),
             Codec.INT.fieldOf("active").forGetter(ClipboardContent::active),
-            Page.CODEC.listOf().fieldOf("title").forGetter(ClipboardContent::pages)
+            Page.CODEC.listOf().fieldOf("pages").forGetter(ClipboardContent::pages)
     ).apply(inst, ClipboardContent::new));
     public static final StreamCodec<FriendlyByteBuf, ClipboardContent> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, ClipboardContent::title,
@@ -33,11 +34,7 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
     }
 
     public boolean canHaveNewPage() {
-        if (active >= pages.size() - 1) {
-            int localActive = pages.size() - 1;
-            return localActive < MAX_PAGES;
-        }
-        return true;
+        return active < pages.size() - 1 || pages.size() - 1 < MAX_PAGES;
     }
 
     public ClipboardContent nextPage() {
@@ -57,10 +54,15 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
     }
 
     public record Page(List<CheckboxState> checkboxes, List<String> lines) {
+        public Page(List<CheckboxState> checkboxes, List<String> lines) {
+            this.checkboxes = BCUtil.extend(checkboxes, MAX_LINES, CheckboxState.EMPTY);
+            this.lines = BCUtil.extend(lines, MAX_LINES, "");
+        }
+        
         public static final Page DEFAULT = new Page(new ArrayList<>(MAX_LINES), new ArrayList<>(MAX_LINES));
         public static final Codec<Page> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                 CheckboxState.CODEC.listOf().fieldOf("checkboxes").forGetter(Page::checkboxes),
-                Codec.STRING.listOf().fieldOf("pages").forGetter(Page::lines)
+                Codec.STRING.listOf().fieldOf("lines").forGetter(Page::lines)
         ).apply(inst, Page::new));
         public static final StreamCodec<FriendlyByteBuf, Page> STREAM_CODEC = StreamCodec.composite(
                 CheckboxState.STREAM_CODEC.apply(ByteBufCodecs.list()), Page::checkboxes,

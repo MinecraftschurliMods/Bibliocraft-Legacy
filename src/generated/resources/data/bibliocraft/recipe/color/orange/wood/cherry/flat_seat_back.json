@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:flat_seat_backs",
   "key": {
     "R": {
       "tag": "c:rods/wooden"

@@ -10,7 +10,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.ChainBlock;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -22,7 +22,6 @@ public class BCBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        BibliocraftApi.getDatagenHelper().generateBlockStates(this);
         DatagenUtil.fancyLightBlockModel(this, BCBlocks.CLEAR_FANCY_GOLD_LAMP,
                 models().withExistingParent("block/fancy_gold_lamp_standing", modLoc("block/template/fancy_lamp/standing_gold")).texture("color", mcLoc("block/glass")),
                 models().withExistingParent("block/fancy_gold_lamp_hanging", modLoc("block/template/fancy_lamp/hanging_gold")).texture("color", mcLoc("block/glass")),
@@ -79,6 +78,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
                     models().withExistingParent("block/color/" + name + "/fancy_iron_lantern_wall", modLoc("block/template/fancy_lantern/wall_iron")).texture("color", texture),
                     false);
         }
+        horizontalBlock(BCBlocks.CLIPBOARD.get(), models().getExistingFile(modLoc("block/clipboard")));
         getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(models().getExistingFile(modLoc("block/cookie_jar" + (state.getValue(CookieJarBlock.OPEN) ? "_open" : ""))))
                 .build());
@@ -90,6 +90,12 @@ public class BCBlockStateProvider extends BlockStateProvider {
                 .modelFile(models().withExistingParent("block/gold_chain", mcLoc("block/chain")).renderType("cutout").texture("all", modLoc("block/gold_chain")).texture("particle", modLoc("block/gold_chain")))
                 .rotationX(state.getValue(ChainBlock.AXIS) != Direction.Axis.Y ? 90 : 0)
                 .rotationY(state.getValue(ChainBlock.AXIS) == Direction.Axis.X ? 90 : 0)
+                .build());
+        getVariantBuilder(BCBlocks.GOLD_LANTERN.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(models().withExistingParent("block/gold_lantern", mcLoc(state.getValue(BlockStateProperties.HANGING) ? "block/template_hanging_lantern" : "block/template_lantern")).renderType("cutout").texture("lantern", modLoc("block/gold_lantern")))
+                .build());
+        getVariantBuilder(BCBlocks.GOLD_SOUL_LANTERN.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(models().withExistingParent("block/gold_soul_lantern", mcLoc(state.getValue(BlockStateProperties.HANGING) ? "block/template_hanging_lantern" : "block/template_lantern")).renderType("cutout").texture("lantern", modLoc("block/gold_soul_lantern")))
                 .build());
         DatagenUtil.doubleHighHorizontalBlockModel(this, BCBlocks.IRON_FANCY_ARMOR_STAND, models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_bottom")), models().getExistingFile(modLoc("block/template/fancy_armor_stand/iron_top")), false);
         DatagenUtil.horizontalBlockModel(this, BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);

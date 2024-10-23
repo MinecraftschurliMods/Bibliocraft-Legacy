@@ -1,8 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
+import com.github.minecraftschurlimods.bibliocraft.client.SpriteButton;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItemSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,10 +16,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ClipboardScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard.png");
@@ -39,15 +41,18 @@ public class ClipboardScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        close();
+        stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
+        PacketDistributor.sendToServer(new ClipboardSyncPacket(data));
     }
 
     @Override
     protected void init() {
         int x = (width - 192) / 2;
         titleBox = addRenderableWidget(new EditBox(getMinecraft().font, x + 57, 14, 72, 8, Component.empty()));
+        titleBox.setTextColor(0);
+        titleBox.setBordered(false);
         titleBox.setTextShadow(false);
-        titleBox.setResponder(e -> data.setTitle(e));
+        titleBox.setResponder(e -> data = data.setTitle(e));
         for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
             final int j = i; // I love Java
             checkboxes[i] = addRenderableWidget(new CheckboxButton(x + 30, 15 * i + 26, e -> {
@@ -59,6 +64,8 @@ public class ClipboardScreen extends Screen {
                 data = data.setPages(pages);
             }));
             lines[i] = addRenderableWidget(new EditBox(getMinecraft().font, x + 45, 15 * i + 28, 109, 8, Component.empty()));
+            lines[i].setTextColor(0);
+            lines[i].setBordered(false);
             lines[i].setTextShadow(false);
             lines[i].setResponder(e -> {
                 List<ClipboardContent.Page> pages = new ArrayList<>(data.pages());
@@ -77,10 +84,7 @@ public class ClipboardScreen extends Screen {
             data = data.prevPage();
             updateContents();
         }, false));
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
-            close();
-            Objects.requireNonNull(minecraft).setScreen(null);
-        }).bounds(width / 2 - 100, 196, 200, 20).build());
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 - 100, 196, 200, 20).build());
         updateContents();
     }
 
@@ -90,9 +94,33 @@ public class ClipboardScreen extends Screen {
         graphics.blit(BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192);
     }
 
-    private void close() {
-        stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
-        PacketDistributor.sendToServer(new ClipboardItemSyncPacket(data));
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if (scrollY < 0 && forwardButton.visible) {
+            forwardButton.onPress();
+            return true;
+        }
+        if (scrollY > 0 && backButton.visible) {
+            backButton.onPress();
+            return true;
+        }
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (super.keyPressed(keyCode, scanCode, modifiers)) return true;
+        return switch (keyCode) {
+            case GLFW.GLFW_KEY_PAGE_UP -> {
+                backButton.onPress();
+                yield true;
+            }
+            case GLFW.GLFW_KEY_PAGE_DOWN -> {
+                forwardButton.onPress();
+                yield true;
+            }
+            default -> false;
+        };
     }
 
     private void updateContents() {
@@ -105,13 +133,13 @@ public class ClipboardScreen extends Screen {
         }
     }
 
-    private static class CheckboxButton extends Button {
+    private static class CheckboxButton extends SpriteButton {
         private static final ResourceLocation CHECK_TEXTURE = BCUtil.modLoc("check");
         private static final ResourceLocation X_TEXTURE = BCUtil.modLoc("x");
         private CheckboxState state = CheckboxState.EMPTY;
 
         public CheckboxButton(int x, int y, OnPress onPress) {
-            super(new Builder(Component.empty(), onPress).bounds(x, y, 14, 14));
+            super(x, y, 14, 14, onPress);
         }
 
         public CheckboxState getState() {
@@ -133,12 +161,13 @@ public class ClipboardScreen extends Screen {
         }
 
         @Override
-        protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-            if (state == CheckboxState.CHECK) {
-                graphics.blitSprite(CHECK_TEXTURE, getX(), getY(), getWidth(), getHeight());
-            } else if (state == CheckboxState.X) {
-                graphics.blitSprite(X_TEXTURE, getX(), getY(), getWidth(), getHeight());
-            }
+        @Nullable
+        protected ResourceLocation getSprite() {
+            return switch (state) {
+                case EMPTY -> null;
+                case CHECK -> CHECK_TEXTURE;
+                case X -> X_TEXTURE;
+            };
         }
     }
 }

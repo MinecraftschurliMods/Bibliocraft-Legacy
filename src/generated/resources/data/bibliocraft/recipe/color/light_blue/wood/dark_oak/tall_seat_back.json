@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:tall_seat_backs",
   "key": {
     "#": {
       "item": "bibliocraft:light_blue_dark_oak_flat_seat_back"

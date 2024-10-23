@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "bibliocraft:small_seat_backs",
   "key": {
     "S": {
       "item": "minecraft:cherry_slab"

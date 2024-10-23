@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Abstract superclass for entity blocks in this mod.
  */
-@SuppressWarnings({"deprecation", "DuplicatedCode"})
+@SuppressWarnings({"DuplicatedCode"})
 public abstract class BCFacingEntityBlock extends BCFacingBlock implements EntityBlock {
     public BCFacingEntityBlock(Properties properties) {
         super(properties);

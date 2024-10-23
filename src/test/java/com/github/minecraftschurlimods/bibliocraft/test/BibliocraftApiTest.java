@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.test;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftDatagenHelper;
-import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftWoodTypeRegistry;
+import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
+import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import org.junit.jupiter.api.Assertions;

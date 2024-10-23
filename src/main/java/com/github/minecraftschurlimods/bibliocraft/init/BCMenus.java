@@ -8,6 +8,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancyworkbench.FancyW
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -23,6 +24,7 @@ public interface BCMenus {
     Supplier<MenuType<LabelMenu>>           LABEL             = BCRegistries.MENUS.register("label",             () -> IMenuTypeExtension.create(LabelMenu::new));
     Supplier<MenuType<PotionShelfMenu>>     POTION_SHELF      = BCRegistries.MENUS.register("potion_shelf",      () -> IMenuTypeExtension.create(PotionShelfMenu::new));
     Supplier<MenuType<ShelfMenu>>           SHELF             = BCRegistries.MENUS.register("shelf",             () -> IMenuTypeExtension.create(ShelfMenu::new));
+    Supplier<MenuType<SlottedBookMenu>>     SLOTTED_BOOK      = BCRegistries.MENUS.register("slotted_book",      () -> IMenuTypeExtension.create(SlottedBookMenu::new));
     Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = BCRegistries.MENUS.register("tool_rack",         () -> IMenuTypeExtension.create(ToolRackMenu::new));
 
     /**

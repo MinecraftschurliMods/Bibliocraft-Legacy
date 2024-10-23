@@ -73,14 +73,6 @@ public class ColoredDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @return An array of values of all {@link DeferredHolder}s in this object.
-     */
-    @SuppressWarnings("unchecked")
-    public T[] valuesAsArray() {
-        return map.values().stream().map(DeferredHolder::get).toList().toArray((T[]) new Object[0]);
-    }
-
-    /**
      * @return An immutable collection of ids of all {@link DeferredHolder}s in this object.
      */
     public Collection<ResourceLocation> ids() {
