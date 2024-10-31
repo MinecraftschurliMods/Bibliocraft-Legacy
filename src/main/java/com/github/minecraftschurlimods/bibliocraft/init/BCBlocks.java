@@ -12,6 +12,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.displaycase.WallDispl
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLanternBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.fancyworkbench.FancyWorkbenchBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
@@ -37,6 +38,7 @@ import java.util.function.Supplier;
 public interface BCBlocks {
     WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
     WoodTypeDeferredHolder<Block, FancyArmorStandBlock> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
+    WoodTypeDeferredHolder<Block, FancyWorkbenchBlock>  FANCY_WORKBENCH   = woodenBlock("fancy_workbench",   FancyWorkbenchBlock::new);
     WoodTypeDeferredHolder<Block, LabelBlock>           LABEL             = woodenBlock("label",             LabelBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
     WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf",             ShelfBlock::new);
@@ -67,7 +69,6 @@ public interface BCBlocks {
     DeferredBlock<SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
     //TODO Clock
     //TODO Fancy Sign
-    //TODO Fancy Workbench
     //TODO Desk
     //TODO Map Frame
     //TODO Painting Frame

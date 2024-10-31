@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
@@ -13,15 +14,26 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
@@ -53,6 +65,19 @@ public final class BCUtil {
      */
     public static ResourceLocation modLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, path);
+    }
+
+    /**
+     * Shorthand to open a menu for the block entity at the given position.
+     *
+     * @param player The player to open the menu for.
+     * @param level  The level of the block entity.
+     * @param pos    The position of the block entity.
+     */
+    public static void openBEMenu(Player player, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof MenuProvider mp && player instanceof ServerPlayer sp) {
+            sp.openMenu(mp, buf -> buf.writeBlockPos(pos));
+        }
     }
 
     /**
@@ -116,19 +141,6 @@ public final class BCUtil {
     }
 
     /**
-     * Shorthand to open a menu for the block entity at the given position.
-     *
-     * @param player The player to open the menu for.
-     * @param level  The level of the block entity.
-     * @param pos    The position of the block entity.
-     */
-    public static void openBEMenu(Player player, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof MenuProvider mp && player instanceof ServerPlayer sp) {
-            sp.openMenu(mp, buf -> buf.writeBlockPos(pos));
-        }
-    }
-
-    /**
      * @param valuesSupplier The enum's {@code values()} method.
      * @param <E>            The enum type.
      * @return An enum codec.
@@ -172,6 +184,17 @@ public final class BCUtil {
     }
 
     /**
+     * Returns a display name for the given position. If there is a nameable block entity at the position, the block entity's name is returned, otherwise the block's name is returned.
+     *
+     * @param level The {@link Level} to get the display name for.
+     * @param pos   The {@link BlockPos} to get the display name for.
+     * @return The display name to use for the given position.
+     */
+    public static Component getNameAtPos(Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName();
+    }
+
+    /**
      * Returns a {@link Comparator} that is reversed, i.e. will sort elements in the reverse order of the original {@link Comparator}.
      *
      * @param comparator The {@link Comparator} comparator to reverse.
@@ -183,14 +206,36 @@ public final class BCUtil {
     }
 
     /**
-     * Returns a display name for the given position. If there is a nameable block entity at the position, the block entity's name is returned, otherwise the block's name is returned.
-     *
-     * @param level The {@link Level} to get the display name for.
-     * @param pos   The {@link BlockPos} to get the display name for.
-     * @return The display name to use for the given position.
+     * Attempts to insert the given {@link ItemStack} into a container at the given {@link BlockPos} in the given {@link Level} from the given {@link Direction}, if possible.
+     * First, the vanilla way using {@link Container} is checked. If that doesn't work, the NeoForge way using {@link IItemHandler} is checked.
+     * @param level The {@link Level} the insertion takes place in.
+     * @param pos The {@link BlockPos} the insertion takes place at.
+     * @param direction The {@link Direction} from which the insertion happens.
+     * @param stack The {@link ItemStack} to be inserted.
+     * @param source The source of the insertion. May be null.
+     * @return The {@link ItemStack} left after the insertion has been attempted and, if applicable, succeeded.
+     * @param <T> The generic type of the source.
      */
-    public static Component getNameAtPos(Level level, BlockPos pos) {
-        return level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName();
+    public static <T extends BlockEntity & Container> ItemStack tryInsert(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable T source) {
+        Container container = HopperBlockEntity.getContainerAt(level, pos.relative(direction));
+        if (container != null) return HopperBlockEntity.addItem(source, container, stack, direction.getOpposite());
+        IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, level.getBlockState(pos), source, direction);
+        if (cap == null) {
+            List<Entity> list = level.getEntities((Entity) null, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), EntitySelector.ENTITY_STILL_ALIVE);
+            if (!list.isEmpty()) {
+                Collections.shuffle(list);
+                for (Entity entity : list) {
+                    cap = entity.getCapability(Capabilities.ItemHandler.ENTITY_AUTOMATION, direction);
+                    if (cap != null) break;
+                }
+            }
+        }
+        if (cap != null) {
+            for (int slot = 0; slot < cap.getSlots() && !stack.isEmpty(); slot++) {
+                stack = cap.insertItem(slot, stack, false);
+            }
+        }
+        return stack;
     }
 
     /**

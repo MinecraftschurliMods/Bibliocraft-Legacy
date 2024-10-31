@@ -47,14 +47,6 @@ public final class BCMenuScreens {
         }
     }
 
-    public static class FancyWorkbench extends BCMenuScreen<FancyWorkbenchMenu> {
-        private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_workbench.png");
-
-        public FancyWorkbench(FancyWorkbenchMenu menu, Inventory inventory, Component title) {
-            super(menu, inventory, title, BACKGROUND);
-        }
-    }
-
     public static class Label extends BCMenuScreen<LabelMenu> {
         private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/label.png");
 
