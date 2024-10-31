@@ -1,15 +1,15 @@
 # Bibliocraft Legacy
 
-[Bibliocraft Legacy](https://www.curseforge.com/minecraft/mc-mods/bibliocraft-legacy) is a port of the original
-Bibliocraft Minecraft mod by Nuchaz. It adds various pieces of decorative and functional furniture into the game.
+[![CurseForge Downloads](https://img.shields.io/curseforge/dt/350734?logo=curseforge&label=CurseForge%20Downloads&color=orange)](https://www.curseforge.com/minecraft/mc-mods/ars-magica-legacy/files)
+[![Discord](https://img.shields.io/discord/358283695104458752?logo=discord&label=Discord&color=%235865F2)](https://discord.gg/GcFqXwX)
 
-For the original mod, see the [CurseForge page](https://www.curseforge.com/minecraft/mc-mods/bibliocraft) and
-the [GitHub repo](https://github.com/Nuchaz/BiblioCraft-Source/tree/1.18.x).
+[Bibliocraft Legacy](https://www.curseforge.com/minecraft/mc-mods/bibliocraft-legacy) is a port of the original Bibliocraft Minecraft mod by Nuchaz to [NeoForge](https://neoforged.net) 1.21.1 and beyond. It adds various pieces of decorative and functional furniture into the game.
+
+For the original mod, see the [CurseForge page](https://www.curseforge.com/minecraft/mc-mods/bibliocraft) and the [GitHub repository](https://github.com/Nuchaz/BiblioCraft-Source/tree/1.18.x).
 
 ## Developing Addons
 
-Bibliocraft Legacy offers an API for other modders to integrate with. This is mainly intended to allow integration with
-modded wood types.
+Bibliocraft Legacy offers an API for other modders to integrate with. This is mainly intended to allow integration with modded wood types.
 
 ### Setup
 
@@ -29,11 +29,9 @@ dependencies {
 }
 ```
 
-Get the latest version on CurseForge. Please refer to the [CurseMaven documentation](https://www.cursemaven.com) on how
-to find the latest artifact.
+Get the latest version on CurseForge. Please refer to the [CurseMaven documentation](https://www.cursemaven.com) on how to find the latest artifact.
 
-Next, add the dependency block in your `neoforge.mods.toml` file. Note: It is crucial that your mod is set to load
-`BEFORE` Bibliocraft, to ensure that your event handlers will be fired early enough.
+Next, add the dependency block in your `neoforge.mods.toml` file. Note: It is crucial that your mod is set to load `BEFORE` Bibliocraft, to ensure that your event handlers will be fired early enough.
 
 ```toml
 [[dependencies.${mod_id}]]
@@ -44,9 +42,7 @@ ordering="BEFORE"
 side="BOTH"
 ```
 
-Now, for the actual coding part. You should isolate all Bibliocraft-related logic in a separate class, similar to what
-you'd do with client classes, so that it doesn't get classloaded when Bibliocraft isn't present. This can be done like
-so:
+Now, for the actual coding part. You should isolate all Bibliocraft-related logic in a separate class, similar to what you'd do with client classes, so that it doesn't get classloaded when Bibliocraft isn't present. This can be done like so:
 
 ```java
 @Mod("yourmodid")
@@ -101,20 +97,13 @@ public class BibliocraftCompat {
 }
 ```
 
-And that's it! Now, if you boot up your game, you will notice that Bibliocraft will have blocks in your wood type's
-variant, however they will not have models, textures or any other data. For that, we need to set up datagen. And this
-is where things become a little tricky.
+And that's it! Now, if you boot up your game, you will notice that Bibliocraft will have blocks in your wood type's variant, however they will not have models, textures or any other data. For that, we need to set up datagen. And this is where things become a little tricky.
 
-Due to how Minecraft's datagen works, it is not possible to have multiple data providers write to the same file. This
-means that we have to capture the language provider and the two tags providers and pass them to our providers directly,
-due to how Bibliocraft's datagen is structured internally.
+Due to how Minecraft's datagen works, it is not possible to have multiple data providers write to the same file. This means that we have to capture the language provider and the two tags providers and pass them to our providers directly, due to how Bibliocraft's datagen is structured internally.
 
-With language providers, this works without issues. However, Mojang programmed the tags providers to auto-clear before
-running their `#addTags` method. This is bad for us because it means we will lose tag entries.
+With language providers, this works without issues. However, Mojang programmed the tags providers to auto-clear before running their `#addTags` method. This is bad for us because it means we will lose tag entries.
 
-As a workaround, the Bibliocraft API provides you with the `NonClearingBlockTagsProvider` and
-`NonClearingItemTagsProvider` classes. These classes are modified to not clear the existing values before generating,
-and can be used as a replacement for `BlockTagsProvider`/`ItemTagsProvider` in your tag datagen classes.
+As a workaround, the Bibliocraft API provides you with the `NonClearingBlockTagsProvider` and `NonClearingItemTagsProvider` classes. These classes are modified to not clear the existing values before generating, and can be used as a drop-in replacement for `BlockTagsProvider`/`ItemTagsProvider` in your tag datagen classes.
 
 Tying it all together, a Bibliocraft-enabled datagen would look something like this:
 
@@ -150,13 +139,11 @@ public final class YourModDatagen {
 }
 ```
 
-Running this will output `assets` and `data` in both Bibliocraft's and your own mod's namespaces. This is expected and
-no reason to worry, as this is required by Bibliocraft's internal structure.
+Running this will output `assets` and `data` in both Bibliocraft's and your own mod's namespaces. This is expected and no reason to worry, as this is required by Bibliocraft's internal structure.
 
 ### Adding Custom Lock Behaviors
 
-Bibliocraft adds the Lock and Key item, which allows lockable block entities to be locked and unlocked with a named Lock
-and Key. If your mod adds lockable blocks, you can add support for the Lock and Key like so:
+Bibliocraft adds the Lock and Key item, which allows lockable block entities to be locked and unlocked with a named Lock and Key. If your mod adds lockable blocks, you can add support for the Lock and Key like so:
 
 ```java
 public class BibliocraftCompat {
