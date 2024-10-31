@@ -1,6 +1,6 @@
 # Bibliocraft Legacy
 
-[![CurseForge Downloads](https://img.shields.io/curseforge/dt/350734?logo=curseforge&label=CurseForge%20Downloads&color=orange)](https://www.curseforge.com/minecraft/mc-mods/ars-magica-legacy/files)
+[![CurseForge Downloads](https://img.shields.io/curseforge/dt/1122260?logo=curseforge&label=CurseForge%20Downloads&color=orange)](https://www.curseforge.com/minecraft/mc-mods/bibliocraft-legacy/files)
 [![Discord](https://img.shields.io/discord/358283695104458752?logo=discord&label=Discord&color=%235865F2)](https://discord.gg/GcFqXwX)
 
 [Bibliocraft Legacy](https://www.curseforge.com/minecraft/mc-mods/bibliocraft-legacy) is a port of the original Bibliocraft Minecraft mod by Nuchaz to [NeoForge](https://neoforged.net) 1.21.1 and beyond. It adds various pieces of decorative and functional furniture into the game.
