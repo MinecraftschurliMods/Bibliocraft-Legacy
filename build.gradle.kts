@@ -51,10 +51,6 @@ helper.withDataGenRuns()
 
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 tasks.javadoc {
     classpath = sourceSets.api.get().compileClasspath
     source = sourceSets.api.get().allJava
