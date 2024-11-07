@@ -5,35 +5,43 @@ import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatage
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import net.minecraft.gametest.framework.GameTest;
+import net.neoforged.testframework.annotation.ForEachTest;
+import net.neoforged.testframework.annotation.TestHolder;
+import net.neoforged.testframework.gametest.EmptyTemplate;
+import net.neoforged.testframework.gametest.ExtendedGameTestHelper; 
 
+@SuppressWarnings("ConstantValue")
+@ForEachTest(groups = BibliocraftApi.MOD_ID + ".api")
 public class BibliocraftApiTest {
-    @Test
-    @DisplayName("Test that the BibliocraftDatagenHelper is available via the BibliocraftApi")
-    public void testDatagenHelperAvailable() {
+    @GameTest
+    @EmptyTemplate
+    @TestHolder(description = "Test that the BibliocraftDatagenHelper is available via the BibliocraftApi")
+    public static void testDatagenHelperAvailable(ExtendedGameTestHelper helper) {
         BibliocraftDatagenHelper datagenHelper = BibliocraftApi.getDatagenHelper();
-        Assertions.assertNotNull(datagenHelper, "BibliocraftDatagenHelper is not available");
-        Assertions.assertSame(BibliocraftDatagenHelperImpl.class, datagenHelper.getClass(), "BibliocraftDatagenHelper implementation is replaced");
+        helper.assertTrue(datagenHelper != null, "BibliocraftDatagenHelper is not available");
+        helper.assertTrue(datagenHelper.getClass() == BibliocraftDatagenHelperImpl.class, "BibliocraftDatagenHelper implementation is replaced");
+        helper.succeed();
     }
 
-    @Test
-    @DisplayName("Test that the BibliocraftWoodTypeRegistry is available via the BibliocraftApi")
-    public void testWoodTypeRegistryAvailable() {
+    @GameTest
+    @EmptyTemplate
+    @TestHolder(description = "Test that the BibliocraftWoodTypeRegistry is available via the BibliocraftApi")
+    public static void testWoodTypeRegistryAvailable(ExtendedGameTestHelper helper) {
         BibliocraftWoodTypeRegistry woodTypeRegistry = BibliocraftApi.getWoodTypeRegistry();
-        Assertions.assertNotNull(woodTypeRegistry, "BibliocraftWoodTypeRegistry is not available");
-        Assertions.assertSame(BibliocraftWoodTypeRegistryImpl.class, woodTypeRegistry.getClass(), "BibliocraftWoodTypeRegistry implementation is replaced");
-        Assertions.assertNotNull(woodTypeRegistry.get("oak"), "Oak WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("spruce"), "Spruce WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("birch"), "Birch WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("jungle"), "Jungle WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("acacia"), "Acacia WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("dark_oak"), "Dark Oak WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("crimson"), "Crimson WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("warped"), "Warped WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("mangrove"), "Mangrove WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("bamboo"), "Bamboo WoodType is not registered");
-        Assertions.assertNotNull(woodTypeRegistry.get("cherry"), "Cherry WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry != null, "BibliocraftWoodTypeRegistry is not available");
+        helper.assertTrue(woodTypeRegistry.getClass() == BibliocraftWoodTypeRegistryImpl.class, "BibliocraftWoodTypeRegistry implementation is replaced");
+        helper.assertTrue(woodTypeRegistry.get("oak") != null, "Oak WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("spruce") != null, "Spruce WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("birch") != null, "Birch WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("jungle") != null, "Jungle WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("acacia") != null, "Acacia WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("dark_oak") != null, "Dark Oak WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("crimson") != null, "Crimson WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("warped") != null, "Warped WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("mangrove") != null, "Mangrove WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("bamboo") != null, "Bamboo WoodType is not registered");
+        helper.assertTrue(woodTypeRegistry.get("cherry") != null, "Cherry WoodType is not registered");
+        helper.succeed();
     }
 }
