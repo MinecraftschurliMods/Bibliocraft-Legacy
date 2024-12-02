@@ -22,6 +22,8 @@ public class FancyWorkbenchScreen extends BCMenuScreen<FancyWorkbenchMenu> {
     public FancyWorkbenchScreen(FancyWorkbenchMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, BACKGROUND);
         player = inventory.player;
+        imageHeight = 192;
+        inventoryLabelY = 99;
     }
 
     @Override

@@ -27,9 +27,9 @@ public class FancyWorkbenchMenu extends BCMenu<FancyWorkbenchBlockEntity> {
         }
         addSlot(new NoPlaceSlot(blockEntity, 9, 124, 35));
         for (int i = 0; i < 8; i++) {
-            addSlot(new Slot(blockEntity, i + 10, 17 + i * 18, 81));
+            addSlot(new Slot(blockEntity, i + 10, 17 + i * 18, 78));
         }
-        addInventorySlots(inventory, 8, 109);
+        addInventorySlots(inventory, 8, 110);
     }
 
     @Override

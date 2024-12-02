@@ -5,10 +5,10 @@
 	"textures": {
 		"1": "block/crafting_table_top",
 		"2": "#texture",
-		"3": "bibliocraft:block/fancy_workbench/back",
-		"4": "bibliocraft:block/fancy_workbench/left",
-		"5": "bibliocraft:block/fancy_workbench/right",
-		"6": "bibliocraft:block/fancy_workbench/glass",
+		"3": "bibliocraft:block/fancy_workbench_back",
+		"4": "bibliocraft:block/fancy_workbench_left",
+		"5": "bibliocraft:block/fancy_workbench_right",
+		"6": "bibliocraft:block/fancy_workbench_glass",
 		"particle": "#texture"
 	},
 	"elements": [
