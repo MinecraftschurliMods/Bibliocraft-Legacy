@@ -19,9 +19,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Objects;
@@ -30,6 +28,7 @@ import java.util.stream.IntStream;
 public class FancyWorkbenchBlockEntity extends BCMenuBlockEntity {
     private static final String CRAFTING_TICKS_REMAINING_KEY = "crafting_ticks_remaining";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
+    private static final String TRIGGERED_KEY = "triggered";
     private static final int SLOT_DISABLED = 1;
     private static final int SLOT_ENABLED = 0;
     private static final int MAX_CRAFTING_TICKS = 6;
@@ -53,7 +52,7 @@ public class FancyWorkbenchBlockEntity extends BCMenuBlockEntity {
         if (!resultStack.isEmpty() && (!ItemStack.isSameItemSameComponents(result, resultStack) || result.getCount() + resultStack.getCount() > result.getMaxStackSize()))
             return;
         blockEntity.craftingTicksRemaining--;
-        if (blockEntity.craftingTicksRemaining == 0) {
+        if (blockEntity.craftingTicksRemaining <= 0) {
             CraftingInput input = CraftingInput.of(3, 3, IntStream.range(0, 9).mapToObj(blockEntity::getItem).toList());
             ItemStack assembled = recipe.assemble(input, level.registryAccess());
             assembled.onCraftedBySystem(level);
@@ -151,7 +150,7 @@ public class FancyWorkbenchBlockEntity extends BCMenuBlockEntity {
     }
 
     private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {
-        Direction direction = state.getValue(BlockStateProperties.FACING);
+        Direction direction = state.getValue(FancyWorkbenchBlock.FACING);
         stack = BCUtil.tryInsert(level, pos, direction, stack, this);
         if (!stack.isEmpty() && level.getBlockState(pos.above()).getCollisionShape(level, pos.above()).isEmpty()) {
             Vec3 vec3 = Vec3.atCenterOf(pos.above());

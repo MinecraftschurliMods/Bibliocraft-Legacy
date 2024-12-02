@@ -39,11 +39,11 @@ public class FancyWorkbenchBlock extends BCFacingEntityBlock {
         return new FancyWorkbenchBlockEntity(pos, state);
     }
 
-    @Nullable
     @Override
+    @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (type != BCBlockEntities.FANCY_WORKBENCH.get()) return null;
-        if (!state.getValue(POWERED)) return null;
+        if (level.isClientSide() || type != BCBlockEntities.FANCY_WORKBENCH.get() || !state.getValue(POWERED))
+            return null;
         return (l, p, s, b) -> FancyWorkbenchBlockEntity.tick(l, p, s, (FancyWorkbenchBlockEntity) b);
     }
 

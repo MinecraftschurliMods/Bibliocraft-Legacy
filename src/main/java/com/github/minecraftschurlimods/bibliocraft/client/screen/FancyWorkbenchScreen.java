@@ -44,7 +44,7 @@ public class FancyWorkbenchScreen extends BCMenuScreen<FancyWorkbenchMenu> {
 
     @Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
-        if (slot instanceof FancyWorkbenchSlot && !slot.hasItem() && player.isSpectator()) {
+        if (slot instanceof FancyWorkbenchSlot && !slot.hasItem() && !player.isSpectator()) {
             switch (type) {
                 case PICKUP -> {
                     if (menu.isSlotDisabled(slotId)) {
