@@ -22,6 +22,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -53,20 +55,37 @@ public class FancyWorkbenchBlockEntity extends BCMenuBlockEntity {
             return;
         blockEntity.craftingTicksRemaining--;
         if (blockEntity.craftingTicksRemaining <= 0) {
-            CraftingInput input = CraftingInput.of(3, 3, IntStream.range(0, 9).mapToObj(blockEntity::getItem).toList());
+            CraftingInput input = CraftingInput.of(3, 3, blockEntity.getInputs());
             ItemStack assembled = recipe.assemble(input, level.registryAccess());
             assembled.onCraftedBySystem(level);
-            if (!resultStack.isEmpty()) {
-                assembled.setCount(assembled.getCount() + resultStack.getCount());
-            }
             blockEntity.setItem(9, blockEntity.tryDispense(level, pos, assembled, state));
             blockEntity.craftingTicksRemaining = MAX_CRAFTING_TICKS;
-            recipe.getRemainingItems(input)
+            recipe.getRemainingItems(CraftingInput.of(3, 3, blockEntity.getInputs()))
                     .stream()
                     .filter(e -> !e.isEmpty())
                     .forEach(e -> blockEntity.tryDispense(level, pos, e, state));
-            IntStream.range(0, 9)
-                    .mapToObj(blockEntity::getItem)
+            List<ItemStack> inputs = new ArrayList<>(blockEntity.getInputs()
+                    .stream()
+                    .filter(e -> !e.isEmpty())
+                    .toList());
+            // for loop instead of stream chain to prevent CME
+            for (int i = 10; i < 18; i++) {
+                ItemStack stack = blockEntity.getItem(i);
+                if (stack.isEmpty()) continue;
+                List<ItemStack> toRemove = new ArrayList<>();
+                for (ItemStack e : inputs) {
+                    if (!ItemStack.isSameItemSameComponents(e, stack)) continue;
+                    if (e.getCount() >= e.getMaxStackSize()) continue;
+                    if (!stack.isEmpty()) {
+                        e.grow(1);
+                        toRemove.add(e);
+                        stack.shrink(1);
+                    }
+                }
+                toRemove.forEach(inputs::remove);
+            }
+            blockEntity.getInputs()
+                    .stream()
                     .filter(e -> !e.isEmpty())
                     .forEach(e -> e.shrink(1));
             blockEntity.setChanged();
@@ -145,14 +164,17 @@ public class FancyWorkbenchBlockEntity extends BCMenuBlockEntity {
 
     private void calculateRecipe() {
         RecipeManager recipes = Objects.requireNonNull(level).getRecipeManager();
-        CraftingInput input = CraftingInput.of(3, 3, IntStream.range(0, 9).mapToObj(items::getStackInSlot).toList());
+        CraftingInput input = CraftingInput.of(3, 3, getInputs());
         recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level).orElse(null);
+        if (recipe != null) {
+            items.setStackInSlot(9, recipe.value().getResultItem(level.registryAccess()).copy());
+        }
     }
 
     private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {
         Direction direction = state.getValue(FancyWorkbenchBlock.FACING);
         stack = BCUtil.tryInsert(level, pos, direction, stack, this);
-        if (!stack.isEmpty() && level.getBlockState(pos.above()).getCollisionShape(level, pos.above()).isEmpty()) {
+        if (!stack.isEmpty() && !level.isClientSide() && level.getBlockState(pos.above()).getCollisionShape(level, pos.above()).isEmpty()) {
             Vec3 vec3 = Vec3.atCenterOf(pos.above());
             ItemEntity entity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), stack);
             level.addFreshEntity(entity);
@@ -160,5 +182,9 @@ public class FancyWorkbenchBlockEntity extends BCMenuBlockEntity {
             return ItemStack.EMPTY;
         }
         return stack;
+    }
+
+    private List<ItemStack> getInputs() {
+        return IntStream.range(0, 9).mapToObj(this::getItem).toList();
     }
 }

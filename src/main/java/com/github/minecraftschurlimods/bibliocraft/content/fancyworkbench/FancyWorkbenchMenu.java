@@ -25,7 +25,7 @@ public class FancyWorkbenchMenu extends BCMenu<FancyWorkbenchBlockEntity> {
                 addSlot(new FancyWorkbenchSlot(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
             }
         }
-        addSlot(new NoPlaceSlot(blockEntity, 9, 124, 35));
+        addSlot(new ViewSlot(blockEntity, 9, 124, 35));
         for (int i = 0; i < 8; i++) {
             addSlot(new Slot(blockEntity, i + 10, 17 + i * 18, 78));
         }
@@ -47,13 +47,18 @@ public class FancyWorkbenchMenu extends BCMenu<FancyWorkbenchBlockEntity> {
         return blockEntity.isSlotDisabled(slot);
     }
 
-    private static class NoPlaceSlot extends Slot {
-        public NoPlaceSlot(Container container, int slot, int x, int y) {
+    private static class ViewSlot extends Slot {
+        public ViewSlot(Container container, int slot, int x, int y) {
             super(container, slot, x, y);
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
+            return false;
+        }
+
+        @Override
+        public boolean mayPickup(Player player) {
             return false;
         }
     }
