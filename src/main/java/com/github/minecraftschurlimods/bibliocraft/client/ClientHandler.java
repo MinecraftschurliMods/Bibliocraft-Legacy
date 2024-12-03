@@ -16,7 +16,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseModel;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
-import com.github.minecraftschurlimods.bibliocraft.client.screen.FancyWorkbenchScreen;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.FancyCrafterScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.SlottedBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
@@ -54,7 +54,7 @@ public final class ClientHandler {
             event.register(BCMenus.POTION_SHELF.get(),      BCMenuScreens.PotionShelf::new);
             event.register(BCMenus.SHELF.get(),             BCMenuScreens.Shelf::new);
             event.register(BCMenus.TOOL_RACK.get(),         BCMenuScreens.ToolRack::new);
-            event.register(BCMenus.FANCY_WORKBENCH.get(),   FancyWorkbenchScreen::new);
+            event.register(BCMenus.FANCY_CRAFTER.get(),     FancyCrafterScreen::new);
             event.register(BCMenus.SLOTTED_BOOK.get(),      SlottedBookScreen::new);
         }
 

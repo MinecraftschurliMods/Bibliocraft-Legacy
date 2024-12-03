@@ -53,7 +53,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "cookie_jar", "Cookie Jar");
         add("container", "disc_rack", "Disc Rack");
         add("container", "fancy_armor_stand", "Armor Stand");
-        add("container", "fancy_workbench", "Crafting");
+        add("container", "fancy_crafter", "Crafting");
         add("container", "label", "Label");
         add("container", "potion_shelf", "Potion Shelf");
         add("container", "shelf", "Shelf");
