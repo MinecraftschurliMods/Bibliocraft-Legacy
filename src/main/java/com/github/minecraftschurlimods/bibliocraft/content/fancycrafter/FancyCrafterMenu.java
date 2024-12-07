@@ -34,7 +34,43 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        return super.quickMoveStack(player, index); //TODO
+        int slotCount = blockEntity.getContainerSize();
+        Slot slot = slots.get(index);
+        if (!slot.hasItem()) return ItemStack.EMPTY;
+        ItemStack stack = slot.getItem();
+        ItemStack originalStack = stack.copy();
+        if (index < slotCount) { // If slot is a BE slot
+            if (index == 9) return stack;
+            // Try moving to the hotbar or inventory
+            if (!moveItemStackTo(slot.getItem(), slotCount, slotCount + 36, false))
+                return ItemStack.EMPTY;
+        } else if (index < slotCount + 9) { // If slot is a hotbar slot
+            // Try moving to the crafting grid
+            if (!moveItemStackToEnabled(stack, 0, 9))
+                return ItemStack.EMPTY;
+            // Try moving to the container
+            if (!moveItemStackTo(stack, 10, slotCount, false))
+                return ItemStack.EMPTY;
+            // Try moving to the inventory
+            if (!moveItemStackTo(stack, slotCount + 9, slotCount + 36, false))
+                return ItemStack.EMPTY;
+        } else if (index < slotCount + 36) { // If slot is an inventory slot
+            // Try moving to the crafting grid
+            if (!moveItemStackToEnabled(stack, 0, 9))
+                return ItemStack.EMPTY;
+            // Try moving to the container
+            if (!moveItemStackTo(stack, 10, slotCount, false))
+                return ItemStack.EMPTY;
+            // Try moving to the hotbar
+            if (!moveItemStackTo(stack, slotCount, slotCount + 9, false))
+                return ItemStack.EMPTY;
+        }
+        if (stack.isEmpty()) {
+            slot.set(ItemStack.EMPTY);
+        } else {
+            slot.setChanged();
+        }
+        return originalStack;
     }
 
     public void setSlotDisabled(int slot, boolean disabled) {
@@ -45,6 +81,15 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> {
     
     public boolean isSlotDisabled(int slot) {
         return blockEntity.isSlotDisabled(slot);
+    }
+    
+    @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "SameParameterValue"})
+    private boolean moveItemStackToEnabled(ItemStack stack, int start, int end) {
+        for (int i = start; i < end; i++) {
+            if (!blockEntity.isSlotDisabled(i) && !moveItemStackTo(stack, i, i + 1, false))
+                return false;
+        }
+        return true;
     }
 
     private static class ViewSlot extends Slot {
