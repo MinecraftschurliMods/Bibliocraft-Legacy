@@ -29,7 +29,9 @@ public final class ClipboardReadOnlyRenderer {
     private static final ResourceLocation X_TEXTURE = BCUtil.modLoc("x");
 
     public static void render(PoseStack pose, MultiBufferSource bufferSource, ClipboardContent data, int width, int height) {
+        pose.pushPose();
         blit(pose, BACKGROUND, 0, 0, 0, 0, width, height, 256, 256);
+        pose.translate(0, 0, -0.01);
         drawText(pose, bufferSource, data.title(), 29, 2, 72, 8);
         ClipboardContent.Page page = data.pages().get(data.active());
         for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
@@ -41,6 +43,7 @@ public final class ClipboardReadOnlyRenderer {
             }
             drawText(pose, bufferSource, page.lines().get(i), 17, 15 * i + 16, 109, 8);
         }
+        pose.popPose();
     }
 
     private static void drawText(PoseStack pose, MultiBufferSource bufferSource, String text, float x, float y, int width, int height) {
