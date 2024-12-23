@@ -1,1 +1,1 @@
-Add Fancy Crafter and some fixes
+Some small bug fixes

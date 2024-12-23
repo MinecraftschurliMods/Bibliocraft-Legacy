@@ -6,7 +6,7 @@
 		"0": "bibliocraft:block/sword_pedestal_base",
 		"1": "bibliocraft:block/sword_pedestal_side",
 		"2": "bibliocraft:block/sword_pedestal_overlay",
-		"particle": "bibliocraft:block/sword_pedestal/base"
+		"particle": "bibliocraft:block/sword_pedestal_base"
 	},
 	"elements": [
 		{

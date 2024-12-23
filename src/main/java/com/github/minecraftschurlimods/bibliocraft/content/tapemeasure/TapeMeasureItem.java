@@ -23,7 +23,7 @@ public class TapeMeasureItem extends Item {
         BlockPos pos = context.getClickedPos();
         if (stack.has(BCDataComponents.STORED_POSITION)) {
             BlockPos distance = context.getClickedPos().subtract(stack.getOrDefault(BCDataComponents.STORED_POSITION, StoredPosition.DEFAULT).position());
-            player.displayClientMessage(Component.translatable(Translations.TAPE_MEASURE_DISTANCE, distance.distSqr(BlockPos.ZERO), Math.abs(distance.getX()), Math.abs(distance.getY()), Math.abs(distance.getZ())), true);
+            player.displayClientMessage(Component.translatable(Translations.TAPE_MEASURE_DISTANCE, distance.distManhattan(BlockPos.ZERO), Math.abs(distance.getX()), Math.abs(distance.getY()), Math.abs(distance.getZ())), true);
             stack.remove(BCDataComponents.STORED_POSITION);
         } else {
             stack.set(BCDataComponents.STORED_POSITION, new StoredPosition(pos));

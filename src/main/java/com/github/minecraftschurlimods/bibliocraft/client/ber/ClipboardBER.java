@@ -15,7 +15,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity> {
         ClientUtil.setupCenteredBER(stack, blockEntity);
         stack.mulPose(Axis.XP.rotationDegrees(180));
         stack.translate(-0.25, -0.25, 0.4375);
-        stack.translate(0, 0, -0.00001);
+        stack.translate(0, 0, -1 / 1024d);
         float scale = 1 / 256f;
         stack.scale(scale, scale, 0);
         ClipboardReadOnlyRenderer.render(stack, buffer, blockEntity.getContent(), 128, 148);

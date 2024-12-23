@@ -112,7 +112,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         lockKey = LockCode.fromTag(tag);
         if (tag.contains(ITEMS_TAG)) {
