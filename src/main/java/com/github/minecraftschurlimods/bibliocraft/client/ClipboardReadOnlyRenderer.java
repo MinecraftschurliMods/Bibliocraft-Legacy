@@ -33,7 +33,6 @@ public final class ClipboardReadOnlyRenderer {
         RenderSystem.enableDepthTest();
         blit(pose, BACKGROUND, 0, 0, 0, 0, width, height, 256, 256);
         RenderSystem.disableDepthTest();
-        pose.translate(0, 0, 0);
         drawText(pose, bufferSource, data.title(), 29, 2, 72, 8);
         ClipboardContent.Page page = data.pages().get(data.active());
         for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
