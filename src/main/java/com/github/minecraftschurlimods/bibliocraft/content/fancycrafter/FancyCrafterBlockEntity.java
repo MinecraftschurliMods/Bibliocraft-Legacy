@@ -166,9 +166,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
         RecipeManager recipes = Objects.requireNonNull(level).getRecipeManager();
         CraftingInput input = CraftingInput.of(3, 3, getInputs());
         recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level).orElse(null);
-        if (recipe != null) {
-            items.setStackInSlot(9, recipe.value().getResultItem(level.registryAccess()).copy());
-        }
+        items.setStackInSlot(9, recipe == null ? ItemStack.EMPTY : recipe.value().getResultItem(level.registryAccess()).copy());
     }
 
     private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {
