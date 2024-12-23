@@ -52,7 +52,7 @@ public final class ClipboardReadOnlyRenderer {
         Font font = Minecraft.getInstance().font;
         String visibleText = font.plainSubstrByWidth(text, width);
         if (visibleText.isEmpty()) return;
-        font.drawInBatch(visibleText, x, y, 0, false, pose.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT, font.isBidirectional());
+        font.drawInBatch(visibleText, x, y, 0, false, pose.last().pose(), bufferSource, Font.DisplayMode.POLYGON_OFFSET, 0, LightTexture.FULL_BRIGHT, font.isBidirectional());
     }
     
     private static void blitSprite(PoseStack pose, ResourceLocation location, int x, int y, int width, int height) {
