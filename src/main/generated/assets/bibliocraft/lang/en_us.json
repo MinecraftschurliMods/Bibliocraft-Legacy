@@ -1671,7 +1671,7 @@
   "item.bibliocraft.red_warped_raised_seat_back": "Red Warped Raised Seat Back",
   "item.bibliocraft.red_warped_small_seat_back": "Red Warped Small Seat Back",
   "item.bibliocraft.red_warped_tall_seat_back": "Red Warped Tall Seat Back",
-  "item.bibliocraft.redstone_book": "Redstone: Volume 1",
+  "item.bibliocraft.redstone_book": "Redstone Book",
   "item.bibliocraft.redstone_book.text": "When putting this book into a bookcase, the bookcase will emit a redstone signal. The strength of the signal depends on the slot it is placed in. Slot 1 (top left) yields no signal. Slot 2 yields a signal strength of 1. Each slot after that increases the signal strength by one, all the way to slot 16 (bottom right), which yields a signal strength of 15.",
   "item.bibliocraft.redstone_book.title": "Redstone: Volume 1",
   "item.bibliocraft.slotted_book": "Slotted Book",
