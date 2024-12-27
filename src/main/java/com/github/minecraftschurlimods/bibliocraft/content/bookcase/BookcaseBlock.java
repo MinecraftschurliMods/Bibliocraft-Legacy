@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBl
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,6 +14,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.stream.IntStream;
 
 public class BookcaseBlock extends BCFacingEntityBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
@@ -60,5 +63,15 @@ public class BookcaseBlock extends BCFacingEntityBlock {
             if (bcbe.getItem(i).getItem() instanceof RedstoneBookItem) return i;
         }
         return super.getAnalogOutputSignal(state, level, pos);
+    }
+
+    @Override
+    public float getEnchantPowerBonus(BlockState state, LevelReader level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof BookcaseBlockEntity bcbe)) return super.getEnchantPowerBonus(state, level, pos);
+        return super.getEnchantPowerBonus(state, level, pos) + 0.125f * IntStream.range(0, bcbe.getContainerSize())
+                .mapToObj(bcbe::getItem)
+                .filter(e -> !e.isEmpty())
+                .count();
     }
 }
