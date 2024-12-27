@@ -25,3 +25,4 @@ run-data
 
 repo
 /src/main/generated/.cache/
+/src/generated/resources/.cache/

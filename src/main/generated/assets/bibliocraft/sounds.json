@@ -1,10 +1,43 @@
 {
+  "clock_chime": {
+    "sounds": [
+      "bibliocraft:clock_chime"
+    ]
+  },
+  "clock_tick": {
+    "sounds": [
+      "bibliocraft:clock_tick_1",
+      "bibliocraft:clock_tick_2",
+      "bibliocraft:clock_tick_3",
+      "bibliocraft:clock_tick_4",
+      "bibliocraft:clock_tick_5"
+    ]
+  },
+  "clock_tock": {
+    "sounds": [
+      "bibliocraft:clock_tock_1",
+      "bibliocraft:clock_tock_2",
+      "bibliocraft:clock_tock_3",
+      "bibliocraft:clock_tock_4",
+      "bibliocraft:clock_tock_5"
+    ]
+  },
   "desk_bell": {
     "sounds": [
       "bibliocraft:desk_bell_1",
       "bibliocraft:desk_bell_2",
       "bibliocraft:desk_bell_3",
       "bibliocraft:desk_bell_4"
+    ]
+  },
+  "tape_measure_close": {
+    "sounds": [
+      "bibliocraft:tape_measure_close"
+    ]
+  },
+  "tape_measure_open": {
+    "sounds": [
+      "bibliocraft:tape_measure_open"
     ]
   }
 }

@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.tapemeasure;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
+import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,8 +26,10 @@ public class TapeMeasureItem extends Item {
             BlockPos distance = context.getClickedPos().subtract(stack.getOrDefault(BCDataComponents.STORED_POSITION, StoredPosition.DEFAULT).position());
             player.displayClientMessage(Component.translatable(Translations.TAPE_MEASURE_DISTANCE, distance.distManhattan(BlockPos.ZERO), Math.abs(distance.getX()), Math.abs(distance.getY()), Math.abs(distance.getZ())), true);
             stack.remove(BCDataComponents.STORED_POSITION);
+            player.playSound(BCSoundEvents.TAPE_MEASURE_CLOSE.value(), 1, 1);
         } else {
             stack.set(BCDataComponents.STORED_POSITION, new StoredPosition(pos));
+            player.playSound(BCSoundEvents.TAPE_MEASURE_OPEN.value(), 1, 1);
         }
         return InteractionResult.SUCCESS;
     }
