@@ -44,7 +44,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
         add(BCItems.LOCK_AND_KEY.get(), "Lock and Key");
         addDefaultItem(BCItems.PLUMB_LINE);
-        add(BCItems.REDSTONE_BOOK.get(), "Redstone: Volume 1");
+        addDefaultItem(BCItems.REDSTONE_BOOK);
         addDefaultItem(BCItems.SLOTTED_BOOK);
         addDefaultItem(BCItems.STOCKROOM_CATALOG);
         addDefaultItem(BCItems.TAPE_MEASURE);
