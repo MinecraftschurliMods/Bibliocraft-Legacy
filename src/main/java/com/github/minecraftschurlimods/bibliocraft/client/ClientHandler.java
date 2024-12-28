@@ -1,19 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.ClipboardBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.DinnerPlateBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.DiscRackBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyCrafterBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.TableBER;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.*;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseModel;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
@@ -80,9 +68,15 @@ public final class ClientHandler {
         }
 
         @SubscribeEvent
+        private static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(FancyClockBER.CLOCK_HAND_LOCATION, FancyClockBER::createLayerDefinition);
+        }
+
+        @SubscribeEvent
         private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
-            event.registerEntityRenderer(BCEntities.SEAT.get(), EmptyEntityRenderer::new);
+            event.registerEntityRenderer(BCEntities.SEAT.get(),              EmptyEntityRenderer::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.FANCY_CLOCK.get(),       FancyClockBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.CLIPBOARD.get(),         $ -> new ClipboardBER());
             event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(),        $ -> new CookieJarBER());
             event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(),      $ -> new DinnerPlateBER());
