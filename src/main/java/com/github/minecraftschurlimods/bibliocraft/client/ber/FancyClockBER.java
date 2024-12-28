@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 
@@ -85,10 +84,10 @@ public class FancyClockBER implements BlockEntityRenderer<FancyClockBlockEntity>
 
     private void renderPendulum(FancyClockBlockEntity blockEntity, ModelPart pendulum, PoseStack stack, VertexConsumer vc, int light, int overlay) {
         Level level = Objects.requireNonNull(blockEntity.getLevel());
-        float rotation = level.getDayTime() % 40 - 20;
+        float rotation = (float) Math.sin((level.getDayTime() % 40 - 20) * Math.PI / 20);
         stack.pushPose();
         stack.mulPose(Axis.ZP.rotationDegrees(180));
-        stack.mulPose(Axis.ZP.rotation((float) Math.sin(rotation * Math.PI / 20) * 0.25f));
+        stack.mulPose(Axis.ZP.rotation(rotation * 0.25f));
         pendulum.render(stack, vc, light, overlay);
         stack.popPose();
     }
