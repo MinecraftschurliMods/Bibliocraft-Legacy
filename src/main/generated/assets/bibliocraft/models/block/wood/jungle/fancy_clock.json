@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/clock/fancy",
+  "textures": {
+    "texture": "minecraft:block/jungle_planks"
+  }
+}

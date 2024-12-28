@@ -8,7 +8,7 @@
 		"2": "block/copper_block",
 		"3": "block/brown_wool",
 		"4": "bibliocraft:block/clock_hand",
-		"particle": "block/oak_planks"
+		"particle": "#texture"
 	},
 	"elements": [
 		{

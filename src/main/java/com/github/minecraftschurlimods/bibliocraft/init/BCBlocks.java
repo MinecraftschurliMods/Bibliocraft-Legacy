@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.deskbell.DeskBellBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.dinnerplate.DinnerPlateBlock;
@@ -38,6 +39,7 @@ import java.util.function.Supplier;
 public interface BCBlocks {
     WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
     WoodTypeDeferredHolder<Block, FancyArmorStandBlock> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
+    WoodTypeDeferredHolder<Block, FancyClockBlock>      FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockBlock::new);
     WoodTypeDeferredHolder<Block, FancyCrafterBlock>    FANCY_CRAFTER     = woodenBlock("fancy_crafter",     FancyCrafterBlock::new);
     WoodTypeDeferredHolder<Block, LabelBlock>           LABEL             = woodenBlock("label",             LabelBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);

@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/clock/fancy_inventory",
+  "textures": {
+    "texture": "minecraft:block/mangrove_planks"
+  }
+}

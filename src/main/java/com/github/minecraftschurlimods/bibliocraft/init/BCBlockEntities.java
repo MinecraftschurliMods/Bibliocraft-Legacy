@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.dinnerplate.DinnerPlateBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackBlockEntity;
@@ -31,6 +32,7 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<DiscRackBlockEntity>>        DISC_RACK         = register("disc_rack",         DiscRackBlockEntity::new,        BCBlocks.DISC_RACK, BCBlocks.WALL_DISC_RACK);
     Supplier<BlockEntityType<DisplayCaseBlockEntity>>     DISPLAY_CASE      = register("display_case",      DisplayCaseBlockEntity::new,     BCUtil.mergeRaw(BCBlocks.DISPLAY_CASE.holders(), BCBlocks.WALL_DISPLAY_CASE.holders()));
     Supplier<BlockEntityType<FancyArmorStandBlockEntity>> FANCY_ARMOR_STAND = register("fancy_armor_stand", FancyArmorStandBlockEntity::new, BCUtil.merge(BCBlocks.FANCY_ARMOR_STAND.holders(), BCBlocks.IRON_FANCY_ARMOR_STAND));
+    Supplier<BlockEntityType<FancyClockBlockEntity>>      FANCY_CLOCK       = register("fancy_clock",       FancyClockBlockEntity::new,      BCBlocks.FANCY_CLOCK.holders());
     Supplier<BlockEntityType<FancyCrafterBlockEntity>>    FANCY_CRAFTER     = register("fancy_crafter",     FancyCrafterBlockEntity::new,    BCBlocks.FANCY_CRAFTER.holders());
     Supplier<BlockEntityType<LabelBlockEntity>>           LABEL             = register("label",             LabelBlockEntity::new,           BCBlocks.LABEL.holders());
     Supplier<BlockEntityType<PotionShelfBlockEntity>>     POTION_SHELF      = register("potion_shelf",      PotionShelfBlockEntity::new,     BCBlocks.POTION_SHELF.holders());
