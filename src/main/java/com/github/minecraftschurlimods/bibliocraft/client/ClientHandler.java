@@ -69,7 +69,7 @@ public final class ClientHandler {
 
         @SubscribeEvent
         private static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-            event.registerLayerDefinition(FancyClockBER.CLOCK_HAND_LOCATION, FancyClockBER::createLayerDefinition);
+            event.registerLayerDefinition(FancyClockBER.LOCATION, FancyClockBER::createLayerDefinition);
         }
 
         @SubscribeEvent
