@@ -16,7 +16,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class FancyClockBlock extends BCFacingEntityBlock {
+public class FancyClockBlock extends AbstractClockBlock {
     private static final VoxelShape X_SHAPE = ShapeUtil.combine(
             Shapes.box(0.25, 0, 0.25, 0.75, 0.0625, 0.75),
             Shapes.box(0.3125, 0.0625, 0.25, 0.6875, 0.875, 0.75),
@@ -33,19 +33,7 @@ public class FancyClockBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    @Nullable
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new FancyClockBlockEntity(pos, state);
-    }
-
-    @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return state.getValue(FACING).getAxis() == Direction.Axis.X ? X_SHAPE : Z_SHAPE;
-    }
-
-    @Override
-    @Nullable
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return (l, p, s, b) -> FancyClockBlockEntity.tick(l, p, s, (FancyClockBlockEntity) b);
     }
 }

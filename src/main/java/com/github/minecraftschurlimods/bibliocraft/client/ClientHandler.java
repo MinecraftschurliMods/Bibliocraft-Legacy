@@ -69,14 +69,14 @@ public final class ClientHandler {
 
         @SubscribeEvent
         private static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-            event.registerLayerDefinition(FancyClockBER.LOCATION, FancyClockBER::createLayerDefinition);
+            event.registerLayerDefinition(ClockBER.LOCATION, ClockBER::createLayerDefinition);
         }
 
         @SubscribeEvent
         private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
             event.registerEntityRenderer(BCEntities.SEAT.get(),              EmptyEntityRenderer::new);
-            event.registerBlockEntityRenderer(BCBlockEntities.FANCY_CLOCK.get(),       FancyClockBER::new);
+            event.registerBlockEntityRenderer(BCBlockEntities.CLOCK.get(),       ClockBER::new);
             event.registerBlockEntityRenderer(BCBlockEntities.CLIPBOARD.get(),         $ -> new ClipboardBER());
             event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(),        $ -> new CookieJarBER());
             event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(),      $ -> new DinnerPlateBER());

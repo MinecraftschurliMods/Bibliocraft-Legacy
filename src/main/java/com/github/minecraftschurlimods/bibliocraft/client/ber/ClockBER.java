@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -27,7 +27,7 @@ import java.util.Objects;
  * Conceptual credit for the clock hands:
  * <a href="https://github.com/MehVahdJukaar/Supplementaries/blob/master/common/src/main/java/net/mehvahdjukaar/supplementaries/client/renderers/tiles/ClockBlockTileRenderer.java">ClockBlockTileRenderer from the Supplementaries mod</a>
  */
-public class FancyClockBER implements BlockEntityRenderer<FancyClockBlockEntity> {
+public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
     public static final Material HAND_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BCUtil.modLoc("block/clock_hand"));
     public static final Material PENDULUM_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BCUtil.mcLoc("block/copper_block"));
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(BCUtil.modLoc("clock"), "main");
@@ -35,7 +35,7 @@ public class FancyClockBER implements BlockEntityRenderer<FancyClockBlockEntity>
     private final ModelPart minuteHand;
     private final ModelPart pendulum;
 
-    public FancyClockBER(BlockEntityRendererProvider.Context context) {
+    public ClockBER(BlockEntityRendererProvider.Context context) {
         ModelPart model = context.bakeLayer(LOCATION);
         hourHand = model.getChild("hour");
         minuteHand = model.getChild("minute");
@@ -53,7 +53,7 @@ public class FancyClockBER implements BlockEntityRenderer<FancyClockBlockEntity>
     }
 
     @Override
-    public void render(FancyClockBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
+    public void render(ClockBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
         VertexConsumer handMaterial = HAND_MATERIAL.buffer(buffer, RenderType::entityCutout);
         VertexConsumer pendulumMaterial = PENDULUM_MATERIAL.buffer(buffer, RenderType::entityCutout);
         stack.pushPose();
@@ -69,7 +69,7 @@ public class FancyClockBER implements BlockEntityRenderer<FancyClockBlockEntity>
         stack.popPose();
     }
 
-    private void renderHands(FancyClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, PoseStack stack, VertexConsumer vc, int light, int overlay) {
+    private void renderHands(ClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, PoseStack stack, VertexConsumer vc, int light, int overlay) {
         Level level = Objects.requireNonNull(blockEntity.getLevel());
         float rotation = -level.getSunAngle(1) * 2;
         stack.pushPose();
@@ -82,7 +82,7 @@ public class FancyClockBER implements BlockEntityRenderer<FancyClockBlockEntity>
         stack.popPose();
     }
 
-    private void renderPendulum(FancyClockBlockEntity blockEntity, ModelPart pendulum, PoseStack stack, VertexConsumer vc, int light, int overlay) {
+    private void renderPendulum(ClockBlockEntity blockEntity, ModelPart pendulum, PoseStack stack, VertexConsumer vc, int light, int overlay) {
         Level level = Objects.requireNonNull(blockEntity.getLevel());
         float rotation = (float) Math.sin((level.getDayTime() % 40 - 20) * Math.PI / 20);
         stack.pushPose();
