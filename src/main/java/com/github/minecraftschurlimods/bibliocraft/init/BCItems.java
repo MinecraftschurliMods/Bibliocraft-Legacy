@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItem;
+import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLightItem;
@@ -29,7 +30,7 @@ public interface BCItems {
 
     WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",      BCBlocks.BOOKCASE);
     WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_armor_stand", wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
-    WoodTypeDeferredHolder<Item, BlockItem>           FANCY_CLOCK       = woodenBlock("fancy_clock",   BCBlocks.FANCY_CLOCK);
+    WoodTypeDeferredHolder<Item, FancyClockItem>      FANCY_CLOCK       = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_clock", FancyClockItem::new);
     WoodTypeDeferredHolder<Item, BlockItem>           FANCY_CRAFTER     = woodenBlock("fancy_crafter", BCBlocks.FANCY_CRAFTER);
     WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",         BCBlocks.LABEL);
     WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf",  BCBlocks.POTION_SHELF);

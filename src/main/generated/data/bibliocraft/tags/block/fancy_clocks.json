@@ -1,15 +1,26 @@
 {
   "values": [
     "bibliocraft:oak_fancy_clock",
+    "bibliocraft:oak_wall_fancy_clock",
     "bibliocraft:spruce_fancy_clock",
+    "bibliocraft:spruce_wall_fancy_clock",
     "bibliocraft:birch_fancy_clock",
+    "bibliocraft:birch_wall_fancy_clock",
     "bibliocraft:jungle_fancy_clock",
+    "bibliocraft:jungle_wall_fancy_clock",
     "bibliocraft:acacia_fancy_clock",
+    "bibliocraft:acacia_wall_fancy_clock",
     "bibliocraft:dark_oak_fancy_clock",
+    "bibliocraft:dark_oak_wall_fancy_clock",
     "bibliocraft:crimson_fancy_clock",
+    "bibliocraft:crimson_wall_fancy_clock",
     "bibliocraft:warped_fancy_clock",
+    "bibliocraft:warped_wall_fancy_clock",
     "bibliocraft:mangrove_fancy_clock",
+    "bibliocraft:mangrove_wall_fancy_clock",
     "bibliocraft:bamboo_fancy_clock",
-    "bibliocraft:cherry_fancy_clock"
+    "bibliocraft:bamboo_wall_fancy_clock",
+    "bibliocraft:cherry_fancy_clock",
+    "bibliocraft:cherry_wall_fancy_clock"
   ]
 }

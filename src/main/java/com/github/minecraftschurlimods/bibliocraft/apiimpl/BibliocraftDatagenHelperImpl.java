@@ -160,6 +160,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         woodenBlockTranslation(provider, woodType, BCBlocks.BOOKCASE,          "Bookcase");
         woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_ARMOR_STAND, "Fancy Armor Stand");
         woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_CLOCK,       "Fancy Clock");
+        woodenBlockTranslation(provider, woodType, BCBlocks.WALL_FANCY_CLOCK,  "Fancy Clock");
         woodenBlockTranslation(provider, woodType, BCBlocks.FANCY_CRAFTER,     "Fancy Crafter");
         woodenBlockTranslation(provider, woodType, BCBlocks.LABEL,             "Label");
         woodenBlockTranslation(provider, woodType, BCBlocks.POTION_SHELF,      "Potion Shelf");
@@ -195,6 +196,10 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.FANCY_CLOCK.holder(woodType),
                 prefix + "fancy_clock",
                 bcLoc("block/template/clock/fancy"),
+                woodTexture);
+        DatagenUtil.horizontalBlockModel(provider, BCBlocks.WALL_FANCY_CLOCK.holder(woodType),
+                prefix + "wall_fancy_clock",
+                bcLoc("block/template/clock/wall_fancy"),
                 woodTexture);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.FANCY_CRAFTER.holder(woodType),
                 prefix + "fancy_crafter",
@@ -282,6 +287,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .add(BCBlocks.BOOKCASE.get(woodType));
             tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).add(BCBlocks.FANCY_ARMOR_STAND.get(woodType));
             tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .add(BCBlocks.FANCY_CLOCK.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .add(BCBlocks.WALL_FANCY_CLOCK.get(woodType));
             tagAccessor.apply(BCTags.Blocks.FANCY_CRAFTERS)         .add(BCBlocks.FANCY_CRAFTER.get(woodType));
             tagAccessor.apply(BCTags.Blocks.LABELS)                 .add(BCBlocks.LABEL.get(woodType));
             tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .add(BCBlocks.POTION_SHELF.get(woodType));
@@ -296,6 +302,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .addOptional(BCBlocks.BOOKCASE.id(woodType));
             tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).addOptional(BCBlocks.FANCY_ARMOR_STAND.id(woodType));
             tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .addOptional(BCBlocks.FANCY_CLOCK.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .addOptional(BCBlocks.WALL_FANCY_CLOCK.id(woodType));
             tagAccessor.apply(BCTags.Blocks.FANCY_CRAFTERS)         .addOptional(BCBlocks.FANCY_CRAFTER.id(woodType));
             tagAccessor.apply(BCTags.Blocks.LABELS)                 .addOptional(BCBlocks.LABEL.id(woodType));
             tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .addOptional(BCBlocks.POTION_SHELF.id(woodType));
@@ -353,6 +360,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         loot(lootTableAdder, BCBlocks.BOOKCASE.get(woodType),          DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.FANCY_ARMOR_STAND.get(woodType), DatagenUtil::createFancyArmorStandTable);
         loot(lootTableAdder, BCBlocks.FANCY_CLOCK.get(woodType),       DatagenUtil::createDefaultTable);
+        loot(lootTableAdder, BCBlocks.WALL_FANCY_CLOCK.get(woodType),  DatagenUtil::createDefaultTable);
         loot(lootTableAdder, BCBlocks.FANCY_CRAFTER.get(woodType),     DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.LABEL.get(woodType),             DatagenUtil::createNameableTable);
         loot(lootTableAdder, BCBlocks.POTION_SHELF.get(woodType),      DatagenUtil::createNameableTable);
