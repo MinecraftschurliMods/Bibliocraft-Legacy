@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bibliocraft:grandfather_clock",
+  "ingredients": [
+    {
+      "item": "bibliocraft:acacia_fancy_clock"
+    },
+    {
+      "item": "bibliocraft:acacia_fancy_clock"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:acacia_grandfather_clock"
+  }
+}

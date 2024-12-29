@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.clock.GrandfatherClockBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.WallFancyClockBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
@@ -21,7 +22,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.Level;
 
 import java.util.Objects;
 
@@ -36,21 +36,31 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
     private final ModelPart hourHand;
     private final ModelPart minuteHand;
     private final ModelPart pendulum;
+    private final ModelPart grandfatherHourHand;
+    private final ModelPart grandfatherMinuteHand;
+    private final ModelPart grandfatherPendulum;
 
     public ClockBER(BlockEntityRendererProvider.Context context) {
         ModelPart model = context.bakeLayer(LOCATION);
         hourHand = model.getChild("hour");
         minuteHand = model.getChild("minute");
         pendulum = model.getChild("pendulum");
+        grandfatherHourHand = model.getChild("grandfather_hour");
+        grandfatherMinuteHand = model.getChild("grandfather_minute");
+        grandfatherPendulum = model.getChild("grandfather_pendulum");
     }
 
     public static LayerDefinition createLayerDefinition() {
         MeshDefinition mesh = new MeshDefinition();
         PartDefinition root = mesh.getRoot();
         root.addOrReplaceChild("hour", CubeListBuilder.create().addBox(-0.25f, -0.25f, -0.25f, 0.5f, 1.5f, 0.5f), PartPose.ZERO);
-        root.addOrReplaceChild("minute", CubeListBuilder.create().addBox(-0.25f, -0.25f, -0.25f, 0.5f, 2f, 0.5f), PartPose.ZERO);
-        PartDefinition pendulum = root.addOrReplaceChild("pendulum", CubeListBuilder.create().addBox(-0.25f, 0, -0.25f, 0.5f, 2f, 0.5f), PartPose.ZERO);
-        pendulum.addOrReplaceChild("head", CubeListBuilder.create().addBox(-1, 2, -0.5f, 2, 2, 1), PartPose.ZERO);
+        root.addOrReplaceChild("minute", CubeListBuilder.create().addBox(-0.25f, -0.25f, -0.25f, 0.5f, 2, 0.5f), PartPose.ZERO);
+        PartDefinition pendulum = root.addOrReplaceChild("pendulum", CubeListBuilder.create().addBox(-0.25f, 0, -0.25f, 0.5f, 2, 0.5f), PartPose.ZERO);
+        pendulum.addOrReplaceChild("head", CubeListBuilder.create().texOffs(7, 7).addBox(-1, 2, -0.5f, 2, 2, 1), PartPose.ZERO);
+        root.addOrReplaceChild("grandfather_hour", CubeListBuilder.create().addBox(-0.25f, -0.25f, -0.25f, 0.5f, 2, 0.5f), PartPose.ZERO);
+        root.addOrReplaceChild("grandfather_minute", CubeListBuilder.create().addBox(-0.25f, -0.25f, -0.25f, 0.5f, 2.5f, 0.5f), PartPose.ZERO);
+        PartDefinition grandfatherPendulum = root.addOrReplaceChild("grandfather_pendulum", CubeListBuilder.create().addBox(-0.25f, 0, -0.25f, 0.5f, 15, 0.5f), PartPose.ZERO);
+        grandfatherPendulum.addOrReplaceChild("grandfather_head", CubeListBuilder.create().texOffs(7, 7).addBox(-1, 15, -0.5f, 2, 2, 1), PartPose.ZERO);
         return LayerDefinition.create(mesh, 16, 16);
     }
 
@@ -61,19 +71,22 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
         stack.pushPose();
         ClientUtil.setupCenteredBER(stack, blockEntity);
         if (blockEntity.getBlockState().getBlock() instanceof FancyClockBlock) {
-            renderHands(blockEntity, hourHand, minuteHand, 0, 0.15625, 0.15625, stack, handMaterial, light, overlay);
-            renderPendulum(blockEntity, pendulum, 4, 0, -0.0625, 0.09375, stack, pendulumMaterial, light, overlay);
+            renderHands(blockEntity, hourHand, minuteHand, 0.15625, 0.15625, stack, handMaterial, light, overlay);
+            renderPendulum(blockEntity, pendulum, 4, -0.0625, 0.09375, stack, pendulumMaterial, light, overlay);
         } else if (blockEntity.getBlockState().getBlock() instanceof WallFancyClockBlock) {
-            renderHands(blockEntity, hourHand, minuteHand, 0, 0.15625, -0.15625, stack, handMaterial, light, overlay);
-            renderPendulum(blockEntity, pendulum, 4, 0, -0.0625, -0.21875, stack, pendulumMaterial, light, overlay);
+            renderHands(blockEntity, hourHand, minuteHand, 0.15625, -0.15625, stack, handMaterial, light, overlay);
+            renderPendulum(blockEntity, pendulum, 4, -0.0625, -0.21875, stack, pendulumMaterial, light, overlay);
+        } else if (blockEntity.getBlockState().getBlock() instanceof GrandfatherClockBlock) {
+            renderHands(blockEntity, grandfatherHourHand, grandfatherMinuteHand, 0.125, 0.15625, stack, handMaterial, light, overlay);
+            renderPendulum(blockEntity, grandfatherPendulum, 17, -0.125, 0.09375, stack, pendulumMaterial, light, overlay);
         }
         stack.popPose();
     }
 
-    private void renderHands(ClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, double x, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
+    private void renderHands(ClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
         float rotation = -Objects.requireNonNull(blockEntity.getLevel()).getSunAngle(1) * 2;
         stack.pushPose();
-        stack.translate(x, y, z);
+        stack.translate(0, y, z);
         stack.pushPose();
         stack.mulPose(Axis.ZP.rotation(rotation));
         hourHand.render(stack, vc, light, overlay);
@@ -85,10 +98,10 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
         stack.popPose();
     }
 
-    private void renderPendulum(ClockBlockEntity blockEntity, ModelPart pendulum, float pendulumSize, double x, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
+    private void renderPendulum(ClockBlockEntity blockEntity, ModelPart pendulum, float pendulumSize, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
         float rotation = (float) Math.sin((Objects.requireNonNull(blockEntity.getLevel()).getDayTime() % 40 - 20) * Math.PI / 20);
         stack.pushPose();
-        stack.translate(x, y, z);
+        stack.translate(0, y, z);
         stack.mulPose(Axis.ZP.rotationDegrees(180));
         stack.mulPose(Axis.ZP.rotation(rotation / pendulumSize));
         pendulum.render(stack, vc, light, overlay);

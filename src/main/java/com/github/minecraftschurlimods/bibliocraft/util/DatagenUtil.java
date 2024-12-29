@@ -203,6 +203,17 @@ public final class DatagenUtil {
     }
 
     /**
+     * Creates a loot table for a grandfather clock.
+     *
+     * @param block The block to create the loot table for.
+     * @return A loot table for a grandfather clock, dropping the given block.
+     */
+    public static LootTable.Builder createGrandfatherClockTable(Block block) {
+        return createStandardTable(LootItem.lootTableItem(block)
+                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER))));
+    }
+
+    /**
      * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
      *
      * @param registry   The {@link Registry} associated with the collection elements.

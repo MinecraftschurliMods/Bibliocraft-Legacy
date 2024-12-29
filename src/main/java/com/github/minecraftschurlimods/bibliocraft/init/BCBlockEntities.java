@@ -27,7 +27,7 @@ import java.util.function.Supplier;
 public interface BCBlockEntities {
     Supplier<BlockEntityType<BookcaseBlockEntity>>        BOOKCASE          = register("bookcase",          BookcaseBlockEntity::new,        BCBlocks.BOOKCASE.holders());
     Supplier<BlockEntityType<ClipboardBlockEntity>>       CLIPBOARD         = register("clipboard",         ClipboardBlockEntity::new,       BCBlocks.CLIPBOARD);
-    Supplier<BlockEntityType<ClockBlockEntity>>           CLOCK             = register("clock",             ClockBlockEntity::new,           BCUtil.mergeRaw(BCBlocks.FANCY_CLOCK.holders(), BCBlocks.WALL_FANCY_CLOCK.holders()));
+    Supplier<BlockEntityType<ClockBlockEntity>>           CLOCK             = register("clock",             ClockBlockEntity::new,           BCUtil.mergeRaw(BCBlocks.FANCY_CLOCK.holders(), BCBlocks.WALL_FANCY_CLOCK.holders(), BCBlocks.GRANDFATHER_CLOCK.holders()));
     Supplier<BlockEntityType<CookieJarBlockEntity>>       COOKIE_JAR        = register("cookie_jar",        CookieJarBlockEntity::new,       BCBlocks.COOKIE_JAR);
     Supplier<BlockEntityType<DinnerPlateBlockEntity>>     DINNER_PLATE      = register("dinner_plate",      DinnerPlateBlockEntity::new,     BCBlocks.DINNER_PLATE);
     Supplier<BlockEntityType<DiscRackBlockEntity>>        DISC_RACK         = register("disc_rack",         DiscRackBlockEntity::new,        BCBlocks.DISC_RACK, BCBlocks.WALL_DISC_RACK);

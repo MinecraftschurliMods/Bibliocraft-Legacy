@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "group": "bibliocraft:fancy_crafters",
+  "group": "bibliocraft:fancy_crafter",
   "key": {
     "C": {
       "item": "minecraft:crafter"

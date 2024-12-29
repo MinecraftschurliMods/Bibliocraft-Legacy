@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.clock.GrandfatherClockBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.WallFancyClockBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.deskbell.DeskBellBlock;
@@ -38,16 +39,17 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface BCBlocks {
-    WoodTypeDeferredHolder<Block, BookcaseBlock>        BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
-    WoodTypeDeferredHolder<Block, FancyArmorStandBlock> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
-    WoodTypeDeferredHolder<Block, FancyClockBlock>      FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockBlock::new);
-    WoodTypeDeferredHolder<Block, WallFancyClockBlock>  WALL_FANCY_CLOCK  = woodenBlock("wall_fancy_clock",  WallFancyClockBlock::new);
-    WoodTypeDeferredHolder<Block, FancyCrafterBlock>    FANCY_CRAFTER     = woodenBlock("fancy_crafter",     FancyCrafterBlock::new);
-    WoodTypeDeferredHolder<Block, LabelBlock>           LABEL             = woodenBlock("label",             LabelBlock::new);
-    WoodTypeDeferredHolder<Block, PotionShelfBlock>     POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
-    WoodTypeDeferredHolder<Block, ShelfBlock>           SHELF             = woodenBlock("shelf",             ShelfBlock::new);
-    WoodTypeDeferredHolder<Block, TableBlock>           TABLE             = woodenBlock("table",             TableBlock::new);
-    WoodTypeDeferredHolder<Block, ToolRackBlock>        TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
+    WoodTypeDeferredHolder<Block, BookcaseBlock>         BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
+    WoodTypeDeferredHolder<Block, FancyArmorStandBlock>  FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
+    WoodTypeDeferredHolder<Block, FancyClockBlock>       FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockBlock::new);
+    WoodTypeDeferredHolder<Block, WallFancyClockBlock>   WALL_FANCY_CLOCK  = woodenBlock("wall_fancy_clock",  WallFancyClockBlock::new);
+    WoodTypeDeferredHolder<Block, FancyCrafterBlock>     FANCY_CRAFTER     = woodenBlock("fancy_crafter",     FancyCrafterBlock::new);
+    WoodTypeDeferredHolder<Block, GrandfatherClockBlock> GRANDFATHER_CLOCK = woodenBlock("grandfather_clock", GrandfatherClockBlock::new);
+    WoodTypeDeferredHolder<Block, LabelBlock>            LABEL             = woodenBlock("label",             LabelBlock::new);
+    WoodTypeDeferredHolder<Block, PotionShelfBlock>      POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
+    WoodTypeDeferredHolder<Block, ShelfBlock>            SHELF             = woodenBlock("shelf",             ShelfBlock::new);
+    WoodTypeDeferredHolder<Block, TableBlock>            TABLE             = woodenBlock("table",             TableBlock::new);
+    WoodTypeDeferredHolder<Block, ToolRackBlock>         TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
     ColoredWoodTypeDeferredHolder<Block, DisplayCaseBlock>     DISPLAY_CASE      = coloredWoodenBlock("display_case",      DisplayCaseBlock::new);
     ColoredWoodTypeDeferredHolder<Block, WallDisplayCaseBlock> WALL_DISPLAY_CASE = coloredWoodenBlock("wall_display_case", WallDisplayCaseBlock::new);
     ColoredWoodTypeDeferredHolder<Block, SeatBlock>            SEAT              = coloredWoodenBlock("seat",              SeatBlock::new);
@@ -71,7 +73,6 @@ public interface BCBlocks {
     DeferredBlock<LanternBlock>         GOLD_SOUL_LANTERN      = BCRegistries.BLOCKS.register("gold_soul_lantern",      () -> new LanternBlock        (BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_LANTERN)));
     DeferredBlock<FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredBlock<SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
-    //TODO Clock
     //TODO Fancy Sign
     //TODO Desk
     //TODO Map Frame

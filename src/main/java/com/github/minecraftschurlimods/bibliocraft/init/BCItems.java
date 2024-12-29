@@ -30,8 +30,9 @@ public interface BCItems {
 
     WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",      BCBlocks.BOOKCASE);
     WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_armor_stand", wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
-    WoodTypeDeferredHolder<Item, FancyClockItem>      FANCY_CLOCK       = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_clock", FancyClockItem::new);
+    WoodTypeDeferredHolder<Item, FancyClockItem>      FANCY_CLOCK       = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_clock",       FancyClockItem::new);
     WoodTypeDeferredHolder<Item, BlockItem>           FANCY_CRAFTER     = woodenBlock("fancy_crafter", BCBlocks.FANCY_CRAFTER);
+    WoodTypeDeferredHolder<Item, DoubleHighBlockItem> GRANDFATHER_CLOCK = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "grandfather_clock", wood -> new DoubleHighBlockItem(BCBlocks.GRANDFATHER_CLOCK.get(wood), PROPERTIES));
     WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",         BCBlocks.LABEL);
     WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf",  BCBlocks.POTION_SHELF);
     WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",         BCBlocks.SHELF);
