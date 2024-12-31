@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClipboardScreen;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.StockroomCatalogScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -35,6 +36,15 @@ public final class ClientUtil {
      */
     public static void openClipboardScreen(ItemStack stack) {
         Minecraft.getInstance().setScreen(new ClipboardScreen(stack));
+    }
+
+    /**
+     * Opens a {@link ClockScreen} on the client.
+     *
+     * @param pos The {@link BlockPos} of the clock owning the screen.
+     */
+    public static void openClockScreen(BlockPos pos) {
+        Minecraft.getInstance().setScreen(new ClockScreen(pos));
     }
 
     /**

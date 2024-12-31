@@ -1,39 +1,77 @@
 {
   "variants": {
-    "facing=east,waterlogged=false": {
+    "facing=east,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,waterlogged=true": {
+    "facing=east,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true,
       "y": 90
     },
-    "facing=north,waterlogged=false": {
+    "facing=east,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true
     },
-    "facing=north,waterlogged=true": {
+    "facing=north,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true
     },
-    "facing=south,waterlogged=false": {
+    "facing=north,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true
+    },
+    "facing=north,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true
+    },
+    "facing=south,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,waterlogged=true": {
+    "facing=south,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,waterlogged=false": {
+    "facing=south,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,waterlogged=true": {
+    "facing=west,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,powered=true,waterlogged=true": {
       "model": "bibliocraft:block/wood/acacia/wall_fancy_clock",
       "uvlock": true,
       "y": 270

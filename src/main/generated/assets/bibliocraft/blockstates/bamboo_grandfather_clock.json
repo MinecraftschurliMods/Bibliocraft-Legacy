@@ -1,77 +1,153 @@
 {
   "variants": {
-    "facing=east,half=lower,waterlogged=false": {
+    "facing=east,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,half=lower,waterlogged=true": {
+    "facing=east,half=lower,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,half=upper,waterlogged=false": {
+    "facing=east,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=upper,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,half=upper,waterlogged=true": {
+    "facing=east,half=upper,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true,
       "y": 90
     },
-    "facing=north,half=lower,waterlogged=false": {
+    "facing=east,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=upper,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true
     },
-    "facing=north,half=lower,waterlogged=true": {
+    "facing=north,half=lower,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true
     },
-    "facing=north,half=upper,waterlogged=false": {
+    "facing=north,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true
+    },
+    "facing=north,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true
+    },
+    "facing=north,half=upper,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true
     },
-    "facing=north,half=upper,waterlogged=true": {
+    "facing=north,half=upper,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true
     },
-    "facing=south,half=lower,waterlogged=false": {
+    "facing=north,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true
+    },
+    "facing=north,half=upper,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true
+    },
+    "facing=south,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,half=lower,waterlogged=true": {
+    "facing=south,half=lower,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,half=upper,waterlogged=false": {
+    "facing=south,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=upper,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,half=upper,waterlogged=true": {
+    "facing=south,half=upper,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,half=lower,waterlogged=false": {
+    "facing=south,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=upper,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,half=lower,waterlogged=true": {
+    "facing=west,half=lower,powered=false,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,half=upper,waterlogged=false": {
+    "facing=west,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=upper,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,half=upper,waterlogged=true": {
+    "facing=west,half=upper,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=upper,powered=true,waterlogged=true": {
       "model": "bibliocraft:block/wood/bamboo/grandfather_clock_top",
       "uvlock": true,
       "y": 270

@@ -67,6 +67,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(StockroomCatalogSorting.Item.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
         add(StockroomCatalogSorting.Item.COUNT_ASC.getTranslationKey(), "1-99");
         add(StockroomCatalogSorting.Item.COUNT_DESC.getTranslationKey(), "99-1");
+        add(Translations.CLOCK_TITLE, "Clock");
         add(Translations.STOCKROOM_CATALOG_COUNT, "x%s");
         add(Translations.STOCKROOM_CATALOG_DISTANCE, "%s blocks away");
         add(Translations.STOCKROOM_CATALOG_LOCATE, "Locate");

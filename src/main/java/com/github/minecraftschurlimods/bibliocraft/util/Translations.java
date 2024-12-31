@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
  * Utility class holding various translation keys.
  */
 public interface Translations {
+    String CLOCK_TITLE                       = "gui." + BibliocraftApi.MOD_ID + ".clock.title";
     String STOCKROOM_CATALOG_COUNT           = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";
     String STOCKROOM_CATALOG_DISTANCE        = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.distance";
     String STOCKROOM_CATALOG_LOCATE          = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.locate";
