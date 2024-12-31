@@ -21,7 +21,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.Level;
 
 import java.util.Objects;
 
@@ -39,6 +41,9 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
     private final ModelPart grandfatherHourHand;
     private final ModelPart grandfatherMinuteHand;
     private final ModelPart grandfatherPendulum;
+    private float rotation;
+    private float rotationOld;
+    private long lastUpdateTick;
 
     public ClockBER(BlockEntityRendererProvider.Context context) {
         ModelPart model = context.bakeLayer(LOCATION);
@@ -84,7 +89,8 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
     }
 
     private void renderHands(ClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
-        float rotation = -Objects.requireNonNull(blockEntity.getLevel()).getSunAngle(1) * 2;
+        Level level = Objects.requireNonNull(blockEntity.getLevel());
+        float rotation = level.dimensionType().natural() ? -level.getSunAngle(1) * 2 : getRotation(level);
         stack.pushPose();
         stack.translate(0, y, z);
         stack.pushPose();
@@ -106,5 +112,22 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
         stack.mulPose(Axis.ZP.rotation(rotation / pendulumSize));
         pendulum.render(stack, vc, light, overlay);
         stack.popPose();
+    }
+
+    /**
+     * Get the rotation values for "unnatural" dimensions, e.g. the nether or end.
+     * Adapted from the {@link net.minecraft.client.renderer.item.ItemProperties} for the clock.
+     */
+    private float getRotation(Level level) {
+        float rotationNew = (float) Math.random();
+        if (level.getGameTime() != lastUpdateTick) {
+            lastUpdateTick = level.getGameTime();
+            float f = rotationNew - rotation;
+            f = Mth.positiveModulo(f + 0.5f, 1) - 0.5f;
+            rotationOld += f * 0.1f;
+            rotationOld *= 0.9f;
+            rotation = Mth.positiveModulo(rotation + rotationOld, 1);
+        }
+        return rotation * (float) Math.PI * 4;
     }
 }
