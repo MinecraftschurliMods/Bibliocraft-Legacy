@@ -92,9 +92,36 @@ public final class ClientUtil {
      * @param overlay The overlay value to use.
      */
     public static void renderFixedItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
+        renderItem(item, stack, buffer, light, overlay, ItemDisplayContext.FIXED);
+    }
+
+    /**
+     * Renders an {@link ItemStack} in the {@link ItemDisplayContext#GUI} pose.
+     *
+     * @param item    The {@link ItemStack} to render.
+     * @param stack   The {@link PoseStack} to use.
+     * @param buffer  The {@link MultiBufferSource} to use.
+     * @param light   The light value to use.
+     * @param overlay The overlay value to use.
+     */
+    public static void renderGuiItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
+        renderItem(item, stack, buffer, light, overlay, ItemDisplayContext.GUI);
+    }
+
+    /**
+     * Renders an {@link ItemStack} for use in a BER or GUI.
+     *
+     * @param item    The {@link ItemStack} to render.
+     * @param stack   The {@link PoseStack} to use.
+     * @param buffer  The {@link MultiBufferSource} to use.
+     * @param light   The light value to use.
+     * @param overlay The overlay value to use.
+     * @param context The {@link ItemDisplayContext} to use.
+     */
+    public static void renderItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay, ItemDisplayContext context) {
         Minecraft minecraft = Minecraft.getInstance();
         ItemRenderer renderer = minecraft.getItemRenderer();
-        renderer.render(item, ItemDisplayContext.FIXED, false, stack, buffer, light, overlay, renderer.getModel(item, minecraft.level, null, 0));
+        renderer.render(item, context, context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND || context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND, stack, buffer, light, overlay, renderer.getModel(item, minecraft.level, null, 0));
     }
 
     /**

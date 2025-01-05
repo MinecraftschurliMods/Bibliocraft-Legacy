@@ -49,6 +49,7 @@ public class ClockScreen extends Screen {
                 .selected(clock.tickSound)
                 .onValueChange((checkbox, value) -> clock.tickSound = value)
                 .build());
+        addRenderableWidget(new ClockTriggerPanel(leftPos + 8, topPos + 36, 160, 122));
         addRenderableWidget(Button.builder(ADD_TRIGGER, $ -> {})
                 .bounds(width / 2 - 100, topPos + 170, 98, 20)
                 .build());

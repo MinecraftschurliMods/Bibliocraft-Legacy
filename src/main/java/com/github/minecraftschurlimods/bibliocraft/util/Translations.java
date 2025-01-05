@@ -7,7 +7,14 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
  */
 public interface Translations {
     String CLOCK_ADD_TRIGGER                 = "gui." + BibliocraftApi.MOD_ID + ".clock.add_trigger";
+    String CLOCK_DELETE_TRIGGER              = "gui." + BibliocraftApi.MOD_ID + ".clock.delete_trigger";
+    String CLOCK_EDIT_TRIGGER                = "gui." + BibliocraftApi.MOD_ID + ".clock.edit_trigger";
+    String CLOCK_EMIT_REDSTONE               = "gui." + BibliocraftApi.MOD_ID + ".clock.emit_redstone";
+    String CLOCK_EMIT_SOUND                  = "gui." + BibliocraftApi.MOD_ID + ".clock.emit_sound";
+    String CLOCK_MOVE_DOWN                   = "gui." + BibliocraftApi.MOD_ID + ".clock.move_down";
+    String CLOCK_MOVE_UP                     = "gui." + BibliocraftApi.MOD_ID + ".clock.move_up";
     String CLOCK_TICK                        = "gui." + BibliocraftApi.MOD_ID + ".clock.tick";
+    String CLOCK_TIME                        = "gui." + BibliocraftApi.MOD_ID + ".clock.time";
     String CLOCK_TITLE                       = "gui." + BibliocraftApi.MOD_ID + ".clock.title";
     String CLOCK_TRIGGERS                    = "gui." + BibliocraftApi.MOD_ID + ".clock.triggers";
     String STOCKROOM_CATALOG_COUNT           = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";

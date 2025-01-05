@@ -68,7 +68,14 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(StockroomCatalogSorting.Item.COUNT_ASC.getTranslationKey(), "1-99");
         add(StockroomCatalogSorting.Item.COUNT_DESC.getTranslationKey(), "99-1");
         add(Translations.CLOCK_ADD_TRIGGER, "Add Trigger");
+        add(Translations.CLOCK_DELETE_TRIGGER, "Delete Trigger");
+        add(Translations.CLOCK_EDIT_TRIGGER, "Edit Trigger");
+        add(Translations.CLOCK_EMIT_REDSTONE, "Emit Redstone");
+        add(Translations.CLOCK_EMIT_SOUND, "Emit Sound");
+        add(Translations.CLOCK_MOVE_DOWN, "Move Down");
+        add(Translations.CLOCK_MOVE_UP, "Move Up");
         add(Translations.CLOCK_TICK, "Enable Ticking Sound");
+        add(Translations.CLOCK_TIME, "%s:%s");
         add(Translations.CLOCK_TITLE, "Clock");
         add(Translations.CLOCK_TRIGGERS, "Triggers");
         add(Translations.STOCKROOM_CATALOG_COUNT, "x%s");
