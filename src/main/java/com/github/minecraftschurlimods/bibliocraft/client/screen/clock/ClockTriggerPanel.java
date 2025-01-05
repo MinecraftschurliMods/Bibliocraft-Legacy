@@ -1,36 +1,23 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen.clock;
 
-import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.gui.widget.ScrollPanel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.function.BooleanSupplier;
-import java.util.function.IntSupplier;
 
 public class ClockTriggerPanel extends ScrollPanel {
     private final List<ClockTriggerElement> elements;
 
-    public ClockTriggerPanel(int left, int top, int width, int height) {
+    public ClockTriggerPanel(int left, int top, int width, int height, List<ClockTrigger> triggers) {
         super(Minecraft.getInstance(), width, height, top, left);
         elements = new ArrayList<>();
-        elements.addAll(List.of(
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "00", "00"), this),
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "01", "00"), this),
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "02", "00"), this),
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "03", "00"), this),
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "04", "00"), this),
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "05", "00"), this),
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "06", "00"), this),
-                new ClockTriggerElement(0, 0, Component.translatable(Translations.CLOCK_TIME, "07", "00"), this)
-        ));
+        buildElements(triggers);
     }
 
     @Override
@@ -68,5 +55,12 @@ public class ClockTriggerPanel extends ScrollPanel {
 
     public boolean hasScrollbar() {
         return elements.size() * ClockTriggerElement.HEIGHT > height;
+    }
+
+    public void buildElements(List<ClockTrigger> triggers) {
+        elements.clear();
+        for (int i = 0; i < triggers.size(); i++) {
+            elements.add(new ClockTriggerElement(0, i * ClockTriggerElement.HEIGHT, triggers.get(i), this, i));
+        }
     }
 }

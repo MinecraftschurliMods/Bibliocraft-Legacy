@@ -1,8 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen.clock;
 
+import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
-import com.mojang.blaze3d.platform.Window;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,13 +21,18 @@ public class ClockTriggerElement extends AbstractWidget {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 20;
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clock_trigger.png");
+    private static final Component SEPARATOR = Component.translatable(Translations.CLOCK_TIME_SEPARATOR);
     private static final ItemStack REDSTONE = new ItemStack(Items.REDSTONE);
     private static final ItemStack NOTE_BLOCK = new ItemStack(Items.NOTE_BLOCK);
+    private final ClockTrigger trigger;
     private final ClockTriggerPanel owner;
+    private int index;
 
-    public ClockTriggerElement(int x, int y, Component message, ClockTriggerPanel owner) {
-        super(x, y, WIDTH, HEIGHT, message);
+    public ClockTriggerElement(int x, int y, ClockTrigger trigger, ClockTriggerPanel owner, int index) {
+        super(x, y, WIDTH, HEIGHT, Component.translatable("%s%s%s", trigger.hour(), SEPARATOR.getString(), trigger.minute()));
+        this.trigger = trigger;
         this.owner = owner;
+        this.index = index;
     }
 
     @Override
@@ -39,9 +45,13 @@ public class ClockTriggerElement extends AbstractWidget {
         pose.translate(8, 12, 0);
         pose.scale(16, -16, 0);
         pose.translate(0.125, 0.125, 0);
-        ClientUtil.renderGuiItem(REDSTONE, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+        if (trigger.redstone()) {
+            ClientUtil.renderGuiItem(REDSTONE, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+        }
         pose.translate(1.0625, 0, 0);
-        ClientUtil.renderGuiItem(NOTE_BLOCK, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+        if (trigger.sound()) {
+            ClientUtil.renderGuiItem(NOTE_BLOCK, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+        }
         pose.popPose();
         graphics.drawString(Minecraft.getInstance().font, getMessage(), 36, 7, 0x404040, false);
     }

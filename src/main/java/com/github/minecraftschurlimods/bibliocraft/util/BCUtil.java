@@ -141,6 +141,17 @@ public final class BCUtil {
     }
 
     /**
+     * Returns the max of multiple ints.
+     *
+     * @param ints The ints to get the max of.
+     * @return The max int in the input.
+     */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    public static int max(int... ints) {
+        return Arrays.stream(ints).max().getAsInt();
+    }
+
+    /**
      * @param valuesSupplier The enum's {@code values()} method.
      * @param <E>            The enum type.
      * @return An enum codec.

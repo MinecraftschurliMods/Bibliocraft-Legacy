@@ -11,10 +11,15 @@ public interface Translations {
     String CLOCK_EDIT_TRIGGER                = "gui." + BibliocraftApi.MOD_ID + ".clock.edit_trigger";
     String CLOCK_EMIT_REDSTONE               = "gui." + BibliocraftApi.MOD_ID + ".clock.emit_redstone";
     String CLOCK_EMIT_SOUND                  = "gui." + BibliocraftApi.MOD_ID + ".clock.emit_sound";
+    String CLOCK_HOURS                       = "gui." + BibliocraftApi.MOD_ID + ".clock.hours";
+    String CLOCK_HOURS_HINT                  = "gui." + BibliocraftApi.MOD_ID + ".clock.hours_hint";
+    String CLOCK_MINUTES                     = "gui." + BibliocraftApi.MOD_ID + ".clock.minutes";
+    String CLOCK_MINUTES_HINT                = "gui." + BibliocraftApi.MOD_ID + ".clock.minutes_hint";
     String CLOCK_MOVE_DOWN                   = "gui." + BibliocraftApi.MOD_ID + ".clock.move_down";
     String CLOCK_MOVE_UP                     = "gui." + BibliocraftApi.MOD_ID + ".clock.move_up";
     String CLOCK_TICK                        = "gui." + BibliocraftApi.MOD_ID + ".clock.tick";
     String CLOCK_TIME                        = "gui." + BibliocraftApi.MOD_ID + ".clock.time";
+    String CLOCK_TIME_SEPARATOR              = "gui." + BibliocraftApi.MOD_ID + ".clock.time_separator";
     String CLOCK_TITLE                       = "gui." + BibliocraftApi.MOD_ID + ".clock.title";
     String CLOCK_TRIGGERS                    = "gui." + BibliocraftApi.MOD_ID + ".clock.triggers";
     String STOCKROOM_CATALOG_COUNT           = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";

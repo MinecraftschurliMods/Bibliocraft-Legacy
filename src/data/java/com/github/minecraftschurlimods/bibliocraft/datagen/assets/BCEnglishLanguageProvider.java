@@ -72,10 +72,15 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.CLOCK_EDIT_TRIGGER, "Edit Trigger");
         add(Translations.CLOCK_EMIT_REDSTONE, "Emit Redstone");
         add(Translations.CLOCK_EMIT_SOUND, "Emit Sound");
+        add(Translations.CLOCK_HOURS, "Hours");
+        add(Translations.CLOCK_HOURS_HINT, "hh");
+        add(Translations.CLOCK_MINUTES, "Minutes");
+        add(Translations.CLOCK_MINUTES_HINT, "mm");
         add(Translations.CLOCK_MOVE_DOWN, "Move Down");
         add(Translations.CLOCK_MOVE_UP, "Move Up");
         add(Translations.CLOCK_TICK, "Enable Ticking Sound");
-        add(Translations.CLOCK_TIME, "%s:%s");
+        add(Translations.CLOCK_TIME, "Time:");
+        add(Translations.CLOCK_TIME_SEPARATOR, ":");
         add(Translations.CLOCK_TITLE, "Clock");
         add(Translations.CLOCK_TRIGGERS, "Triggers");
         add(Translations.STOCKROOM_CATALOG_COUNT, "x%s");

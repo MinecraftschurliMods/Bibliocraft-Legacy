@@ -8,6 +8,8 @@ import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.ChunkPos;
@@ -21,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class ClockBlockEntity extends BlockEntity {
     private static final String TICK_SOUND_KEY = "tick";
@@ -65,6 +66,7 @@ public class ClockBlockEntity extends BlockEntity {
     }
 
     public void setFromPacket(ClockSyncPacket packet) {
+        tickSound = packet.tickSound();
         addTriggers(packet.triggers());
         if (level instanceof ServerLevel serverLevel) {
             PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), packet);
@@ -85,19 +87,41 @@ public class ClockBlockEntity extends BlockEntity {
             this.triggersMap.put(trigger.getInGameTime(), trigger);
         }
         this.triggers.sort(ClockTrigger::compareTo);
+        setChanged();
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         tickSound = tag.getBoolean(TICK_SOUND_KEY);
-        addTriggers(BCUtil.decodeNbt(ClockTrigger.LIST_CODEC, tag.getCompound(TRIGGERS_KEY)));
+        List<ClockTrigger> list = new ArrayList<>();
+        for (Tag trigger : tag.getList(TRIGGERS_KEY, Tag.TAG_COMPOUND)) {
+            list.add(BCUtil.decodeNbt(ClockTrigger.CODEC, trigger));
+        }
+        addTriggers(list);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putBoolean(TICK_SOUND_KEY, tickSound);
-        tag.put(TRIGGERS_KEY, BCUtil.encodeNbt(ClockTrigger.LIST_CODEC, triggers));
+        ListTag list = new ListTag();
+        for (ClockTrigger trigger : triggers) {
+            list.add(BCUtil.encodeNbt(ClockTrigger.CODEC, trigger));
+        }
+        tag.put(TRIGGERS_KEY, list);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        saveAdditional(tag, registries);
+        return tag;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+        super.handleUpdateTag(tag, lookupProvider);
+        loadAdditional(tag, lookupProvider);
     }
 }

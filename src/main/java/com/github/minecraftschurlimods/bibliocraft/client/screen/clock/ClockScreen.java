@@ -16,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,25 +33,26 @@ public class ClockScreen extends Screen {
     private final List<ClockTrigger> triggers;
     private int leftPos;
     private int topPos;
+    private Checkbox tickSound;
+    private ClockTriggerPanel triggerPanel;
 
     public ClockScreen(BlockPos pos) {
         super(TITLE);
         this.pos = pos;
         clock = (ClockBlockEntity) Objects.requireNonNull(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos));
-        triggers = clock.getTriggers();
+        triggers = new ArrayList<>(clock.getTriggers());
     }
 
     @Override
     protected void init() {
         leftPos = (width - IMAGE_WIDTH) / 2;
         topPos = (height - IMAGE_HEIGHT) / 2;
-        addRenderableWidget(Checkbox.builder(Component.empty(), Minecraft.getInstance().font)
+        tickSound = addRenderableWidget(Checkbox.builder(Component.empty(), Minecraft.getInstance().font)
                 .pos(leftPos + 7, topPos + 6)
                 .selected(clock.tickSound)
-                .onValueChange((checkbox, value) -> clock.tickSound = value)
                 .build());
-        addRenderableWidget(new ClockTriggerPanel(leftPos + 8, topPos + 36, 160, 122));
-        addRenderableWidget(Button.builder(ADD_TRIGGER, $ -> {})
+        triggerPanel = addRenderableWidget(new ClockTriggerPanel(leftPos + 8, topPos + 36, 160, 122, triggers));
+        addRenderableWidget(Button.builder(ADD_TRIGGER, $ -> Minecraft.getInstance().pushGuiLayer(new ClockTriggerEditScreen(this)))
                 .bounds(width / 2 - 100, topPos + 170, 98, 20)
                 .build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())
@@ -60,21 +62,27 @@ public class ClockScreen extends Screen {
 
     @Override
     public void onClose() {
-        PacketDistributor.sendToServer(new ClockSyncPacket(pos, triggers));
+        PacketDistributor.sendToServer(new ClockSyncPacket(pos, tickSound.selected(), triggers));
         super.onClose();
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(guiGraphics, mouseX, mouseY, partialTick);
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.drawString(Minecraft.getInstance().font, TICK, leftPos + 28, topPos + 11, 0x404040, false);
-        guiGraphics.drawString(Minecraft.getInstance().font, TRIGGERS, leftPos + 8, topPos + 26, 0x404040, false);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        renderBackground(graphics, mouseX, mouseY, partialTick);
+        super.render(graphics, mouseX, mouseY, partialTick);
+        graphics.drawString(Minecraft.getInstance().font, TICK, leftPos + 28, topPos + 11, 0x404040, false);
+        graphics.drawString(Minecraft.getInstance().font, TRIGGERS, leftPos + 8, topPos + 26, 0x404040, false);
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(BACKGROUND, leftPos, topPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+    }
+
+    public void addTrigger(ClockTrigger trigger) {
+        triggers.add(trigger);
+        triggers.sort(ClockTrigger::compareTo);
+        triggerPanel.buildElements(triggers);
     }
 }
