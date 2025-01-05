@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
-public record ClockTrigger(int hour, int minute, boolean sound, boolean redstone) {
+public record ClockTrigger(int hour, int minute, boolean sound, boolean redstone) implements Comparable<ClockTrigger> {
     public static final StreamCodec<ByteBuf, ClockTrigger> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.INT, ClockTrigger::hour,
             ByteBufCodecs.INT, ClockTrigger::minute,
@@ -15,5 +15,11 @@ public record ClockTrigger(int hour, int minute, boolean sound, boolean redstone
     public int getInGameTime() {
         // 1 in-game hour is 1000 ticks, 1 in-game minute is 50/3 ticks.
         return (int) (hour * 1000 + minute * 50 / 3d);
+    }
+
+    @Override
+    public int compareTo(ClockTrigger that) {
+        int hour = Integer.compare(this.hour, that.hour);
+        return hour != 0 ? hour : Integer.compare(this.minute, that.minute);
     }
 }

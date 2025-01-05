@@ -1,9 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -128,5 +131,15 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return state.getValue(HALF) == DoubleBlockHalf.UPPER ? super.getTicker(level, state, blockEntityType) : null;
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
+            if (level.getBlockState(pos.above()).getBlock() instanceof GrandfatherClockBlock) {
+                pos = pos.above();
+            } else return InteractionResult.PASS;
+        }
+        return super.useWithoutItem(state, level, pos, player, hit);
     }
 }

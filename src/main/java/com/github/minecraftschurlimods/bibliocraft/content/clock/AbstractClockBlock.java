@@ -1,8 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractClockBlock extends BCFacingEntityBlock {
@@ -38,6 +42,15 @@ public abstract class AbstractClockBlock extends BCFacingEntityBlock {
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return (l, p, s, b) -> ClockBlockEntity.tick(l, p, s, (ClockBlockEntity) b);
+    }
+
+    @Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (player.isSecondaryUseActive()) return InteractionResult.PASS;
+        if (level.isClientSide()) {
+            ClientUtil.openClockScreen(pos);
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override

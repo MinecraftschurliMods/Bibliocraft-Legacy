@@ -76,7 +76,7 @@ public final class EventHandler {
         private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
             event.registrar(BibliocraftApi.MOD_ID)
                     .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
-                    .playToServer(ClockSyncPacket.TYPE,                   ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
+                    .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
                     .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                     .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
                     .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle);

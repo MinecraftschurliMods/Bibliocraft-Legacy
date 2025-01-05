@@ -6,6 +6,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.List;
@@ -17,9 +19,15 @@ public record ClockSyncPacket(BlockPos pos, List<ClockTrigger> triggers) impleme
             ClockTrigger.STREAM_CODEC.apply(ByteBufCodecs.list()), ClockSyncPacket::triggers,
             ClockSyncPacket::new);
 
+    @SuppressWarnings("deprecation")
     public static void handle(ClockSyncPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
-
+            BlockPos pos = packet.pos();
+            Level level = context.player().level();
+            if (!level.hasChunkAt(pos)) return;
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (!(blockEntity instanceof ClockBlockEntity clock)) return;
+            clock.setFromPacket(packet);
         });
     }
 
