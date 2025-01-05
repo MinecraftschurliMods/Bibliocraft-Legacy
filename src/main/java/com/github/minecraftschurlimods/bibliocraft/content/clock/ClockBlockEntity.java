@@ -2,9 +2,12 @@ package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.ChunkPos;
@@ -21,8 +24,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class ClockBlockEntity extends BlockEntity {
+    private static final String TICK_SOUND_KEY = "tick";
+    private static final String TRIGGERS_KEY = "triggers";
     private final List<ClockTrigger> triggers = new ArrayList<>();
     private final Multimap<Integer, ClockTrigger> triggersMap = HashMultimap.create();
+    public boolean tickSound = true;
 
     public ClockBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.CLOCK.get(), pos, state);
@@ -42,7 +48,7 @@ public class ClockBlockEntity extends BlockEntity {
                 setPowered(level, pos, true);
             }
         }
-        if (time % 20 == 0) {
+        if (blockEntity.tickSound && time % 20 == 0) {
             level.playSound(null, pos, time % 40 == 0 ? BCSoundEvents.CLOCK_TICK.value() : BCSoundEvents.CLOCK_TOCK.value(), SoundSource.BLOCKS, 1, 1);
         }
     }
@@ -59,13 +65,7 @@ public class ClockBlockEntity extends BlockEntity {
     }
 
     public void setFromPacket(ClockSyncPacket packet) {
-        triggers.clear();
-        triggersMap.clear();
-        for (ClockTrigger trigger : packet.triggers()) {
-            triggers.add(trigger);
-            triggersMap.put(trigger.getInGameTime(), trigger);
-        }
-        triggers.sort(ClockTrigger::compareTo);
+        addTriggers(packet.triggers());
         if (level instanceof ServerLevel serverLevel) {
             PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), packet);
         }
@@ -75,5 +75,29 @@ public class ClockBlockEntity extends BlockEntity {
         triggers.add(trigger);
         triggers.sort(ClockTrigger::compareTo);
         triggersMap.put(trigger.getInGameTime(), trigger);
+    }
+
+    private void addTriggers(Collection<ClockTrigger> triggers) {
+        this.triggers.clear();
+        this.triggersMap.clear();
+        for (ClockTrigger trigger : triggers) {
+            this.triggers.add(trigger);
+            this.triggersMap.put(trigger.getInGameTime(), trigger);
+        }
+        this.triggers.sort(ClockTrigger::compareTo);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        tickSound = tag.getBoolean(TICK_SOUND_KEY);
+        addTriggers(BCUtil.decodeNbt(ClockTrigger.LIST_CODEC, tag.getCompound(TRIGGERS_KEY)));
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putBoolean(TICK_SOUND_KEY, tickSound);
+        tag.put(TRIGGERS_KEY, BCUtil.encodeNbt(ClockTrigger.LIST_CODEC, triggers));
     }
 }

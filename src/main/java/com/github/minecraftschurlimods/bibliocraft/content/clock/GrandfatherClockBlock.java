@@ -76,7 +76,7 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
         BlockPos blockpos = context.getClickedPos();
         Level level = context.getLevel();
         return blockpos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(blockpos.above()).canBeReplaced(context) ? defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection())
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER) : null;
     }
 

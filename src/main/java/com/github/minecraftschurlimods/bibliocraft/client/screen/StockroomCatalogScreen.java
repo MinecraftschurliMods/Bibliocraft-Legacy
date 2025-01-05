@@ -39,10 +39,15 @@ import java.util.stream.IntStream;
 
 public class StockroomCatalogScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/stockroom_catalog.png");
-    private static final ResourceLocation LOCATE = BCUtil.modLoc("locate");
-    private static final ResourceLocation LOCATE_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
-    private static final ResourceLocation REMOVE = BCUtil.modLoc("remove");
-    private static final ResourceLocation REMOVE_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
+    private static final ResourceLocation LOCATE_ICON = BCUtil.modLoc("locate");
+    private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
+    private static final ResourceLocation REMOVE_ICON = BCUtil.modLoc("remove");
+    private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
+    private static final Component LOCATE = Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE);
+    private static final Component REMOVE = Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE);
+    private static final Component SEARCH = Component.translatable(Translations.STOCKROOM_CATALOG_SEARCH);
+    private static final Component SHOW_CONTAINERS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS);
+    private static final Component SHOW_ITEMS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_ITEMS);
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
@@ -91,12 +96,12 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE), mouseX, mouseY);
+                    graphics.renderTooltip(font, REMOVE, mouseX, mouseY);
                 }
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY);
+                    graphics.renderTooltip(font, LOCATE, mouseX, mouseY);
                 }
             }
         } else {
@@ -118,7 +123,7 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
-                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY);
+                    graphics.renderTooltip(font, LOCATE, mouseX, mouseY);
                 }
             }
         }
@@ -136,13 +141,13 @@ public class StockroomCatalogScreen extends Screen {
         locateButtons.clear();
         removeButtons.clear();
         int x = (width - 256) / 2;
-        addRenderableWidget(Button.builder(Component.translatable(showContainerList ? Translations.STOCKROOM_CATALOG_SHOW_ITEMS : Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS), $ -> toggleMode()).bounds(width / 2 - 100, 260, 98, 20).build());
+        addRenderableWidget(Button.builder(showContainerList ? SHOW_ITEMS : SHOW_CONTAINERS, $ -> toggleMode()).bounds(width / 2 - 100, 260, 98, 20).build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 + 2, 260, 98, 20).build());
         EditBox searchBox = addRenderableWidget(new EditBox(getMinecraft().font, x + 33, 15, 140, 8, Component.empty()));
         searchBox.setTextColor(0);
         searchBox.setBordered(false);
         searchBox.setTextShadow(false);
-        searchBox.setHint(Component.translatable(Translations.STOCKROOM_CATALOG_SEARCH));
+        searchBox.setHint(SEARCH);
         searchBox.setResponder(e -> {
             search = e.toLowerCase(Locale.ROOT);
             updateContents();
@@ -170,11 +175,11 @@ public class StockroomCatalogScreen extends Screen {
             }));
             for (int i = 0; i < ROWS_PER_PAGE; i++) {
                 final int j = i; // I love Java
-                removeButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(REMOVE, REMOVE_HIGHLIGHTED, x + 189, i * 19 + 29, 16, 16, p -> {
+                removeButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(REMOVE_ICON, REMOVE_ICON_HIGHLIGHTED, x + 189, i * 19 + 29, 16, 16, p -> {
                     data.remove(new GlobalPos(Objects.requireNonNull(Minecraft.getInstance().level).dimension(), visibleContainers.get(j)));
                     setDataOnStack();
                 })));
-                locateButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(LOCATE, LOCATE_HIGHLIGHTED, x + 206, i * 19 + 29, 16, 16, p -> addParticles(visibleContainers.get(j)))));
+                locateButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(LOCATE_ICON, LOCATE_ICON_HIGHLIGHTED, x + 206, i * 19 + 29, 16, 16, p -> addParticles(visibleContainers.get(j)))));
             }
         } else {
             addRenderableWidget(new SortButton<>(StockroomCatalogSorting.Item.ALPHABETICAL_ASC, x + 172, 11, 52, 14, b -> {
@@ -191,7 +196,7 @@ public class StockroomCatalogScreen extends Screen {
             }));
             for (int i = 0; i < ROWS_PER_PAGE; i++) {
                 final int j = i; // I love Java
-                locateButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(LOCATE, LOCATE_HIGHLIGHTED, x + 206, i * 19 + 29, 16, 16, p -> addParticles(visibleItems.get(j)))));
+                locateButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(LOCATE_ICON, LOCATE_ICON_HIGHLIGHTED, x + 206, i * 19 + 29, 16, 16, p -> addParticles(visibleItems.get(j)))));
             }
         }
         updateContents();
