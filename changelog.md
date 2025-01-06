@@ -1,6 +1,10 @@
-# Fixes
+# Additions
 
-- Fixed clipboard flickering at long distances
-- Fixed sword pedestal color changing when receiving a block update
-- Fixed sword pedestal breaking particles
-- Fixed tape measure showing incorrect distances
+- New fancy clock and grandfather clock blocks
+- Sounds for the tape measure
+- Config to allow removing the various wooden and colored variants from JEI
+
+# Changes
+
+- Bookcases now have enchantment power depending on the amount of books in them
+- Redstone: Volume 1 was renamed to Redstone Book
