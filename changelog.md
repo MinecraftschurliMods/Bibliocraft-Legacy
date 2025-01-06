@@ -1,3 +1,3 @@
 # Fixes
 
-- Fix a dupe issue with the slotted book (again)
+- Fix a server startup crash
