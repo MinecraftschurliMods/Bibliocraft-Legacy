@@ -51,8 +51,8 @@ public class ClockScreen extends Screen {
                 .pos(leftPos + 7, topPos + 6)
                 .selected(clock.tickSound)
                 .build());
-        triggerPanel = addRenderableWidget(new ClockTriggerPanel(leftPos + 8, topPos + 36, 160, 122, triggers));
-        addRenderableWidget(Button.builder(ADD_TRIGGER, $ -> Minecraft.getInstance().pushGuiLayer(new ClockTriggerEditScreen(this)))
+        triggerPanel = addRenderableWidget(new ClockTriggerPanel(leftPos + 8, topPos + 36, 160, 122, triggers, this));
+        addRenderableWidget(Button.builder(ADD_TRIGGER, $ -> Minecraft.getInstance().pushGuiLayer(new ClockTriggerEditScreen(this, null)))
                 .bounds(width / 2 - 100, topPos + 170, 98, 20)
                 .build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())
@@ -72,6 +72,7 @@ public class ClockScreen extends Screen {
         super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawString(Minecraft.getInstance().font, TICK, leftPos + 28, topPos + 11, 0x404040, false);
         graphics.drawString(Minecraft.getInstance().font, TRIGGERS, leftPos + 8, topPos + 26, 0x404040, false);
+        triggerPanel.renderTooltip(graphics, mouseX, mouseY);
     }
 
     @Override
@@ -83,6 +84,12 @@ public class ClockScreen extends Screen {
     public void addTrigger(ClockTrigger trigger) {
         triggers.add(trigger);
         triggers.sort(ClockTrigger::compareTo);
-        triggerPanel.buildElements(triggers);
+        triggerPanel.rebuildElements(triggers);
+    }
+
+    public void removeTrigger(ClockTrigger trigger) {
+        triggers.remove(trigger);
+        triggers.sort(ClockTrigger::compareTo);
+        triggerPanel.rebuildElements(triggers);
     }
 }

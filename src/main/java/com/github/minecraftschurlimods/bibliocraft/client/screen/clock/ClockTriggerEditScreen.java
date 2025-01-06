@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 public class ClockTriggerEditScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clock_edit.png");
@@ -28,6 +29,8 @@ public class ClockTriggerEditScreen extends Screen {
     private static final int WIDTH = 144;
     private static final int HEIGHT = 72;
     private final ClockScreen parent;
+    @Nullable
+    private final ClockTrigger old;
     private final int timeWidth;
     private final int separatorWidth;
     private final int redstoneWidth;
@@ -41,9 +44,10 @@ public class ClockTriggerEditScreen extends Screen {
     private Checkbox redstone;
     private Checkbox sound;
 
-    public ClockTriggerEditScreen(ClockScreen parent) {
+    public ClockTriggerEditScreen(ClockScreen parent, @Nullable ClockTrigger old) {
         super(TITLE);
         this.parent = parent;
+        this.old = old;
         Font font = Minecraft.getInstance().font;
         timeWidth = font.width(TIME);
         separatorWidth = font.width(TIME_SEPARATOR);
@@ -65,7 +69,7 @@ public class ClockTriggerEditScreen extends Screen {
                 int i = Integer.parseInt(s);
                 return i >= 0 && i < 24;
             } catch (NumberFormatException e) {
-                return false;
+                return s.isEmpty();
             }
         });
         minutes = addRenderableWidget(new EditBox(font, contentLeftPos + timeWidth + separatorWidth + 44, contentTopPos, 40, 20, MINUTES));
@@ -75,18 +79,31 @@ public class ClockTriggerEditScreen extends Screen {
                 int i = Integer.parseInt(s);
                 return i >= 0 && i < 60;
             } catch (NumberFormatException e) {
-                return false;
+                return s.isEmpty();
             }
         });
         redstone = addRenderableWidget(Checkbox.builder(Component.empty(), font).pos(contentLeftPos, contentTopPos + 22).build());
         sound = addRenderableWidget(Checkbox.builder(Component.empty(), font).pos(contentLeftPos, contentTopPos + 41).build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
                     try {
+                        if (old != null) {
+                            parent.removeTrigger(old);
+                        }
                         parent.addTrigger(new ClockTrigger(Integer.parseInt(hours.getValue()), Integer.parseInt(minutes.getValue()), redstone.selected(), sound.selected()));
                     } catch (NumberFormatException ignored) {
                     }
                     onClose();
                 }).bounds(leftPos, topPos + HEIGHT + 4, WIDTH, 20).build());
+        if (old != null) {
+            hours.setValue(String.valueOf(old.hour()));
+            minutes.setValue(String.valueOf(old.minute()));
+            if (old.redstone()) {
+                redstone.onPress();
+            }
+            if (old.sound()) {
+                sound.onPress();
+            }
+        }
     }
 
     @Override
