@@ -90,15 +90,15 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
 
     private void renderHands(ClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
         Level level = Objects.requireNonNull(blockEntity.getLevel());
-        float rotation = level.dimensionType().natural() ? -level.getSunAngle(1) * 2 : getRotation(level);
+        float rotation = level.dimensionType().natural() ? -((level.getDayTime() + 6000) % 12000) * 0.03f : getRotation(level);
         stack.pushPose();
         stack.translate(0, y, z);
         stack.pushPose();
-        stack.mulPose(Axis.ZP.rotation(rotation));
+        stack.mulPose(Axis.ZP.rotationDegrees(rotation));
         hourHand.render(stack, vc, light, overlay);
         stack.popPose();
         stack.pushPose();
-        stack.mulPose(Axis.ZP.rotation(rotation * 12));
+        stack.mulPose(Axis.ZP.rotationDegrees((rotation * 12) % 360));
         minuteHand.render(stack, vc, light, overlay);
         stack.popPose();
         stack.popPose();

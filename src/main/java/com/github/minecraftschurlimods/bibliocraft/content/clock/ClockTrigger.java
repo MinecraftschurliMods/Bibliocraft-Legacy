@@ -22,7 +22,7 @@ public record ClockTrigger(int hour, int minute, boolean redstone, boolean sound
 
     public int getInGameTime() {
         // 1 in-game hour is 1000 ticks, 1 in-game minute is 50/3 ticks.
-        return (int) (hour * 1000 + minute * 50 / 3d);
+        return ((int) (hour * 1000 + minute * 50 / 3d) + 18000) % 24000;
     }
 
     @Override
