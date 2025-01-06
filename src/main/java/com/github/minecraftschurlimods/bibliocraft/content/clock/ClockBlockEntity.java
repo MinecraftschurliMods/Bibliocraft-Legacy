@@ -13,6 +13,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -49,7 +50,7 @@ public class ClockBlockEntity extends BlockEntity {
                 setPowered(level, pos, true);
             }
         }
-        if (blockEntity.tickSound && time % 20 == 0) {
+        if (blockEntity.tickSound && level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT) && time % 20 == 0) {
             level.playSound(null, pos, time % 40 == 0 ? BCSoundEvents.CLOCK_TICK.value() : BCSoundEvents.CLOCK_TOCK.value(), SoundSource.BLOCKS, 1, 1);
         }
     }
