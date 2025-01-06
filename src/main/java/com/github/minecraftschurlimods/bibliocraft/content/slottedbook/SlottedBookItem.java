@@ -23,7 +23,7 @@ public class SlottedBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (level.isClientSide()) return InteractionResultHolder.success(player.getItemInHand(usedHand));
         if (player instanceof ServerPlayer sp) {
-            sp.openMenu(new SimpleMenuProvider((id, inv, p) -> new SlottedBookMenu(id, inv, p.getItemInHand(usedHand)), getDescription()), buf -> buf.writeEnum(usedHand));
+            sp.openMenu(new SimpleMenuProvider((id, inv, p) -> new SlottedBookMenu(id, inv, usedHand), getDescription()), buf -> buf.writeEnum(usedHand));
         }
         return InteractionResultHolder.consume(player.getItemInHand(usedHand));
     }

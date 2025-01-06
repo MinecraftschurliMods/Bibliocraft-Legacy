@@ -12,8 +12,12 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class SlottedBookMenu extends AbstractContainerMenu {
-    public SlottedBookMenu(int id, Inventory inventory, ItemStack stack) {
+    private final InteractionHand hand;
+
+    public SlottedBookMenu(int id, Inventory inventory, InteractionHand hand) {
         super(BCMenus.SLOTTED_BOOK.get(), id);
+        this.hand = hand;
+        ItemStack stack = inventory.player.getItemInHand(hand);
         Container container = new SlottedBookContainer(stack);
         addSlot(new SlottedBookSlot(container, 0, 80, 34));
         for (int i = 0; i < 3; i++) {
@@ -36,7 +40,7 @@ public class SlottedBookMenu extends AbstractContainerMenu {
     }
 
     public SlottedBookMenu(int id, Inventory inventory, FriendlyByteBuf buf) {
-        this(id, inventory, inventory.player.getItemInHand(buf.readEnum(InteractionHand.class)));
+        this(id, inventory, buf.readEnum(InteractionHand.class));
     }
 
     @Override
@@ -75,7 +79,7 @@ public class SlottedBookMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return true;
+        return player.getItemInHand(hand).is(BCItems.SLOTTED_BOOK.get());
     }
 
     private static class ReadOnlySlot extends Slot {

@@ -1,3 +1,3 @@
 # Fixes
 
-- Fix a dupe issue with the slotted book
+- Fix a dupe issue with the slotted book (again)
