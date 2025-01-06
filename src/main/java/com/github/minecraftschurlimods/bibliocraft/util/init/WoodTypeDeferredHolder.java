@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @param <T> The second type of the {@link DeferredHolder} to use. For example, for wrapping a {@code DeferredHolder<Block, DoorBlock>}, this would be {@code DoorBlock}.
  */
 @SuppressWarnings("unused")
-public class WoodTypeDeferredHolder<R, T extends R> {
+public class WoodTypeDeferredHolder<R, T extends R> implements GroupingDeferredHolder<R, T> {
     private final Map<BibliocraftWoodType, DeferredHolder<R, T>> map = new LinkedHashMap<>();
 
     /**
@@ -64,38 +64,24 @@ public class WoodTypeDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @return An immutable collection of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<DeferredHolder<R, T>> holders() {
-        return map.values();
-    }
-
-    /**
-     * @return An immutable collection of values of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<T> values() {
-        return map.values().stream().map(DeferredHolder::get).toList();
-    }
-
-    /**
-     * @return An array of values of all {@link DeferredHolder}s in this object.
-     */
-    @SuppressWarnings("unchecked")
-    public T[] valuesAsArray() {
-        return map.values().stream().map(DeferredHolder::get).toList().toArray((T[]) new Object[0]);
-    }
-
-    /**
-     * @return An immutable collection of ids of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<ResourceLocation> ids() {
-        return map.values().stream().map(DeferredHolder::getId).toList();
-    }
-
-    /**
      * @return An immutable map of all {@link BibliocraftWoodType} to {@link DeferredHolder} associations in this object.
      */
     public Map<BibliocraftWoodType, DeferredHolder<R, T>> map() {
         return Collections.unmodifiableMap(map);
+    }
+
+    @Override
+    public Collection<DeferredHolder<R, T>> holders() {
+        return map.values();
+    }
+
+    @Override
+    public Collection<T> values() {
+        return map.values().stream().map(DeferredHolder::get).toList();
+    }
+
+    @Override
+    public Collection<ResourceLocation> ids() {
+        return map.values().stream().map(DeferredHolder::getId).toList();
     }
 }

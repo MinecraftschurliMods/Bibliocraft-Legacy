@@ -67,6 +67,14 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(StockroomCatalogSorting.Item.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
         add(StockroomCatalogSorting.Item.COUNT_ASC.getTranslationKey(), "1-99");
         add(StockroomCatalogSorting.Item.COUNT_DESC.getTranslationKey(), "99-1");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility", "Compatibility");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility.tooltip", "Contains compatibility options.");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei", "JEI");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.tooltip", "Contains compatibility options for the JEI mod.");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_wood_types", "Show Wood Types");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_wood_types.tooltip", "Whether to show blocks for all wood types in JEI, or just the default oak.");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types", "Show Color Types");
+        add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types.tooltip", "Whether to show blocks for all color types in JEI, or just the default white.");
         add(Translations.CLOCK_ADD_TRIGGER, "Add Trigger");
         add(Translations.CLOCK_DELETE_TRIGGER, "Delete Trigger");
         add(Translations.CLOCK_EDIT_TRIGGER, "Edit Trigger");
@@ -102,6 +110,9 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.STOCKROOM_CATALOG_ADD_CONTAINER, "Started listing contents of %s in the Stockroom Catalog!");
         add(Translations.STOCKROOM_CATALOG_REMOVE_CONTAINER, "Stopped listing contents of %s in the Stockroom Catalog!");
         add(Translations.TAPE_MEASURE_DISTANCE, "Distance: %s blocks (x: %s, y: %s, z: %s)");
+        add(Translations.ALL_COLORS, "This block can be crafted in all colors.");
+        add(Translations.ALL_COLORS_AND_WOOD_TYPES, "This block can be crafted in all colors and wood types.");
+        add(Translations.ALL_WOOD_TYPES, "This block can be crafted in all wood types.");
     }
 
     /**

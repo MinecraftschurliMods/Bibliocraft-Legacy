@@ -903,6 +903,14 @@
   "block.bibliocraft.yellow_warped_seat": "Yellow Warped Seat",
   "block.bibliocraft.yellow_warped_seat_back": "Yellow Warped Seat Back",
   "block.bibliocraft.yellow_warped_wall_display_case": "Yellow Warped Display Case",
+  "config.bibliocraft.compatibility": "Compatibility",
+  "config.bibliocraft.compatibility.jei": "JEI",
+  "config.bibliocraft.compatibility.jei.show_color_types": "Show Color Types",
+  "config.bibliocraft.compatibility.jei.show_color_types.tooltip": "Whether to show blocks for all color types in JEI, or just the default white.",
+  "config.bibliocraft.compatibility.jei.show_wood_types": "Show Wood Types",
+  "config.bibliocraft.compatibility.jei.show_wood_types.tooltip": "Whether to show blocks for all wood types in JEI, or just the default oak.",
+  "config.bibliocraft.compatibility.jei.tooltip": "Contains compatibility options for the JEI mod.",
+  "config.bibliocraft.compatibility.tooltip": "Contains compatibility options.",
   "container.bibliocraft.bookcase": "Bookcase",
   "container.bibliocraft.cookie_jar": "Cookie Jar",
   "container.bibliocraft.disc_rack": "Disc Rack",
@@ -1842,5 +1850,8 @@
   "item.bibliocraft.yellow_warped_raised_seat_back": "Yellow Warped Raised Seat Back",
   "item.bibliocraft.yellow_warped_small_seat_back": "Yellow Warped Small Seat Back",
   "item.bibliocraft.yellow_warped_tall_seat_back": "Yellow Warped Tall Seat Back",
-  "itemGroup.bibliocraft": "Bibliocraft"
+  "itemGroup.bibliocraft": "Bibliocraft",
+  "jei.bibliocraft.all_colors": "This block can be crafted in all colors.",
+  "jei.bibliocraft.all_colors_and_wood_types": "This block can be crafted in all colors and wood types.",
+  "jei.bibliocraft.all_wood_types": "This block can be crafted in all wood types."
 }

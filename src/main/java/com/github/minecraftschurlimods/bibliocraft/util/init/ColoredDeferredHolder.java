@@ -18,7 +18,7 @@ import java.util.function.Function;
  * @param <T> The second type of the {@link DeferredHolder} to use. For example, for wrapping a {@code DeferredHolder<Block, DoorBlock>}, this would be {@code DoorBlock}.
  */
 @SuppressWarnings("unused")
-public class ColoredDeferredHolder<R, T extends R> {
+public class ColoredDeferredHolder<R, T extends R> implements GroupingDeferredHolder<R, T> {
     private final Map<DyeColor, DeferredHolder<R, T>> map = new LinkedHashMap<>();
 
     /**
@@ -59,30 +59,24 @@ public class ColoredDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @return An immutable collection of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<DeferredHolder<R, T>> holders() {
-        return map.values();
-    }
-
-    /**
-     * @return An immutable collection of values of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<T> values() {
-        return map.values().stream().map(DeferredHolder::get).toList();
-    }
-
-    /**
-     * @return An immutable collection of ids of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<ResourceLocation> ids() {
-        return map.values().stream().map(DeferredHolder::getId).toList();
-    }
-
-    /**
      * @return An immutable map of all {@link DyeColor} to {@link DeferredHolder} associations in this object.
      */
     public Map<DyeColor, DeferredHolder<R, T>> map() {
         return Collections.unmodifiableMap(map);
+    }
+
+    @Override
+    public Collection<DeferredHolder<R, T>> holders() {
+        return map.values();
+    }
+
+    @Override
+    public Collection<T> values() {
+        return map.values().stream().map(DeferredHolder::get).toList();
+    }
+
+    @Override
+    public Collection<ResourceLocation> ids() {
+        return map.values().stream().map(DeferredHolder::getId).toList();
     }
 }

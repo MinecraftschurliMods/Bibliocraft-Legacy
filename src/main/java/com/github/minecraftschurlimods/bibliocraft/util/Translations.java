@@ -42,4 +42,8 @@ public interface Translations {
     String STOCKROOM_CATALOG_ADD_CONTAINER    = "item." + BibliocraftApi.MOD_ID + ".stockroom_catalog.add_container";
     String STOCKROOM_CATALOG_REMOVE_CONTAINER = "item." + BibliocraftApi.MOD_ID + ".stockroom_catalog.remove_container";
     String TAPE_MEASURE_DISTANCE              = "item." + BibliocraftApi.MOD_ID + ".tape_measure.distance";
+
+    String ALL_COLORS                = "jei." + BibliocraftApi.MOD_ID + ".all_colors";
+    String ALL_COLORS_AND_WOOD_TYPES = "jei." + BibliocraftApi.MOD_ID + ".all_colors_and_wood_types";
+    String ALL_WOOD_TYPES            = "jei." + BibliocraftApi.MOD_ID + ".all_wood_types";
 }

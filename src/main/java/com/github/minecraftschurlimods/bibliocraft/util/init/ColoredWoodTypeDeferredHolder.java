@@ -21,7 +21,7 @@ import java.util.function.BiFunction;
  * @param <T> The second type of the {@link DeferredHolder} to use. For example, for wrapping a {@code DeferredHolder<Block, DoorBlock>}, this would be {@code DoorBlock}.
  */
 @SuppressWarnings("unused")
-public class ColoredWoodTypeDeferredHolder<R, T extends R> {
+public class ColoredWoodTypeDeferredHolder<R, T extends R> implements GroupingDeferredHolder<R, T> {
     private final Map<BibliocraftWoodType, ColoredDeferredHolder<R, T>> map = new LinkedHashMap<>();
 
     /**
@@ -80,30 +80,24 @@ public class ColoredWoodTypeDeferredHolder<R, T extends R> {
     }
 
     /**
-     * @return An immutable collection of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<DeferredHolder<R, T>> holders() {
-        return elements().stream().flatMap(holder -> holder.holders().stream()).toList();
-    }
-
-    /**
-     * @return An immutable collection of values of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<T> values() {
-        return elements().stream().flatMap(holder -> holder.values().stream()).toList();
-    }
-
-    /**
-     * @return An immutable collection of ids of all {@link DeferredHolder}s in this object.
-     */
-    public Collection<ResourceLocation> ids() {
-        return elements().stream().flatMap(holder -> holder.ids().stream()).toList();
-    }
-
-    /**
      * @return An immutable map of all {@link BibliocraftWoodType} to {@link DeferredHolder} associations in this object.
      */
     public Map<BibliocraftWoodType, ColoredDeferredHolder<R, T>> map() {
         return Collections.unmodifiableMap(map);
+    }
+
+    @Override
+    public Collection<DeferredHolder<R, T>> holders() {
+        return elements().stream().flatMap(holder -> holder.holders().stream()).toList();
+    }
+
+    @Override
+    public Collection<T> values() {
+        return elements().stream().flatMap(holder -> holder.values().stream()).toList();
+    }
+
+    @Override
+    public Collection<ResourceLocation> ids() {
+        return elements().stream().flatMap(holder -> holder.ids().stream()).toList();
     }
 }
