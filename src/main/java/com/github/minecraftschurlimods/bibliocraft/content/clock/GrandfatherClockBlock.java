@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
-import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

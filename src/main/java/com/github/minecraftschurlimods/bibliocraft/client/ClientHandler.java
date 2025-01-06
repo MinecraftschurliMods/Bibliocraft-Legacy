@@ -1,7 +1,20 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.client.ber.*;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.ClipboardBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.ClockBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.DinnerPlateBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.DiscRackBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyCrafterBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.TableBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseModel;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;

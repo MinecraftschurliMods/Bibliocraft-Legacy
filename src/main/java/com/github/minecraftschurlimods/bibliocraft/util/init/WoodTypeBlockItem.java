@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.util.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 
 public class WoodTypeBlockItem extends BlockItem {
