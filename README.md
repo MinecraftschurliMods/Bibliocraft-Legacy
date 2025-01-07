@@ -17,19 +17,21 @@ To get started, add Bibliocraft as a dependency for your mod in your `build.grad
 
 ```groovy
 repositories {
-    // We currently do not host Bibliocraft on our own maven, this will change soon!
-    maven { url 'https://cursemaven.com' }
+    // Bibliocraft is hosted on the MinecraftschurliMods maven.
+    maven {
+        url 'https://minecraftschurli.ddns.net/repository/maven-public'
+    }
 }
 
 dependencies {
-    // At compile time, depend only on the API JAR. TODO actually make this an API jar.
-    compileOnly "curse.maven:bibliocraft-legacy-1122260:${bc_version}"
+    // At compile time, depend only on the API JAR.
+    compileOnly "com.github.minecraftschurlimods:bibliocraft:${mc_version}-${bc_version}:api"
     // At runtime, use the full JAR.
-    runtimeOnly "curse.maven:bibliocraft-legacy-1122260:${bc_version}"
+    runtimeOnly "com.github.minecraftschurlimods:bibliocraft:${mc_version}-${bc_version}"
 }
 ```
 
-Get the latest version on CurseForge. Please refer to the [CurseMaven documentation](https://www.cursemaven.com) on how to find the latest artifact.
+The format of the `bc_version` variable is `major.minor.patch`, e.g. `1.0.0`. Please get the latest version number on CurseForge, Modrinth, or by browsing the maven yourself.
 
 Next, add the dependency block in your `neoforge.mods.toml` file. Note: It is crucial that your mod is set to load `BEFORE` Bibliocraft, to ensure that your event handlers will be fired early enough.
 
@@ -37,7 +39,10 @@ Next, add the dependency block in your `neoforge.mods.toml` file. Note: It is cr
 [[dependencies.${mod_id}]]
 modId="bibliocraft"
 type="optional"
-versionRange="[1.1.0,)"
+# Bibliocraft bumps the minor version whenever a breaking API change occurs,
+# or when addons are expected to update (e.g. when a new wooden block is added).
+# As such, we can allow any patch of the current minor version.
+versionRange="[1.3.0,1.4)"
 ordering="BEFORE"
 side="BOTH"
 ```
