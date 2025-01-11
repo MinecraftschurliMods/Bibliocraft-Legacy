@@ -19,9 +19,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +39,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
+import java.util.Objects;
+
 public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape Z_SHAPE_BOTTOM = ShapeUtil.combine(
             Shapes.box(0, 0, 0, 1, 0.125, 1),
@@ -69,50 +73,65 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
+    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        DoubleBlockHalf half = state.getValue(HALF);
+        if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP) && (!facingState.is(this) || facingState.getValue(HALF) == half))
+            return Blocks.AIR.defaultBlockState();
+        return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+    }
+
+    @Override
+    @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockPos blockpos = context.getClickedPos();
+        BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        return blockpos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(blockpos.above()).canBeReplaced(context) ? defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection())
-                .setValue(HALF, DoubleBlockHalf.LOWER) : null;
+        return pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)
+                ? Objects.requireNonNull(super.getStateForPlacement(context))
+                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(HALF, DoubleBlockHalf.LOWER)
+                : null;
     }
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        BlockPos blockpos = pos.below();
-        BlockState blockstate = level.getBlockState(blockpos);
-        return state.getValue(HALF) == DoubleBlockHalf.LOWER || blockstate.is(this);
+        if (state.getValue(HALF) != DoubleBlockHalf.UPPER) return super.canSurvive(state, level, pos);
+        BlockState blockstate = level.getBlockState(pos.below());
+        if (state.getBlock() != this) return super.canSurvive(state, level, pos);
+        return blockstate.is(this) && blockstate.getValue(HALF) == DoubleBlockHalf.LOWER;
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
-        level.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
+        BlockPos above = pos.above();
+        level.setBlock(above, DoublePlantBlock.copyWaterloggedFrom(level, above, state.setValue(HALF, DoubleBlockHalf.UPPER)), Block.UPDATE_ALL);
     }
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide && player.isCreative()) {
-            //Copy of protected method DoublePlantBlock#preventCreativeDropFromBottomPart
-            DoubleBlockHalf half = state.getValue(HALF);
-            if (half == DoubleBlockHalf.UPPER) {
-                BlockPos newPos = pos.below();
-                BlockState newState = level.getBlockState(newPos);
-                if (newState.is(state.getBlock()) && newState.getValue(HALF) == DoubleBlockHalf.LOWER) {
-                    level.setBlock(newPos, newState.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 35);
-                    level.levelEvent(player, 2001, newPos, Block.getId(newState));
+        if (!level.isClientSide) {
+            if (player.isCreative()) {
+                //Copy of protected method DoublePlantBlock#preventDropFromBottomPart
+                if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+                    BlockPos newPos = pos.below();
+                    BlockState newState = level.getBlockState(newPos);
+                    if (newState.is(state.getBlock()) && newState.getValue(HALF) == DoubleBlockHalf.LOWER) {
+                        level.setBlock(newPos, newState.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_NEIGHBORS);
+                        level.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, newPos, Block.getId(newState));
+                    }
                 }
             } else {
-                BlockPos newPos = pos.above();
-                BlockState newState = level.getBlockState(newPos);
-                if (newState.is(state.getBlock()) && newState.getValue(HALF) == DoubleBlockHalf.UPPER) {
-                    level.setBlock(newPos, newState.getFluidState().is(Fluids.WATER) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState(), 35);
-                    level.levelEvent(player, 2001, newPos, Block.getId(newState));
-                }
+                dropResources(state, level, pos, null, player, player.getMainHandItem());
             }
         }
         return super.playerWillDestroy(level, pos, state, player);
     }
 
+    @Override
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity be, ItemStack stack) {
+        super.playerDestroy(level, player, pos, Blocks.AIR.defaultBlockState(), be, stack);
+    }
+
+    @SuppressWarnings("deprecation")
     @Override
     public long getSeed(BlockState state, BlockPos pos) {
         return Mth.getSeed(pos.getX(), pos.below(state.getValue(HALF) == DoubleBlockHalf.LOWER ? 0 : 1).getY(), pos.getZ());
