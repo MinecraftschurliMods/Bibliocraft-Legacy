@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.apiimpl;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
+import com.github.minecraftschurlimods.bibliocraft.api.datagen.BlockLootTableProvider;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
@@ -25,8 +26,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -36,7 +35,6 @@ import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -44,7 +42,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -65,12 +62,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     private final List<BibliocraftWoodType> WOOD_TYPES = new ArrayList<>();
 
@@ -117,25 +112,12 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
             }
         });
-        generator.addProvider(event.includeServer(), new LootTableProvider(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(provider -> new BlockLootSubProvider(Set.of(), FeatureFlags.DEFAULT_FLAGS, provider) {
-            private final List<Block> blocks = new ArrayList<>();
-            
+        generator.addProvider(event.includeServer(), new BlockLootTableProvider(output, lookupProvider) {
             @Override
             protected void generate() {
-                generateLootTablesFor(this::add, woodType);
+                generateLootTablesFor(this, woodType);
             }
 
-            @Override
-            protected void add(Block block, LootTable.Builder builder) {
-                super.add(block, builder);
-                blocks.add(block);
-            }
-
-            @Override
-            protected Iterable<Block> getKnownBlocks() {
-                return blocks;
-            }
-        }, LootContextParamSets.BLOCK)), lookupProvider) {
             @Override
             public String getName() {
                 return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
@@ -367,23 +349,23 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     }
 
     @Override
-    public void generateLootTablesFor(BiConsumer<Block, LootTable.Builder> lootTableAdder, BibliocraftWoodType woodType) {
-        loot(lootTableAdder, BCBlocks.BOOKCASE.get(woodType),          DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.FANCY_ARMOR_STAND.get(woodType), DatagenUtil::createFancyArmorStandTable);
-        loot(lootTableAdder, BCBlocks.FANCY_CLOCK.get(woodType),       DatagenUtil::createDefaultTable);
-        loot(lootTableAdder, BCBlocks.WALL_FANCY_CLOCK.get(woodType),  DatagenUtil::createDefaultTable);
-        loot(lootTableAdder, BCBlocks.FANCY_CRAFTER.get(woodType),     DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.GRANDFATHER_CLOCK.get(woodType), DatagenUtil::createGrandfatherClockTable);
-        loot(lootTableAdder, BCBlocks.LABEL.get(woodType),             DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.POTION_SHELF.get(woodType),      DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.SHELF.get(woodType),             DatagenUtil::createNameableTable);
-        loot(lootTableAdder, BCBlocks.TABLE.get(woodType),             DatagenUtil::createDefaultTable);
-        loot(lootTableAdder, BCBlocks.TOOL_RACK.get(woodType),         DatagenUtil::createNameableTable);
+    public void generateLootTablesFor(BlockLootTableProvider provider, BibliocraftWoodType woodType) {
+        loot(provider, BCBlocks.BOOKCASE.get(woodType),          woodType, DatagenUtil::createNameableTable);
+        loot(provider, BCBlocks.FANCY_ARMOR_STAND.get(woodType), woodType, DatagenUtil::createFancyArmorStandTable);
+        loot(provider, BCBlocks.FANCY_CLOCK.get(woodType),       woodType, DatagenUtil::createDefaultTable);
+        loot(provider, BCBlocks.WALL_FANCY_CLOCK.get(woodType),  woodType, DatagenUtil::createDefaultTable);
+        loot(provider, BCBlocks.FANCY_CRAFTER.get(woodType),     woodType, DatagenUtil::createNameableTable);
+        loot(provider, BCBlocks.GRANDFATHER_CLOCK.get(woodType), woodType, DatagenUtil::createGrandfatherClockTable);
+        loot(provider, BCBlocks.LABEL.get(woodType),             woodType, DatagenUtil::createNameableTable);
+        loot(provider, BCBlocks.POTION_SHELF.get(woodType),      woodType, DatagenUtil::createNameableTable);
+        loot(provider, BCBlocks.SHELF.get(woodType),             woodType, DatagenUtil::createNameableTable);
+        loot(provider, BCBlocks.TABLE.get(woodType),             woodType, DatagenUtil::createDefaultTable);
+        loot(provider, BCBlocks.TOOL_RACK.get(woodType),         woodType, DatagenUtil::createNameableTable);
         for (DyeColor color : DyeColor.values()) {
-            loot(lootTableAdder, BCBlocks.DISPLAY_CASE.get(woodType, color),      DatagenUtil::createDefaultTable);
-            loot(lootTableAdder, BCBlocks.WALL_DISPLAY_CASE.get(woodType, color), DatagenUtil::createDefaultTable);
-            loot(lootTableAdder, BCBlocks.SEAT.get(woodType, color),              DatagenUtil::createDefaultTable);
-            loot(lootTableAdder, BCBlocks.SEAT_BACK.get(woodType, color), block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(ExplosionCondition.survivesExplosion())
+            loot(provider, BCBlocks.DISPLAY_CASE.get(woodType, color),      woodType, DatagenUtil::createDefaultTable);
+            loot(provider, BCBlocks.WALL_DISPLAY_CASE.get(woodType, color), woodType, DatagenUtil::createDefaultTable);
+            loot(provider, BCBlocks.SEAT.get(woodType, color),              woodType, DatagenUtil::createDefaultTable);
+            loot(provider, BCBlocks.SEAT_BACK.get(woodType, color), woodType, block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(ExplosionCondition.survivesExplosion())
                     .add(LootItem.lootTableItem(BCItems.SMALL_SEAT_BACK.get(woodType, color)) .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.SMALL))))
                     .add(LootItem.lootTableItem(BCItems.RAISED_SEAT_BACK.get(woodType, color)).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.RAISED))))
                     .add(LootItem.lootTableItem(BCItems.FLAT_SEAT_BACK.get(woodType, color))  .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.FLAT))))
@@ -587,12 +569,16 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     /**
      * Adds a loot table for a block.
      *
-     * @param lootTableAdder The loot table adder.
-     * @param block          The block.
-     * @param builder        A function that returns a {@link LootTable.Builder} for a given block.
+     * @param provider The loot table provider.
+     * @param block    The block.
+     * @param factory  A function that returns a {@link LootTable.Builder} for a given block.
      */
-    private static void loot(BiConsumer<Block, LootTable.Builder> lootTableAdder, Block block, Function<Block, LootTable.Builder> builder) {
-        lootTableAdder.accept(block, builder.apply(block));
+    private static void loot(BlockLootTableProvider provider, Block block, BibliocraftWoodType woodType, Function<Block, LootTable.Builder> factory) {
+        BlockLootTableProvider.WithConditionsBuilder<LootTable.Builder> builder = BlockLootTableProvider.wrapLootTable(factory.apply(block));
+        if (!woodType.getNamespace().equals("minecraft")) {
+            builder.addCondition(new ModLoadedCondition(woodType.getNamespace()));
+        }
+        provider.add(block, builder);
     }
 
     /**

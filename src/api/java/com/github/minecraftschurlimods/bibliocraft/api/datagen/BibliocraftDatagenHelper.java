@@ -81,10 +81,10 @@ public interface BibliocraftDatagenHelper {
     /**
      * Generates the loot table files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
      *
-     * @param lootTableAdder A reference to your mod's {@link BlockLootSubProvider#add(Block, LootTable.Builder)} method, as it is protected for some reason.
-     * @param woodType       The {@link BibliocraftWoodType} to generate the loot tables for.
+     * @param provider The {@link BlockLootTableProvider} to use.
+     * @param woodType The {@link BibliocraftWoodType} to generate the loot tables for.
      */
-    void generateLootTablesFor(BiConsumer<Block, LootTable.Builder> lootTableAdder, BibliocraftWoodType woodType);
+    void generateLootTablesFor(BlockLootTableProvider provider, BibliocraftWoodType woodType);
 
     /**
      * Generates the recipe files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
@@ -166,10 +166,10 @@ public interface BibliocraftDatagenHelper {
     /**
      * Generates the loot table files for Bibliocraft blocks with your mod's wood type(s).
      *
-     * @param lootTableAdder A reference to your mod's {@link BlockLootSubProvider#add(Block, LootTable.Builder)} method, as it is protected for some reason.
+     * @param provider Your mod's {@link BlockLootTableProvider}.
      */
-    default void generateLootTables(BiConsumer<Block, LootTable.Builder> lootTableAdder) {
-        getWoodTypesToGenerate().forEach(woodType -> generateLootTablesFor(lootTableAdder, woodType));
+    default void generateLootTables(BlockLootTableProvider provider) {
+        getWoodTypesToGenerate().forEach(woodType -> generateLootTablesFor(provider, woodType));
     }
 
     /**
