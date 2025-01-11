@@ -1,12 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancysign;
 
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.content.clock.AbstractClockBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeBlockItem;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 

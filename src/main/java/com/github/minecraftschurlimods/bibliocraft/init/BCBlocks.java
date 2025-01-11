@@ -13,9 +13,9 @@ import com.github.minecraftschurlimods.bibliocraft.content.discrack.WallDiscRack
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.WallDisplayCaseBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLanternBlock;
-import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.WallFancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlock;
