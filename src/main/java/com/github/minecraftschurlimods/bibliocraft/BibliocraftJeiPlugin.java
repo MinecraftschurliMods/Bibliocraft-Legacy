@@ -37,7 +37,7 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
     private static final Component ALL_COLORS_AND_WOOD_TYPES = Component.translatable(Translations.ALL_COLORS_AND_WOOD_TYPES);
     private static final Component ALL_WOOD_TYPES = Component.translatable(Translations.ALL_WOOD_TYPES);
     private static final Lazy<List<WoodTypeDeferredHolder<Item, ?>>> WOOD_TYPE_DEFERRED_HOLDERS =
-            Lazy.of(() -> List.of(BCItems.BOOKCASE, BCItems.FANCY_ARMOR_STAND, BCItems.FANCY_CLOCK, BCItems.FANCY_CRAFTER, BCItems.GRANDFATHER_CLOCK, BCItems.LABEL, BCItems.POTION_SHELF, BCItems.SHELF, BCItems.TABLE, BCItems.TOOL_RACK));
+            Lazy.of(() -> List.of(BCItems.BOOKCASE, BCItems.FANCY_ARMOR_STAND, BCItems.FANCY_CLOCK, BCItems.FANCY_SIGN, BCItems.FANCY_CRAFTER, BCItems.GRANDFATHER_CLOCK, BCItems.LABEL, BCItems.POTION_SHELF, BCItems.SHELF, BCItems.TABLE, BCItems.TOOL_RACK));
     private static final Lazy<List<ColoredDeferredHolder<Item, ?>>> COLORED_DEFERRED_HOLDERS =
             Lazy.of(() -> List.of(BCItems.FANCY_GOLD_LAMP, BCItems.FANCY_IRON_LAMP, BCItems.FANCY_GOLD_LANTERN, BCItems.FANCY_IRON_LANTERN));
     private static final Lazy<List<ColoredWoodTypeDeferredHolder<Item, ?>>> COLORED_WOOD_TYPE_DEFERRED_HOLDERS =

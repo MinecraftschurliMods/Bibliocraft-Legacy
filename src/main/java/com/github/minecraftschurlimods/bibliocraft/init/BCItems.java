@@ -1,10 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
+import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItem;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLightItem;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignItem;
 import com.github.minecraftschurlimods.bibliocraft.content.lockandkey.LockAndKeyItem;
 import com.github.minecraftschurlimods.bibliocraft.content.plumbline.PlumbLineItem;
 import com.github.minecraftschurlimods.bibliocraft.content.redstonebook.RedstoneBookItem;
@@ -23,21 +25,25 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
+
+import java.util.function.Function;
 
 public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
-    WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",      BCBlocks.BOOKCASE);
-    WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_armor_stand", wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
-    WoodTypeDeferredHolder<Item, FancyClockItem>      FANCY_CLOCK       = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "fancy_clock",       FancyClockItem::new);
-    WoodTypeDeferredHolder<Item, BlockItem>           FANCY_CRAFTER     = woodenBlock("fancy_crafter", BCBlocks.FANCY_CRAFTER);
-    WoodTypeDeferredHolder<Item, DoubleHighBlockItem> GRANDFATHER_CLOCK = new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, "grandfather_clock", wood -> new DoubleHighBlockItem(BCBlocks.GRANDFATHER_CLOCK.get(wood), PROPERTIES));
-    WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",         BCBlocks.LABEL);
-    WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf",  BCBlocks.POTION_SHELF);
-    WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",         BCBlocks.SHELF);
-    WoodTypeDeferredHolder<Item, BlockItem>           TABLE             = woodenBlock("table",         BCBlocks.TABLE);
-    WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",     BCBlocks.TOOL_RACK);
+    WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",          BCBlocks.BOOKCASE);
+    WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
+    WoodTypeDeferredHolder<Item, FancyClockItem>      FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockItem::new);
+    WoodTypeDeferredHolder<Item, BlockItem>           FANCY_CRAFTER     = woodenBlock("fancy_crafter",     BCBlocks.FANCY_CRAFTER);
+    WoodTypeDeferredHolder<Item, FancySignItem>       FANCY_SIGN        = woodenBlock("fancy_sign",        FancySignItem::new);
+    WoodTypeDeferredHolder<Item, DoubleHighBlockItem> GRANDFATHER_CLOCK = woodenBlock("grandfather_clock", wood -> new DoubleHighBlockItem(BCBlocks.GRANDFATHER_CLOCK.get(wood), PROPERTIES));
+    WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",             BCBlocks.LABEL);
+    WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf",      BCBlocks.POTION_SHELF);
+    WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",             BCBlocks.SHELF);
+    WoodTypeDeferredHolder<Item, BlockItem>           TABLE             = woodenBlock("table",             BCBlocks.TABLE);
+    WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",         BCBlocks.TOOL_RACK);
     ColoredWoodTypeDeferredHolder<Item, BlockItem>    DISPLAY_CASE      = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "display_case",     DisplayCaseItem::new);
     ColoredWoodTypeDeferredHolder<Item, BlockItem>    SEAT              = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "seat",             (wood, color) -> new ColoredWoodTypeBlockItem(BCBlocks.SEAT, wood, color));
     ColoredWoodTypeDeferredHolder<Item, SeatBackItem> SMALL_SEAT_BACK   = new ColoredWoodTypeDeferredHolder<>(BCRegistries.ITEMS, "small_seat_back",  (wood, color) -> new SeatBackItem(BCBlocks.SEAT_BACK, wood, color, SeatBackType.SMALL));
@@ -91,7 +97,18 @@ public interface BCItems {
      * @return A {@code WoodTypeDeferredHolder<Item, BlockItem>} that represents the blocks in the given {@code WoodTypeDeferredHolder<Block, ?>}.
      */
     static WoodTypeDeferredHolder<Item, BlockItem> woodenBlock(String name, WoodTypeDeferredHolder<Block, ?> block) {
-        return new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, name, wood -> new BlockItem(block.get(wood), PROPERTIES));
+        return woodenBlock(name, wood -> new BlockItem(block.get(wood), PROPERTIES));
+    }
+
+    /**
+     * Helper method to register a {@code WoodTypeDeferredHolder<Item, BlockItem>}.
+     *
+     * @param name    The name of the {@link WoodTypeDeferredHolder}.
+     * @param creator A function of {@link BibliocraftWoodType} to {@code T} to pass into the {@link WoodTypeDeferredHolder}.
+     * @return A {@code WoodTypeDeferredHolder<Item, BlockItem>} that represents the blocks in the given {@code WoodTypeDeferredHolder<Block, ?>}.
+     */
+    static <T extends Item> WoodTypeDeferredHolder<Item, T> woodenBlock(String name, Function<BibliocraftWoodType, T> creator) {
+        return new WoodTypeDeferredHolder<>(BCRegistries.ITEMS, name, creator);
     }
 
     /**
