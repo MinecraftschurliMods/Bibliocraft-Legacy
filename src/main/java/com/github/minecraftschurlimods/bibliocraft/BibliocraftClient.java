@@ -9,7 +9,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @Mod(value = BibliocraftApi.MOD_ID, dist = Dist.CLIENT)
-public class BibliocraftClient {
+public final class BibliocraftClient {
     public BibliocraftClient(ModContainer container) {
         container.registerConfig(ModConfig.Type.CLIENT, Config.SPEC);
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
