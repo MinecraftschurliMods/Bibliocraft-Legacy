@@ -1,18 +1,21 @@
 package com.github.minecraftschurlimods.bibliocraft.content.discrack;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-public class DiscRackBlock extends AbstractDiscRackBlock {
+public class DiscRackBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape Z_SHAPE = ShapeUtil.combine(
             Shapes.box(0.3125, 0, 0.1875, 0.6875, 0.0625, 0.8125),
             Shapes.box(0.375, 0.0625, 0.203125, 0.625, 0.25, 0.796875));
@@ -45,5 +48,11 @@ public class DiscRackBlock extends AbstractDiscRackBlock {
         return direction == Direction.UP ||
                state.getValue(FACING).getAxis() == Direction.Axis.X && direction.getAxis() == Direction.Axis.Z ||
                state.getValue(FACING).getAxis() == Direction.Axis.Z && direction.getAxis() == Direction.Axis.X;
+    }
+
+    @Override
+    @Nullable
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new DiscRackBlockEntity(pos, state);
     }
 }

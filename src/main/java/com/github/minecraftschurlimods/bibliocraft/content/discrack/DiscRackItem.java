@@ -17,7 +17,7 @@ public class DiscRackItem extends BlockItem {
     @Nullable
     protected BlockState getPlacementState(BlockPlaceContext context) {
         Block block = context.getClickedFace() == Direction.UP ? BCBlocks.DISC_RACK.get() : BCBlocks.WALL_DISC_RACK.get();
-        BlockState state = block.defaultBlockState().setValue(AbstractDiscRackBlock.FACING, context.getHorizontalDirection().getOpposite());
+        BlockState state = block.defaultBlockState().setValue(DiscRackBlock.FACING, context.getHorizontalDirection().getOpposite());
         return canPlace(context, state) ? state : null;
     }
 }
