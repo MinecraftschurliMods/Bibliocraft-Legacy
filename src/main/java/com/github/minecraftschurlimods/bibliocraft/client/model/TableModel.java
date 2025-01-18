@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
-import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -31,7 +30,6 @@ import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,8 +52,11 @@ public class TableModel extends DynamicBlockModel {
 
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
-        TableBlock.Type type = extraData.get(TableBlockEntity.TYPE_PROPERTY);
-        return new ArrayList<>(baseMap.get(type).getQuads(state, side, rand, extraData, renderType));
+        TableBlock.Type type = TableBlock.Type.NONE;
+        if (state != null && state.hasProperty(TableBlock.TYPE)) {
+            type = state.getValue(TableBlock.TYPE);
+        }
+        return baseMap.get(type).getQuads(state, side, rand, extraData, renderType);
     }
 
     @Override
