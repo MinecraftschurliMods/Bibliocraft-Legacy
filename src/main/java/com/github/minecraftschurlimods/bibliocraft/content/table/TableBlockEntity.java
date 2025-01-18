@@ -10,14 +10,10 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
 
 import java.util.Objects;
 
 public class TableBlockEntity extends BCBlockEntity {
-    public static final ModelProperty<TableBlock.Type> TYPE_PROPERTY = new ModelProperty<>();
-
     public TableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.TABLE.get(), 2, pos, state);
     }
@@ -41,10 +37,5 @@ public class TableBlockEntity extends BCBlockEntity {
         if (slot == 1) {
             requestModelDataUpdate();
         }
-    }
-
-    @Override
-    public ModelData getModelData() {
-        return ModelData.builder().with(TYPE_PROPERTY, getBlockState().getValue(TableBlock.TYPE)).build();
     }
 }
