@@ -30,7 +30,6 @@ import net.neoforged.neoforge.client.model.geometry.IUnbakedGeometry;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ public class TableModel extends DynamicBlockModel {
         if (state != null && state.hasProperty(TableBlock.TYPE)) {
             type = state.getValue(TableBlock.TYPE);
         }
-        return new ArrayList<>(baseMap.get(type).getQuads(state, side, rand, extraData, renderType));
+        return baseMap.get(type).getQuads(state, side, rand, extraData, renderType);
     }
 
     @Override
