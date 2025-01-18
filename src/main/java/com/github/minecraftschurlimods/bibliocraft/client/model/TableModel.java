@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
-import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.google.gson.JsonObject;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -54,7 +53,10 @@ public class TableModel extends DynamicBlockModel {
 
     @Override
     public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource rand, ModelData extraData, @Nullable RenderType renderType) {
-        TableBlock.Type type = extraData.get(TableBlockEntity.TYPE_PROPERTY);
+        TableBlock.Type type = TableBlock.Type.NONE;
+        if (state != null && state.hasProperty(TableBlock.TYPE)) {
+            type = state.getValue(TableBlock.TYPE);
+        }
         return new ArrayList<>(baseMap.get(type).getQuads(state, side, rand, extraData, renderType));
     }
 
