@@ -19,7 +19,7 @@ To get started, add Bibliocraft as a dependency for your mod in your `build.grad
 repositories {
     // Bibliocraft is hosted on the MinecraftschurliMods maven.
     maven {
-        url 'https://minecraftschurli.ddns.net/repository/maven-public'
+        url 'https://maven.minecraftschurli.at/'
     }
 }
 
