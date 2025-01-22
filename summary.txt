@@ -1,1 +1,1 @@
-Fix log spam in Bibliowoods
+Some critical bugfixes
