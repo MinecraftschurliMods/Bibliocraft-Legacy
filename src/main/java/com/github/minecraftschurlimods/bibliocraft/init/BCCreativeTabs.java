@@ -24,7 +24,6 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FANCY_ARMOR_STAND.values());
                 addToTab(output, BCItems.FANCY_CLOCK.values());
                 addToTab(output, BCItems.FANCY_CRAFTER.values());
-                addToTab(output, BCItems.FANCY_SIGN.values());
                 addToTab(output, BCItems.GRANDFATHER_CLOCK.values());
                 addToTab(output, BCItems.LABEL.values());
                 addToTab(output, BCItems.POTION_SHELF.values());

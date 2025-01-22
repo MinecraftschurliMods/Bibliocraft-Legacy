@@ -35,7 +35,6 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<DisplayCaseBlockEntity>>     DISPLAY_CASE      = register("display_case",      DisplayCaseBlockEntity::new,     BCUtil.mergeRaw(BCBlocks.DISPLAY_CASE.holders(), BCBlocks.WALL_DISPLAY_CASE.holders()));
     Supplier<BlockEntityType<FancyArmorStandBlockEntity>> FANCY_ARMOR_STAND = register("fancy_armor_stand", FancyArmorStandBlockEntity::new, BCUtil.merge(BCBlocks.FANCY_ARMOR_STAND.holders(), BCBlocks.IRON_FANCY_ARMOR_STAND));
     Supplier<BlockEntityType<FancyCrafterBlockEntity>>    FANCY_CRAFTER     = register("fancy_crafter",     FancyCrafterBlockEntity::new,    BCBlocks.FANCY_CRAFTER.holders());
-    Supplier<BlockEntityType<FancySignBlockEntity>>       FANCY_SIGN        = register("fancy_sign",        FancySignBlockEntity::new,       BCUtil.mergeRaw(BCBlocks.FANCY_SIGN.holders(), BCBlocks.WALL_FANCY_SIGN.holders()));
     Supplier<BlockEntityType<LabelBlockEntity>>           LABEL             = register("label",             LabelBlockEntity::new,           BCBlocks.LABEL.holders());
     Supplier<BlockEntityType<PotionShelfBlockEntity>>     POTION_SHELF      = register("potion_shelf",      PotionShelfBlockEntity::new,     BCBlocks.POTION_SHELF.holders());
     Supplier<BlockEntityType<ShelfBlockEntity>>           SHELF             = register("shelf",             ShelfBlockEntity::new,           BCBlocks.SHELF.holders());

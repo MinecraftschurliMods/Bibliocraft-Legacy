@@ -46,8 +46,6 @@ public interface BCBlocks {
     WoodTypeDeferredHolder<Block, FancyClockBlock>       FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockBlock::new);
     WoodTypeDeferredHolder<Block, WallFancyClockBlock>   WALL_FANCY_CLOCK  = woodenBlock("wall_fancy_clock",  WallFancyClockBlock::new);
     WoodTypeDeferredHolder<Block, FancyCrafterBlock>     FANCY_CRAFTER     = woodenBlock("fancy_crafter",     FancyCrafterBlock::new);
-    WoodTypeDeferredHolder<Block, FancySignBlock>        FANCY_SIGN        = woodenBlock("fancy_sign",        FancySignBlock::new);
-    WoodTypeDeferredHolder<Block, WallFancySignBlock>    WALL_FANCY_SIGN   = woodenBlock("wall_fancy_sign",   WallFancySignBlock::new);
     WoodTypeDeferredHolder<Block, GrandfatherClockBlock> GRANDFATHER_CLOCK = woodenBlock("grandfather_clock", GrandfatherClockBlock::new);
     WoodTypeDeferredHolder<Block, LabelBlock>            LABEL             = woodenBlock("label",             LabelBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock>      POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
