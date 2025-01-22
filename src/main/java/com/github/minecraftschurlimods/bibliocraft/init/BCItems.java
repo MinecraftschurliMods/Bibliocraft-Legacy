@@ -6,7 +6,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseItem;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLightItem;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignItem;
 import com.github.minecraftschurlimods.bibliocraft.content.lockandkey.LockAndKeyItem;
 import com.github.minecraftschurlimods.bibliocraft.content.plumbline.PlumbLineItem;
 import com.github.minecraftschurlimods.bibliocraft.content.redstonebook.RedstoneBookItem;

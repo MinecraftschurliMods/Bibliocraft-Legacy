@@ -5,7 +5,6 @@ import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatage
 import com.github.minecraftschurlimods.bibliocraft.api.datagen.BlockLootTableProvider;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableModel;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackItem;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;

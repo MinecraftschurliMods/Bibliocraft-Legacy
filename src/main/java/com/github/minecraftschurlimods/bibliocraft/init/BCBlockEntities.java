@@ -9,7 +9,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackBloc
 import com.github.minecraftschurlimods.bibliocraft.content.displaycase.DisplayCaseBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlockEntity;
