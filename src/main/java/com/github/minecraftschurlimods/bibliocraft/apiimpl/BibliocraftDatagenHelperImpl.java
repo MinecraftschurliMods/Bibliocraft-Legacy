@@ -253,7 +253,6 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         provider.withExistingParent(prefix + "_fancy_armor_stand", bcLoc("block/template/fancy_armor_stand/inventory")).texture("texture", woodType.texture());
         provider.withExistingParent(prefix + "_fancy_clock",       bcLoc("block/template/clock/fancy_inventory")).texture("texture", woodType.texture());
         provider.withExistingParent(prefix + "_fancy_crafter",     bcLoc("block/wood/" + prefix + "/fancy_crafter"));
-        provider.withExistingParent(prefix + "_fancy_sign",        bcLoc("block/wood/" + prefix + "/fancy_sign"));
         provider.withExistingParent(prefix + "_grandfather_clock", bcLoc("block/template/clock/grandfather_inventory")).texture("texture", woodType.texture());
         provider.withExistingParent(prefix + "_label",             bcLoc("block/wood/" + prefix + "/label"));
         provider.withExistingParent(prefix + "_potion_shelf",      bcLoc("block/wood/" + prefix + "/potion_shelf"));
