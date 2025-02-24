@@ -1,6 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/fancy_sign/hanging",
-  "textures": {
-    "texture": "minecraft:block/birch_planks"
-  }
-}
