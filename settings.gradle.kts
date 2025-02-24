@@ -7,7 +7,7 @@ pluginManagement {
         mavenLocal()
         gradlePluginPortal()
         maven { url = uri("https://maven.neoforged.net/releases") }
-        maven { url = uri("https://minecraftschurli.ddns.net/repository/maven-public") }
+        maven { url = uri("https://maven.minecraftschurli.at/maven-public") }
     }
 }
 
