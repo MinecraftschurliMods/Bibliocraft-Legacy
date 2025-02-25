@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -37,6 +38,10 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         texts[0] = "Hello World!";
         styles[0] = Style.EMPTY.withColor(0xff0000);
+        sizes[0] = 10;
+        texts[1] = "Hello World 2!";
+        styles[1] = Style.EMPTY.withColor(0xff00ff);
+        shadows[1] = true;
         int x = getX();
         int y = getY();
         graphics.fill(x, y, width, height, 0xffffffff); //TODO background
@@ -60,22 +65,31 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
         boolean cursorInText = cursorInLine && cursorX < text.length();
         boolean shouldRenderCursor = cursorInLine && isFocused() && (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0;
 
+        // Scale the text, 8 is the default font size, and we subtract a padding of 1 on each side
+        PoseStack pose = graphics.pose();
+        pose.pushPose();
+        float scale = (size - 2) / 8f;
+        pose.scale(scale, scale, 1);
+        
+        // Draw the text
+        int textX = x + 1;
         if (cursorInLine) {
             if (cursorInText) {
-                int textWidth = graphics.drawString(font, format(text.substring(0, cursorX), style), x, y, color, shadow);
-                graphics.drawString(font, format(text.substring(cursorX), style), x + textWidth - 1, y, color, shadow);
+                int textWidth = graphics.drawString(font, format(text.substring(0, cursorX), style), textX, y, color, shadow);
+                graphics.drawString(font, format(text.substring(cursorX), style), textX + textWidth - 1, y, color, shadow);
                 if (shouldRenderCursor) {
-                    graphics.fill(RenderType.guiOverlay(), textWidth, y - 1, textWidth + 1, y + 10, color);
+                    graphics.fill(textX + textWidth, y - 1, textX + textWidth + 1, y + 10, color);
                 }
             } else {
-                int textWidth = graphics.drawString(font, format(text, style), x, y, color, shadow);
+                int textWidth = graphics.drawString(font, format(text, style), textX, y, color, shadow);
                 if (shouldRenderCursor) {
-                    graphics.drawString(font, "_", textWidth, y, color, shadow);
+                    graphics.drawString(font, "_", textX + textWidth, y, color, shadow);
                 }
             }
         } else {
-            graphics.drawString(font, format(text, style), x, y, color, shadow);
+            graphics.drawString(font, format(text, style), textX, y, color, shadow);
         }
+        pose.popPose();
     }
 
     private FormattedCharSequence format(String text, Style style) {
@@ -88,12 +102,12 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
         return switch (keyCode) {
             case GLFW.GLFW_KEY_DOWN -> {
                 cursorY = Math.clamp(cursorY + 1, 0, MAX_LINES);
-                cursorX = Math.min(cursorX, texts[cursorY].length() - 1);
+                cursorX = Math.min(cursorX, texts[cursorY].length());
                 yield true;
             }
             case GLFW.GLFW_KEY_UP -> {
                 cursorY = Math.clamp(cursorY - 1, 0, MAX_LINES);
-                cursorX = Math.min(cursorX, texts[cursorY].length() - 1);
+                cursorX = Math.min(cursorX, texts[cursorY].length());
                 yield true;
             }
             case GLFW.GLFW_KEY_LEFT -> {
@@ -101,7 +115,7 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
                 yield true;
             }
             case GLFW.GLFW_KEY_RIGHT -> {
-                cursorX = Math.min(cursorX + 1, texts[cursorY].length() - 1);
+                cursorX = Math.min(cursorX + 1, texts[cursorY].length());
                 yield true;
             }
             default -> super.keyPressed(keyCode, scanCode, modifiers);

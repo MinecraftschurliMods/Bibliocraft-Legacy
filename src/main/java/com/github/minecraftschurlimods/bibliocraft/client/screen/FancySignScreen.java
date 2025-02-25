@@ -15,12 +15,13 @@ public class FancySignScreen extends Screen {
 
     @Override
     protected void init() {
-        textArea = addRenderableWidget(new FormattedTextArea(0, 0, 300, 90, Component.empty()));
+        int x = (width - 192) / 2;
+        textArea = addRenderableWidget(new FormattedTextArea(0, 6, 192, 90, Component.empty()));
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        super.renderBackground(graphics, mouseX, mouseY, partialTick);
         //TODO
     }
 }
