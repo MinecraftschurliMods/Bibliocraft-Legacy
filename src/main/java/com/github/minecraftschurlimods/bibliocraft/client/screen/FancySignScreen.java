@@ -15,7 +15,7 @@ public class FancySignScreen extends Screen {
 
     @Override
     protected void init() {
-        textArea = new FormattedTextArea(0, 0, 300, 90, Component.empty());
+        textArea = addRenderableWidget(new FormattedTextArea(0, 0, 300, 90, Component.empty()));
     }
 
     @Override

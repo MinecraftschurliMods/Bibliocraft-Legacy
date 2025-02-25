@@ -35,8 +35,11 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        texts[0] = "Hello World!";
+        styles[0] = Style.EMPTY.withColor(0xff0000);
         int x = getX();
         int y = getY();
+        graphics.fill(x, y, width, height, 0xffffffff); //TODO background
         for (int i = 0; i < effectiveMaxLines; i++) {
             renderLine(graphics, i, x, y);
             y += sizes[i];
@@ -45,8 +48,8 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
 
     private void renderLine(GuiGraphics graphics, int line, int x, int y) {
         String text = texts[line];
-        if (text.isEmpty()) return;
-        Style style = styles[line];
+        if (text == null || text.isEmpty()) return;
+        Style style = styles[line] != null ? styles[line] : Style.EMPTY;
         int size = sizes[line];
         boolean shadow = shadows[line];
         int color = Objects.requireNonNull(style.getColor()).getValue();
