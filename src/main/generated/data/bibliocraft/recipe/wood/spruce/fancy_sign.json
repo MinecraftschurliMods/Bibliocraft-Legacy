@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:fancy_sign",
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "P": {
+      "item": "minecraft:spruce_planks"
+    },
+    "R": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "P#P",
+    "P#P",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:spruce_fancy_sign"
+  }
+}

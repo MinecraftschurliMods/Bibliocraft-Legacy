@@ -1,0 +1,26 @@
+{
+  "values": [
+    "bibliocraft:oak_fancy_sign",
+    "bibliocraft:oak_wall_fancy_sign",
+    "bibliocraft:spruce_fancy_sign",
+    "bibliocraft:spruce_wall_fancy_sign",
+    "bibliocraft:birch_fancy_sign",
+    "bibliocraft:birch_wall_fancy_sign",
+    "bibliocraft:jungle_fancy_sign",
+    "bibliocraft:jungle_wall_fancy_sign",
+    "bibliocraft:acacia_fancy_sign",
+    "bibliocraft:acacia_wall_fancy_sign",
+    "bibliocraft:dark_oak_fancy_sign",
+    "bibliocraft:dark_oak_wall_fancy_sign",
+    "bibliocraft:crimson_fancy_sign",
+    "bibliocraft:crimson_wall_fancy_sign",
+    "bibliocraft:warped_fancy_sign",
+    "bibliocraft:warped_wall_fancy_sign",
+    "bibliocraft:mangrove_fancy_sign",
+    "bibliocraft:mangrove_wall_fancy_sign",
+    "bibliocraft:bamboo_fancy_sign",
+    "bibliocraft:bamboo_wall_fancy_sign",
+    "bibliocraft:cherry_fancy_sign",
+    "bibliocraft:cherry_wall_fancy_sign"
+  ]
+}

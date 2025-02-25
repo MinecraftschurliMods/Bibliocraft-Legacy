@@ -76,15 +76,6 @@ public class FancySignBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (player.isSecondaryUseActive()) return InteractionResult.PASS;
-        if (level.isClientSide()) {
-            ClientUtil.openFancySignScreen(pos);
-        }
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FancySignBlockEntity(pos, state);
