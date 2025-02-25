@@ -6,18 +6,15 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 public class FormattedTextArea extends AbstractWidget implements Renderable {
     private static final int MAX_HEIGHT = 90;
@@ -29,12 +26,7 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
     private final Font font = Minecraft.getInstance().font;
     private int cursorX = 0;
     private int cursorY = 0;
-    private int highlightX = 0;
-    private int highlightY = 0;
-    @Nullable
-    private Consumer<String> responder;
-    private BiFunction<String, Integer, FormattedCharSequence> formatter = (p_94147_, p_94148_) -> FormattedCharSequence.forward(p_94147_, Style.EMPTY);
-    private long focusedTime = Util.getMillis();
+    private long focusedTimestamp = Util.getMillis();
     private int effectiveMaxLines = MAX_LINES;
 
     public FormattedTextArea(int x, int y, int width, int height, Component message) {
@@ -43,67 +35,48 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        int x = getX();
+        int y = getY();
         for (int i = 0; i < effectiveMaxLines; i++) {
-            // get values
-            String text = texts[i];
-            if (text.isEmpty()) continue;
-            Style style = styles[i];
-            FormattedCharSequence formattedText = FormattedCharSequence.forward(text, style);
-            int size = sizes[i];
-            boolean shadow = shadows[i];
-            int color = Objects.requireNonNull(style.getColor()).getValue();
-            int x = getX();
-            int y = getY();
-            boolean cursorInLine = cursorY == i;
-            boolean cursorInText = cursorX < text.length();
-            // draw text before the cursor
-            int textWidth = graphics.drawString(font, formattedText, x, y, color, shadow);
-            // draw text after the cursor
-            int minX = textWidth;
-            if (cursorInText) {
-                minX = textWidth - 1;
-                textWidth--;
-            }
-            if (cursorX < text.length()) {
-                graphics.drawString(font, formattedText, textWidth, y, color, shadow);
-            }
-            // draw cursor
-            int minY = y - 1;
-            int maxY = y + 10;
-            if (isFocused() && (Util.getMillis() - focusedTime) / 300L % 2 == 0) {
-                if (cursorInText) {
-                    graphics.fill(RenderType.guiOverlay(), minX, minY, minX + 1, maxY, 0xffd0d0d0);
-                } else {
-                    graphics.drawString(font, "_", minX, y, color, shadow);
-                }
-            }
-            // draw text selection
-            if (highlightX != cursorX) {
-                int maxX = x + font.width(text.substring(0, highlightX)) - 1;
-                if (minX < maxX) {
-                    int temp = minX;
-                    minX = maxX;
-                    maxX = temp;
-                }
-                if (minY < maxY) {
-                    int temp = minY;
-                    minY = maxY;
-                    maxY = temp;
-                }
-                int totalX = this.getX() + this.width;
-                if (maxX > totalX) {
-                    maxX = totalX;
-                }
-                if (minX > totalX) {
-                    minX = totalX;
-                }
-                graphics.fill(RenderType.guiTextHighlight(), minX, minY, maxX, maxY, 0xff0000ff);
-            }
+            renderLine(graphics, i, x, y);
+            y += sizes[i];
         }
     }
 
-    private void drawHighlighted(int line, int startX, int endX) {
-        //TODO
+    private void renderLine(GuiGraphics graphics, int line, int x, int y) {
+        String text = texts[line];
+        if (text.isEmpty()) return;
+        Style style = styles[line];
+        int size = sizes[line];
+        boolean shadow = shadows[line];
+        int color = Objects.requireNonNull(style.getColor()).getValue();
+
+        // is the current line selected?
+        boolean cursorInLine = cursorY == line;
+        // is the cursor not at the end?
+        boolean cursorInText = cursorInLine && cursorX < text.length();
+        boolean shouldRenderCursor = cursorInLine && isFocused() && (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0;
+
+        if (cursorInLine) {
+            if (cursorInText) {
+                int textWidth = graphics.drawString(font, format(text.substring(0, cursorX), style), x, y, color, shadow);
+                graphics.drawString(font, format(text.substring(cursorX), style), x + textWidth - 1, y, color, shadow);
+                if (shouldRenderCursor) {
+                    graphics.fill(RenderType.guiOverlay(), textWidth, y - 1, textWidth + 1, y + 10, color);
+                }
+            } else {
+                int textWidth = graphics.drawString(font, format(text, style), x, y, color, shadow);
+                if (shouldRenderCursor) {
+                    graphics.drawString(font, "_", textWidth, y, color, shadow);
+                }
+            }
+        } else {
+            graphics.drawString(font, format(text, style), x, y, color, shadow);
+        }
+    }
+
+    private FormattedCharSequence format(String text, Style style) {
+        return FormattedCharSequence.forward(text, style);
     }
 
     @Override
@@ -111,23 +84,21 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
         if (!isActive() || !isFocused()) return false;
         return switch (keyCode) {
             case GLFW.GLFW_KEY_DOWN -> {
-                changeLine(1);
-                highlightY = cursorY;
+                cursorY = Math.clamp(cursorY + 1, 0, MAX_LINES);
+                cursorX = Math.min(cursorX, texts[cursorY].length() - 1);
                 yield true;
             }
             case GLFW.GLFW_KEY_UP -> {
-                changeLine(-1);
-                highlightY = cursorY;
+                cursorY = Math.clamp(cursorY - 1, 0, MAX_LINES);
+                cursorX = Math.min(cursorX, texts[cursorY].length() - 1);
                 yield true;
             }
             case GLFW.GLFW_KEY_LEFT -> {
                 cursorX = Math.max(0, cursorX - 1);
-                highlightX = cursorX;
                 yield true;
             }
             case GLFW.GLFW_KEY_RIGHT -> {
                 cursorX = Math.min(cursorX + 1, texts[cursorY].length() - 1);
-                highlightX = cursorX;
                 yield true;
             }
             default -> super.keyPressed(keyCode, scanCode, modifiers);
@@ -136,40 +107,12 @@ public class FormattedTextArea extends AbstractWidget implements Renderable {
 
     @Override
     protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
-
+        narrationElementOutput.add(NarratedElementType.TITLE, createNarrationMessage());
     }
 
-    private int calculateEffectiveMaxLines() {
-        int height = 0;
-        for (int i = 0; i < MAX_LINES; i++) {
-            height += sizes[i];
-            if (height > MAX_HEIGHT) return i + 1;
-        }
-        return MAX_LINES;
-    }
-    
-    private void changeLine(int direction) {
-        cursorX = 0;
-        cursorY = Mth.clamp(cursorY + direction, 0, MAX_HEIGHT);
-        /*int oldWidth = font.width(texts[cursorY].substring(cursorX));
-        int line = cursorY + direction;
-        if (line == effectiveMaxLines) {
-            line = 0;
-        }
-        if (line == -1) {
-            line = effectiveMaxLines - 1;
-        }
-        int index = 0;
-        int width = 0;
-        for (; index < texts[line].length(); index++) {
-            width += font.width(FormattedCharSequence.forward(String.valueOf(texts[line].charAt(index)), styles[line]));
-            if (oldWidth <= width) break;
-        }
-        int newWidth = font.width(texts[line].substring(0, index - 1));
-        if (Math.abs(newWidth - width) < Math.abs(oldWidth - width)) {
-            index--;
-        }
-        cursorX = index;
-        cursorY = line;*/
+    @Override
+    public void setFocused(boolean focused) {
+        super.setFocused(focused);
+        focusedTimestamp = Util.getMillis();
     }
 }
