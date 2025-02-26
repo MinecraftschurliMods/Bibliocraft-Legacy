@@ -51,10 +51,11 @@ public final class ClientUtil {
     /**
      * Opens a {@link FancySignScreen} on the client.
      *
-     * @param pos The {@link BlockPos} of the clock owning the screen.
+     * @param pos  The {@link BlockPos} of the clock owning the screen.
+     * @param back Whether the back of the sign was clicked or not.
      */
-    public static void openFancySignScreen(BlockPos pos) {
-        Minecraft.getInstance().setScreen(new FancySignScreen(pos));
+    public static void openFancySignScreen(BlockPos pos, boolean back) {
+        Minecraft.getInstance().setScreen(new FancySignScreen(pos, back));
     }
 
     /**
