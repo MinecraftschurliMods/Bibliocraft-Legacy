@@ -63,8 +63,8 @@ public class ClipboardBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.handleUpdateTag(tag, lookupProvider);
+    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
+        super.handleUpdateTag(tag, registries);
         if (tag.contains(CONTENT_KEY)) {
             setContent(BCUtil.decodeNbt(ClipboardContent.CODEC, tag.get(CONTENT_KEY)));
         }
