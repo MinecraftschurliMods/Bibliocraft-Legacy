@@ -1,5 +1,6 @@
-package com.github.minecraftschurlimods.bibliocraft.client.screen.clock;
+package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
+import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;

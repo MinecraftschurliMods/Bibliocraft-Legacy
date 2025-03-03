@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
-import com.github.minecraftschurlimods.bibliocraft.client.FormattedTextArea;
+import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineList;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineListPacket;
@@ -9,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Objects;

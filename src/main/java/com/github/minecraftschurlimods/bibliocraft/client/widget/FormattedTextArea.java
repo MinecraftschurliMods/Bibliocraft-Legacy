@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.client;
+package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -18,7 +18,6 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FormattedTextArea extends AbstractWidget {
     public static final int WIDTH = 140;

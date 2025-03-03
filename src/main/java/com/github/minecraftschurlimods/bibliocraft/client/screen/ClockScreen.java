@@ -1,5 +1,6 @@
-package com.github.minecraftschurlimods.bibliocraft.client.screen.clock;
+package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
+import com.github.minecraftschurlimods.bibliocraft.client.widget.ClockTriggerPanel;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;

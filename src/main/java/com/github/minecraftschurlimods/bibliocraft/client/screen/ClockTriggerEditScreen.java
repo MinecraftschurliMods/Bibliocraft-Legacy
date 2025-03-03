@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.client.screen.clock;
+package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;

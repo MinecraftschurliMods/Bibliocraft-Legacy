@@ -1,6 +1,6 @@
-package com.github.minecraftschurlimods.bibliocraft.client.screen.clock;
+package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
-import com.github.minecraftschurlimods.bibliocraft.client.SpriteButton;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockTriggerEditScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;

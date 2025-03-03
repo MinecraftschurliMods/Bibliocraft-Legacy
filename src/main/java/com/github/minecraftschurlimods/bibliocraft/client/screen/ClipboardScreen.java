@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
-import com.github.minecraftschurlimods.bibliocraft.client.SpriteButton;
+import com.github.minecraftschurlimods.bibliocraft.client.widget.SpriteButton;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;

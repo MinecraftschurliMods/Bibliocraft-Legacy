@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.client;
+package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
