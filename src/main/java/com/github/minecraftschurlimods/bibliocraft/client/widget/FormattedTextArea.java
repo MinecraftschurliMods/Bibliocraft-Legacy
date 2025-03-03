@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.mojang.blaze3d.vertex.PoseStack;
-import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -10,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -19,10 +19,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.BooleanSupplier;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FormattedTextArea extends AbstractWidget {
@@ -42,8 +39,8 @@ public class FormattedTextArea extends AbstractWidget {
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         int x = getX();
-        int y = getY();
-        graphics.fill(x, y, x + width, y + height, 0xffffffff); //TODO background
+        int y = getY() + 1;
+        graphics.fill(x, y - 1, x + width, y + height, 0xffffffff); //TODO background
         for (int i = 0; i < lines.size(); i++) {
             renderLine(graphics, i, x, y);
             y += lines.get(i).size();
@@ -53,11 +50,16 @@ public class FormattedTextArea extends AbstractWidget {
     private void renderLine(GuiGraphics graphics, int index, int x, int y) {
         FormattedLine line = lines.get(index);
         String text = line.text();
-        if (text == null || text.isEmpty()) return;
         Style style = line.style();
         int size = line.size();
         boolean shadow = line.shadow();
         int color = style.getColor() == null ? 0 : style.getColor().getValue();
+        if (text == null || text.isEmpty()) {
+            if (cursorY == index) {
+                graphics.fill(RenderType.guiOverlay(), x, y - 1, x + 1, y + 10, 0xff000000 | color);
+            }
+            return;
+        }
 
         // is the current line selected?
         boolean cursorInLine = cursorY == index;
@@ -78,7 +80,7 @@ public class FormattedTextArea extends AbstractWidget {
                 int textWidth = graphics.drawString(font, format(text.substring(0, cursorX), style), textX, y, color, shadow);
                 graphics.drawString(font, format(text.substring(cursorX), style), textWidth, y, color, shadow);
                 if (shouldRenderCursor) {
-                    graphics.fill(RenderType.guiOverlay(), textWidth, y - 1, textWidth + 1, y + 10, 0xff000000 | color);
+                    graphics.fill(RenderType.guiOverlay(), textWidth - 1, y - 1, textWidth, y + 10, 0xff000000 | color);
                 }
             } else {
                 int textWidth = graphics.drawString(font, format(text, style), textX, y, color, shadow);
@@ -99,27 +101,56 @@ public class FormattedTextArea extends AbstractWidget {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (!isActive() || !isFocused()) return false;
-        return switch (keyCode) {
-            case GLFW.GLFW_KEY_DOWN -> {
-                cursorY = Math.clamp(cursorY + 1, 0, lines.size());
+        switch (keyCode) {
+            case GLFW.GLFW_KEY_DOWN: //TODO selection, ctrl
+                cursorY = Math.clamp(cursorY + 1, 0, lines.size() - 1);
                 cursorX = Math.min(cursorX, lines.get(cursorY).text().length());
-                yield true;
-            }
-            case GLFW.GLFW_KEY_UP -> {
-                cursorY = Math.clamp(cursorY - 1, 0, lines.size());
+                return true;
+            case GLFW.GLFW_KEY_UP: //TODO selection, ctrl
+                cursorY = Math.clamp(cursorY - 1, 0, lines.size() - 1);
                 cursorX = Math.min(cursorX, lines.get(cursorY).text().length());
-                yield true;
-            }
-            case GLFW.GLFW_KEY_LEFT -> {
+                return true;
+            case GLFW.GLFW_KEY_LEFT: //TODO selection, ctrl
                 cursorX = Math.max(0, cursorX - 1);
-                yield true;
-            }
-            case GLFW.GLFW_KEY_RIGHT -> {
+                return true;
+            case GLFW.GLFW_KEY_RIGHT: //TODO selection, ctrl
                 cursorX = Math.min(cursorX + 1, lines.get(cursorY).text().length());
-                yield true;
-            }
-            default -> super.keyPressed(keyCode, scanCode, modifiers);
-        };
+                return true;
+            case GLFW.GLFW_KEY_BACKSPACE: //TODO ctrl
+                if (cursorX > 0) {
+                    cursorX--;
+                    lines.set(cursorY, lines.get(cursorY).withText(lines.get(cursorY).text().substring(0, cursorX) + lines.get(cursorY).text().substring(cursorX + 1)));
+                }
+                return true;
+            case GLFW.GLFW_KEY_DELETE: //TODO ctrl
+                if (cursorX < lines.size() - 1) {
+                    lines.set(cursorY, lines.get(cursorY).withText(lines.get(cursorY).text().substring(0, cursorX) + lines.get(cursorY).text().substring(cursorX + 1)));
+                }
+                return true;
+            case GLFW.GLFW_KEY_HOME: //TODO selection
+                cursorX = 0;
+                return true;
+            case GLFW.GLFW_KEY_END: //TODO selection
+                cursorX = lines.get(cursorY).text().length();
+                return true;
+        }
+        if (Screen.isSelectAll(keyCode)) {
+            //TODO
+            return true;
+        }
+        if (Screen.isCopy(keyCode)) {
+            //TODO
+            return true;
+        }
+        if (Screen.isPaste(keyCode)) {
+            //TODO
+            return true;
+        }
+        if (Screen.isCut(keyCode)) {
+            //TODO
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
@@ -135,12 +166,12 @@ public class FormattedTextArea extends AbstractWidget {
 
     @Override
     public boolean charTyped(char codePoint, int modifiers) {
-        if (!(isActive() && isFocused() && isEditable())) return false;
-        if (!StringUtil.isAllowedChatCharacter(codePoint)) return false;
-        if (isEditable()) {
-            insertText(Character.toString(codePoint));
-        }
-        return true;
+        if (!(isActive() && isFocused() && isEditable()) || !StringUtil.isAllowedChatCharacter(codePoint)) return false;
+        String oldText = lines.get(cursorY).text();
+        return tryEdit(
+                () -> insertText(Character.toString(codePoint)),
+                () -> lines.set(cursorY, lines.get(cursorY).withText(oldText))
+        );
     }
 
     private boolean tryEdit(Runnable edit, Runnable revert) {
@@ -154,11 +185,15 @@ public class FormattedTextArea extends AbstractWidget {
         return true; //TODO
     }
     
-    private void insertText(String text) {
-        //TODO check if in bounds
+    private boolean insertText(String text) {
         FormattedLine line = lines.get(cursorY);
-        lines.set(cursorY, line.withText(line.text().substring(0, cursorX) + text + line.text().substring(cursorX)));
+        String oldText = line.text();
+        if (!tryEdit(
+                () -> lines.set(cursorY, line.withText(line.text().substring(0, cursorX) + text + line.text().substring(cursorX))),
+                () -> lines.set(cursorY, line.withText(oldText))
+        )) return false;
         cursorX += text.length();
+        return true;
     }
 
     private boolean isEditable() {
@@ -173,6 +208,9 @@ public class FormattedTextArea extends AbstractWidget {
         FormattedLine line = lines.get(cursorY);
         Style style = line.style();
         boolean oldValue = styleGetter.apply(style);
-        return tryEdit(() -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, !oldValue))), () -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, oldValue))));
+        return tryEdit(
+                () -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, !oldValue))),
+                () -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, oldValue)))
+        );
     }
 }
