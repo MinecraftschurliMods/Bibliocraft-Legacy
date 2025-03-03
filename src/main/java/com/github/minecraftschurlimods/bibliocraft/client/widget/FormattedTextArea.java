@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -18,6 +19,11 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class FormattedTextArea extends AbstractWidget {
     public static final int WIDTH = 140;
@@ -137,6 +143,17 @@ public class FormattedTextArea extends AbstractWidget {
         return true;
     }
 
+    private boolean tryEdit(Runnable edit, Runnable revert) {
+        edit.run();
+        if (isValid()) return true;
+        revert.run();
+        return false;
+    }
+    
+    private boolean isValid() {
+        return true; //TODO
+    }
+    
     private void insertText(String text) {
         //TODO check if in bounds
         FormattedLine line = lines.get(cursorY);
@@ -150,5 +167,12 @@ public class FormattedTextArea extends AbstractWidget {
 
     public List<FormattedLine> getLines() {
         return lines;
+    }
+    
+    public boolean toggleStyle(Function<Style, Boolean> styleGetter, BiFunction<Style, Boolean, Style> styleSetter) {
+        FormattedLine line = lines.get(cursorY);
+        Style style = line.style();
+        boolean oldValue = styleGetter.apply(style);
+        return tryEdit(() -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, !oldValue))), () -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, oldValue))));
     }
 }

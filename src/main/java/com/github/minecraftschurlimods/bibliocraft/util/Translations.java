@@ -22,6 +22,16 @@ public interface Translations {
     String CLOCK_TIME_SEPARATOR              = "gui." + BibliocraftApi.MOD_ID + ".clock.time_separator";
     String CLOCK_TITLE                       = "gui." + BibliocraftApi.MOD_ID + ".clock.title";
     String CLOCK_TRIGGERS                    = "gui." + BibliocraftApi.MOD_ID + ".clock.triggers";
+    String FANCY_SIGN_BOLD                   = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.bold";
+    String FANCY_SIGN_BOLD_SHORT             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.bold.short";
+    String FANCY_SIGN_ITALIC                 = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.italic";
+    String FANCY_SIGN_ITALIC_SHORT           = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.italic.short";
+    String FANCY_SIGN_OBFUSCATED             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.obfuscated";
+    String FANCY_SIGN_OBFUSCATED_SHORT       = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.obfuscated.short";
+    String FANCY_SIGN_STRIKETHROUGH          = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.strikethrough";
+    String FANCY_SIGN_STRIKETHROUGH_SHORT    = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.strikethrough.short";
+    String FANCY_SIGN_UNDERLINED             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.underlined";
+    String FANCY_SIGN_UNDERLINED_SHORT       = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.underlined.short";
     String STOCKROOM_CATALOG_COUNT           = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";
     String STOCKROOM_CATALOG_DISTANCE        = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.distance";
     String STOCKROOM_CATALOG_LOCATE          = "gui." + BibliocraftApi.MOD_ID + ".stockroom_catalog.locate";
