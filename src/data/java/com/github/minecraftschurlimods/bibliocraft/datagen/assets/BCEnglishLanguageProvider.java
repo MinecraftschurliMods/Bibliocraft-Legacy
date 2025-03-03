@@ -91,6 +91,16 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.CLOCK_TIME_SEPARATOR, ":");
         add(Translations.CLOCK_TITLE, "Clock");
         add(Translations.CLOCK_TRIGGERS, "Triggers");
+        add(Translations.FANCY_SIGN_BOLD, "Bold");
+        add(Translations.FANCY_SIGN_BOLD_SHORT, "B");
+        add(Translations.FANCY_SIGN_ITALIC, "Italic");
+        add(Translations.FANCY_SIGN_ITALIC_SHORT, "I");
+        add(Translations.FANCY_SIGN_OBFUSCATED, "Obfuscated");
+        add(Translations.FANCY_SIGN_OBFUSCATED_SHORT, "O");
+        add(Translations.FANCY_SIGN_STRIKETHROUGH, "Strikethrough");
+        add(Translations.FANCY_SIGN_STRIKETHROUGH_SHORT, "S");
+        add(Translations.FANCY_SIGN_UNDERLINED, "Underlined");
+        add(Translations.FANCY_SIGN_UNDERLINED_SHORT, "U");
         add(Translations.STOCKROOM_CATALOG_COUNT, "x%s");
         add(Translations.STOCKROOM_CATALOG_DISTANCE, "%s blocks away");
         add(Translations.STOCKROOM_CATALOG_LOCATE, "Locate");
