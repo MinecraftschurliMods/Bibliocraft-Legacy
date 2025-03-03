@@ -53,10 +53,10 @@ public class FormattedTextArea extends AbstractWidget {
         Style style = line.style();
         int size = line.size();
         boolean shadow = line.shadow();
-        int color = style.getColor() == null ? 0 : style.getColor().getValue();
+        int color = 0xff000000 | (style.getColor() == null ? 0 : style.getColor().getValue());
         if (text == null || text.isEmpty()) {
-            if (cursorY == index) {
-                graphics.fill(RenderType.guiOverlay(), x, y - 1, x + 1, y + 10, 0xff000000 | color);
+            if (cursorY == index && isFocused() && (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0) {
+                graphics.fill(RenderType.guiOverlay(), x, y - 1, x + 1, y + 10, color);
             }
             return;
         }
@@ -80,7 +80,7 @@ public class FormattedTextArea extends AbstractWidget {
                 int textWidth = graphics.drawString(font, format(text.substring(0, cursorX), style), textX, y, color, shadow);
                 graphics.drawString(font, format(text.substring(cursorX), style), textWidth, y, color, shadow);
                 if (shouldRenderCursor) {
-                    graphics.fill(RenderType.guiOverlay(), textWidth - 1, y - 1, textWidth, y + 10, 0xff000000 | color);
+                    graphics.fill(RenderType.guiOverlay(), textWidth - 1, y - 1, textWidth, y + 10, color);
                 }
             } else {
                 int textWidth = graphics.drawString(font, format(text, style), textX, y, color, shadow);
@@ -166,7 +166,7 @@ public class FormattedTextArea extends AbstractWidget {
 
     @Override
     public boolean charTyped(char codePoint, int modifiers) {
-        if (!(isActive() && isFocused() && isEditable()) || !StringUtil.isAllowedChatCharacter(codePoint)) return false;
+        if (!isActive() || !isFocused() || !StringUtil.isAllowedChatCharacter(codePoint)) return false;
         String oldText = lines.get(cursorY).text();
         return tryEdit(
                 () -> insertText(Character.toString(codePoint)),
@@ -180,11 +180,11 @@ public class FormattedTextArea extends AbstractWidget {
         revert.run();
         return false;
     }
-    
+
     private boolean isValid() {
         return true; //TODO
     }
-    
+
     private boolean insertText(String text) {
         FormattedLine line = lines.get(cursorY);
         String oldText = line.text();
@@ -196,14 +196,10 @@ public class FormattedTextArea extends AbstractWidget {
         return true;
     }
 
-    private boolean isEditable() {
-        return true; //TODO
-    }
-
     public List<FormattedLine> getLines() {
         return lines;
     }
-    
+
     public boolean toggleStyle(Function<Style, Boolean> styleGetter, BiFunction<Style, Boolean, Style> styleSetter) {
         FormattedLine line = lines.get(cursorY);
         Style style = line.style();
