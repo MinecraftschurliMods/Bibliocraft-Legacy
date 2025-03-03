@@ -209,4 +209,9 @@ public class FormattedTextArea extends AbstractWidget {
                 () -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, oldValue)))
         );
     }
+
+    public void setColor(int color) {
+        FormattedLine line = lines.get(cursorY);
+        lines.set(cursorY, line.withStyle(line.style().withColor(color)));
+    }
 }

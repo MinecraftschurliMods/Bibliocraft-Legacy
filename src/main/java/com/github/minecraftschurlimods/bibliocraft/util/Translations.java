@@ -24,6 +24,7 @@ public interface Translations {
     String CLOCK_TRIGGERS                    = "gui." + BibliocraftApi.MOD_ID + ".clock.triggers";
     String FANCY_SIGN_BOLD                   = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.bold";
     String FANCY_SIGN_BOLD_SHORT             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.bold.short";
+    String FANCY_SIGN_COLOR_HINT             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.color_hint";
     String FANCY_SIGN_ITALIC                 = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.italic";
     String FANCY_SIGN_ITALIC_SHORT           = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.italic.short";
     String FANCY_SIGN_OBFUSCATED             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.obfuscated";

@@ -960,6 +960,7 @@
   "gui.bibliocraft.clock.triggers": "Triggers",
   "gui.bibliocraft.fancy_sign.bold": "Bold",
   "gui.bibliocraft.fancy_sign.bold.short": "B",
+  "gui.bibliocraft.fancy_sign.color_hint": "#RRGGBB",
   "gui.bibliocraft.fancy_sign.italic": "Italic",
   "gui.bibliocraft.fancy_sign.italic.short": "I",
   "gui.bibliocraft.fancy_sign.obfuscated": "Obfuscated",

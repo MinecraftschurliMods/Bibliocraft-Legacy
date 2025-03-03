@@ -93,6 +93,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.CLOCK_TRIGGERS, "Triggers");
         add(Translations.FANCY_SIGN_BOLD, "Bold");
         add(Translations.FANCY_SIGN_BOLD_SHORT, "B");
+        add(Translations.FANCY_SIGN_COLOR_HINT, "#RRGGBB");
         add(Translations.FANCY_SIGN_ITALIC, "Italic");
         add(Translations.FANCY_SIGN_ITALIC_SHORT, "I");
         add(Translations.FANCY_SIGN_OBFUSCATED, "Obfuscated");
