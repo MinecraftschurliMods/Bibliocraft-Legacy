@@ -77,9 +77,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_wood_types.tooltip", "Whether to show blocks for all wood types in JEI, or just the default oak.");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types", "Show Color Types");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types.tooltip", "Whether to show blocks for all color types in JEI, or just the default white.");
-        for (ChatFormatting color : BCUtil.getChatFormattingColors().toList()) {
-            add("color." + color.getName(), DatagenUtil.toTranslation(color.getName()));
-        }
+        BCUtil.getChatFormattingColors().forEach(color -> add("color." + color.getName(), DatagenUtil.toTranslation(color.getName())));
         add(Translations.CLOCK_ADD_TRIGGER, "Add Trigger");
         add(Translations.CLOCK_DELETE_TRIGGER, "Delete Trigger");
         add(Translations.CLOCK_EDIT_TRIGGER, "Edit Trigger");
