@@ -4,8 +4,10 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSorting;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import net.minecraft.ChatFormatting;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -75,6 +77,9 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_wood_types.tooltip", "Whether to show blocks for all wood types in JEI, or just the default oak.");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types", "Show Color Types");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types.tooltip", "Whether to show blocks for all color types in JEI, or just the default white.");
+        for (ChatFormatting color : BCUtil.getChatFormattingColors().toList()) {
+            add("color." + color.getName(), keyToTranslation(color.getName()));
+        }
         add(Translations.CLOCK_ADD_TRIGGER, "Add Trigger");
         add(Translations.CLOCK_DELETE_TRIGGER, "Delete Trigger");
         add(Translations.CLOCK_EDIT_TRIGGER, "Edit Trigger");
@@ -153,5 +158,28 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
      */
     private void addDefaultItem(DeferredHolder<Item, ?> item) {
         add(item.get(), DatagenUtil.toTranslation(item.getId().getPath()));
+    }
+
+    /**
+     * Converts a translation key into an English translation.
+     *
+     * @param key The translation key to convert.
+     * @return The corresponding English translation.
+     */
+    private static String keyToTranslation(String key) {
+        StringBuilder builder = new StringBuilder();
+        boolean space = true;
+        for (char c : key.toCharArray()) {
+            if (c == '_') {
+                builder.append(' ');
+                space = true;
+            } else if (space) {
+                builder.append(Character.toUpperCase(c));
+                space = false;
+            } else {
+                builder.append(c);
+            }
+        }
+        return builder.toString();
     }
 }

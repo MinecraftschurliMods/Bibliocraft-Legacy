@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextAr
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineList;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineListPacket;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -16,11 +17,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Arrays;
 import java.util.HexFormat;
 import java.util.Objects;
+import java.util.Optional;
 
 public class FancySignScreen extends Screen {
     private static final Component BOLD = Component.translatable(Translations.FANCY_SIGN_BOLD);
@@ -33,6 +36,7 @@ public class FancySignScreen extends Screen {
     private static final Component UNDERLINED_SHORT = Component.translatable(Translations.FANCY_SIGN_UNDERLINED_SHORT).withStyle(Style.EMPTY.withUnderlined(true));
     private static final Component STRIKETHROUGH_SHORT = Component.translatable(Translations.FANCY_SIGN_STRIKETHROUGH_SHORT).withStyle(Style.EMPTY.withStrikethrough(true));
     private static final Component OBFUSCATED_SHORT = Component.translatable(Translations.FANCY_SIGN_OBFUSCATED_SHORT).withStyle(Style.EMPTY.withObfuscated(true));
+    private static final Component COLOR_HINT = Component.translatable(Translations.FANCY_SIGN_COLOR_HINT);
     private final BlockPos pos;
     private final boolean back;
     private FormattedTextArea textArea;
@@ -44,6 +48,7 @@ public class FancySignScreen extends Screen {
         this.back = back;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Override
     protected void init() {
         if (Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign) {
@@ -74,26 +79,21 @@ public class FancySignScreen extends Screen {
                     .build());
 
             // Color buttons and text box
-            int[] colors = Arrays.stream(ChatFormatting.values())
-                    .map(ChatFormatting::getColor)
-                    .filter(Objects::nonNull)
-                    .mapToInt(e -> e)
-                    .toArray();
+            ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
             int columns = 4;
             colorBox = addRenderableWidget(new EditBox(font, x - 16 - 16 * columns, y + 64 + 16 * Math.floorDiv(colors.length, columns), columns * 16, 16, Component.empty()));
+            colorBox.setHint(COLOR_HINT);
             colorBox.setMaxLength(7);
             colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
             colorBox.setResponder(s -> {
                 if (s.length() <= 1) return;
                 textArea.setColor(Integer.parseInt(s.substring(1), 16));
             });
+            setColor(textArea.getLines().getFirst().style().getColor().getValue());
             for (int i = 0; i < colors.length; i++) {
                 final int j = i; // I love Java
-                addRenderableWidget(new ColorButton(colors[i], Button.builder(Component.empty(), $ -> {
-                    textArea.setColor(colors[j]);
-                    String hexString = Integer.toHexString(colors[j]);
-                    colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
-                }).bounds(x - 16 - 16 * (columns - i % columns), y + 48 + 16 * Math.floorDiv(i, columns), 16, 16)));
+                ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor())).bounds(x - 16 - 16 * (columns - i % columns), y + 48 + 16 * Math.floorDiv(i, columns), 16, 16)));
+                button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
             }
         }
     }
@@ -117,11 +117,9 @@ public class FancySignScreen extends Screen {
         super.onClose();
     }
     
-    private static boolean isHexDigit(char c) {
-        return Character.isDigit(c) || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
-    }
-    
-    private static boolean isHexDigit(int c) {
-        return isHexDigit((char) c);
+    public void setColor(int color) {
+        textArea.setColor(color);
+        String hexString = Integer.toHexString(color);
+        colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
     }
 }

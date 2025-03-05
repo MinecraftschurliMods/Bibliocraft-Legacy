@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -38,6 +39,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Utility class holding various helper methods.
@@ -192,6 +194,13 @@ public final class BCUtil {
      */
     public static <T> T decodeNbt(Codec<T> codec, Tag tag) {
         return codec.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
+    }
+
+    /**
+     * @return A {@link Stream} of all {@link ChatFormatting}s that represent a color.
+     */
+    public static Stream<ChatFormatting> getChatFormattingColors() {
+        return Arrays.stream(ChatFormatting.values()).filter(ChatFormatting::isColor);
     }
 
     /**
