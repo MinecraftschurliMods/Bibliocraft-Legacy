@@ -20,10 +20,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import java.util.Arrays;
 import java.util.HexFormat;
 import java.util.Objects;
-import java.util.Optional;
 
 public class FancySignScreen extends Screen {
     private static final Component BOLD = Component.translatable(Translations.FANCY_SIGN_BOLD);
@@ -36,16 +34,41 @@ public class FancySignScreen extends Screen {
     private static final Component UNDERLINED_SHORT = Component.translatable(Translations.FANCY_SIGN_UNDERLINED_SHORT).withStyle(Style.EMPTY.withUnderlined(true));
     private static final Component STRIKETHROUGH_SHORT = Component.translatable(Translations.FANCY_SIGN_STRIKETHROUGH_SHORT).withStyle(Style.EMPTY.withStrikethrough(true));
     private static final Component OBFUSCATED_SHORT = Component.translatable(Translations.FANCY_SIGN_OBFUSCATED_SHORT).withStyle(Style.EMPTY.withObfuscated(true));
+    private static final Component MODE_GLOWING = Component.translatable(Translations.FANCY_SIGN_MODE_GLOWING);
+    private static final Component MODE_NORMAL = Component.translatable(Translations.FANCY_SIGN_MODE_NORMAL);
+    private static final Component MODE_SHADOW = Component.translatable(Translations.FANCY_SIGN_MODE_SHADOW);
+    private static final Component MODE_TOGGLE = Component.translatable(Translations.FANCY_SIGN_MODE_TOGGLE);
     private static final Component COLOR_HINT = Component.translatable(Translations.FANCY_SIGN_COLOR_HINT);
     private final BlockPos pos;
     private final boolean back;
     private FormattedTextArea textArea;
+    private Button modeButton;
     private EditBox colorBox;
 
     public FancySignScreen(BlockPos pos, boolean back) {
         super(Component.empty());
         this.pos = pos;
         this.back = back;
+    }
+
+    public void setColor(int color) {
+        textArea.setColor(color);
+        String hexString = Integer.toHexString(color);
+        colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
+    }
+
+    @Override
+    public void onClose() {
+        if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign))
+            return;
+        FormattedLineList list = new FormattedLineList(textArea.getLines());
+        if (back) {
+            sign.setBackContent(list);
+        } else {
+            sign.setFrontContent(list);
+        }
+        PacketDistributor.sendToServer(new FormattedLineListPacket(list, pos, back));
+        super.onClose();
     }
 
     @SuppressWarnings("DataFlowIssue")
@@ -59,24 +82,32 @@ public class FancySignScreen extends Screen {
             // Formatting buttons
             addRenderableWidget(Button.builder(BOLD_SHORT, $ -> textArea.toggleStyle(Style::isBold, Style::withBold))
                     .tooltip(Tooltip.create(BOLD))
-                    .bounds(x - 64, y, 16, 16)
+                    .bounds(x - 80, y, 16, 16)
                     .build());
             addRenderableWidget(Button.builder(ITALIC_SHORT, $ -> textArea.toggleStyle(Style::isItalic, Style::withItalic))
                     .tooltip(Tooltip.create(ITALIC))
-                    .bounds(x - 48, y, 16, 16)
+                    .bounds(x - 64, y, 16, 16)
                     .build());
             addRenderableWidget(Button.builder(UNDERLINED_SHORT, $ -> textArea.toggleStyle(Style::isUnderlined, Style::withUnderlined))
                     .tooltip(Tooltip.create(UNDERLINED))
-                    .bounds(x - 32, y, 16, 16)
+                    .bounds(x - 48, y, 16, 16)
                     .build());
             addRenderableWidget(Button.builder(STRIKETHROUGH_SHORT, $ -> textArea.toggleStyle(Style::isStrikethrough, Style::withStrikethrough))
                     .tooltip(Tooltip.create(STRIKETHROUGH))
-                    .bounds(x - 64, y + 16, 16, 16)
+                    .bounds(x - 32, y, 16, 16)
                     .build());
             addRenderableWidget(Button.builder(OBFUSCATED_SHORT, $ -> textArea.toggleStyle(Style::isObfuscated, Style::withObfuscated))
                     .tooltip(Tooltip.create(OBFUSCATED))
-                    .bounds(x - 48, y + 16, 16, 16)
+                    .bounds(x - 80, y + 16, 16, 16)
                     .build());
+            modeButton = addRenderableWidget(Button.builder(MODE_NORMAL, button -> {
+                        textArea.toggleMode();
+                        updateModeButton();
+                    })
+                    .tooltip(Tooltip.create(MODE_TOGGLE))
+                    .bounds(x - 64, y + 16, 48, 16)
+                    .build());
+            updateModeButton();
 
             // Color buttons and text box
             ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
@@ -89,7 +120,10 @@ public class FancySignScreen extends Screen {
                 if (s.length() <= 1) return;
                 textArea.setColor(Integer.parseInt(s.substring(1), 16));
             });
-            setColor(textArea.getLines().getFirst().style().getColor().getValue());
+            TextColor color = textArea.getLines().getFirst().style().getColor();
+            if (color != null) {
+                setColor(color.getValue());
+            }
             for (int i = 0; i < colors.length; i++) {
                 final int j = i; // I love Java
                 ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor())).bounds(x - 16 - 16 * (columns - i % columns), y + 48 + 16 * Math.floorDiv(i, columns), 16, 16)));
@@ -103,23 +137,12 @@ public class FancySignScreen extends Screen {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         //TODO
     }
-
-    @Override
-    public void onClose() {
-        if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign)) return;
-        FormattedLineList list = new FormattedLineList(textArea.getLines());
-        if (back) {
-            sign.setBackContent(list);
-        } else {
-            sign.setFrontContent(list);
-        }
-        PacketDistributor.sendToServer(new FormattedLineListPacket(list, pos, back));
-        super.onClose();
-    }
     
-    public void setColor(int color) {
-        textArea.setColor(color);
-        String hexString = Integer.toHexString(color);
-        colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
+    public void updateModeButton() {
+        modeButton.setMessage(switch (textArea.getMode()) {
+            case NORMAL -> MODE_NORMAL;
+            case SHADOW -> MODE_SHADOW;
+            case GLOWING -> MODE_GLOWING;
+        });
     }
 }

@@ -10,9 +10,11 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.util.FastColor;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.StringUtil;
 import org.lwjgl.glfw.GLFW;
@@ -52,14 +54,8 @@ public class FormattedTextArea extends AbstractWidget {
         String text = line.text();
         Style style = line.style();
         int size = line.size();
-        boolean shadow = line.shadow();
+        FormattedLine.Mode mode = line.mode();
         int color = 0xff000000 | (style.getColor() == null ? 0 : style.getColor().getValue());
-        if (text == null || text.isEmpty()) {
-            if (cursorY == index && isFocused() && (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0) {
-                graphics.fill(RenderType.guiOverlay(), x, y - 1, x + 1, y + 10, color);
-            }
-            return;
-        }
 
         // is the current line selected?
         boolean cursorInLine = cursorY == index;
@@ -77,21 +73,34 @@ public class FormattedTextArea extends AbstractWidget {
         int textX = x + 1;
         if (cursorInLine) {
             if (cursorInText) {
-                int textWidth = graphics.drawString(font, format(text.substring(0, cursorX), style), textX, y, color, shadow);
-                graphics.drawString(font, format(text.substring(cursorX), style), textWidth, y, color, shadow);
+                int textWidth = drawText(graphics, format(text.substring(0, cursorX), style), textX, y, color, mode);
+                drawText(graphics, format(text.substring(cursorX), style), textWidth, y, color, mode);
                 if (shouldRenderCursor) {
                     graphics.fill(RenderType.guiOverlay(), textWidth - 1, y - 1, textWidth, y + 10, color);
                 }
             } else {
-                int textWidth = graphics.drawString(font, format(text, style), textX, y, color, shadow);
+                int textWidth = drawText(graphics, format(text, style), textX, y, color, mode);
                 if (shouldRenderCursor) {
-                    graphics.drawString(font, "_", textWidth, y, color, shadow);
+                    drawText(graphics, format("_", style), textWidth, y, color, mode);
                 }
             }
         } else {
-            graphics.drawString(font, format(text, style), textX, y, color, shadow);
+            drawText(graphics, format(text, style), textX, y, color, mode);
         }
         pose.popPose();
+    }
+
+    private int drawText(GuiGraphics graphics, FormattedCharSequence text, float x, float y, int color, FormattedLine.Mode mode) {
+        if (mode == FormattedLine.Mode.GLOWING) {
+            int outlineColor = color == 0 ? 0xfff0ebcc : FastColor.ARGB32.color(255,
+                    (int) ((double) FastColor.ARGB32.red(color) * 0.4),
+                    (int) ((double) FastColor.ARGB32.green(color) * 0.4),
+                    (int) ((double) FastColor.ARGB32.blue(color) * 0.4));
+            font.drawInBatch8xOutline(text, x, y, color, outlineColor, graphics.pose().last().pose(), graphics.bufferSource(), LightTexture.FULL_BRIGHT);
+            return (int) x + font.width(text);
+        } else {
+            return graphics.drawString(font, text, x, y, color, mode == FormattedLine.Mode.SHADOW);
+        }
     }
 
     private FormattedCharSequence format(String text, Style style) {
@@ -154,17 +163,6 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     @Override
-    protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
-        narrationElementOutput.add(NarratedElementType.TITLE, createNarrationMessage());
-    }
-
-    @Override
-    public void setFocused(boolean focused) {
-        super.setFocused(focused);
-        focusedTimestamp = Util.getMillis();
-    }
-
-    @Override
     public boolean charTyped(char codePoint, int modifiers) {
         if (!isActive() || !isFocused() || !StringUtil.isAllowedChatCharacter(codePoint)) return false;
         String oldText = lines.get(cursorY).text();
@@ -174,26 +172,15 @@ public class FormattedTextArea extends AbstractWidget {
         );
     }
 
-    private boolean tryEdit(Runnable edit, Runnable revert) {
-        edit.run();
-        if (isValid()) return true;
-        revert.run();
-        return false;
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
+        narrationElementOutput.add(NarratedElementType.TITLE, createNarrationMessage());
     }
 
-    private boolean isValid() {
-        return true; //TODO
-    }
-
-    private boolean insertText(String text) {
-        FormattedLine line = lines.get(cursorY);
-        String oldText = line.text();
-        if (!tryEdit(
-                () -> lines.set(cursorY, line.withText(line.text().substring(0, cursorX) + text + line.text().substring(cursorX))),
-                () -> lines.set(cursorY, line.withText(oldText))
-        )) return false;
-        cursorX += text.length();
-        return true;
+    @Override
+    public void setFocused(boolean focused) {
+        super.setFocused(focused);
+        focusedTimestamp = Util.getMillis();
     }
 
     public List<FormattedLine> getLines() {
@@ -213,5 +200,40 @@ public class FormattedTextArea extends AbstractWidget {
     public void setColor(int color) {
         FormattedLine line = lines.get(cursorY);
         lines.set(cursorY, line.withStyle(line.style().withColor(color)));
+    }
+
+    public void toggleMode() {
+        FormattedLine line = lines.get(cursorY);
+        lines.set(cursorY, line.withMode(switch (line.mode()) {
+            case NORMAL -> FormattedLine.Mode.SHADOW;
+            case SHADOW -> FormattedLine.Mode.GLOWING;
+            case GLOWING -> FormattedLine.Mode.NORMAL;
+        }));
+    }
+
+    public FormattedLine.Mode getMode() {
+        return lines.get(cursorY).mode();
+    }
+
+    private boolean isValid() {
+        return true; //TODO
+    }
+
+    private boolean tryEdit(Runnable edit, Runnable revert) {
+        edit.run();
+        if (isValid()) return true;
+        revert.run();
+        return false;
+    }
+
+    private boolean insertText(String text) {
+        FormattedLine line = lines.get(cursorY);
+        String oldText = line.text();
+        if (!tryEdit(
+                () -> lines.set(cursorY, line.withText(line.text().substring(0, cursorX) + text + line.text().substring(cursorX))),
+                () -> lines.set(cursorY, line.withText(oldText))
+        )) return false;
+        cursorX += text.length();
+        return true;
     }
 }
