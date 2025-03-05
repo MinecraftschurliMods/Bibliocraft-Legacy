@@ -78,7 +78,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types", "Show Color Types");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types.tooltip", "Whether to show blocks for all color types in JEI, or just the default white.");
         for (ChatFormatting color : BCUtil.getChatFormattingColors().toList()) {
-            add("color." + color.getName(), keyToTranslation(color.getName()));
+            add("color." + color.getName(), DatagenUtil.toTranslation(color.getName()));
         }
         add(Translations.CLOCK_ADD_TRIGGER, "Add Trigger");
         add(Translations.CLOCK_DELETE_TRIGGER, "Delete Trigger");
@@ -162,28 +162,5 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
      */
     private void addDefaultItem(DeferredHolder<Item, ?> item) {
         add(item.get(), DatagenUtil.toTranslation(item.getId().getPath()));
-    }
-
-    /**
-     * Converts a translation key into an English translation.
-     *
-     * @param key The translation key to convert.
-     * @return The corresponding English translation.
-     */
-    private static String keyToTranslation(String key) {
-        StringBuilder builder = new StringBuilder();
-        boolean space = true;
-        for (char c : key.toCharArray()) {
-            if (c == '_') {
-                builder.append(' ');
-                space = true;
-            } else if (space) {
-                builder.append(Character.toUpperCase(c));
-                space = false;
-            } else {
-                builder.append(c);
-            }
-        }
-        return builder.toString();
     }
 }
