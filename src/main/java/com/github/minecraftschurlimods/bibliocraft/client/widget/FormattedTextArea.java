@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.StringUtil;
@@ -22,6 +23,7 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FormattedTextArea extends AbstractWidget {
@@ -32,6 +34,7 @@ public class FormattedTextArea extends AbstractWidget {
     private int cursorX = 0;
     private int cursorY = 0;
     private long focusedTimestamp = Util.getMillis();
+    private Consumer<FormattedLine> onLineChange;
 
     public FormattedTextArea(int x, int y, Component message, List<FormattedLine> lines) {
         super(x, y, WIDTH, HEIGHT, message);
@@ -122,12 +125,14 @@ public class FormattedTextArea extends AbstractWidget {
                 if (cursorY < lines.size() - 1) {
                     cursorX = getCursorXForNewLine(cursorY, cursorY + 1);
                     cursorY++;
+                    onLineChange.accept(lines.get(cursorY));
                 }
                 return true;
             case GLFW.GLFW_KEY_UP: //TODO selection, ctrl
                 if (cursorY > 0) {
                     cursorX = getCursorXForNewLine(cursorY, cursorY - 1);
                     cursorY--;
+                    onLineChange.accept(lines.get(cursorY));
                 }
                 return true;
             case GLFW.GLFW_KEY_LEFT: //TODO selection, ctrl
@@ -192,6 +197,10 @@ public class FormattedTextArea extends AbstractWidget {
     public void setFocused(boolean focused) {
         super.setFocused(focused);
         focusedTimestamp = Util.getMillis();
+    }
+
+    public void setOnLineChange(Consumer<FormattedLine> onLineChange) {
+        this.onLineChange = onLineChange;
     }
 
     public List<FormattedLine> getLines() {

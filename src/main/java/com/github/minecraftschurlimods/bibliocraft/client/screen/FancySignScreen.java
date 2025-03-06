@@ -82,88 +82,90 @@ public class FancySignScreen extends Screen {
     @SuppressWarnings("DataFlowIssue")
     @Override
     protected void init() {
-        if (Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign) {
-            int x = (width - FormattedTextArea.WIDTH) / 2;
-            int y = 6;
-            textArea = addRenderableWidget(new FormattedTextArea(x, y, Component.empty(), sign.getFrontContent().lines()));
+        if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign))
+            return;
+        int x = (width - FormattedTextArea.WIDTH) / 2;
+        int y = 6;
+        textArea = addRenderableWidget(new FormattedTextArea(x, y, Component.empty(), sign.getFrontContent().lines()));
+        textArea.setOnLineChange(this::onLineChange);
 
-            // Formatting buttons
-            addRenderableWidget(Button.builder(BOLD_SHORT, $ -> textArea.toggleStyle(Style::isBold, Style::withBold))
-                    .tooltip(Tooltip.create(BOLD))
-                    .bounds(x - 80, y, 16, 16)
-                    .build());
-            addRenderableWidget(Button.builder(ITALIC_SHORT, $ -> textArea.toggleStyle(Style::isItalic, Style::withItalic))
-                    .tooltip(Tooltip.create(ITALIC))
-                    .bounds(x - 64, y, 16, 16)
-                    .build());
-            addRenderableWidget(Button.builder(UNDERLINED_SHORT, $ -> textArea.toggleStyle(Style::isUnderlined, Style::withUnderlined))
-                    .tooltip(Tooltip.create(UNDERLINED))
-                    .bounds(x - 48, y, 16, 16)
-                    .build());
-            addRenderableWidget(Button.builder(STRIKETHROUGH_SHORT, $ -> textArea.toggleStyle(Style::isStrikethrough, Style::withStrikethrough))
-                    .tooltip(Tooltip.create(STRIKETHROUGH))
-                    .bounds(x - 32, y, 16, 16)
-                    .build());
-            addRenderableWidget(Button.builder(OBFUSCATED_SHORT, $ -> textArea.toggleStyle(Style::isObfuscated, Style::withObfuscated))
-                    .tooltip(Tooltip.create(OBFUSCATED))
-                    .bounds(x - 80, y + 16, 16, 16)
-                    .build());
-            modeButton = addRenderableWidget(Button.builder(MODE_NORMAL, button -> {
-                        textArea.toggleMode();
-                        updateModeButton();
-                    })
-                    .tooltip(Tooltip.create(MODE_TOGGLE))
-                    .bounds(x - 64, y + 16, 48, 16)
-                    .build());
-            updateModeButton();
+        // Formatting buttons
+        addRenderableWidget(Button.builder(BOLD_SHORT, $ -> textArea.toggleStyle(Style::isBold, Style::withBold))
+                .tooltip(Tooltip.create(BOLD))
+                .bounds(x - 80, y, 16, 16)
+                .build());
+        addRenderableWidget(Button.builder(ITALIC_SHORT, $ -> textArea.toggleStyle(Style::isItalic, Style::withItalic))
+                .tooltip(Tooltip.create(ITALIC))
+                .bounds(x - 64, y, 16, 16)
+                .build());
+        addRenderableWidget(Button.builder(UNDERLINED_SHORT, $ -> textArea.toggleStyle(Style::isUnderlined, Style::withUnderlined))
+                .tooltip(Tooltip.create(UNDERLINED))
+                .bounds(x - 48, y, 16, 16)
+                .build());
+        addRenderableWidget(Button.builder(STRIKETHROUGH_SHORT, $ -> textArea.toggleStyle(Style::isStrikethrough, Style::withStrikethrough))
+                .tooltip(Tooltip.create(STRIKETHROUGH))
+                .bounds(x - 32, y, 16, 16)
+                .build());
+        addRenderableWidget(Button.builder(OBFUSCATED_SHORT, $ -> textArea.toggleStyle(Style::isObfuscated, Style::withObfuscated))
+                .tooltip(Tooltip.create(OBFUSCATED))
+                .bounds(x - 80, y + 16, 16, 16)
+                .build());
+        modeButton = addRenderableWidget(Button.builder(MODE_NORMAL, button -> {
+                    textArea.toggleMode();
+                    updateModeButton();
+                })
+                .tooltip(Tooltip.create(MODE_TOGGLE))
+                .bounds(x - 64, y + 16, 48, 16)
+                .build());
+        updateModeButton();
 
-            // Color buttons and text box
-            ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
-            int colorRows = Math.floorDiv(colors.length, 4);
-            colorBox = addRenderableWidget(new EditBox(font, x - 80, y + 64 + 16 * colorRows, 64, 16, Component.empty()));
-            colorBox.setHint(COLOR_HINT);
-            colorBox.setMaxLength(7);
-            colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
-            colorBox.setResponder(s -> {
-                if (s.length() <= 1) return;
-                textArea.setColor(Integer.parseInt(s.substring(1), 16));
-            });
-            TextColor color = textArea.getLines().getFirst().style().getColor();
-            if (color != null) {
-                setColor(color.getValue());
-            }
-            for (int i = 0; i < colors.length; i++) {
-                final int j = i; // I love Java
-                ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor())).bounds(x - 16 - 16 * (4 - i % 4), y + 48 + 16 * Math.floorDiv(i, 4), 16, 16)));
-                button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
-            }
-
-            // Size buttons and text box
-            sizeBox = addRenderableWidget(new EditBox(font, x - 64, y + 96 + 16 * colorRows, 32, 16, Component.empty()));
-            sizeBox.setFilter(s -> {
-                try {
-                    int i = Integer.parseInt(s);
-                    return i >= FormattedLine.MIN_SIZE && i <= FormattedLine.MAX_SIZE;
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            });
-            sizeBox.setResponder(s -> {
-                try {
-                    textArea.setSize(Integer.parseInt(s));
-                } catch (NumberFormatException ignored) {}
-            });
-            scaleDownButton = addRenderableWidget(Button.builder(SCALE_DOWN, button -> {
-                int size = textArea.getSize() - 1;
-                sizeBox.setValue(String.valueOf(size));
-                updateSizeButtons(size);
-            }).bounds(x - 80, y + 96 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(SCALE_DOWN_TOOLTIP)).build());
-            scaleUpButton = addRenderableWidget(Button.builder(SCALE_UP, button -> {
-                int size = textArea.getSize() + 1;
-                sizeBox.setValue(String.valueOf(size));
-                updateSizeButtons(size);
-            }).bounds(x - 32, y + 96 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(SCALE_UP_TOOLTIP)).build());
+        // Color buttons and text box
+        ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
+        int colorRows = Math.floorDiv(colors.length, 4);
+        colorBox = addRenderableWidget(new EditBox(font, x - 80, y + 64 + 16 * colorRows, 64, 16, Component.empty()));
+        colorBox.setHint(COLOR_HINT);
+        colorBox.setMaxLength(7);
+        colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
+        colorBox.setResponder(s -> {
+            if (s.length() <= 1) return;
+            textArea.setColor(Integer.parseInt(s.substring(1), 16));
+        });
+        TextColor color = textArea.getLines().getFirst().style().getColor();
+        if (color != null) {
+            setColor(color.getValue());
         }
+        for (int i = 0; i < colors.length; i++) {
+            final int j = i; // I love Java
+            ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor())).bounds(x - 16 - 16 * (4 - i % 4), y + 48 + 16 * Math.floorDiv(i, 4), 16, 16)));
+            button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
+        }
+
+        // Size buttons and text box
+        sizeBox = addRenderableWidget(new EditBox(font, x - 64, y + 96 + 16 * colorRows, 32, 16, Component.empty()));
+        sizeBox.setFilter(s -> {
+            try {
+                int i = Integer.parseInt(s);
+                return i >= FormattedLine.MIN_SIZE && i <= FormattedLine.MAX_SIZE;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        });
+        sizeBox.setResponder(s -> {
+            try {
+                textArea.setSize(Integer.parseInt(s));
+            } catch (NumberFormatException ignored) {}
+        });
+        scaleDownButton = addRenderableWidget(Button.builder(SCALE_DOWN, button -> {
+            int size = textArea.getSize() - 1;
+            sizeBox.setValue(String.valueOf(size));
+            updateSizeButtons(size);
+        }).bounds(x - 80, y + 96 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(SCALE_DOWN_TOOLTIP)).build());
+        scaleUpButton = addRenderableWidget(Button.builder(SCALE_UP, button -> {
+            int size = textArea.getSize() + 1;
+            sizeBox.setValue(String.valueOf(size));
+            updateSizeButtons(size);
+        }).bounds(x - 32, y + 96 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(SCALE_UP_TOOLTIP)).build());
+        onLineChange(textArea.getLines().getFirst());
     }
 
     @Override
@@ -183,5 +185,12 @@ public class FancySignScreen extends Screen {
     private void updateSizeButtons(int size) {
         scaleDownButton.active = size > FormattedLine.MIN_SIZE;
         scaleUpButton.active = size < FormattedLine.MAX_SIZE;
+    }
+
+    private void onLineChange(FormattedLine line) {
+        TextColor color = line.style().getColor();
+        setColor(color == null ? 0 : color.getValue());
+        sizeBox.setValue(String.valueOf(line.size()));
+        updateSizeButtons(line.size());
     }
 }
