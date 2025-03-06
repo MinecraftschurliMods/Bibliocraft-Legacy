@@ -105,6 +105,10 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.FANCY_SIGN_MODE_TOGGLE, "Toggle Shadow/Glowing");
         add(Translations.FANCY_SIGN_OBFUSCATED, "Obfuscated");
         add(Translations.FANCY_SIGN_OBFUSCATED_SHORT, "O");
+        add(Translations.FANCY_SIGN_SCALE_DOWN, "-");
+        add(Translations.FANCY_SIGN_SCALE_DOWN_TOOLTIP, "Scale Down");
+        add(Translations.FANCY_SIGN_SCALE_UP, "+");
+        add(Translations.FANCY_SIGN_SCALE_UP_TOOLTIP, "Scale Up");
         add(Translations.FANCY_SIGN_STRIKETHROUGH, "Strikethrough");
         add(Translations.FANCY_SIGN_STRIKETHROUGH_SHORT, "S");
         add(Translations.FANCY_SIGN_UNDERLINED, "Underlined");

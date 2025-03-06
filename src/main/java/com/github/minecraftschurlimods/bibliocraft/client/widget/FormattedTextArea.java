@@ -63,46 +63,55 @@ public class FormattedTextArea extends AbstractWidget {
         boolean cursorInText = cursorInLine && cursorX < text.length();
         boolean shouldRenderCursor = cursorInLine && isFocused() && (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0;
 
-        // scale the text, 8 is the default font size, and we subtract a padding of 1 on each side
-        PoseStack pose = graphics.pose();
-        pose.pushPose();
-        float scale = (size - 2) / 8f;
-        pose.scale(scale, scale, 1);
-
         // draw the text
         int textX = x + 1;
+        float scale = getScale(size);
         if (cursorInLine) {
             if (cursorInText) {
-                int textWidth = drawText(graphics, format(text.substring(0, cursorX), style), textX, y, color, mode);
-                drawText(graphics, format(text.substring(cursorX), style), textWidth, y, color, mode);
+                int textWidth = drawText(graphics, format(text.substring(0, cursorX), style), textX, y, color, size, mode);
+                drawText(graphics, format(text.substring(cursorX), style), textX + textWidth * scale, y, color, size, mode);
                 if (shouldRenderCursor) {
-                    graphics.fill(RenderType.guiOverlay(), textWidth - 1, y - 1, textWidth, y + 10, color);
+                    graphics.fill(RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
                 }
             } else {
-                int textWidth = drawText(graphics, format(text, style), textX, y, color, mode);
+                int textWidth = drawText(graphics, format(text, style), textX, y, color, size, mode);
                 if (shouldRenderCursor) {
-                    drawText(graphics, format("_", style), textWidth, y, color, mode);
+                    drawText(graphics, format("_", style), textX + textWidth * scale, y, color, size, mode);
                 }
             }
         } else {
-            drawText(graphics, format(text, style), textX, y, color, mode);
+            drawText(graphics, format(text, style), x + 1, y, color, size, mode);
         }
-        pose.popPose();
     }
 
-    private int drawText(GuiGraphics graphics, FormattedCharSequence text, float x, float y, int color, FormattedLine.Mode mode) {
+    private int drawText(GuiGraphics graphics, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
+        float scale = getScale(size);
+        int result;
+        PoseStack pose = graphics.pose();
+        pose.pushPose();
+        pose.translate(x, y, 0);
+        pose.scale(scale, scale, 1);
         if (mode == FormattedLine.Mode.GLOWING) {
             int outlineColor = color == 0 ? 0xfff0ebcc : FastColor.ARGB32.color(255,
                     (int) ((double) FastColor.ARGB32.red(color) * 0.4),
                     (int) ((double) FastColor.ARGB32.green(color) * 0.4),
                     (int) ((double) FastColor.ARGB32.blue(color) * 0.4));
-            font.drawInBatch8xOutline(text, x, y, color, outlineColor, graphics.pose().last().pose(), graphics.bufferSource(), LightTexture.FULL_BRIGHT);
-            return (int) x + font.width(text);
-        } else return graphics.drawString(font, text, x, y, color, mode == FormattedLine.Mode.SHADOW);
+            font.drawInBatch8xOutline(text, 0, 0, color, outlineColor, pose.last().pose(), graphics.bufferSource(), LightTexture.FULL_BRIGHT);
+            result = font.width(text);
+        } else {
+            result = graphics.drawString(font, text, 0, 0, color, mode == FormattedLine.Mode.SHADOW);
+        }
+        pose.popPose();
+        return result;
     }
 
     private FormattedCharSequence format(String text, Style style) {
         return FormattedCharSequence.forward(text, style);
+    }
+
+    private float getScale(int size) {
+        // scale the text, 8 is the default font size, and we subtract a padding of 1 on each side
+        return (size - 2) / 8f;
     }
 
     @Override
@@ -204,6 +213,14 @@ public class FormattedTextArea extends AbstractWidget {
         lines.set(cursorY, line.withStyle(line.style().withColor(color)));
     }
 
+    public void setSize(int size) {
+        lines.set(cursorY, lines.get(cursorY).withSize(size));
+    }
+
+    public int getSize() {
+        return lines.get(cursorY).size();
+    }
+
     public void toggleMode() {
         FormattedLine line = lines.get(cursorY);
         lines.set(cursorY, line.withMode(switch (line.mode()) {
@@ -242,12 +259,13 @@ public class FormattedTextArea extends AbstractWidget {
     private int getCursorXForNewLine(int oldIndex, int newIndex) {
         FormattedLine oldLine = lines.get(oldIndex);
         FormattedLine newLine = lines.get(newIndex);
+        float scale = (float) newLine.size() / oldLine.size();
         int targetWidth = font.width(format(oldLine.text().substring(0, cursorX), oldLine.style()));
-        int index = 0, width = 0, prevWidth = 0;
-        while (Math.abs(targetWidth - width) <= Math.abs(targetWidth - prevWidth)) {
+        int index = 0, width = 0, prevWidth = -1;
+        while (Math.abs(targetWidth - width) < Math.abs(targetWidth - prevWidth)) {
             if (index >= newLine.text().length()) return index;
             prevWidth = width;
-            width += font.width(format(String.valueOf(newLine.text().charAt(index)), newLine.style()));
+            width += (int) (font.width(format(String.valueOf(newLine.text().charAt(index)), newLine.style())) * scale);
             index++;
         }
         return index - 1;

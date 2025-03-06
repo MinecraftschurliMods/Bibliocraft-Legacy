@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.ColorButton;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineList;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineListPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -39,11 +40,18 @@ public class FancySignScreen extends Screen {
     private static final Component MODE_SHADOW = Component.translatable(Translations.FANCY_SIGN_MODE_SHADOW);
     private static final Component MODE_TOGGLE = Component.translatable(Translations.FANCY_SIGN_MODE_TOGGLE);
     private static final Component COLOR_HINT = Component.translatable(Translations.FANCY_SIGN_COLOR_HINT);
+    private static final Component SCALE_DOWN = Component.translatable(Translations.FANCY_SIGN_SCALE_DOWN);
+    private static final Component SCALE_DOWN_TOOLTIP = Component.translatable(Translations.FANCY_SIGN_SCALE_DOWN_TOOLTIP);
+    private static final Component SCALE_UP = Component.translatable(Translations.FANCY_SIGN_SCALE_UP);
+    private static final Component SCALE_UP_TOOLTIP = Component.translatable(Translations.FANCY_SIGN_SCALE_UP_TOOLTIP);
     private final BlockPos pos;
     private final boolean back;
     private FormattedTextArea textArea;
     private Button modeButton;
     private EditBox colorBox;
+    private EditBox sizeBox;
+    private Button scaleDownButton;
+    private Button scaleUpButton;
 
     public FancySignScreen(BlockPos pos, boolean back) {
         super(Component.empty());
@@ -111,8 +119,8 @@ public class FancySignScreen extends Screen {
 
             // Color buttons and text box
             ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
-            int columns = 4;
-            colorBox = addRenderableWidget(new EditBox(font, x - 16 - 16 * columns, y + 64 + 16 * Math.floorDiv(colors.length, columns), columns * 16, 16, Component.empty()));
+            int colorRows = Math.floorDiv(colors.length, 4);
+            colorBox = addRenderableWidget(new EditBox(font, x - 80, y + 64 + 16 * colorRows, 64, 16, Component.empty()));
             colorBox.setHint(COLOR_HINT);
             colorBox.setMaxLength(7);
             colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
@@ -126,9 +134,35 @@ public class FancySignScreen extends Screen {
             }
             for (int i = 0; i < colors.length; i++) {
                 final int j = i; // I love Java
-                ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor())).bounds(x - 16 - 16 * (columns - i % columns), y + 48 + 16 * Math.floorDiv(i, columns), 16, 16)));
+                ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor())).bounds(x - 16 - 16 * (4 - i % 4), y + 48 + 16 * Math.floorDiv(i, 4), 16, 16)));
                 button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
             }
+
+            // Size buttons and text box
+            sizeBox = addRenderableWidget(new EditBox(font, x - 64, y + 96 + 16 * colorRows, 32, 16, Component.empty()));
+            sizeBox.setFilter(s -> {
+                try {
+                    int i = Integer.parseInt(s);
+                    return i >= FormattedLine.MIN_SIZE && i <= FormattedLine.MAX_SIZE;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            });
+            sizeBox.setResponder(s -> {
+                try {
+                    textArea.setSize(Integer.parseInt(s));
+                } catch (NumberFormatException ignored) {}
+            });
+            scaleDownButton = addRenderableWidget(Button.builder(SCALE_DOWN, button -> {
+                int size = textArea.getSize() - 1;
+                sizeBox.setValue(String.valueOf(size));
+                updateSizeButtons(size);
+            }).bounds(x - 80, y + 96 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(SCALE_DOWN_TOOLTIP)).build());
+            scaleUpButton = addRenderableWidget(Button.builder(SCALE_UP, button -> {
+                int size = textArea.getSize() + 1;
+                sizeBox.setValue(String.valueOf(size));
+                updateSizeButtons(size);
+            }).bounds(x - 32, y + 96 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(SCALE_UP_TOOLTIP)).build());
         }
     }
 
@@ -144,5 +178,10 @@ public class FancySignScreen extends Screen {
             case SHADOW -> MODE_SHADOW;
             case GLOWING -> MODE_GLOWING;
         });
+    }
+
+    private void updateSizeButtons(int size) {
+        scaleDownButton.active = size > FormattedLine.MIN_SIZE;
+        scaleUpButton.active = size < FormattedLine.MAX_SIZE;
     }
 }

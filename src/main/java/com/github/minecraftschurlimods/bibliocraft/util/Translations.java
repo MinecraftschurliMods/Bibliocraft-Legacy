@@ -33,6 +33,10 @@ public interface Translations {
     String FANCY_SIGN_MODE_TOGGLE            = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.mode.toggle";
     String FANCY_SIGN_OBFUSCATED             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.obfuscated";
     String FANCY_SIGN_OBFUSCATED_SHORT       = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.obfuscated.short";
+    String FANCY_SIGN_SCALE_DOWN             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.scale_down";
+    String FANCY_SIGN_SCALE_DOWN_TOOLTIP     = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.scale_down.tooltip";
+    String FANCY_SIGN_SCALE_UP               = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.scale_up";
+    String FANCY_SIGN_SCALE_UP_TOOLTIP       = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.scale_up.tooltip";
     String FANCY_SIGN_STRIKETHROUGH          = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.strikethrough";
     String FANCY_SIGN_STRIKETHROUGH_SHORT    = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.strikethrough.short";
     String FANCY_SIGN_UNDERLINED             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.underlined";

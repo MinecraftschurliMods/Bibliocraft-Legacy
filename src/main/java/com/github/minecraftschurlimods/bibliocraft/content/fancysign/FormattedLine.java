@@ -8,15 +8,18 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.StringRepresentable;
 
 import java.util.Locale;
 
 public record FormattedLine(String text, Style style, int size, Mode mode, Alignment alignment) {
+    public static final int MIN_SIZE = 5;
+    public static final int MAX_SIZE = 35;
     public static final Codec<FormattedLine> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.STRING.fieldOf("text").forGetter(FormattedLine::text),
             Style.Serializer.CODEC.fieldOf("style").forGetter(FormattedLine::style),
-            Codec.INT.fieldOf("size").forGetter(FormattedLine::size),
+            ExtraCodecs.intRange(MIN_SIZE, MAX_SIZE).fieldOf("size").forGetter(FormattedLine::size),
             Mode.CODEC.fieldOf("mode").forGetter(FormattedLine::mode),
             Alignment.CODEC.fieldOf("alignment").forGetter(FormattedLine::alignment)
     ).apply(inst, FormattedLine::new));
