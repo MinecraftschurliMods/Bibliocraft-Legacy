@@ -98,9 +98,7 @@ public class FormattedTextArea extends AbstractWidget {
                     (int) ((double) FastColor.ARGB32.blue(color) * 0.4));
             font.drawInBatch8xOutline(text, x, y, color, outlineColor, graphics.pose().last().pose(), graphics.bufferSource(), LightTexture.FULL_BRIGHT);
             return (int) x + font.width(text);
-        } else {
-            return graphics.drawString(font, text, x, y, color, mode == FormattedLine.Mode.SHADOW);
-        }
+        } else return graphics.drawString(font, text, x, y, color, mode == FormattedLine.Mode.SHADOW);
     }
 
     private FormattedCharSequence format(String text, Style style) {
@@ -112,12 +110,16 @@ public class FormattedTextArea extends AbstractWidget {
         if (!isActive() || !isFocused()) return false;
         switch (keyCode) {
             case GLFW.GLFW_KEY_DOWN: //TODO selection, ctrl
-                cursorY = Math.clamp(cursorY + 1, 0, lines.size() - 1);
-                cursorX = Math.min(cursorX, lines.get(cursorY).text().length());
+                if (cursorY < lines.size() - 1) {
+                    cursorX = getCursorXForNewLine(cursorY, cursorY + 1);
+                    cursorY++;
+                }
                 return true;
             case GLFW.GLFW_KEY_UP: //TODO selection, ctrl
-                cursorY = Math.clamp(cursorY - 1, 0, lines.size() - 1);
-                cursorX = Math.min(cursorX, lines.get(cursorY).text().length());
+                if (cursorY > 0) {
+                    cursorX = getCursorXForNewLine(cursorY, cursorY - 1);
+                    cursorY--;
+                }
                 return true;
             case GLFW.GLFW_KEY_LEFT: //TODO selection, ctrl
                 cursorX = Math.max(0, cursorX - 1);
@@ -235,5 +237,19 @@ public class FormattedTextArea extends AbstractWidget {
         )) return false;
         cursorX += text.length();
         return true;
+    }
+
+    private int getCursorXForNewLine(int oldIndex, int newIndex) {
+        FormattedLine oldLine = lines.get(oldIndex);
+        FormattedLine newLine = lines.get(newIndex);
+        int targetWidth = font.width(format(oldLine.text().substring(0, cursorX), oldLine.style()));
+        int index = 0, width = 0, prevWidth = 0;
+        while (Math.abs(targetWidth - width) <= Math.abs(targetWidth - prevWidth)) {
+            if (index >= newLine.text().length()) return index;
+            prevWidth = width;
+            width += font.width(format(String.valueOf(newLine.text().charAt(index)), newLine.style()));
+            index++;
+        }
+        return index - 1;
     }
 }
