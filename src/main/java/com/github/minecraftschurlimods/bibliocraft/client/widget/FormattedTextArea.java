@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.StringUtil;
@@ -121,35 +120,37 @@ public class FormattedTextArea extends AbstractWidget {
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (!isActive() || !isFocused()) return false;
         switch (keyCode) {
-            case GLFW.GLFW_KEY_DOWN: //TODO selection, ctrl
+            case GLFW.GLFW_KEY_DOWN: //TODO selection
                 if (cursorY < lines.size() - 1) {
                     cursorX = getCursorXForNewLine(cursorY, cursorY + 1);
                     cursorY++;
                     onLineChange.accept(lines.get(cursorY));
                 }
                 return true;
-            case GLFW.GLFW_KEY_UP: //TODO selection, ctrl
+            case GLFW.GLFW_KEY_UP: //TODO selection
                 if (cursorY > 0) {
                     cursorX = getCursorXForNewLine(cursorY, cursorY - 1);
                     cursorY--;
                     onLineChange.accept(lines.get(cursorY));
                 }
                 return true;
-            case GLFW.GLFW_KEY_LEFT: //TODO selection, ctrl
-                cursorX = Math.max(0, cursorX - 1);
+            case GLFW.GLFW_KEY_LEFT: //TODO selection
+                cursorX = Screen.hasControlDown() ? getWordPosition(-1) : Math.max(0, cursorX - 1);
                 return true;
-            case GLFW.GLFW_KEY_RIGHT: //TODO selection, ctrl
-                cursorX = Math.min(cursorX + 1, lines.get(cursorY).text().length());
+            case GLFW.GLFW_KEY_RIGHT: //TODO selection
+                cursorX = Screen.hasControlDown() ? getWordPosition(1) : Math.min(cursorX + 1, lines.get(cursorY).text().length());
                 return true;
-            case GLFW.GLFW_KEY_BACKSPACE: //TODO ctrl
+            case GLFW.GLFW_KEY_BACKSPACE:
                 if (cursorX > 0) {
-                    cursorX--;
-                    lines.set(cursorY, lines.get(cursorY).withText(lines.get(cursorY).text().substring(0, cursorX) + lines.get(cursorY).text().substring(cursorX + 1)));
+                    int x = Screen.hasControlDown() ? getWordPosition(-1) : cursorX - 1;
+                    lines.set(cursorY, lines.get(cursorY).withText(lines.get(cursorY).text().substring(0, x) + lines.get(cursorY).text().substring(cursorX)));
+                    cursorX = x;
                 }
                 return true;
-            case GLFW.GLFW_KEY_DELETE: //TODO ctrl
+            case GLFW.GLFW_KEY_DELETE:
                 if (cursorX < lines.size() - 1) {
-                    lines.set(cursorY, lines.get(cursorY).withText(lines.get(cursorY).text().substring(0, cursorX) + lines.get(cursorY).text().substring(cursorX + 1)));
+                    int x = Screen.hasControlDown() ? getWordPosition(1) : cursorX + 1;
+                    lines.set(cursorY, lines.get(cursorY).withText(lines.get(cursorY).text().substring(0, cursorX) + lines.get(cursorY).text().substring(x)));
                 }
                 return true;
             case GLFW.GLFW_KEY_HOME: //TODO selection
@@ -176,6 +177,34 @@ public class FormattedTextArea extends AbstractWidget {
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    private int getWordPosition(int numWords) {
+        String text = lines.get(cursorY).text();
+        int x = cursorX;
+        int abs = Math.abs(numWords);
+        boolean reverse = numWords < 0;
+        for (int i = 0; i < abs; i++) {
+            if (!reverse) {
+                int length = text.length();
+                x = text.indexOf(' ', x);
+                if (x == -1) {
+                    x = length;
+                } else {
+                    while (x < length && text.charAt(x) == ' ') {
+                        x++;
+                    }
+                }
+            } else {
+                while (x > 0 && text.charAt(x - 1) == ' ') {
+                    x--;
+                }
+                while (x > 0 && text.charAt(x - 1) != ' ') {
+                    x--;
+                }
+            }
+        }
+        return x;
     }
 
     @Override
