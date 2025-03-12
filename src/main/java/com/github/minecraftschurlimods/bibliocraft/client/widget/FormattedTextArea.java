@@ -66,9 +66,9 @@ public class FormattedTextArea extends AbstractWidget {
         boolean cursorInText = cursorInLine && cursorX < text.length();
         boolean shouldRenderCursor = cursorInLine && isFocused() && (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0;
 
-        // draw the text
-        int textX = x + 1;
+        // draw text
         float scale = getScale(size);
+        int textX = x + getLineLeftX(line, scale);
         if (cursorInLine) {
             if (cursorInText) {
                 int textWidth = drawText(graphics, format(text.substring(0, cursorX), style), textX, y, color, size, mode);
@@ -83,16 +83,16 @@ public class FormattedTextArea extends AbstractWidget {
                 }
             }
         } else {
-            drawText(graphics, format(text, style), x + 1, y, color, size, mode);
+            drawText(graphics, format(text, style), textX, y, color, size, mode);
         }
         
         // draw highlight
         if (cursorInLine && cursorX != highlightX) {
             int min = Math.min(cursorX, highlightX);
             int max = Math.max(cursorX, highlightX);
-            int minWidth = font.width(format(text.substring(0, min), style));
-            int maxWidth = font.width(format(text.substring(0, max), style));
-            graphics.fill(RenderType.guiTextHighlight(), x + (int) (minWidth * scale), y - 1, x + (int) (maxWidth * scale), (int) (y + 9 * scale + 1), 0xff0000ff);
+            int minWidth = (int) (font.width(format(text.substring(0, min), style)) * scale);
+            int maxWidth = (int) (font.width(format(text.substring(0, max), style)) * scale);
+            graphics.fill(RenderType.guiTextHighlight(), textX + minWidth - 1, y - 1, textX + maxWidth - 1, (int) (y + 9 * scale + 1), 0xff0000ff);
         }
     }
 
@@ -158,7 +158,7 @@ public class FormattedTextArea extends AbstractWidget {
                 } else if (cursorX > 0) {
                     int x = Screen.hasControlDown() ? getWordPosition(-1) : cursorX - 1;
                     lines.set(cursorY, line.withText(text.substring(0, x) + text.substring(cursorX)));
-                    cursorX = x;
+                    moveCursor(x, cursorY, false);
                 }
                 return true;
             case GLFW.GLFW_KEY_DELETE:
@@ -281,21 +281,47 @@ public class FormattedTextArea extends AbstractWidget {
         lines.set(cursorY, line.withStyle(line.style().withColor(color)));
     }
 
-    public void setSize(int size) {
-        lines.set(cursorY, lines.get(cursorY).withSize(size));
+    public boolean setSize(int size) {
+        FormattedLine line = lines.get(cursorY);
+        int oldValue = line.size();
+        return tryEdit(
+                () -> lines.set(cursorY, line.withSize(size)),
+                () -> lines.set(cursorY, line.withSize(oldValue))
+        );
     }
 
     public int getSize() {
         return lines.get(cursorY).size();
     }
 
-    public void toggleMode() {
+    public boolean toggleAlignment() {
         FormattedLine line = lines.get(cursorY);
-        lines.set(cursorY, line.withMode(switch (line.mode()) {
-            case NORMAL -> FormattedLine.Mode.SHADOW;
-            case SHADOW -> FormattedLine.Mode.GLOWING;
-            case GLOWING -> FormattedLine.Mode.NORMAL;
-        }));
+        FormattedLine.Alignment oldValue = line.alignment();
+        return tryEdit(
+                () -> lines.set(cursorY, line.withAlignment(switch (oldValue) {
+                    case LEFT -> FormattedLine.Alignment.CENTER;
+                    case CENTER -> FormattedLine.Alignment.RIGHT;
+                    case RIGHT -> FormattedLine.Alignment.LEFT;
+                })),
+                () -> lines.set(cursorY, line.withAlignment(oldValue))
+        );
+    }
+
+    public FormattedLine.Alignment getAlignment() {
+        return lines.get(cursorY).alignment();
+    }
+
+    public boolean toggleMode() {
+        FormattedLine line = lines.get(cursorY);
+        FormattedLine.Mode oldValue = line.mode();
+        return tryEdit(
+                () -> lines.set(cursorY, line.withMode(switch (oldValue) {
+                    case NORMAL -> FormattedLine.Mode.SHADOW;
+                    case SHADOW -> FormattedLine.Mode.GLOWING;
+                    case GLOWING -> FormattedLine.Mode.NORMAL;
+                })),
+                () -> lines.set(cursorY, line.withMode(oldValue))
+        );
     }
 
     public FormattedLine.Mode getMode() {
@@ -315,22 +341,29 @@ public class FormattedTextArea extends AbstractWidget {
 
     private void deleteHighlight() {
         FormattedLine line = lines.get(cursorY);
-        lines.set(cursorY, line.withText(line.text().substring(0, Math.min(highlightX, cursorX) + 1) + line.text().substring(Math.max(highlightX, cursorX))));
+        lines.set(cursorY, line.withText(line.text().substring(0, Math.min(highlightX, cursorX)) + line.text().substring(Math.max(highlightX, cursorX))));
         moveCursor(Math.min(highlightX, cursorX), cursorY, false);
     }
 
     private boolean insertText(String s) {
         String text = StringUtil.filterText(s);
-        FormattedLine line = lines.get(cursorY);
-        String oldText = line.text();
+        String oldText = lines.get(cursorY).text();
+        int oldHighlight = highlightX;
+        int oldCursor = cursorX;
         if (!tryEdit(
                 () -> {
                     deleteHighlight();
+                    FormattedLine line = lines.get(cursorY);
                     lines.set(cursorY, line.withText(line.text().substring(0, cursorX) + text + line.text().substring(cursorX)));
                 },
-                () -> lines.set(cursorY, line.withText(oldText))
+                () -> {
+                    lines.set(cursorY, lines.get(cursorY).withText(oldText));
+                    highlightX = oldHighlight;
+                    cursorX = oldCursor;
+                }
         )) return false;
         cursorX += text.length();
+        highlightX = cursorX;
         return true;
     }
 
@@ -347,5 +380,23 @@ public class FormattedTextArea extends AbstractWidget {
             index++;
         }
         return index - 1;
+    }
+    
+    private int getLineLeftX(FormattedLine line, float scale) {
+        int textWidth = (int) (font.width(format(line.text(), line.style())) * scale);
+        return switch (line.alignment()) {
+            case LEFT -> 1;
+            case CENTER -> width / 2 - textWidth / 2;
+            case RIGHT -> width - 1 - textWidth;
+        };
+    }
+
+    private int getLineRightX(FormattedLine line, float scale) {
+        int textWidth = (int) (font.width(format(line.text(), line.style())) * scale);
+        return switch (line.alignment()) {
+            case LEFT -> 1 + textWidth;
+            case CENTER -> width / 2 + textWidth / 2;
+            case RIGHT -> width - 1;
+        };
     }
 }

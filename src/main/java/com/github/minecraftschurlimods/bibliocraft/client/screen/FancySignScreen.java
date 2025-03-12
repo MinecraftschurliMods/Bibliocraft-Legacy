@@ -35,10 +35,8 @@ public class FancySignScreen extends Screen {
     private static final Component UNDERLINED_SHORT = Component.translatable(Translations.FANCY_SIGN_UNDERLINED_SHORT).withStyle(Style.EMPTY.withUnderlined(true));
     private static final Component STRIKETHROUGH_SHORT = Component.translatable(Translations.FANCY_SIGN_STRIKETHROUGH_SHORT).withStyle(Style.EMPTY.withStrikethrough(true));
     private static final Component OBFUSCATED_SHORT = Component.translatable(Translations.FANCY_SIGN_OBFUSCATED_SHORT).withStyle(Style.EMPTY.withObfuscated(true));
-    private static final Component MODE_GLOWING = Component.translatable(Translations.FANCY_SIGN_MODE_GLOWING);
-    private static final Component MODE_NORMAL = Component.translatable(Translations.FANCY_SIGN_MODE_NORMAL);
-    private static final Component MODE_SHADOW = Component.translatable(Translations.FANCY_SIGN_MODE_SHADOW);
-    private static final Component MODE_TOGGLE = Component.translatable(Translations.FANCY_SIGN_MODE_TOGGLE);
+    private static final Component MODE = Component.translatable(Translations.FANCY_SIGN_MODE);
+    private static final Component ALIGNMENT = Component.translatable(Translations.FANCY_SIGN_ALIGNMENT);
     private static final Component COLOR_HINT = Component.translatable(Translations.FANCY_SIGN_COLOR_HINT);
     private static final Component SCALE_DOWN = Component.translatable(Translations.FANCY_SIGN_SCALE_DOWN);
     private static final Component SCALE_DOWN_TOOLTIP = Component.translatable(Translations.FANCY_SIGN_SCALE_DOWN_TOOLTIP);
@@ -48,6 +46,7 @@ public class FancySignScreen extends Screen {
     private final boolean back;
     private FormattedTextArea textArea;
     private Button modeButton;
+    private Button alignmentButton;
     private EditBox colorBox;
     private EditBox sizeBox;
     private Button scaleDownButton;
@@ -110,14 +109,20 @@ public class FancySignScreen extends Screen {
                 .tooltip(Tooltip.create(OBFUSCATED))
                 .bounds(x - 80, y + 16, 16, 16)
                 .build());
-        modeButton = addRenderableWidget(Button.builder(MODE_NORMAL, button -> {
+        modeButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getMode().getTranslationKey()), button -> {
                     textArea.toggleMode();
                     updateModeButton();
                 })
-                .tooltip(Tooltip.create(MODE_TOGGLE))
+                .tooltip(Tooltip.create(MODE))
                 .bounds(x - 64, y + 16, 48, 16)
                 .build());
-        updateModeButton();
+        alignmentButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getAlignment().getTranslationKey()), button -> {
+                    textArea.toggleAlignment();
+                    updateAlignmentButton();
+                })
+                .tooltip(Tooltip.create(ALIGNMENT))
+                .bounds(x - 80, y + 32, 64, 16)
+                .build());
 
         // Color buttons and text box
         ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
@@ -136,7 +141,8 @@ public class FancySignScreen extends Screen {
         }
         for (int i = 0; i < colors.length; i++) {
             final int j = i; // I love Java
-            ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor())).bounds(x - 16 - 16 * (4 - i % 4), y + 48 + 16 * Math.floorDiv(i, 4), 16, 16)));
+            ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor()))
+                    .bounds(x - 16 - 16 * (4 - i % 4), y + 64 + 16 * Math.floorDiv(i, 4), 16, 16)));
             button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
         }
 
@@ -174,23 +180,25 @@ public class FancySignScreen extends Screen {
         //TODO
     }
     
-    public void updateModeButton() {
-        modeButton.setMessage(switch (textArea.getMode()) {
-            case NORMAL -> MODE_NORMAL;
-            case SHADOW -> MODE_SHADOW;
-            case GLOWING -> MODE_GLOWING;
-        });
-    }
-
     private void updateSizeButtons(int size) {
         scaleDownButton.active = size > FormattedLine.MIN_SIZE;
         scaleUpButton.active = size < FormattedLine.MAX_SIZE;
     }
 
     private void onLineChange(FormattedLine line) {
+        updateModeButton();
+        updateAlignmentButton();
         TextColor color = line.style().getColor();
         setColor(color == null ? 0 : color.getValue());
         sizeBox.setValue(String.valueOf(line.size()));
         updateSizeButtons(line.size());
+    }
+
+    public void updateModeButton() {
+        modeButton.setMessage(Component.translatable(textArea.getMode().getTranslationKey()));
+    }
+
+    public void updateAlignmentButton() {
+        alignmentButton.setMessage(Component.translatable(textArea.getAlignment().getTranslationKey()));
     }
 }
