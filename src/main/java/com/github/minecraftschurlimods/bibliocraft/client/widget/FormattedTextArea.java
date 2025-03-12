@@ -132,7 +132,7 @@ public class FormattedTextArea extends AbstractWidget {
         FormattedLine line = lines.get(cursorY);
         String text = line.text();
         switch (keyCode) {
-            case GLFW.GLFW_KEY_DOWN:
+            case GLFW.GLFW_KEY_DOWN, GLFW.GLFW_KEY_ENTER:
                 if (Screen.hasShiftDown()) {
                     moveCursor(text.length(), cursorY, true);
                 } else if (cursorY < lines.size() - 1) {
@@ -185,7 +185,7 @@ public class FormattedTextArea extends AbstractWidget {
             Minecraft.getInstance().keyboardHandler.setClipboard(text.substring(Math.min(cursorX, highlightX), Math.max(cursorX, highlightX)));
             return true;
         }
-        if (Screen.isPaste(keyCode)) {
+        if (Screen.isPaste(keyCode) || keyCode == GLFW.GLFW_KEY_INSERT) {
             insertText(Minecraft.getInstance().keyboardHandler.getClipboard());
             return true;
         }
