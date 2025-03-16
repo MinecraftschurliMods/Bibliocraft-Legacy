@@ -158,7 +158,7 @@ public class FormattedTextArea extends AbstractWidget {
                 } else if (cursorX > 0) {
                     int x = Screen.hasControlDown() ? getWordPosition(-1) : cursorX - 1;
                     lines.set(cursorY, line.withText(text.substring(0, x) + text.substring(cursorX)));
-                    cursorX = x;
+                    moveCursor(x, cursorY, false);
                 }
                 return true;
             case GLFW.GLFW_KEY_DELETE:
@@ -281,8 +281,12 @@ public class FormattedTextArea extends AbstractWidget {
         lines.set(cursorY, line.withStyle(line.style().withColor(color)));
     }
 
-    public void setSize(int size) {
-        lines.set(cursorY, lines.get(cursorY).withSize(size));
+    public boolean setSize(int size) {
+        int oldValue = lines.get(cursorY).size();
+        return tryEdit(
+                () -> lines.set(cursorY, lines.get(cursorY).withSize(size)),
+                () -> lines.set(cursorY, lines.get(cursorY).withSize(oldValue))
+        );
     }
 
     public int getSize() {
@@ -303,7 +307,16 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     private boolean isValid() {
-        return true; //TODO
+        int y = 0;
+        for (FormattedLine line : lines) {
+            int size = line.size();
+            y += size;
+            if (line.text().isEmpty()) continue;
+            if (y > height) return false;
+            float textWidth = font.width(format(line.text(), line.style())) * getScale(size);
+            if (textWidth > width - 2) return false;
+        }
+        return true;
     }
 
     private boolean tryEdit(Runnable edit, Runnable revert) {
@@ -314,6 +327,7 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     private void deleteHighlight() {
+        if (highlightX == cursorX) return;
         FormattedLine line = lines.get(cursorY);
         lines.set(cursorY, line.withText(line.text().substring(0, Math.min(highlightX, cursorX) + 1) + line.text().substring(Math.max(highlightX, cursorX))));
         moveCursor(Math.min(highlightX, cursorX), cursorY, false);
@@ -331,6 +345,7 @@ public class FormattedTextArea extends AbstractWidget {
                 () -> lines.set(cursorY, line.withText(oldText))
         )) return false;
         cursorX += text.length();
+        highlightX = cursorX;
         return true;
     }
 
