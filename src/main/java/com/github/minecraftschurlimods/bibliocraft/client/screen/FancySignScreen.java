@@ -16,6 +16,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -85,7 +86,7 @@ public class FancySignScreen extends Screen {
             return;
         int leftX = (width - FormattedTextArea.WIDTH) / 2;
         int rightX = (width + FormattedTextArea.WIDTH) / 2;
-        int y = 6;
+        int y = (height - FormattedTextArea.HEIGHT) / 2 - 12;
         textArea = addRenderableWidget(new FormattedTextArea(leftX, y, Component.empty(), sign.getFrontContent().lines()));
         textArea.setOnLineChange(this::onLineChange);
 
@@ -173,6 +174,8 @@ public class FancySignScreen extends Screen {
             updateSizeButtons(size);
         }).bounds(leftX - 32, y + 64, 16, 16).tooltip(Tooltip.create(SCALE_UP_TOOLTIP)).build());
         onLineChange(textArea.getLines().getFirst());
+
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> minecraft.setScreen(null)).bounds(leftX, y + FormattedTextArea.HEIGHT + 4, FormattedTextArea.WIDTH, 20).build());
     }
 
     @Override
