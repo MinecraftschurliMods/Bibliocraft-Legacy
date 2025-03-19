@@ -166,11 +166,15 @@ public class FancySignScreen extends Screen {
         scaleDownButton = addRenderableWidget(Button.builder(SCALE_DOWN, button -> {
             int size = textArea.getSize() - 1;
             sizeBox.setValue(String.valueOf(size));
+            // call again to account for invalid values
+            sizeBox.setValue(String.valueOf(textArea.getSize()));
             updateSizeButtons(size);
         }).bounds(leftX - 80, y + 64, 16, 16).tooltip(Tooltip.create(SCALE_DOWN_TOOLTIP)).build());
         scaleUpButton = addRenderableWidget(Button.builder(SCALE_UP, button -> {
             int size = textArea.getSize() + 1;
             sizeBox.setValue(String.valueOf(size));
+            // call again to account for invalid values
+            sizeBox.setValue(String.valueOf(textArea.getSize()));
             updateSizeButtons(size);
         }).bounds(leftX - 32, y + 64, 16, 16).tooltip(Tooltip.create(SCALE_UP_TOOLTIP)).build());
         onLineChange(textArea.getLines().getFirst());
