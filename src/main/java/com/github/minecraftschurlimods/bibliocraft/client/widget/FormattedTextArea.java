@@ -1,7 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -11,12 +13,14 @@ import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.StringUtil;
+import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -41,6 +45,51 @@ public class FormattedTextArea extends AbstractWidget {
         this.lines = new ArrayList<>(lines);
     }
 
+    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width, int height, int cursor, DrawCursor drawCursor) {
+        String text = line.text();
+        Style style = line.style();
+        int size = line.size();
+        FormattedLine.Mode mode = line.mode();
+        int color = 0xff000000 | (style.getColor() == null ? 0 : style.getColor().getValue());
+        float scale = getScale(size);
+        int textX = x + getLineLeftX(line, scale, width);
+        FormattedCharSequence formattedText = format(text, style);
+        drawText(poseStack, bufferSource, formattedText, textX, y, color, size, mode);
+        int textWidth = Minecraft.getInstance().font.width(formattedText);
+        if (drawCursor == DrawCursor.VERTICAL) {
+            fill(poseStack, bufferSource, RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
+        } else if (drawCursor == DrawCursor.HORIZONTAL) {
+            drawText(poseStack, bufferSource, format("_", style), textX + textWidth * scale, y, color, size, mode);
+        }
+    }
+
+    /**
+     * Static version of {@link GuiGraphics#fill(RenderType, int, int, int, int, int)}.
+     */
+    private static void fill(PoseStack stack, MultiBufferSource bufferSource, RenderType renderType, float minX, float minY, float maxX, float maxY, int color) {
+        Matrix4f matrix4f = stack.last().pose();
+        if (minX < maxX) {
+            float x = minX;
+            minX = maxX;
+            maxX = x;
+        }
+        if (minY < maxY) {
+            float y = minY;
+            minY = maxY;
+            maxY = y;
+        }
+        VertexConsumer vc = bufferSource.getBuffer(renderType);
+        vc.addVertex(matrix4f, minX, minY, 0).setColor(color);
+        vc.addVertex(matrix4f, minX, maxY, 0).setColor(color);
+        vc.addVertex(matrix4f, maxX, maxY, 0).setColor(color);
+        vc.addVertex(matrix4f, maxX, minY, 0).setColor(color);
+        if (bufferSource instanceof MultiBufferSource.BufferSource guiBuffer) {
+            RenderSystem.disableDepthTest();
+            guiBuffer.endBatch();
+            RenderSystem.enableDepthTest();
+        }
+    }
+
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         int x = getX();
@@ -55,73 +104,49 @@ public class FormattedTextArea extends AbstractWidget {
     private void renderLine(GuiGraphics graphics, int index, int x, int y) {
         FormattedLine line = lines.get(index);
         String text = line.text();
-        Style style = line.style();
-        int size = line.size();
-        FormattedLine.Mode mode = line.mode();
-        int color = 0xff000000 | (style.getColor() == null ? 0 : style.getColor().getValue());
-
-        // is the current line selected?
-        boolean cursorInLine = cursorY == index;
-        // is the cursor not at the end?
-        boolean cursorInText = cursorInLine && cursorX < text.length();
-        boolean shouldRenderCursor = cursorInLine && isFocused() && (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0;
-
-        // draw text
-        float scale = getScale(size);
-        int textX = x + getLineLeftX(line, scale);
-        if (cursorInLine) {
-            if (cursorInText) {
-                int textWidth = drawText(graphics, format(text.substring(0, cursorX), style), textX, y, color, size, mode);
-                drawText(graphics, format(text.substring(cursorX), style), textX + textWidth * scale, y, color, size, mode);
-                if (shouldRenderCursor) {
-                    graphics.fill(RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
-                }
-            } else {
-                int textWidth = drawText(graphics, format(text, style), textX, y, color, size, mode);
-                if (shouldRenderCursor) {
-                    drawText(graphics, format("_", style), textX + textWidth * scale, y, color, size, mode);
-                }
-            }
-        } else {
-            drawText(graphics, format(text, style), textX, y, color, size, mode);
-        }
-        
-        // draw highlight
-        if (cursorInLine && cursorX != highlightX) {
+        DrawCursor draw = !isFocused() || (Util.getMillis() - focusedTimestamp) / 300L % 2 != 0
+                ? DrawCursor.NONE
+                : cursorY == index && cursorX < text.length()
+                ? DrawCursor.VERTICAL
+                : cursorY == index
+                ? DrawCursor.HORIZONTAL
+                : DrawCursor.NONE;
+        renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, height, cursorX, draw);
+        if (draw != DrawCursor.NONE && cursorX != highlightX) {
             int min = Math.min(cursorX, highlightX);
             int max = Math.max(cursorX, highlightX);
+            Style style = line.style();
+            float scale = getScale(line.size());
+            int textX = x + getLineLeftX(line, scale, width);
             int minWidth = (int) (font.width(format(text.substring(0, min), style)) * scale);
             int maxWidth = (int) (font.width(format(text.substring(0, max), style)) * scale);
             graphics.fill(RenderType.guiTextHighlight(), textX + minWidth - 1, y - 1, textX + maxWidth - 1, (int) (y + 9 * scale + 1), 0xff0000ff);
         }
     }
 
-    private int drawText(GuiGraphics graphics, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
+    private static void drawText(PoseStack poseStack, MultiBufferSource bufferSource, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
+        Font font = Minecraft.getInstance().font;
         float scale = getScale(size);
-        int result;
-        PoseStack pose = graphics.pose();
-        pose.pushPose();
-        pose.translate(x, y, 0);
-        pose.scale(scale, scale, 1);
+        poseStack.pushPose();
+        poseStack.translate(x, y, 0);
+        poseStack.scale(scale, scale, 1);
         if (mode == FormattedLine.Mode.GLOWING) {
             int outlineColor = color == 0 ? 0xfff0ebcc : FastColor.ARGB32.color(255,
                     (int) ((double) FastColor.ARGB32.red(color) * 0.4),
                     (int) ((double) FastColor.ARGB32.green(color) * 0.4),
                     (int) ((double) FastColor.ARGB32.blue(color) * 0.4));
-            font.drawInBatch8xOutline(text, 0, 0, color, outlineColor, pose.last().pose(), graphics.bufferSource(), LightTexture.FULL_BRIGHT);
-            result = font.width(text);
+            font.drawInBatch8xOutline(text, 0, 0, color, outlineColor, poseStack.last().pose(), bufferSource, LightTexture.FULL_BRIGHT);
         } else {
-            result = graphics.drawString(font, text, 0, 0, color, mode == FormattedLine.Mode.SHADOW);
+            font.drawInBatch(text, 0, 0, color, mode == FormattedLine.Mode.SHADOW, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
         }
-        pose.popPose();
-        return result;
+        poseStack.popPose();
     }
 
-    private FormattedCharSequence format(String text, Style style) {
+    private static FormattedCharSequence format(String text, Style style) {
         return FormattedCharSequence.forward(text, style);
     }
 
-    private float getScale(int size) {
+    private static float getScale(int size) {
         // scale the text, 8 is the default font size, and we subtract a padding of 1 on each side
         return (size - 2) / 8f;
     }
@@ -391,8 +416,8 @@ public class FormattedTextArea extends AbstractWidget {
         return index - 1;
     }
 
-    private int getLineLeftX(FormattedLine line, float scale) {
-        int textWidth = (int) (font.width(format(line.text(), line.style())) * scale);
+    private static int getLineLeftX(FormattedLine line, float scale, int width) {
+        int textWidth = (int) (Minecraft.getInstance().font.width(format(line.text(), line.style())) * scale);
         return switch (line.alignment()) {
             case LEFT -> 1;
             case CENTER -> width / 2 - textWidth / 2;
@@ -400,8 +425,8 @@ public class FormattedTextArea extends AbstractWidget {
         };
     }
 
-    private int getLineRightX(FormattedLine line, float scale) {
-        int textWidth = (int) (font.width(format(line.text(), line.style())) * scale);
+    private static int getLineRightX(FormattedLine line, float scale, int width) {
+        int textWidth = (int) (Minecraft.getInstance().font.width(format(line.text(), line.style())) * scale);
         return switch (line.alignment()) {
             case LEFT -> 1 + textWidth;
             case CENTER -> width / 2 + textWidth / 2;
@@ -417,5 +442,9 @@ public class FormattedTextArea extends AbstractWidget {
             if (size > height) return i - 1;
         }
         return lines.size();
+    }
+
+    public enum DrawCursor {
+        NONE, VERTICAL, HORIZONTAL
     }
 }
