@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancysign;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -62,6 +63,10 @@ public record FormattedLine(String text, Style style, int size, Mode mode, Align
         public String getSerializedName() {
             return name().toLowerCase(Locale.ROOT);
         }
+
+        public String getTranslationKey() {
+            return "gui." + BibliocraftApi.MOD_ID + ".formatted_line.mode." + getSerializedName();
+        }
     }
 
     public enum Alignment implements StringRepresentable {
@@ -72,6 +77,10 @@ public record FormattedLine(String text, Style style, int size, Mode mode, Align
         @Override
         public String getSerializedName() {
             return name().toLowerCase(Locale.ROOT);
+        }
+
+        public String getTranslationKey() {
+            return "gui." + BibliocraftApi.MOD_ID + ".formatted_line.alignment." + getSerializedName();
         }
     }
 }

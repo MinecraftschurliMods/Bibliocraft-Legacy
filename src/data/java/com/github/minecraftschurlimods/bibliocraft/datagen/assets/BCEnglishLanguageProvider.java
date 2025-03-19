@@ -1,13 +1,13 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSorting;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.ChatFormatting;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -61,6 +61,12 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");
         add("itemGroup." + BibliocraftApi.MOD_ID, "Bibliocraft");
+        add(FormattedLine.Mode.NORMAL.getTranslationKey(), "Normal");
+        add(FormattedLine.Mode.SHADOW.getTranslationKey(), "Shadow");
+        add(FormattedLine.Mode.GLOWING.getTranslationKey(), "Glowing");
+        add(FormattedLine.Alignment.LEFT.getTranslationKey(), "Left");
+        add(FormattedLine.Alignment.CENTER.getTranslationKey(), "Center");
+        add(FormattedLine.Alignment.RIGHT.getTranslationKey(), "Right");
         add(StockroomCatalogSorting.Container.ALPHABETICAL_ASC.getTranslationKey(), "A-Z");
         add(StockroomCatalogSorting.Container.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
         add(StockroomCatalogSorting.Container.DISTANCE_ASC.getTranslationKey(), "<-->");
@@ -94,15 +100,13 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.CLOCK_TIME_SEPARATOR, ":");
         add(Translations.CLOCK_TITLE, "Clock");
         add(Translations.CLOCK_TRIGGERS, "Triggers");
+        add(Translations.FANCY_SIGN_ALIGNMENT, "Toggle Alignment");
         add(Translations.FANCY_SIGN_BOLD, "Bold");
         add(Translations.FANCY_SIGN_BOLD_SHORT, "B");
         add(Translations.FANCY_SIGN_COLOR_HINT, "#RRGGBB");
         add(Translations.FANCY_SIGN_ITALIC, "Italic");
         add(Translations.FANCY_SIGN_ITALIC_SHORT, "I");
-        add(Translations.FANCY_SIGN_MODE_GLOWING, "Glowing");
-        add(Translations.FANCY_SIGN_MODE_NORMAL, "Normal");
-        add(Translations.FANCY_SIGN_MODE_SHADOW, "Shadow");
-        add(Translations.FANCY_SIGN_MODE_TOGGLE, "Toggle Shadow/Glowing");
+        add(Translations.FANCY_SIGN_MODE, "Toggle Shadow/Glowing");
         add(Translations.FANCY_SIGN_OBFUSCATED, "Obfuscated");
         add(Translations.FANCY_SIGN_OBFUSCATED_SHORT, "O");
         add(Translations.FANCY_SIGN_SCALE_DOWN, "-");

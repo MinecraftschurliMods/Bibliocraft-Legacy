@@ -22,15 +22,13 @@ public interface Translations {
     String CLOCK_TIME_SEPARATOR              = "gui." + BibliocraftApi.MOD_ID + ".clock.time_separator";
     String CLOCK_TITLE                       = "gui." + BibliocraftApi.MOD_ID + ".clock.title";
     String CLOCK_TRIGGERS                    = "gui." + BibliocraftApi.MOD_ID + ".clock.triggers";
+    String FANCY_SIGN_ALIGNMENT              = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.alignment";
     String FANCY_SIGN_BOLD                   = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.bold";
     String FANCY_SIGN_BOLD_SHORT             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.bold.short";
     String FANCY_SIGN_COLOR_HINT             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.color_hint";
     String FANCY_SIGN_ITALIC                 = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.italic";
     String FANCY_SIGN_ITALIC_SHORT           = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.italic.short";
-    String FANCY_SIGN_MODE_GLOWING           = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.mode.glowing";
-    String FANCY_SIGN_MODE_NORMAL            = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.mode.normal";
-    String FANCY_SIGN_MODE_SHADOW            = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.mode.shadow";
-    String FANCY_SIGN_MODE_TOGGLE            = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.mode.toggle";
+    String FANCY_SIGN_MODE                   = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.mode";
     String FANCY_SIGN_OBFUSCATED             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.obfuscated";
     String FANCY_SIGN_OBFUSCATED_SHORT       = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.obfuscated.short";
     String FANCY_SIGN_SCALE_DOWN             = "gui." + BibliocraftApi.MOD_ID + ".fancy_sign.scale_down";
