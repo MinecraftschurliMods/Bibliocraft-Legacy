@@ -135,7 +135,7 @@ public class FormattedTextArea extends AbstractWidget {
             case GLFW.GLFW_KEY_DOWN, GLFW.GLFW_KEY_ENTER:
                 if (Screen.hasShiftDown()) {
                     moveCursor(text.length(), cursorY, true);
-                } else if (cursorY < lines.size() - 1) {
+                } else if (cursorY < getEffectiveMaxLines()) {
                     moveCursor(getCursorXForNewLine(cursorY, cursorY + 1), cursorY + 1, false);
                 }
                 return true;
@@ -164,7 +164,7 @@ public class FormattedTextArea extends AbstractWidget {
             case GLFW.GLFW_KEY_DELETE:
                 if (highlightX != cursorX) {
                     deleteHighlight();
-                } else if (cursorX < lines.size() - 1) {
+                } else if (cursorX < lines.get(cursorY).text().length()) {
                     int x = Screen.hasControlDown() ? getWordPosition(1) : cursorX + 1;
                     lines.set(cursorY, line.withText(text.substring(0, cursorX) + text.substring(x)));
                 }
@@ -177,8 +177,8 @@ public class FormattedTextArea extends AbstractWidget {
                 return true;
         }
         if (Screen.isSelectAll(keyCode)) {
-            cursorX = 0;
-            highlightX = text.length();
+            cursorX = text.length();
+            highlightX = 0;
             return true;
         }
         if (Screen.isCopy(keyCode)) {
@@ -398,5 +398,15 @@ public class FormattedTextArea extends AbstractWidget {
             case CENTER -> width / 2 + textWidth / 2;
             case RIGHT -> width - 1;
         };
+    }
+
+    private int getEffectiveMaxLines() {
+        int size = 0;
+        for (int i = 0; i < lines.size(); i++) {
+            FormattedLine line = lines.get(i);
+            size += line.size();
+            if (size > height) return i - 1;
+        }
+        return lines.size();
     }
 }
