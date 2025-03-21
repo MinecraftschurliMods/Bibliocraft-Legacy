@@ -55,11 +55,12 @@ public class FormattedTextArea extends AbstractWidget {
         int textX = x + getLineLeftX(line, scale, width);
         FormattedCharSequence formattedText = format(text, style);
         drawText(poseStack, bufferSource, formattedText, textX, y, color, size, mode);
-        int textWidth = Minecraft.getInstance().font.width(formattedText);
+        Font font = Minecraft.getInstance().font;
         if (drawCursor == DrawCursor.VERTICAL) {
+            int textWidth = font.width(format(text.substring(0, cursor), style));
             fill(poseStack, bufferSource, RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
         } else if (drawCursor == DrawCursor.HORIZONTAL) {
-            drawText(poseStack, bufferSource, format("_", style), textX + textWidth * scale, y, color, size, mode);
+            drawText(poseStack, bufferSource, format("_", style), textX + font.width(formattedText) * scale, y, color, size, mode);
         }
     }
 
