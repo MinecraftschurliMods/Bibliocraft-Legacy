@@ -179,7 +179,10 @@ public class FancySignScreen extends Screen {
         }).bounds(leftX - 32, y + 64, 16, 16).tooltip(Tooltip.create(SCALE_UP_TOOLTIP)).build());
         onLineChange(textArea.getLines().getFirst());
 
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> minecraft.setScreen(null)).bounds(leftX, y + FormattedTextArea.HEIGHT + 4, FormattedTextArea.WIDTH, 20).build());
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
+            onClose();
+            minecraft.setScreen(null);
+        }).bounds(leftX, y + FormattedTextArea.HEIGHT + 4, FormattedTextArea.WIDTH, 20).build());
     }
 
     @Override
