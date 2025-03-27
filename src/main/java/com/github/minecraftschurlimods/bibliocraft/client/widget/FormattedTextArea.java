@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
+import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -30,8 +31,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FormattedTextArea extends AbstractWidget {
-    public static final int WIDTH = 140;
-    public static final int HEIGHT = 80;
     private final Font font = Minecraft.getInstance().font;
     private final List<FormattedLine> lines;
     private int cursorX = 0;
@@ -40,8 +39,8 @@ public class FormattedTextArea extends AbstractWidget {
     private long focusedTimestamp = Util.getMillis();
     private Consumer<FormattedLine> onLineChange;
 
-    public FormattedTextArea(int x, int y, Component message, List<FormattedLine> lines) {
-        super(x, y, WIDTH, HEIGHT, message);
+    public FormattedTextArea(int x, int y, int width, int height, Component message, List<FormattedLine> lines) {
+        super(x, y, FancySignScreen.WIDTH, FancySignScreen.HEIGHT, message);
         this.lines = new ArrayList<>(lines);
     }
 

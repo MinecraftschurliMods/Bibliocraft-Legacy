@@ -26,6 +26,8 @@ import java.util.HexFormat;
 import java.util.Objects;
 
 public class FancySignScreen extends Screen {
+    public static final int WIDTH = 140;
+    public static final int HEIGHT = 80;
     private static final Component BOLD = Component.translatable(Translations.FANCY_SIGN_BOLD);
     private static final Component ITALIC = Component.translatable(Translations.FANCY_SIGN_ITALIC);
     private static final Component UNDERLINED = Component.translatable(Translations.FANCY_SIGN_UNDERLINED);
@@ -84,10 +86,10 @@ public class FancySignScreen extends Screen {
     protected void init() {
         if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign))
             return;
-        int leftX = (width - FormattedTextArea.WIDTH) / 2;
-        int rightX = (width + FormattedTextArea.WIDTH) / 2;
-        int y = (height - FormattedTextArea.HEIGHT) / 2 - 12;
-        textArea = addRenderableWidget(new FormattedTextArea(leftX, y, Component.empty(), sign.getFrontContent().lines()));
+        int leftX = (width - WIDTH) / 2;
+        int rightX = (width + WIDTH) / 2;
+        int y = (height - HEIGHT) / 2 - 12;
+        textArea = addRenderableWidget(new FormattedTextArea(leftX, y, WIDTH, HEIGHT, Component.empty(), sign.getFrontContent().lines()));
         textArea.setOnLineChange(this::onLineChange);
 
         // Color buttons and text box
@@ -182,7 +184,7 @@ public class FancySignScreen extends Screen {
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
             onClose();
             minecraft.setScreen(null);
-        }).bounds(leftX, y + FormattedTextArea.HEIGHT + 4, FormattedTextArea.WIDTH, 20).build());
+        }).bounds(leftX, y + HEIGHT + 4, WIDTH, 20).build());
     }
 
     @Override

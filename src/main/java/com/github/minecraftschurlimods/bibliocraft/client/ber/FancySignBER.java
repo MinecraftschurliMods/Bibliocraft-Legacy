@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
+import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.AbstractFancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlock;
@@ -12,7 +13,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity> {
         stack.translate(0, 1, 0);
         int y = 0;
         for (FormattedLine line : lines) {
-            FormattedTextArea.renderLine(line, stack, bufferSource, 0, y, FormattedTextArea.WIDTH, FormattedTextArea.HEIGHT);
+            FormattedTextArea.renderLine(line, stack, bufferSource, 0, y, FancySignScreen.WIDTH, FancySignScreen.HEIGHT);
             y += line.size();
         }
         stack.popPose();
