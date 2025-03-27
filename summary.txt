@@ -1,1 +1,1 @@
-Fix a bug with some tags
+Add fancy signs, mod compat, and some bug fixes
