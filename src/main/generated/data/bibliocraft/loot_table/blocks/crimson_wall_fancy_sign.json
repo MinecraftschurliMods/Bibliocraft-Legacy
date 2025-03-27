@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "bibliocraft:crimson_fancy_sign"
         }
       ],
       "rolls": 1.0

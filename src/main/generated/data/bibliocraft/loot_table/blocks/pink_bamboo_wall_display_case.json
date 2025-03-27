@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "bibliocraft:pink_bamboo_display_case"
         }
       ],
       "rolls": 1.0

@@ -370,10 +370,10 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         loot(provider, BCBlocks.BOOKCASE.get(woodType),          woodType, DatagenUtil::createNameableTable);
         loot(provider, BCBlocks.FANCY_ARMOR_STAND.get(woodType), woodType, DatagenUtil::createFancyArmorStandTable);
         loot(provider, BCBlocks.FANCY_CLOCK.get(woodType),       woodType, DatagenUtil::createDefaultTable);
-        loot(provider, BCBlocks.WALL_FANCY_CLOCK.get(woodType),  woodType, DatagenUtil::createDefaultTable);
+        loot(provider, BCBlocks.WALL_FANCY_CLOCK.get(woodType),  woodType, block -> DatagenUtil.createDefaultTable(BCBlocks.FANCY_CLOCK.get(woodType)));
         loot(provider, BCBlocks.FANCY_CRAFTER.get(woodType),     woodType, DatagenUtil::createNameableTable);
         loot(provider, BCBlocks.FANCY_SIGN.get(woodType),        woodType, DatagenUtil::createDefaultTable);
-        loot(provider, BCBlocks.WALL_FANCY_SIGN.get(woodType),   woodType, DatagenUtil::createDefaultTable);
+        loot(provider, BCBlocks.WALL_FANCY_SIGN.get(woodType),   woodType, block -> DatagenUtil.createDefaultTable(BCBlocks.FANCY_SIGN.get(woodType)));
         loot(provider, BCBlocks.GRANDFATHER_CLOCK.get(woodType), woodType, DatagenUtil::createGrandfatherClockTable);
         loot(provider, BCBlocks.LABEL.get(woodType),             woodType, DatagenUtil::createNameableTable);
         loot(provider, BCBlocks.POTION_SHELF.get(woodType),      woodType, DatagenUtil::createNameableTable);
@@ -382,7 +382,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         loot(provider, BCBlocks.TOOL_RACK.get(woodType),         woodType, DatagenUtil::createNameableTable);
         for (DyeColor color : DyeColor.values()) {
             loot(provider, BCBlocks.DISPLAY_CASE.get(woodType, color),      woodType, DatagenUtil::createDefaultTable);
-            loot(provider, BCBlocks.WALL_DISPLAY_CASE.get(woodType, color), woodType, DatagenUtil::createDefaultTable);
+            loot(provider, BCBlocks.WALL_DISPLAY_CASE.get(woodType, color), woodType, block -> DatagenUtil.createDefaultTable(BCBlocks.DISPLAY_CASE.get(woodType, color)));
             loot(provider, BCBlocks.SEAT.get(woodType, color),              woodType, DatagenUtil::createDefaultTable);
             loot(provider, BCBlocks.SEAT_BACK.get(woodType, color), woodType, block -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(ExplosionCondition.survivesExplosion())
                     .add(LootItem.lootTableItem(BCItems.SMALL_SEAT_BACK.get(woodType, color)) .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SeatBackBlock.TYPE, SeatBackType.SMALL))))
