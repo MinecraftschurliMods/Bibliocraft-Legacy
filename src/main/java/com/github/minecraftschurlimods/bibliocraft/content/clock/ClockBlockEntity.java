@@ -30,6 +30,7 @@ public class ClockBlockEntity extends BlockEntity {
     private static final String TRIGGERS_KEY = "triggers";
     private final List<ClockTrigger> triggers = new ArrayList<>();
     private final Multimap<Integer, ClockTrigger> triggersMap = HashMultimap.create();
+    private int redstoneTick = 0;
     public boolean tickSound = true;
 
     public ClockBlockEntity(BlockPos pos, BlockState state) {
@@ -38,7 +39,10 @@ public class ClockBlockEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, ClockBlockEntity blockEntity) {
         if (state.getValue(AbstractClockBlock.POWERED)) {
-            setPowered(level, pos, false);
+            blockEntity.redstoneTick--;
+            if (blockEntity.redstoneTick <= 0) {
+                setPowered(level, pos, false);
+            }
         }
         int time = (int) (level.getDayTime() % 24000);
         if (blockEntity.triggersMap.containsKey(time)) {
@@ -47,6 +51,7 @@ public class ClockBlockEntity extends BlockEntity {
                 level.playSound(null, pos, BCSoundEvents.CLOCK_CHIME.value(), SoundSource.BLOCKS, 1, 1);
             }
             if (trigger.stream().anyMatch(ClockTrigger::redstone)) {
+                blockEntity.redstoneTick = 2;
                 setPowered(level, pos, true);
             }
         }
