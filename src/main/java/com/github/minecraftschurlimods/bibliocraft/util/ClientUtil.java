@@ -1,10 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClipboardScreen;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.StockroomCatalogScreen;
-import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
