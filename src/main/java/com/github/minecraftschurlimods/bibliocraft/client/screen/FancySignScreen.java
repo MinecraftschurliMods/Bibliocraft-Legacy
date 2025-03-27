@@ -20,6 +20,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HexFormat;
@@ -28,6 +29,7 @@ import java.util.Objects;
 public class FancySignScreen extends Screen {
     public static final int WIDTH = 140;
     public static final int HEIGHT = 80;
+    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_sign.png");
     private static final Component BOLD = Component.translatable(Translations.FANCY_SIGN_BOLD);
     private static final Component ITALIC = Component.translatable(Translations.FANCY_SIGN_ITALIC);
     private static final Component UNDERLINED = Component.translatable(Translations.FANCY_SIGN_UNDERLINED);
@@ -88,7 +90,7 @@ public class FancySignScreen extends Screen {
             return;
         int leftX = (width - WIDTH) / 2;
         int rightX = (width + WIDTH) / 2;
-        int y = (height - HEIGHT) / 2 - 12;
+        int y = (height - HEIGHT) / 2 - 16;
         textArea = addRenderableWidget(new FormattedTextArea(leftX, y, WIDTH, HEIGHT, Component.empty(), sign.getFrontContent().lines()));
         textArea.setOnLineChange(this::onLineChange);
 
@@ -184,13 +186,13 @@ public class FancySignScreen extends Screen {
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
             onClose();
             minecraft.setScreen(null);
-        }).bounds(leftX, y + HEIGHT + 4, WIDTH, 20).build());
+        }).bounds(leftX, y + HEIGHT + 8, WIDTH, 20).build());
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        //TODO
+        graphics.blit(BACKGROUND, (width - WIDTH) / 2 - 4, (height - HEIGHT) / 2 - 20, 0, 0, 192, 192);
     }
     
     private void updateSizeButtons(int size) {

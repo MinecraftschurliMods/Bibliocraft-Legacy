@@ -98,7 +98,6 @@ public class FormattedTextArea extends AbstractWidget {
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         int x = getX();
         int y = getY() + 1;
-        graphics.fill(x, y - 1, x + width, y + height, 0xffffffff); //TODO background
         for (int i = 0; i < lines.size(); i++) {
             renderLine(graphics, i, x, y);
             y += lines.get(i).size();
