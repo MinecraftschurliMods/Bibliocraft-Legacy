@@ -94,6 +94,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Items.FANCY_LANTERNS_IRON, "Iron Fancy Lanterns");
         add(BCTags.Items.BOOKCASE_BOOKS, "Books for Bookcases");
         add(BCTags.Items.COOKIE_JAR_COOKIES, "Cookies for Cookie Jars");
+        add(BCTags.Items.DISC_RACK_DISCS, "Discs for Disc Racks");
         add(BCTags.Items.FANCY_SIGN_WAX, "Wax for Fancy Signs");
         add(BCTags.Items.POTION_SHELF_POTIONS, "Potions for Potion Shelves");
         add(BCTags.Items.SWORD_PEDESTAL_SWORDS, "Swords for Sword Pedestals");

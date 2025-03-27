@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#c:music_discs",
+    {
+      "id": "#computercraft:disks",
+      "required": false
+    }
+  ]
+}

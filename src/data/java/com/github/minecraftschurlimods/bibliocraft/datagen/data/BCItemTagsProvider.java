@@ -36,6 +36,8 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         tag(BCTags.Items.COOKIE_JAR_COOKIES).add(Items.COOKIE)
                 .addOptional(ResourceLocation.fromNamespaceAndPath("farmersdelight", "honey_cookie"))
                 .addOptional(ResourceLocation.fromNamespaceAndPath("farmersdelight", "sweet_berry_cookie"));
+        tag(BCTags.Items.DISC_RACK_DISCS).addTag(Tags.Items.MUSIC_DISCS)
+                .addOptionalTag(ResourceLocation.fromNamespaceAndPath("computercraft", "disks"));
         tag(BCTags.Items.FANCY_SIGN_WAX).add(Items.HONEYCOMB);
         // TODO 1.21.4+ add #c:drink_containing/bottle
         tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.DRAGON_BREATH);
