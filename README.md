@@ -31,6 +31,8 @@ dependencies {
 }
 ```
 
+**Note:** The maven is currently not up to date due to internal problems that will hopefully be fixed soon. For now, please use [CurseMaven](https://www.cursemaven.com) instead.
+
 The format of the `bc_version` variable is `major.minor.patch`, e.g. `1.0.0`. Please get the latest version number on CurseForge, Modrinth, or by browsing the maven yourself.
 
 Next, add the dependency block in your `neoforge.mods.toml` file. Note: It is crucial that your mod is set to load `BEFORE` Bibliocraft, to ensure that your event handlers will be fired early enough.
@@ -42,7 +44,7 @@ type="optional"
 # Bibliocraft bumps the minor version whenever a breaking API change occurs,
 # or when addons are expected to update (e.g. when a new wooden block is added).
 # As such, we can allow any patch of the current minor version.
-versionRange="[1.3.0,1.4)"
+versionRange="[1.5.0,1.6)"
 ordering="BEFORE"
 side="BOTH"
 ```
