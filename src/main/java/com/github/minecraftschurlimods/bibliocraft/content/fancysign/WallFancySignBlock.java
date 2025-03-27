@@ -58,7 +58,7 @@ public class WallFancySignBlock extends AbstractFancySignBlock {
 
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (player.isSecondaryUseActive()) return InteractionResult.PASS;
+        if (state.getValue(WAXED) || player.isSecondaryUseActive()) return InteractionResult.PASS;
         if (level.isClientSide()) {
             ClientUtil.openFancySignScreen(pos, false);
         }

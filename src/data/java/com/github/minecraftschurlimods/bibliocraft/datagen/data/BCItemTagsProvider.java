@@ -33,6 +33,7 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         tag(BCTags.Items.SEAT_BACKS).addTags(BCTags.Items.SEAT_BACKS_SMALL, BCTags.Items.SEAT_BACKS_RAISED, BCTags.Items.SEAT_BACKS_FLAT, BCTags.Items.SEAT_BACKS_TALL, BCTags.Items.SEAT_BACKS_FANCY);
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS).addOptional(ResourceLocation.fromNamespaceAndPath("patchouli", "guide_book"));
         tag(BCTags.Items.COOKIE_JAR_COOKIES).add(Items.COOKIE);
+        tag(BCTags.Items.FANCY_SIGN_WAX).add(Items.HONEYCOMB);
         tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.DRAGON_BREATH);
         tag(BCTags.Items.SWORD_PEDESTAL_SWORDS).addTag(ItemTags.SWORDS);
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
