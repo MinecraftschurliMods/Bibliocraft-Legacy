@@ -109,14 +109,15 @@ public class FormattedTextArea extends AbstractWidget {
     private void renderLine(GuiGraphics graphics, int index, int x, int y) {
         FormattedLine line = lines.get(index);
         String text = line.text();
-        DrawCursor draw = !isFocused() || (Util.getMillis() - focusedTimestamp) / 300L % 2 != 0
+        boolean cursorBlink = (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0;
+        DrawCursor draw = !isFocused()
                 ? DrawCursor.NONE
                 : cursorY == index && cursorX < text.length()
                 ? DrawCursor.VERTICAL
                 : cursorY == index
                 ? DrawCursor.HORIZONTAL
                 : DrawCursor.NONE;
-        renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, height, cursorX, draw);
+        renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, height, cursorX, cursorBlink ? DrawCursor.NONE : draw);
         if (draw != DrawCursor.NONE && cursorX != highlightX) {
             int min = Math.min(cursorX, highlightX);
             int max = Math.max(cursorX, highlightX);
