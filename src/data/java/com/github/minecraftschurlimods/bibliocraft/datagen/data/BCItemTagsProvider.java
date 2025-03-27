@@ -39,8 +39,11 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         tag(BCTags.Items.DISC_RACK_DISCS).addTag(Tags.Items.MUSIC_DISCS)
                 .addOptionalTag(ResourceLocation.fromNamespaceAndPath("computercraft", "disks"));
         tag(BCTags.Items.FANCY_SIGN_WAX).add(Items.HONEYCOMB);
-        // TODO 1.21.4+ add #c:drink_containing/bottle
-        tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.DRAGON_BREATH);
+        tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.DRAGON_BREATH)
+                .addOptional(ResourceLocation.fromNamespaceAndPath("farmersdelight", "apple_cider"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("farmersdelight", "glow_berry_custard"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("farmersdelight", "hot_cocoa"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("farmersdelight", "melon_juice"));
         tag(BCTags.Items.SWORD_PEDESTAL_SWORDS).addTag(ItemTags.SWORDS);
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
         tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());

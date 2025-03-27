@@ -6,6 +6,22 @@
     "minecraft:glass_bottle",
     "minecraft:experience_bottle",
     "minecraft:honey_bottle",
-    "minecraft:dragon_breath"
+    "minecraft:dragon_breath",
+    {
+      "id": "farmersdelight:apple_cider",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:glow_berry_custard",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:hot_cocoa",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:melon_juice",
+      "required": false
+    }
   ]
 }
