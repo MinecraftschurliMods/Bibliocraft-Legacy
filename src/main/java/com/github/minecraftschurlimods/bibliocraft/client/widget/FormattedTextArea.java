@@ -64,6 +64,10 @@ public class FormattedTextArea extends AbstractWidget {
         }
     }
 
+    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width, int height) {
+        renderLine(line, poseStack, bufferSource, x, y, width, height, 0, DrawCursor.NONE);
+    }
+
     /**
      * Static version of {@link GuiGraphics#fill(RenderType, int, int, int, int, int)}.
      */

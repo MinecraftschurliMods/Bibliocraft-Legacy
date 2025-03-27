@@ -8,6 +8,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.DiscRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.DisplayCaseBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyArmorStandBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.FancyCrafterBER;
+import com.github.minecraftschurlimods.bibliocraft.client.ber.FancySignBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.LabelBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.PotionShelfBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ShelfBER;
@@ -99,6 +100,7 @@ public final class ClientHandler {
         event.registerBlockEntityRenderer(BCBlockEntities.DISC_RACK.get(),         $ -> new DiscRackBER());
         event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), $ -> new FancyArmorStandBER());
         event.registerBlockEntityRenderer(BCBlockEntities.FANCY_CRAFTER.get(),     $ -> new FancyCrafterBER());
+        event.registerBlockEntityRenderer(BCBlockEntities.FANCY_SIGN.get(),        $ -> new FancySignBER());
         event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(),             $ -> new LabelBER());
         event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(),      $ -> new PotionShelfBER());
         event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(),             $ -> new ShelfBER());

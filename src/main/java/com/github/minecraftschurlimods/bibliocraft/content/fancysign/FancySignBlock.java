@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancysign;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -12,7 +11,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -21,11 +19,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class FancySignBlock extends BCFacingEntityBlock {
+public class FancySignBlock extends AbstractFancySignBlock {
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
     private static final VoxelShape Z_SHAPE = ShapeUtil.combine(
             Shapes.box(0.9375, 0.1875, 0.4375, 1, 0.8125, 0.5625),
@@ -52,7 +49,7 @@ public class FancySignBlock extends BCFacingEntityBlock {
 
     public FancySignBlock(Properties properties) {
         super(properties);
-        registerDefaultState(getStateDefinition().any().setValue(HANGING, false).setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+        registerDefaultState(getStateDefinition().any().setValue(HANGING, false).setValue(UPSIDE_DOWN, false).setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -78,15 +75,10 @@ public class FancySignBlock extends BCFacingEntityBlock {
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isSecondaryUseActive()) return InteractionResult.PASS;
-        if (level.isClientSide()) {
-            ClientUtil.openFancySignScreen(pos, false);
+        Direction direction = hit.getDirection();
+        if (level.isClientSide() && hit.getDirection().getAxis() == state.getValue(FACING).getAxis()) {
+            ClientUtil.openFancySignScreen(pos, hit.getDirection() == state.getValue(FACING));
         }
         return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    @Nullable
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new FancySignBlockEntity(pos, state);
     }
 }

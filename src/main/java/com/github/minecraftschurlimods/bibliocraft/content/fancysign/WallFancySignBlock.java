@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodT
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -22,7 +20,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class WallFancySignBlock extends BCFacingEntityBlock {
+public class WallFancySignBlock extends AbstractFancySignBlock {
     private static final VoxelShape NORTH_SHAPE = ShapeUtil.combine(
             Shapes.box(0.9375, 0.1875, 0.875, 1, 0.8125, 1),
             Shapes.box(0, 0.1875, 0.875, 0.0625, 0.8125, 1),
@@ -65,11 +63,5 @@ public class WallFancySignBlock extends BCFacingEntityBlock {
             ClientUtil.openFancySignScreen(pos, false);
         }
         return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    @Nullable
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new FancySignBlockEntity(pos, state);
     }
 }

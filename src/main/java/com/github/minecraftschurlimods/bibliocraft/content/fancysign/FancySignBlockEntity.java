@@ -8,8 +8,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
-
 public class FancySignBlockEntity extends BlockEntity {
     private static final String FRONT_CONTENT_KEY = "front_content";
     private static final String BACK_CONTENT_KEY = "back_content";
