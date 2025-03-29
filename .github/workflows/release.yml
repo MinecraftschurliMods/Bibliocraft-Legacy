@@ -14,7 +14,7 @@ jobs:
       maven-user: ${{ vars.MAVEN_USER }}
       upload-artifacts: true
       artifact-retention: 1
-      publish-to-maven: false
+      publish-to-maven: true
       release-type: release
       datagen-folder: src/main/generated/
     secrets:
