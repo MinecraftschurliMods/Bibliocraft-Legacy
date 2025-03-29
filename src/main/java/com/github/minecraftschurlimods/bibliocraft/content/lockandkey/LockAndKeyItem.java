@@ -29,16 +29,16 @@ public class LockAndKeyItem extends Item {
         ItemStack stack = context.getItemInHand();
         LockAndKeyBehavior<BlockEntity> behavior = BibliocraftApi.getLockAndKeyBehaviors().get(blockEntity);
         if (behavior == null) return super.useOn(context);
-        Component name = behavior.nameGetter().apply(blockEntity);
+        Component name = behavior.getDisplayName(blockEntity);
         if (hasNoCustomName(player, stack, name)) return InteractionResult.FAIL;
-        LockCode lock = behavior.lockGetter().apply(blockEntity);
+        LockCode lock = behavior.getLockKey(blockEntity);
         if (lock == LockCode.NO_LOCK) {
-            behavior.lockSetter().accept(blockEntity, newLockCode(stack));
+            behavior.setLockKey(blockEntity, newLockCode(stack));
             blockEntity.setChanged();
             player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_LOCKED, name), true);
             return InteractionResult.SUCCESS;
         } else if (lock.unlocksWith(stack)) {
-            behavior.lockSetter().accept(blockEntity, LockCode.NO_LOCK);
+            behavior.setLockKey(blockEntity, LockCode.NO_LOCK);
             blockEntity.setChanged();
             player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_UNLOCKED, name), true);
             return InteractionResult.SUCCESS;

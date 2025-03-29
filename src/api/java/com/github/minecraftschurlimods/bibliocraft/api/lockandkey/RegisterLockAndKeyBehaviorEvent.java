@@ -35,6 +35,6 @@ public class RegisterLockAndKeyBehaviorEvent extends Event implements IModBusEve
      * @param <T> The type of the {@link BlockEntity}.
      */
     public <T extends BlockEntity> void register(Class<T> clazz, Function<T, LockCode> lockGetter, BiConsumer<T, LockCode> lockSetter, Function<T, Component> nameGetter) {
-        values.put(clazz, new LockAndKeyBehavior<>(lockGetter, lockSetter, nameGetter));
+        values.put(clazz, new LockAndKeyBehavior.Simple<>(lockGetter, lockSetter, nameGetter));
     }
 }
