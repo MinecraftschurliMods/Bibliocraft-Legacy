@@ -259,6 +259,16 @@ public final class BCUtil {
     }
 
     /**
+     * Returns a display name for the given {@link BlockEntity}. If it is nameable, the block entity's name is returned, otherwise the block's name is returned.
+     *
+     * @param blockEntity The {@link BlockEntity} to get the display name for.
+     * @return The display name to use for the given {@link BlockEntity}.
+     */
+    public static Component getNameForBE(BlockEntity blockEntity) {
+        return blockEntity instanceof Nameable nameable ? nameable.getDisplayName() : blockEntity.getBlockState().getBlock().getName();
+    }
+
+    /**
      * @param vec A {@link Vec3i}.
      * @return The given {@link Vec3i}, represented as a {@link Vec3}.
      */
