@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
+import com.github.minecraftschurlimods.bibliocraft.client.screen.BigBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClipboardScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
@@ -30,6 +31,16 @@ import net.neoforged.neoforge.client.model.data.ModelData;
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
 public final class ClientUtil {
+    /**
+     * Opens a {@link BigBookScreen} on the client.
+     *
+     * @param stack    The owning {@link ItemStack} of the screen.
+     * @param writable Whether the screen should be read-write ({@code true}) or read-only ({@code false}).
+     */
+    public static void openBigBookScreen(ItemStack stack, boolean writable) {
+        Minecraft.getInstance().setScreen(new BigBookScreen(stack, writable));
+    }
+
     /**
      * Opens a {@link ClipboardScreen} on the client.
      *

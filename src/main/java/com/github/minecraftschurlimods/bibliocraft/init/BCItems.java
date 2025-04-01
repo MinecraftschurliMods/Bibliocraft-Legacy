@@ -22,6 +22,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHold
 import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
@@ -69,7 +70,8 @@ public interface BCItems {
     DeferredItem<BlockItem>            GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
     DeferredItem<DoubleHighBlockItem>  IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     DeferredItem<BlockItem>            SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
-    DeferredItem<BigBookItem>          BIG_BOOK               = BCRegistries.ITEMS.register("big_book", BigBookItem::new);
+    DeferredItem<BigBookItem>          BIG_BOOK               = BCRegistries.ITEMS.register("big_book", () -> new BigBookItem(true));
+    DeferredItem<BigBookItem>          WRITTEN_BIG_BOOK       = BCRegistries.ITEMS.register("written_big_book", () -> new BigBookItem(true));
     DeferredItem<LockAndKeyItem>       LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
     DeferredItem<PlumbLineItem>        PLUMB_LINE             = BCRegistries.ITEMS.registerItem("plumb_line", PlumbLineItem::new);
     DeferredItem<RedstoneBookItem>     REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);

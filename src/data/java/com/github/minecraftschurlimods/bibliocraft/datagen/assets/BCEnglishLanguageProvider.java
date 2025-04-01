@@ -46,6 +46,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
         addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
         addDefaultItem(BCItems.BIG_BOOK);
+        add(BCItems.WRITTEN_BIG_BOOK.get(), "Big Book");
         add(BCItems.LOCK_AND_KEY.get(), "Lock and Key");
         addDefaultItem(BCItems.PLUMB_LINE);
         addDefaultItem(BCItems.REDSTONE_BOOK);
