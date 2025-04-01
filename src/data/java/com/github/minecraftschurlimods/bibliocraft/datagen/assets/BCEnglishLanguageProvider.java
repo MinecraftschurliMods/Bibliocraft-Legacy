@@ -123,6 +123,12 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(StockroomCatalogSorting.Item.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
         add(StockroomCatalogSorting.Item.COUNT_ASC.getTranslationKey(), "1-99");
         add(StockroomCatalogSorting.Item.COUNT_DESC.getTranslationKey(), "99-1");
+        add("config." + BibliocraftApi.MOD_ID + ".cosmetic", "Cosmetics");
+        add("config." + BibliocraftApi.MOD_ID + ".cosmetic.tooltip", "Contains cosmetic options.");
+        add("config." + BibliocraftApi.MOD_ID + ".cosmetic.enable_pride", "Enable Pride Cosmetics");
+        add("config." + BibliocraftApi.MOD_ID + ".cosmetic.enable_pride.tooltip", "Whether to enable pride-themed cosmetics during pride month or not.");
+        add("config." + BibliocraftApi.MOD_ID + ".cosmetic.enable_pride_always", "Always Enable Pride Cosmetics");
+        add("config." + BibliocraftApi.MOD_ID + ".cosmetic.enable_pride_always.tooltip", "Whether to enable pride-themed cosmetics all year or only during pride month. Does nothing if enable_pride is false.");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility", "Compatibility");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.tooltip", "Contains compatibility options.");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei", "JEI");
