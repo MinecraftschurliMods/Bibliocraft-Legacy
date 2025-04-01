@@ -46,7 +46,7 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
                 .addOptional(ResourceLocation.fromNamespaceAndPath("farmersdelight", "melon_juice"));
         tag(BCTags.Items.SWORD_PEDESTAL_SWORDS).addTag(ItemTags.SWORDS);
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
-        tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
+        tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
         tag(ItemTags.DYEABLE).add(BCItems.SWORD_PEDESTAL.get());
     }
 }

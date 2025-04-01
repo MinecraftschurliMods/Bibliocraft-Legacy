@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookItem;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardItem;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.FancyClockItem;
 import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackItem;
@@ -68,6 +69,7 @@ public interface BCItems {
     DeferredItem<BlockItem>            GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
     DeferredItem<DoubleHighBlockItem>  IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     DeferredItem<BlockItem>            SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
+    DeferredItem<BigBookItem>          BIG_BOOK               = BCRegistries.ITEMS.register("big_book", BigBookItem::new);
     DeferredItem<LockAndKeyItem>       LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
     DeferredItem<PlumbLineItem>        PLUMB_LINE             = BCRegistries.ITEMS.registerItem("plumb_line", PlumbLineItem::new);
     DeferredItem<RedstoneBookItem>     REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
@@ -75,7 +77,6 @@ public interface BCItems {
     DeferredItem<StockroomCatalogItem> STOCKROOM_CATALOG      = BCRegistries.ITEMS.registerItem("stockroom_catalog", StockroomCatalogItem::new);
     DeferredItem<TapeMeasureItem>      TAPE_MEASURE           = BCRegistries.ITEMS.registerItem("tape_measure", TapeMeasureItem::new);
     DeferredItem<Item>                 TAPE_REEL              = BCRegistries.ITEMS.registerSimpleItem("tape_reel");
-    //TODO Big Book
     //TODO Hand Drill
     //TODO Screw Gun
     //TODO Monocle

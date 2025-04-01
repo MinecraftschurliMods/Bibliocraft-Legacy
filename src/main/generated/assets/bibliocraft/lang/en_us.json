@@ -1013,6 +1013,7 @@
   "gui.bibliocraft.stockroom_catalog.sorting.item.alphabetical_desc": "Z-A",
   "gui.bibliocraft.stockroom_catalog.sorting.item.count_asc": "1-99",
   "gui.bibliocraft.stockroom_catalog.sorting.item.count_desc": "99-1",
+  "item.bibliocraft.big_book": "Big Book",
   "item.bibliocraft.black_acacia_fancy_seat_back": "Black Acacia Fancy Seat Back",
   "item.bibliocraft.black_acacia_flat_seat_back": "Black Acacia Flat Seat Back",
   "item.bibliocraft.black_acacia_raised_seat_back": "Black Acacia Raised Seat Back",

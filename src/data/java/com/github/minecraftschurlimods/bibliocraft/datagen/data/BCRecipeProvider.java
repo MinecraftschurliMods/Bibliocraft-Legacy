@@ -197,6 +197,14 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('N', Tags.Items.NUGGETS_GOLD)
                 .unlockedBy("has_gold_nugget", has(Tags.Items.NUGGETS_GOLD))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.BIG_BOOK)
+                .pattern("PPP")
+                .pattern("PBP")
+                .pattern("PPP")
+                .define('P', Items.PAPER)
+                .define('B', Items.WRITABLE_BOOK)
+                .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND)
                 .pattern(" I ")
                 .pattern(" I ")

@@ -14,6 +14,7 @@ public class BCItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        basicItem(BCItems.BIG_BOOK.get());
         basicItem(BCItems.CLIPBOARD.get());
         basicItem(BCItems.GOLD_CHAIN.get());
         basicItem(BCItems.GOLD_LANTERN.get());
