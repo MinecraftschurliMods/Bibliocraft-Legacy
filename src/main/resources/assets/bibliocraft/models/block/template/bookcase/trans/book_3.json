@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "4": "bibliocraft:block/bookcase/book_3"
+    "4": "bibliocraft:block/bookcase/trans/book_3"
   },
   "elements": [
     {

@@ -26,6 +26,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.RenderTypeHelper;
 import net.neoforged.neoforge.client.model.data.ModelData;
 
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
@@ -157,5 +161,12 @@ public final class ClientUtil {
         for (RenderType type : model.getRenderTypes(state, random, modelData)) {
             renderer.renderModel(stack.last(), buffer.getBuffer(RenderTypeHelper.getEntityRenderType(type, false)), state, model, red, green, blue, light, OverlayTexture.NO_OVERLAY, modelData, type);
         }
+    }
+
+    /**
+     * @return Whether pride-themed content should be displayed.
+     */
+    public static boolean isPride() {
+        return Calendar.getInstance().get(Calendar.MONTH) == Calendar.JUNE;
     }
 }
