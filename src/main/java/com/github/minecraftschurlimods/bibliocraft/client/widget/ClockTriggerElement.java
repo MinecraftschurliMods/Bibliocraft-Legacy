@@ -26,11 +26,6 @@ public class ClockTriggerElement extends Screen {
     private static final ResourceLocation EDIT_HIGHLIGHTED = BCUtil.modLoc("edit_highlighted");
     private static final ResourceLocation DELETE = BCUtil.modLoc("delete");
     private static final ResourceLocation DELETE_HIGHLIGHTED = BCUtil.modLoc("delete_highlighted");
-    private static final Component DELETE_TRIGGER = Component.translatable(Translations.CLOCK_DELETE_TRIGGER);
-    private static final Component EDIT_TRIGGER = Component.translatable(Translations.CLOCK_EDIT_TRIGGER);
-    private static final Component EMIT_REDSTONE = Component.translatable(Translations.CLOCK_EMIT_REDSTONE);
-    private static final Component EMIT_SOUND = Component.translatable(Translations.CLOCK_EMIT_SOUND);
-    private static final Component SEPARATOR = Component.translatable(Translations.CLOCK_TIME_SEPARATOR);
     private static final ItemStack REDSTONE = new ItemStack(Items.REDSTONE);
     private static final ItemStack NOTE_BLOCK = new ItemStack(Items.NOTE_BLOCK);
     public final ClockTriggerPanel owner;
@@ -40,7 +35,7 @@ public class ClockTriggerElement extends Screen {
     private final Button deleteButton;
 
     public ClockTriggerElement(ClockTrigger trigger, ClockTriggerPanel owner, int listSize) {
-        super(Component.literal(String.format("%02d%s%02d", trigger.hour(), SEPARATOR.getString(), trigger.minute())));
+        super(Component.literal(String.format("%02d%s%02d", trigger.hour(), Translations.CLOCK_TIME_SEPARATOR.getString(), trigger.minute())));
         this.width = WIDTH;
         this.height = HEIGHT;
         this.trigger = trigger;
@@ -80,13 +75,13 @@ public class ClockTriggerElement extends Screen {
     public void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
         if (mouseY >= 2 && mouseY < 18) {
             if (trigger.redstone() && mouseX >= 2 && mouseX < 18) {
-                graphics.renderTooltip(Minecraft.getInstance().font, EMIT_REDSTONE, mouseX, mouseY);
+                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_EMIT_REDSTONE, mouseX, mouseY);
             } else if (trigger.sound() && mouseX >= 19 && mouseX < 37) {
-                graphics.renderTooltip(Minecraft.getInstance().font, EMIT_SOUND, mouseX, mouseY);
+                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_EMIT_SOUND, mouseX, mouseY);
             } else if (editButton.isHovered()) {
-                graphics.renderTooltip(Minecraft.getInstance().font, EDIT_TRIGGER, mouseX, mouseY);
+                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_EDIT_TRIGGER, mouseX, mouseY);
             } else if (deleteButton.isHovered()) {
-                graphics.renderTooltip(Minecraft.getInstance().font, DELETE_TRIGGER, mouseX, mouseY);
+                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_DELETE_TRIGGER, mouseX, mouseY);
             }
         }
     }

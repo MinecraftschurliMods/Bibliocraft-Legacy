@@ -27,7 +27,7 @@ public class PlumbLineItem extends Item {
             state = context.getLevel().getBlockState(pos);
         }
         if (count <= 2) return super.useOn(context);
-        context.getPlayer().displayClientMessage(Component.translatable(Translations.PLUMB_LINE_DISTANCE, count), true);
+        context.getPlayer().displayClientMessage(Component.translatable(Translations.PLUMB_LINE_DISTANCE_KEY, count), true);
         return InteractionResult.SUCCESS;
     }
 }

@@ -17,15 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class ClockTriggerEditScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clock_edit.png");
-    private static final Component TITLE = Component.translatable(Translations.CLOCK_TITLE);
-    private static final Component EMIT_REDSTONE = Component.translatable(Translations.CLOCK_EMIT_REDSTONE);
-    private static final Component EMIT_SOUND = Component.translatable(Translations.CLOCK_EMIT_SOUND);
-    private static final Component HOURS = Component.translatable(Translations.CLOCK_HOURS);
-    private static final Component HOURS_HINT = Component.translatable(Translations.CLOCK_HOURS_HINT);
-    private static final Component MINUTES = Component.translatable(Translations.CLOCK_MINUTES);
-    private static final Component MINUTES_HINT = Component.translatable(Translations.CLOCK_MINUTES_HINT);
-    private static final Component TIME = Component.translatable(Translations.CLOCK_TIME);
-    private static final Component TIME_SEPARATOR = Component.translatable(Translations.CLOCK_TIME_SEPARATOR);
     private static final int WIDTH = 144;
     private static final int HEIGHT = 72;
     private final ClockScreen parent;
@@ -45,14 +36,14 @@ public class ClockTriggerEditScreen extends Screen {
     private Checkbox sound;
 
     public ClockTriggerEditScreen(ClockScreen parent, @Nullable ClockTrigger old) {
-        super(TITLE);
+        super(Translations.CLOCK_TITLE);
         this.parent = parent;
         this.old = old;
         Font font = Minecraft.getInstance().font;
-        timeWidth = font.width(TIME);
-        separatorWidth = font.width(TIME_SEPARATOR);
-        redstoneWidth = font.width(EMIT_REDSTONE);
-        soundWidth = font.width(EMIT_SOUND);
+        timeWidth = font.width(Translations.CLOCK_TIME);
+        separatorWidth = font.width(Translations.CLOCK_TIME_SEPARATOR);
+        redstoneWidth = font.width(Translations.CLOCK_EMIT_REDSTONE);
+        soundWidth = font.width(Translations.CLOCK_EMIT_SOUND);
     }
 
     @Override
@@ -62,8 +53,8 @@ public class ClockTriggerEditScreen extends Screen {
         contentLeftPos = (width - Math.min(WIDTH - 12, BCUtil.max(timeWidth + separatorWidth + 90, redstoneWidth + 19, soundWidth + 19))) / 2;
         contentTopPos = topPos + 6;
         Font font = Minecraft.getInstance().font;
-        hours = addRenderableWidget(new EditBox(font, contentLeftPos + timeWidth + 2, contentTopPos, 40, 20, HOURS));
-        hours.setHint(HOURS_HINT);
+        hours = addRenderableWidget(new EditBox(font, contentLeftPos + timeWidth + 2, contentTopPos, 40, 20, Translations.CLOCK_HOURS));
+        hours.setHint(Translations.CLOCK_HOURS_HINT);
         hours.setFilter(s -> {
             try {
                 int i = Integer.parseInt(s);
@@ -72,8 +63,8 @@ public class ClockTriggerEditScreen extends Screen {
                 return s.isEmpty();
             }
         });
-        minutes = addRenderableWidget(new EditBox(font, contentLeftPos + timeWidth + separatorWidth + 44, contentTopPos, 40, 20, MINUTES));
-        minutes.setHint(MINUTES_HINT);
+        minutes = addRenderableWidget(new EditBox(font, contentLeftPos + timeWidth + separatorWidth + 44, contentTopPos, 40, 20, Translations.CLOCK_MINUTES));
+        minutes.setHint(Translations.CLOCK_MINUTES_HINT);
         minutes.setFilter(s -> {
             try {
                 int i = Integer.parseInt(s);
@@ -110,10 +101,10 @@ public class ClockTriggerEditScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawString(Minecraft.getInstance().font, TIME, contentLeftPos, contentTopPos + 6, 0x404040, false);
-        graphics.drawString(Minecraft.getInstance().font, TIME_SEPARATOR, contentLeftPos + timeWidth + 43, contentTopPos + 6, 0x404040, false);
-        graphics.drawString(Minecraft.getInstance().font, EMIT_REDSTONE, contentLeftPos + 19, contentTopPos + 27, 0x404040, false);
-        graphics.drawString(Minecraft.getInstance().font, EMIT_SOUND, contentLeftPos + 19, contentTopPos + 46, 0x404040, false);
+        graphics.drawString(Minecraft.getInstance().font, Translations.CLOCK_TIME, contentLeftPos, contentTopPos + 6, 0x404040, false);
+        graphics.drawString(Minecraft.getInstance().font, Translations.CLOCK_TIME_SEPARATOR, contentLeftPos + timeWidth + 43, contentTopPos + 6, 0x404040, false);
+        graphics.drawString(Minecraft.getInstance().font, Translations.CLOCK_EMIT_REDSTONE, contentLeftPos + 19, contentTopPos + 27, 0x404040, false);
+        graphics.drawString(Minecraft.getInstance().font, Translations.CLOCK_EMIT_SOUND, contentLeftPos + 19, contentTopPos + 46, 0x404040, false);
     }
 
     @Override

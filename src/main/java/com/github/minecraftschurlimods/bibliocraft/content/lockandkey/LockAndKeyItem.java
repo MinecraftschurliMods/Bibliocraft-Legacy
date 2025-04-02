@@ -35,12 +35,12 @@ public class LockAndKeyItem extends Item {
         if (lock == LockCode.NO_LOCK) {
             behavior.setLockKey(blockEntity, newLockCode(stack));
             blockEntity.setChanged();
-            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_LOCKED, name), true);
+            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_LOCKED_KEY, name), true);
             return InteractionResult.SUCCESS;
         } else if (lock.unlocksWith(stack)) {
             behavior.setLockKey(blockEntity, LockCode.NO_LOCK);
             blockEntity.setChanged();
-            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_UNLOCKED, name), true);
+            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_UNLOCKED_KEY, name), true);
             return InteractionResult.SUCCESS;
         }
         return super.useOn(context);
@@ -52,7 +52,7 @@ public class LockAndKeyItem extends Item {
 
     private boolean hasNoCustomName(Player player, ItemStack stack, Component displayName) {
         if (stack.has(DataComponents.CUSTOM_NAME)) return false;
-        player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME, displayName), true);
+        player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME_KEY, displayName), true);
         player.playNotifySound(SoundEvents.CHEST_LOCKED, SoundSource.BLOCKS, 1.0F, 1.0F);
         return true;
     }

@@ -13,8 +13,8 @@ import net.minecraft.util.FormattedCharSequence;
 import java.util.List;
 
 public class RedstoneBookScreen extends Screen {
-    private static final Component TITLE = Component.translatable(Translations.REDSTONE_BOOK_TITLE);
-    private static final Component TEXT = Component.translatable(Translations.REDSTONE_BOOK_TEXT);
+    private static final Component TITLE = Component.translatable(Translations.REDSTONE_BOOK_TITLE_KEY);
+    private static final Component TEXT = Component.translatable(Translations.REDSTONE_BOOK_TEXT_KEY);
 
     public RedstoneBookScreen() {
         super(TITLE);

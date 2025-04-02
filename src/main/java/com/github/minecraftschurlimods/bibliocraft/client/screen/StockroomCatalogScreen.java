@@ -43,11 +43,11 @@ public class StockroomCatalogScreen extends Screen {
     private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
     private static final ResourceLocation REMOVE_ICON = BCUtil.modLoc("remove");
     private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
-    private static final Component LOCATE = Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE);
-    private static final Component REMOVE = Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE);
-    private static final Component SEARCH = Component.translatable(Translations.STOCKROOM_CATALOG_SEARCH);
-    private static final Component SHOW_CONTAINERS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS);
-    private static final Component SHOW_ITEMS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_ITEMS);
+    private static final Component LOCATE = Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE_KEY);
+    private static final Component REMOVE = Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE_KEY);
+    private static final Component SEARCH = Component.translatable(Translations.STOCKROOM_CATALOG_SEARCH_KEY);
+    private static final Component SHOW_CONTAINERS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS_KEY);
+    private static final Component SHOW_ITEMS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_ITEMS_KEY);
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
@@ -91,7 +91,7 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 34 && mouseX < x + 50) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE, (int) Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(visibleContainers.get(y / 19)))), mouseX, mouseY);
+                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, (int) Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(visibleContainers.get(y / 19)))), mouseX, mouseY);
                 }
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
@@ -108,7 +108,7 @@ public class StockroomCatalogScreen extends Screen {
             for (StockroomCatalogItemEntry entry : visibleItems) {
                 graphics.renderItem(entry.item(), x + 34, i * 19 + 29);
                 graphics.renderItemDecorations(font, entry.item(), x + 34, i * 19 + 29);
-                String countText = Component.translatable(Translations.STOCKROOM_CATALOG_COUNT, entry.count()).getString();
+                String countText = Component.translatable(Translations.STOCKROOM_CATALOG_COUNT_KEY, entry.count()).getString();
                 int countWidth = font.width(countText);
                 graphics.drawString(font, countText, x + 205 - countWidth, i * 19 + 33, 0, false);
                 String itemText = entry.item().getHoverName().getString(153 - countWidth);
@@ -337,7 +337,7 @@ public class StockroomCatalogScreen extends Screen {
         }
         
         private static <T extends StockroomCatalogSorting> Component message(T t) {
-            return Component.translatable(Translations.STOCKROOM_CATALOG_SORT, Component.translatable(t.getTranslationKey()));
+            return Component.translatable(Translations.STOCKROOM_CATALOG_SORT_KEY, Component.translatable(t.getTranslationKey()));
         }
     }
 }

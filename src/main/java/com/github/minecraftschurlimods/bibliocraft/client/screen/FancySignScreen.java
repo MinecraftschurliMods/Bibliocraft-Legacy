@@ -30,23 +30,6 @@ public class FancySignScreen extends Screen {
     public static final int WIDTH = 140;
     public static final int HEIGHT = 80;
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_sign.png");
-    private static final Component BOLD = Component.translatable(Translations.FANCY_TEXT_AREA_BOLD);
-    private static final Component ITALIC = Component.translatable(Translations.FANCY_TEXT_AREA_ITALIC);
-    private static final Component UNDERLINED = Component.translatable(Translations.FANCY_TEXT_AREA_UNDERLINED);
-    private static final Component STRIKETHROUGH = Component.translatable(Translations.FANCY_TEXT_AREA_STRIKETHROUGH);
-    private static final Component OBFUSCATED = Component.translatable(Translations.FANCY_TEXT_AREA_OBFUSCATED);
-    private static final Component BOLD_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_BOLD_SHORT).withStyle(Style.EMPTY.withBold(true));
-    private static final Component ITALIC_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_ITALIC_SHORT).withStyle(Style.EMPTY.withItalic(true));
-    private static final Component UNDERLINED_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_UNDERLINED_SHORT).withStyle(Style.EMPTY.withUnderlined(true));
-    private static final Component STRIKETHROUGH_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_STRIKETHROUGH_SHORT).withStyle(Style.EMPTY.withStrikethrough(true));
-    private static final Component OBFUSCATED_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_OBFUSCATED_SHORT).withStyle(Style.EMPTY.withObfuscated(true));
-    private static final Component MODE = Component.translatable(Translations.FANCY_TEXT_AREA_MODE);
-    private static final Component ALIGNMENT = Component.translatable(Translations.FANCY_TEXT_AREA_ALIGNMENT);
-    private static final Component COLOR_HINT = Component.translatable(Translations.FANCY_TEXT_AREA_COLOR_HINT);
-    private static final Component SCALE_DOWN = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_DOWN);
-    private static final Component SCALE_DOWN_TOOLTIP = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP);
-    private static final Component SCALE_UP = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_UP);
-    private static final Component SCALE_UP_TOOLTIP = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP);
     private final BlockPos pos;
     private final boolean back;
     private FormattedTextArea textArea;
@@ -98,7 +81,7 @@ public class FancySignScreen extends Screen {
         ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
         int colorRows = Math.floorDiv(colors.length, 4);
         colorBox = addRenderableWidget(new EditBox(font, rightX + 16, y + 16 * colorRows, 64, 16, Component.empty()));
-        colorBox.setHint(COLOR_HINT);
+        colorBox.setHint(Translations.FANCY_TEXT_AREA_COLOR_HINT);
         colorBox.setMaxLength(7);
         colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
         colorBox.setResponder(s -> {
@@ -117,38 +100,38 @@ public class FancySignScreen extends Screen {
         }
 
         // Formatting buttons
-        addRenderableWidget(Button.builder(BOLD_SHORT, $ -> textArea.toggleStyle(Style::isBold, Style::withBold))
-                .tooltip(Tooltip.create(BOLD))
+        addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_BOLD_SHORT, $ -> textArea.toggleStyle(Style::isBold, Style::withBold))
+                .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_BOLD))
                 .bounds(leftX - 80, y, 16, 16)
                 .build());
-        addRenderableWidget(Button.builder(ITALIC_SHORT, $ -> textArea.toggleStyle(Style::isItalic, Style::withItalic))
-                .tooltip(Tooltip.create(ITALIC))
+        addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_ITALIC_SHORT, $ -> textArea.toggleStyle(Style::isItalic, Style::withItalic))
+                .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_ITALIC))
                 .bounds(leftX - 64, y, 16, 16)
                 .build());
-        addRenderableWidget(Button.builder(UNDERLINED_SHORT, $ -> textArea.toggleStyle(Style::isUnderlined, Style::withUnderlined))
-                .tooltip(Tooltip.create(UNDERLINED))
+        addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_UNDERLINED_SHORT, $ -> textArea.toggleStyle(Style::isUnderlined, Style::withUnderlined))
+                .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_UNDERLINED))
                 .bounds(leftX - 48, y, 16, 16)
                 .build());
-        addRenderableWidget(Button.builder(STRIKETHROUGH_SHORT, $ -> textArea.toggleStyle(Style::isStrikethrough, Style::withStrikethrough))
-                .tooltip(Tooltip.create(STRIKETHROUGH))
+        addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_STRIKETHROUGH_SHORT, $ -> textArea.toggleStyle(Style::isStrikethrough, Style::withStrikethrough))
+                .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_STRIKETHROUGH))
                 .bounds(leftX - 32, y, 16, 16)
                 .build());
-        addRenderableWidget(Button.builder(OBFUSCATED_SHORT, $ -> textArea.toggleStyle(Style::isObfuscated, Style::withObfuscated))
-                .tooltip(Tooltip.create(OBFUSCATED))
+        addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_OBFUSCATED_SHORT, $ -> textArea.toggleStyle(Style::isObfuscated, Style::withObfuscated))
+                .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_OBFUSCATED))
                 .bounds(leftX - 80, y + 16, 16, 16)
                 .build());
         modeButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getMode().getTranslationKey()), button -> {
                     textArea.toggleMode();
                     updateModeButton();
                 })
-                .tooltip(Tooltip.create(MODE))
+                .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_MODE))
                 .bounds(leftX - 64, y + 16, 48, 16)
                 .build());
         alignmentButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getAlignment().getTranslationKey()), button -> {
                     textArea.toggleAlignment();
                     updateAlignmentButton();
                 })
-                .tooltip(Tooltip.create(ALIGNMENT))
+                .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_ALIGNMENT))
                 .bounds(leftX - 80, y + 32, 64, 16)
                 .build());
 
@@ -167,20 +150,20 @@ public class FancySignScreen extends Screen {
                 textArea.setSize(Integer.parseInt(s));
             } catch (NumberFormatException ignored) {}
         });
-        scaleDownButton = addRenderableWidget(Button.builder(SCALE_DOWN, button -> {
+        scaleDownButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_DOWN, button -> {
             int size = textArea.getSize() - 1;
             sizeBox.setValue(String.valueOf(size));
             // call again to account for invalid values
             sizeBox.setValue(String.valueOf(textArea.getSize()));
             updateSizeButtons(size);
-        }).bounds(leftX - 80, y + 64, 16, 16).tooltip(Tooltip.create(SCALE_DOWN_TOOLTIP)).build());
-        scaleUpButton = addRenderableWidget(Button.builder(SCALE_UP, button -> {
+        }).bounds(leftX - 80, y + 64, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP)).build());
+        scaleUpButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_UP, button -> {
             int size = textArea.getSize() + 1;
             sizeBox.setValue(String.valueOf(size));
             // call again to account for invalid values
             sizeBox.setValue(String.valueOf(textArea.getSize()));
             updateSizeButtons(size);
-        }).bounds(leftX - 32, y + 64, 16, 16).tooltip(Tooltip.create(SCALE_UP_TOOLTIP)).build());
+        }).bounds(leftX - 32, y + 64, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP)).build());
         onLineChange(textArea.getLines().getFirst());
 
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
