@@ -15,7 +15,7 @@ public record WrittenBigBookContent(List<List<FormattedLine>> pages, String titl
             FormattedLine.CODEC.listOf().listOf().fieldOf("pages").forGetter(WrittenBigBookContent::pages),
             Codec.string(0, 32).fieldOf("title").forGetter(WrittenBigBookContent::title),
             Codec.STRING.fieldOf("author").forGetter(WrittenBigBookContent::author),
-            ExtraCodecs.intRange(0, 3).fieldOf("generation").forGetter(WrittenBigBookContent::generation)
+            ExtraCodecs.intRange(0, 3).optionalFieldOf("generation", 0).forGetter(WrittenBigBookContent::generation)
     ).apply(inst, WrittenBigBookContent::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, WrittenBigBookContent> STREAM_CODEC = StreamCodec.composite(
             FormattedLine.STREAM_CODEC.apply(ByteBufCodecs.list()).apply(ByteBufCodecs.list()), WrittenBigBookContent::pages,
