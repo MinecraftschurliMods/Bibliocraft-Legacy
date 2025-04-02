@@ -17,18 +17,15 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class BigBookItem extends Item {
-    private final boolean writable;
-
-    public BigBookItem(boolean writable) {
-        super(writable ? new Properties() : new Properties().component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
-        this.writable = writable;
+    public BigBookItem(boolean glint) {
+        super(glint ? new Properties() : new Properties().component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) {
-            ClientUtil.openBigBookScreen(stack, writable);
+            ClientUtil.openBigBookScreen(stack);
         }
         return InteractionResultHolder.success(stack);
     }

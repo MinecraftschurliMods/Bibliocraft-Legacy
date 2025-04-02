@@ -30,23 +30,23 @@ public class FancySignScreen extends Screen {
     public static final int WIDTH = 140;
     public static final int HEIGHT = 80;
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_sign.png");
-    private static final Component BOLD = Component.translatable(Translations.FANCY_SIGN_BOLD);
-    private static final Component ITALIC = Component.translatable(Translations.FANCY_SIGN_ITALIC);
-    private static final Component UNDERLINED = Component.translatable(Translations.FANCY_SIGN_UNDERLINED);
-    private static final Component STRIKETHROUGH = Component.translatable(Translations.FANCY_SIGN_STRIKETHROUGH);
-    private static final Component OBFUSCATED = Component.translatable(Translations.FANCY_SIGN_OBFUSCATED);
-    private static final Component BOLD_SHORT = Component.translatable(Translations.FANCY_SIGN_BOLD_SHORT).withStyle(Style.EMPTY.withBold(true));
-    private static final Component ITALIC_SHORT = Component.translatable(Translations.FANCY_SIGN_ITALIC_SHORT).withStyle(Style.EMPTY.withItalic(true));
-    private static final Component UNDERLINED_SHORT = Component.translatable(Translations.FANCY_SIGN_UNDERLINED_SHORT).withStyle(Style.EMPTY.withUnderlined(true));
-    private static final Component STRIKETHROUGH_SHORT = Component.translatable(Translations.FANCY_SIGN_STRIKETHROUGH_SHORT).withStyle(Style.EMPTY.withStrikethrough(true));
-    private static final Component OBFUSCATED_SHORT = Component.translatable(Translations.FANCY_SIGN_OBFUSCATED_SHORT).withStyle(Style.EMPTY.withObfuscated(true));
-    private static final Component MODE = Component.translatable(Translations.FANCY_SIGN_MODE);
-    private static final Component ALIGNMENT = Component.translatable(Translations.FANCY_SIGN_ALIGNMENT);
-    private static final Component COLOR_HINT = Component.translatable(Translations.FANCY_SIGN_COLOR_HINT);
-    private static final Component SCALE_DOWN = Component.translatable(Translations.FANCY_SIGN_SCALE_DOWN);
-    private static final Component SCALE_DOWN_TOOLTIP = Component.translatable(Translations.FANCY_SIGN_SCALE_DOWN_TOOLTIP);
-    private static final Component SCALE_UP = Component.translatable(Translations.FANCY_SIGN_SCALE_UP);
-    private static final Component SCALE_UP_TOOLTIP = Component.translatable(Translations.FANCY_SIGN_SCALE_UP_TOOLTIP);
+    private static final Component BOLD = Component.translatable(Translations.FANCY_TEXT_AREA_BOLD);
+    private static final Component ITALIC = Component.translatable(Translations.FANCY_TEXT_AREA_ITALIC);
+    private static final Component UNDERLINED = Component.translatable(Translations.FANCY_TEXT_AREA_UNDERLINED);
+    private static final Component STRIKETHROUGH = Component.translatable(Translations.FANCY_TEXT_AREA_STRIKETHROUGH);
+    private static final Component OBFUSCATED = Component.translatable(Translations.FANCY_TEXT_AREA_OBFUSCATED);
+    private static final Component BOLD_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_BOLD_SHORT).withStyle(Style.EMPTY.withBold(true));
+    private static final Component ITALIC_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_ITALIC_SHORT).withStyle(Style.EMPTY.withItalic(true));
+    private static final Component UNDERLINED_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_UNDERLINED_SHORT).withStyle(Style.EMPTY.withUnderlined(true));
+    private static final Component STRIKETHROUGH_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_STRIKETHROUGH_SHORT).withStyle(Style.EMPTY.withStrikethrough(true));
+    private static final Component OBFUSCATED_SHORT = Component.translatable(Translations.FANCY_TEXT_AREA_OBFUSCATED_SHORT).withStyle(Style.EMPTY.withObfuscated(true));
+    private static final Component MODE = Component.translatable(Translations.FANCY_TEXT_AREA_MODE);
+    private static final Component ALIGNMENT = Component.translatable(Translations.FANCY_TEXT_AREA_ALIGNMENT);
+    private static final Component COLOR_HINT = Component.translatable(Translations.FANCY_TEXT_AREA_COLOR_HINT);
+    private static final Component SCALE_DOWN = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_DOWN);
+    private static final Component SCALE_DOWN_TOOLTIP = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP);
+    private static final Component SCALE_UP = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_UP);
+    private static final Component SCALE_UP_TOOLTIP = Component.translatable(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP);
     private final BlockPos pos;
     private final boolean back;
     private FormattedTextArea textArea;
@@ -209,11 +209,11 @@ public class FancySignScreen extends Screen {
         updateSizeButtons(line.size());
     }
 
-    public void updateModeButton() {
+    private void updateModeButton() {
         modeButton.setMessage(Component.translatable(textArea.getMode().getTranslationKey()));
     }
 
-    public void updateAlignmentButton() {
+    private void updateAlignmentButton() {
         alignmentButton.setMessage(Component.translatable(textArea.getAlignment().getTranslationKey()));
     }
 }

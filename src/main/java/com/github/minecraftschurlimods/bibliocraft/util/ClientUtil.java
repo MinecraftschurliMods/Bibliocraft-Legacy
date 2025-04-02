@@ -35,10 +35,9 @@ public final class ClientUtil {
      * Opens a {@link BigBookScreen} on the client.
      *
      * @param stack    The owning {@link ItemStack} of the screen.
-     * @param writable Whether the screen should be read-write ({@code true}) or read-only ({@code false}).
      */
-    public static void openBigBookScreen(ItemStack stack, boolean writable) {
-        Minecraft.getInstance().setScreen(new BigBookScreen(stack, writable));
+    public static void openBigBookScreen(ItemStack stack) {
+        Minecraft.getInstance().setScreen(new BigBookScreen(stack));
     }
 
     /**
