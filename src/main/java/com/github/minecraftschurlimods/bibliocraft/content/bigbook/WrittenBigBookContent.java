@@ -12,7 +12,7 @@ import java.util.List;
 
 public record WrittenBigBookContent(List<List<FormattedLine>> pages, String title, String author, int generation) {
     public static final Codec<WrittenBigBookContent> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            FormattedLine.CODEC.listOf().listOf().fieldOf("pages").forGetter(WrittenBigBookContent::pages),
+            FormattedLine.CODEC.sizeLimitedListOf(256).listOf().fieldOf("pages").forGetter(WrittenBigBookContent::pages),
             Codec.string(0, 32).fieldOf("title").forGetter(WrittenBigBookContent::title),
             Codec.STRING.fieldOf("author").forGetter(WrittenBigBookContent::author),
             ExtraCodecs.intRange(0, 3).optionalFieldOf("generation", 0).forGetter(WrittenBigBookContent::generation)

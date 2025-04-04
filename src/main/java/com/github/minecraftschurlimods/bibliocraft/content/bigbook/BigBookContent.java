@@ -11,7 +11,7 @@ import java.util.List;
 
 public record BigBookContent(List<List<FormattedLine>> pages) {
     public static final Codec<BigBookContent> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            FormattedLine.CODEC.listOf().listOf().fieldOf("pages").forGetter(BigBookContent::pages)
+            FormattedLine.CODEC.sizeLimitedListOf(256).listOf().fieldOf("pages").forGetter(BigBookContent::pages)
     ).apply(inst, BigBookContent::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, BigBookContent> STREAM_CODEC = StreamCodec.composite(
             FormattedLine.STREAM_CODEC.apply(ByteBufCodecs.list()).apply(ByteBufCodecs.list()), BigBookContent::pages,
