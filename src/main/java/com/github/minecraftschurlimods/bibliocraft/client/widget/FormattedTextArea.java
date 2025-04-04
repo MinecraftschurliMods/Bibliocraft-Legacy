@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
-import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -39,9 +38,17 @@ public class FormattedTextArea extends AbstractWidget {
     private long focusedTimestamp = Util.getMillis();
     private Consumer<FormattedLine> onLineChange;
 
-    public FormattedTextArea(int x, int y, int width, int height, Component message, List<FormattedLine> lines) {
-        super(x, y, FancySignScreen.WIDTH, FancySignScreen.HEIGHT, message);
+    public FormattedTextArea(int x, int y, int width, int height, List<FormattedLine> lines) {
+        super(x, y, width, height, Component.empty());
         this.lines = new ArrayList<>(lines);
+    }
+
+    public static void renderLines(List<FormattedLine> lines, PoseStack stack, MultiBufferSource bufferSource, int x, int y, int width, int height) {
+        int i = y;
+        for (FormattedLine line : lines) {
+            renderLine(line, stack, bufferSource, x, i, width, height);
+            i += line.size();
+        }
     }
 
     public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width, int height, int cursor, DrawCursor drawCursor) {

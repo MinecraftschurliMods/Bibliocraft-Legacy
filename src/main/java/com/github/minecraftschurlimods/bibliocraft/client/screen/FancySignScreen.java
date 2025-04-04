@@ -46,12 +46,6 @@ public class FancySignScreen extends Screen {
         this.back = back;
     }
 
-    public void setColor(int color) {
-        textArea.setColor(color);
-        String hexString = Integer.toHexString(color);
-        colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
-    }
-
     @Override
     public void onClose() {
         if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign))
@@ -74,7 +68,7 @@ public class FancySignScreen extends Screen {
         int leftX = (width - WIDTH) / 2;
         int rightX = (width + WIDTH) / 2;
         int y = (height - HEIGHT) / 2 - 16;
-        textArea = addRenderableWidget(new FormattedTextArea(leftX, y, WIDTH, HEIGHT, Component.empty(), sign.getFrontContent().lines()));
+        textArea = addRenderableWidget(new FormattedTextArea(leftX, y, WIDTH, HEIGHT, sign.getFrontContent().lines()));
         textArea.setOnLineChange(this::onLineChange);
 
         // Color buttons and text box
@@ -177,7 +171,13 @@ public class FancySignScreen extends Screen {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(BACKGROUND, (width - WIDTH) / 2 - 4, (height - HEIGHT) / 2 - 20, 0, 0, 192, 192);
     }
-    
+
+    private void setColor(int color) {
+        textArea.setColor(color);
+        String hexString = Integer.toHexString(color);
+        colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
+    }
+
     private void updateSizeButtons(int size) {
         scaleDownButton.active = size > FormattedLine.MIN_SIZE;
         scaleUpButton.active = size < FormattedLine.MAX_SIZE;
