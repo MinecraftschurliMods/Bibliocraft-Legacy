@@ -2,6 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.client.widget.ColorButton;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookContent;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -19,6 +22,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.HexFormat;
@@ -34,8 +38,8 @@ public class BigBookScreen extends Screen {
     private static final int TEXT_HEIGHT = 204;
     private final ItemStack stack;
     private final boolean writable;
+    private final List<List<FormattedLine>> pages;
     private int currentPage = 0;
-    private List<List<FormattedLine>> pages;
     private FormattedTextArea textArea;
     private boolean isSigning = false;
     private Button modeButton;
@@ -51,10 +55,10 @@ public class BigBookScreen extends Screen {
         super(stack.getHoverName());
         this.stack = stack;
         if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
-            pages = Objects.requireNonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)).pages();
+            pages = new ArrayList<>(Objects.requireNonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)).pages());
             writable = false;
         } else if (stack.has(BCDataComponents.BIG_BOOK_CONTENT)) {
-            pages = Objects.requireNonNull(stack.get(BCDataComponents.BIG_BOOK_CONTENT)).pages();
+            pages = new ArrayList<>(Objects.requireNonNull(stack.get(BCDataComponents.BIG_BOOK_CONTENT)).pages());
             writable = true;
         } else {
             pages = new ArrayList<>();
@@ -213,7 +217,9 @@ public class BigBookScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        //TODO
+        BigBookContent content = new BigBookContent(pages);
+        stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
+        PacketDistributor.sendToServer(new BigBookSyncPacket(content));
     }
 
     private void onLineChange(FormattedLine line) {
