@@ -49,7 +49,7 @@ public class FancySignBlock extends AbstractFancySignBlock {
 
     public FancySignBlock(Properties properties) {
         super(properties);
-        registerDefaultState(getStateDefinition().any().setValue(HANGING, false).setValue(UPSIDE_DOWN, false).setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+        registerDefaultState(getStateDefinition().any().setValue(HANGING, false).setValue(UPSIDE_DOWN, false).setValue(WAXED, false).setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
@@ -76,8 +76,8 @@ public class FancySignBlock extends AbstractFancySignBlock {
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (state.getValue(WAXED) || player.isSecondaryUseActive()) return InteractionResult.PASS;
         Direction direction = hit.getDirection();
-        if (level.isClientSide() && hit.getDirection().getAxis() == state.getValue(FACING).getAxis()) {
-            ClientUtil.openFancySignScreen(pos, hit.getDirection() == state.getValue(FACING));
+        if (level.isClientSide() && direction.getAxis() == state.getValue(FACING).getAxis()) {
+            ClientUtil.openFancySignScreen(pos, direction == state.getValue(FACING));
         }
         return InteractionResult.SUCCESS;
     }
