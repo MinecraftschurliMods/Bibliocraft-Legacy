@@ -302,11 +302,11 @@ public class FormattedTextArea extends AbstractWidget {
         return lines;
     }
 
-    public boolean toggleStyle(Function<Style, Boolean> styleGetter, BiFunction<Style, Boolean, Style> styleSetter) {
+    public void toggleStyle(Function<Style, Boolean> styleGetter, BiFunction<Style, Boolean, Style> styleSetter) {
         FormattedLine line = lines.get(cursorY);
         Style style = line.style();
         boolean oldValue = styleGetter.apply(style);
-        return tryEdit(
+        tryEdit(
                 () -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, !oldValue))),
                 () -> lines.set(cursorY, line.withStyle(styleSetter.apply(style, oldValue)))
         );
@@ -317,9 +317,9 @@ public class FormattedTextArea extends AbstractWidget {
         lines.set(cursorY, line.withStyle(line.style().withColor(color)));
     }
 
-    public boolean setSize(int size) {
+    public void setSize(int size) {
         int oldValue = lines.get(cursorY).size();
-        return tryEdit(
+        tryEdit(
                 () -> lines.set(cursorY, lines.get(cursorY).withSize(size)),
                 () -> lines.set(cursorY, lines.get(cursorY).withSize(oldValue))
         );
@@ -329,10 +329,10 @@ public class FormattedTextArea extends AbstractWidget {
         return lines.get(cursorY).size();
     }
 
-    public boolean toggleAlignment() {
+    public void toggleAlignment() {
         FormattedLine line = lines.get(cursorY);
         FormattedLine.Alignment oldValue = line.alignment();
-        return tryEdit(
+        tryEdit(
                 () -> lines.set(cursorY, line.withAlignment(switch (oldValue) {
                     case LEFT -> FormattedLine.Alignment.CENTER;
                     case CENTER -> FormattedLine.Alignment.RIGHT;
@@ -346,10 +346,10 @@ public class FormattedTextArea extends AbstractWidget {
         return lines.get(cursorY).alignment();
     }
 
-    public boolean toggleMode() {
+    public void toggleMode() {
         FormattedLine line = lines.get(cursorY);
         FormattedLine.Mode oldValue = line.mode();
-        return tryEdit(
+        tryEdit(
                 () -> lines.set(cursorY, line.withMode(switch (oldValue) {
                     case NORMAL -> FormattedLine.Mode.SHADOW;
                     case SHADOW -> FormattedLine.Mode.GLOWING;
@@ -390,7 +390,7 @@ public class FormattedTextArea extends AbstractWidget {
         moveCursor(Math.min(highlightX, cursorX), cursorY, false);
     }
 
-    private boolean insertText(String s) {
+    private void insertText(String s) {
         String text = StringUtil.filterText(s);
         String oldText = lines.get(cursorY).text();
         int oldHighlight = highlightX;
@@ -406,10 +406,9 @@ public class FormattedTextArea extends AbstractWidget {
                     highlightX = oldHighlight;
                     cursorX = oldCursor;
                 }
-        )) return false;
+        )) return;
         cursorX += text.length();
         highlightX = cursorX;
-        return true;
     }
 
     private int getCursorXForNewLine(int oldIndex, int newIndex) {
