@@ -76,7 +76,7 @@ public class BigBookScreen extends Screen {
         if (writable) {
             int leftX = (width - BACKGROUND_WIDTH - 80) / 2;
             int rightX = (width + BACKGROUND_WIDTH - 80) / 2;
-            textArea = addRenderableWidget(new FormattedTextArea(rightX + 16, 26, TEXT_WIDTH, TEXT_HEIGHT, pages.get(currentPage)));
+            textArea = addRenderableWidget(new FormattedTextArea(leftX + 16, 26, TEXT_WIDTH, TEXT_HEIGHT, pages.get(currentPage)));
             textArea.setOnLineChange(this::onLineChange);
 
             // Color buttons and text box
@@ -184,6 +184,7 @@ public class BigBookScreen extends Screen {
                 }
                 updateButtonVisibility();
             }, true));
+            updateButtonVisibility();
             addRenderableWidget(Button.builder(SIGN_BUTTON, button -> {
                 //TODO
             }).bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16).build());
@@ -249,6 +250,7 @@ public class BigBookScreen extends Screen {
         String hexString = Integer.toHexString(color);
         colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
     }
+
     private void updateButtonVisibility() {
         this.backButton.visible = !isSigning && currentPage > 0;
         this.forwardButton.visible = !isSigning && (writable || currentPage < 255);
