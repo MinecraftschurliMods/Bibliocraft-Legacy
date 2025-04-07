@@ -71,28 +71,6 @@ public class FancySignScreen extends Screen {
         textArea = addRenderableWidget(new FormattedTextArea(leftX, y, WIDTH, HEIGHT, sign.getFrontContent().lines()));
         textArea.setOnLineChange(this::onLineChange);
 
-        // Color buttons and text box
-        ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
-        int colorRows = Math.floorDiv(colors.length, 4);
-        colorBox = addRenderableWidget(new EditBox(font, rightX + 16, y + 16 * colorRows, 64, 16, Component.empty()));
-        colorBox.setHint(Translations.FANCY_TEXT_AREA_COLOR_HINT);
-        colorBox.setMaxLength(7);
-        colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
-        colorBox.setResponder(s -> {
-            if (s.length() <= 1) return;
-            textArea.setColor(Integer.parseInt(s.substring(1), 16));
-        });
-        TextColor color = textArea.getLines().getFirst().style().getColor();
-        if (color != null) {
-            setColor(color.getValue());
-        }
-        for (int i = 0; i < colors.length; i++) {
-            final int j = i; // I love Java
-            ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor()))
-                    .bounds(rightX + 80 - 16 * (4 - i % 4), y + 16 * Math.floorDiv(i, 4), 16, 16)));
-            button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
-        }
-
         // Formatting buttons
         addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_BOLD_SHORT, $ -> textArea.toggleStyle(Style::isBold, Style::withBold))
                 .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_BOLD))
@@ -130,7 +108,7 @@ public class FancySignScreen extends Screen {
                 .build());
 
         // Size buttons and text box
-        sizeBox = addRenderableWidget(new EditBox(font, leftX - 64, y + 64, 32, 16, Component.empty()));
+        sizeBox = new EditBox(font, leftX - 64, y + 64, 32, 16, Component.empty());
         sizeBox.setFilter(s -> {
             try {
                 int i = Integer.parseInt(s);
@@ -151,6 +129,7 @@ public class FancySignScreen extends Screen {
             sizeBox.setValue(String.valueOf(textArea.getSize()));
             updateSizeButtons(size);
         }).bounds(leftX - 80, y + 64, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP)).build());
+        addRenderableWidget(sizeBox);
         scaleUpButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_UP, button -> {
             int size = textArea.getSize() + 1;
             sizeBox.setValue(String.valueOf(size));
@@ -158,8 +137,31 @@ public class FancySignScreen extends Screen {
             sizeBox.setValue(String.valueOf(textArea.getSize()));
             updateSizeButtons(size);
         }).bounds(leftX - 32, y + 64, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP)).build());
-        onLineChange(textArea.getLines().getFirst());
 
+        // Color buttons and text box
+        ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
+        int colorRows = Math.floorDiv(colors.length, 4);
+        colorBox = new EditBox(font, rightX + 16, y + 16 * colorRows, 64, 16, Component.empty());
+        colorBox.setHint(Translations.FANCY_TEXT_AREA_COLOR_HINT);
+        colorBox.setMaxLength(7);
+        colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
+        colorBox.setResponder(s -> {
+            if (s.length() <= 1) return;
+            textArea.setColor(Integer.parseInt(s.substring(1), 16));
+        });
+        TextColor color = textArea.getLines().getFirst().style().getColor();
+        if (color != null) {
+            setColor(color.getValue());
+        }
+        for (int i = 0; i < colors.length; i++) {
+            final int j = i; // I love Java
+            ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor()))
+                    .bounds(rightX + 80 - 16 * (4 - i % 4), y + 16 * Math.floorDiv(i, 4), 16, 16)));
+            button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
+        }
+        addRenderableWidget(colorBox);
+
+        onLineChange(textArea.getLines().getFirst());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
             onClose();
             minecraft.setScreen(null);

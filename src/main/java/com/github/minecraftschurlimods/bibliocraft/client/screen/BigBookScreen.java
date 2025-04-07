@@ -77,27 +77,28 @@ public class BigBookScreen extends Screen {
             int rightX = (width + BACKGROUND_WIDTH - 80) / 2;
             updateTextArea();
 
-            // Color buttons and text box
-            ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
-            int colorRows = Math.floorDiv(colors.length, 4);
-            colorBox = addRenderableWidget(new EditBox(font, rightX + 16, 80 + 16 * colorRows, 64, 16, Component.empty()));
-            colorBox.setHint(Translations.FANCY_TEXT_AREA_COLOR_HINT);
-            colorBox.setMaxLength(7);
-            colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
-            colorBox.setResponder(s -> {
-                if (s.length() <= 1) return;
-                textArea.setColor(Integer.parseInt(s.substring(1), 16));
-            });
-            TextColor color = textArea.getLines().getFirst().style().getColor();
-            if (color != null) {
-                setColor(color.getValue());
-            }
-            for (int i = 0; i < colors.length; i++) {
-                final int j = i; // I love Java
-                ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor()))
-                        .bounds(rightX + 80 - 16 * (4 - i % 4), 80 + 16 * Math.floorDiv(i, 4), 16, 16)));
-                button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
-            }
+            // Page buttons
+            backButton = addRenderableWidget(new PageButton(leftX + 43, BACKGROUND_HEIGHT - 32, false, $ -> {
+                pages.set(currentPage, textArea.getLines());
+                if (currentPage > 0) {
+                    currentPage--;
+                }
+                updateButtonVisibility();
+                updateTextArea();
+            }, true));
+            forwardButton = addRenderableWidget(new PageButton(leftX + 144, BACKGROUND_HEIGHT - 32, true, $ -> {
+                pages.set(currentPage, textArea.getLines());
+                if (currentPage < 255) {
+                    currentPage++;
+                    if (currentPage >= pages.size()) {
+                        pages.add(new ArrayList<>());
+                        pages.get(currentPage).add(FormattedLine.DEFAULT);
+                    }
+                }
+                updateButtonVisibility();
+                updateTextArea();
+            }, true));
+            updateButtonVisibility();
 
             // Formatting buttons
             addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_BOLD_SHORT, $ -> textArea.toggleStyle(Style::isBold, Style::withBold))
@@ -135,8 +136,31 @@ public class BigBookScreen extends Screen {
                     .bounds(rightX + 16, 48, 64, 16)
                     .build());
 
+            // Color buttons and text box
+            ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
+            int colorRows = Math.floorDiv(colors.length, 4);
+            colorBox = new EditBox(font, rightX + 16, 80 + 16 * colorRows, 64, 16, Component.empty());
+            colorBox.setHint(Translations.FANCY_TEXT_AREA_COLOR_HINT);
+            colorBox.setMaxLength(7);
+            colorBox.setFilter(s -> s.isEmpty() || s.charAt(0) == '#' && s.substring(1).codePoints().allMatch(HexFormat::isHexDigit));
+            colorBox.setResponder(s -> {
+                if (s.length() <= 1) return;
+                textArea.setColor(Integer.parseInt(s.substring(1), 16));
+            });
+            TextColor color = textArea.getLines().getFirst().style().getColor();
+            if (color != null) {
+                setColor(color.getValue());
+            }
+            for (int i = 0; i < colors.length; i++) {
+                final int j = i; // I love Java
+                ColorButton button = addRenderableWidget(new ColorButton(colors[i].getColor(), Button.builder(Component.translatable("color." + colors[i].getName()), $ -> setColor(colors[j].getColor()))
+                        .bounds(rightX + 80 - 16 * (4 - i % 4), 80 + 16 * Math.floorDiv(i, 4), 16, 16)));
+                button.setTooltip(Tooltip.create(Component.translatable("color." + colors[i].getName())));
+            }
+            addRenderableWidget(colorBox);
+
             // Size buttons and text box
-            sizeBox = addRenderableWidget(new EditBox(font, rightX + 32, 112 + 16 * colorRows, 32, 16, Component.empty()));
+            sizeBox = new EditBox(font, rightX + 32, 112 + 16 * colorRows, 32, 16, Component.empty());
             sizeBox.setFilter(s -> {
                 try {
                     int i = Integer.parseInt(s);
@@ -157,6 +181,7 @@ public class BigBookScreen extends Screen {
                 sizeBox.setValue(String.valueOf(textArea.getSize()));
                 updateSizeButtons(size);
             }).bounds(rightX + 16, 112 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP)).build());
+            addRenderableWidget(sizeBox);
             scaleUpButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_UP, button -> {
                 int size = textArea.getSize() + 1;
                 sizeBox.setValue(String.valueOf(size));
@@ -164,29 +189,8 @@ public class BigBookScreen extends Screen {
                 sizeBox.setValue(String.valueOf(textArea.getSize()));
                 updateSizeButtons(size);
             }).bounds(rightX + 64, 112 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP)).build());
-            onLineChange(textArea.getLines().getFirst());
 
-            backButton = addRenderableWidget(new PageButton(leftX + 43, BACKGROUND_HEIGHT - 32, false, $ -> {
-                pages.set(currentPage, textArea.getLines());
-                if (currentPage > 0) {
-                    currentPage--;
-                }
-                updateButtonVisibility();
-                updateTextArea();
-            }, true));
-            forwardButton = addRenderableWidget(new PageButton(leftX + 144, BACKGROUND_HEIGHT - 32, true, $ -> {
-                pages.set(currentPage, textArea.getLines());
-                if (currentPage < 255) {
-                    currentPage++;
-                    if (currentPage >= pages.size()) {
-                        pages.add(new ArrayList<>());
-                        pages.get(currentPage).add(FormattedLine.DEFAULT);
-                    }
-                }
-                updateButtonVisibility();
-                updateTextArea();
-            }, true));
-            updateButtonVisibility();
+            onLineChange(textArea.getLines().getFirst());
             addRenderableWidget(Button.builder(SIGN_BUTTON, button -> {
                 //TODO
             }).bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16).build());
