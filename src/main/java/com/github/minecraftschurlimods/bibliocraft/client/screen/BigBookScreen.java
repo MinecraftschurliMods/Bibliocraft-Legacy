@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.client.widget.ColorButton;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookContent;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
-import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -76,8 +75,7 @@ public class BigBookScreen extends Screen {
         if (writable) {
             int leftX = (width - BACKGROUND_WIDTH - 80) / 2;
             int rightX = (width + BACKGROUND_WIDTH - 80) / 2;
-            textArea = addRenderableWidget(new FormattedTextArea(leftX + 16, 26, TEXT_WIDTH, TEXT_HEIGHT, pages.get(currentPage)));
-            textArea.setOnLineChange(this::onLineChange);
+            updateTextArea();
 
             // Color buttons and text box
             ChatFormatting[] colors = BCUtil.getChatFormattingColors().toArray(ChatFormatting[]::new);
@@ -169,12 +167,15 @@ public class BigBookScreen extends Screen {
             onLineChange(textArea.getLines().getFirst());
 
             backButton = addRenderableWidget(new PageButton(leftX + 43, BACKGROUND_HEIGHT - 32, false, $ -> {
+                pages.set(currentPage, textArea.getLines());
                 if (currentPage > 0) {
                     currentPage--;
                 }
                 updateButtonVisibility();
+                updateTextArea();
             }, true));
             forwardButton = addRenderableWidget(new PageButton(leftX + 144, BACKGROUND_HEIGHT - 32, true, $ -> {
+                pages.set(currentPage, textArea.getLines());
                 if (currentPage < 255) {
                     currentPage++;
                     if (currentPage >= pages.size()) {
@@ -183,6 +184,7 @@ public class BigBookScreen extends Screen {
                     }
                 }
                 updateButtonVisibility();
+                updateTextArea();
             }, true));
             updateButtonVisibility();
             addRenderableWidget(Button.builder(SIGN_BUTTON, button -> {
@@ -254,5 +256,13 @@ public class BigBookScreen extends Screen {
     private void updateButtonVisibility() {
         this.backButton.visible = !isSigning && currentPage > 0;
         this.forwardButton.visible = !isSigning && (writable || currentPage < 255);
+    }
+
+    private void updateTextArea() {
+        if (textArea != null) {
+            removeWidget(textArea);
+        }
+        textArea = addRenderableWidget(new FormattedTextArea((width - BACKGROUND_WIDTH - 80) / 2 + 16, 26, TEXT_WIDTH, TEXT_HEIGHT, pages.get(currentPage)));
+        textArea.setOnLineChange(this::onLineChange);
     }
 }
