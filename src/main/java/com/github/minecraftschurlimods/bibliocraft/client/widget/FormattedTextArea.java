@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
@@ -292,6 +293,41 @@ public class FormattedTextArea extends AbstractWidget {
     public void setFocused(boolean focused) {
         super.setFocused(focused);
         focusedTimestamp = Util.getMillis();
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (isMouseOver(mouseX, mouseY)) {
+            setFocused(true);
+            mouseX -= getX();
+            mouseY -= getY();
+            cursorY = lines.size() - 1;
+            int y = 0;
+            for (int i = 0; i < lines.size(); i++) {
+                y += lines.get(i).size();
+                if (y > mouseY) {
+                    cursorY = i;
+                    break;
+                }
+            }
+            FormattedLine line = lines.get(cursorY);
+            float scale = getScale(line.size());
+            int startX = getLineLeftX(line, scale, width);
+            int targetWidth = (int) (mouseX - startX);
+            int index = 0, width = 0, prevWidth = -1;
+            while (Math.abs(targetWidth - width) < Math.abs(targetWidth - prevWidth)) {
+                if (index >= line.text().length()) break;
+                prevWidth = width;
+                width += (int) (font.width(format(String.valueOf(line.text().charAt(index)), line.style())) * scale);
+                index++;
+            }
+            cursorX = Mth.clamp(index, 0, line.text().length());
+            if (!Screen.hasShiftDown()) {
+                highlightX = cursorX;
+            }
+            return true;
+        }
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     public void setOnLineChange(Consumer<FormattedLine> onLineChange) {
