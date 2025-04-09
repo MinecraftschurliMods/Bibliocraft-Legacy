@@ -297,10 +297,10 @@ public class FormattedTextArea extends AbstractWidget {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (isMouseOver(mouseX, mouseY)) {
-            setFocused(true);
-            mouseX -= getX();
-            mouseY -= getY();
+        if (!isMouseOver(mouseX, mouseY)) return super.mouseClicked(mouseX, mouseY, button);
+        mouseX -= getX();
+        mouseY -= getY();
+        if (!Screen.hasShiftDown() || !isFocused()) {
             cursorY = lines.size() - 1;
             int y = 0;
             for (int i = 0; i < lines.size(); i++) {
@@ -310,24 +310,24 @@ public class FormattedTextArea extends AbstractWidget {
                     break;
                 }
             }
-            FormattedLine line = lines.get(cursorY);
-            float scale = getScale(line.size());
-            int startX = getLineLeftX(line, scale, width);
-            int targetWidth = (int) (mouseX - startX);
-            int index = 0, width = 0, prevWidth = -1;
-            while (Math.abs(targetWidth - width) < Math.abs(targetWidth - prevWidth)) {
-                if (index >= line.text().length()) break;
-                prevWidth = width;
-                width += (int) (font.width(format(String.valueOf(line.text().charAt(index)), line.style())) * scale);
-                index++;
-            }
-            cursorX = Mth.clamp(index, 0, line.text().length());
-            if (!Screen.hasShiftDown()) {
-                highlightX = cursorX;
-            }
-            return true;
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        FormattedLine line = lines.get(cursorY);
+        float scale = getScale(line.size());
+        int startX = getLineLeftX(line, scale, width);
+        int targetWidth = (int) (mouseX - startX);
+        int index = 0, width = 0, prevWidth = -1;
+        while (Math.abs(targetWidth - width) < Math.abs(targetWidth - prevWidth)) {
+            if (index >= line.text().length()) break;
+            prevWidth = width;
+            width += (int) (font.width(format(String.valueOf(line.text().charAt(index)), line.style())) * scale);
+            index++;
+        }
+        cursorX = Mth.clamp(index, 0, line.text().length());
+        if (!Screen.hasShiftDown() && isFocused()) {
+            highlightX = cursorX;
+        }
+        setFocused(true);
+        return true;
     }
 
     public void setOnLineChange(Consumer<FormattedLine> onLineChange) {
