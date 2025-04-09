@@ -224,6 +224,11 @@ public class BigBookScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
+        for (int i = pages.size() - 1; i >= 0; i--) {
+            List<FormattedLine> lines = pages.get(i);
+            if (lines.stream().anyMatch(e -> e != FormattedLine.DEFAULT)) break;
+            pages.remove(i);
+        }
         BigBookContent content = new BigBookContent(pages);
         stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
         PacketDistributor.sendToServer(new BigBookSyncPacket(content));
