@@ -210,6 +210,8 @@ public class BigBookScreen extends Screen {
         if (!writable) {
             FormattedTextArea.renderLines(pages.get(currentPage), graphics.pose(), graphics.bufferSource(), 0, 0, TEXT_WIDTH, TEXT_HEIGHT);
         }
+        Component pageIndicator = Component.translatable("book.pageIndicator", currentPage + 1, pages.size());
+        graphics.drawString(font, pageIndicator, textArea.getX() + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
     }
 
     @Override
