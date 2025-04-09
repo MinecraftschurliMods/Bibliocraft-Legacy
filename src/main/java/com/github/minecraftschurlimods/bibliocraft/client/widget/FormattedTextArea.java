@@ -125,8 +125,8 @@ public class FormattedTextArea extends AbstractWidget {
                 : DrawCursor.NONE;
         renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, height, cursorX, cursorBlink ? DrawCursor.NONE : draw);
         if (draw != DrawCursor.NONE && cursorX != highlightX) {
-            int min = Math.min(cursorX, highlightX);
-            int max = Math.max(cursorX, highlightX);
+            int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
+            int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
             Style style = line.style();
             float scale = getScale(line.size());
             int textX = x + getLineLeftX(line, scale, width);
@@ -168,6 +168,8 @@ public class FormattedTextArea extends AbstractWidget {
         if (!isActive() || !isFocused()) return false;
         FormattedLine line = lines.get(cursorY);
         String text = line.text();
+        int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
+        int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
         switch (keyCode) {
             case GLFW.GLFW_KEY_DOWN, GLFW.GLFW_KEY_ENTER:
                 if (Screen.hasShiftDown()) {
@@ -219,7 +221,7 @@ public class FormattedTextArea extends AbstractWidget {
             return true;
         }
         if (Screen.isCopy(keyCode)) {
-            Minecraft.getInstance().keyboardHandler.setClipboard(text.substring(Math.min(cursorX, highlightX), Math.max(cursorX, highlightX)));
+            Minecraft.getInstance().keyboardHandler.setClipboard(text.substring(min, max));
             return true;
         }
         if (Screen.isPaste(keyCode) || keyCode == GLFW.GLFW_KEY_INSERT) {
@@ -227,7 +229,7 @@ public class FormattedTextArea extends AbstractWidget {
             return true;
         }
         if (Screen.isCut(keyCode)) {
-            Minecraft.getInstance().keyboardHandler.setClipboard(text.substring(Math.min(cursorX, highlightX), Math.max(cursorX, highlightX)));
+            Minecraft.getInstance().keyboardHandler.setClipboard(text.substring(min, max));
             deleteHighlight();
             return true;
         }
@@ -305,6 +307,10 @@ public class FormattedTextArea extends AbstractWidget {
             int y = 0;
             for (int i = 0; i < lines.size(); i++) {
                 y += lines.get(i).size();
+                if (y > height) {
+                    cursorY = i - 1;
+                    break;
+                }
                 if (y > mouseY) {
                     cursorY = i;
                     break;
@@ -312,6 +318,7 @@ public class FormattedTextArea extends AbstractWidget {
             }
         }
         FormattedLine line = lines.get(cursorY);
+        onLineChange.accept(line);
         float scale = getScale(line.size());
         int startX = getLineLeftX(line, scale, width);
         int targetWidth = (int) (mouseX - startX);
@@ -422,8 +429,11 @@ public class FormattedTextArea extends AbstractWidget {
     private void deleteHighlight() {
         if (highlightX == cursorX) return;
         FormattedLine line = lines.get(cursorY);
-        lines.set(cursorY, line.withText(line.text().substring(0, Math.min(highlightX, cursorX)) + line.text().substring(Math.max(highlightX, cursorX))));
-        moveCursor(Math.min(highlightX, cursorX), cursorY, false);
+        String text = line.text();
+        int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
+        int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
+        lines.set(cursorY, line.withText(text.substring(0, min) + text.substring(max)));
+        moveCursor(min, cursorY, false);
     }
 
     private void insertText(String s) {
@@ -487,7 +497,7 @@ public class FormattedTextArea extends AbstractWidget {
             size += line.size();
             if (size > height) return i - 1;
         }
-        return lines.size();
+        return lines.size() - 1;
     }
 
     public enum DrawCursor {

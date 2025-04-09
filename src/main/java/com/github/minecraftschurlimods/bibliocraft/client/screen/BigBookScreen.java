@@ -64,8 +64,7 @@ public class BigBookScreen extends Screen {
             writable = true;
         }
         if (pages.isEmpty()) {
-            pages.add(new ArrayList<>());
-            pages.getFirst().add(FormattedLine.DEFAULT);
+            addPage();
         }
     }
 
@@ -90,9 +89,8 @@ public class BigBookScreen extends Screen {
                 pages.set(currentPage, textArea.getLines());
                 if (currentPage < 255) {
                     currentPage++;
-                    if (currentPage >= pages.size()) {
-                        pages.add(new ArrayList<>());
-                        pages.get(currentPage).add(FormattedLine.DEFAULT);
+                    while (currentPage >= pages.size()) {
+                        addPage();
                     }
                 }
                 updateButtonVisibility();
@@ -268,5 +266,13 @@ public class BigBookScreen extends Screen {
         }
         textArea = addRenderableWidget(new FormattedTextArea((width - BACKGROUND_WIDTH - 80) / 2 + 16, 26, TEXT_WIDTH, TEXT_HEIGHT, pages.get(currentPage)));
         textArea.setOnLineChange(this::onLineChange);
+    }
+
+    private void addPage() {
+        List<FormattedLine> lines = new ArrayList<>();
+        for (int i = 0; i < TEXT_HEIGHT / FormattedLine.MIN_SIZE; i++) {
+            lines.add(FormattedLine.DEFAULT);
+        }
+        pages.add(lines);
     }
 }
