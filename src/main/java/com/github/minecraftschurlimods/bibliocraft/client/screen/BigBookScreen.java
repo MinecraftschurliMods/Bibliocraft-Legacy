@@ -3,9 +3,12 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.ColorButton;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookContent;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBookContent;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.ChatFormatting;
@@ -22,6 +25,8 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringUtil;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
@@ -43,6 +48,8 @@ public class BigBookScreen extends Screen {
     private static final int TEXT_WIDTH = 188;
     private static final int TEXT_HEIGHT = 204;
     private final ItemStack stack;
+    private final Player player;
+    private final InteractionHand hand;
     private final boolean writable;
     private final List<List<FormattedLine>> pages;
     private int currentPage = 0;
@@ -59,9 +66,11 @@ public class BigBookScreen extends Screen {
     private Button finalizeButton;
     private EditBox titleBox;
 
-    public BigBookScreen(ItemStack stack) {
+    public BigBookScreen(ItemStack stack, Player player, InteractionHand hand) {
         super(stack.getHoverName());
         this.stack = stack;
+        this.player = player;
+        this.hand = hand;
         if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
             pages = new ArrayList<>(Objects.requireNonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)).pages());
             writable = false;
@@ -226,7 +235,7 @@ public class BigBookScreen extends Screen {
             addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
                 onClose();
                 minecraft.setScreen(null);
-            }).bounds(width - BACKGROUND_WIDTH / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH, 20).build());
+            }).bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH, 20).build());
         }
     }
 
@@ -239,11 +248,14 @@ public class BigBookScreen extends Screen {
             graphics.drawString(font, OWNER, x + 18 + (TEXT_WIDTH - font.width(OWNER)) / 2, 60, 0, false);
             graphics.drawWordWrap(font, FINALIZE_LABEL, x + 18, 82, TEXT_WIDTH, 0);
         } else {
-            if (!writable) {
-                FormattedTextArea.renderLines(pages.get(currentPage), graphics.pose(), graphics.bufferSource(), 0, 0, TEXT_WIDTH, TEXT_HEIGHT);
-            }
             Component pageIndicator = Component.translatable("book.pageIndicator", currentPage + 1, pages.size());
-            graphics.drawString(font, pageIndicator, textArea.getX() + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
+            if (writable) {
+                graphics.drawString(font, pageIndicator, (width - BACKGROUND_WIDTH - 80) / 2 + 16 + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
+            } else {
+                int x = (width - BACKGROUND_WIDTH) / 2 + 16;
+                FormattedTextArea.renderLines(pages.get(currentPage), graphics.pose(), graphics.bufferSource(), x, 26, TEXT_WIDTH, TEXT_HEIGHT);
+                graphics.drawString(font, pageIndicator, x + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
+            }
         }
     }
 
@@ -270,14 +282,11 @@ public class BigBookScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        for (int i = pages.size() - 1; i >= 0; i--) {
-            List<FormattedLine> lines = pages.get(i);
-            if (lines.stream().anyMatch(e -> e != FormattedLine.DEFAULT)) break;
-            pages.remove(i);
-        }
+        if (!writable) return;
+        savePages();
         BigBookContent content = new BigBookContent(pages);
         stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
-        PacketDistributor.sendToServer(new BigBookSyncPacket(content));
+        PacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
     }
 
     private void onLineChange(FormattedLine line) {
@@ -329,10 +338,22 @@ public class BigBookScreen extends Screen {
         pages.add(lines);
     }
 
+    private void savePages() {
+        pages.set(currentPage, textArea.getLines());
+        for (int i = pages.size() - 1; i >= 0; i--) {
+            List<FormattedLine> lines = pages.get(i);
+            if (lines.stream().anyMatch(e -> e != FormattedLine.DEFAULT)) break;
+            pages.remove(i);
+        }
+    }
+
     private void finalizeBook() {
-        //TODO
-        //stack.remove(BCDataComponents.BIG_BOOK_CONTENT);
-        //stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, new WrittenBigBookContent(pages, titleBox.getValue(), Minecraft.getInstance().player.getName().getString(), 0));
-        minecraft.setScreen(null);
+        savePages();
+        ItemStack stack = new ItemStack(BCItems.WRITTEN_BIG_BOOK.get());
+        WrittenBigBookContent content = new WrittenBigBookContent(pages, titleBox.getValue(), player.getName().getString(), 0);
+        stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
+        player.setItemInHand(hand, stack);
+        PacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
+        Objects.requireNonNull(minecraft).setScreen(null);
     }
 }

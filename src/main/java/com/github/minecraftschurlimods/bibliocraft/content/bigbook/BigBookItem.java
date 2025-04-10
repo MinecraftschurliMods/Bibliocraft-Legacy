@@ -18,14 +18,16 @@ import java.util.List;
 
 public class BigBookItem extends Item {
     public BigBookItem(boolean glint) {
-        super(glint ? new Properties() : new Properties().component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true));
+        super(glint
+                ? new Properties().component(DataComponents.MAX_STACK_SIZE, 1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                : new Properties().component(DataComponents.MAX_STACK_SIZE, 1));
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) {
-            ClientUtil.openBigBookScreen(stack);
+            ClientUtil.openBigBookScreen(stack, player, hand);
         }
         return InteractionResultHolder.success(stack);
     }
@@ -35,9 +37,7 @@ public class BigBookItem extends Item {
         WrittenBigBookContent content = stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT);
         if (content != null) {
             String title = content.title();
-            if (!StringUtil.isBlank(title)) {
-                return Component.literal(title);
-            }
+            if (!StringUtil.isBlank(title)) return Component.literal(title);
         }
         return super.getName(stack);
     }

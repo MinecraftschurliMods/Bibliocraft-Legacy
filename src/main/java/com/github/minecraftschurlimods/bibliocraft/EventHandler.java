@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.RegisterLockAn
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.RegisterBibliocraftWoodTypesEvent;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
@@ -82,6 +83,7 @@ public final class EventHandler {
 
     private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
         event.registrar(BibliocraftApi.MOD_ID)
+                .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
                 .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
                 .playToServer(FormattedLineListPacket.TYPE,           FormattedLineListPacket.STREAM_CODEC,           FormattedLineListPacket::handle)

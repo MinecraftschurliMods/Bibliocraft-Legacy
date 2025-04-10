@@ -18,6 +18,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,10 +36,12 @@ public final class ClientUtil {
     /**
      * Opens a {@link BigBookScreen} on the client.
      *
-     * @param stack    The owning {@link ItemStack} of the screen.
+     * @param stack  The owning {@link ItemStack} of the screen.
+     * @param player The owning {@link Player} of the screen.
+     * @param hand   The contextual {@link InteractionHand}.
      */
-    public static void openBigBookScreen(ItemStack stack) {
-        Minecraft.getInstance().setScreen(new BigBookScreen(stack));
+    public static void openBigBookScreen(ItemStack stack, Player player, InteractionHand hand) {
+        Minecraft.getInstance().setScreen(new BigBookScreen(stack, player, hand));
     }
 
     /**
