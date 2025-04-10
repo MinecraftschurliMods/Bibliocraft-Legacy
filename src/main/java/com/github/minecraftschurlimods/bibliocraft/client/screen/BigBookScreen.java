@@ -52,7 +52,7 @@ public class BigBookScreen extends Screen {
     private final InteractionHand hand;
     private final boolean writable;
     private final List<List<FormattedLine>> pages;
-    private int currentPage = 0;
+    private int currentPage;
     private boolean isSigning = false;
     private FormattedTextArea textArea;
     private Button modeButton;
@@ -72,13 +72,18 @@ public class BigBookScreen extends Screen {
         this.player = player;
         this.hand = hand;
         if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
-            pages = new ArrayList<>(Objects.requireNonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)).pages());
+            WrittenBigBookContent content = Objects.requireNonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT));
+            pages = new ArrayList<>(content.pages());
+            currentPage = content.currentPage();
             writable = false;
         } else if (stack.has(BCDataComponents.BIG_BOOK_CONTENT)) {
-            pages = new ArrayList<>(Objects.requireNonNull(stack.get(BCDataComponents.BIG_BOOK_CONTENT)).pages());
+            BigBookContent content = Objects.requireNonNull(stack.get(BCDataComponents.BIG_BOOK_CONTENT));
+            pages = new ArrayList<>(content.pages());
+            currentPage = content.currentPage();
             writable = true;
         } else {
             pages = new ArrayList<>();
+            currentPage = 0;
             writable = true;
         }
         if (pages.isEmpty()) {
@@ -117,6 +122,12 @@ public class BigBookScreen extends Screen {
                     currentPage--;
                 }
                 updateButtonVisibility();
+￼
+dpeter99￼ — 13:57
+Curle will you have free time nowadays?
+NEW
+￼
+Curle￼ — 13:58
                 updateTextArea();
             }, true));
             forwardButton = addRenderableWidget(new PageButton(leftX + 144, BACKGROUND_HEIGHT - 32, true, $ -> {
@@ -232,6 +243,19 @@ public class BigBookScreen extends Screen {
                 minecraft.setScreen(null);
             }).bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16).build());
         } else {
+            backButton = addRenderableWidget(new PageButton(leftX + 83, BACKGROUND_HEIGHT - 32, false, $ -> {
+                if (currentPage > 0) {
+                    currentPage--;
+                }
+                updateButtonVisibility();
+            }, true));
+            forwardButton = addRenderableWidget(new PageButton(leftX + 184, BACKGROUND_HEIGHT - 32, true, $ -> {
+                if (currentPage < pages.size()) {
+                    currentPage++;
+                }
+                updateButtonVisibility();
+            }, true));
+            updateButtonVisibility();
             addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
                 onClose();
                 minecraft.setScreen(null);
@@ -284,7 +308,7 @@ public class BigBookScreen extends Screen {
         super.onClose();
         if (!writable) return;
         savePages();
-        BigBookContent content = new BigBookContent(pages);
+        BigBookContent content = new BigBookContent(pages, currentPage);
         stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
         PacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
     }
@@ -319,7 +343,7 @@ public class BigBookScreen extends Screen {
 
     private void updateButtonVisibility() {
         this.backButton.visible = !isSigning && currentPage > 0;
-        this.forwardButton.visible = !isSigning && (writable || currentPage < 255);
+        this.forwardButton.visible = !isSigning && currentPage < 255 && (writable || currentPage < pages.size() - 1);
     }
 
     private void updateTextArea() {
@@ -345,12 +369,13 @@ public class BigBookScreen extends Screen {
             if (lines.stream().anyMatch(e -> e != FormattedLine.DEFAULT)) break;
             pages.remove(i);
         }
+        currentPage = Math.clamp(currentPage, 0, pages.size() - 1);
     }
 
     private void finalizeBook() {
         savePages();
         ItemStack stack = new ItemStack(BCItems.WRITTEN_BIG_BOOK.get());
-        WrittenBigBookContent content = new WrittenBigBookContent(pages, titleBox.getValue(), player.getName().getString(), 0);
+        WrittenBigBookContent content = new WrittenBigBookContent(pages, titleBox.getValue(), player.getName().getString(), 0, currentPage);
         stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
         player.setItemInHand(hand, stack);
         PacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
