@@ -122,12 +122,6 @@ public class BigBookScreen extends Screen {
                     currentPage--;
                 }
                 updateButtonVisibility();
-￼
-dpeter99￼ — 13:57
-Curle will you have free time nowadays?
-NEW
-￼
-Curle￼ — 13:58
                 updateTextArea();
             }, true));
             forwardButton = addRenderableWidget(new PageButton(leftX + 144, BACKGROUND_HEIGHT - 32, true, $ -> {
