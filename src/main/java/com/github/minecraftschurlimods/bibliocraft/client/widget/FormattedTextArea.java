@@ -171,7 +171,7 @@ public class FormattedTextArea extends AbstractWidget {
         int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
         int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
         switch (keyCode) {
-            case GLFW.GLFW_KEY_DOWN, GLFW.GLFW_KEY_ENTER:
+            case GLFW.GLFW_KEY_DOWN, GLFW.GLFW_KEY_ENTER, GLFW.GLFW_KEY_KP_ENTER:
                 if (Screen.hasShiftDown()) {
                     moveCursor(text.length(), cursorY, true);
                 } else if (cursorY < getEffectiveMaxLines()) {

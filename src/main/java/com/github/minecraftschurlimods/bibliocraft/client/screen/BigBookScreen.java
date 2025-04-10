@@ -9,6 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -20,8 +21,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.HexFormat;
@@ -30,7 +33,11 @@ import java.util.Objects;
 
 public class BigBookScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/big_book.png");
+    private static final Component EDIT_TITLE_LABEL = Component.translatable("book.editTitle");
+    private static final Component FINALIZE_LABEL = Component.translatable("book.finalizeWarning");
+    private static final Component FINALIZE_BUTTON = Component.translatable("book.finalizeButton");
     private static final Component SIGN_BUTTON = Component.translatable("book.signButton");
+    private static final Component OWNER = Component.translatable("book.byAuthor", Objects.requireNonNull(Minecraft.getInstance().player).getName()).withStyle(ChatFormatting.DARK_GRAY);
     private static final int BACKGROUND_WIDTH = 220;
     private static final int BACKGROUND_HEIGHT = 256;
     private static final int TEXT_WIDTH = 188;
@@ -39,8 +46,8 @@ public class BigBookScreen extends Screen {
     private final boolean writable;
     private final List<List<FormattedLine>> pages;
     private int currentPage = 0;
-    private FormattedTextArea textArea;
     private boolean isSigning = false;
+    private FormattedTextArea textArea;
     private Button modeButton;
     private Button alignmentButton;
     private EditBox colorBox;
@@ -49,6 +56,8 @@ public class BigBookScreen extends Screen {
     private Button scaleUpButton;
     private PageButton backButton;
     private PageButton forwardButton;
+    private Button finalizeButton;
+    private EditBox titleBox;
 
     public BigBookScreen(ItemStack stack) {
         super(stack.getHoverName());
@@ -71,9 +80,25 @@ public class BigBookScreen extends Screen {
     @SuppressWarnings("DataFlowIssue")
     @Override
     protected void init() {
-        if (writable) {
-            int leftX = (width - BACKGROUND_WIDTH - 80) / 2;
-            int rightX = (width + BACKGROUND_WIDTH - 80) / 2;
+        int leftX = (width - BACKGROUND_WIDTH - 80) / 2;
+        int rightX = (width + BACKGROUND_WIDTH - 80) / 2;
+        if (isSigning) {
+            titleBox = addRenderableWidget(new EditBox(font, (width - 80) / 2, 50, TEXT_WIDTH, 20, Component.empty()));
+            titleBox.setTextColor(0);
+            titleBox.setBordered(false);
+            titleBox.setTextShadow(false);
+            titleBox.setResponder(s -> {
+                titleBox.setX((width - 80 - font.width(s)) / 2);
+                finalizeButton.active = !StringUtil.isBlank(s);
+            });
+            setFocused(titleBox);
+            finalizeButton = addRenderableWidget(Button.builder(FINALIZE_BUTTON, $ -> finalizeBook()).bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16).build());
+            finalizeButton.active = false;
+            addRenderableWidget(Button.builder(CommonComponents.GUI_CANCEL, $ -> {
+                isSigning = false;
+                rebuildWidgets();
+            }).bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16).build());
+        } else if (writable) {
             updateTextArea();
 
             // Page buttons
@@ -119,14 +144,14 @@ public class BigBookScreen extends Screen {
                     .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_OBFUSCATED))
                     .bounds(rightX + 16, 32, 16, 16)
                     .build());
-            modeButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getMode().getTranslationKey()), button -> {
+            modeButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getMode().getTranslationKey()), $ -> {
                         textArea.toggleMode();
                         updateModeButton();
                     })
                     .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_MODE))
                     .bounds(rightX + 32, 32, 48, 16)
                     .build());
-            alignmentButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getAlignment().getTranslationKey()), button -> {
+            alignmentButton = addRenderableWidget(Button.builder(Component.translatable(textArea.getAlignment().getTranslationKey()), $ -> {
                         textArea.toggleAlignment();
                         updateAlignmentButton();
                     })
@@ -172,7 +197,7 @@ public class BigBookScreen extends Screen {
                     textArea.setSize(Integer.parseInt(s));
                 } catch (NumberFormatException ignored) {}
             });
-            scaleDownButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_DOWN, button -> {
+            scaleDownButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_DOWN, $ -> {
                 int size = textArea.getSize() - 1;
                 sizeBox.setValue(String.valueOf(size));
                 // call again to account for invalid values
@@ -180,7 +205,7 @@ public class BigBookScreen extends Screen {
                 updateSizeButtons(size);
             }).bounds(rightX + 16, 112 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP)).build());
             addRenderableWidget(sizeBox);
-            scaleUpButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_UP, button -> {
+            scaleUpButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_UP, $ -> {
                 int size = textArea.getSize() + 1;
                 sizeBox.setValue(String.valueOf(size));
                 // call again to account for invalid values
@@ -189,15 +214,16 @@ public class BigBookScreen extends Screen {
             }).bounds(rightX + 64, 112 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP)).build());
 
             onLineChange(textArea.getLines().getFirst());
-            addRenderableWidget(Button.builder(SIGN_BUTTON, button -> {
-                //TODO
+            addRenderableWidget(Button.builder(SIGN_BUTTON, $ -> {
+                isSigning = true;
+                rebuildWidgets();
             }).bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16).build());
-            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> {
+            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
                 onClose();
                 minecraft.setScreen(null);
             }).bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16).build());
         } else {
-            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, button -> {
+            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
                 onClose();
                 minecraft.setScreen(null);
             }).bounds(width - BACKGROUND_WIDTH / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH, 20).build());
@@ -207,11 +233,31 @@ public class BigBookScreen extends Screen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        if (!writable) {
-            FormattedTextArea.renderLines(pages.get(currentPage), graphics.pose(), graphics.bufferSource(), 0, 0, TEXT_WIDTH, TEXT_HEIGHT);
+        if (isSigning) {
+            int x = (width - BACKGROUND_WIDTH - 80) / 2;
+            graphics.drawString(font, EDIT_TITLE_LABEL, x + 18 + (TEXT_WIDTH - font.width(EDIT_TITLE_LABEL)) / 2, 34, 0, false);
+            graphics.drawString(font, OWNER, x + 18 + (TEXT_WIDTH - font.width(OWNER)) / 2, 60, 0, false);
+            graphics.drawWordWrap(font, FINALIZE_LABEL, x + 18, 82, TEXT_WIDTH, 0);
+        } else {
+            if (!writable) {
+                FormattedTextArea.renderLines(pages.get(currentPage), graphics.pose(), graphics.bufferSource(), 0, 0, TEXT_WIDTH, TEXT_HEIGHT);
+            }
+            Component pageIndicator = Component.translatable("book.pageIndicator", currentPage + 1, pages.size());
+            graphics.drawString(font, pageIndicator, textArea.getX() + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
         }
-        Component pageIndicator = Component.translatable("book.pageIndicator", currentPage + 1, pages.size());
-        graphics.drawString(font, pageIndicator, textArea.getX() + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (isSigning) {
+            if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER) {
+                finalizeBook();
+                return true;
+            }
+            clearFocus();
+            setFocused(titleBox);
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
@@ -281,5 +327,12 @@ public class BigBookScreen extends Screen {
             lines.add(FormattedLine.DEFAULT);
         }
         pages.add(lines);
+    }
+
+    private void finalizeBook() {
+        //TODO
+        //stack.remove(BCDataComponents.BIG_BOOK_CONTENT);
+        //stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, new WrittenBigBookContent(pages, titleBox.getValue(), Minecraft.getInstance().player.getName().getString(), 0));
+        minecraft.setScreen(null);
     }
 }
