@@ -5,7 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextAr
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.AbstractFancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.WallFancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;

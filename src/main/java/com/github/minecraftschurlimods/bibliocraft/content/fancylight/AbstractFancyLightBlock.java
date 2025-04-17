@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancylight;
 
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.context.BlockPlaceContext;

@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;

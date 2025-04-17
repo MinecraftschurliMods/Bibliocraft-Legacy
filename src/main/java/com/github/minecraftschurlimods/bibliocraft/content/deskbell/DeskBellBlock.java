@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.deskbell;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCWaterloggedBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCWaterloggedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;

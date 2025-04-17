@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.util.content;
+package com.github.minecraftschurlimods.bibliocraft.util.block;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;

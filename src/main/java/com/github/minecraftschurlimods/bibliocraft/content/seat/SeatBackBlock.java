@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.seat;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;

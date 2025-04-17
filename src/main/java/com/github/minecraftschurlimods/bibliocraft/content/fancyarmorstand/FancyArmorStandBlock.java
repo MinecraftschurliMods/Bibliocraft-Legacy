@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;

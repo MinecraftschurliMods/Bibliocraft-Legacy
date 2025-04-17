@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.dinnerplate;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCEntityBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;

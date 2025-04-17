@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.util.init;
+package com.github.minecraftschurlimods.bibliocraft.util.holder;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;

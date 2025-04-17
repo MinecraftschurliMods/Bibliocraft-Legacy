@@ -5,10 +5,10 @@ import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodT
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.init.GroupingDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupingDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.WoodTypeDeferredHolder;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;

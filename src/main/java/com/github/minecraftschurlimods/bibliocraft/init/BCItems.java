@@ -17,12 +17,11 @@ import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBo
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.tapemeasure.TapeMeasureItem;
-import com.github.minecraftschurlimods.bibliocraft.util.content.ColoredWoodTypeBlockItem;
-import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.init.ColoredWoodTypeDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.block.ColoredWoodTypeBlockItem;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.WoodTypeDeferredHolder;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;

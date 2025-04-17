@@ -3,9 +3,9 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.ColorButton;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlockEntity;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineList;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineListPacket;
+import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignContent;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.ChatFormatting;
@@ -50,13 +50,13 @@ public class FancySignScreen extends Screen {
     public void onClose() {
         if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign))
             return;
-        FormattedLineList list = new FormattedLineList(textArea.getLines());
+        FancySignContent list = new FancySignContent(textArea.getLines());
         if (back) {
             sign.setBackContent(list);
         } else {
             sign.setFrontContent(list);
         }
-        PacketDistributor.sendToServer(new FormattedLineListPacket(list, pos, back));
+        PacketDistributor.sendToServer(new FancySignSyncPacket(list, pos, back));
         super.onClose();
     }
 

@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.dinnerplate;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;

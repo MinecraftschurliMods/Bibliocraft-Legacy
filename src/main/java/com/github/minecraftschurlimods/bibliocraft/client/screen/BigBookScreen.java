@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookConten
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBookContent;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;

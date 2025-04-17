@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCMenu;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EquipmentSlot;

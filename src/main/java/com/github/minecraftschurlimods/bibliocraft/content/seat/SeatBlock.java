@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.seat;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingBlock;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCWaterloggedBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCWaterloggedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

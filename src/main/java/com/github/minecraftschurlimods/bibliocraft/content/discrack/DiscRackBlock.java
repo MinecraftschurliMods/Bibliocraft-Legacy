@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.discrack;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;

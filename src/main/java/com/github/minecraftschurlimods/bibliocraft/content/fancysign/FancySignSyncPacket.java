@@ -8,15 +8,15 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record FormattedLineListPacket(FormattedLineList list, BlockPos pos, boolean back) implements CustomPacketPayload {
-    public static final Type<FormattedLineListPacket> TYPE = new Type<>(BCUtil.modLoc("formatted_line_list"));
-    public static final StreamCodec<RegistryFriendlyByteBuf, FormattedLineListPacket> STREAM_CODEC = StreamCodec.composite(
-            FormattedLineList.STREAM_CODEC, FormattedLineListPacket::list,
-            BlockPos.STREAM_CODEC, FormattedLineListPacket::pos,
-            ByteBufCodecs.BOOL, FormattedLineListPacket::back,
-            FormattedLineListPacket::new);
+public record FancySignSyncPacket(FancySignContent list, BlockPos pos, boolean back) implements CustomPacketPayload {
+    public static final Type<FancySignSyncPacket> TYPE = new Type<>(BCUtil.modLoc("fancy_sign_sync"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, FancySignSyncPacket> STREAM_CODEC = StreamCodec.composite(
+            FancySignContent.STREAM_CODEC, FancySignSyncPacket::list,
+            BlockPos.STREAM_CODEC, FancySignSyncPacket::pos,
+            ByteBufCodecs.BOOL, FancySignSyncPacket::back,
+            FancySignSyncPacket::new);
 
-    public static void handle(FormattedLineListPacket packet, IPayloadContext context) {
+    public static void handle(FancySignSyncPacket packet, IPayloadContext context) {
         context.enqueueWork(() -> {
             BlockPos pos = packet.pos();
             if (!(context.player().level().getBlockEntity(pos) instanceof FancySignBlockEntity sign)) return;

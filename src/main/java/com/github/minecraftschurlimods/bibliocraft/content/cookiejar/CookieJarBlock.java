@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.cookiejar;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCEntityBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;

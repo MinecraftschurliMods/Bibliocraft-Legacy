@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
-import com.github.minecraftschurlimods.bibliocraft.util.init.WoodTypeBlockItem;
+import com.github.minecraftschurlimods.bibliocraft.util.block.WoodTypeBlockItem;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;

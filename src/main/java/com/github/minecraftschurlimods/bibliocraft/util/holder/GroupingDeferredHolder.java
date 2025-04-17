@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.util.init;
+package com.github.minecraftschurlimods.bibliocraft.util.holder;
 
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.registries.DeferredHolder;

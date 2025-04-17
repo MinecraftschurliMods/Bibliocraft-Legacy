@@ -39,6 +39,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -149,8 +150,8 @@ public final class BCUtil {
      * @return The max int in the input.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public static int max(int... ints) {
-        return Arrays.stream(ints).max().getAsInt();
+    public static int max(int i, int... ints) {
+        return IntStream.concat(IntStream.of(i), Arrays.stream(ints)).max().getAsInt();
     }
 
     /**
@@ -169,7 +170,7 @@ public final class BCUtil {
      * @return An enum stream codec.
      */
     public static <E extends Enum<E>> StreamCodec<ByteBuf, E> enumStreamCodec(Supplier<E[]> valuesSupplier, Function<E, Integer> ordinalSupplier) {
-        return ByteBufCodecs.INT.map(e -> valuesSupplier.get()[e], ordinalSupplier);
+        return ByteBufCodecs.VAR_INT.map(e -> valuesSupplier.get()[e], ordinalSupplier);
     }
 
     /**

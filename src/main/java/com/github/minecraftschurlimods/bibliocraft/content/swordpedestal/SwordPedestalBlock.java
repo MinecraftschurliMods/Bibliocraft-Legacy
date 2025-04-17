@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.swordpedestal;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCFacingInteractibleBlock;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;

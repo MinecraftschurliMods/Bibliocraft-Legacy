@@ -9,7 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPa
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FormattedLineListPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogRequestListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
@@ -17,7 +17,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.content.BCBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.world.entity.LivingEntity;
@@ -86,8 +86,8 @@ public final class EventHandler {
                 .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
                 .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
-                .playToServer(FormattedLineListPacket.TYPE,           FormattedLineListPacket.STREAM_CODEC,           FormattedLineListPacket::handle)
                 .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
+                .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
                 .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle);
