@@ -45,6 +45,17 @@ public final class ClientUtil {
     }
 
     /**
+     * Opens a {@link BigBookScreen} on the client.
+     *
+     * @param stack   The owning {@link ItemStack} of the screen.
+     * @param player  The owning {@link Player} of the screen.
+     * @param lectern The owning lectern's {@link BlockPos}.
+     */
+    public static void openBigBookScreen(ItemStack stack, Player player, BlockPos lectern) {
+        Minecraft.getInstance().setScreen(new BigBookScreen(stack, player, lectern));
+    }
+
+    /**
      * Opens a {@link ClipboardScreen} on the client.
      *
      * @param stack The owning {@link ItemStack} of the screen.

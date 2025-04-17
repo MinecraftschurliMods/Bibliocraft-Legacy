@@ -6,10 +6,12 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookConten
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBookContent;
-import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.util.SetLecternPagePacket;
+import com.github.minecraftschurlimods.bibliocraft.util.TakeLecternBookPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -19,6 +21,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -29,6 +32,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -42,6 +46,7 @@ public class BigBookScreen extends Screen {
     private static final Component FINALIZE_LABEL = Component.translatable("book.finalizeWarning");
     private static final Component FINALIZE_BUTTON = Component.translatable("book.finalizeButton");
     private static final Component SIGN_BUTTON = Component.translatable("book.signButton");
+    private static final Component TAKE_BOOK = Component.translatable("lectern.take_book");
     private static final Component OWNER = Component.translatable("book.byAuthor", Objects.requireNonNull(Minecraft.getInstance().player).getName()).withStyle(ChatFormatting.DARK_GRAY);
     private static final int BACKGROUND_WIDTH = 220;
     private static final int BACKGROUND_HEIGHT = 256;
@@ -50,6 +55,7 @@ public class BigBookScreen extends Screen {
     private final ItemStack stack;
     private final Player player;
     private final InteractionHand hand;
+    private final BlockPos lectern;
     private final boolean writable;
     private final List<List<FormattedLine>> pages;
     private int currentPage;
@@ -67,10 +73,19 @@ public class BigBookScreen extends Screen {
     private EditBox titleBox;
 
     public BigBookScreen(ItemStack stack, Player player, InteractionHand hand) {
+        this(stack, player, hand, null);
+    }
+
+    public BigBookScreen(ItemStack stack, Player player, BlockPos lectern) {
+        this(stack, player, null, lectern);
+    }
+
+    private BigBookScreen(ItemStack stack, Player player, @Nullable InteractionHand hand, @Nullable BlockPos lectern) {
         super(stack.getHoverName());
         this.stack = stack;
         this.player = player;
         this.hand = hand;
+        this.lectern = lectern;
         if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
             WrittenBigBookContent content = Objects.requireNonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT));
             pages = new ArrayList<>(content.pages());
@@ -80,11 +95,11 @@ public class BigBookScreen extends Screen {
             BigBookContent content = Objects.requireNonNull(stack.get(BCDataComponents.BIG_BOOK_CONTENT));
             pages = new ArrayList<>(content.pages());
             currentPage = content.currentPage();
-            writable = true;
+            writable = lectern == null;
         } else {
             pages = new ArrayList<>();
             currentPage = 0;
-            writable = true;
+            writable = lectern == null;
         }
         if (pages.isEmpty()) {
             addPage();
@@ -106,12 +121,16 @@ public class BigBookScreen extends Screen {
                 finalizeButton.active = !StringUtil.isBlank(s);
             });
             setFocused(titleBox);
-            finalizeButton = addRenderableWidget(Button.builder(FINALIZE_BUTTON, $ -> finalizeBook()).bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16).build());
+            finalizeButton = addRenderableWidget(Button.builder(FINALIZE_BUTTON, $ -> finalizeBook())
+                    .bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16)
+                    .build());
             finalizeButton.active = false;
             addRenderableWidget(Button.builder(CommonComponents.GUI_CANCEL, $ -> {
                 isSigning = false;
                 rebuildWidgets();
-            }).bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16).build());
+            })
+                    .bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16)
+                    .build());
         } else if (writable) {
             updateTextArea();
 
@@ -217,7 +236,10 @@ public class BigBookScreen extends Screen {
                 // call again to account for invalid values
                 sizeBox.setValue(String.valueOf(textArea.getSize()));
                 updateSizeButtons(size);
-            }).bounds(rightX + 16, 112 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP)).build());
+            })
+                    .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP))
+                    .bounds(rightX + 16, 112 + 16 * colorRows, 16, 16)
+                    .build());
             addRenderableWidget(sizeBox);
             scaleUpButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_UP, $ -> {
                 int size = textArea.getSize() + 1;
@@ -225,35 +247,56 @@ public class BigBookScreen extends Screen {
                 // call again to account for invalid values
                 sizeBox.setValue(String.valueOf(textArea.getSize()));
                 updateSizeButtons(size);
-            }).bounds(rightX + 64, 112 + 16 * colorRows, 16, 16).tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP)).build());
+            })
+                    .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP))
+                    .bounds(rightX + 64, 112 + 16 * colorRows, 16, 16)
+                    .build());
 
             onLineChange(textArea.getLines().getFirst());
             addRenderableWidget(Button.builder(SIGN_BUTTON, $ -> {
                 isSigning = true;
                 rebuildWidgets();
-            }).bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16).build());
-            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
-                onClose();
-                minecraft.setScreen(null);
-            }).bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16).build());
+            })
+                    .bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16)
+                    .build());
+            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, this::done)
+                    .bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16)
+                    .build());
         } else {
             backButton = addRenderableWidget(new PageButton(leftX + 83, BACKGROUND_HEIGHT - 32, false, $ -> {
                 if (currentPage > 0) {
                     currentPage--;
                 }
                 updateButtonVisibility();
+                if (lectern != null) {
+                    PacketDistributor.sendToServer(new SetLecternPagePacket(lectern, currentPage));
+                }
             }, true));
             forwardButton = addRenderableWidget(new PageButton(leftX + 184, BACKGROUND_HEIGHT - 32, true, $ -> {
                 if (currentPage < pages.size()) {
                     currentPage++;
                 }
                 updateButtonVisibility();
+                if (lectern != null) {
+                    PacketDistributor.sendToServer(new SetLecternPagePacket(lectern, currentPage));
+                }
             }, true));
             updateButtonVisibility();
-            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
-                onClose();
-                minecraft.setScreen(null);
-            }).bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH, 20).build());
+            if (lectern != null) {
+                addRenderableWidget(Button.builder(TAKE_BOOK, button -> {
+                    done(button);
+                    PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
+                })
+                        .bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH / 2 - 4, 20)
+                        .build());
+                addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, this::done)
+                        .bounds(width / 2 + 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH / 2 - 4, 20)
+                        .build());
+            } else {
+                addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, this::done)
+                        .bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH, 20)
+                        .build());
+            }
         }
     }
 
@@ -300,8 +343,10 @@ public class BigBookScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        if (!writable) return;
-        savePages();
+        if (!writable && lectern == null) return;
+        if (writable) {
+            savePages();
+        }
         BigBookContent content = new BigBookContent(pages, currentPage);
         stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
         PacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
@@ -373,6 +418,11 @@ public class BigBookScreen extends Screen {
         stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
         player.setItemInHand(hand, stack);
         PacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
+        Objects.requireNonNull(minecraft).setScreen(null);
+    }
+
+    private void done(Button button) {
+        onClose();
         Objects.requireNonNull(minecraft).setScreen(null);
     }
 }

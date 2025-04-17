@@ -23,8 +23,11 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -275,5 +278,22 @@ public final class BCUtil {
      */
     public static Vec3 toVec3(Vec3i vec) {
         return new Vec3(vec.getX(), vec.getY(), vec.getZ());
+    }
+
+    /**
+     * Removes the book from the {@link LecternBlockEntity} and adds it to the {@link Player}'s inventory.
+     *
+     * @param lectern The {@link LecternBlockEntity} to remove the book from.
+     * @param player  The {@link Player} to add the lectern's book to.
+     * @param level   The {@link Level} of the lectern.
+     * @param pos     The {@link BlockPos} of the lectern.
+     */
+    public static void takeLecternBook(LecternBlockEntity lectern, Player player, Level level, BlockPos pos) {
+        ItemStack stack = lectern.getBook();
+        lectern.setBook(ItemStack.EMPTY);
+        LecternBlock.resetBookState(player, level, pos, level.getBlockState(pos), false);
+        if (!player.getInventory().add(stack)) {
+            player.drop(stack, false);
+        }
     }
 }

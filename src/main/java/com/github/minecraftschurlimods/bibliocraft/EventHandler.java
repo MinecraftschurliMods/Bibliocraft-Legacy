@@ -14,18 +14,32 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogRequestListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.SetLecternPagePacket;
+import com.github.minecraftschurlimods.bibliocraft.util.TakeLecternBookPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
@@ -34,7 +48,10 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -50,6 +67,7 @@ public final class EventHandler {
         modBus.addListener(RegisterPayloadHandlersEvent.class,      EventHandler::registerPayloadHandlers);
         modBus.addListener(RegisterLockAndKeyBehaviorEvent.class,   EventHandler::registerLockAndKeyBehaviors);
         modBus.addListener(RegisterBibliocraftWoodTypesEvent.class, EventHandler::registerBibliocraftWoodTypes);
+        NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, EventHandler::rightClickBlock);
     }
 
     private static void constructMod(FMLConstructModEvent event) {
@@ -88,9 +106,11 @@ public final class EventHandler {
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
                 .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
                 .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
+                .playToServer(SetLecternPagePacket.TYPE,              SetLecternPagePacket.STREAM_CODEC,              SetLecternPagePacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
-                .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle);
+                .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
+                .playToServer(TakeLecternBookPacket.TYPE,             TakeLecternBookPacket.STREAM_CODEC,             TakeLecternBookPacket::handle);
     }
 
     private static void registerLockAndKeyBehaviors(RegisterLockAndKeyBehaviorEvent event) {
@@ -118,5 +138,38 @@ public final class EventHandler {
      */
     private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
         event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), () -> family);
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        Player player = event.getEntity();
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        BlockState state = level.getBlockState(pos);
+        if (!(level.getBlockEntity(pos) instanceof LecternBlockEntity lectern)) return;
+        if (state.getValue(LecternBlock.HAS_BOOK)) {
+            ItemStack stack = lectern.getBook();
+            if (stack.has(BCDataComponents.BIG_BOOK_CONTENT) || stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
+                if (player.isSecondaryUseActive()) {
+                    BCUtil.takeLecternBook(lectern, player, level, pos);
+                } else if (level.isClientSide()) {
+                    ClientUtil.openBigBookScreen(stack, player, pos);
+                }
+                event.setCanceled(true);
+            }
+        } else {
+            ItemStack stack = player.getItemInHand(event.getHand());
+            if (stack.is(ItemTags.LECTERN_BOOKS)) {
+                lectern.setBook(stack.consumeAndReturn(1, player));
+                LecternBlock.resetBookState(player, level, pos, state, true);
+                level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1.0F, 1.0F);
+                if (stack.has(BCDataComponents.BIG_BOOK_CONTENT)) {
+                    lectern.pageCount = stack.get(BCDataComponents.BIG_BOOK_CONTENT).pages().size();
+                } else if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
+                    lectern.pageCount = stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT).pages().size();
+                }
+                event.setCanceled(true);
+            }
+        }
     }
 }
