@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ClipboardSyncPacket(ClipboardContent content) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<ClipboardSyncPacket> TYPE = new CustomPacketPayload.Type<>(BCUtil.modLoc("clipboard_sync"));
+    public static final Type<ClipboardSyncPacket> TYPE = new Type<>(BCUtil.modLoc("clipboard_sync"));
     public static final StreamCodec<FriendlyByteBuf, ClipboardSyncPacket> STREAM_CODEC = StreamCodec.composite(
             ClipboardContent.STREAM_CODEC, ClipboardSyncPacket::content,
             ClipboardSyncPacket::new);

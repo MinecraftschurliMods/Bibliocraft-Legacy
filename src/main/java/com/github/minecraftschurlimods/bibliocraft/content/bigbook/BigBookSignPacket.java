@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record BigBookSignPacket(WrittenBigBookContent content, InteractionHand hand) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<BigBookSignPacket> TYPE = new CustomPacketPayload.Type<>(BCUtil.modLoc("big_book_sign"));
+    public static final Type<BigBookSignPacket> TYPE = new Type<>(BCUtil.modLoc("big_book_sign"));
     public static final StreamCodec<RegistryFriendlyByteBuf, BigBookSignPacket> STREAM_CODEC = StreamCodec.composite(
             WrittenBigBookContent.STREAM_CODEC, BigBookSignPacket::content,
             BCUtil.enumStreamCodec(InteractionHand::values, InteractionHand::ordinal), BigBookSignPacket::hand,
