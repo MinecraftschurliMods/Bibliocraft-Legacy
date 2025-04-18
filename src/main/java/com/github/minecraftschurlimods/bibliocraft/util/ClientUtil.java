@@ -97,21 +97,23 @@ public final class ClientUtil {
     /**
      * Opens a {@link StockroomCatalogScreen} on the client.
      *
-     * @param stack The owning {@link ItemStack} of the screen.
-     * @param hand  The {@link InteractionHand} in which the stockroom catalog is held.
+     * @param stack  The owning {@link ItemStack} of the screen.
+     * @param player The owning {@link Player} of the screen.
+     * @param hand   The {@link InteractionHand} in which the stockroom catalog is held.
      */
-    public static void openStockroomCatalogScreen(ItemStack stack, InteractionHand hand) {
-        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, hand));
+    public static void openStockroomCatalogScreen(ItemStack stack, Player player, InteractionHand hand) {
+        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, player, hand));
     }
 
     /**
      * Opens a {@link StockroomCatalogScreen} on the client.
      *
      * @param stack   The owning {@link ItemStack} of the screen.
+     * @param player  The owning {@link Player} of the screen.
      * @param lectern The owning lectern's {@link BlockPos}.
      */
-    public static void openStockroomCatalogScreen(ItemStack stack, BlockPos lectern) {
-        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, lectern));
+    public static void openStockroomCatalogScreen(ItemStack stack, Player player, BlockPos lectern) {
+        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, player, lectern));
     }
 
     /**

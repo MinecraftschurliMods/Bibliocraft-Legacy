@@ -7,6 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -36,7 +37,7 @@ public class StockroomCatalogItem extends Item {
     private static final Comparator<StockroomCatalogItemEntry> COMPARE_COUNT = Comparator.comparingInt(StockroomCatalogItemEntry::count);
 
     public StockroomCatalogItem(Properties properties) {
-        super(properties.component(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT));
+        super(properties.component(DataComponents.MAX_STACK_SIZE, 1).component(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT));
     }
 
     @SuppressWarnings("deprecation")
@@ -131,7 +132,7 @@ public class StockroomCatalogItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) {
-            ClientUtil.openStockroomCatalogScreen(stack, hand);
+            ClientUtil.openStockroomCatalogScreen(stack, player, hand);
         }
         return InteractionResultHolder.success(stack);
     }

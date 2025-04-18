@@ -10,6 +10,8 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookPacket;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,6 +29,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -46,9 +49,11 @@ public class StockroomCatalogScreen extends Screen {
     private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
     private static final ResourceLocation REMOVE_ICON = BCUtil.modLoc("remove");
     private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
+    private static final Component TAKE_BOOK = Component.translatable("lectern.take_book");
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
+    private final Player player;
     private final InteractionHand hand;
     private final BlockPos lectern;
     private final RandomSource random = RandomSource.create();
@@ -67,17 +72,18 @@ public class StockroomCatalogScreen extends Screen {
     private StockroomCatalogSorting.Container containerSorting = StockroomCatalogSorting.Container.ALPHABETICAL_ASC;
     private StockroomCatalogSorting.Item itemSorting = StockroomCatalogSorting.Item.ALPHABETICAL_ASC;
 
-    public StockroomCatalogScreen(ItemStack stack, InteractionHand hand) {
-        this(stack, hand, null);
+    public StockroomCatalogScreen(ItemStack stack, Player player, InteractionHand hand) {
+        this(stack, player, hand, null);
     }
 
-    public StockroomCatalogScreen(ItemStack stack, BlockPos lectern) {
-        this(stack, null, lectern);
+    public StockroomCatalogScreen(ItemStack stack, Player player, BlockPos lectern) {
+        this(stack, player, null, lectern);
     }
 
-    private StockroomCatalogScreen(ItemStack stack, InteractionHand hand, BlockPos lectern) {
+    private StockroomCatalogScreen(ItemStack stack, Player player, InteractionHand hand, BlockPos lectern) {
         super(stack.getHoverName());
         this.stack = stack;
+        this.player = player;
         this.hand = hand;
         this.lectern = lectern;
         this.data = stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT);
@@ -153,8 +159,19 @@ public class StockroomCatalogScreen extends Screen {
         locateButtons.clear();
         removeButtons.clear();
         int x = (width - 256) / 2;
-        addRenderableWidget(Button.builder(showContainerList ? Translations.STOCKROOM_CATALOG_SHOW_ITEMS : Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS, $ -> toggleMode()).bounds(width / 2 - 100, 260, 98, 20).build());
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 + 2, 260, 98, 20).build());
+        Component switchComponent = showContainerList ? Translations.STOCKROOM_CATALOG_SHOW_ITEMS : Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS;
+        if (lectern != null) {
+            addRenderableWidget(Button.builder(TAKE_BOOK, $ -> {
+                LecternUtil.takeLecternBook(player, player.level(), lectern);
+                PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
+                onClose();
+            }).bounds(width / 2 - 151, 260, 98, 20).build());
+            addRenderableWidget(Button.builder(switchComponent, $ -> toggleMode()).bounds(width / 2 - 49, 260, 98, 20).build());
+            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 + 53, 260, 98, 20).build());
+        } else {
+            addRenderableWidget(Button.builder(switchComponent, $ -> toggleMode()).bounds(width / 2 - 100, 260, 98, 20).build());
+            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 + 2, 260, 98, 20).build());
+        }
         EditBox searchBox = addRenderableWidget(new EditBox(getMinecraft().font, x + 33, 15, 140, 8, Component.empty()));
         searchBox.setTextColor(0);
         searchBox.setBordered(false);

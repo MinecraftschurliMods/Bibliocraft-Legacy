@@ -72,7 +72,7 @@ public final class LecternUtil {
         if (stack.has(BCDataComponents.BIG_BOOK_CONTENT) || stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
             ClientUtil.openBigBookScreen(stack, player, pos);
         } else if (stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
-            ClientUtil.openStockroomCatalogScreen(stack, pos);
+            ClientUtil.openStockroomCatalogScreen(stack, player, pos);
         }
     }
 }
