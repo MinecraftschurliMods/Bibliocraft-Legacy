@@ -21,7 +21,7 @@ public record SetLecternPagePacket(int page, Either<InteractionHand, BlockPos> t
     public static final Type<SetLecternPagePacket> TYPE = new Type<>(BCUtil.modLoc("set_lectern_page"));
     public static final StreamCodec<ByteBuf, SetLecternPagePacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.INT, SetLecternPagePacket::page,
-            ByteBufCodecs.either(BCUtil.enumStreamCodec(InteractionHand::values, InteractionHand::ordinal), BlockPos.STREAM_CODEC), SetLecternPagePacket::target,
+            ByteBufCodecs.either(BCUtil.INTERACTION_HAND_STREAM_CODEC, BlockPos.STREAM_CODEC), SetLecternPagePacket::target,
             SetLecternPagePacket::new);
 
     public void handle(IPayloadContext context) {

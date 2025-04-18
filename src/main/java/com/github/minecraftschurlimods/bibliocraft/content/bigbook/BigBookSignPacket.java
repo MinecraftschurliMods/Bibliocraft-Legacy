@@ -14,7 +14,7 @@ public record BigBookSignPacket(WrittenBigBookContent content, InteractionHand h
     public static final Type<BigBookSignPacket> TYPE = new Type<>(BCUtil.modLoc("big_book_sign"));
     public static final StreamCodec<RegistryFriendlyByteBuf, BigBookSignPacket> STREAM_CODEC = StreamCodec.composite(
             WrittenBigBookContent.STREAM_CODEC, BigBookSignPacket::content,
-            BCUtil.enumStreamCodec(InteractionHand::values, InteractionHand::ordinal), BigBookSignPacket::hand,
+            BCUtil.INTERACTION_HAND_STREAM_CODEC, BigBookSignPacket::hand,
             BigBookSignPacket::new);
 
     public void handle(IPayloadContext context) {

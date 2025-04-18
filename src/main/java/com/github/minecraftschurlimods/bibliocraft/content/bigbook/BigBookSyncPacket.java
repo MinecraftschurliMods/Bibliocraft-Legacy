@@ -12,7 +12,7 @@ public record BigBookSyncPacket(BigBookContent content, InteractionHand hand) im
     public static final Type<BigBookSyncPacket> TYPE = new Type<>(BCUtil.modLoc("big_book_sync"));
     public static final StreamCodec<RegistryFriendlyByteBuf, BigBookSyncPacket> STREAM_CODEC = StreamCodec.composite(
             BigBookContent.STREAM_CODEC, BigBookSyncPacket::content,
-            BCUtil.enumStreamCodec(InteractionHand::values, InteractionHand::ordinal), BigBookSyncPacket::hand,
+            BCUtil.INTERACTION_HAND_STREAM_CODEC, BigBookSyncPacket::hand,
             BigBookSyncPacket::new);
 
     public void handle(IPayloadContext context) {
