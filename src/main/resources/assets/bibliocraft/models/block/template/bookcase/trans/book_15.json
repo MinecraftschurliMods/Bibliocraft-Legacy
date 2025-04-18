@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "16": "bibliocraft:block/bookcase/trans/book_15"
+  },
+  "elements": [
+    {
+      "name": "book15",
+      "from": [1, 1, 9],
+      "to": [3, 7, 15],
+      "faces": {
+        "north": {"uv": [14, 6, 16, 12], "texture": "#16"},
+        "east": {"uv": [0, 6, 6, 12], "texture": "#16"},
+        "south": {"uv": [6, 6, 8, 12], "texture": "#16"},
+        "west": {"uv": [8, 6, 14, 12], "texture": "#16"},
+        "up": {"uv": [6, 0, 8, 6], "texture": "#16"},
+        "down": {"uv": [8, 0, 10, 6], "texture": "#16"}
+      }
+    }
+  ]
+}

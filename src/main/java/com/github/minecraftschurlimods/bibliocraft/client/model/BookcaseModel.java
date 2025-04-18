@@ -1,7 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import com.google.gson.JsonArray;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModel;
@@ -31,10 +34,17 @@ import java.util.List;
 import java.util.function.Function;
 
 public class BookcaseModel extends DynamicBlockModel {
+    private static final RandomSource RANDOM = RandomSource.create(Util.getNanos());
     public static final IGeometryLoader<BookcaseGeometry> LOADER = (jsonObject, context) -> {
         jsonObject.remove("loader");
         BlockModel base = context.deserialize(jsonObject, BlockModel.class);
         BlockModel[] books = new BlockModel[16];
+        if (ClientUtil.isPride()) {
+            JsonArray prideBooks = jsonObject.getAsJsonArray("pride_books");
+            if (!prideBooks.isEmpty()) {
+                jsonObject = prideBooks.get(RANDOM.nextInt(prideBooks.size())).getAsJsonObject();
+            }
+        }
         for (int i = 0; i < 16; i++) {
             books[i] = context.deserialize(GsonHelper.getAsJsonObject(jsonObject, "book_" + i), BlockModel.class);
         }
