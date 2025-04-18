@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -54,7 +55,7 @@ public class BigBookItem extends Item {
         if (content != null) {
             String author = content.author();
             if (!StringUtil.isBlank(author)) {
-                tooltipComponents.add(Component.translatable("book.byAuthor", author).withStyle(ChatFormatting.GRAY));
+                tooltipComponents.add(Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, author).withStyle(ChatFormatting.GRAY));
             }
             tooltipComponents.add(Component.translatable("book.generation." + content.generation()).withStyle(ChatFormatting.GRAY));
         }

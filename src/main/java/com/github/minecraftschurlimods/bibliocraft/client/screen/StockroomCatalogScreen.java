@@ -49,7 +49,6 @@ public class StockroomCatalogScreen extends Screen {
     private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
     private static final ResourceLocation REMOVE_ICON = BCUtil.modLoc("remove");
     private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
-    private static final Component TAKE_BOOK = Component.translatable("lectern.take_book");
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
@@ -161,7 +160,7 @@ public class StockroomCatalogScreen extends Screen {
         int x = (width - 256) / 2;
         Component switchComponent = showContainerList ? Translations.STOCKROOM_CATALOG_SHOW_ITEMS : Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS;
         if (lectern != null) {
-            addRenderableWidget(Button.builder(TAKE_BOOK, $ -> {
+            addRenderableWidget(Button.builder(Translations.VANILLA_TAKE_BOOK, $ -> {
                 LecternUtil.takeLecternBook(player, player.level(), lectern);
                 PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
                 onClose();

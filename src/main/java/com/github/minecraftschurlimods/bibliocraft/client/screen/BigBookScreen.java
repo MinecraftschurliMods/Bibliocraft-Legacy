@@ -44,12 +44,7 @@ import java.util.Objects;
 
 public class BigBookScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/big_book.png");
-    private static final Component EDIT_TITLE_LABEL = Component.translatable("book.editTitle");
-    private static final Component FINALIZE_LABEL = Component.translatable("book.finalizeWarning");
-    private static final Component FINALIZE_BUTTON = Component.translatable("book.finalizeButton");
-    private static final Component SIGN_BUTTON = Component.translatable("book.signButton");
-    private static final Component TAKE_BOOK = Component.translatable("lectern.take_book");
-    private static final Component OWNER = Component.translatable("book.byAuthor", Objects.requireNonNull(Minecraft.getInstance().player).getName()).withStyle(ChatFormatting.DARK_GRAY);
+    private static final Component OWNER = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, Objects.requireNonNull(Minecraft.getInstance().player).getName()).withStyle(ChatFormatting.DARK_GRAY);
     private static final int BACKGROUND_WIDTH = 220;
     private static final int BACKGROUND_HEIGHT = 256;
     private static final int TEXT_WIDTH = 188;
@@ -123,7 +118,7 @@ public class BigBookScreen extends Screen {
                 finalizeButton.active = !StringUtil.isBlank(s);
             });
             setFocused(titleBox);
-            finalizeButton = addRenderableWidget(Button.builder(FINALIZE_BUTTON, $ -> finalizeBook())
+            finalizeButton = addRenderableWidget(Button.builder(Translations.VANILLA_FINALIZE_BUTTON, $ -> finalizeBook())
                     .bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16)
                     .build());
             finalizeButton.active = false;
@@ -255,7 +250,7 @@ public class BigBookScreen extends Screen {
                     .build());
 
             onLineChange(textArea.getLines().getFirst());
-            addRenderableWidget(Button.builder(SIGN_BUTTON, $ -> {
+            addRenderableWidget(Button.builder(Translations.VANILLA_SIGN_BUTTON, $ -> {
                 isSigning = true;
                 rebuildWidgets();
             })
@@ -285,7 +280,7 @@ public class BigBookScreen extends Screen {
             }, true));
             updateButtonVisibility();
             if (lectern != null) {
-                addRenderableWidget(Button.builder(TAKE_BOOK, button -> {
+                addRenderableWidget(Button.builder(Translations.VANILLA_TAKE_BOOK, button -> {
                     done(button);
                     LecternUtil.takeLecternBook(player, player.level(), lectern);
                     PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
@@ -308,11 +303,11 @@ public class BigBookScreen extends Screen {
         super.render(graphics, mouseX, mouseY, partialTick);
         if (isSigning) {
             int x = (width - BACKGROUND_WIDTH - 80) / 2;
-            graphics.drawString(font, EDIT_TITLE_LABEL, x + 18 + (TEXT_WIDTH - font.width(EDIT_TITLE_LABEL)) / 2, 34, 0, false);
+            graphics.drawString(font, Translations.VANILLA_EDIT_TITLE, x + 18 + (TEXT_WIDTH - font.width(Translations.VANILLA_EDIT_TITLE)) / 2, 34, 0, false);
             graphics.drawString(font, OWNER, x + 18 + (TEXT_WIDTH - font.width(OWNER)) / 2, 60, 0, false);
-            graphics.drawWordWrap(font, FINALIZE_LABEL, x + 18, 82, TEXT_WIDTH, 0);
+            graphics.drawWordWrap(font, Translations.VANILLA_FINALIZE_WARNING, x + 18, 82, TEXT_WIDTH, 0);
         } else {
-            Component pageIndicator = Component.translatable("book.pageIndicator", currentPage + 1, pages.size());
+            Component pageIndicator = Component.translatable(Translations.VANILLA_PAGE_INDICATOR_KEY, currentPage + 1, pages.size());
             if (writable) {
                 graphics.drawString(font, pageIndicator, (width - BACKGROUND_WIDTH - 80) / 2 + 16 + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
             } else {

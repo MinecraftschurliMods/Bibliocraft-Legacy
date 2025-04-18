@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 public class FancyCrafterScreen extends BCMenuScreen<FancyCrafterMenu> {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_crafter.png");
     private static final ResourceLocation DISABLED_SLOT = BCUtil.mcLoc("container/crafter/disabled_slot");
-    private static final Component DISABLED_SLOT_TOOLTIP = Component.translatable("gui.togglable_slot");
     private final Player player;
 
     public FancyCrafterScreen(FancyCrafterMenu menu, Inventory inventory, Component title) {
@@ -30,7 +30,7 @@ public class FancyCrafterScreen extends BCMenuScreen<FancyCrafterMenu> {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         if (hoveredSlot instanceof FancyCrafterSlot && !menu.isSlotDisabled(hoveredSlot.index) && menu.getCarried().isEmpty() && !hoveredSlot.hasItem() && !player.isSpectator()) {
-            guiGraphics.renderTooltip(font, DISABLED_SLOT_TOOLTIP, mouseX, mouseY);
+            guiGraphics.renderTooltip(font, Translations.VANILLA_TOGGLABLE_SLOT, mouseX, mouseY);
         }
     }
 
