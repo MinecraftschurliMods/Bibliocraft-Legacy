@@ -5,9 +5,9 @@ import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.RegisterLockAn
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.RegisterBibliocraftWoodTypesEvent;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
-import com.github.minecraftschurlimods.bibliocraft.util.SetLecternPagePacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.OpenBigBookInLecternPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
@@ -19,12 +19,13 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.SetLecternPagePacket;
 import com.github.minecraftschurlimods.bibliocraft.util.TakeLecternBookPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
@@ -52,6 +53,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -101,12 +103,13 @@ public final class EventHandler {
 
     private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
         event.registrar(BibliocraftApi.MOD_ID)
-                .playToServer(SetLecternPagePacket.TYPE,              SetLecternPagePacket.STREAM_CODEC,              SetLecternPagePacket::handle)
                 .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
                 .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
                 .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
                 .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
+                .playToClient(OpenBigBookInLecternPacket.TYPE,        OpenBigBookInLecternPacket.STREAM_CODEC,        OpenBigBookInLecternPacket::handle)
+                .playToServer(SetLecternPagePacket.TYPE,              SetLecternPagePacket.STREAM_CODEC,              SetLecternPagePacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
                 .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
@@ -167,8 +170,8 @@ public final class EventHandler {
                 return;
             if (player.isSecondaryUseActive()) {
                 BCUtil.takeLecternBook(player, level, pos);
-            } else if (level.isClientSide()) {
-                ClientUtil.openBigBookScreen(book, player, pos);
+            } else if (!level.isClientSide() && player instanceof ServerPlayer sp) {
+                PacketDistributor.sendToPlayer(sp, new OpenBigBookInLecternPacket(pos, book));
             }
         }
         event.setCancellationResult(InteractionResult.SUCCESS);
