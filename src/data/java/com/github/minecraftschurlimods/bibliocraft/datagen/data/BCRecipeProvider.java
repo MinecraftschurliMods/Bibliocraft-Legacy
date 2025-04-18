@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookCloningRecipe;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -13,6 +14,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -264,5 +266,6 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .requires(BCTags.Items.LABELS)
                 .unlockedBy("has_book", has(Items.BOOK))
                 .save(output);
+        SpecialRecipeBuilder.special(BigBookCloningRecipe::new).save(output, "big_book_cloning");
     }
 }
