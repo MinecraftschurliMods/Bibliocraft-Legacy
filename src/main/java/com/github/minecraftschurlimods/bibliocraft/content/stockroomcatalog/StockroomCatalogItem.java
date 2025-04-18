@@ -131,7 +131,7 @@ public class StockroomCatalogItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) {
-            ClientUtil.openStockroomCatalogScreen(stack);
+            ClientUtil.openStockroomCatalogScreen(stack, hand);
         }
         return InteractionResultHolder.success(stack);
     }

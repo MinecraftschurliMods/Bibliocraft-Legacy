@@ -49,7 +49,10 @@ import java.util.stream.Stream;
  * Utility class holding various helper methods.
  */
 public final class BCUtil {
-    public static final StreamCodec<ByteBuf, InteractionHand> INTERACTION_HAND_STREAM_CODEC = enumStreamCodec(InteractionHand::values, InteractionHand::ordinal);
+    public static final StreamCodec<ByteBuf, InteractionHand> INTERACTION_HAND_STREAM_CODEC = ByteBufCodecs.BOOL.map(
+            bool -> bool ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND,
+            hand -> hand == InteractionHand.MAIN_HAND
+    );
 
     /**
      * @param path The path to use.

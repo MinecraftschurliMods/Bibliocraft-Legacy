@@ -25,6 +25,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -51,6 +52,7 @@ public class StockroomCatalogScreen extends Screen {
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
+    private final InteractionHand hand;
     private final StockroomCatalogContent data;
     private final RandomSource random = RandomSource.create();
     private final List<Button> removeButtons = new ArrayList<>();
@@ -67,9 +69,10 @@ public class StockroomCatalogScreen extends Screen {
     private StockroomCatalogSorting.Container containerSorting = StockroomCatalogSorting.Container.ALPHABETICAL_ASC;
     private StockroomCatalogSorting.Item itemSorting = StockroomCatalogSorting.Item.ALPHABETICAL_ASC;
 
-    public StockroomCatalogScreen(ItemStack stack) {
+    public StockroomCatalogScreen(ItemStack stack, InteractionHand hand) {
         super(stack.getHoverName());
         this.stack = stack;
+        this.hand = hand;
         this.data = stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT);
         requestPacket();
     }
@@ -253,7 +256,7 @@ public class StockroomCatalogScreen extends Screen {
 
     private void setDataOnStack() {
         stack.set(BCDataComponents.STOCKROOM_CATALOG_CONTENT, data);
-        PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data));
+        PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, hand));
     }
 
     private void toggleMode() {

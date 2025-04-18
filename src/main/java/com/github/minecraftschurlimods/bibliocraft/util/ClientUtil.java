@@ -63,9 +63,10 @@ public final class ClientUtil {
      * Opens a {@link ClipboardScreen} on the client.
      *
      * @param stack The owning {@link ItemStack} of the screen.
+     * @param hand  The {@link InteractionHand} in which the clipboard is held.
      */
-    public static void openClipboardScreen(ItemStack stack) {
-        Minecraft.getInstance().setScreen(new ClipboardScreen(stack));
+    public static void openClipboardScreen(ItemStack stack, InteractionHand hand) {
+        Minecraft.getInstance().setScreen(new ClipboardScreen(stack, hand));
     }
 
     /**
@@ -98,9 +99,10 @@ public final class ClientUtil {
      * Opens a {@link StockroomCatalogScreen} on the client.
      *
      * @param stack The owning {@link ItemStack} of the screen.
+     * @param hand  The {@link InteractionHand} in which the stockroom catalog is held.
      */
-    public static void openStockroomCatalogScreen(ItemStack stack) {
-        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack));
+    public static void openStockroomCatalogScreen(ItemStack stack, InteractionHand hand) {
+        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, hand));
     }
 
     /**
@@ -114,7 +116,7 @@ public final class ClientUtil {
         if (stack.has(BCDataComponents.BIG_BOOK_CONTENT) || stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
             openBigBookScreen(stack, player, pos);
         } else if (stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
-            openStockroomCatalogScreen(stack);
+            openStockroomCatalogScreen(stack, null);//TODO
         }
     }
 

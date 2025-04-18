@@ -14,6 +14,7 @@ import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +26,7 @@ import java.util.List;
 public class ClipboardScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
+    private final InteractionHand hand;
     private ClipboardContent data;
     private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardContent.MAX_LINES];
     private final EditBox[] lines = new EditBox[ClipboardContent.MAX_LINES];
@@ -32,9 +34,10 @@ public class ClipboardScreen extends Screen {
     private PageButton forwardButton;
     private PageButton backButton;
 
-    public ClipboardScreen(ItemStack stack) {
+    public ClipboardScreen(ItemStack stack, InteractionHand hand) {
         super(stack.getHoverName());
         this.stack = stack;
+        this.hand = hand;
         this.data = stack.get(BCDataComponents.CLIPBOARD_CONTENT);
     }
 
@@ -42,7 +45,7 @@ public class ClipboardScreen extends Screen {
     public void onClose() {
         super.onClose();
         stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
-        PacketDistributor.sendToServer(new ClipboardSyncPacket(data));
+        PacketDistributor.sendToServer(new ClipboardSyncPacket(data, hand));
     }
 
     @Override

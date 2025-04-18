@@ -21,7 +21,7 @@ public class ClipboardItem extends BlockItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) {
-            ClientUtil.openClipboardScreen(stack);
+            ClientUtil.openClipboardScreen(stack, hand);
         }
         return InteractionResultHolder.success(stack);
     }
