@@ -21,6 +21,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,17 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
     private static final int SLOT_ENABLED = 0;
     private static final int MAX_CRAFTING_TICKS = 6;
     private final boolean[] disabledSlots = new boolean[9];
+    private final InvWrapper wrapper = new InvWrapper(this) {
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return slot == 9 ? stack : super.insertItem(slot, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return slot == 9 ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
+        }
+    };
     private int craftingTicksRemaining = MAX_CRAFTING_TICKS;
     private RecipeHolder<CraftingRecipe> recipe;
 
@@ -54,42 +68,40 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
         if (!resultStack.isEmpty() && (!ItemStack.isSameItemSameComponents(result, resultStack) || result.getCount() + resultStack.getCount() > result.getMaxStackSize()))
             return;
         blockEntity.craftingTicksRemaining--;
-        if (blockEntity.craftingTicksRemaining <= 0) {
-            CraftingInput input = CraftingInput.of(3, 3, blockEntity.getInputs());
-            ItemStack assembled = recipe.assemble(input, level.registryAccess());
-            assembled.onCraftedBySystem(level);
-            blockEntity.setItem(9, blockEntity.tryDispense(level, pos, assembled, state));
-            blockEntity.craftingTicksRemaining = MAX_CRAFTING_TICKS;
-            recipe.getRemainingItems(CraftingInput.of(3, 3, blockEntity.getInputs()))
-                    .stream()
-                    .filter(e -> !e.isEmpty())
-                    .forEach(e -> blockEntity.tryDispense(level, pos, e, state));
-            List<ItemStack> inputs = new ArrayList<>(blockEntity.getInputs()
-                    .stream()
-                    .filter(e -> !e.isEmpty())
-                    .toList());
-            // for loop instead of stream chain to prevent CME
-            for (int i = 10; i < 18; i++) {
-                ItemStack stack = blockEntity.getItem(i);
+        if (blockEntity.craftingTicksRemaining > 0) return;
+        CraftingInput input = CraftingInput.of(3, 3, blockEntity.getInputs());
+        ItemStack assembled = recipe.assemble(input, level.registryAccess());
+        assembled.onCraftedBySystem(level);
+        blockEntity.setItem(9, blockEntity.tryDispense(level, pos, assembled, state));
+        blockEntity.craftingTicksRemaining = MAX_CRAFTING_TICKS;
+        recipe.getRemainingItems(CraftingInput.of(3, 3, blockEntity.getInputs()))
+                .stream()
+                .filter(e -> !e.isEmpty())
+                .forEach(e -> blockEntity.tryDispense(level, pos, e, state));
+        List<ItemStack> inputs = new ArrayList<>(blockEntity.getInputs()
+                .stream()
+                .filter(e -> !e.isEmpty())
+                .toList());
+        // for loop instead of stream chain to prevent CME
+        for (int i = 10; i < 18; i++) {
+            ItemStack stack = blockEntity.getItem(i);
+            if (stack.isEmpty()) continue;
+            List<ItemStack> toRemove = new ArrayList<>();
+            for (ItemStack e : inputs) {
+                if (!ItemStack.isSameItemSameComponents(e, stack)) continue;
+                if (e.getCount() >= e.getMaxStackSize()) continue;
                 if (stack.isEmpty()) continue;
-                List<ItemStack> toRemove = new ArrayList<>();
-                for (ItemStack e : inputs) {
-                    if (!ItemStack.isSameItemSameComponents(e, stack)) continue;
-                    if (e.getCount() >= e.getMaxStackSize()) continue;
-                    if (!stack.isEmpty()) {
-                        e.grow(1);
-                        toRemove.add(e);
-                        stack.shrink(1);
-                    }
-                }
-                toRemove.forEach(inputs::remove);
+                e.grow(1);
+                toRemove.add(e);
+                stack.shrink(1);
             }
-            blockEntity.getInputs()
-                    .stream()
-                    .filter(e -> !e.isEmpty())
-                    .forEach(e -> e.shrink(1));
-            blockEntity.setChanged();
+            toRemove.forEach(inputs::remove);
         }
+        blockEntity.getInputs()
+                .stream()
+                .filter(e -> !e.isEmpty())
+                .forEach(e -> e.shrink(1));
+        blockEntity.setChanged();
     }
 
     @Override
@@ -132,6 +144,11 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
             tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
         }
         tag.putIntArray(DISABLED_SLOTS_KEY, tagSlots);
+    }
+
+    @Override
+    public IItemHandler getCapability(@Nullable Direction side) {
+        return wrapper;
     }
 
     public void setSlotDisabled(int slot, boolean disabled) {
