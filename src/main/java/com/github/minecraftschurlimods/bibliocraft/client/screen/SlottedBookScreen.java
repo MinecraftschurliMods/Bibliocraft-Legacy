@@ -14,8 +14,6 @@ import net.minecraft.world.entity.player.Inventory;
 import java.util.List;
 
 public class SlottedBookScreen extends AbstractContainerScreen<SlottedBookMenu> {
-    private static final Component TITLE = Component.translatable(Translations.SLOTTED_BOOK_TITLE_KEY);
-    private static final Component TEXT = Component.translatable(Translations.SLOTTED_BOOK_TEXT_KEY);
     private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/slotted_book.png");
 
     public SlottedBookScreen(SlottedBookMenu menu, Inventory inventory, Component title) {
@@ -38,7 +36,7 @@ public class SlottedBookScreen extends AbstractContainerScreen<SlottedBookMenu> 
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
-        FormattedText text = FormattedText.of(TEXT.getString());
+        FormattedText text = FormattedText.of(Translations.SLOTTED_BOOK_TEXT.getString());
         List<FormattedCharSequence> lines = font.split(text, 114);
         int startX = (width - 192) / 2;
         int startY = topPos + 111 - lines.size() * 9;

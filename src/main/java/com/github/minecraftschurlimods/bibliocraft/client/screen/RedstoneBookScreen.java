@@ -13,17 +13,14 @@ import net.minecraft.util.FormattedCharSequence;
 import java.util.List;
 
 public class RedstoneBookScreen extends Screen {
-    private static final Component TITLE = Component.translatable(Translations.REDSTONE_BOOK_TITLE_KEY);
-    private static final Component TEXT = Component.translatable(Translations.REDSTONE_BOOK_TEXT_KEY);
-
     public RedstoneBookScreen() {
-        super(TITLE);
+        super(Translations.REDSTONE_BOOK_TITLE);
     }
 
     @Override
     public void render(GuiGraphics graphics, int x, int y, float partialTick) {
         super.render(graphics, x, y, partialTick);
-        FormattedText text = FormattedText.of(TEXT.getString());
+        FormattedText text = FormattedText.of(Translations.REDSTONE_BOOK_TEXT.getString());
         List<FormattedCharSequence> lines = font.split(text, 114);
         int startX = (width - 192) / 2;
         for (int i = 0; i < lines.size(); i++) {

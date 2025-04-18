@@ -46,11 +46,6 @@ public class StockroomCatalogScreen extends Screen {
     private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
     private static final ResourceLocation REMOVE_ICON = BCUtil.modLoc("remove");
     private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
-    private static final Component LOCATE = Component.translatable(Translations.STOCKROOM_CATALOG_LOCATE_KEY);
-    private static final Component REMOVE = Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE_KEY);
-    private static final Component SEARCH = Component.translatable(Translations.STOCKROOM_CATALOG_SEARCH_KEY);
-    private static final Component SHOW_CONTAINERS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS_KEY);
-    private static final Component SHOW_ITEMS = Component.translatable(Translations.STOCKROOM_CATALOG_SHOW_ITEMS_KEY);
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
@@ -113,12 +108,12 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, REMOVE, mouseX, mouseY);
+                    graphics.renderTooltip(font, Translations.STOCKROOM_CATALOG_REMOVE, mouseX, mouseY);
                 }
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, LOCATE, mouseX, mouseY);
+                    graphics.renderTooltip(font, Translations.STOCKROOM_CATALOG_LOCATE, mouseX, mouseY);
                 }
             }
         } else {
@@ -140,7 +135,7 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
-                    graphics.renderTooltip(font, LOCATE, mouseX, mouseY);
+                    graphics.renderTooltip(font, Translations.STOCKROOM_CATALOG_LOCATE, mouseX, mouseY);
                 }
             }
         }
@@ -158,13 +153,13 @@ public class StockroomCatalogScreen extends Screen {
         locateButtons.clear();
         removeButtons.clear();
         int x = (width - 256) / 2;
-        addRenderableWidget(Button.builder(showContainerList ? SHOW_ITEMS : SHOW_CONTAINERS, $ -> toggleMode()).bounds(width / 2 - 100, 260, 98, 20).build());
+        addRenderableWidget(Button.builder(showContainerList ? Translations.STOCKROOM_CATALOG_SHOW_ITEMS : Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS, $ -> toggleMode()).bounds(width / 2 - 100, 260, 98, 20).build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 + 2, 260, 98, 20).build());
         EditBox searchBox = addRenderableWidget(new EditBox(getMinecraft().font, x + 33, 15, 140, 8, Component.empty()));
         searchBox.setTextColor(0);
         searchBox.setBordered(false);
         searchBox.setTextShadow(false);
-        searchBox.setHint(SEARCH);
+        searchBox.setHint(Translations.STOCKROOM_CATALOG_SEARCH);
         searchBox.setResponder(e -> {
             search = e.toLowerCase(Locale.ROOT);
             updateContents();

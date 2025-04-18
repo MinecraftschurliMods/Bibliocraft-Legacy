@@ -33,9 +33,6 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
     private static final ResourceLocation UID = BCUtil.modLoc("jei_plugin");
     private static final Lazy<BibliocraftWoodType> OAK = Lazy.of(() -> BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")));
     private static final DyeColor WHITE = DyeColor.WHITE;
-    private static final Component ALL_COLORS = Component.translatable(Translations.ALL_COLORS_KEY);
-    private static final Component ALL_COLORS_AND_WOOD_TYPES = Component.translatable(Translations.ALL_COLORS_AND_WOOD_TYPES_KEY);
-    private static final Component ALL_WOOD_TYPES = Component.translatable(Translations.ALL_WOOD_TYPES_KEY);
     private static final Lazy<List<WoodTypeDeferredHolder<Item, ?>>> WOOD_TYPE_DEFERRED_HOLDERS =
             Lazy.of(() -> List.of(BCItems.BOOKCASE, BCItems.FANCY_ARMOR_STAND, BCItems.FANCY_CLOCK, BCItems.FANCY_CRAFTER, BCItems.GRANDFATHER_CLOCK, BCItems.LABEL, BCItems.POTION_SHELF, BCItems.SHELF, BCItems.TABLE, BCItems.TOOL_RACK));
     private static final Lazy<List<ColoredDeferredHolder<Item, ?>>> COLORED_DEFERRED_HOLDERS =
@@ -57,23 +54,23 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                registration.addIngredientInfo(holder.get(OAK.get()), ALL_WOOD_TYPES);
+                registration.addIngredientInfo(holder.get(OAK.get()), Translations.ALL_WOOD_TYPES);
             }
         }
         if (!Config.JEI_SHOW_COLOR_TYPES.get()) {
             if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                    registration.addIngredientInfo(holder.get(OAK.get(), WHITE), ALL_COLORS_AND_WOOD_TYPES);
+                    registration.addIngredientInfo(holder.get(OAK.get(), WHITE), Translations.ALL_COLORS_AND_WOOD_TYPES);
                 }
             } else {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     for (BibliocraftWoodType woodType : BibliocraftApi.getWoodTypeRegistry().getAll()) {
-                        registration.addIngredientInfo(holder.get(woodType, WHITE), ALL_COLORS);
+                        registration.addIngredientInfo(holder.get(woodType, WHITE), Translations.ALL_COLORS);
                     }
                 }
             }
             for (ColoredDeferredHolder<Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
-                registration.addIngredientInfo(holder.get(WHITE), ALL_COLORS);
+                registration.addIngredientInfo(holder.get(WHITE), Translations.ALL_COLORS);
             }
         }
     }

@@ -1799,7 +1799,6 @@
   "item.bibliocraft.redstone_book.title": "Redstone: Volume 1",
   "item.bibliocraft.slotted_book": "Slotted Book",
   "item.bibliocraft.slotted_book.text": "This book can be used to hide your valuables among many books.",
-  "item.bibliocraft.slotted_book.title": "Slotted Book",
   "item.bibliocraft.stockroom_catalog": "Stockroom Catalog",
   "item.bibliocraft.stockroom_catalog.add_container": "Started listing contents of %s in the Stockroom Catalog!",
   "item.bibliocraft.stockroom_catalog.remove_container": "Stopped listing contents of %s in the Stockroom Catalog!",

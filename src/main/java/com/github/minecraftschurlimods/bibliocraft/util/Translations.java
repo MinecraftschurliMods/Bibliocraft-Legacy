@@ -43,7 +43,6 @@ public interface Translations {
     String REDSTONE_BOOK_TEXT_KEY                  = "item." + BibliocraftApi.MOD_ID + ".redstone_book.text";
     String REDSTONE_BOOK_TITLE_KEY                 = "item." + BibliocraftApi.MOD_ID + ".redstone_book.title";
     String SLOTTED_BOOK_TEXT_KEY                   = "item." + BibliocraftApi.MOD_ID + ".slotted_book.text";
-    String SLOTTED_BOOK_TITLE_KEY                  = "item." + BibliocraftApi.MOD_ID + ".slotted_book.title";
     String ALL_COLORS_KEY                          = "jei."  + BibliocraftApi.MOD_ID + ".all_colors";
     String ALL_COLORS_AND_WOOD_TYPES_KEY           = "jei."  + BibliocraftApi.MOD_ID + ".all_colors_and_wood_types";
     String ALL_WOOD_TYPES_KEY                      = "jei."  + BibliocraftApi.MOD_ID + ".all_wood_types";
@@ -79,6 +78,18 @@ public interface Translations {
     Component FANCY_TEXT_AREA_SCALE_UP_TOOLTIP     = Component.translatable(FANCY_TEXT_AREA_SCALE_UP_TOOLTIP_KEY);
     Component FANCY_TEXT_AREA_STRIKETHROUGH        = Component.translatable(FANCY_TEXT_AREA_STRIKETHROUGH_KEY);
     Component FANCY_TEXT_AREA_UNDERLINED           = Component.translatable(FANCY_TEXT_AREA_UNDERLINED_KEY);
+    Component STOCKROOM_CATALOG_LOCATE             = Component.translatable(STOCKROOM_CATALOG_LOCATE_KEY);
+    Component STOCKROOM_CATALOG_REMOVE             = Component.translatable(STOCKROOM_CATALOG_REMOVE_KEY);
+    Component STOCKROOM_CATALOG_SEARCH             = Component.translatable(STOCKROOM_CATALOG_SEARCH_KEY);
+    Component STOCKROOM_CATALOG_SHOW_CONTAINERS    = Component.translatable(STOCKROOM_CATALOG_SHOW_CONTAINERS_KEY);
+    Component STOCKROOM_CATALOG_SHOW_ITEMS         = Component.translatable(STOCKROOM_CATALOG_SHOW_ITEMS_KEY);
+    Component LOCK_AND_KEY_NO_CUSTOM_NAME          = Component.translatable(LOCK_AND_KEY_NO_CUSTOM_NAME_KEY);
+    Component REDSTONE_BOOK_TEXT                   = Component.translatable(REDSTONE_BOOK_TEXT_KEY);
+    Component REDSTONE_BOOK_TITLE                  = Component.translatable(REDSTONE_BOOK_TITLE_KEY);
+    Component SLOTTED_BOOK_TEXT                    = Component.translatable(SLOTTED_BOOK_TEXT_KEY);
+    Component ALL_COLORS                           = Component.translatable(ALL_COLORS_KEY);
+    Component ALL_COLORS_AND_WOOD_TYPES            = Component.translatable(ALL_COLORS_AND_WOOD_TYPES_KEY);
+    Component ALL_WOOD_TYPES                       = Component.translatable(ALL_WOOD_TYPES_KEY);
     Component FANCY_TEXT_AREA_BOLD_SHORT           = Component.translatable(FANCY_TEXT_AREA_BOLD_SHORT_KEY).withStyle(ChatFormatting.BOLD);
     Component FANCY_TEXT_AREA_ITALIC_SHORT         = Component.translatable(FANCY_TEXT_AREA_ITALIC_SHORT_KEY).withStyle(ChatFormatting.ITALIC);
     Component FANCY_TEXT_AREA_OBFUSCATED_SHORT     = Component.translatable(FANCY_TEXT_AREA_OBFUSCATED_SHORT_KEY).withStyle(ChatFormatting.OBFUSCATED);

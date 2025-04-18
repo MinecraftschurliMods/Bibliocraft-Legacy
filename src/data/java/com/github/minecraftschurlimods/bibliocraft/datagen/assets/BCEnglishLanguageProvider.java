@@ -180,7 +180,6 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.REDSTONE_BOOK_TEXT_KEY, "When putting this book into a bookcase, the bookcase will emit a redstone signal. The strength of the signal depends on the slot it is placed in. Slot 1 (top left) yields no signal. Slot 2 yields a signal strength of 1. Each slot after that increases the signal strength by one, all the way to slot 16 (bottom right), which yields a signal strength of 15.");
         add(Translations.REDSTONE_BOOK_TITLE_KEY, "Redstone: Volume 1");
         add(Translations.SLOTTED_BOOK_TEXT_KEY, "This book can be used to hide your valuables among many books.");
-        add(Translations.SLOTTED_BOOK_TITLE_KEY, "Slotted Book");
         add(Translations.ALL_COLORS_KEY, "This block can be crafted in all colors.");
         add(Translations.ALL_COLORS_AND_WOOD_TYPES_KEY, "This block can be crafted in all colors and wood types.");
         add(Translations.ALL_WOOD_TYPES_KEY, "This block can be crafted in all wood types.");
