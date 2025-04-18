@@ -7,7 +7,6 @@ import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.StockroomCatalogScreen;
-import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -42,7 +41,7 @@ public final class ClientUtil {
      *
      * @param stack  The owning {@link ItemStack} of the screen.
      * @param player The owning {@link Player} of the screen.
-     * @param hand   The contextual {@link InteractionHand}.
+     * @param hand   The {@link InteractionHand} in which the big book is held.
      */
     public static void openBigBookScreen(ItemStack stack, Player player, InteractionHand hand) {
         Minecraft.getInstance().setScreen(new BigBookScreen(stack, player, hand));
@@ -106,18 +105,13 @@ public final class ClientUtil {
     }
 
     /**
-     * Opens a screen for the given {@link ItemStack} on the client. The {@link ItemStack} is assumed to be inside a lectern.
+     * Opens a {@link StockroomCatalogScreen} on the client.
      *
-     * @param stack  The owning {@link ItemStack} of the screen.
-     * @param player The owning {@link Player} of the screen.
-     * @param pos    The {@link BlockPos} of the lectern.
+     * @param stack   The owning {@link ItemStack} of the screen.
+     * @param lectern The owning lectern's {@link BlockPos}.
      */
-    public static void openScreenForLectern(ItemStack stack, Player player, BlockPos pos) {
-        if (stack.has(BCDataComponents.BIG_BOOK_CONTENT) || stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
-            openBigBookScreen(stack, player, pos);
-        } else if (stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
-            openStockroomCatalogScreen(stack, null);//TODO
-        }
+    public static void openStockroomCatalogScreen(ItemStack stack, BlockPos lectern) {
+        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, lectern));
     }
 
     /**
@@ -196,9 +190,9 @@ public final class ClientUtil {
     public static void renderBakedModel(BakedModel model, PoseStack stack, MultiBufferSource buffer, Level level, BlockPos pos, BlockState state, RandomSource random, ModelData modelData) {
         ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
         int color = Minecraft.getInstance().getBlockColors().getColor(state, level, pos, 0);
-        float red = (float) (color >> 16 & 255) / 255.0F;
-        float green = (float) (color >> 8 & 255) / 255.0F;
-        float blue = (float) (color & 255) / 255.0F;
+        float red = (float) (color >> 16 & 255) / 255f;
+        float green = (float) (color >> 8 & 255) / 255f;
+        float blue = (float) (color & 255) / 255f;
         int light = LevelRenderer.getLightColor(level, pos);
         for (RenderType type : model.getRenderTypes(state, random, modelData)) {
             renderer.renderModel(stack.last(), buffer.getBuffer(RenderTypeHelper.getEntityRenderType(type, false)), state, model, red, green, blue, light, OverlayTexture.NO_OVERLAY, modelData, type);

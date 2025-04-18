@@ -7,7 +7,8 @@ import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRe
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
-import com.github.minecraftschurlimods.bibliocraft.util.OpenBookInLecternPacket;
+import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.lectern.OpenBookInLecternPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
@@ -19,8 +20,8 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.SetLecternPagePacket;
-import com.github.minecraftschurlimods.bibliocraft.util.TakeLecternBookPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.bigbook.SetBigBookPageInLecternPacket;
+import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.BlockFamilies;
@@ -108,8 +109,8 @@ public final class EventHandler {
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
                 .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
                 .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
-                .playToClient(OpenBookInLecternPacket.TYPE,        OpenBookInLecternPacket.STREAM_CODEC,        OpenBookInLecternPacket::handle)
-                .playToServer(SetLecternPagePacket.TYPE,              SetLecternPagePacket.STREAM_CODEC,              SetLecternPagePacket::handle)
+                .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
+                .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
                 .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
@@ -169,7 +170,7 @@ public final class EventHandler {
             }
         } else if (book.has(BCDataComponents.BIG_BOOK_CONTENT) || book.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) || book.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
             if (player.isSecondaryUseActive()) {
-                BCUtil.takeLecternBook(player, level, pos);
+                LecternUtil.takeLecternBook(player, level, pos);
             } else if (!level.isClientSide() && player instanceof ServerPlayer sp) {
                 PacketDistributor.sendToPlayer(sp, new OpenBookInLecternPacket(pos, book));
             }

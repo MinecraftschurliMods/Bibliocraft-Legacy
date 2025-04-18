@@ -1,5 +1,6 @@
-package com.github.minecraftschurlimods.bibliocraft.util;
+package com.github.minecraftschurlimods.bibliocraft.util.lectern;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -24,7 +25,7 @@ public record OpenBookInLecternPacket(BlockPos pos, ItemStack stack) implements 
         if (lectern.getBook().isEmpty()) {
             lectern.setBook(stack);
         }
-        ClientUtil.openScreenForLectern(stack, player, pos);
+        LecternUtil.openScreenForLectern(stack, player, pos);
     }
 
     @Override

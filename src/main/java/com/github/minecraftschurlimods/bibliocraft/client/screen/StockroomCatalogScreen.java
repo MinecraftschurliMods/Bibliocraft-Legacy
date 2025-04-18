@@ -10,6 +10,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -54,6 +55,7 @@ public class StockroomCatalogScreen extends Screen {
     private final ItemStack stack;
     private final InteractionHand hand;
     private final StockroomCatalogContent data;
+    private final BlockPos lectern;
     private final RandomSource random = RandomSource.create();
     private final List<Button> removeButtons = new ArrayList<>();
     private final List<Button> locateButtons = new ArrayList<>();
@@ -70,9 +72,18 @@ public class StockroomCatalogScreen extends Screen {
     private StockroomCatalogSorting.Item itemSorting = StockroomCatalogSorting.Item.ALPHABETICAL_ASC;
 
     public StockroomCatalogScreen(ItemStack stack, InteractionHand hand) {
+        this(stack, hand, null);
+    }
+
+    public StockroomCatalogScreen(ItemStack stack, BlockPos lectern) {
+        this(stack, null, lectern);
+    }
+
+    private StockroomCatalogScreen(ItemStack stack, InteractionHand hand, BlockPos lectern) {
         super(stack.getHoverName());
         this.stack = stack;
         this.hand = hand;
+        this.lectern = lectern;
         this.data = stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT);
         requestPacket();
     }
@@ -94,7 +105,9 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 34 && mouseX < x + 50) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, (int) Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(visibleContainers.get(y / 19)))), mouseX, mouseY);
+                    BlockPos container = visibleContainers.get(y / 19);
+                    int distance = (int) (lectern != null ? Math.sqrt(lectern.distSqr(container)) : Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(container)));
+                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance), mouseX, mouseY);
                 }
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
@@ -251,12 +264,20 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     private void requestPacket() {
-        PacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting));
+        if (hand != null) {
+            PacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting, Either.left(hand)));
+        } else if (lectern != null) {
+            PacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting, Either.right(lectern)));
+        }
     }
 
     private void setDataOnStack() {
         stack.set(BCDataComponents.STOCKROOM_CATALOG_CONTENT, data);
-        PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, hand));
+        if (hand != null) {
+            PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, Either.left(hand)));
+        } else if (lectern != null) {
+            PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, Either.right(lectern)));
+        }
     }
 
     private void toggleMode() {
