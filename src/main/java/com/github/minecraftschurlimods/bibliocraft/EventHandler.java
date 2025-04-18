@@ -7,7 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRe
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
-import com.github.minecraftschurlimods.bibliocraft.content.bigbook.OpenBigBookInLecternPacket;
+import com.github.minecraftschurlimods.bibliocraft.util.OpenBookInLecternPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
@@ -108,7 +108,7 @@ public final class EventHandler {
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
                 .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
                 .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
-                .playToClient(OpenBigBookInLecternPacket.TYPE,        OpenBigBookInLecternPacket.STREAM_CODEC,        OpenBigBookInLecternPacket::handle)
+                .playToClient(OpenBookInLecternPacket.TYPE,        OpenBookInLecternPacket.STREAM_CODEC,        OpenBookInLecternPacket::handle)
                 .playToServer(SetLecternPagePacket.TYPE,              SetLecternPagePacket.STREAM_CODEC,              SetLecternPagePacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
@@ -156,22 +156,22 @@ public final class EventHandler {
             // if it can be added to vanilla/neo somehow, this can be scrapped
             ItemStack stack = player.getItemInHand(event.getHand());
             if (!stack.is(ItemTags.LECTERN_BOOKS)) return;
-            if (!stack.has(BCDataComponents.BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) return;
+            if (!stack.has(BCDataComponents.BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) return;
             lectern.setBook(stack.consumeAndReturn(1, player));
             LecternBlock.resetBookState(player, level, pos, state, true);
-            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1f, 1f);
             if (stack.has(BCDataComponents.BIG_BOOK_CONTENT)) {
                 lectern.pageCount = stack.get(BCDataComponents.BIG_BOOK_CONTENT).pages().size();
             } else if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
                 lectern.pageCount = stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT).pages().size();
+            } else if (stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
+                lectern.pageCount = 1;
             }
-        } else {
-            if (!book.has(BCDataComponents.BIG_BOOK_CONTENT) && !book.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT))
-                return;
+        } else if (book.has(BCDataComponents.BIG_BOOK_CONTENT) || book.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) || book.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
             if (player.isSecondaryUseActive()) {
                 BCUtil.takeLecternBook(player, level, pos);
             } else if (!level.isClientSide() && player instanceof ServerPlayer sp) {
-                PacketDistributor.sendToPlayer(sp, new OpenBigBookInLecternPacket(pos, book));
+                PacketDistributor.sendToPlayer(sp, new OpenBookInLecternPacket(pos, book));
             }
         }
         event.setCancellationResult(InteractionResult.SUCCESS);

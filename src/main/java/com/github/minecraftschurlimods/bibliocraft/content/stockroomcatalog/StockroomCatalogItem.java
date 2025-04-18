@@ -36,7 +36,7 @@ public class StockroomCatalogItem extends Item {
     private static final Comparator<StockroomCatalogItemEntry> COMPARE_COUNT = Comparator.comparingInt(StockroomCatalogItemEntry::count);
 
     public StockroomCatalogItem(Properties properties) {
-        super(properties);
+        super(properties.component(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT));
     }
 
     @SuppressWarnings("deprecation")

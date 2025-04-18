@@ -48,6 +48,6 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
         tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
         tag(ItemTags.DYEABLE).add(BCItems.SWORD_PEDESTAL.get());
-        tag(ItemTags.LECTERN_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get());
+        tag(ItemTags.LECTERN_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
     }
 }

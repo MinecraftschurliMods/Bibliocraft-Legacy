@@ -7,6 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.StockroomCatalogScreen;
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -30,9 +31,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.RenderTypeHelper;
 import net.neoforged.neoforge.client.model.data.ModelData;
 
-import java.time.Instant;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
@@ -102,6 +101,21 @@ public final class ClientUtil {
      */
     public static void openStockroomCatalogScreen(ItemStack stack) {
         Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack));
+    }
+
+    /**
+     * Opens a screen for the given {@link ItemStack} on the client. The {@link ItemStack} is assumed to be inside a lectern.
+     *
+     * @param stack  The owning {@link ItemStack} of the screen.
+     * @param player The owning {@link Player} of the screen.
+     * @param pos    The {@link BlockPos} of the lectern.
+     */
+    public static void openScreenForLectern(ItemStack stack, Player player, BlockPos pos) {
+        if (stack.has(BCDataComponents.BIG_BOOK_CONTENT) || stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
+            openBigBookScreen(stack, player, pos);
+        } else if (stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
+            openStockroomCatalogScreen(stack);
+        }
     }
 
     /**
