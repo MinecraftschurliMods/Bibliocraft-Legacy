@@ -281,14 +281,14 @@ public final class BCUtil {
     }
 
     /**
-     * Removes the book from the {@link LecternBlockEntity} and adds it to the {@link Player}'s inventory.
+     * Removes the book from the lectern at the given location and adds it to the {@link Player}'s inventory.
      *
-     * @param lectern The {@link LecternBlockEntity} to remove the book from.
-     * @param player  The {@link Player} to add the lectern's book to.
-     * @param level   The {@link Level} of the lectern.
-     * @param pos     The {@link BlockPos} of the lectern.
+     * @param player The {@link Player} to add the lectern's book to.
+     * @param level  The {@link Level} of the lectern.
+     * @param pos    The {@link BlockPos} of the lectern.
      */
-    public static void takeLecternBook(LecternBlockEntity lectern, Player player, Level level, BlockPos pos) {
+    public static void takeLecternBook(Player player, Level level, BlockPos pos) {
+        if (!(level.getBlockEntity(pos) instanceof LecternBlockEntity lectern)) return;
         ItemStack stack = lectern.getBook();
         lectern.setBook(ItemStack.EMPTY);
         LecternBlock.resetBookState(player, level, pos, level.getBlockState(pos), false);

@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.ColorButton;
 import com.github.minecraftschurlimods.bibliocraft.client.widget.FormattedTextArea;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookContent;
+import com.github.minecraftschurlimods.bibliocraft.util.SetLecternPagePacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBookContent;
@@ -10,9 +11,9 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
-import com.github.minecraftschurlimods.bibliocraft.util.SetLecternPagePacket;
 import com.github.minecraftschurlimods.bibliocraft.util.TakeLecternBookPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -269,7 +270,7 @@ public class BigBookScreen extends Screen {
                 }
                 updateButtonVisibility();
                 if (lectern != null) {
-                    PacketDistributor.sendToServer(new SetLecternPagePacket(lectern, currentPage));
+                    PacketDistributor.sendToServer(new SetLecternPagePacket(currentPage, Either.right(lectern)));
                 }
             }, true));
             forwardButton = addRenderableWidget(new PageButton(leftX + 184, BACKGROUND_HEIGHT - 32, true, $ -> {
@@ -278,13 +279,14 @@ public class BigBookScreen extends Screen {
                 }
                 updateButtonVisibility();
                 if (lectern != null) {
-                    PacketDistributor.sendToServer(new SetLecternPagePacket(lectern, currentPage));
+                    PacketDistributor.sendToServer(new SetLecternPagePacket(currentPage, Either.right(lectern)));
                 }
             }, true));
             updateButtonVisibility();
             if (lectern != null) {
                 addRenderableWidget(Button.builder(TAKE_BOOK, button -> {
                     done(button);
+                    BCUtil.takeLecternBook(player, player.level(), lectern);
                     PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
                 })
                         .bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH / 2 - 4, 20)
@@ -343,13 +345,16 @@ public class BigBookScreen extends Screen {
     @Override
     public void onClose() {
         super.onClose();
-        if (!writable && lectern == null) return;
         if (writable) {
             savePages();
+            BigBookContent content = new BigBookContent(pages, currentPage);
+            stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
+            PacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
+        } else if (hand != null) {
+            PacketDistributor.sendToServer(new SetLecternPagePacket(currentPage, Either.left(hand)));
+        } else if (lectern != null) {
+            PacketDistributor.sendToServer(new SetLecternPagePacket(currentPage, Either.right(lectern)));
         }
-        BigBookContent content = new BigBookContent(pages, currentPage);
-        stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
-        PacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
     }
 
     private void onLineChange(FormattedLine line) {

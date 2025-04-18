@@ -23,8 +23,8 @@ public record TakeLecternBookPacket(BlockPos pos) implements CustomPacketPayload
             Player player = context.player();
             Level level = player.level();
             BlockPos pos = packet.pos;
-            if (level.getBlockState(pos).getValue(LecternBlock.HAS_BOOK) && level.getBlockEntity(pos) instanceof LecternBlockEntity lectern) {
-                BCUtil.takeLecternBook(lectern, player, level, pos);
+            if (level.getBlockState(pos).getValue(LecternBlock.HAS_BOOK)) {
+                BCUtil.takeLecternBook(player, level, pos);
             }
         });
     }

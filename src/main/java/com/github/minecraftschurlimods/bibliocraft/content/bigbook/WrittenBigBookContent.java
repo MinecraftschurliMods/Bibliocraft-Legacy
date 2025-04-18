@@ -25,4 +25,5 @@ public record WrittenBigBookContent(List<List<FormattedLine>> pages, String titl
             ByteBufCodecs.VAR_INT, WrittenBigBookContent::generation,
             ByteBufCodecs.VAR_INT, WrittenBigBookContent::currentPage,
             WrittenBigBookContent::new);
+    public static final WrittenBigBookContent DEFAULT = new WrittenBigBookContent(List.of(), "", "", 0, 0);
 }

@@ -19,4 +19,5 @@ public record BigBookContent(List<List<FormattedLine>> pages, int currentPage) {
             FormattedLine.STREAM_CODEC.apply(ByteBufCodecs.list()).apply(ByteBufCodecs.list()), BigBookContent::pages,
             ByteBufCodecs.VAR_INT, BigBookContent::currentPage,
             BigBookContent::new);
+    public static final BigBookContent DEFAULT = new BigBookContent(List.of(), 0);
 }

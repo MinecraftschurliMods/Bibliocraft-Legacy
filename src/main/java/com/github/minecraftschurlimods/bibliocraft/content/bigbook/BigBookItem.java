@@ -17,10 +17,16 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public class BigBookItem extends Item {
-    public BigBookItem(boolean glint) {
-        super(glint
-                ? new Properties().component(DataComponents.MAX_STACK_SIZE, 1).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                : new Properties().component(DataComponents.MAX_STACK_SIZE, 1));
+    public BigBookItem(boolean isWritten) {
+        super(isWritten
+                ? new Properties()
+                .component(DataComponents.MAX_STACK_SIZE, 1)
+                .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                .component(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, WrittenBigBookContent.DEFAULT)
+                : new Properties()
+                .component(DataComponents.MAX_STACK_SIZE, 1)
+                .component(BCDataComponents.BIG_BOOK_CONTENT, BigBookContent.DEFAULT)
+        );
     }
 
     @Override
