@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "13": "bibliocraft:block/bookcase/rainbow/book_12"
+  },
+  "elements": [
+    {
+      "name": "book12",
+      "from": [7, 1, 9],
+      "to": [9, 7, 15],
+      "faces": {
+        "north": {"uv": [14, 6, 16, 12], "texture": "#13"},
+        "east": {"uv": [0, 6, 6, 12], "texture": "#13"},
+        "south": {"uv": [6, 6, 8, 12], "texture": "#13"},
+        "west": {"uv": [8, 6, 14, 12], "texture": "#13"},
+        "up": {"uv": [6, 0, 8, 6], "texture": "#13"},
+        "down": {"uv": [8, 0, 10, 6], "texture": "#13"}
+      }
+    }
+  ]
+}

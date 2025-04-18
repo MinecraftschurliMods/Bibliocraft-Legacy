@@ -1,1 +1,1 @@
-Add fancy signs, mod compat, and some bug fixes
+Add pride bookshelves, fix a dupe bug

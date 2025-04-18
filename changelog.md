@@ -1,18 +1,8 @@
 # Additions
 
-- Fancy Sign: A new block in all 11 wood types that can display text in a variety of modes! Including, but not limited to:
-  - Per-line colors
-  - Per-line text sizes
-  - Per-line formatting (bold, italic, etc.)
-  - Left/center/right alignment
-- Mod compat:
-  - CC Tweaked: The disc rack can now hold floppy disks
-  - Farmer's Delight: The potion shelf can now hold the various drinks
-  - Farmer's Delight: The cookie jar will now show honey and sweet berry cookies alongside the vanilla cookies
-  - JEI and EMI: Will now show tag translations
+- Pride bookshelves! During pride month (or all year round if you toggle the config option), bookshelves will use pride-themed color patterns.
+  - This was done due to a semi-recent incident in the greater modding community. If you're gonna complain, complain to them, they spited me into doing this.
 
 # Fixes
 
-- Fix fancy clocks and grandfather clocks not properly outputting redstone signals
 - Fix a dupe bug with fancy crafters
-- Fix wall-mounted fancy clocks and display cases not dropping themselves
