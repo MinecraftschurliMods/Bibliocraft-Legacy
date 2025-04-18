@@ -117,5 +117,5 @@ public interface Translations {
     String STOCKROOM_CATALOG_REMOVE_CONTAINER_KEY  = "item." + BibliocraftApi.MOD_ID + ".stockroom_catalog.remove_container";
     String TAPE_MEASURE_DISTANCE_KEY               = "item." + BibliocraftApi.MOD_ID + ".tape_measure.distance";
     String VANILLA_BY_AUTHOR_KEY      = "book.byAuthor";
-    String VANILLA_PAGE_INDICATOR_KEY = "lectern.take_book";
+    String VANILLA_PAGE_INDICATOR_KEY = "book.pageIndicator";
 }
