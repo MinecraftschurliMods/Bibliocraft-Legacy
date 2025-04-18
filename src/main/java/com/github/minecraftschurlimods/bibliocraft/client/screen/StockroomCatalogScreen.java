@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 
 public class StockroomCatalogScreen extends Screen {
@@ -54,11 +55,11 @@ public class StockroomCatalogScreen extends Screen {
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
     private final InteractionHand hand;
-    private final StockroomCatalogContent data;
     private final BlockPos lectern;
     private final RandomSource random = RandomSource.create();
     private final List<Button> removeButtons = new ArrayList<>();
     private final List<Button> locateButtons = new ArrayList<>();
+    private StockroomCatalogContent data;
     private boolean showContainerList = false;
     private int page = 0;
     private String search = "";
@@ -192,8 +193,10 @@ public class StockroomCatalogScreen extends Screen {
             for (int i = 0; i < ROWS_PER_PAGE; i++) {
                 final int j = i; // I love Java
                 removeButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(REMOVE_ICON, REMOVE_ICON_HIGHLIGHTED, x + 189, i * 19 + 29, 16, 16, p -> {
-                    data.remove(new GlobalPos(Objects.requireNonNull(Minecraft.getInstance().level).dimension(), visibleContainers.get(j)));
+                    updateData(data -> data.remove(new GlobalPos(Objects.requireNonNull(Minecraft.getInstance().level).dimension(), visibleContainers.get(j))));
                     setDataOnStack();
+                    requestPacket();
+                    updateContents();
                 })));
                 locateButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(LOCATE_ICON, LOCATE_ICON_HIGHLIGHTED, x + 206, i * 19 + 29, 16, 16, p -> addParticles(visibleContainers.get(j)))));
             }
@@ -286,6 +289,10 @@ public class StockroomCatalogScreen extends Screen {
         search = "";
         rebuildWidgets();
         updateContents();
+    }
+
+    private void updateData(UnaryOperator<StockroomCatalogContent> operator) {
+        data = operator.apply(data);
     }
 
     private void updateContents() {
