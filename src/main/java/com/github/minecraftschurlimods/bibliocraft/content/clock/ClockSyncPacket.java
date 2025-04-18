@@ -21,15 +21,13 @@ public record ClockSyncPacket(BlockPos pos, boolean tickSound, List<ClockTrigger
             ClockSyncPacket::new);
 
     @SuppressWarnings("deprecation")
-    public static void handle(ClockSyncPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            BlockPos pos = packet.pos();
-            Level level = context.player().level();
-            if (!level.hasChunkAt(pos)) return;
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (!(blockEntity instanceof ClockBlockEntity clock)) return;
-            clock.setFromPacket(packet);
-        });
+    public void handle(IPayloadContext context) {
+        BlockPos pos = pos();
+        Level level = context.player().level();
+        if (!level.hasChunkAt(pos)) return;
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof ClockBlockEntity clock)) return;
+        clock.setFromPacket(this);
     }
 
     @Override

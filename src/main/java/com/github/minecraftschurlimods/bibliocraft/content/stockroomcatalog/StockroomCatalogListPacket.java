@@ -19,12 +19,10 @@ public record StockroomCatalogListPacket(List<BlockPos> containers, List<Stockro
             StockroomCatalogItemEntry.STREAM_CODEC.apply(ByteBufCodecs.list()), StockroomCatalogListPacket::items,
             StockroomCatalogListPacket::new);
 
-    public static void handle(StockroomCatalogListPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            if (Minecraft.getInstance().screen instanceof StockroomCatalogScreen screen) {
-                screen.setFromPacket(packet);
-            }
-        });
+    public void handle(IPayloadContext context) {
+        if (Minecraft.getInstance().screen instanceof StockroomCatalogScreen screen) {
+            screen.setFromPacket(this);
+        }
     }
 
     @Override

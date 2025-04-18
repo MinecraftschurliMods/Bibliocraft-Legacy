@@ -15,8 +15,8 @@ public record BigBookSyncPacket(BigBookContent content, InteractionHand hand) im
             BCUtil.enumStreamCodec(InteractionHand::values, InteractionHand::ordinal), BigBookSyncPacket::hand,
             BigBookSyncPacket::new);
 
-    public static void handle(BigBookSyncPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> context.player().getItemInHand(packet.hand).set(BCDataComponents.BIG_BOOK_CONTENT, packet.content));
+    public void handle(IPayloadContext context) {
+        context.player().getItemInHand(hand).set(BCDataComponents.BIG_BOOK_CONTENT, content);
     }
 
     @Override

@@ -17,12 +17,10 @@ public record BigBookSignPacket(WrittenBigBookContent content, InteractionHand h
             BCUtil.enumStreamCodec(InteractionHand::values, InteractionHand::ordinal), BigBookSignPacket::hand,
             BigBookSignPacket::new);
 
-    public static void handle(BigBookSignPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            ItemStack stack = new ItemStack(BCItems.WRITTEN_BIG_BOOK.get());
-            stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, packet.content);
-            context.player().setItemInHand(packet.hand, stack);
-        });
+    public void handle(IPayloadContext context) {
+        ItemStack stack = new ItemStack(BCItems.WRITTEN_BIG_BOOK.get());
+        stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
+        context.player().setItemInHand(hand, stack);
     }
 
     @Override

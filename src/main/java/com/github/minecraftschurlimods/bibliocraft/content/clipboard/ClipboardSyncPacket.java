@@ -16,16 +16,14 @@ public record ClipboardSyncPacket(ClipboardContent content) implements CustomPac
             ClipboardContent.STREAM_CODEC, ClipboardSyncPacket::content,
             ClipboardSyncPacket::new);
 
-    public static void handle(ClipboardSyncPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            Player player = context.player();
-            ItemStack stack = player.getMainHandItem();
-            if (!stack.is(BCItems.CLIPBOARD)) {
-                stack = player.getOffhandItem();
-                if (!stack.is(BCItems.CLIPBOARD)) return;
-            }
-            stack.set(BCDataComponents.CLIPBOARD_CONTENT, packet.content);
-        });
+    public void handle(IPayloadContext context) {
+        Player player = context.player();
+        ItemStack stack = player.getMainHandItem();
+        if (!stack.is(BCItems.CLIPBOARD)) {
+            stack = player.getOffhandItem();
+            if (!stack.is(BCItems.CLIPBOARD)) return;
+        }
+        stack.set(BCDataComponents.CLIPBOARD_CONTENT, content);
     }
 
     @Override

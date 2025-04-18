@@ -19,14 +19,14 @@ public record OpenBigBookInLecternPacket(BlockPos pos, ItemStack stack) implemen
             ItemStack.STREAM_CODEC, OpenBigBookInLecternPacket::stack,
             OpenBigBookInLecternPacket::new);
 
-    public static void handle(OpenBigBookInLecternPacket packet, IPayloadContext context) {
+    public void handle(IPayloadContext context) {
         Player player = context.player();
         Level level = player.level();
-        if (!(level.getBlockEntity(packet.pos) instanceof LecternBlockEntity lectern)) return;
+        if (!(level.getBlockEntity(pos) instanceof LecternBlockEntity lectern)) return;
         if (lectern.getBook().isEmpty()) {
-            lectern.setBook(packet.stack);
+            lectern.setBook(stack);
         }
-        ClientUtil.openBigBookScreen(packet.stack, player, packet.pos);
+        ClientUtil.openBigBookScreen(stack, player, pos);
     }
 
     @Override

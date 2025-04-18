@@ -24,16 +24,16 @@ public record SetLecternPagePacket(int page, Either<InteractionHand, BlockPos> t
             ByteBufCodecs.either(BCUtil.enumStreamCodec(InteractionHand::values, InteractionHand::ordinal), BlockPos.STREAM_CODEC), SetLecternPagePacket::target,
             SetLecternPagePacket::new);
 
-    public static void handle(SetLecternPagePacket packet, IPayloadContext context) {
+    public void handle(IPayloadContext context) {
         Player player = context.player();
-        packet.target.ifLeft(left -> updateStack(player.getItemInHand(left), packet.page));
-        packet.target.ifRight(right -> {
+        target.ifLeft(left -> updateStack(player.getItemInHand(left), page));
+        target.ifRight(right -> {
             Level level = player.level();
             if (!level.getBlockState(right).hasProperty(LecternBlock.HAS_BOOK) || !level.getBlockState(right).getValue(LecternBlock.HAS_BOOK))
                 return;
             if (!(level.getBlockEntity(right) instanceof LecternBlockEntity lectern)) return;
-            updateStack(lectern.getBook(), packet.page);
-            lectern.setPage(packet.page);
+            updateStack(lectern.getBook(), page);
+            lectern.setPage(page);
         });
     }
 

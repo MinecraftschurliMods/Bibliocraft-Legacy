@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -18,12 +19,11 @@ public record StockroomCatalogRequestListPacket(StockroomCatalogSorting.Containe
             StockroomCatalogSorting.Item.STREAM_CODEC, StockroomCatalogRequestListPacket::itemSorting,
             StockroomCatalogRequestListPacket::new);
 
-    public static void handle(StockroomCatalogRequestListPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            List<BlockPos> containers = StockroomCatalogItem.calculatePositions(context.player().getItemInHand(context.player().getUsedItemHand()), context.player().level(), context.player(), packet.containerSorting());
-            List<StockroomCatalogItemEntry> items = StockroomCatalogItem.calculateItems(containers, context.player().level(), packet.itemSorting());
-            PacketDistributor.sendToPlayer((ServerPlayer) context.player(), new StockroomCatalogListPacket(containers, items));
-        });
+    public void handle(IPayloadContext context) {
+        Player player = context.player();
+        List<BlockPos> containers = StockroomCatalogItem.calculatePositions(player.getItemInHand(player.getUsedItemHand()), player.level(), player, containerSorting);
+        List<StockroomCatalogItemEntry> items = StockroomCatalogItem.calculateItems(containers, player.level(), itemSorting);
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new StockroomCatalogListPacket(containers, items));
     }
     
     @Override

@@ -16,16 +16,14 @@ public record StockroomCatalogSyncPacket(StockroomCatalogContent content) implem
             StockroomCatalogContent.STREAM_CODEC, StockroomCatalogSyncPacket::content,
             StockroomCatalogSyncPacket::new);
 
-    public static void handle(StockroomCatalogSyncPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            Player player = context.player();
-            ItemStack stack = player.getMainHandItem();
-            if (!stack.is(BCItems.STOCKROOM_CATALOG)) {
-                stack = player.getOffhandItem();
-                if (!stack.is(BCItems.STOCKROOM_CATALOG)) return;
-            }
-            stack.set(BCDataComponents.STOCKROOM_CATALOG_CONTENT, packet.content);
-        });
+    public void handle(IPayloadContext context) {
+        Player player = context.player();
+        ItemStack stack = player.getMainHandItem();
+        if (!stack.is(BCItems.STOCKROOM_CATALOG)) {
+            stack = player.getOffhandItem();
+            if (!stack.is(BCItems.STOCKROOM_CATALOG)) return;
+        }
+        stack.set(BCDataComponents.STOCKROOM_CATALOG_CONTENT, content);
     }
 
     @Override

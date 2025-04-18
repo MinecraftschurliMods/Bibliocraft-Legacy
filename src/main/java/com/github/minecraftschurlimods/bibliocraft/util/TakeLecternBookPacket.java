@@ -18,15 +18,12 @@ public record TakeLecternBookPacket(BlockPos pos) implements CustomPacketPayload
             BlockPos.STREAM_CODEC, TakeLecternBookPacket::pos,
             TakeLecternBookPacket::new);
 
-    public static void handle(TakeLecternBookPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            Player player = context.player();
-            Level level = player.level();
-            BlockPos pos = packet.pos;
-            if (level.getBlockState(pos).getValue(LecternBlock.HAS_BOOK)) {
-                BCUtil.takeLecternBook(player, level, pos);
-            }
-        });
+    public void handle(IPayloadContext context) {
+        Player player = context.player();
+        Level level = player.level();
+        if (level.getBlockState(pos).getValue(LecternBlock.HAS_BOOK)) {
+            BCUtil.takeLecternBook(player, level, pos);
+        }
     }
 
     @Override

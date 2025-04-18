@@ -16,16 +16,13 @@ public record FancySignSyncPacket(FancySignContent list, BlockPos pos, boolean b
             ByteBufCodecs.BOOL, FancySignSyncPacket::back,
             FancySignSyncPacket::new);
 
-    public static void handle(FancySignSyncPacket packet, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            BlockPos pos = packet.pos();
-            if (!(context.player().level().getBlockEntity(pos) instanceof FancySignBlockEntity sign)) return;
-            if (packet.back()) {
-                sign.setBackContent(packet.list());
-            } else {
-                sign.setFrontContent(packet.list());
-            }
-        });
+    public void handle(IPayloadContext context) {
+        if (!(context.player().level().getBlockEntity(pos) instanceof FancySignBlockEntity sign)) return;
+        if (back) {
+            sign.setBackContent(list);
+        } else {
+            sign.setFrontContent(list);
+        }
     }
 
     @Override
