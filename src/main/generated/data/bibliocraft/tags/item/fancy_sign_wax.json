@@ -1,5 +1,13 @@
 {
   "values": [
-    "minecraft:honeycomb"
+    "minecraft:honeycomb",
+    {
+      "id": "modern_industrialization:wax",
+      "required": false
+    },
+    {
+      "id": "productivebees:wax",
+      "required": false
+    }
   ]
 }

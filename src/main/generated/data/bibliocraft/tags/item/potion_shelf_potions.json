@@ -6,7 +6,428 @@
     "minecraft:glass_bottle",
     "minecraft:experience_bottle",
     "minecraft:honey_bottle",
+    "minecraft:ominous_bottle",
     "minecraft:dragon_breath",
+    {
+      "id": "apothic_enchanting:infused_breath",
+      "required": false
+    },
+    {
+      "id": "aquaculture:message_in_a_bottle",
+      "required": false
+    },
+    {
+      "id": "ars_additions:xp_jar",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:jar_of_light",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:potion_flask",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:potion_flask_amplify",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:potion_flask_extend_time",
+      "required": false
+    },
+    {
+      "id": "ars_nouveau:void_jar",
+      "required": false
+    },
+    {
+      "id": "arsdelight:activated_bastion_jam",
+      "required": false
+    },
+    {
+      "id": "arsdelight:activated_bombegranate_jam",
+      "required": false
+    },
+    {
+      "id": "arsdelight:activated_mendosteen_jam",
+      "required": false
+    },
+    {
+      "id": "arsdelight:neutralized_frostaya_jam",
+      "required": false
+    },
+    {
+      "id": "arsdelight:source_berry_jam",
+      "required": false
+    },
+    {
+      "id": "arsdelight:unstable_cocktail",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:blueberry_juice",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:blueberryjam",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:cherry_jam",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:cherry_juice",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:dark_grape_jam",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:dark_grape_juice",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:glass_jar",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:grape_juice",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:green_grape_jam",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:raspberry_jam",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:raspberry_juice",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:strawberry_jam",
+      "required": false
+    },
+    {
+      "id": "berries_and_cherries:strawberry_juice",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:aloe_vera_juice",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:blue_glow_bottle",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:green_glow_bottle",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:red_glow_bottle",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:yellow_glow_bottle",
+      "required": false
+    },
+    {
+      "id": "cataclysm:sandstorm_in_a_bottle",
+      "required": false
+    },
+    {
+      "id": "corn_delight:creamy_corn_drink",
+      "required": false
+    },
+    {
+      "id": "crabbersdelight:jar_of_pickles",
+      "required": false
+    },
+    {
+      "id": "crabbersdelight:kelp_shake",
+      "required": false
+    },
+    {
+      "id": "crabbersdelight:sea_pickle_juice",
+      "required": false
+    },
+    {
+      "id": "create:builders_tea",
+      "required": false
+    },
+    {
+      "id": "enderio:empty_soul_vial",
+      "required": false
+    },
+    {
+      "id": "enderio:filled_soul_vial",
+      "required": false
+    },
+    {
+      "id": "endersdelight:chorus_juice",
+      "required": false
+    },
+    {
+      "id": "ends_delight:bubble_tea",
+      "required": false
+    },
+    {
+      "id": "ends_delight:chorus_flower_tea",
+      "required": false
+    },
+    {
+      "id": "ends_delight:chorus_fruit_milk_tea",
+      "required": false
+    },
+    {
+      "id": "evilcraft:biome_extract",
+      "required": false
+    },
+    {
+      "id": "evilcraft:poison_bottle",
+      "required": false
+    },
+    {
+      "id": "evilcraft:weather_container",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:apple_juice",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:cranberry_jelly",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:cranberry_juice",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:glass_jar",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:glow_berry_jelly",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:glow_berry_juice",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:goat_milk_bottle",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:sweet_berry_jelly",
+      "required": false
+    },
+    {
+      "id": "extradelight:aioli_jar_item",
+      "required": false
+    },
+    {
+      "id": "extradelight:apple_custard",
+      "required": false
+    },
+    {
+      "id": "extradelight:apple_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:bbq_jar_item",
+      "required": false
+    },
+    {
+      "id": "extradelight:blood_chocolate_syrup_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:cactus_juice",
+      "required": false
+    },
+    {
+      "id": "extradelight:caramel_custard",
+      "required": false
+    },
+    {
+      "id": "extradelight:caramel_sauce",
+      "required": false
+    },
+    {
+      "id": "extradelight:chocolate_custard",
+      "required": false
+    },
+    {
+      "id": "extradelight:chocolate_milk",
+      "required": false
+    },
+    {
+      "id": "extradelight:chocolate_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:cocoa_butter_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:coffee",
+      "required": false
+    },
+    {
+      "id": "extradelight:coffee_jelly",
+      "required": false
+    },
+    {
+      "id": "extradelight:cookie_dough_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:cooking_oil",
+      "required": false
+    },
+    {
+      "id": "extradelight:dark_chocolate_syrup_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:eggnog",
+      "required": false
+    },
+    {
+      "id": "extradelight:ginger_beer",
+      "required": false
+    },
+    {
+      "id": "extradelight:glow_berry_jam",
+      "required": false
+    },
+    {
+      "id": "extradelight:glow_berry_juice",
+      "required": false
+    },
+    {
+      "id": "extradelight:glow_berry_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:golden_apple_jam",
+      "required": false
+    },
+    {
+      "id": "extradelight:hazelnut_spread_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:honey_custard",
+      "required": false
+    },
+    {
+      "id": "extradelight:honey_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:horchata",
+      "required": false
+    },
+    {
+      "id": "extradelight:jam",
+      "required": false
+    },
+    {
+      "id": "extradelight:ketchup_jar_item",
+      "required": false
+    },
+    {
+      "id": "extradelight:marshmallow_fluff_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:mayo_jar_item",
+      "required": false
+    },
+    {
+      "id": "extradelight:milk_chocolate_syrup_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:mint_chip_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:nut_butter_custard",
+      "required": false
+    },
+    {
+      "id": "extradelight:nut_butter_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:peanut_butter_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:pumpkin_custard",
+      "required": false
+    },
+    {
+      "id": "extradelight:pumpkin_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:punch",
+      "required": false
+    },
+    {
+      "id": "extradelight:rice_pudding",
+      "required": false
+    },
+    {
+      "id": "extradelight:sweet_berry_custard",
+      "required": false
+    },
+    {
+      "id": "extradelight:sweet_berry_juice",
+      "required": false
+    },
+    {
+      "id": "extradelight:sweet_berry_milkshake",
+      "required": false
+    },
+    {
+      "id": "extradelight:tea",
+      "required": false
+    },
+    {
+      "id": "extradelight:tomato_juice",
+      "required": false
+    },
+    {
+      "id": "extradelight:vinegar",
+      "required": false
+    },
+    {
+      "id": "extradelight:white_chocolate_syrup_bottle",
+      "required": false
+    },
+    {
+      "id": "extradelight:xocolati",
+      "required": false
+    },
     {
       "id": "farmersdelight:apple_cider",
       "required": false
@@ -21,6 +442,654 @@
     },
     {
       "id": "farmersdelight:melon_juice",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:milk_bottle",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:aureal_bottle",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:blood_test_tube",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:splash_aureal_bottle",
+      "required": false
+    },
+    {
+      "id": "forbidden_arcanus:test_tube",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:punch_cobweb",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:punch_ghasttear",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:punch_rotten_flesh",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:punch_soul_berry",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:punch_spidereye",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:punch_wither_berry",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:apple_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:bayberry_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:bayberry_soup",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:bellini_cocktail",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:blueberry_custard",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:blueberry_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:chorus_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:cranberry_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:durian_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:fig_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:glowberry_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:hamimelon_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:hamimelon_juice",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:hamimelon_shaved_ice",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:hawberry_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:hawberry_tea",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:kiwi_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:kiwi_juice",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:lemon_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:lemon_juice",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:lychee_cherry_tea",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:lychee_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:mango_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:mango_tea",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:mangosteen_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:mangosteen_tea",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:melon_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:orange_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:orange_juice",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:peach_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:peach_tea",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:pear_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:pear_juice",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:persimmon_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:pineapple_jam",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:sweetberry_jam",
+      "required": false
+    },
+    {
+      "id": "gobberdelight:ender_gooey_apple_cider",
+      "required": false
+    },
+    {
+      "id": "gobberdelight:nether_gooey_apple_cider",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:blood_vial",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:greater_healing_potion",
+      "required": false
+    },
+    {
+      "id": "irons_spellbooks:lightning_bottle",
+      "required": false
+    },
+    {
+      "id": "merrymaking:bottle_of_mint",
+      "required": false
+    },
+    {
+      "id": "minecolonies:large_empty_bottle",
+      "required": false
+    },
+    {
+      "id": "minecolonies:large_milk_bottle",
+      "required": false
+    },
+    {
+      "id": "minecolonies:large_soy_milk_bottle",
+      "required": false
+    },
+    {
+      "id": "minecolonies:large_water_bottle",
+      "required": false
+    },
+    {
+      "id": "minecolonies:magicpotion",
+      "required": false
+    },
+    {
+      "id": "mysticalagriculture:experience_capsule",
+      "required": false
+    },
+    {
+      "id": "mysticalagriculture:soul_jar",
+      "required": false
+    },
+    {
+      "id": "naturesaura:aura_bottle",
+      "required": false
+    },
+    {
+      "id": "naturesaura:bottle_two_the_rebottling",
+      "required": false
+    },
+    {
+      "id": "naturesaura:vacuum_bottle",
+      "required": false
+    },
+    {
+      "id": "pineapple_delight:pineapple_ice_cream",
+      "required": false
+    },
+    {
+      "id": "pineapple_delight:pineapple_juice",
+      "required": false
+    },
+    {
+      "id": "pineapple_delight:pineapple_milk_shake",
+      "required": false
+    },
+    {
+      "id": "potionbundles:lingering_potion_bundle",
+      "required": false
+    },
+    {
+      "id": "potionbundles:potion_bundle",
+      "required": false
+    },
+    {
+      "id": "potionbundles:splash_potion_bundle",
+      "required": false
+    },
+    {
+      "id": "productivebees:bee_bomb",
+      "required": false
+    },
+    {
+      "id": "productivebees:gene",
+      "required": false
+    },
+    {
+      "id": "productivebees:milk_bottle",
+      "required": false
+    },
+    {
+      "id": "productivetrees:date_palm_juice",
+      "required": false
+    },
+    {
+      "id": "railcraft:creosote_bottle",
+      "required": false
+    },
+    {
+      "id": "reliquary:angelheart_vial",
+      "required": false
+    },
+    {
+      "id": "reliquary:empty_potion_vial",
+      "required": false
+    },
+    {
+      "id": "reliquary:fertile_potion",
+      "required": false
+    },
+    {
+      "id": "reliquary:lingering_potion",
+      "required": false
+    },
+    {
+      "id": "reliquary:potion",
+      "required": false
+    },
+    {
+      "id": "reliquary:splash_potion",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:chocolate_coffee",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:coffee",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:dark_coffee",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:honey_coffee",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:milk_coffee",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:syrup",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:syrup_coffee",
+      "required": false
+    },
+    {
+      "id": "seeddelight:cherry_jam_jar",
+      "required": false
+    },
+    {
+      "id": "seeddelight:cherry_wine",
+      "required": false
+    },
+    {
+      "id": "seeddelight:pine_needle_wine",
+      "required": false
+    },
+    {
+      "id": "seeddelight:rosehip_jam_jar",
+      "required": false
+    },
+    {
+      "id": "seeddelight:rosehip_tea",
+      "required": false
+    },
+    {
+      "id": "shrink:shrink_bottle",
+      "required": false
+    },
+    {
+      "id": "supplementaries:lumisene_bottle",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:royal_jelly_bottle",
+      "required": false
+    },
+    {
+      "id": "the_bumblezone:sugar_water_bottle",
+      "required": false
+    },
+    {
+      "id": "tiab:time_in_a_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:apricotjerry_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:bittern_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:bottle_dashi",
+      "required": false
+    },
+    {
+      "id": "tofucraft:bottle_soyoil",
+      "required": false
+    },
+    {
+      "id": "tofucraft:bottle_soysause",
+      "required": false
+    },
+    {
+      "id": "tofucraft:crimson_fluid_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:shroom_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_annin",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_apple",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_cocoa",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_fruits",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_hell_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_honey",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_kinako",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_ominous_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_pudding",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_pumpkin",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_ramune",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_sakura",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_soul_bottle",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_strawberry",
+      "required": false
+    },
+    {
+      "id": "tofucraft:soymilk_tea",
+      "required": false
+    },
+    {
+      "id": "tofucraft:warped_fluid_bottle",
+      "required": false
+    },
+    {
+      "id": "tombstone:essence_of_undeath",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:glacier_ice_tea",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:phytochemical_juice",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:tear_drink",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:thorn_rose_tea",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:torchberry_juice",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:twilight_spring",
+      "required": false
+    },
+    {
+      "id": "twilightforest:brittle_potion_flask",
+      "required": false
+    },
+    {
+      "id": "twilightforest:fiery_blood",
+      "required": false
+    },
+    {
+      "id": "twilightforest:fiery_tears",
+      "required": false
+    },
+    {
+      "id": "twilightforest:greater_potion_flask",
+      "required": false
+    },
+    {
+      "id": "ubesdelight:condensed_milk_bottle",
+      "required": false
+    },
+    {
+      "id": "ubesdelight:fish_sauce_bottle",
+      "required": false
+    },
+    {
+      "id": "ubesdelight:halo_halo",
+      "required": false
+    },
+    {
+      "id": "ubesdelight:milk_tea_ube",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:alchemical_bottle",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:blood_syrup",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:blood_wine_bottle",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:blood_wine_glass",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:dandelion_beer_bottle",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:dandelion_beer_mug",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:mulled_wine_glass",
+      "required": false
+    },
+    {
+      "id": "vampirism:blood_bottle",
+      "required": false
+    },
+    {
+      "id": "vampirism:daisy_tea",
+      "required": false
+    },
+    {
+      "id": "vampirism:holy_water_bottle_enhanced",
+      "required": false
+    },
+    {
+      "id": "vampirism:holy_water_bottle_normal",
+      "required": false
+    },
+    {
+      "id": "vampirism:holy_water_bottle_ultimate",
+      "required": false
+    },
+    {
+      "id": "vampirism:holy_water_splash_bottle_enhanced",
+      "required": false
+    },
+    {
+      "id": "vampirism:holy_water_splash_bottle_normal",
+      "required": false
+    },
+    {
+      "id": "vampirism:holy_water_splash_bottle_ultimate",
+      "required": false
+    },
+    {
+      "id": "vampirism:oblivion_potion",
+      "required": false
+    },
+    {
+      "id": "vampirism:oil_bottle",
+      "required": false
+    },
+    {
+      "id": "vampirism:orchid_tea",
+      "required": false
+    },
+    {
+      "id": "vampirism:pure_blood_0",
+      "required": false
+    },
+    {
+      "id": "vampirism:pure_blood_1",
+      "required": false
+    },
+    {
+      "id": "vampirism:pure_blood_2",
+      "required": false
+    },
+    {
+      "id": "vampirism:pure_blood_3",
+      "required": false
+    },
+    {
+      "id": "vampirism:pure_blood_4",
+      "required": false
+    },
+    {
+      "id": "vampirism:pure_salt_water",
+      "required": false
+    },
+    {
+      "id": "vampirism:vampire_blood_bottle",
+      "required": false
+    },
+    {
+      "id": "vegandelight:soymilk_bottle",
       "required": false
     }
   ]

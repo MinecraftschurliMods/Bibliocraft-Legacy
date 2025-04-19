@@ -12,10 +12,14 @@
 # Changes
 
 - Stockroom catalogs can now be put into lecterns
+- Added ominous bottles to the allowed items for potion shelves
+- Compatibility:
+  - Added a wide range of new compatible items to the bookcase, the cookie jar and the potion shelf
+  - Wax from Modern Industrialization or Productive Bees is now supported for waxing fancy signs
 
 # Fixes
 
 - Fix a dupe bug with fancy crafters
 - Fix the remove container button in the stockroom catalog GUI not working
 - Fix some minor bugs with the fancy sign GUI
-- Minor networking-related cleanups fixes
+- Minor networking-related cleanups and fixes

@@ -1,1 +1,1 @@
-Add big books, pride bookshelves, fix a few bugs
+Add big books, pride bookshelves and compatibility; fix a few bugs

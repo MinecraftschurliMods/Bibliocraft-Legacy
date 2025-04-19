@@ -2,11 +2,283 @@
   "values": [
     "minecraft:cookie",
     {
+      "id": "ars_nouveau:source_berry_roll",
+      "required": false
+    },
+    {
+      "id": "arsdelight:source_berry_cookie",
+      "required": false
+    },
+    {
+      "id": "create:sweet_roll",
+      "required": false
+    },
+    {
+      "id": "eggdelight:egg_cookie",
+      "required": false
+    },
+    {
+      "id": "endersdelight:uncanny_cookies",
+      "required": false
+    },
+    {
+      "id": "ends_delight:chorus_cookie",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:berry_sweet_roll",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:chocolate_cookie",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:glow_berry_sweet_roll",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "expandeddelight:sweet_roll",
+      "required": false
+    },
+    {
+      "id": "extradelight:apple_cookie",
+      "required": false
+    },
+    {
+      "id": "extradelight:chocolate_cookie",
+      "required": false
+    },
+    {
+      "id": "extradelight:gingerbread_cookie",
+      "required": false
+    },
+    {
+      "id": "extradelight:glow_berry_cookie",
+      "required": false
+    },
+    {
+      "id": "extradelight:nut_butter_cookie",
+      "required": false
+    },
+    {
+      "id": "extradelight:pumpkin_cookie",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_alex",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_creeper",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_diamond",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_emerald",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_pickaxe",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_steve",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_sword",
+      "required": false
+    },
+    {
+      "id": "extradelight:sugar_cookie_villager",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:black_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:blue_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:brown_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:cyan_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:gray_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:green_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:light_blue_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:light_gray_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:lime_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:magenta_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:orange_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:pink_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:purple_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:red_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:white_sugar_cookie",
+      "required": false
+    },
+    {
+      "id": "farmers_delight_christmas_editio:yellow_sugar_cookie",
+      "required": false
+    },
+    {
       "id": "farmersdelight:honey_cookie",
       "required": false
     },
     {
       "id": "farmersdelight:sweet_berry_cookie",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_cobweb",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_flesh",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_ghast_tear",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_slime",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_slimeapple",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_soul_berry",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_spidereye",
+      "required": false
+    },
+    {
+      "id": "frightsdelight:cookie_wither_berry",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:bayberry_cookie",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:cranberry_cookie",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:lemon_cookie",
+      "required": false
+    },
+    {
+      "id": "fruitsdelight:persimmon_cookie",
+      "required": false
+    },
+    {
+      "id": "merrymaking:gingerbread_cookie",
+      "required": false
+    },
+    {
+      "id": "merrymaking:mitten_christmas_cookie",
+      "required": false
+    },
+    {
+      "id": "merrymaking:stocking_christmas_cookie",
+      "required": false
+    },
+    {
+      "id": "merrymaking:tree_christmas_cookie",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:cherry_blossom_cookie",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:coffee_cookie",
+      "required": false
+    },
+    {
+      "id": "rusticdelight:syrup_cookie",
+      "required": false
+    },
+    {
+      "id": "seeddelight:rose_cookie",
+      "required": false
+    },
+    {
+      "id": "tofucraft:tofucookie",
+      "required": false
+    },
+    {
+      "id": "twilightdelight:torchberry_cookie",
+      "required": false
+    },
+    {
+      "id": "ubesdelight:cookie_ginger",
+      "required": false
+    },
+    {
+      "id": "ubesdelight:cookie_ube",
+      "required": false
+    },
+    {
+      "id": "vampiresdelight:orchid_cookie",
       "required": false
     }
   ]
