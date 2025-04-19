@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:typewriter",
+  "key": {
+    "B": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "C": {
+      "item": "minecraft:terracotta"
+    },
+    "D": {
+      "tag": "c:dyes/black"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "IPI",
+    "BDB",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:typewriter"
+  }
+}

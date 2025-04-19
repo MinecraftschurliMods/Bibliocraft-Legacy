@@ -28,11 +28,13 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(), "Fancy Iron Lamp");
         add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), "Fancy Gold Lantern");
         add(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get(), "Fancy Iron Lantern");
+        add(BCBlocks.CLEAR_TYPEWRITER.get(), "Typewriter");
         for (DyeColor color : DyeColor.values()) {
             addDefaultBlock(BCBlocks.FANCY_GOLD_LAMP.holder(color));
             addDefaultBlock(BCBlocks.FANCY_IRON_LAMP.holder(color));
             addDefaultBlock(BCBlocks.FANCY_GOLD_LANTERN.holder(color));
             addDefaultBlock(BCBlocks.FANCY_IRON_LANTERN.holder(color));
+            addDefaultBlock(BCBlocks.TYPEWRITER.holder(color));
         }
         addDefaultBlock(BCBlocks.CLIPBOARD);
         addDefaultBlock(BCBlocks.COOKIE_JAR);
@@ -74,6 +76,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Blocks.FANCY_LANTERNS, "Fancy Lanterns");
         add(BCTags.Blocks.FANCY_LANTERNS_GOLD, "Gold Fancy Lanterns");
         add(BCTags.Blocks.FANCY_LANTERNS_IRON, "Iron Fancy Lanterns");
+        add(BCTags.Blocks.TYPEWRITERS, "Typewriters");
         add(BCTags.Items.BOOKCASES, "Bookcases");
         add(BCTags.Items.DISPLAY_CASES, "Display Cases");
         add(BCTags.Items.FANCY_ARMOR_STANDS_WOOD, "Wooden Fancy Armor Stands");
@@ -94,6 +97,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Items.FANCY_LANTERNS, "Fancy Lanterns");
         add(BCTags.Items.FANCY_LANTERNS_GOLD, "Gold Fancy Lanterns");
         add(BCTags.Items.FANCY_LANTERNS_IRON, "Iron Fancy Lanterns");
+        add(BCTags.Items.TYPEWRITERS, "Typewriters");
         add(BCTags.Items.BOOKCASE_BOOKS, "Books for Bookcases");
         add(BCTags.Items.COOKIE_JAR_COOKIES, "Cookies for Cookie Jars");
         add(BCTags.Items.DISC_RACK_DISCS, "Discs for Disc Racks");

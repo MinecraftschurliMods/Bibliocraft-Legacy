@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import net.minecraft.core.Direction;
@@ -77,6 +78,15 @@ public class BCBlockStateProvider extends BlockStateProvider {
                     models().withExistingParent("block/color/" + name + "/fancy_iron_lantern_hanging", modLoc("block/template/fancy_lantern/hanging_iron")).texture("color", texture),
                     models().withExistingParent("block/color/" + name + "/fancy_iron_lantern_wall", modLoc("block/template/fancy_lantern/wall_iron")).texture("color", texture),
                     false);
+        }
+        DatagenUtil.horizontalBlockModel(this, BCBlocks.CLEAR_TYPEWRITER, state -> models()
+                .withExistingParent("block/typewriter_" + state.getValue(TypewriterBlock.PAPER), modLoc("block/template/typewriter/" + state.getValue(TypewriterBlock.PAPER)))
+                .texture("color", mcLoc("block/terracotta")));
+        for (DyeColor color : DyeColor.values()) {
+            String name = color.getSerializedName();
+            DatagenUtil.horizontalBlockModel(this, BCBlocks.TYPEWRITER.holder(color), state -> models()
+                    .withExistingParent("block/color/" + name + "/typewriter_" + state.getValue(TypewriterBlock.PAPER), modLoc("block/template/typewriter/" + state.getValue(TypewriterBlock.PAPER)))
+                    .texture("color", mcLoc("block/" + name + "_terracotta")));
         }
         horizontalBlock(BCBlocks.CLIPBOARD.get(), models().getExistingFile(modLoc("block/clipboard")));
         getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()

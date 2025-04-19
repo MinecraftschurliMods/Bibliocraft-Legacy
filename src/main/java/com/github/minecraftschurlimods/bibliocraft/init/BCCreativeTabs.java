@@ -46,6 +46,8 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FANCY_GOLD_LANTERN.values());
                 output.accept(BCItems.CLEAR_FANCY_IRON_LANTERN);
                 addToTab(output, BCItems.FANCY_IRON_LANTERN.values());
+                output.accept(BCItems.CLEAR_TYPEWRITER);
+                addToTab(output, BCItems.TYPEWRITER.values());
                 output.accept(BCItems.CLIPBOARD);
                 output.accept(BCItems.COOKIE_JAR);
                 output.accept(BCItems.DESK_BELL);

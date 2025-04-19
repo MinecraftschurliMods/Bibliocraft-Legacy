@@ -26,6 +26,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.WoodTypeDeferredHolder;
@@ -66,6 +67,8 @@ public interface BCBlocks {
     ColoredDeferredHolder<Block, FancyLanternBlock> FANCY_GOLD_LANTERN        = coloredBlock(                "fancy_gold_lantern", () -> new FancyLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.LANTERN).lightLevel($ -> 15).noOcclusion()));
     DeferredBlock<FancyLanternBlock>                CLEAR_FANCY_IRON_LANTERN  = BCRegistries.BLOCKS.register("fancy_iron_lantern", () -> new FancyLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel($ -> 15).noOcclusion()));
     ColoredDeferredHolder<Block, FancyLanternBlock> FANCY_IRON_LANTERN        = coloredBlock(                "fancy_iron_lantern", () -> new FancyLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel($ -> 15).noOcclusion()));
+    DeferredBlock<TypewriterBlock>                  CLEAR_TYPEWRITER          = BCRegistries.BLOCKS.register("typewriter",         () -> new TypewriterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TERRACOTTA).noOcclusion()));
+    ColoredDeferredHolder<Block, TypewriterBlock>   TYPEWRITER                = coloredBlock(                "typewriter",         () -> new TypewriterBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TERRACOTTA).noOcclusion()));
     DeferredBlock<CookieJarBlock>       COOKIE_JAR             = BCRegistries.BLOCKS.register("cookie_jar",             () -> new CookieJarBlock      (BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)));
     DeferredBlock<ClipboardBlock>       CLIPBOARD              = BCRegistries.BLOCKS.register("clipboard",              () -> new ClipboardBlock      (BlockBehaviour.Properties.of().instabreak().sound(SoundType.WOOD).ignitedByLava()));
     DeferredBlock<DeskBellBlock>        DESK_BELL              = BCRegistries.BLOCKS.register("desk_bell",              () -> new DeskBellBlock       (BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
@@ -82,7 +85,6 @@ public interface BCBlocks {
     //TODO Painting Press
     //TODO Printing Press
     //TODO Typesetting Table
-    //TODO Typewriter
     //TODO Writing Desk
 
     /**

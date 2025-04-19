@@ -59,6 +59,8 @@ public interface BCItems {
     ColoredDeferredHolder<Item, FancyLightItem> FANCY_GOLD_LANTERN = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_gold_lantern", color -> new FancyLightItem(BCBlocks.FANCY_GOLD_LANTERN.get(color)));
     DeferredItem<FancyLightItem> CLEAR_FANCY_IRON_LANTERN          = BCRegistries.ITEMS.register(                    "fancy_iron_lantern", () -> new FancyLightItem(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get()));
     ColoredDeferredHolder<Item, FancyLightItem> FANCY_IRON_LANTERN = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_iron_lantern", color -> new FancyLightItem(BCBlocks.FANCY_IRON_LANTERN.get(color)));
+    DeferredItem<BlockItem> CLEAR_TYPEWRITER                       = BCRegistries.ITEMS.register(                    "typewriter", () -> new BlockItem(BCBlocks.CLEAR_TYPEWRITER.get(), new Item.Properties()));
+    ColoredDeferredHolder<Item, BlockItem> TYPEWRITER              = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "typewriter", color -> new BlockItem(BCBlocks.TYPEWRITER.get(color), new Item.Properties()));
     DeferredItem<ClipboardItem>        CLIPBOARD              = BCRegistries.ITEMS.register("clipboard", ClipboardItem::new);
     DeferredItem<BlockItem>            COOKIE_JAR             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.COOKIE_JAR);
     DeferredItem<BlockItem>            DESK_BELL              = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DESK_BELL);

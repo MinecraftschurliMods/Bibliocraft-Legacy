@@ -30,6 +30,7 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         copy(BCTags.Blocks.FANCY_LANTERNS, BCTags.Items.FANCY_LANTERNS);
         copy(BCTags.Blocks.FANCY_LANTERNS_GOLD, BCTags.Items.FANCY_LANTERNS_GOLD);
         copy(BCTags.Blocks.FANCY_LANTERNS_IRON, BCTags.Items.FANCY_LANTERNS_IRON);
+        copy(BCTags.Blocks.TYPEWRITERS, BCTags.Items.TYPEWRITERS);
         tag(BCTags.Items.SEAT_BACKS).addTags(BCTags.Items.SEAT_BACKS_SMALL, BCTags.Items.SEAT_BACKS_RAISED, BCTags.Items.SEAT_BACKS_FLAT, BCTags.Items.SEAT_BACKS_TALL, BCTags.Items.SEAT_BACKS_FANCY);
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS)
                 .addOptional(ResourceLocation.fromNamespaceAndPath("actuallyadditions", "booklet"))
@@ -400,8 +401,7 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
                 .addOptional(ResourceLocation.fromNamespaceAndPath("vampirism", "pure_blood_4"))
                 .addOptional(ResourceLocation.fromNamespaceAndPath("vampirism", "pure_salt_water"))
                 .addOptional(ResourceLocation.fromNamespaceAndPath("vampirism", "vampire_blood_bottle"))
-                .addOptional(ResourceLocation.fromNamespaceAndPath("vegandelight", "soymilk_bottle"))
-        ;
+                .addOptional(ResourceLocation.fromNamespaceAndPath("vegandelight", "soymilk_bottle"));
         tag(BCTags.Items.SWORD_PEDESTAL_SWORDS).addTag(ItemTags.SWORDS);
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
         tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());

@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/typewriter/2",
+  "textures": {
+    "color": "minecraft:block/brown_terracotta"
+  }
+}

@@ -39,11 +39,13 @@ public final class BCLootTableProvider extends LootTableProvider {
             add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(),    DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_IRON_LAMP.get()));
             add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get()));
             add(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get()));
+            add(BCBlocks.CLEAR_TYPEWRITER.get(),         DatagenUtil.createDefaultTable(BCBlocks.CLEAR_TYPEWRITER.get()));
             for (DyeColor color : DyeColor.values()) {
                 add(BCBlocks.FANCY_GOLD_LAMP.get(color),    DatagenUtil.createDefaultTable(BCBlocks.FANCY_GOLD_LAMP.get(color)));
                 add(BCBlocks.FANCY_IRON_LAMP.get(color),    DatagenUtil.createDefaultTable(BCBlocks.FANCY_IRON_LAMP.get(color)));
                 add(BCBlocks.FANCY_GOLD_LANTERN.get(color), DatagenUtil.createDefaultTable(BCBlocks.FANCY_GOLD_LANTERN.get(color)));
                 add(BCBlocks.FANCY_IRON_LANTERN.get(color), DatagenUtil.createDefaultTable(BCBlocks.FANCY_IRON_LANTERN.get(color)));
+                add(BCBlocks.TYPEWRITER.get(color),         DatagenUtil.createDefaultTable(BCBlocks.TYPEWRITER.get(color)));
             }
             add(BCBlocks.CLIPBOARD.get(),              DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.CLIPBOARD.get()).apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(BCDataComponents.CLIPBOARD_CONTENT.get()))));
             add(BCBlocks.COOKIE_JAR.get(),             DatagenUtil.createNameableTable(BCBlocks.COOKIE_JAR.get()));

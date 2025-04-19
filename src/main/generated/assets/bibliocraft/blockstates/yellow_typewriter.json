@@ -1,0 +1,346 @@
+{
+  "variants": {
+    "facing=east,paper=0,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=0,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=1,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=1,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=2,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=2,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=3,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=3,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=4,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=4,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=5,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=5,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=6,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=6,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=7,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=7,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=8,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,paper=8,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,paper=0,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true
+    },
+    "facing=north,paper=0,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true
+    },
+    "facing=north,paper=1,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true
+    },
+    "facing=north,paper=1,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true
+    },
+    "facing=north,paper=2,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true
+    },
+    "facing=north,paper=2,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true
+    },
+    "facing=north,paper=3,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true
+    },
+    "facing=north,paper=3,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true
+    },
+    "facing=north,paper=4,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true
+    },
+    "facing=north,paper=4,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true
+    },
+    "facing=north,paper=5,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true
+    },
+    "facing=north,paper=5,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true
+    },
+    "facing=north,paper=6,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true
+    },
+    "facing=north,paper=6,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true
+    },
+    "facing=north,paper=7,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true
+    },
+    "facing=north,paper=7,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true
+    },
+    "facing=north,paper=8,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true
+    },
+    "facing=north,paper=8,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true
+    },
+    "facing=south,paper=0,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=0,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=1,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=1,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=2,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=2,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=3,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=3,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=4,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=4,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=5,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=5,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=6,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=6,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=7,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=7,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=8,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,paper=8,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,paper=0,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=0,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_0",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=1,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=1,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_1",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=2,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=2,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_2",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=3,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=3,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_3",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=4,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=4,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_4",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=5,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=5,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_5",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=6,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=6,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_6",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=7,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=7,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_7",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=8,waterlogged=false": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,paper=8,waterlogged=true": {
+      "model": "bibliocraft:block/color/yellow/typewriter_8",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}
