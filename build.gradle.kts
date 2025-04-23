@@ -21,6 +21,13 @@ repositories {
             includeGroup("mezz.jei")
         }
     }
+    maven {
+        name = "Abnormals Maven"
+        url = uri("https://maven.jaackson.me")
+        content {
+            includeGroup("com.teamabnormals")
+        }
+    }
 }
 
 val jei = helper.dependencies.jei()
@@ -35,6 +42,14 @@ dependencies {
     compileOnly(jeiApiDep)
     if (!helper.runningInCI.getOrElse(false)) {
         runtimeOnly(jeiDep)
+    }
+
+    // abnormals mods for integration
+    if (!helper.runningInCI.getOrElse(false)) {
+        runtimeOnly("com.teamabnormals:blueprint:${helper.minecraftVersion.get()}-${project.properties["blueprint_version"]}")
+    }
+    if (!helper.runningInCI.getOrElse(false)) {
+        runtimeOnly("com.teamabnormals:gallery:${helper.minecraftVersion.get()}-${project.properties["gallery_version"]}")
     }
 
     testImplementation("org.junit.jupiter:junit-jupiter:${project.properties["junit_version"]}")
