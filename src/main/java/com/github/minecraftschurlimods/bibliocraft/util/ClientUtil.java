@@ -7,6 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.StockroomCatalogScreen;
+import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
@@ -206,5 +207,15 @@ public final class ClientUtil {
      */
     public static boolean isPride() {
         return Config.ENABLE_PRIDE.get() && (Config.ENABLE_PRIDE_ALWAYS.get() || Calendar.getInstance().get(Calendar.MONTH) == Calendar.JUNE);
+    }
+
+    /**
+     * Classloading guard for setting the stockroom catalog contents from a packet.
+     * @param packet The packet containing the stockroom catalog contents.
+     */
+    public static void setStockroomCatalogList(StockroomCatalogListPacket packet) {
+        if (Minecraft.getInstance().screen instanceof StockroomCatalogScreen screen) {
+            screen.setFromPacket(packet);
+        }
     }
 }
