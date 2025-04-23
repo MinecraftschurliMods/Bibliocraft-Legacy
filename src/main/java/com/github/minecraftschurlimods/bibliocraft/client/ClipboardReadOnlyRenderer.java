@@ -24,9 +24,9 @@ import org.joml.Matrix4f;
  */
 @SuppressWarnings("SameParameterValue")
 public final class ClipboardReadOnlyRenderer {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard_block.png");
-    private static final ResourceLocation CHECK_TEXTURE = BCUtil.modLoc("check");
-    private static final ResourceLocation X_TEXTURE = BCUtil.modLoc("x");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard_block.png");
+    private static final ResourceLocation CHECK_TEXTURE = BCUtil.bcLoc("check");
+    private static final ResourceLocation X_TEXTURE = BCUtil.bcLoc("x");
 
     public static void render(PoseStack pose, MultiBufferSource bufferSource, ClipboardContent data, int width, int height) {
         pose.pushPose();

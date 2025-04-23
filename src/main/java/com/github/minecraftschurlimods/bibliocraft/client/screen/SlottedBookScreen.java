@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
 import java.util.List;
 
 public class SlottedBookScreen extends AbstractContainerScreen<SlottedBookMenu> {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/slotted_book.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/slotted_book.png");
 
     public SlottedBookScreen(SlottedBookMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);

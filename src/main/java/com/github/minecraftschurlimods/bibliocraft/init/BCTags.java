@@ -35,7 +35,7 @@ public interface BCTags {
          * @return A {@link TagKey<Block>} with this mod's namespace and the given path.
          */
         static TagKey<Block> tag(String name) {
-            return TagKey.create(BuiltInRegistries.BLOCK.key(), BCUtil.modLoc(name));
+            return TagKey.create(BuiltInRegistries.BLOCK.key(), BCUtil.bcLoc(name));
         }
     }
 
@@ -79,7 +79,7 @@ public interface BCTags {
          * @return A {@link TagKey<Item>} with this mod's namespace and the given path.
          */
         static TagKey<Item> tag(String name) {
-            return TagKey.create(BuiltInRegistries.ITEM.key(), BCUtil.modLoc(name));
+            return TagKey.create(BuiltInRegistries.ITEM.key(), BCUtil.bcLoc(name));
         }
     }
 }

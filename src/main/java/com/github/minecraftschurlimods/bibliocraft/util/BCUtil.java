@@ -72,8 +72,17 @@ public final class BCUtil {
      * @param path The path to use.
      * @return A {@link ResourceLocation} with the "bibliocraft" namespace and the given path.
      */
-    public static ResourceLocation modLoc(String path) {
+    public static ResourceLocation bcLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, path);
+    }
+
+    /**
+     * @param namespace The namespace to use.
+     * @param path      The path to use.
+     * @return A {@link ResourceLocation} with the given namespace and path.
+     */
+    public static ResourceLocation modLoc(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
 
     /**

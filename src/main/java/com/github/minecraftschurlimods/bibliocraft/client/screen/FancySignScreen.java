@@ -29,7 +29,7 @@ import java.util.Objects;
 public class FancySignScreen extends Screen {
     public static final int WIDTH = 140;
     public static final int HEIGHT = 80;
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_sign.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/fancy_sign.png");
     private final BlockPos pos;
     private final boolean back;
     private FormattedTextArea textArea;

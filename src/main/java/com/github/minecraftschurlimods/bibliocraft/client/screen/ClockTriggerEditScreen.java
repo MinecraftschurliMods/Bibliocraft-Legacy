@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 public class ClockTriggerEditScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clock_edit.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock_edit.png");
     private static final int WIDTH = 144;
     private static final int HEIGHT = 72;
     private final ClockScreen parent;

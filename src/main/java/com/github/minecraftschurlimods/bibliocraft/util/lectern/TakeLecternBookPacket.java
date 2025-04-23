@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.LecternBlock;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record TakeLecternBookPacket(BlockPos pos) implements CustomPacketPayload {
-    public static final Type<TakeLecternBookPacket> TYPE = new Type<>(BCUtil.modLoc("take_lectern_book"));
+    public static final Type<TakeLecternBookPacket> TYPE = new Type<>(BCUtil.bcLoc("take_lectern_book"));
     public static final StreamCodec<ByteBuf, TakeLecternBookPacket> STREAM_CODEC = StreamCodec.composite(
             BlockPos.STREAM_CODEC, TakeLecternBookPacket::pos,
             TakeLecternBookPacket::new);

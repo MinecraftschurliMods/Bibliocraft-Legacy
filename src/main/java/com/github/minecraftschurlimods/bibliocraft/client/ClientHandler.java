@@ -71,7 +71,7 @@ public final class ClientHandler {
     private static void registerAdditional(ModelEvent.RegisterAdditional event) {
         for (TableBlock.Type type : TableBlock.Type.values()) {
             for (DyeColor color : DyeColor.values()) {
-                event.register(ModelResourceLocation.standalone(BCUtil.modLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName())));
+                event.register(ModelResourceLocation.standalone(BCUtil.bcLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName())));
             }
         }
     }
@@ -81,8 +81,8 @@ public final class ClientHandler {
     }
 
     private static void registerGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
-        event.register(BCUtil.modLoc("bookcase"), BookcaseModel.LOADER);
-        event.register(BCUtil.modLoc("table"), TableModel.LOADER);
+        event.register(BCUtil.bcLoc("bookcase"), BookcaseModel.LOADER);
+        event.register(BCUtil.bcLoc("table"), TableModel.LOADER);
     }
 
     private static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

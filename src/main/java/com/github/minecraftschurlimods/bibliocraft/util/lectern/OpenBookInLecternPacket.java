@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record OpenBookInLecternPacket(BlockPos pos, ItemStack stack) implements CustomPacketPayload {
-    public static final Type<OpenBookInLecternPacket> TYPE = new Type<>(BCUtil.modLoc("open_book_in_lectern"));
+    public static final Type<OpenBookInLecternPacket> TYPE = new Type<>(BCUtil.bcLoc("open_book_in_lectern"));
     public static final StreamCodec<RegistryFriendlyByteBuf, OpenBookInLecternPacket> STREAM_CODEC = StreamCodec.composite(
             BlockPos.STREAM_CODEC, OpenBookInLecternPacket::pos,
             ItemStack.STREAM_CODEC, OpenBookInLecternPacket::stack,

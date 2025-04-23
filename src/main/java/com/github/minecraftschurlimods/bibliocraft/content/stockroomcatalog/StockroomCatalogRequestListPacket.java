@@ -19,7 +19,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.List;
 
 public record StockroomCatalogRequestListPacket(StockroomCatalogSorting.Container containerSorting, StockroomCatalogSorting.Item itemSorting, Either<InteractionHand, BlockPos> target) implements CustomPacketPayload {
-    public static final Type<StockroomCatalogRequestListPacket> TYPE = new Type<>(BCUtil.modLoc("stockroom_catalog_request_list"));
+    public static final Type<StockroomCatalogRequestListPacket> TYPE = new Type<>(BCUtil.bcLoc("stockroom_catalog_request_list"));
     public static final StreamCodec<ByteBuf, StockroomCatalogRequestListPacket> STREAM_CODEC = StreamCodec.composite(
             StockroomCatalogSorting.Container.STREAM_CODEC, StockroomCatalogRequestListPacket::containerSorting,
             StockroomCatalogSorting.Item.STREAM_CODEC, StockroomCatalogRequestListPacket::itemSorting,

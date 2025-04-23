@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClipboardScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clipboard.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
     private final InteractionHand hand;
     private ClipboardContent data;
@@ -137,8 +137,8 @@ public class ClipboardScreen extends Screen {
     }
 
     private static class CheckboxButton extends SpriteButton {
-        private static final ResourceLocation CHECK_TEXTURE = BCUtil.modLoc("check");
-        private static final ResourceLocation X_TEXTURE = BCUtil.modLoc("x");
+        private static final ResourceLocation CHECK_TEXTURE = BCUtil.bcLoc("check");
+        private static final ResourceLocation X_TEXTURE = BCUtil.bcLoc("x");
         private CheckboxState state = CheckboxState.EMPTY;
 
         public CheckboxButton(int x, int y, OnPress onPress) {

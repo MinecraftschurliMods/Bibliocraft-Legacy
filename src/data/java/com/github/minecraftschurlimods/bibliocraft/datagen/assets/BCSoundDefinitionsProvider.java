@@ -41,6 +41,6 @@ public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
     }
     
     private SoundDefinition.Sound modSound(String name) {
-        return sound(BCUtil.modLoc(name));
+        return sound(BCUtil.bcLoc(name));
     }
 }
