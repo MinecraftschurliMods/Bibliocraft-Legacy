@@ -1,1 +1,1 @@
-Add big books, pride bookshelves and compatibility; fix a few bugs
+Fix the Stockroom Catalog not working properly on servers
