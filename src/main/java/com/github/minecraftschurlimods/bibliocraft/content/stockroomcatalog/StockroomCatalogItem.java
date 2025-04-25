@@ -25,7 +25,6 @@ import net.neoforged.neoforge.items.IItemHandler;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.SequencedMap;
 
