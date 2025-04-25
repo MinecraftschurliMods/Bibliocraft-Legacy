@@ -22,10 +22,10 @@ repositories {
         }
     }
     maven {
-        name = "Abnormals Maven"
-        url = uri("https://maven.jaackson.me")
+        name = "Curse Maven"
+        url = uri("https://cursemaven.com")
         content {
-            includeGroup("com.teamabnormals")
+            includeGroup("curse.maven")
         }
     }
 }
@@ -46,10 +46,8 @@ dependencies {
 
     // abnormals mods for integration
     if (!helper.runningInCI.getOrElse(false)) {
-        runtimeOnly("com.teamabnormals:blueprint:${helper.minecraftVersion.get()}-${project.properties["blueprint_version"]}")
-    }
-    if (!helper.runningInCI.getOrElse(false)) {
-        runtimeOnly("com.teamabnormals:gallery:${helper.minecraftVersion.get()}-${project.properties["gallery_version"]}")
+        runtimeOnly("curse.maven:blueprint-382216:6449863")
+        runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
     }
 
     testImplementation("org.junit.jupiter:junit-jupiter:${project.properties["junit_version"]}")
