@@ -12,18 +12,4 @@ public final class CompatUtil {
     public static boolean hasSoulCandles() {
         return ModList.get().isLoaded("buzzier_bees");
     }
-
-    /**
-     * @return Whether ender candles are expected to be present in the game.
-     */
-    public static boolean hasEnderCandles() {
-        return ModList.get().isLoaded("buzzier_bees") && ModList.get().isLoaded("endergetic");
-    }
-
-    /**
-     * @return Whether cupric candles are expected to be present in the game.
-     */
-    public static boolean hasCupricCandles() {
-        return ModList.get().isLoaded("buzzier_bees") && ModList.get().isLoaded("caverns_and_chasms");
-    }
 }
