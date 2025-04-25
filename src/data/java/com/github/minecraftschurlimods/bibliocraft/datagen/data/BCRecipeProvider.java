@@ -15,7 +15,6 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
@@ -24,6 +23,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
 
 import java.util.concurrent.CompletableFuture;
@@ -43,7 +43,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
-                    .define('W', BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_wool")))
+                    .define('W', BuiltInRegistries.ITEM.get(BCUtil.mcLoc(name + "_wool")))
                     .group("bibliocraft:sword_pedestal")
                     .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
                     .save(output, BCUtil.bcLoc("color/" + name + "/sword_pedestal"));
@@ -75,7 +75,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("GIG")
                     .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                     .define('I', Tags.Items.INGOTS_GOLD)
-                    .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_candle"))))
+                    .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(BCUtil.mcLoc(name + "_candle"))))
                     .group("bibliocraft:fancy_lantern")
                     .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                     .save(output, BCUtil.bcLoc("color/" + name + "/fancy_gold_lantern"));
@@ -85,7 +85,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .pattern("GIG")
                     .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
                     .define('I', Tags.Items.INGOTS_IRON)
-                    .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(name + "_candle"))))
+                    .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(BCUtil.mcLoc(name + "_candle"))))
                     .group("bibliocraft:fancy_lantern")
                     .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, BCUtil.bcLoc("color/" + name + "/fancy_iron_lantern"));
@@ -132,6 +132,26 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
+        /*ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_GOLD_LANTERN)
+                .pattern("GIG")
+                .pattern("ICI")
+                .pattern("GIG")
+                .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
+                .group("bibliocraft:fancy_lantern")
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_IRON_LANTERN)
+                .pattern("GIG")
+                .pattern("ICI")
+                .pattern("GIG")
+                .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
+                .group("bibliocraft:fancy_lantern")
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));*/
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD)
                 .pattern("I F")
                 .pattern("PPP")

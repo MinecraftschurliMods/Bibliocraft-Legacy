@@ -58,13 +58,9 @@ public interface BCItems {
     DeferredItem<FancyLightItem> CLEAR_FANCY_GOLD_LANTERN          = BCRegistries.ITEMS.register(                    "fancy_gold_lantern", () -> new FancyLightItem(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get()));
     ColoredDeferredHolder<Item, FancyLightItem> FANCY_GOLD_LANTERN = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_gold_lantern", color -> new FancyLightItem(BCBlocks.FANCY_GOLD_LANTERN.get(color)));
     DeferredItem<FancyLightItem> SOUL_FANCY_GOLD_LANTERN           = BCRegistries.ITEMS.register(               "soul_fancy_gold_lantern", () -> new FancyLightItem(BCBlocks.SOUL_FANCY_GOLD_LANTERN.get()));
-    DeferredItem<FancyLightItem> ENDER_FANCY_GOLD_LANTERN          = BCRegistries.ITEMS.register(              "ender_fancy_gold_lantern", () -> new FancyLightItem(BCBlocks.ENDER_FANCY_GOLD_LANTERN.get()));
-    DeferredItem<FancyLightItem> CUPRIC_FANCY_GOLD_LANTERN         = BCRegistries.ITEMS.register(             "cupric_fancy_gold_lantern", () -> new FancyLightItem(BCBlocks.CUPRIC_FANCY_GOLD_LANTERN.get()));
     DeferredItem<FancyLightItem> CLEAR_FANCY_IRON_LANTERN          = BCRegistries.ITEMS.register(                    "fancy_iron_lantern", () -> new FancyLightItem(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get()));
     ColoredDeferredHolder<Item, FancyLightItem> FANCY_IRON_LANTERN = new ColoredDeferredHolder<>(BCRegistries.ITEMS, "fancy_iron_lantern", color -> new FancyLightItem(BCBlocks.FANCY_IRON_LANTERN.get(color)));
     DeferredItem<FancyLightItem> SOUL_FANCY_IRON_LANTERN           = BCRegistries.ITEMS.register(               "soul_fancy_iron_lantern", () -> new FancyLightItem(BCBlocks.SOUL_FANCY_IRON_LANTERN.get()));
-    DeferredItem<FancyLightItem> ENDER_FANCY_IRON_LANTERN          = BCRegistries.ITEMS.register(              "ender_fancy_iron_lantern", () -> new FancyLightItem(BCBlocks.ENDER_FANCY_IRON_LANTERN.get()));
-    DeferredItem<FancyLightItem> CUPRIC_FANCY_IRON_LANTERN         = BCRegistries.ITEMS.register(             "cupric_fancy_iron_lantern", () -> new FancyLightItem(BCBlocks.CUPRIC_FANCY_IRON_LANTERN.get()));
     DeferredItem<ClipboardItem>        CLIPBOARD              = BCRegistries.ITEMS.register("clipboard", ClipboardItem::new);
     DeferredItem<BlockItem>            COOKIE_JAR             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.COOKIE_JAR);
     DeferredItem<BlockItem>            DESK_BELL              = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DESK_BELL);

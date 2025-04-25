@@ -48,22 +48,10 @@ public interface BCCreativeTabs {
                 if (CompatUtil.hasSoulCandles()) {
                     output.accept(BCItems.SOUL_FANCY_GOLD_LANTERN);
                 }
-                if (CompatUtil.hasEnderCandles()) {
-                    output.accept(BCItems.ENDER_FANCY_GOLD_LANTERN);
-                }
-                if (CompatUtil.hasCupricCandles()) {
-                    output.accept(BCItems.CUPRIC_FANCY_GOLD_LANTERN);
-                }
                 output.accept(BCItems.CLEAR_FANCY_IRON_LANTERN);
                 addToTab(output, BCItems.FANCY_IRON_LANTERN.values());
                 if (CompatUtil.hasSoulCandles()) {
                     output.accept(BCItems.SOUL_FANCY_IRON_LANTERN);
-                }
-                if (CompatUtil.hasEnderCandles()) {
-                    output.accept(BCItems.ENDER_FANCY_IRON_LANTERN);
-                }
-                if (CompatUtil.hasCupricCandles()) {
-                    output.accept(BCItems.CUPRIC_FANCY_IRON_LANTERN);
                 }
                 output.accept(BCItems.CLIPBOARD);
                 output.accept(BCItems.COOKIE_JAR);

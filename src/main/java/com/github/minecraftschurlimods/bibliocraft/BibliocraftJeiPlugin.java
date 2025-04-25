@@ -103,12 +103,6 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
         if (!CompatUtil.hasSoulCandles()) {
             remove(runtime, Stream.of(BCItems.SOUL_FANCY_GOLD_LANTERN, BCItems.SOUL_FANCY_IRON_LANTERN).map(Supplier::get).map(ItemStack::new).toList());
         }
-        if (!CompatUtil.hasEnderCandles()) {
-            remove(runtime, Stream.of(BCItems.ENDER_FANCY_GOLD_LANTERN, BCItems.ENDER_FANCY_IRON_LANTERN).map(Supplier::get).map(ItemStack::new).toList());
-        }
-        if (!CompatUtil.hasCupricCandles()) {
-            remove(runtime, Stream.of(BCItems.CUPRIC_FANCY_GOLD_LANTERN, BCItems.CUPRIC_FANCY_IRON_LANTERN).map(Supplier::get).map(ItemStack::new).toList());
-        }
     }
 
     private void remove(IJeiRuntime runtime, List<ItemStack> list) {

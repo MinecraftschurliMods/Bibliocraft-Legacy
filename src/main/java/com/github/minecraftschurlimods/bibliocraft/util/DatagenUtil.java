@@ -160,6 +160,40 @@ public final class DatagenUtil {
     }
 
     /**
+     * Adds a fancy lamp model.
+     *
+     * @param provider     Your mod's {@link BlockStateProvider}.
+     * @param block        The block to add the model for.
+     * @param folderPrefix The folder prefix of the model.
+     * @param material     The material of the lamp. E.g. gold, iron.
+     * @param texture      The glass texture to use.
+     */
+    public static void fancyLampModel(BlockStateProvider provider, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
+        fancyLightBlockModel(provider, block,
+                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_standing", BCUtil.bcLoc("block/template/fancy_lamp/standing_" + material)).texture("color", texture),
+                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_hanging", BCUtil.bcLoc("block/template/fancy_lamp/hanging_" + material)).texture("color", texture),
+                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_wall", BCUtil.bcLoc("block/template/fancy_lamp/wall_" + material)).texture("color", texture),
+                false);
+    }
+
+    /**
+     * Adds a fancy lantern model.
+     *
+     * @param provider     Your mod's {@link BlockStateProvider}.
+     * @param block        The block to add the model for.
+     * @param folderPrefix The folder prefix of the model.
+     * @param material     The material of the lantern. E.g. gold, iron.
+     * @param texture      The candle texture to use.
+     */
+    public static void fancyLanternModel(BlockStateProvider provider, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
+        fancyLightBlockModel(provider, block,
+                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_standing", BCUtil.bcLoc("block/template/fancy_lantern/standing_" + material)).texture("color", texture),
+                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_hanging", BCUtil.bcLoc("block/template/fancy_lantern/hanging_" + material)).texture("color", texture),
+                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_wall", BCUtil.bcLoc("block/template/fancy_lantern/wall_" + material)).texture("color", texture),
+                false);
+    }
+
+    /**
      * Creates a standard loot table with the given entry builder.
      *
      * @param builder The entry builder to use.
