@@ -132,7 +132,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
-        /*ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_GOLD_LANTERN)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_GOLD_LANTERN)
                 .pattern("GIG")
                 .pattern("ICI")
                 .pattern("GIG")
@@ -151,7 +151,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
                 .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));*/
+                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD)
                 .pattern("I F")
                 .pattern("PPP")
