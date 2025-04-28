@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
@@ -26,13 +25,10 @@ import net.neoforged.neoforge.items.IItemHandler;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.SequencedMap;
 
 public class StockroomCatalogItem extends Item {
-    private static final Comparator<BlockPos> COMPARE_DISTANCE = Comparator.comparingDouble(e -> Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(e)));
-    private static final Comparator<BlockPos> COMPARE_ALPHABETICAL = Comparator.comparing(e -> BCUtil.getNameAtPos(Objects.requireNonNull(Minecraft.getInstance().level), e).getString());
     private static final Comparator<StockroomCatalogItemEntry> COMPARE_NAME = Comparator.comparing(e -> e.item().getDisplayName().getString());
     private static final Comparator<StockroomCatalogItemEntry> COMPARE_COUNT = Comparator.comparingInt(StockroomCatalogItemEntry::count);
 
@@ -42,6 +38,8 @@ public class StockroomCatalogItem extends Item {
 
     @SuppressWarnings("deprecation")
     public static List<BlockPos> calculatePositions(ItemStack stack, Level level, Player player, StockroomCatalogSorting.Container containerSorting) {
+        Comparator<BlockPos> COMPARE_DISTANCE = Comparator.comparingDouble(e -> player.position().distanceTo(BCUtil.toVec3(e)));
+        Comparator<BlockPos> COMPARE_ALPHABETICAL = Comparator.comparing(e -> BCUtil.getNameAtPos(level, e).getString());
         return stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT)
                 .positions()
                 .stream()
@@ -99,7 +97,7 @@ public class StockroomCatalogItem extends Item {
                 })
                 .toList();
     }
-    
+
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
