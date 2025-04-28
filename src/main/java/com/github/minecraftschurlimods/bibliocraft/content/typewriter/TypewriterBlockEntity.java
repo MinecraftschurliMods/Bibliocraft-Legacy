@@ -16,8 +16,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.EnumMap;
 
 public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyContainer {
-    private static final int INPUT = 0;
-    private static final int OUTPUT = 1;
+    public static final int INPUT = 0;
+    public static final int OUTPUT = 1;
     private static final int[] INPUTS = new int[]{INPUT};
     private static final int[] OUTPUTS = new int[]{OUTPUT};
     private final EnumMap<Direction, SidedInvWrapper> wrappers = Util.make(new EnumMap<>(Direction.class), map -> {
@@ -53,5 +53,19 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         return direction == Direction.DOWN && index == OUTPUT;
+    }
+
+    public boolean insertPaper(ItemStack stack) {
+        ItemStack input = getItem(INPUT);
+        if (!input.isEmpty() && !ItemStack.isSameItemSameComponents(input, stack)) return false;
+        input.grow(1);
+        stack.shrink(1);
+        return true;
+    }
+
+    public ItemStack takeOutput() {
+        ItemStack output = getItem(OUTPUT);
+        setItem(OUTPUT, ItemStack.EMPTY);
+        return output;
     }
 }
