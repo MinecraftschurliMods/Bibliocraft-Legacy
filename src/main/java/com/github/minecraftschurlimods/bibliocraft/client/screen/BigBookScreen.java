@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class BigBookScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/big_book.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/big_book.png");
     private static final Component OWNER = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, Objects.requireNonNull(Minecraft.getInstance().player).getName()).withStyle(ChatFormatting.DARK_GRAY);
     private static final int BACKGROUND_WIDTH = 220;
     private static final int BACKGROUND_HEIGHT = 256;

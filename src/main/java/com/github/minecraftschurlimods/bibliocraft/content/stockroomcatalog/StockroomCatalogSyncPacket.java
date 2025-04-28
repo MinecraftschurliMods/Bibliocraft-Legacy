@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record StockroomCatalogSyncPacket(StockroomCatalogContent content, Either<InteractionHand, BlockPos> target) implements CustomPacketPayload {
-    public static final Type<StockroomCatalogSyncPacket> TYPE = new Type<>(BCUtil.modLoc("stockroom_catalog_sync"));
+    public static final Type<StockroomCatalogSyncPacket> TYPE = new Type<>(BCUtil.bcLoc("stockroom_catalog_sync"));
     public static final StreamCodec<FriendlyByteBuf, StockroomCatalogSyncPacket> STREAM_CODEC = StreamCodec.composite(
             StockroomCatalogContent.STREAM_CODEC, StockroomCatalogSyncPacket::content,
             ByteBufCodecs.either(BCUtil.INTERACTION_HAND_STREAM_CODEC, BlockPos.STREAM_CODEC), StockroomCatalogSyncPacket::target,

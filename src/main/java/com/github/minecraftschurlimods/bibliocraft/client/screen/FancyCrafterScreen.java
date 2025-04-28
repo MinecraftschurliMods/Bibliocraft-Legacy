@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class FancyCrafterScreen extends BCMenuScreen<FancyCrafterMenu> {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/fancy_crafter.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/fancy_crafter.png");
     private static final ResourceLocation DISABLED_SLOT = BCUtil.mcLoc("container/crafter/disabled_slot");
     private final Player player;
 

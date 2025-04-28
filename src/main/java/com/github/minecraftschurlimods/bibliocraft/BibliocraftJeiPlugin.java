@@ -29,7 +29,7 @@ import java.util.List;
 
 @JeiPlugin
 public final class BibliocraftJeiPlugin implements IModPlugin {
-    private static final ResourceLocation UID = BCUtil.modLoc("jei_plugin");
+    private static final ResourceLocation UID = BCUtil.bcLoc("jei_plugin");
     private static final Lazy<BibliocraftWoodType> OAK = Lazy.of(() -> BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")));
     private static final DyeColor WHITE = DyeColor.WHITE;
     private static final Lazy<List<WoodTypeDeferredHolder<Item, ?>>> WOOD_TYPE_DEFERRED_HOLDERS =

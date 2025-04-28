@@ -21,11 +21,11 @@ import net.minecraft.world.item.Items;
 public class ClockTriggerElement extends Screen {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 20;
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clock_trigger.png");
-    private static final ResourceLocation EDIT = BCUtil.modLoc("edit");
-    private static final ResourceLocation EDIT_HIGHLIGHTED = BCUtil.modLoc("edit_highlighted");
-    private static final ResourceLocation DELETE = BCUtil.modLoc("delete");
-    private static final ResourceLocation DELETE_HIGHLIGHTED = BCUtil.modLoc("delete_highlighted");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock_trigger.png");
+    private static final ResourceLocation EDIT = BCUtil.bcLoc("edit");
+    private static final ResourceLocation EDIT_HIGHLIGHTED = BCUtil.bcLoc("edit_highlighted");
+    private static final ResourceLocation DELETE = BCUtil.bcLoc("delete");
+    private static final ResourceLocation DELETE_HIGHLIGHTED = BCUtil.bcLoc("delete_highlighted");
     private static final ItemStack REDSTONE = new ItemStack(Items.REDSTONE);
     private static final ItemStack NOTE_BLOCK = new ItemStack(Items.NOTE_BLOCK);
     public final ClockTriggerPanel owner;

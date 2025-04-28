@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ClockScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/clock.png");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock.png");
     private static final int IMAGE_WIDTH = 176;
     private static final int IMAGE_HEIGHT = 166;
     private final BlockPos pos;

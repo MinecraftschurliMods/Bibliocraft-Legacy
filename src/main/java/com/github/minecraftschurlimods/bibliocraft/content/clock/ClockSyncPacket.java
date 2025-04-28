@@ -13,7 +13,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.List;
 
 public record ClockSyncPacket(BlockPos pos, boolean tickSound, List<ClockTrigger> triggers) implements CustomPacketPayload {
-    public static final Type<ClockSyncPacket> TYPE = new Type<>(BCUtil.modLoc("clock_sync"));
+    public static final Type<ClockSyncPacket> TYPE = new Type<>(BCUtil.bcLoc("clock_sync"));
     public static final StreamCodec<FriendlyByteBuf, ClockSyncPacket> STREAM_CODEC = StreamCodec.composite(
             BlockPos.STREAM_CODEC, ClockSyncPacket::pos,
             ByteBufCodecs.BOOL, ClockSyncPacket::tickSound,

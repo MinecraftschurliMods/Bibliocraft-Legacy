@@ -9,7 +9,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record FancySignSyncPacket(FancySignContent list, BlockPos pos, boolean back) implements CustomPacketPayload {
-    public static final Type<FancySignSyncPacket> TYPE = new Type<>(BCUtil.modLoc("fancy_sign_sync"));
+    public static final Type<FancySignSyncPacket> TYPE = new Type<>(BCUtil.bcLoc("fancy_sign_sync"));
     public static final StreamCodec<RegistryFriendlyByteBuf, FancySignSyncPacket> STREAM_CODEC = StreamCodec.composite(
             FancySignContent.STREAM_CODEC, FancySignSyncPacket::list,
             BlockPos.STREAM_CODEC, FancySignSyncPacket::pos,

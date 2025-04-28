@@ -92,7 +92,7 @@ public class TableModel extends DynamicBlockModel {
         private ResourceLocation particle;
 
         public Builder(BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
-            super(BCUtil.modLoc("table"), parent, existingFileHelper, false);
+            super(BCUtil.bcLoc("table"), parent, existingFileHelper, false);
         }
 
         public Builder withModelForType(TableBlock.Type type, JsonObject model) {

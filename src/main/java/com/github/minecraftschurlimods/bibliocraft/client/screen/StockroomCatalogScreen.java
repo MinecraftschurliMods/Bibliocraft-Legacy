@@ -44,11 +44,11 @@ import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 
 public class StockroomCatalogScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.modLoc("textures/gui/stockroom_catalog.png");
-    private static final ResourceLocation LOCATE_ICON = BCUtil.modLoc("locate");
-    private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.modLoc("locate_highlighted");
-    private static final ResourceLocation REMOVE_ICON = BCUtil.modLoc("remove");
-    private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.modLoc("remove_highlighted");
+    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/stockroom_catalog.png");
+    private static final ResourceLocation LOCATE_ICON = BCUtil.bcLoc("locate");
+    private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.bcLoc("locate_highlighted");
+    private static final ResourceLocation REMOVE_ICON = BCUtil.bcLoc("remove");
+    private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.bcLoc("remove_highlighted");
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;

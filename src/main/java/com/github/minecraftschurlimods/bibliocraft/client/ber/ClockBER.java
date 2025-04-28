@@ -32,9 +32,9 @@ import java.util.Objects;
  * <a href="https://github.com/MehVahdJukaar/Supplementaries/blob/master/common/src/main/java/net/mehvahdjukaar/supplementaries/client/renderers/tiles/ClockBlockTileRenderer.java">ClockBlockTileRenderer from the Supplementaries mod</a>
  */
 public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
-    public static final Material HAND_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BCUtil.modLoc("block/clock_hand"));
+    public static final Material HAND_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BCUtil.bcLoc("block/clock_hand"));
     public static final Material PENDULUM_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BCUtil.mcLoc("block/copper_block"));
-    public static final ModelLayerLocation LOCATION = new ModelLayerLocation(BCUtil.modLoc("clock"), "main");
+    public static final ModelLayerLocation LOCATION = new ModelLayerLocation(BCUtil.bcLoc("clock"), "main");
     private final ModelPart hourHand;
     private final ModelPart minuteHand;
     private final ModelPart pendulum;

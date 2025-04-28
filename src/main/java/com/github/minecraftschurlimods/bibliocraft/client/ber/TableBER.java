@@ -44,7 +44,7 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
         for (TableBlock.Type type : TableBlock.Type.values()) {
             Map<DyeColor, BakedModel> map = new HashMap<>();
             for (DyeColor color : DyeColor.values()) {
-                map.put(color, models.getModel(ModelResourceLocation.standalone(BCUtil.modLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName()))));
+                map.put(color, models.getModel(ModelResourceLocation.standalone(BCUtil.bcLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName()))));
             }
             CLOTH_MAP.put(type, map);
         }
