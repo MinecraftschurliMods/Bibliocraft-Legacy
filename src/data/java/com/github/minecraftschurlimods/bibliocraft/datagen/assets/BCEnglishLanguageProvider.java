@@ -105,6 +105,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Items.POTION_SHELF_POTIONS, "Potions for Potion Shelves");
         add(BCTags.Items.SWORD_PEDESTAL_SWORDS, "Swords for Sword Pedestals");
         add(BCTags.Items.TOOL_RACK_TOOLS, "Tools for Tool Racks");
+        add(BCTags.Items.TYPEWRITER_PAPER, "Paper for Typewriters");
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
         add("container", "disc_rack", "Disc Rack");

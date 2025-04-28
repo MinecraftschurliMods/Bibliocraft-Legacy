@@ -16,6 +16,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlockEntit
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -42,6 +43,7 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<SwordPedestalBlockEntity>>   SWORD_PEDESTAL    = register("sword_pedestal",    SwordPedestalBlockEntity::new,   BCBlocks.SWORD_PEDESTAL);
     Supplier<BlockEntityType<TableBlockEntity>>           TABLE             = register("table",             TableBlockEntity::new,           BCBlocks.TABLE.holders());
     Supplier<BlockEntityType<ToolRackBlockEntity>>        TOOL_RACK         = register("tool_rack",         ToolRackBlockEntity::new,        BCBlocks.TOOL_RACK.holders());
+    Supplier<BlockEntityType<TypewriterBlockEntity>>      TYPEWRITER        = register("typewriter",        TypewriterBlockEntity::new,      BCUtil.merge(BCBlocks.TYPEWRITER.holders(), BCBlocks.CLEAR_TYPEWRITER));
 
     /**
      * Registration helper method that takes a supplier list instead of a vararg parameter.

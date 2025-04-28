@@ -75,6 +75,7 @@ public interface BCTags {
         TagKey<Item> POTION_SHELF_POTIONS    = tag("potion_shelf_potions");
         TagKey<Item> SWORD_PEDESTAL_SWORDS   = tag("sword_pedestal_swords");
         TagKey<Item> TOOL_RACK_TOOLS         = tag("tool_rack_tools");
+        TagKey<Item> TYPEWRITER_PAPER        = tag("typewriter_paper");
 
         /**
          * @param name The path of the tag.

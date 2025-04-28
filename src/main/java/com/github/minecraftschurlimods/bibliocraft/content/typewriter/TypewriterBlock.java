@@ -76,6 +76,6 @@ public class TypewriterBlock extends BCFacingEntityBlock {
     @Override
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new TypewriterBlockEntity(pos, state);
     }
 }

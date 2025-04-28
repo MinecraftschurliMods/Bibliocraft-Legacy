@@ -401,10 +401,10 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
                 .addOptional(BCUtil.modLoc("vampirism", "pure_blood_4"))
                 .addOptional(BCUtil.modLoc("vampirism", "pure_salt_water"))
                 .addOptional(BCUtil.modLoc("vampirism", "vampire_blood_bottle"))
-                .addOptional(BCUtil.modLoc("vegandelight", "soymilk_bottle"))
-        ;
+                .addOptional(BCUtil.modLoc("vegandelight", "soymilk_bottle"));
         tag(BCTags.Items.SWORD_PEDESTAL_SWORDS).addTag(ItemTags.SWORDS);
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
+        tag(BCTags.Items.TYPEWRITER_PAPER).add(Items.PAPER);
         tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
         tag(ItemTags.DYEABLE).add(BCItems.SWORD_PEDESTAL.get());
         tag(ItemTags.LECTERN_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());

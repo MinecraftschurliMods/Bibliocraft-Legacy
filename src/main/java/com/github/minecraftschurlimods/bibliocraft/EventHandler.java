@@ -100,6 +100,7 @@ public final class EventHandler {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SWORD_PEDESTAL.get(),    BCBlockEntity::getCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TOOL_RACK.get(),         BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TYPEWRITER.get(),        BCBlockEntity::getCapability);
     }
 
     private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
