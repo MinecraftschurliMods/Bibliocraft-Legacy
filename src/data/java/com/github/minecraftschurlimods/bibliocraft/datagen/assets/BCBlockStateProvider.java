@@ -35,12 +35,12 @@ public class BCBlockStateProvider extends BlockStateProvider {
         for (DyeColor color : DyeColor.values()) {
             DatagenUtil.fancyLanternModel(this, BCBlocks.FANCY_GOLD_LANTERN.holder(color), "block/color/" + color.getSerializedName() + "/", "gold", DatagenUtil.CANDLE_TEXTURES.get(color));
         }
-        //DatagenUtil.fancyLanternModel(this, BCBlocks.SOUL_FANCY_GOLD_LANTERN, "block/soul_", "gold", BCUtil.modLoc("buzzier_bees", "block/soul_candle_lit"));
+        DatagenUtil.fancyLanternModel(this, BCBlocks.SOUL_FANCY_GOLD_LANTERN, "block/soul_", "gold", BCUtil.modLoc("buzzier_bees", "block/soul_candle_lit"));
         DatagenUtil.fancyLanternModel(this, BCBlocks.CLEAR_FANCY_IRON_LANTERN, "block/", "iron", mcLoc("block/candle_lit"));
         for (DyeColor color : DyeColor.values()) {
             DatagenUtil.fancyLanternModel(this, BCBlocks.FANCY_IRON_LANTERN.holder(color), "block/color/" + color.getSerializedName() + "/", "iron", DatagenUtil.CANDLE_TEXTURES.get(color));
         }
-        //DatagenUtil.fancyLanternModel(this, BCBlocks.SOUL_FANCY_IRON_LANTERN, "block/soul_", "iron", BCUtil.modLoc("buzzier_bees", "block/soul_candle_lit"));
+        DatagenUtil.fancyLanternModel(this, BCBlocks.SOUL_FANCY_IRON_LANTERN, "block/soul_", "iron", BCUtil.modLoc("buzzier_bees", "block/soul_candle_lit"));
         horizontalBlock(BCBlocks.CLIPBOARD.get(), models().getExistingFile(modLoc("block/clipboard")));
         getVariantBuilder(BCBlocks.COOKIE_JAR.get()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(models().getExistingFile(modLoc("block/cookie_jar" + (state.getValue(CookieJarBlock.OPEN) ? "_open" : ""))))

@@ -31,6 +31,7 @@ repositories {
 }
 
 val jei = helper.dependencies.jei()
+val buzzierBeesCompat = true
 
 dependencies {
     implementation(helper.neoforge())
@@ -45,7 +46,7 @@ dependencies {
     }
 
     // abnormals mods for integration
-    if (!helper.runningInCI.getOrElse(false)) {
+    if (buzzierBeesCompat) {
         runtimeOnly("curse.maven:blueprint-382216:6449863")
         runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
     }
@@ -60,7 +61,11 @@ dependencies {
 
 helper.withCommonRuns()
 helper.withGameTestRuns()
-helper.withDataGenRuns()
+helper.withDataGenRuns {
+    if (buzzierBeesCompat) {
+        programArguments("--existing-mod", "buzzier_bees")
+    }
+}
 
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
 
