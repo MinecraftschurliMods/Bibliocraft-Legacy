@@ -3,13 +3,28 @@ package com.github.minecraftschurlimods.bibliocraft.content.typewriter;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import org.jetbrains.annotations.Nullable;
 
-public class TypewriterBlockEntity extends BCBlockEntity {
+import java.util.EnumMap;
+
+public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyContainer {
     private static final int INPUT = 0;
     private static final int OUTPUT = 1;
+    private static final int[] INPUTS = new int[]{INPUT};
+    private static final int[] OUTPUTS = new int[]{OUTPUT};
+    private final EnumMap<Direction, SidedInvWrapper> wrappers = Util.make(new EnumMap<>(Direction.class), map -> {
+        for (Direction direction : Direction.values()) {
+            map.put(direction, new SidedInvWrapper(this, direction));
+        }
+    });
 
     public TypewriterBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.TYPEWRITER.get(), 2, pos, state);
@@ -18,5 +33,25 @@ public class TypewriterBlockEntity extends BCBlockEntity {
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
         return slot == INPUT && stack.is(BCTags.Items.TYPEWRITER_PAPER);
+    }
+
+    @Override
+    public IItemHandler getCapability(@Nullable Direction side) {
+        return side == null ? null : wrappers.get(side);
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return side == Direction.DOWN ? OUTPUTS : INPUTS;
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
+        return direction != Direction.DOWN && canPlaceItem(index, stack);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+        return direction == Direction.DOWN && index == OUTPUT;
     }
 }
