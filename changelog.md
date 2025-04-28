@@ -1,3 +1,3 @@
 # Fixes
 
-- Fix the Stockroom Catalog not working properly on servers
+- Fix the Stockroom Catalog not working properly on servers (again)
