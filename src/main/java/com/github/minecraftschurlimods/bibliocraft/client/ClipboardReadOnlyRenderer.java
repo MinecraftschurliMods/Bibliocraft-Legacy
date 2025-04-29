@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.CheckboxState;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.BufferUploader;
@@ -10,7 +11,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -48,14 +48,14 @@ public final class ClipboardReadOnlyRenderer {
     }
 
     private static void drawText(PoseStack pose, MultiBufferSource bufferSource, String text, float x, float y, int width, int height) {
-        Font font = Minecraft.getInstance().font;
+        Font font = ClientUtil.getFont();
         String visibleText = font.plainSubstrByWidth(text, width);
         if (visibleText.isEmpty()) return;
         font.drawInBatch(visibleText, x, y, 0, false, pose.last().pose(), bufferSource, Font.DisplayMode.POLYGON_OFFSET, 0, LightTexture.FULL_BRIGHT, font.isBidirectional());
     }
     
     private static void blitSprite(PoseStack pose, ResourceLocation location, int x, int y, int width, int height) {
-        TextureAtlasSprite sprite = Minecraft.getInstance().getGuiSprites().getSprite(location);
+        TextureAtlasSprite sprite = ClientUtil.getMc().getGuiSprites().getSprite(location);
         innerBlit(pose, sprite.atlasLocation(), x, x + width, y, y + width, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1());
     }
 

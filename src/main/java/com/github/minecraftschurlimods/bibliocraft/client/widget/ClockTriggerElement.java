@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -42,7 +42,7 @@ public class ClockTriggerElement extends Screen {
         this.owner = owner;
         this.listSize = listSize;
         int width = owner.hasScrollbar(listSize) ? WIDTH - 6 : WIDTH;
-        editButton = addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(EDIT, EDIT_HIGHLIGHTED, width - 34, 2, 16, 16, $ -> Minecraft.getInstance().pushGuiLayer(new ClockTriggerEditScreen(owner.owner, trigger))));
+        editButton = addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(EDIT, EDIT_HIGHLIGHTED, width - 34, 2, 16, 16, $ -> ClientUtil.getMc().pushGuiLayer(new ClockTriggerEditScreen(owner.owner, trigger))));
         deleteButton = addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(DELETE, DELETE_HIGHLIGHTED, width - 18, 2, 16, 16, $ -> owner.owner.removeTrigger(trigger)));
     }
 
@@ -64,7 +64,7 @@ public class ClockTriggerElement extends Screen {
             ClientUtil.renderGuiItem(NOTE_BLOCK, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
         }
         pose.popPose();
-        graphics.drawString(Minecraft.getInstance().font, getTitle(), 36, 7, 0x404040, false);
+        graphics.drawString(ClientUtil.getFont(), getTitle(), 36, 7, 0x404040, false);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
 
@@ -74,14 +74,15 @@ public class ClockTriggerElement extends Screen {
 
     public void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
         if (mouseY >= 2 && mouseY < 18) {
+            Font font = ClientUtil.getFont();
             if (trigger.redstone() && mouseX >= 2 && mouseX < 18) {
-                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_EMIT_REDSTONE, mouseX, mouseY);
+                graphics.renderTooltip(font, Translations.CLOCK_EMIT_REDSTONE, mouseX, mouseY);
             } else if (trigger.sound() && mouseX >= 19 && mouseX < 37) {
-                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_EMIT_SOUND, mouseX, mouseY);
+                graphics.renderTooltip(font, Translations.CLOCK_EMIT_SOUND, mouseX, mouseY);
             } else if (editButton.isHovered()) {
-                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_EDIT_TRIGGER, mouseX, mouseY);
+                graphics.renderTooltip(font, Translations.CLOCK_EDIT_TRIGGER, mouseX, mouseY);
             } else if (deleteButton.isHovered()) {
-                graphics.renderTooltip(Minecraft.getInstance().font, Translations.CLOCK_DELETE_TRIGGER, mouseX, mouseY);
+                graphics.renderTooltip(font, Translations.CLOCK_DELETE_TRIGGER, mouseX, mouseY);
             }
         }
     }

@@ -14,7 +14,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookPacket;
 import com.mojang.datafixers.util.Either;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -352,7 +351,7 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     private void addParticles(BlockPos pos) {
-        ParticleEngine particles = Minecraft.getInstance().particleEngine;
+        ParticleEngine particles = ClientUtil.getMc().particleEngine;
         for (int i = 0; i < PARTICLE_COUNT; i++) {
             Particle particle = particles.createParticle(ParticleTypes.POOF, pos.getX() + random.nextDouble(), pos.getY() + random.nextDouble(), pos.getZ() + random.nextDouble(), 0, 0, 0);
             if (particle != null) {

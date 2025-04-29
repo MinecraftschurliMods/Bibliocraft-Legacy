@@ -39,7 +39,7 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
 
     public static void rebuildClothModelCache() {
         CLOTH_MAP.clear();
-        ModelManager models = Minecraft.getInstance().getModelManager();
+        ModelManager models = ClientUtil.getMc().getModelManager();
         for (TableBlock.Type type : TableBlock.Type.values()) {
             Map<DyeColor, BakedModel> map = new HashMap<>();
             for (DyeColor color : DyeColor.values()) {
@@ -58,7 +58,7 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
             stack.scale(0.75f, 0.75f, 0.75f);
             stack.scale(0.0078125f, 0.0078125f, 0.0078125f);
             stack.mulPose(Axis.XP.rotationDegrees(90));
-            Minecraft minecraft = Minecraft.getInstance();
+            Minecraft minecraft = ClientUtil.getMc();
             MapId mapId = item.get(DataComponents.MAP_ID);
             MapItemSavedData mapData = MapItem.getSavedData(mapId, ClientUtil.getLevel());
             VertexConsumer vc = buffer.getBuffer(mapData == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);

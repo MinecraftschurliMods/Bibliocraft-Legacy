@@ -2,9 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.world.phys.AABB;
@@ -17,7 +17,7 @@ public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBl
             stack.pushPose();
             stack.translate(0.5, 0.0625, 0.5);
             stack.mulPose(Axis.YP.rotationDegrees(entity.getYHeadRot()));
-            Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, partialTick, stack, buffer, light);
+            ClientUtil.getMc().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, partialTick, stack, buffer, light);
             stack.popPose();
         }
     }

@@ -1,11 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class FormattedTextArea extends AbstractWidget {
-    private final Font font = Minecraft.getInstance().font;
+    private final Font font = ClientUtil.getFont();
     private final List<FormattedLine> lines;
     private int cursorX = 0;
     private int cursorY = 0;
@@ -62,7 +62,7 @@ public class FormattedTextArea extends AbstractWidget {
         int textX = x + getLineLeftX(line, scale, width);
         FormattedCharSequence formattedText = format(text, style);
         drawText(poseStack, bufferSource, formattedText, textX, y, color, size, mode);
-        Font font = Minecraft.getInstance().font;
+        Font font = ClientUtil.getFont();
         if (drawCursor == DrawCursor.VERTICAL) {
             int textWidth = font.width(format(text.substring(0, cursor), style));
             fill(poseStack, bufferSource, RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
@@ -137,7 +137,7 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     private static void drawText(PoseStack poseStack, MultiBufferSource bufferSource, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
-        Font font = Minecraft.getInstance().font;
+        Font font = ClientUtil.getFont();
         float scale = getScale(size);
         poseStack.pushPose();
         poseStack.translate(x, y, 0);
@@ -221,15 +221,15 @@ public class FormattedTextArea extends AbstractWidget {
             return true;
         }
         if (Screen.isCopy(keyCode)) {
-            Minecraft.getInstance().keyboardHandler.setClipboard(text.substring(min, max));
+            ClientUtil.getMc().keyboardHandler.setClipboard(text.substring(min, max));
             return true;
         }
         if (Screen.isPaste(keyCode) || keyCode == GLFW.GLFW_KEY_INSERT) {
-            insertText(Minecraft.getInstance().keyboardHandler.getClipboard());
+            insertText(ClientUtil.getMc().keyboardHandler.getClipboard());
             return true;
         }
         if (Screen.isCut(keyCode)) {
-            Minecraft.getInstance().keyboardHandler.setClipboard(text.substring(min, max));
+            ClientUtil.getMc().keyboardHandler.setClipboard(text.substring(min, max));
             deleteHighlight();
             return true;
         }
@@ -473,7 +473,7 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     private static int getLineLeftX(FormattedLine line, float scale, int width) {
-        int textWidth = (int) (Minecraft.getInstance().font.width(format(line.text(), line.style())) * scale);
+        int textWidth = (int) (ClientUtil.getFont().width(format(line.text(), line.style())) * scale);
         return switch (line.alignment()) {
             case LEFT -> 1;
             case CENTER -> width / 2 - textWidth / 2;
@@ -482,7 +482,7 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     private static int getLineRightX(FormattedLine line, float scale, int width) {
-        int textWidth = (int) (Minecraft.getInstance().font.width(format(line.text(), line.style())) * scale);
+        int textWidth = (int) (ClientUtil.getFont().width(format(line.text(), line.style())) * scale);
         return switch (line.alignment()) {
             case LEFT -> 1 + textWidth;
             case CENTER -> width / 2 + textWidth / 2;

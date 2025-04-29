@@ -7,7 +7,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Checkbox;
@@ -44,12 +43,12 @@ public class ClockScreen extends Screen {
     protected void init() {
         leftPos = (width - IMAGE_WIDTH) / 2;
         topPos = (height - IMAGE_HEIGHT) / 2;
-        tickSound = addRenderableWidget(Checkbox.builder(Component.empty(), Minecraft.getInstance().font)
+        tickSound = addRenderableWidget(Checkbox.builder(Component.empty(), ClientUtil.getFont())
                 .pos(leftPos + 7, topPos + 6)
                 .selected(clock.tickSound)
                 .build());
         triggerPanel = addRenderableWidget(new ClockTriggerPanel(leftPos + 8, topPos + 36, 160, 122, triggers, this));
-        addRenderableWidget(Button.builder(Translations.CLOCK_ADD_TRIGGER, $ -> Minecraft.getInstance().pushGuiLayer(new ClockTriggerEditScreen(this, null)))
+        addRenderableWidget(Button.builder(Translations.CLOCK_ADD_TRIGGER, $ -> ClientUtil.getMc().pushGuiLayer(new ClockTriggerEditScreen(this, null)))
                 .bounds(width / 2 - 100, topPos + 170, 98, 20)
                 .build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())
@@ -67,8 +66,8 @@ public class ClockScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawString(Minecraft.getInstance().font, Translations.CLOCK_TICK, leftPos + 28, topPos + 11, 0x404040, false);
-        graphics.drawString(Minecraft.getInstance().font, Translations.CLOCK_TRIGGERS, leftPos + 8, topPos + 26, 0x404040, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TICK, leftPos + 28, topPos + 11, 0x404040, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TRIGGERS, leftPos + 8, topPos + 26, 0x404040, false);
         triggerPanel.renderTooltip(graphics, mouseX, mouseY);
     }
 

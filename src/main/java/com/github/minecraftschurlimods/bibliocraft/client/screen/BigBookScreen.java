@@ -17,7 +17,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookPacket;
 import com.mojang.datafixers.util.Either;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -419,11 +418,11 @@ public class BigBookScreen extends Screen {
         stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
         player.setItemInHand(hand, stack);
         PacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
-        Minecraft.getInstance().setScreen(null);
+        ClientUtil.getMc().setScreen(null);
     }
 
     private void done(Button button) {
         onClose();
-        Minecraft.getInstance().setScreen(null);
+        ClientUtil.getMc().setScreen(null);
     }
 }

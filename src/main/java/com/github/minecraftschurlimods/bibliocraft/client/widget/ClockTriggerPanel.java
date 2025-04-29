@@ -2,9 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.neoforged.neoforge.client.gui.widget.ScrollPanel;
@@ -22,7 +22,7 @@ public class ClockTriggerPanel extends ScrollPanel {
     private final List<ClockTriggerElement> elements;
 
     public ClockTriggerPanel(int x, int y, int width, int height, List<ClockTrigger> triggers, ClockScreen owner) {
-        super(Minecraft.getInstance(), width, height, y, x, 0);
+        super(ClientUtil.getMc(), width, height, y, x, 0);
         this.owner = owner;
         this.x = x;
         this.y = y;

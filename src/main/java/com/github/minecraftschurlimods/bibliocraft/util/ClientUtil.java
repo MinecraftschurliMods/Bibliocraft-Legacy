@@ -12,6 +12,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -41,21 +42,39 @@ import java.util.Calendar;
  */
 public final class ClientUtil {
     /**
-     * Helper to get the {@link ClientLevel} without the nullability inspection.
+     * Helper to get the {@link Minecraft} instance.
+     *
+     * @return The {@link Minecraft} instance.
+     */
+    public static Minecraft getMc() {
+        return Minecraft.getInstance();
+    }
+
+    /**
+     * Helper to get the {@link ClientLevel} instance from the {@link Minecraft} instance.
      *
      * @return The {@link ClientLevel} instance.
      */
     public static ClientLevel getLevel() {
-        return Minecraft.getInstance().level;
+        return getMc().level;
     }
 
     /**
-     * Helper to get the {@link LocalPlayer} without the nullability inspection.
+     * Helper to get the {@link LocalPlayer} instance from the {@link Minecraft} instance.
      *
      * @return The {@link LocalPlayer} instance.
      */
     public static LocalPlayer getPlayer() {
-        return Minecraft.getInstance().player;
+        return getMc().player;
+    }
+
+    /**
+     * Helper to get the {@link Font} instance from the {@link Minecraft} instance.
+     *
+     * @return The {@link Font} instance.
+     */
+    public static Font getFont() {
+        return getMc().font;
     }
 
     /**
@@ -66,7 +85,7 @@ public final class ClientUtil {
      * @param hand   The {@link InteractionHand} in which the big book is held.
      */
     public static void openBigBookScreen(ItemStack stack, Player player, InteractionHand hand) {
-        Minecraft.getInstance().setScreen(new BigBookScreen(stack, player, hand));
+        getMc().setScreen(new BigBookScreen(stack, player, hand));
     }
 
     /**
@@ -77,7 +96,7 @@ public final class ClientUtil {
      * @param lectern The owning lectern's {@link BlockPos}.
      */
     public static void openBigBookScreen(ItemStack stack, Player player, BlockPos lectern) {
-        Minecraft.getInstance().setScreen(new BigBookScreen(stack, player, lectern));
+        getMc().setScreen(new BigBookScreen(stack, player, lectern));
     }
 
     /**
@@ -87,7 +106,7 @@ public final class ClientUtil {
      * @param hand  The {@link InteractionHand} in which the clipboard is held.
      */
     public static void openClipboardScreen(ItemStack stack, InteractionHand hand) {
-        Minecraft.getInstance().setScreen(new ClipboardScreen(stack, hand));
+        getMc().setScreen(new ClipboardScreen(stack, hand));
     }
 
     /**
@@ -96,7 +115,7 @@ public final class ClientUtil {
      * @param pos The {@link BlockPos} of the clock owning the screen.
      */
     public static void openClockScreen(BlockPos pos) {
-        Minecraft.getInstance().setScreen(new ClockScreen(pos));
+        getMc().setScreen(new ClockScreen(pos));
     }
 
     /**
@@ -106,14 +125,14 @@ public final class ClientUtil {
      * @param back Whether the back of the sign was clicked or not.
      */
     public static void openFancySignScreen(BlockPos pos, boolean back) {
-        Minecraft.getInstance().setScreen(new FancySignScreen(pos, back));
+        getMc().setScreen(new FancySignScreen(pos, back));
     }
 
     /**
      * Opens a {@link RedstoneBookScreen} on the client.
      */
     public static void openRedstoneBookScreen() {
-        Minecraft.getInstance().setScreen(new RedstoneBookScreen());
+        getMc().setScreen(new RedstoneBookScreen());
     }
 
     /**
@@ -124,7 +143,7 @@ public final class ClientUtil {
      * @param hand   The {@link InteractionHand} in which the stockroom catalog is held.
      */
     public static void openStockroomCatalogScreen(ItemStack stack, Player player, InteractionHand hand) {
-        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, player, hand));
+        getMc().setScreen(new StockroomCatalogScreen(stack, player, hand));
     }
 
     /**
@@ -135,7 +154,7 @@ public final class ClientUtil {
      * @param lectern The owning lectern's {@link BlockPos}.
      */
     public static void openStockroomCatalogScreen(ItemStack stack, Player player, BlockPos lectern) {
-        Minecraft.getInstance().setScreen(new StockroomCatalogScreen(stack, player, lectern));
+        getMc().setScreen(new StockroomCatalogScreen(stack, player, lectern));
     }
 
     /**
@@ -144,7 +163,7 @@ public final class ClientUtil {
      * @param pos The typewriter's {@link BlockPos}.
      */
     public static void openTypewriterScreen(BlockPos pos) {
-        Minecraft.getInstance().setScreen(new TypewriterScreen(pos));
+        getMc().setScreen(new TypewriterScreen(pos));
     }
 
     /**
@@ -203,7 +222,7 @@ public final class ClientUtil {
      * @param context The {@link ItemDisplayContext} to use.
      */
     public static void renderItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay, ItemDisplayContext context) {
-        Minecraft minecraft = Minecraft.getInstance();
+        Minecraft minecraft = getMc();
         ItemRenderer renderer = minecraft.getItemRenderer();
         renderer.render(item, context, context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND || context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND, stack, buffer, light, overlay, renderer.getModel(item, minecraft.level, null, 0));
     }
@@ -221,8 +240,8 @@ public final class ClientUtil {
      * @param modelData The {@link ModelData} to use.
      */
     public static void renderBakedModel(BakedModel model, PoseStack stack, MultiBufferSource buffer, Level level, BlockPos pos, BlockState state, RandomSource random, ModelData modelData) {
-        ModelBlockRenderer renderer = Minecraft.getInstance().getBlockRenderer().getModelRenderer();
-        int color = Minecraft.getInstance().getBlockColors().getColor(state, level, pos, 0);
+        ModelBlockRenderer renderer = getMc().getBlockRenderer().getModelRenderer();
+        int color = getMc().getBlockColors().getColor(state, level, pos, 0);
         float red = (float) (color >> 16 & 255) / 255f;
         float green = (float) (color >> 8 & 255) / 255f;
         float blue = (float) (color & 255) / 255f;
@@ -244,7 +263,7 @@ public final class ClientUtil {
      * @param packet The packet containing the stockroom catalog contents.
      */
     public static void setStockroomCatalogList(StockroomCatalogListPacket packet) {
-        if (Minecraft.getInstance().screen instanceof StockroomCatalogScreen screen) {
+        if (getMc().screen instanceof StockroomCatalogScreen screen) {
             screen.setFromPacket(packet);
         }
     }
