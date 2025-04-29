@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractibleBlock;
@@ -38,8 +39,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape Z_SHAPE_BOTTOM = ShapeUtil.combine(
@@ -86,7 +85,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
         return pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)
-                ? Objects.requireNonNull(super.getStateForPlacement(context))
+                ? BCUtil.nonNull(super.getStateForPlacement(context))
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER)
                 : null;

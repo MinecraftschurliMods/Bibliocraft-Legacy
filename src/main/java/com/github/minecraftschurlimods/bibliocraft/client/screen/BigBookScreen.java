@@ -10,6 +10,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBoo
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
@@ -40,11 +41,10 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.HexFormat;
 import java.util.List;
-import java.util.Objects;
 
 public class BigBookScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/big_book.png");
-    private static final Component OWNER = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, Objects.requireNonNull(Minecraft.getInstance().player).getName()).withStyle(ChatFormatting.DARK_GRAY);
+    private static final Component OWNER = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, ClientUtil.getPlayer().getName()).withStyle(ChatFormatting.DARK_GRAY);
     private static final int BACKGROUND_WIDTH = 220;
     private static final int BACKGROUND_HEIGHT = 256;
     private static final int TEXT_WIDTH = 188;
@@ -84,12 +84,12 @@ public class BigBookScreen extends Screen {
         this.hand = hand;
         this.lectern = lectern;
         if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
-            WrittenBigBookContent content = Objects.requireNonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT));
+            WrittenBigBookContent content = BCUtil.nonNull(stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT));
             pages = new ArrayList<>(content.pages());
             currentPage = content.currentPage();
             writable = false;
         } else if (stack.has(BCDataComponents.BIG_BOOK_CONTENT)) {
-            BigBookContent content = Objects.requireNonNull(stack.get(BCDataComponents.BIG_BOOK_CONTENT));
+            BigBookContent content = BCUtil.nonNull(stack.get(BCDataComponents.BIG_BOOK_CONTENT));
             pages = new ArrayList<>(content.pages());
             currentPage = content.currentPage();
             writable = lectern == null;
@@ -419,11 +419,11 @@ public class BigBookScreen extends Screen {
         stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
         player.setItemInHand(hand, stack);
         PacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
-        Objects.requireNonNull(minecraft).setScreen(null);
+        Minecraft.getInstance().setScreen(null);
     }
 
     private void done(Button button) {
         onClose();
-        Objects.requireNonNull(minecraft).setScreen(null);
+        Minecraft.getInstance().setScreen(null);
     }
 }

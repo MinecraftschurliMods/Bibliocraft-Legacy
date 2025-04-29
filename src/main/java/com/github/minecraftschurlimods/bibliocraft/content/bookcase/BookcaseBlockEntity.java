@@ -19,7 +19,6 @@ import net.neoforged.neoforge.client.model.data.ModelProperty;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class BookcaseBlockEntity extends BCMenuBlockEntity {
     public static final List<ModelProperty<Boolean>> MODEL_PROPERTIES = Util.make(new ArrayList<>(), list -> {
@@ -46,7 +45,7 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
         super.onDataPacket(net, pkt, lookupProvider);
-        Objects.requireNonNull(level).sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        level().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
         requestModelDataUpdate();
     }
 

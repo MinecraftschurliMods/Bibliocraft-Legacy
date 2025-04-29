@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
 import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -11,12 +12,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 
-import java.util.Objects;
-
 public class FancyCrafterBER implements BlockEntityRenderer<FancyCrafterBlockEntity> {
     @Override
     public void render(FancyCrafterBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
-        Level level = Objects.requireNonNull(blockEntity.getLevel());
+        Level level = BCUtil.nonNull(blockEntity.getLevel());
         BlockPos pos = blockEntity.getBlockPos();
         Direction direction = blockEntity.getBlockState().getValue(FancyCrafterBlock.FACING);
         stack.pushPose();

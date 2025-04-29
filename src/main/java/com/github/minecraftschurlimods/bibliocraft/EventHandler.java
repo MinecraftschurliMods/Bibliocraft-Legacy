@@ -58,8 +58,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.jetbrains.annotations.ApiStatus;
 
-import java.util.Objects;
-
 public final class EventHandler {
     @ApiStatus.Internal
     public static void init(IEventBus modBus) {
@@ -75,7 +73,7 @@ public final class EventHandler {
 
     private static void constructMod(FMLConstructModEvent event) {
         ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register();
-        BCRegistries.init(Objects.requireNonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus()));
+        BCRegistries.init(BCUtil.nonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus()));
     }
 
     private static void commonSetup(FMLCommonSetupEvent event) {

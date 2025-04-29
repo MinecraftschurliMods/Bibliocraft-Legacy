@@ -12,8 +12,6 @@ import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Objects;
-
 public class CookieJarBlockEntity extends BCMenuBlockEntity {
     private final ContainerOpenersCounter openersCounter = new ContainerOpenersCounter() {
         @Override
@@ -49,20 +47,20 @@ public class CookieJarBlockEntity extends BCMenuBlockEntity {
     }
 
     private void updateBlockState(BlockState pState, boolean pOpen) {
-        Objects.requireNonNull(level).setBlock(getBlockPos(), pState.setValue(BarrelBlock.OPEN, pOpen), 3);
+        level().setBlock(getBlockPos(), pState.setValue(BarrelBlock.OPEN, pOpen), 3);
     }
 
     @Override
     public void startOpen(Player pPlayer) {
         if (!this.remove && !pPlayer.isSpectator()) {
-            this.openersCounter.incrementOpeners(pPlayer, Objects.requireNonNull(level), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.incrementOpeners(pPlayer, level(), this.getBlockPos(), this.getBlockState());
         }
     }
 
     @Override
     public void stopOpen(Player pPlayer) {
         if (!this.remove && !pPlayer.isSpectator()) {
-            this.openersCounter.decrementOpeners(pPlayer, Objects.requireNonNull(level), this.getBlockPos(), this.getBlockState());
+            this.openersCounter.decrementOpeners(pPlayer, level(), this.getBlockPos(), this.getBlockState());
         }
     }
 }

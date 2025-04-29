@@ -6,10 +6,10 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBl
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignContent;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -24,7 +24,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HexFormat;
-import java.util.Objects;
 
 public class FancySignScreen extends Screen {
     public static final int WIDTH = 140;
@@ -48,7 +47,7 @@ public class FancySignScreen extends Screen {
 
     @Override
     public void onClose() {
-        if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign))
+        if (!(ClientUtil.getLevel().getBlockEntity(pos) instanceof FancySignBlockEntity sign))
             return;
         FancySignContent list = new FancySignContent(textArea.getLines());
         if (back) {
@@ -63,7 +62,7 @@ public class FancySignScreen extends Screen {
     @SuppressWarnings("DataFlowIssue")
     @Override
     protected void init() {
-        if (!(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos) instanceof FancySignBlockEntity sign))
+        if (!(ClientUtil.getLevel().getBlockEntity(pos) instanceof FancySignBlockEntity sign))
             return;
         int leftX = (width - WIDTH) / 2;
         int rightX = (width + WIDTH) / 2;

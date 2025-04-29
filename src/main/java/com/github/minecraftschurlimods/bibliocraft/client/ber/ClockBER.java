@@ -25,8 +25,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
 
-import java.util.Objects;
-
 /**
  * Conceptual credit for the clock hands:
  * <a href="https://github.com/MehVahdJukaar/Supplementaries/blob/master/common/src/main/java/net/mehvahdjukaar/supplementaries/client/renderers/tiles/ClockBlockTileRenderer.java">ClockBlockTileRenderer from the Supplementaries mod</a>
@@ -89,7 +87,7 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
     }
 
     private void renderHands(ClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
-        Level level = Objects.requireNonNull(blockEntity.getLevel());
+        Level level = BCUtil.nonNull(blockEntity.getLevel());
         float rotation = level.dimensionType().natural() ? -((level.getDayTime() + 6000) % 12000) * 0.03f : getRotation(level);
         stack.pushPose();
         stack.translate(0, y, z);
@@ -105,7 +103,7 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
     }
 
     private void renderPendulum(ClockBlockEntity blockEntity, ModelPart pendulum, float pendulumSize, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
-        float rotation = (float) Math.sin((Objects.requireNonNull(blockEntity.getLevel()).getDayTime() % 40 - 20) * Math.PI / 20);
+        float rotation = (float) Math.sin((BCUtil.nonNull(blockEntity.getLevel()).getDayTime() % 40 - 20) * Math.PI / 20);
         stack.pushPose();
         stack.translate(0, y, z);
         stack.mulPose(Axis.ZP.rotationDegrees(180));

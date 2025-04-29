@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockBlockEntit
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,7 +20,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ClockScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock.png");
@@ -36,7 +36,7 @@ public class ClockScreen extends Screen {
     public ClockScreen(BlockPos pos) {
         super(Translations.CLOCK_TITLE);
         this.pos = pos;
-        clock = (ClockBlockEntity) Objects.requireNonNull(Objects.requireNonNull(Minecraft.getInstance().level).getBlockEntity(pos));
+        clock = (ClockBlockEntity) BCUtil.nonNull(ClientUtil.getLevel().getBlockEntity(pos));
         triggers = new ArrayList<>(clock.getTriggers());
     }
 

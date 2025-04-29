@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancysign;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
@@ -19,8 +20,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Objects;
 
 public class FancySignBlock extends AbstractFancySignBlock {
     public static final BooleanProperty HANGING = BlockStateProperties.HANGING;
@@ -60,7 +59,7 @@ public class FancySignBlock extends AbstractFancySignBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return Objects.requireNonNull(super.getStateForPlacement(context)).setValue(HANGING, context.getClickedFace() == Direction.DOWN);
+        return BCUtil.nonNull(super.getStateForPlacement(context)).setValue(HANGING, context.getClickedFace() == Direction.DOWN);
     }
 
     @Override

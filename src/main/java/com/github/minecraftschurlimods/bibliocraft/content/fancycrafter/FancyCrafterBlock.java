@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancycrafter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
@@ -23,8 +24,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class FancyCrafterBlock extends BCFacingEntityBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -102,7 +101,7 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return Objects.requireNonNull(super.getStateForPlacement(context)).setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+        return BCUtil.nonNull(super.getStateForPlacement(context)).setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
 
     @Override

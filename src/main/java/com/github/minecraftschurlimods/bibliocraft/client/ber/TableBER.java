@@ -30,7 +30,6 @@ import org.joml.Matrix4f;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
     private static final RenderType MAP_BACKGROUND = RenderType.text(BCUtil.mcLoc("textures/map/map_background.png"));
@@ -61,7 +60,7 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity> {
             stack.mulPose(Axis.XP.rotationDegrees(90));
             Minecraft minecraft = Minecraft.getInstance();
             MapId mapId = item.get(DataComponents.MAP_ID);
-            MapItemSavedData mapData = MapItem.getSavedData(mapId, Objects.requireNonNull(minecraft.level));
+            MapItemSavedData mapData = MapItem.getSavedData(mapId, ClientUtil.getLevel());
             VertexConsumer vc = buffer.getBuffer(mapData == null ? MAP_BACKGROUND : MAP_BACKGROUND_CHECKERBOARD);
             Matrix4f matrix4f = stack.last().pose();
             vc.addVertex(matrix4f, -7f, 135f, 0f).setColor(-1).setUv(0f, 1f).setLight(light);

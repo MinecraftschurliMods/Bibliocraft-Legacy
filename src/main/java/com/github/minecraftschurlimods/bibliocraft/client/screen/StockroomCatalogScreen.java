@@ -9,6 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookPacket;
@@ -39,7 +40,6 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 
@@ -97,7 +97,7 @@ public class StockroomCatalogScreen extends Screen {
         int i = 0;
         if (showContainerList) {
             for (BlockPos pos : visibleContainers) {
-                ItemStack blockItem = new ItemStack(Objects.requireNonNull(Minecraft.getInstance().level).getBlockState(pos).getBlock().asItem());
+                ItemStack blockItem = new ItemStack(ClientUtil.getLevel().getBlockState(pos).getBlock().asItem());
                 graphics.renderItem(blockItem, x + 34, i * 19 + 29);
                 graphics.renderItemDecorations(font, blockItem, x + 34, i * 19 + 29);
                 String itemText = blockItem.getHoverName().getString(137);
@@ -107,7 +107,7 @@ public class StockroomCatalogScreen extends Screen {
             if (mouseX >= x + 34 && mouseX < x + 50) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
                     BlockPos container = visibleContainers.get(y / 19);
-                    int distance = (int) (lectern != null ? Math.sqrt(lectern.distSqr(container)) : Objects.requireNonNull(Minecraft.getInstance().player).position().distanceTo(BCUtil.toVec3(container)));
+                    int distance = (int) (lectern != null ? Math.sqrt(lectern.distSqr(container)) : ClientUtil.getPlayer().position().distanceTo(BCUtil.toVec3(container)));
                     graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance), mouseX, mouseY);
                 }
             }
@@ -204,7 +204,7 @@ public class StockroomCatalogScreen extends Screen {
             for (int i = 0; i < ROWS_PER_PAGE; i++) {
                 final int j = i; // I love Java
                 removeButtons.add(addRenderableWidget(new SpriteButton.RegularAndHighlightSprite(REMOVE_ICON, REMOVE_ICON_HIGHLIGHTED, x + 189, i * 19 + 29, 16, 16, p -> {
-                    updateData(data -> data.remove(new GlobalPos(Objects.requireNonNull(Minecraft.getInstance().level).dimension(), visibleContainers.get(j))));
+                    updateData(data -> data.remove(new GlobalPos(ClientUtil.getLevel().dimension(), visibleContainers.get(j))));
                     setDataOnStack();
                     requestPacket();
                     updateContents();
@@ -268,7 +268,7 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     public void setFromPacket(StockroomCatalogListPacket packet) {
-        Level level = Objects.requireNonNull(Minecraft.getInstance().level);
+        Level level = ClientUtil.getLevel();
         containers = packet.containers()
                 .stream()
                 .filter(e -> level.getCapability(Capabilities.ItemHandler.BLOCK, e, null) != null)
@@ -331,7 +331,7 @@ public class StockroomCatalogScreen extends Screen {
 
     private void buildVisibleContainersCache() {
         visibleContainers = containers.stream()
-                .filter(e -> BCUtil.getNameAtPos(Objects.requireNonNull(Minecraft.getInstance().level), e).getString().toLowerCase(Locale.ROOT).contains(search))
+                .filter(e -> BCUtil.getNameAtPos(ClientUtil.getLevel(), e).getString().toLowerCase(Locale.ROOT).contains(search))
                 .skip((long) page * ROWS_PER_PAGE)
                 .limit(ROWS_PER_PAGE)
                 .toList();

@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.seat;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.ColoredWoodTypeBlockItem;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
 import net.minecraft.Util;
@@ -15,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Supplier;
 
 public class SeatBackItem extends ColoredWoodTypeBlockItem {
@@ -41,7 +41,7 @@ public class SeatBackItem extends ColoredWoodTypeBlockItem {
     @Override
     @Nullable
     protected BlockState getPlacementState(BlockPlaceContext context) {
-        BlockState state = Objects.requireNonNull(getBlock().getStateForPlacement(context));
+        BlockState state = BCUtil.nonNull(getBlock().getStateForPlacement(context));
         return canPlace(context, state) ? state.setValue(SeatBackBlock.TYPE, type) : null;
     }
 

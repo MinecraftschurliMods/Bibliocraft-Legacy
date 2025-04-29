@@ -12,6 +12,8 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -38,6 +40,24 @@ import java.util.Calendar;
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
 public final class ClientUtil {
+    /**
+     * Helper to get the {@link ClientLevel} without the nullability inspection.
+     *
+     * @return The {@link ClientLevel} instance.
+     */
+    public static ClientLevel getLevel() {
+        return Minecraft.getInstance().level;
+    }
+
+    /**
+     * Helper to get the {@link LocalPlayer} without the nullability inspection.
+     *
+     * @return The {@link LocalPlayer} instance.
+     */
+    public static LocalPlayer getPlayer() {
+        return Minecraft.getInstance().player;
+    }
+
     /**
      * Opens a {@link BigBookScreen} on the client.
      *

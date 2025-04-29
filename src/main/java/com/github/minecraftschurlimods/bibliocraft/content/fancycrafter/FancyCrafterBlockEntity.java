@@ -27,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
@@ -180,10 +179,10 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
     }
 
     private void calculateRecipe() {
-        RecipeManager recipes = Objects.requireNonNull(level).getRecipeManager();
+        RecipeManager recipes = level().getRecipeManager();
         CraftingInput input = CraftingInput.of(3, 3, getInputs());
-        recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level).orElse(null);
-        items.setStackInSlot(9, recipe == null ? ItemStack.EMPTY : recipe.value().getResultItem(level.registryAccess()).copy());
+        recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level()).orElse(null);
+        items.setStackInSlot(9, recipe == null ? ItemStack.EMPTY : recipe.value().getResultItem(level().registryAccess()).copy());
     }
 
     private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {

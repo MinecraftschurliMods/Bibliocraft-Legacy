@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.util.block;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
@@ -9,8 +10,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.Objects;
 
 /**
  * Abstract superclass for all menus of this mod.
@@ -41,7 +40,7 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
      */
     @SuppressWarnings("unchecked")
     public BCMenu(MenuType<?> type, int id, Inventory inventory, FriendlyByteBuf data) {
-        this(type, id, inventory, (T) Objects.requireNonNull(inventory.player.level().getBlockEntity(data.readBlockPos())));
+        this(type, id, inventory, (T) BCUtil.nonNull(inventory.player.level().getBlockEntity(data.readBlockPos())));
     }
 
     /**

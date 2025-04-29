@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.table;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
@@ -28,7 +29,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class TableBlock extends BCFacingEntityBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
@@ -108,7 +108,7 @@ public class TableBlock extends BCFacingEntityBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        return getNewState(level, pos, Objects.requireNonNull(super.getStateForPlacement(context)));
+        return getNewState(level, pos, BCUtil.nonNull(super.getStateForPlacement(context)));
     }
 
     @Override

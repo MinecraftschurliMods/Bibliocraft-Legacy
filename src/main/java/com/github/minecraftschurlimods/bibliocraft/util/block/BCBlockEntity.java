@@ -11,6 +11,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -19,8 +20,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 /**
  * Abstract superclass for all block entities in this mod.
@@ -43,7 +42,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
             protected void onContentsChanged(int slot) {
                 super.onContentsChanged(slot);
                 setChanged();
-                Objects.requireNonNull(level).sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+                level().sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             }
         };
     }
@@ -55,7 +54,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     public void setLockKey(LockCode lockKey) {
         this.lockKey = lockKey;
         setChanged();
-        Objects.requireNonNull(level).sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        level().sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     @Override
@@ -101,7 +100,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     @Override
     public boolean stillValid(Player player) {
         BlockPos pos = getBlockPos();
-        return Objects.requireNonNull(level).getBlockEntity(pos) == this && player.distanceToSqr(Vec3.atCenterOf(pos)) <= 64;
+        return level().getBlockEntity(pos) == this && player.distanceToSqr(Vec3.atCenterOf(pos)) <= 64;
     }
 
     @Override
@@ -143,5 +142,9 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     
     public IItemHandler getCapability(@Nullable Direction side) {
         return items;
+    }
+    
+    public Level level() {
+        return level;
     }
 }

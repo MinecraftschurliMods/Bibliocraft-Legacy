@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -84,6 +85,16 @@ public final class BCUtil {
      */
     public static ResourceLocation modLoc(String namespace, String path) {
         return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    }
+
+    /**
+     * Helper to reduce {@link Objects#requireNonNull(Object)} boilerplate.
+     * @param t The nullable object.
+     * @return The input object, guarded by a non-null check.
+     * @param <T> The type of the object.
+     */
+    public static <T> T nonNull(T t) {
+        return Objects.requireNonNull(t);
     }
 
     /**
