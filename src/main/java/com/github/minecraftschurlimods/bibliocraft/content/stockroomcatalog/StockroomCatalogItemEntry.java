@@ -33,7 +33,7 @@ public record StockroomCatalogItemEntry(ItemStack item, int count, List<BlockPos
     }
 
     public StockroomCatalogItemEntry add(int count) {
-        return new StockroomCatalogItemEntry(item, this.count + count, containers);
+        return new StockroomCatalogItemEntry(item, this.count + count, new ArrayList<>(containers));
     }
     
     public StockroomCatalogItemEntry add(BlockPos container) {

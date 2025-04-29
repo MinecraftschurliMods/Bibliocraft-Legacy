@@ -14,6 +14,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+import java.util.ArrayList;
+
 public record SetBigBookPageInLecternPacket(int page, Either<InteractionHand, BlockPos> target) implements CustomPacketPayload {
     public static final Type<SetBigBookPageInLecternPacket> TYPE = new Type<>(BCUtil.bcLoc("set_big_book_page_in_lectern"));
     public static final StreamCodec<ByteBuf, SetBigBookPageInLecternPacket> STREAM_CODEC = StreamCodec.composite(
@@ -35,14 +37,14 @@ public record SetBigBookPageInLecternPacket(int page, Either<InteractionHand, Bl
             stack.update(
                     BCDataComponents.BIG_BOOK_CONTENT,
                     BigBookContent.DEFAULT,
-                    data -> new BigBookContent(data.pages(), Math.clamp(page, 0, Math.max(0, data.pages().size() - 1)))
+                    data -> new BigBookContent(new ArrayList<>(data.pages()), Math.clamp(page, 0, Math.max(0, data.pages().size() - 1)))
             );
         }
         if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
             stack.update(
                     BCDataComponents.WRITTEN_BIG_BOOK_CONTENT,
                     WrittenBigBookContent.DEFAULT,
-                    data -> new WrittenBigBookContent(data.pages(), data.title(), data.author(), data.generation(), Math.clamp(page, 0, Math.max(0, data.pages().size() - 1)))
+                    data -> new WrittenBigBookContent(new ArrayList<>(data.pages()), data.title(), data.author(), data.generation(), Math.clamp(page, 0, Math.max(0, data.pages().size() - 1)))
             );
         }
     }

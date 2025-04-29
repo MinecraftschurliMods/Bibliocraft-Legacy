@@ -10,6 +10,7 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.component.WrittenBookContent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record WrittenBigBookContent(List<List<FormattedLine>> pages, String title, String author, int generation, int currentPage) {
@@ -31,6 +32,6 @@ public record WrittenBigBookContent(List<List<FormattedLine>> pages, String titl
 
     @Nullable
     public WrittenBigBookContent tryCraftCopy() {
-        return generation >= WrittenBookContent.MAX_CRAFTABLE_GENERATION ? null : new WrittenBigBookContent(pages, title, author, generation + 1, currentPage);
+        return generation >= WrittenBookContent.MAX_CRAFTABLE_GENERATION ? null : new WrittenBigBookContent(new ArrayList<>(pages), title, author, generation + 1, currentPage);
     }
 }

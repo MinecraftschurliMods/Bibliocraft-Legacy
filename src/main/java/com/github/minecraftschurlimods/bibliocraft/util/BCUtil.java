@@ -38,6 +38,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -167,6 +168,19 @@ public final class BCUtil {
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public static int max(int i, int... ints) {
         return IntStream.concat(IntStream.of(i), Arrays.stream(ints)).max().getAsInt();
+    }
+
+    /**
+     * Copies the list and performs the given operation on it.
+     * @param list     The list to copy.
+     * @param consumer The operation to perform.
+     * @return A copy of the original list, with the operation performed on it.
+     * @param <T> The type of the list.
+     */
+    public static <T> List<T> copyListAndDo(List<T> list, Consumer<List<T>> consumer) {
+        List<T> copy = new ArrayList<>(list);
+        consumer.accept(copy);
+        return copy;
     }
 
     /**

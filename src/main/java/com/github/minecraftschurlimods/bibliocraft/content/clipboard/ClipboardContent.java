@@ -26,11 +26,11 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
             ClipboardContent::new);
 
     public ClipboardContent setTitle(String title) {
-        return new ClipboardContent(title, active, pages);
+        return new ClipboardContent(title, active, new ArrayList<>(pages));
     }
 
     public ClipboardContent setActive(int active) {
-        return new ClipboardContent(title, active, pages);
+        return new ClipboardContent(title, active, new ArrayList<>(pages));
     }
 
     public boolean canHaveNewPage() {
@@ -50,7 +50,7 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
     }
 
     public ClipboardContent setPages(List<Page> pages) {
-        return new ClipboardContent(title, active, pages);
+        return new ClipboardContent(title, active, new ArrayList<>(pages));
     }
 
     public record Page(List<CheckboxState> checkboxes, List<String> lines) {
@@ -70,11 +70,11 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
                 Page::new);
 
         public Page setCheckboxes(List<CheckboxState> checkboxes) {
-            return new Page(checkboxes, lines);
+            return new Page(checkboxes, new ArrayList<>(lines));
         }
 
         public Page setLines(List<String> lines) {
-            return new Page(checkboxes, lines);
+            return new Page(checkboxes, new ArrayList<>(lines));
         }
     }
 }
