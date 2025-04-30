@@ -146,6 +146,11 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     @Override
+    public boolean isPauseScreen() {
+        return lectern == null;
+    }
+
+    @Override
     public void onClose() {
         super.onClose();
         setDataOnStack();
