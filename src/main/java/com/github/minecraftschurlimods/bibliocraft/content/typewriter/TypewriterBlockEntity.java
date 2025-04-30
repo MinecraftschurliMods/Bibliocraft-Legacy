@@ -2,10 +2,13 @@ package com.github.minecraftschurlimods.bibliocraft.content.typewriter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,14 +23,28 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     public static final int OUTPUT = 1;
     private static final int[] INPUTS = new int[]{INPUT};
     private static final int[] OUTPUTS = new int[]{OUTPUT};
+    private static final String PAGE_KEY = "page";
     private final EnumMap<Direction, SidedInvWrapper> wrappers = Util.make(new EnumMap<>(Direction.class), map -> {
         for (Direction direction : Direction.values()) {
             map.put(direction, new SidedInvWrapper(this, direction));
         }
     });
+    private TypewriterPage page = new TypewriterPage();
 
     public TypewriterBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.TYPEWRITER.get(), 2, pos, state);
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        page = BCUtil.decodeNbt(TypewriterPage.CODEC, tag.getCompound(PAGE_KEY));
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.put(PAGE_KEY, BCUtil.encodeNbt(TypewriterPage.CODEC, page));
     }
 
     @Override
@@ -67,5 +84,9 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
         ItemStack output = getItem(OUTPUT);
         setItem(OUTPUT, ItemStack.EMPTY);
         return output;
+    }
+
+    public TypewriterPage getPage() {
+        return page;
     }
 }
