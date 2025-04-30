@@ -168,14 +168,16 @@ public final class EventHandler {
             } else if (stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
                 lectern.pageCount = 1;
             }
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCanceled(true);
         } else if (book.has(BCDataComponents.BIG_BOOK_CONTENT) || book.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) || book.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
             if (player.isSecondaryUseActive()) {
                 LecternUtil.takeLecternBook(player, level, pos);
             } else if (!level.isClientSide() && player instanceof ServerPlayer sp) {
                 PacketDistributor.sendToPlayer(sp, new OpenBookInLecternPacket(pos, book));
             }
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCanceled(true);
         }
-        event.setCancellationResult(InteractionResult.SUCCESS);
-        event.setCanceled(true);
     }
 }

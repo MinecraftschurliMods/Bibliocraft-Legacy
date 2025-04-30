@@ -299,6 +299,11 @@ public class BigBookScreen extends Screen {
     }
 
     @Override
+    public boolean isPauseScreen() {
+        return lectern == null;
+    }
+
+    @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
         if (isSigning) {
