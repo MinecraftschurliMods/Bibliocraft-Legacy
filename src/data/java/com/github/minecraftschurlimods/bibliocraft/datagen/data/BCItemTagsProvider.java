@@ -162,6 +162,9 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
                 .addOptional(BCUtil.modLoc("biomeswevegone", "green_glow_bottle"))
                 .addOptional(BCUtil.modLoc("biomeswevegone", "red_glow_bottle"))
                 .addOptional(BCUtil.modLoc("biomeswevegone", "yellow_glow_bottle"))
+                .addOptional(BCUtil.modLoc("buzzier_bees", "bee_bottle"))
+                .addOptional(BCUtil.modLoc("buzzier_bees", "endermite_bottle"))
+                .addOptional(BCUtil.modLoc("buzzier_bees", "silverfish_bottle"))
                 .addOptional(BCUtil.modLoc("cataclysm", "sandstorm_in_a_bottle"))
                 .addOptional(BCUtil.modLoc("corn_delight", "creamy_corn_drink"))
                 .addOptional(BCUtil.modLoc("crabbersdelight", "jar_of_pickles"))
@@ -308,6 +311,9 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
                 .addOptional(BCUtil.modLoc("potionbundles", "lingering_potion_bundle"))
                 .addOptional(BCUtil.modLoc("potionbundles", "potion_bundle"))
                 .addOptional(BCUtil.modLoc("potionbundles", "splash_potion_bundle"))
+                .addOptional(BCUtil.modLoc("potionofbees", "lingering_potion_of_bees"))
+                .addOptional(BCUtil.modLoc("potionofbees", "potion_of_bees"))
+                .addOptional(BCUtil.modLoc("potionofbees", "splash_potion_of_bees"))
                 .addOptional(BCUtil.modLoc("productivebees", "bee_bomb"))
                 .addOptional(BCUtil.modLoc("productivebees", "gene"))
                 .addOptional(BCUtil.modLoc("productivebees", "milk_bottle"))
@@ -400,8 +406,7 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
                 .addOptional(BCUtil.modLoc("vampirism", "pure_blood_4"))
                 .addOptional(BCUtil.modLoc("vampirism", "pure_salt_water"))
                 .addOptional(BCUtil.modLoc("vampirism", "vampire_blood_bottle"))
-                .addOptional(BCUtil.modLoc("vegandelight", "soymilk_bottle"))
-        ;
+                .addOptional(BCUtil.modLoc("vegandelight", "soymilk_bottle"));
         tag(BCTags.Items.SWORD_PEDESTAL_SWORDS).addTag(ItemTags.SWORDS);
         tag(BCTags.Items.TOOL_RACK_TOOLS).addTag(Tags.Items.TOOLS);
         tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());

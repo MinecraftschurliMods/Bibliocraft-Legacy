@@ -31,7 +31,7 @@ repositories {
 }
 
 val jei = helper.dependencies.jei()
-val buzzierBeesCompat = true
+val abnormalsCompat = true
 
 dependencies {
     implementation(helper.neoforge())
@@ -46,7 +46,7 @@ dependencies {
     }
 
     // abnormals mods for integration
-    if (buzzierBeesCompat) {
+    if (abnormalsCompat) {
         runtimeOnly("curse.maven:blueprint-382216:6449863")
         runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
         "dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
@@ -65,7 +65,7 @@ dependencies {
 helper.withCommonRuns()
 helper.withGameTestRuns()
 helper.withDataGenRuns {
-    if (buzzierBeesCompat) {
+    if (abnormalsCompat) {
         programArguments("--existing-mod", "buzzier_bees")
     }
 }
