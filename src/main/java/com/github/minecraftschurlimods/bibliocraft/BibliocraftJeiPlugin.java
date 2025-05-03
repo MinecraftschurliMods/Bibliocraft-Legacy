@@ -54,13 +54,13 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                 registration.addIngredientInfo(holder.get(OAK.get()), Translations.ALL_WOOD_TYPES);
             }
         }
-        if (!Config.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BibliocraftConfig.JEI_SHOW_COLOR_TYPES.get()) {
+            if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     registration.addIngredientInfo(holder.get(OAK.get(), WHITE), Translations.ALL_COLORS_AND_WOOD_TYPES);
                 }
@@ -79,13 +79,13 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
 
     @Override
     public void onRuntimeAvailable(IJeiRuntime runtime) {
-        if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                 removeAllExcept(runtime, holder, holder.get(OAK.get()));
             }
         }
-        if (!Config.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BibliocraftConfig.JEI_SHOW_COLOR_TYPES.get()) {
+            if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     removeAllExcept(runtime, holder, holder.get(OAK.get(), WHITE));
                 }

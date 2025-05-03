@@ -3,7 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public final class Config {
+public final class BibliocraftConfig {
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue ENABLE_PRIDE;
     public static final ModConfigSpec.BooleanValue ENABLE_PRIDE_ALWAYS;

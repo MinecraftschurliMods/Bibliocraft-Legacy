@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
-import com.github.minecraftschurlimods.bibliocraft.Config;
+import com.github.minecraftschurlimods.bibliocraft.BibliocraftConfig;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BigBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClipboardScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
@@ -206,7 +206,7 @@ public final class ClientUtil {
      * @return Whether pride-themed content should be displayed.
      */
     public static boolean isPride() {
-        return Config.ENABLE_PRIDE.get() && (Config.ENABLE_PRIDE_ALWAYS.get() || Calendar.getInstance().get(Calendar.MONTH) == Calendar.JUNE);
+        return BibliocraftConfig.ENABLE_PRIDE.get() && (BibliocraftConfig.ENABLE_PRIDE_ALWAYS.get() || Calendar.getInstance().get(Calendar.MONTH) == Calendar.JUNE);
     }
 
     /**
