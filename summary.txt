@@ -1,1 +1,1 @@
-Some lectern-related fixes
+Compat for Buzzier Bees, Configured and Potion of Bees; some lectern-related fixes
