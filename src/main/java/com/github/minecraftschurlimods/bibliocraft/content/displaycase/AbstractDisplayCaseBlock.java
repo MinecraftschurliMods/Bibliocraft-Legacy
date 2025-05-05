@@ -1,8 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.content.displaycase;
 
+import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -33,15 +35,15 @@ public abstract class AbstractDisplayCaseBlock extends BCFacingInteractibleBlock
     @Override
     public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isSecondaryUseActive()) {
-            level.setBlock(pos, state.setValue(OPEN, !state.getValue(OPEN)), Block.UPDATE_ALL);
+            setOpen(level, pos, state, !state.getValue(OPEN));
             return ItemInteractionResult.SUCCESS;
         }
         if (!state.getValue(OPEN)) {
-            level.setBlock(pos, state.setValue(OPEN, true), Block.UPDATE_ALL);
+            setOpen(level, pos, state, true);
             return ItemInteractionResult.SUCCESS;
         }
         if (stack.isEmpty() && level.getBlockEntity(pos) instanceof DisplayCaseBlockEntity dcbe && dcbe.getItem(0).isEmpty()) {
-            level.setBlock(pos, state.setValue(OPEN, false), Block.UPDATE_ALL);
+            setOpen(level, pos, state, false);
             return ItemInteractionResult.SUCCESS;
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hit);
@@ -57,5 +59,10 @@ public abstract class AbstractDisplayCaseBlock extends BCFacingInteractibleBlock
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(OPEN);
+    }
+
+    private void setOpen(Level level, BlockPos pos, BlockState state, boolean open) {
+        level.setBlock(pos, state.setValue(OPEN, open), Block.UPDATE_ALL);
+        level.playSound(null, pos, open ? BCSoundEvents.DISPLAY_CASE_OPEN.value() : BCSoundEvents.DISPLAY_CASE_CLOSE.value(), SoundSource.BLOCKS);
     }
 }

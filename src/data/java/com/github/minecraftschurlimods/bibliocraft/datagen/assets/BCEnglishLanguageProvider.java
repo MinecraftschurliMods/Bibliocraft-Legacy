@@ -64,6 +64,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addSubtitle("clock.tick", "Clock ticks");
         addSubtitle("clock.tock", "Clock tocks");
         addSubtitle("desk_bell", "Desk Bell rings");
+        addSubtitle("display_case.close", "Display Case closes");
+        addSubtitle("display_case.open", "Display Case opens");
         addSubtitle("tape_measure.close", "Tape Measure retracts");
         addSubtitle("tape_measure.open", "Tape Measure extends");
         add(BCTags.Blocks.BOOKCASES, "Bookcases");

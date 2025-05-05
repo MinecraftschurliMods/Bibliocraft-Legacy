@@ -23,6 +23,8 @@ public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
         add(BCSoundEvents.CLOCK_TICK, "clock/tick_", 5, "clock.tick");
         add(BCSoundEvents.CLOCK_TOCK, "clock/tock_", 5, "clock.tock");
         add(BCSoundEvents.DESK_BELL, "desk_bell/", 4, "desk_bell");
+        add(BCSoundEvents.DISPLAY_CASE_CLOSE, "display_case/close", "display_case.close");
+        add(BCSoundEvents.DISPLAY_CASE_OPEN, "display_case/open", "display_case.open");
         add(BCSoundEvents.TAPE_MEASURE_CLOSE, "tape_measure/close", "tape_measure.close");
         add(BCSoundEvents.TAPE_MEASURE_OPEN, "tape_measure/open", "tape_measure.open");
     }

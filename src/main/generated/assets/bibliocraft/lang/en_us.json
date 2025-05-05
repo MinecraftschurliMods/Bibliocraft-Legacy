@@ -1943,6 +1943,8 @@
   "subtitles.bibliocraft.clock.tick": "Clock ticks",
   "subtitles.bibliocraft.clock.tock": "Clock tocks",
   "subtitles.bibliocraft.desk_bell": "Desk Bell rings",
+  "subtitles.bibliocraft.display_case.close": "Display Case closes",
+  "subtitles.bibliocraft.display_case.open": "Display Case opens",
   "subtitles.bibliocraft.tape_measure.close": "Tape Measure retracts",
   "subtitles.bibliocraft.tape_measure.open": "Tape Measure extends",
   "tag.block.bibliocraft.bookcases": "Bookcases",

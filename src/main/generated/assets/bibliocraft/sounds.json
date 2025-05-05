@@ -34,6 +34,18 @@
     ],
     "subtitle": "subtitles.bibliocraft.desk_bell"
   },
+  "display_case_close": {
+    "sounds": [
+      "bibliocraft:display_case/close"
+    ],
+    "subtitle": "subtitles.bibliocraft.display_case.close"
+  },
+  "display_case_open": {
+    "sounds": [
+      "bibliocraft:display_case/open"
+    ],
+    "subtitle": "subtitles.bibliocraft.display_case.open"
+  },
   "tape_measure_close": {
     "sounds": [
       "bibliocraft:tape_measure/close"

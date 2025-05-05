@@ -8,6 +8,8 @@ public interface BCSoundEvents {
     Holder<SoundEvent> CLOCK_TICK         = BCRegistries.SOUND_EVENTS.register("clock_tick",         SoundEvent::createVariableRangeEvent);
     Holder<SoundEvent> CLOCK_TOCK         = BCRegistries.SOUND_EVENTS.register("clock_tock",         SoundEvent::createVariableRangeEvent);
     Holder<SoundEvent> DESK_BELL          = BCRegistries.SOUND_EVENTS.register("desk_bell",          SoundEvent::createVariableRangeEvent);
+    Holder<SoundEvent> DISPLAY_CASE_CLOSE = BCRegistries.SOUND_EVENTS.register("display_case_close", SoundEvent::createVariableRangeEvent);
+    Holder<SoundEvent> DISPLAY_CASE_OPEN  = BCRegistries.SOUND_EVENTS.register("display_case_open",  SoundEvent::createVariableRangeEvent);
     Holder<SoundEvent> TAPE_MEASURE_CLOSE = BCRegistries.SOUND_EVENTS.register("tape_measure_close", SoundEvent::createVariableRangeEvent);
     Holder<SoundEvent> TAPE_MEASURE_OPEN  = BCRegistries.SOUND_EVENTS.register("tape_measure_open",  SoundEvent::createVariableRangeEvent);
 
