@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CompatUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
@@ -26,6 +27,8 @@ import net.neoforged.neoforge.common.util.Lazy;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 @JeiPlugin
 public final class BibliocraftJeiPlugin implements IModPlugin {
@@ -51,13 +54,13 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                 registration.addIngredientInfo(holder.get(OAK.get()), Translations.ALL_WOOD_TYPES);
             }
         }
-        if (!Config.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BibliocraftConfig.JEI_SHOW_COLOR_TYPES.get()) {
+            if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     registration.addIngredientInfo(holder.get(OAK.get(), WHITE), Translations.ALL_COLORS_AND_WOOD_TYPES);
                 }
@@ -75,32 +78,39 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
     }
 
     @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+    public void onRuntimeAvailable(IJeiRuntime runtime) {
+        if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                removeAllExcept(jeiRuntime, holder, holder.get(OAK.get()));
+                removeAllExcept(runtime, holder, holder.get(OAK.get()));
             }
         }
-        if (!Config.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!Config.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BibliocraftConfig.JEI_SHOW_COLOR_TYPES.get()) {
+            if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                    removeAllExcept(jeiRuntime, holder, holder.get(OAK.get(), WHITE));
+                    removeAllExcept(runtime, holder, holder.get(OAK.get(), WHITE));
                 }
             } else {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     for (BibliocraftWoodType woodType : BibliocraftApi.getWoodTypeRegistry().getAll()) {
-                        removeAllExcept(jeiRuntime, holder, holder.get(woodType, WHITE));
+                        removeAllExcept(runtime, holder, holder.get(woodType, WHITE));
                     }
                 }
             }
             for (ColoredDeferredHolder<Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
-                removeAllExcept(jeiRuntime, holder, holder.get(WHITE));
+                removeAllExcept(runtime, holder, holder.get(WHITE));
             }
+        }
+        if (!CompatUtil.hasSoulCandles()) {
+            remove(runtime, Stream.of(BCItems.SOUL_FANCY_GOLD_LANTERN, BCItems.SOUL_FANCY_IRON_LANTERN).map(Supplier::get).map(ItemStack::new).toList());
         }
     }
 
-    private void removeAllExcept(IJeiRuntime jeiRuntime, GroupingDeferredHolder<Item, ?> holder, Item except) {
-        jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, holder.values().stream().filter(e -> e != except).map(ItemStack::new).toList());
+    private void remove(IJeiRuntime runtime, List<ItemStack> list) {
+        runtime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, list);
+    }
+
+    private void removeAllExcept(IJeiRuntime runtime, GroupingDeferredHolder<Item, ?> holder, Item except) {
+        remove(runtime, holder.values().stream().filter(e -> e != except).map(ItemStack::new).toList());
     }
 
     @SuppressWarnings("DataFlowIssue")

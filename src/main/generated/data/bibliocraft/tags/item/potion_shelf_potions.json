@@ -137,6 +137,18 @@
       "required": false
     },
     {
+      "id": "buzzier_bees:bee_bottle",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:endermite_bottle",
+      "required": false
+    },
+    {
+      "id": "buzzier_bees:silverfish_bottle",
+      "required": false
+    },
+    {
       "id": "cataclysm:sandstorm_in_a_bottle",
       "required": false
     },
@@ -718,6 +730,18 @@
     },
     {
       "id": "potionbundles:splash_potion_bundle",
+      "required": false
+    },
+    {
+      "id": "potionofbees:lingering_potion_of_bees",
+      "required": false
+    },
+    {
+      "id": "potionofbees:potion_of_bees",
+      "required": false
+    },
+    {
+      "id": "potionofbees:splash_potion_of_bees",
       "required": false
     },
     {

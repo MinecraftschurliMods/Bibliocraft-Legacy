@@ -39,6 +39,8 @@ public final class BCLootTableProvider extends LootTableProvider {
             add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(),    DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_IRON_LAMP.get()));
             add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get()));
             add(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get()));
+            add(BCBlocks.SOUL_FANCY_GOLD_LANTERN.get(),  DatagenUtil.createDefaultTable(BCBlocks.SOUL_FANCY_GOLD_LANTERN.get()));
+            add(BCBlocks.SOUL_FANCY_IRON_LANTERN.get(),  DatagenUtil.createDefaultTable(BCBlocks.SOUL_FANCY_IRON_LANTERN.get()));
             add(BCBlocks.CLEAR_TYPEWRITER.get(),         DatagenUtil.createDefaultTable(BCBlocks.CLEAR_TYPEWRITER.get()));
             for (DyeColor color : DyeColor.values()) {
                 add(BCBlocks.FANCY_GOLD_LAMP.get(color),    DatagenUtil.createDefaultTable(BCBlocks.FANCY_GOLD_LAMP.get(color)));

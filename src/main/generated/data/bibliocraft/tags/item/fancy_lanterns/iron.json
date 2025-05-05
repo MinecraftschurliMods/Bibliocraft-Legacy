@@ -1,6 +1,10 @@
 {
   "values": [
     "bibliocraft:fancy_iron_lantern",
+    {
+      "id": "bibliocraft:soul_fancy_iron_lantern",
+      "required": false
+    },
     "bibliocraft:white_fancy_iron_lantern",
     "bibliocraft:orange_fancy_iron_lantern",
     "bibliocraft:magenta_fancy_iron_lantern",

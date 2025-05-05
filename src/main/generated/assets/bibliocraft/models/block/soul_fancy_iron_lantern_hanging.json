@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/fancy_lantern/hanging_iron",
+  "textures": {
+    "color": "buzzier_bees:block/soul_candle_lit"
+  }
+}

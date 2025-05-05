@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CompatUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -44,8 +45,14 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FANCY_IRON_LAMP.values());
                 output.accept(BCItems.CLEAR_FANCY_GOLD_LANTERN);
                 addToTab(output, BCItems.FANCY_GOLD_LANTERN.values());
+                if (CompatUtil.hasSoulCandles()) {
+                    output.accept(BCItems.SOUL_FANCY_GOLD_LANTERN);
+                }
                 output.accept(BCItems.CLEAR_FANCY_IRON_LANTERN);
                 addToTab(output, BCItems.FANCY_IRON_LANTERN.values());
+                if (CompatUtil.hasSoulCandles()) {
+                    output.accept(BCItems.SOUL_FANCY_IRON_LANTERN);
+                }
                 output.accept(BCItems.CLEAR_TYPEWRITER);
                 addToTab(output, BCItems.TYPEWRITER.values());
                 output.accept(BCItems.CLIPBOARD);

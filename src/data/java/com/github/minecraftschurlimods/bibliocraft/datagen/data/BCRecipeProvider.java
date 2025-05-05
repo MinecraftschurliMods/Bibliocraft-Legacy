@@ -23,6 +23,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
 
 import java.util.concurrent.CompletableFuture;
@@ -155,6 +156,26 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .group("bibliocraft:typewriter")
                 .unlockedBy("has_terracotta", has(Items.TERRACOTTA))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_GOLD_LANTERN)
+                .pattern("GIG")
+                .pattern("ICI")
+                .pattern("GIG")
+                .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
+                .group("bibliocraft:fancy_lantern")
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_IRON_LANTERN)
+                .pattern("GIG")
+                .pattern("ICI")
+                .pattern("GIG")
+                .define('G', Ingredient.of(Tags.Items.GLASS_PANES_COLORLESS))
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('C', Ingredient.of(BuiltInRegistries.ITEM.get(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
+                .group("bibliocraft:fancy_lantern")
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD)
                 .pattern("I F")
                 .pattern("PPP")

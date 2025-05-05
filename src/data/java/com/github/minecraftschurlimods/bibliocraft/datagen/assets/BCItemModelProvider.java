@@ -24,11 +24,13 @@ public class BCItemModelProvider extends ItemModelProvider {
         basicItem(BCItems.STOCKROOM_CATALOG.get());
         basicItem(BCItems.TAPE_MEASURE.get());
         basicItem(BCItems.TAPE_REEL.get());
-        withExistingParent("fancy_gold_lamp",    modLoc("block/fancy_gold_lamp_standing"));
-        withExistingParent("fancy_iron_lamp",    modLoc("block/fancy_iron_lamp_standing"));
-        withExistingParent("fancy_gold_lantern", modLoc("block/fancy_gold_lantern_standing"));
-        withExistingParent("fancy_iron_lantern", modLoc("block/fancy_iron_lantern_standing"));
-        withExistingParent("typewriter",         modLoc("block/typewriter_0"));
+        withExistingParent("fancy_gold_lamp",         modLoc("block/fancy_gold_lamp_standing"));
+        withExistingParent("fancy_iron_lamp",         modLoc("block/fancy_iron_lamp_standing"));
+        withExistingParent("fancy_gold_lantern",      modLoc("block/fancy_gold_lantern_standing"));
+        withExistingParent("fancy_iron_lantern",      modLoc("block/fancy_iron_lantern_standing"));
+        withExistingParent("soul_fancy_gold_lantern", modLoc("block/soul_fancy_gold_lantern_standing"));
+        withExistingParent("soul_fancy_iron_lantern", modLoc("block/soul_fancy_iron_lantern_standing"));
+        withExistingParent("typewriter",              modLoc("block/typewriter_0"));
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
             withExistingParent(name + "_fancy_gold_lamp",    modLoc("block/color/" + name + "/fancy_gold_lamp_standing"));

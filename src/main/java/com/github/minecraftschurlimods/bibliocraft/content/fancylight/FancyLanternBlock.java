@@ -1,8 +1,12 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancylight;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -33,9 +37,16 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
     private static final VoxelShape EAST_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.COUNTERCLOCKWISE_90);
+    private static final ResourceLocation DEFAULT_PARTICLE = BCUtil.mcLoc("small_flame");
+    private final ResourceLocation particle;
 
     public FancyLanternBlock(Properties properties) {
+        this(properties, DEFAULT_PARTICLE);
+    }
+
+    public FancyLanternBlock(Properties properties, ResourceLocation particle) {
         super(properties);
+        this.particle = particle;
     }
 
     @Override
@@ -58,6 +69,8 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
         if (random.nextFloat() < 0.3f) {
             level.addParticle(ParticleTypes.SMOKE, offset.x, offset.y, offset.z, 0, 0, 0);
         }
-        level.addParticle(ParticleTypes.SMALL_FLAME, offset.x, offset.y, offset.z, 0, 0, 0);
+        if (BuiltInRegistries.PARTICLE_TYPE.get(particle) instanceof ParticleOptions options) {
+            level.addParticle(options, offset.x, offset.y, offset.z, 0, 0, 0);
+        }
     }
 }
