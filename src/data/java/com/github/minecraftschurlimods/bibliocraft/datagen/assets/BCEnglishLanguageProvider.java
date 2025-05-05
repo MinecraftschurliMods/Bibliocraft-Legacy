@@ -162,6 +162,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types", "Show Color Types");
         add("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types.tooltip", "Whether to show blocks for all color types in JEI, or just the default white.");
         BCUtil.getChatFormattingColors().forEach(color -> add("color." + color.getName(), DatagenUtil.toTranslation(color.getName())));
+        add(Translations.TYPEWRITER_NO_PAPER_KEY, "You must insert paper before you can start typing!");
         add(Translations.CLOCK_ADD_TRIGGER_KEY, "Add Trigger");
         add(Translations.CLOCK_DELETE_TRIGGER_KEY, "Delete Trigger");
         add(Translations.CLOCK_EDIT_TRIGGER_KEY, "Edit Trigger");

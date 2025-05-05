@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.typewriter;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -89,8 +90,12 @@ public class TypewriterBlock extends BCFacingEntityBlock {
             if (!item.isEmpty()) {
                 player.addItem(item);
                 return InteractionResult.SUCCESS;
+            } else if (typewriter.getItem(TypewriterBlockEntity.INPUT).isEmpty()) {
+                player.displayClientMessage(Translations.TYPEWRITER_NO_PAPER, true);
+                return InteractionResult.SUCCESS;
             } else if (level.isClientSide()) {
                 ClientUtil.openTypewriterScreen(pos);
+                return InteractionResult.SUCCESS;
             }
         }
         return super.useWithoutItem(state, level, pos, player, hit);

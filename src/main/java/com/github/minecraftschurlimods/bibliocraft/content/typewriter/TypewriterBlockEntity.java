@@ -75,14 +75,20 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     public boolean insertPaper(ItemStack stack) {
         ItemStack input = getItem(INPUT);
         if (!input.isEmpty() && !ItemStack.isSameItemSameComponents(input, stack)) return false;
-        input.grow(1);
+        if (input.isEmpty()) {
+            setItem(INPUT, stack.copyWithCount(1));
+        } else {
+            input.grow(1);
+        }
         stack.shrink(1);
+        setChanged();
         return true;
     }
 
     public ItemStack takeOutput() {
         ItemStack output = getItem(OUTPUT);
         setItem(OUTPUT, ItemStack.EMPTY);
+        setChanged();
         return output;
     }
 

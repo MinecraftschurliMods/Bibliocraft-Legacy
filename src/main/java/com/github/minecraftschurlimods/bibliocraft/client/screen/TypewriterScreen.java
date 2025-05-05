@@ -123,9 +123,9 @@ public class TypewriterScreen extends Screen {
         if (ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter) {
             typewriter.setPage(page);
         }
-        ClientUtil.getPlayer().playSound(BCSoundEvents.TYPEWRITER_CHIME.value());
         PacketDistributor.sendToServer(new TypewriterSyncPacket(pos, page, hasPendingSound));
         if (hasPendingSound) {
+            ClientUtil.getPlayer().playSound(BCSoundEvents.TYPEWRITER_CHIME.value());
             hasPendingSound = false;
         }
     }

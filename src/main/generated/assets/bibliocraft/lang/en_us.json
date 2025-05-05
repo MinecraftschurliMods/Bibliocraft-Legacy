@@ -832,6 +832,7 @@
   "block.bibliocraft.spruce_wall_fancy_sign": "Spruce Fancy Sign",
   "block.bibliocraft.sword_pedestal": "Sword Pedestal",
   "block.bibliocraft.typewriter": "Typewriter",
+  "block.bibliocraft.typewriter.no_paper": "You must insert paper before you can start typing!",
   "block.bibliocraft.wall_disc_rack": "Disc Rack",
   "block.bibliocraft.warped_bookcase": "Warped Bookcase",
   "block.bibliocraft.warped_fancy_armor_stand": "Warped Fancy Armor Stand",
