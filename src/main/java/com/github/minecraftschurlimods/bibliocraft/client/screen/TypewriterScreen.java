@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPage;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import net.minecraft.client.gui.Font;
@@ -13,6 +14,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringUtil;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class TypewriterScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/typewriter_page.png");
@@ -25,6 +27,7 @@ public class TypewriterScreen extends Screen {
     private int row;
     private String currentLine;
     private int frameTick;
+    private boolean hasPendingSound = false;
 
     public TypewriterScreen(BlockPos pos) {
         super(Component.empty());
@@ -60,8 +63,8 @@ public class TypewriterScreen extends Screen {
 
     @Override
     public void onClose() {
+        sync();
         super.onClose();
-        //TODO sync
     }
 
     @Override
@@ -103,14 +106,28 @@ public class TypewriterScreen extends Screen {
         return super.charTyped(codePoint, modifiers);
     }
 
+    private void sync() {
+        page = page.copy().withLine(row);
+        page.lines().set(row, currentLine);
+        if (ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter) {
+            typewriter.setPage(page);
+        }
+        PacketDistributor.sendToServer(new TypewriterSyncPacket(pos, page, hasPendingSound));
+        if (hasPendingSound) {
+            hasPendingSound = false;
+        }
+    }
+
     private void lineBreak() {
-        //TODO play sound
         page = page.copy();
         page.lines().set(row, currentLine);
         currentLine = "";
         row++;
+        hasPendingSound = true;
         if (row >= TypewriterPage.MAX_LINES) {
             onClose();
+        } else {
+            sync();
         }
     }
 }

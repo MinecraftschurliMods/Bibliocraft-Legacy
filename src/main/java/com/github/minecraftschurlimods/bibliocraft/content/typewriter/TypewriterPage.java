@@ -30,4 +30,8 @@ public record TypewriterPage(List<String> lines, int line) {
     public TypewriterPage copy() {
         return new TypewriterPage(new ArrayList<>(lines), line);
     }
+
+    public TypewriterPage withLine(int line) {
+        return new TypewriterPage(lines, line);
+    }
 }

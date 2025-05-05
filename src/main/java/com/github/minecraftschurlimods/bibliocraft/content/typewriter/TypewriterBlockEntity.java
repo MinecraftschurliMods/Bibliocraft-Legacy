@@ -89,4 +89,10 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     public TypewriterPage getPage() {
         return page;
     }
+
+    public void setPage(TypewriterPage page) {
+        this.page = page;
+        //TODO set output item
+        setChanged();
+    }
 }
