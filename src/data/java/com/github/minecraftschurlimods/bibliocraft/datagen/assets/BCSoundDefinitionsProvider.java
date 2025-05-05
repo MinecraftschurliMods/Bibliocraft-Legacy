@@ -27,6 +27,11 @@ public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
         add(BCSoundEvents.DISPLAY_CASE_OPEN, "display_case/open", "display_case.open");
         add(BCSoundEvents.TAPE_MEASURE_CLOSE, "tape_measure/close", "tape_measure.close");
         add(BCSoundEvents.TAPE_MEASURE_OPEN, "tape_measure/open", "tape_measure.open");
+        add(BCSoundEvents.TYPEWRITER_ADD_PAPER, "typewriter/add_paper", "typewriter.add_paper");
+        add(BCSoundEvents.TYPEWRITER_CHIME, "typewriter/chime", "typewriter.chime");
+        add(BCSoundEvents.TYPEWRITER_TAKE_PAGE, "typewriter/take_page", "typewriter.take_page");
+        add(BCSoundEvents.TYPEWRITER_TYPE, "typewriter/type", "typewriter.type");
+        add(BCSoundEvents.TYPEWRITER_TYPING, "typewriter/typing_", 5, "typewriter.typing");
     }
 
     private void add(Holder<SoundEvent> sound, String path, String subtitle) {

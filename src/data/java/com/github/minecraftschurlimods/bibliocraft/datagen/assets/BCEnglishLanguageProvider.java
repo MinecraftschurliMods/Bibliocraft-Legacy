@@ -68,6 +68,11 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addSubtitle("display_case.open", "Display Case opens");
         addSubtitle("tape_measure.close", "Tape Measure retracts");
         addSubtitle("tape_measure.open", "Tape Measure extends");
+        addSubtitle("typewriter.add_paper", "Typewriter paper is added");
+        addSubtitle("typewriter.chime", "Typewriter chimes");
+        addSubtitle("typewriter.take_page", "Typewriter page is taken");
+        addSubtitle("typewriter.type", "Typewriter types");
+        addSubtitle("typewriter.typing", "Typewriter types");
         add(BCTags.Blocks.BOOKCASES, "Bookcases");
         add(BCTags.Blocks.DISPLAY_CASES, "Display Cases");
         add(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD, "Wooden Fancy Armor Stands");

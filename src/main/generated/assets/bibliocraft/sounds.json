@@ -57,5 +57,39 @@
       "bibliocraft:tape_measure/open"
     ],
     "subtitle": "subtitles.bibliocraft.tape_measure.open"
+  },
+  "typewriter_add_paper": {
+    "sounds": [
+      "bibliocraft:typewriter/add_paper"
+    ],
+    "subtitle": "subtitles.bibliocraft.typewriter.add_paper"
+  },
+  "typewriter_chime": {
+    "sounds": [
+      "bibliocraft:typewriter/chime"
+    ],
+    "subtitle": "subtitles.bibliocraft.typewriter.chime"
+  },
+  "typewriter_take_page": {
+    "sounds": [
+      "bibliocraft:typewriter/take_page"
+    ],
+    "subtitle": "subtitles.bibliocraft.typewriter.take_page"
+  },
+  "typewriter_type": {
+    "sounds": [
+      "bibliocraft:typewriter/type"
+    ],
+    "subtitle": "subtitles.bibliocraft.typewriter.type"
+  },
+  "typewriter_typing": {
+    "sounds": [
+      "bibliocraft:typewriter/typing_0",
+      "bibliocraft:typewriter/typing_1",
+      "bibliocraft:typewriter/typing_2",
+      "bibliocraft:typewriter/typing_3",
+      "bibliocraft:typewriter/typing_4"
+    ],
+    "subtitle": "subtitles.bibliocraft.typewriter.typing"
   }
 }
