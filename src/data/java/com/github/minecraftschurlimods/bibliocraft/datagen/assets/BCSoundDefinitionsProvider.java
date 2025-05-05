@@ -3,10 +3,14 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvent;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinition;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
+
+import java.util.stream.IntStream;
 
 public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
     public BCSoundDefinitionsProvider(PackOutput output, ExistingFileHelper helper) {
@@ -15,32 +19,23 @@ public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
 
     @Override
     public void registerSounds() {
-        add(BCSoundEvents.CLOCK_CHIME.value(), SoundDefinition.definition().with(modSound("clock_chime")));
-        add(BCSoundEvents.CLOCK_TICK.value(), SoundDefinition.definition().with(
-                modSound("clock_tick_1"),
-                modSound("clock_tick_2"),
-                modSound("clock_tick_3"),
-                modSound("clock_tick_4"),
-                modSound("clock_tick_5")
-        ));
-        add(BCSoundEvents.CLOCK_TOCK.value(), SoundDefinition.definition().with(
-                modSound("clock_tock_1"),
-                modSound("clock_tock_2"),
-                modSound("clock_tock_3"),
-                modSound("clock_tock_4"),
-                modSound("clock_tock_5")
-        ));
-        add(BCSoundEvents.DESK_BELL.value(), SoundDefinition.definition().with(
-                modSound("desk_bell_1"),
-                modSound("desk_bell_2"),
-                modSound("desk_bell_3"),
-                modSound("desk_bell_4")
-        ));
-        add(BCSoundEvents.TAPE_MEASURE_CLOSE.value(), SoundDefinition.definition().with(modSound("tape_measure_close")));
-        add(BCSoundEvents.TAPE_MEASURE_OPEN.value(), SoundDefinition.definition().with(modSound("tape_measure_open")));
+        add(BCSoundEvents.CLOCK_CHIME, "clock/chime", "clock.chime");
+        add(BCSoundEvents.CLOCK_TICK, "clock/tick_", 5, "clock.tick");
+        add(BCSoundEvents.CLOCK_TOCK, "clock/tock_", 5, "clock.tock");
+        add(BCSoundEvents.DESK_BELL, "desk_bell/", 4, "desk_bell");
+        add(BCSoundEvents.TAPE_MEASURE_CLOSE, "tape_measure/close", "tape_measure.close");
+        add(BCSoundEvents.TAPE_MEASURE_OPEN, "tape_measure/open", "tape_measure.open");
     }
-    
-    private SoundDefinition.Sound modSound(String name) {
-        return sound(BCUtil.bcLoc(name));
+
+    private void add(Holder<SoundEvent> sound, String path, String subtitle) {
+        add(sound.value(), SoundDefinition.definition()
+                .with(sound(BCUtil.bcLoc(path)))
+                .subtitle("subtitles." + BibliocraftApi.MOD_ID + "." + subtitle));
+    }
+
+    private void add(Holder<SoundEvent> sound, String path, int fileCount, String subtitle) {
+        add(sound.value(), SoundDefinition.definition()
+                .with(IntStream.range(0, fileCount).mapToObj(e -> sound(BCUtil.bcLoc(path + e))).toArray(SoundDefinition.Sound[]::new))
+                .subtitle("subtitles." + BibliocraftApi.MOD_ID + "." + subtitle));
     }
 }

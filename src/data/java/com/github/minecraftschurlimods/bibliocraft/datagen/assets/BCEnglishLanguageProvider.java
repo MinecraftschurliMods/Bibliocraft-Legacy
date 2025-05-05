@@ -9,7 +9,9 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -58,6 +60,12 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultItem(BCItems.STOCKROOM_CATALOG);
         addDefaultItem(BCItems.TAPE_MEASURE);
         addDefaultItem(BCItems.TAPE_REEL);
+        addSubtitle("clock.chime", "Clock chimes");
+        addSubtitle("clock.tick", "Clock ticks");
+        addSubtitle("clock.tock", "Clock tocks");
+        addSubtitle("desk_bell", "Desk Bell rings");
+        addSubtitle("tape_measure.close", "Tape Measure retracts");
+        addSubtitle("tape_measure.open", "Tape Measure extends");
         add(BCTags.Blocks.BOOKCASES, "Bookcases");
         add(BCTags.Blocks.DISPLAY_CASES, "Display Cases");
         add(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD, "Wooden Fancy Armor Stands");
@@ -228,5 +236,15 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
      */
     private void addDefaultItem(DeferredHolder<Item, ?> item) {
         add(item.get(), DatagenUtil.toTranslation(item.getId().getPath()));
+    }
+
+    /**
+     * Adds a translation for a sound's subtitle.
+     *
+     * @param subtitle    The subtitle key to use.
+     * @param translation The translation to use.
+     */
+    private void addSubtitle(String subtitle, String translation) {
+        add("subtitles", subtitle, translation);
     }
 }
