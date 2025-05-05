@@ -3,8 +3,10 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPage;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -13,6 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
@@ -21,6 +24,7 @@ public class TypewriterScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/typewriter_page.png");
     private static final int IMAGE_WIDTH = 100;
     private static final int IMAGE_HEIGHT = 164;
+    private final RandomSource random = RandomSource.create(Util.getNanos());
     private final BlockPos pos;
     private TypewriterPage page;
     private int leftPos;
@@ -105,6 +109,8 @@ public class TypewriterScreen extends Screen {
             currentLine += codePoint;
             if (currentLine.length() >= TypewriterPage.MAX_LINE_LENGTH) {
                 lineBreak();
+            } else {
+                ClientUtil.getPlayer().playSound(BCSoundEvents.TYPEWRITER_TYPE.value(), 0.9f + random.nextFloat() * 0.2f, 0.9f + random.nextFloat() * 0.2f);
             }
             return true;
         }
@@ -117,6 +123,7 @@ public class TypewriterScreen extends Screen {
         if (ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter) {
             typewriter.setPage(page);
         }
+        ClientUtil.getPlayer().playSound(BCSoundEvents.TYPEWRITER_CHIME.value());
         PacketDistributor.sendToServer(new TypewriterSyncPacket(pos, page, hasPendingSound));
         if (hasPendingSound) {
             hasPendingSound = false;

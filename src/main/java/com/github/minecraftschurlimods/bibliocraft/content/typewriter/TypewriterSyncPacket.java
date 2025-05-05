@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.typewriter;
 
+import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
@@ -24,7 +25,7 @@ public record TypewriterSyncPacket(BlockPos pos, TypewriterPage page, boolean pl
         if (context.player().level().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter) {
             typewriter.setPage(page);
             if (playSound) {
-                //TODO
+                context.player().playSound(BCSoundEvents.TYPEWRITER_CHIME.value());
             }
         }
     }
