@@ -161,10 +161,7 @@ public class FancySignScreen extends Screen {
         addRenderableWidget(colorBox);
 
         onLineChange(textArea.getLines().getFirst());
-        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
-            onClose();
-            minecraft.setScreen(null);
-        }).bounds(leftX, y + HEIGHT + 8, WIDTH, 20).build());
+        addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(leftX, y + HEIGHT + 8, WIDTH, 20).build());
     }
 
     @Override

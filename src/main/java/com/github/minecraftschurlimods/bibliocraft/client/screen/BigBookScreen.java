@@ -255,7 +255,7 @@ public class BigBookScreen extends Screen {
             })
                     .bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16)
                     .build());
-            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, this::done)
+            addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())
                     .bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16)
                     .build());
         } else {
@@ -280,17 +280,17 @@ public class BigBookScreen extends Screen {
             updateButtonVisibility();
             if (lectern != null) {
                 addRenderableWidget(Button.builder(Translations.VANILLA_TAKE_BOOK, button -> {
-                    done(button);
+                    onClose();
                     LecternUtil.takeLecternBook(player, player.level(), lectern);
                     PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
                 })
                         .bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH / 2 - 4, 20)
                         .build());
-                addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, this::done)
+                addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())
                         .bounds(width / 2 + 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH / 2 - 4, 20)
                         .build());
             } else {
-                addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, this::done)
+                addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())
                         .bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH, 20)
                         .build());
             }
@@ -423,11 +423,6 @@ public class BigBookScreen extends Screen {
         stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
         player.setItemInHand(hand, stack);
         PacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
-        ClientUtil.getMc().setScreen(null);
-    }
-
-    private void done(Button button) {
-        onClose();
-        ClientUtil.getMc().setScreen(null);
+        super.onClose();
     }
 }
