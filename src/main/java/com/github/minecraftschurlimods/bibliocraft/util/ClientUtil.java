@@ -7,6 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.RedstoneBookScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.StockroomCatalogScreen;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.TypewriterPageScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.TypewriterScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -164,6 +165,15 @@ public final class ClientUtil {
      */
     public static void openTypewriterScreen(BlockPos pos) {
         getMc().setScreen(new TypewriterScreen(pos));
+    }
+
+    /**
+     * Opens a {@link TypewriterPageScreen} on the client.
+     *
+     * @param stack The typewriter page's {@link ItemStack}.
+     */
+    public static void openTypewriterPageScreen(ItemStack stack) {
+        getMc().setScreen(new TypewriterPageScreen(stack));
     }
 
     /**
