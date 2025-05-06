@@ -177,6 +177,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.CLOCK_TIME_SEPARATOR_KEY, ":");
         add(Translations.CLOCK_TITLE_KEY, "Clock");
         add(Translations.CLOCK_TRIGGERS_KEY, "Triggers");
+        add(Translations.FANCY_SIGN_TITLE_KEY, "Fancy Sign");
         add(Translations.FANCY_TEXT_AREA_ALIGNMENT_KEY, "Toggle Alignment");
         add(Translations.FANCY_TEXT_AREA_BOLD_KEY, "Bold");
         add(Translations.FANCY_TEXT_AREA_BOLD_SHORT_KEY, "B");
@@ -184,6 +185,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.FANCY_TEXT_AREA_ITALIC_KEY, "Italic");
         add(Translations.FANCY_TEXT_AREA_ITALIC_SHORT_KEY, "I");
         add(Translations.FANCY_TEXT_AREA_MODE_KEY, "Toggle Shadow/Glowing");
+        add(Translations.FANCY_TEXT_AREA_NARRATION_KEY, "Text Area");
         add(Translations.FANCY_TEXT_AREA_OBFUSCATED_KEY, "Obfuscated");
         add(Translations.FANCY_TEXT_AREA_OBFUSCATED_SHORT_KEY, "O");
         add(Translations.FANCY_TEXT_AREA_SCALE_DOWN_KEY, "-");
@@ -199,6 +201,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.STOCKROOM_CATALOG_SEARCH_KEY, "Search");
         add(Translations.STOCKROOM_CATALOG_SHOW_CONTAINERS_KEY, "Show Containers");
         add(Translations.STOCKROOM_CATALOG_SHOW_ITEMS_KEY, "Show Items");
+        add(Translations.TYPEWRITER_TITLE_KEY, "Typewriter");
         add(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME_KEY, "You must rename this lock and key before you can apply it to a block!");
         add(Translations.REDSTONE_BOOK_TEXT_KEY, "When putting this book into a bookcase, the bookcase will emit a redstone signal. The strength of the signal depends on the slot it is placed in. Slot 1 (top left) yields no signal. Slot 2 yields a signal strength of 1. Each slot after that increases the signal strength by one, all the way to slot 16 (bottom right), which yields a signal strength of 15.");
         add(Translations.REDSTONE_BOOK_TITLE_KEY, "Redstone: Volume 1");

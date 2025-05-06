@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.typewriter.Typewriter
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -13,7 +14,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
@@ -35,7 +35,7 @@ public class TypewriterScreen extends Screen {
     private boolean hasPendingSound = false;
 
     public TypewriterScreen(BlockPos pos) {
-        super(Component.empty());
+        super(Translations.TYPEWRITER_TITLE);
         this.pos = pos;
         page = ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter ? typewriter.getPage() : TypewriterPage.DEFAULT;
         row = page.line();
