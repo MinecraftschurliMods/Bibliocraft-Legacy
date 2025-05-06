@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.typewriter.Typewriter
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -13,7 +14,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
@@ -21,9 +21,9 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 public class TypewriterScreen extends Screen {
+    public static final int IMAGE_WIDTH = 100;
+    public static final int IMAGE_HEIGHT = 164;
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/typewriter_page.png");
-    private static final int IMAGE_WIDTH = 100;
-    private static final int IMAGE_HEIGHT = 164;
     private final RandomSource random = RandomSource.create(Util.getNanos());
     private final BlockPos pos;
     private TypewriterPage page;
@@ -35,9 +35,9 @@ public class TypewriterScreen extends Screen {
     private boolean hasPendingSound = false;
 
     public TypewriterScreen(BlockPos pos) {
-        super(Component.empty());
+        super(Translations.TYPEWRITER_TITLE);
         this.pos = pos;
-        page = ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter ? typewriter.getPage() : new TypewriterPage();
+        page = ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter ? typewriter.getPage() : TypewriterPage.DEFAULT;
         row = page.line();
         if (row == TypewriterPage.MAX_LINES) {
             onClose();
@@ -78,7 +78,7 @@ public class TypewriterScreen extends Screen {
         Font font = ClientUtil.getFont();
         for (int i = 0; i < row; i++) {
             if (i >= page.lines().size()) continue;
-            int width = graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0, false);
+            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0, false);
         }
         if (row < TypewriterPage.MAX_LINES) {
             int width = graphics.drawString(font, currentLine, leftPos + 2, topPos + 2 + row * 10, 0, false);

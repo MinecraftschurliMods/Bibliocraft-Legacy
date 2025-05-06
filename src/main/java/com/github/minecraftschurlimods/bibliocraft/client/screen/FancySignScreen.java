@@ -40,7 +40,7 @@ public class FancySignScreen extends Screen {
     private Button scaleUpButton;
 
     public FancySignScreen(BlockPos pos, boolean back) {
-        super(Component.empty());
+        super(Translations.FANCY_SIGN_TITLE);
         this.pos = pos;
         this.back = back;
     }

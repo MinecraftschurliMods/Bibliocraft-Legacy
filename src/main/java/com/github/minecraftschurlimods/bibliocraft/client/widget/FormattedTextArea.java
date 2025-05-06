@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -15,7 +16,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.FormattedCharSequence;
@@ -40,7 +40,7 @@ public class FormattedTextArea extends AbstractWidget {
     private Consumer<FormattedLine> onLineChange;
 
     public FormattedTextArea(int x, int y, int width, int height, List<FormattedLine> lines) {
-        super(x, y, width, height, Component.empty());
+        super(x, y, width, height, Translations.FANCY_TEXT_AREA_NARRATION);
         this.lines = new ArrayList<>(lines);
     }
 

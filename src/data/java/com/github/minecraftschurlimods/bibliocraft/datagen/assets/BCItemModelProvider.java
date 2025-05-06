@@ -24,6 +24,7 @@ public class BCItemModelProvider extends ItemModelProvider {
         basicItem(BCItems.STOCKROOM_CATALOG.get());
         basicItem(BCItems.TAPE_MEASURE.get());
         basicItem(BCItems.TAPE_REEL.get());
+        basicItem(BCItems.TYPEWRITER_PAGE.get());
         withExistingParent("fancy_gold_lamp",         modLoc("block/fancy_gold_lamp_standing"));
         withExistingParent("fancy_iron_lamp",         modLoc("block/fancy_iron_lamp_standing"));
         withExistingParent("fancy_gold_lantern",      modLoc("block/fancy_gold_lantern_standing"));

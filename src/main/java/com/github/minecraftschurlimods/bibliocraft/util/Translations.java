@@ -23,11 +23,13 @@ public interface Translations {
     String CLOCK_TIME_SEPARATOR_KEY                = "gui."   + BibliocraftApi.MOD_ID + ".clock.time_separator";
     String CLOCK_TITLE_KEY                         = "gui."   + BibliocraftApi.MOD_ID + ".clock.title";
     String CLOCK_TRIGGERS_KEY                      = "gui."   + BibliocraftApi.MOD_ID + ".clock.triggers";
+    String FANCY_SIGN_TITLE_KEY                    = "gui."   + BibliocraftApi.MOD_ID + ".fancy_sign.title";
     String FANCY_TEXT_AREA_ALIGNMENT_KEY           = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.alignment";
     String FANCY_TEXT_AREA_BOLD_KEY                = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.bold";
     String FANCY_TEXT_AREA_COLOR_HINT_KEY          = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.color_hint";
     String FANCY_TEXT_AREA_ITALIC_KEY              = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.italic";
     String FANCY_TEXT_AREA_MODE_KEY                = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.mode";
+    String FANCY_TEXT_AREA_NARRATION_KEY           = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.narration";
     String FANCY_TEXT_AREA_OBFUSCATED_KEY          = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.obfuscated";
     String FANCY_TEXT_AREA_SCALE_DOWN_KEY          = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.scale_down";
     String FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP_KEY  = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.scale_down.tooltip";
@@ -40,6 +42,7 @@ public interface Translations {
     String STOCKROOM_CATALOG_SEARCH_KEY            = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.search";
     String STOCKROOM_CATALOG_SHOW_CONTAINERS_KEY   = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.show_containers";
     String STOCKROOM_CATALOG_SHOW_ITEMS_KEY        = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.show_items";
+    String TYPEWRITER_TITLE_KEY                    = "gui."   + BibliocraftApi.MOD_ID + ".typewriter.title";
     String REDSTONE_BOOK_TEXT_KEY                  = "item."  + BibliocraftApi.MOD_ID + ".redstone_book.text";
     String REDSTONE_BOOK_TITLE_KEY                 = "item."  + BibliocraftApi.MOD_ID + ".redstone_book.title";
     String SLOTTED_BOOK_TEXT_KEY                   = "item."  + BibliocraftApi.MOD_ID + ".slotted_book.text";
@@ -73,11 +76,13 @@ public interface Translations {
     Component CLOCK_TIME_SEPARATOR                 = Component.translatable(CLOCK_TIME_SEPARATOR_KEY);
     Component CLOCK_TITLE                          = Component.translatable(CLOCK_TITLE_KEY);
     Component CLOCK_TRIGGERS                       = Component.translatable(CLOCK_TRIGGERS_KEY);
+    Component FANCY_SIGN_TITLE                     = Component.translatable(FANCY_SIGN_TITLE_KEY);
     Component FANCY_TEXT_AREA_ALIGNMENT            = Component.translatable(FANCY_TEXT_AREA_ALIGNMENT_KEY);
     Component FANCY_TEXT_AREA_BOLD                 = Component.translatable(FANCY_TEXT_AREA_BOLD_KEY);
     Component FANCY_TEXT_AREA_COLOR_HINT           = Component.translatable(FANCY_TEXT_AREA_COLOR_HINT_KEY);
     Component FANCY_TEXT_AREA_ITALIC               = Component.translatable(FANCY_TEXT_AREA_ITALIC_KEY);
     Component FANCY_TEXT_AREA_MODE                 = Component.translatable(FANCY_TEXT_AREA_MODE_KEY);
+    Component FANCY_TEXT_AREA_NARRATION            = Component.translatable(FANCY_TEXT_AREA_NARRATION_KEY);
     Component FANCY_TEXT_AREA_OBFUSCATED           = Component.translatable(FANCY_TEXT_AREA_OBFUSCATED_KEY);
     Component FANCY_TEXT_AREA_SCALE_DOWN           = Component.translatable(FANCY_TEXT_AREA_SCALE_DOWN_KEY);
     Component FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP   = Component.translatable(FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP_KEY);
@@ -90,6 +95,7 @@ public interface Translations {
     Component STOCKROOM_CATALOG_SEARCH             = Component.translatable(STOCKROOM_CATALOG_SEARCH_KEY);
     Component STOCKROOM_CATALOG_SHOW_CONTAINERS    = Component.translatable(STOCKROOM_CATALOG_SHOW_CONTAINERS_KEY);
     Component STOCKROOM_CATALOG_SHOW_ITEMS         = Component.translatable(STOCKROOM_CATALOG_SHOW_ITEMS_KEY);
+    Component TYPEWRITER_TITLE                     = Component.translatable(TYPEWRITER_TITLE_KEY);
     Component REDSTONE_BOOK_TEXT                   = Component.translatable(REDSTONE_BOOK_TEXT_KEY);
     Component REDSTONE_BOOK_TITLE                  = Component.translatable(REDSTONE_BOOK_TITLE_KEY);
     Component SLOTTED_BOOK_TEXT                    = Component.translatable(SLOTTED_BOOK_TEXT_KEY);
@@ -108,9 +114,9 @@ public interface Translations {
     Component VANILLA_TAKE_BOOK                    = Component.translatable(VANILLA_TAKE_BOOK_KEY);
     Component VANILLA_TOGGLABLE_SLOT               = Component.translatable(VANILLA_TOGGLABLE_SLOT_KEY);
 
-    String STOCKROOM_CATALOG_COUNT_KEY             = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";
-    String STOCKROOM_CATALOG_DISTANCE_KEY          = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.distance";
-    String STOCKROOM_CATALOG_SORT_KEY              = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.sort";
+    String STOCKROOM_CATALOG_COUNT_KEY             = "gui."  + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";
+    String STOCKROOM_CATALOG_DISTANCE_KEY          = "gui."  + BibliocraftApi.MOD_ID + ".stockroom_catalog.distance";
+    String STOCKROOM_CATALOG_SORT_KEY              = "gui."  + BibliocraftApi.MOD_ID + ".stockroom_catalog.sort";
     String LOCK_AND_KEY_LOCKED_KEY                 = "item." + BibliocraftApi.MOD_ID + ".lock_and_key.locked";
     String LOCK_AND_KEY_NO_CUSTOM_NAME_KEY         = "item." + BibliocraftApi.MOD_ID + ".lock_and_key.no_custom_name";
     String LOCK_AND_KEY_UNLOCKED_KEY               = "item." + BibliocraftApi.MOD_ID + ".lock_and_key.unlocked";
