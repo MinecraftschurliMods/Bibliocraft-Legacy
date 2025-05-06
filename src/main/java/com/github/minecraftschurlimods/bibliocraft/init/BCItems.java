@@ -17,6 +17,8 @@ import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBo
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogItem;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.tapemeasure.TapeMeasureItem;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPage;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageItem;
 import com.github.minecraftschurlimods.bibliocraft.util.block.ColoredWoodTypeBlockItem;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
@@ -72,7 +74,7 @@ public interface BCItems {
     DeferredItem<BlockItem>            GOLD_LANTERN           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_LANTERN);
     DeferredItem<BlockItem>            GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
     DeferredItem<DoubleHighBlockItem>  IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
-    DeferredItem<BlockItem>            SWORD_PEDESTAL         = BCRegistries.ITEMS.register("sword_pedestal", () -> new BlockItem(BCBlocks.SWORD_PEDESTAL.get(), new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR)));
+    DeferredItem<BlockItem>            SWORD_PEDESTAL         = BCRegistries.ITEMS.registerSimpleBlockItem("sword_pedestal", BCBlocks.SWORD_PEDESTAL, new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR));
     DeferredItem<BigBookItem>          BIG_BOOK               = BCRegistries.ITEMS.register("big_book", () -> new BigBookItem(false));
     DeferredItem<BigBookItem>          WRITTEN_BIG_BOOK       = BCRegistries.ITEMS.register("written_big_book", () -> new BigBookItem(true));
     DeferredItem<LockAndKeyItem>       LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
@@ -82,6 +84,7 @@ public interface BCItems {
     DeferredItem<StockroomCatalogItem> STOCKROOM_CATALOG      = BCRegistries.ITEMS.registerItem("stockroom_catalog", StockroomCatalogItem::new);
     DeferredItem<TapeMeasureItem>      TAPE_MEASURE           = BCRegistries.ITEMS.registerItem("tape_measure", TapeMeasureItem::new);
     DeferredItem<Item>                 TAPE_REEL              = BCRegistries.ITEMS.registerSimpleItem("tape_reel");
+    DeferredItem<Item>                 TYPEWRITER_PAGE        = BCRegistries.ITEMS.register("typewriter_page", () -> new TypewriterPageItem(new Item.Properties().stacksTo(1).component(BCDataComponents.TYPEWRITER_PAGE, TypewriterPage.DEFAULT)));
     //TODO Hand Drill
     //TODO Screw Gun
     //TODO Monocle

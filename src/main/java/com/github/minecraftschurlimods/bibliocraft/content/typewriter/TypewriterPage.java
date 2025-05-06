@@ -22,6 +22,7 @@ public record TypewriterPage(List<String> lines, int line) {
             ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.list()), TypewriterPage::lines,
             ByteBufCodecs.VAR_INT, TypewriterPage::line,
             TypewriterPage::new);
+    public static final TypewriterPage DEFAULT = new TypewriterPage();
 
     public TypewriterPage() {
         this(BCUtil.extend(new ArrayList<>(MAX_LINES), MAX_LINES, ""), 0);

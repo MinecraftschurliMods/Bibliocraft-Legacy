@@ -60,6 +60,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultItem(BCItems.STOCKROOM_CATALOG);
         addDefaultItem(BCItems.TAPE_MEASURE);
         addDefaultItem(BCItems.TAPE_REEL);
+        addDefaultItem(BCItems.TYPEWRITER_PAGE);
         addSubtitle("clock.chime", "Clock chimes");
         addSubtitle("clock.tick", "Clock ticks");
         addSubtitle("clock.tock", "Clock tocks");

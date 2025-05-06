@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBoo
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogContent;
 import com.github.minecraftschurlimods.bibliocraft.content.tapemeasure.StoredPosition;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPage;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,6 +18,7 @@ public interface BCDataComponents {
     Supplier<DataComponentType<ClipboardContent>>        CLIPBOARD_CONTENT         = register("clipboard_content",         ClipboardContent.CODEC,        ClipboardContent.STREAM_CODEC);
     Supplier<DataComponentType<StockroomCatalogContent>> STOCKROOM_CATALOG_CONTENT = register("stockroom_catalog_content", StockroomCatalogContent.CODEC, StockroomCatalogContent.STREAM_CODEC);
     Supplier<DataComponentType<StoredPosition>>          STORED_POSITION           = register("stored_position",           StoredPosition.CODEC,          StoredPosition.STREAM_CODEC);
+    Supplier<DataComponentType<TypewriterPage>>          TYPEWRITER_PAGE           = register("typewriter_page",           TypewriterPage.CODEC,          TypewriterPage.STREAM_CODEC);
     Supplier<DataComponentType<WrittenBigBookContent>>   WRITTEN_BIG_BOOK_CONTENT  = register("written_big_book_content",  WrittenBigBookContent.CODEC,   WrittenBigBookContent.STREAM_CODEC);
 
     /**
