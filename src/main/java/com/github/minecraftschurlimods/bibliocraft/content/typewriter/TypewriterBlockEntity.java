@@ -1,6 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.typewriter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
@@ -77,9 +79,9 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
         if (!input.isEmpty() && !ItemStack.isSameItemSameComponents(input, stack)) return false;
         if (input.isEmpty()) {
             setItem(INPUT, stack.copyWithCount(1));
-        } else {
+        } else if (input.getCount() < input.getMaxStackSize()) {
             input.grow(1);
-        }
+        } else return false;
         stack.shrink(1);
         setChanged();
         return true;
@@ -98,7 +100,13 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
 
     public void setPage(TypewriterPage page) {
         this.page = page;
-        //TODO set output item
+        if (page.line() == TypewriterPage.MAX_LINES) {
+            ItemStack output = new ItemStack(BCItems.TYPEWRITER_PAGE.get());
+            output.set(BCDataComponents.TYPEWRITER_PAGE, page);
+            setItem(OUTPUT, output);
+            getItem(INPUT).shrink(1);
+            this.page = TypewriterPage.DEFAULT;
+        }
         setChanged();
     }
 }

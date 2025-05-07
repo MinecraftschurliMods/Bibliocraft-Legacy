@@ -88,7 +88,7 @@ public class TypewriterBlock extends BCFacingEntityBlock {
         if (level.getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter) {
             ItemStack item = typewriter.getItem(TypewriterBlockEntity.OUTPUT);
             if (!item.isEmpty()) {
-                player.addItem(item);
+                player.addItem(typewriter.takeOutput());
                 return InteractionResult.SUCCESS;
             } else if (typewriter.getItem(TypewriterBlockEntity.INPUT).isEmpty()) {
                 player.displayClientMessage(Translations.TYPEWRITER_NO_PAPER, true);

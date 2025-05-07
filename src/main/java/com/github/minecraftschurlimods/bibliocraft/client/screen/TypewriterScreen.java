@@ -119,7 +119,9 @@ public class TypewriterScreen extends Screen {
 
     private void sync() {
         page = page.copy().withLine(row);
-        page.lines().set(row, currentLine);
+        if (row < page.lines().size()) {
+            page.lines().set(row, currentLine);
+        }
         if (ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter) {
             typewriter.setPage(page);
         }
