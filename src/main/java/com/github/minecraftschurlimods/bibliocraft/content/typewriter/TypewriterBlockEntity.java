@@ -74,6 +74,25 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
         return direction == Direction.DOWN && index == OUTPUT;
     }
 
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        super.setItem(slot, stack);
+        if (slot == OUTPUT && getItem(OUTPUT).isEmpty()) {
+            setPage(TypewriterPage.DEFAULT);
+            setChanged();
+        }
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int count) {
+        ItemStack stack = super.removeItem(slot, count);
+        if (slot == OUTPUT && getItem(OUTPUT).isEmpty()) {
+            setPage(TypewriterPage.DEFAULT);
+            setChanged();
+        }
+        return stack;
+    }
+
     public boolean insertPaper(ItemStack stack) {
         ItemStack input = getItem(INPUT);
         if (!input.isEmpty() && !ItemStack.isSameItemSameComponents(input, stack)) return false;
