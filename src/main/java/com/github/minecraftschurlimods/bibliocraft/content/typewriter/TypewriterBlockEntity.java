@@ -90,6 +90,7 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     public ItemStack takeOutput() {
         ItemStack output = getItem(OUTPUT);
         setItem(OUTPUT, ItemStack.EMPTY);
+        level().setBlockAndUpdate(getBlockPos(), getBlockState().setValue(TypewriterBlock.PAPER, 0));
         setChanged();
         return output;
     }
@@ -106,6 +107,10 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
             setItem(OUTPUT, output);
             getItem(INPUT).shrink(1);
             this.page = TypewriterPage.DEFAULT;
+        }
+        BlockState state = getBlockState().setValue(TypewriterBlock.PAPER, page.line() / 2);
+        if (getBlockState() != state) {
+            level().setBlockAndUpdate(getBlockPos(), state);
         }
         setChanged();
     }
