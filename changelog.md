@@ -14,3 +14,4 @@
 # Fixes
 
 - Fix the Book & Quill/Written Book GUI in lecterns not opening
+- Fix a crash with the Tempad mod
