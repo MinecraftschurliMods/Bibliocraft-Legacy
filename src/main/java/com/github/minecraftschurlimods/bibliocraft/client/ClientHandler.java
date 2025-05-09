@@ -108,7 +108,7 @@ public final class ClientHandler {
     }
 
     private static void registerColorHandlersBlock(RegisterColorHandlersEvent.Block event) {
-        event.register((state, level, pos, tintIndex) -> tintIndex == 0 && BCUtil.nonNull(level).getBlockEntity(BCUtil.nonNull(pos)) instanceof SwordPedestalBlockEntity spbe ? spbe.getColor().rgb() : -1, BCBlocks.SWORD_PEDESTAL.get());
+        event.register((state, level, pos, tintIndex) -> tintIndex == 0 && level != null && pos != null && level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe ? spbe.getColor().rgb() : -1, BCBlocks.SWORD_PEDESTAL.get());
     }
 
     private static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
