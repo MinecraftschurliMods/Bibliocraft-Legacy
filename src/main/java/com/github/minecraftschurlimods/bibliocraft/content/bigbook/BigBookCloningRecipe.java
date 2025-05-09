@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
-import com.github.minecraftschurlimods.bibliocraft.init.BCRecipeSerializers;
+import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -78,6 +78,6 @@ public class BigBookCloningRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return BCRecipeSerializers.BIG_BOOK_CLONING.get();
+        return BCRecipes.BIG_BOOK_CLONING.get();
     }
 }

@@ -6,7 +6,7 @@ import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 
 import java.util.function.Supplier;
 
-public interface BCRecipeSerializers {
+public interface BCRecipes {
     Supplier<RecipeSerializer<BigBookCloningRecipe>> BIG_BOOK_CLONING = BCRegistries.RECIPE_SERIALIZERS.register("big_book_cloning", () -> new SimpleCraftingRecipeSerializer<>(BigBookCloningRecipe::new));
 
     /**

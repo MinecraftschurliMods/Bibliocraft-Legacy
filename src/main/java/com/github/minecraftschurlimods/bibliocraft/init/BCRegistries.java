@@ -35,7 +35,7 @@ public interface BCRegistries {
         BCBlockEntities.init();
         BCEntities.init();
         BCMenus.init();
-        BCRecipeSerializers.init();
+        BCRecipes.init();
         BCSoundEvents.init();
         BLOCKS.register(bus);
         ITEMS.register(bus);
