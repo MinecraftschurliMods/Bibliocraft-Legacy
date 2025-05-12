@@ -212,6 +212,10 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 prefix + "potion_shelf",
                 bcLoc("block/template/potion_shelf"),
                 woodTexture);
+        DatagenUtil.horizontalBlockModel(provider, BCBlocks.PRINTING_TABLE.holder(woodType),
+                prefix + "printing_table",
+                bcLoc("block/template/printing_table"),
+                woodTexture);
         DatagenUtil.horizontalBlockModel(provider, BCBlocks.SHELF.holder(woodType),
                 prefix + "shelf",
                 bcLoc("block/template/shelf"),
@@ -268,6 +272,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         provider.withExistingParent(prefix + "_grandfather_clock", bcLoc("block/template/clock/grandfather_inventory")).texture("texture", woodType.texture());
         provider.withExistingParent(prefix + "_label",             bcLoc("block/wood/" + prefix + "/label"));
         provider.withExistingParent(prefix + "_potion_shelf",      bcLoc("block/wood/" + prefix + "/potion_shelf"));
+        provider.withExistingParent(prefix + "_printing_table",    bcLoc("block/wood/" + prefix + "/printing_table"));
         provider.withExistingParent(prefix + "_shelf",             bcLoc("block/wood/" + prefix + "/shelf"));
         provider.withExistingParent(prefix + "_table",             bcLoc("block/wood/" + prefix + "/table_inventory"));
         provider.withExistingParent(prefix + "_tool_rack",         bcLoc("block/wood/" + prefix + "/tool_rack"));

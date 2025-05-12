@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/printing_table",
+  "textures": {
+    "texture": "minecraft:block/warped_planks"
+  }
+}
