@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageCloningRecipe;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -311,5 +312,6 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_book", has(Items.BOOK))
                 .save(output);
         SpecialRecipeBuilder.special(BigBookCloningRecipe::new).save(output, "big_book_cloning");
+        SpecialRecipeBuilder.special(TypewriterPageCloningRecipe::new).save(output, "typewriter_page_cloning");
     }
 }
