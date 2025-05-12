@@ -40,7 +40,7 @@ public final class BCRecipeProvider extends RecipeProvider {
             String name = color.getSerializedName();
             ItemStack swordPedestal = new ItemStack(BCItems.SWORD_PEDESTAL.get());
             swordPedestal.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor(), true));
-            ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, swordPedestal)
+            ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, swordPedestal)
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
@@ -177,7 +177,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.CLIPBOARD)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.CLIPBOARD)
                 .pattern("I F")
                 .pattern("PPP")
                 .pattern(" L ")
@@ -252,13 +252,23 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('B', Items.WRITABLE_BOOK)
                 .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BCItems.IRON_FANCY_ARMOR_STAND)
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.IRON_FANCY_ARMOR_STAND)
                 .pattern(" I ")
                 .pattern(" I ")
                 .pattern("SSS")
                 .define('I', Tags.Items.INGOTS_IRON)
                 .define('S', Items.SMOOTH_STONE_SLAB)
                 .unlockedBy("has_smooth_stone_slab", has(Items.SMOOTH_STONE_SLAB))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, BCItems.IRON_PRINTING_TABLE)
+                .pattern("CCC")
+                .pattern("III")
+                .pattern("BRB")
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('I', Tags.Items.INGOTS_IRON)
+                .define('B', Tags.Items.STORAGE_BLOCKS_IRON)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.LOCK_AND_KEY)
                 .pattern("NI")
@@ -285,7 +295,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('B', Items.BOOK)
                 .unlockedBy("has_book", has(Items.BOOK))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.TAPE_MEASURE)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.TAPE_MEASURE)
                 .pattern(" I ")
                 .pattern("IRI")
                 .pattern(" I ")
@@ -293,7 +303,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('R', BCItems.TAPE_REEL)
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BCItems.TAPE_REEL)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, BCItems.TAPE_REEL)
                 .pattern("SSS")
                 .pattern("SDS")
                 .pattern("SSS")
@@ -301,7 +311,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('D', Tags.Items.DYES_YELLOW)
                 .unlockedBy("has_yellow_dye", has(Tags.Items.DYES_YELLOW))
                 .save(output);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, BCItems.REDSTONE_BOOK)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, BCItems.REDSTONE_BOOK)
                 .requires(Items.BOOK)
                 .requires(Items.REDSTONE_TORCH)
                 .unlockedBy("has_book", has(Items.BOOK))

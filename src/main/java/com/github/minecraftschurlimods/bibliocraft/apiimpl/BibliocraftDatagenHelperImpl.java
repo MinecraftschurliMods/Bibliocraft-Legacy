@@ -151,6 +151,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         woodenBlockTranslation(provider, woodType, BCBlocks.GRANDFATHER_CLOCK, "Grandfather Clock");
         woodenBlockTranslation(provider, woodType, BCBlocks.LABEL,             "Label");
         woodenBlockTranslation(provider, woodType, BCBlocks.POTION_SHELF,      "Potion Shelf");
+        woodenBlockTranslation(provider, woodType, BCBlocks.PRINTING_TABLE,    "Printing Table");
         woodenBlockTranslation(provider, woodType, BCBlocks.SHELF,             "Shelf");
         woodenBlockTranslation(provider, woodType, BCBlocks.TABLE,             "Table");
         woodenBlockTranslation(provider, woodType, BCBlocks.TOOL_RACK,         "Tool Rack");
@@ -294,6 +295,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Blocks.GRANDFATHER_CLOCKS)     .add(BCBlocks.GRANDFATHER_CLOCK.get(woodType));
             tagAccessor.apply(BCTags.Blocks.LABELS)                 .add(BCBlocks.LABEL.get(woodType));
             tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .add(BCBlocks.POTION_SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.PRINTING_TABLES_WOOD)   .add(BCBlocks.PRINTING_TABLE.get(woodType));
             tagAccessor.apply(BCTags.Blocks.SHELVES)                .add(BCBlocks.SHELF.get(woodType));
             tagAccessor.apply(BCTags.Blocks.TABLES)                 .add(BCBlocks.TABLE.get(woodType));
             tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .add(BCBlocks.TOOL_RACK.get(woodType));
@@ -312,6 +314,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Blocks.GRANDFATHER_CLOCKS)     .addOptional(BCBlocks.GRANDFATHER_CLOCK.id(woodType));
             tagAccessor.apply(BCTags.Blocks.LABELS)                 .addOptional(BCBlocks.LABEL.id(woodType));
             tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .addOptional(BCBlocks.POTION_SHELF.id(woodType));
+            tagAccessor.apply(BCTags.Blocks.PRINTING_TABLES_WOOD)   .addOptional(BCBlocks.PRINTING_TABLE.id(woodType));
             tagAccessor.apply(BCTags.Blocks.SHELVES)                .addOptional(BCBlocks.SHELF.id(woodType));
             tagAccessor.apply(BCTags.Blocks.TABLES)                 .addOptional(BCBlocks.TABLE.id(woodType));
             tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .addOptional(BCBlocks.TOOL_RACK.id(woodType));
@@ -333,6 +336,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Items.GRANDFATHER_CLOCKS)     .add(BCItems.GRANDFATHER_CLOCK.get(woodType));
             tagAccessor.apply(BCTags.Items.LABELS)                 .add(BCItems.LABEL.get(woodType));
             tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .add(BCItems.POTION_SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Items.PRINTING_TABLES_WOOD)   .add(BCItems.PRINTING_TABLE.get(woodType));
             tagAccessor.apply(BCTags.Items.SHELVES)                .add(BCItems.SHELF.get(woodType));
             tagAccessor.apply(BCTags.Items.TABLES)                 .add(BCItems.TABLE.get(woodType));
             tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .add(BCItems.TOOL_RACK.get(woodType));
@@ -352,6 +356,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Items.GRANDFATHER_CLOCKS)     .addOptional(BCItems.GRANDFATHER_CLOCK.id(woodType));
             tagAccessor.apply(BCTags.Items.LABELS)                 .addOptional(BCItems.LABEL.id(woodType));
             tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .addOptional(BCItems.POTION_SHELF.id(woodType));
+            tagAccessor.apply(BCTags.Items.PRINTING_TABLES_WOOD)   .addOptional(BCItems.PRINTING_TABLE.id(woodType));
             tagAccessor.apply(BCTags.Items.SHELVES)                .addOptional(BCItems.SHELF.id(woodType));
             tagAccessor.apply(BCTags.Items.TABLES)                 .addOptional(BCItems.TABLE.id(woodType));
             tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .addOptional(BCItems.TOOL_RACK.id(woodType));
@@ -377,6 +382,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         loot(provider, BCBlocks.GRANDFATHER_CLOCK.get(woodType), woodType, DatagenUtil::createGrandfatherClockTable);
         loot(provider, BCBlocks.LABEL.get(woodType),             woodType, DatagenUtil::createNameableTable);
         loot(provider, BCBlocks.POTION_SHELF.get(woodType),      woodType, DatagenUtil::createNameableTable);
+        loot(provider, BCBlocks.PRINTING_TABLE.get(woodType),    woodType, DatagenUtil::createNameableTable);
         loot(provider, BCBlocks.SHELF.get(woodType),             woodType, DatagenUtil::createNameableTable);
         loot(provider, BCBlocks.TABLE.get(woodType),             woodType, DatagenUtil::createDefaultTable);
         loot(provider, BCBlocks.TOOL_RACK.get(woodType),         woodType, DatagenUtil::createNameableTable);
@@ -461,6 +467,15 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 .define('S', slab)
                 .define('#', Items.GLASS_BOTTLE)
                 .save(output, BCUtil.modLoc(modId, prefix + "potion_shelf"));
+        shapedRecipe(BCItems.PRINTING_TABLE.get(woodType), woodType, "printing_tables")
+                .pattern("CCC")
+                .pattern("SSS")
+                .pattern("PRP")
+                .define('P', planks)
+                .define('S', slab)
+                .define('C', Tags.Items.INGOTS_COPPER)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .save(output, BCUtil.modLoc(modId, prefix + "printing_table"));
         shapedRecipe(BCItems.SHELF.get(woodType), woodType, "shelves")
                 .pattern("SSS")
                 .pattern(" P ")

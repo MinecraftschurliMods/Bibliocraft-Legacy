@@ -30,6 +30,7 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         copy(BCTags.Blocks.FANCY_LANTERNS, BCTags.Items.FANCY_LANTERNS);
         copy(BCTags.Blocks.FANCY_LANTERNS_GOLD, BCTags.Items.FANCY_LANTERNS_GOLD);
         copy(BCTags.Blocks.FANCY_LANTERNS_IRON, BCTags.Items.FANCY_LANTERNS_IRON);
+        copy(BCTags.Blocks.PRINTING_TABLES, BCTags.Items.PRINTING_TABLES);
         copy(BCTags.Blocks.TYPEWRITERS, BCTags.Items.TYPEWRITERS);
         tag(BCTags.Items.SEAT_BACKS).addTags(BCTags.Items.SEAT_BACKS_SMALL, BCTags.Items.SEAT_BACKS_RAISED, BCTags.Items.SEAT_BACKS_FLAT, BCTags.Items.SEAT_BACKS_TALL, BCTags.Items.SEAT_BACKS_FANCY);
         tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS)

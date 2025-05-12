@@ -20,6 +20,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBl
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.WallFancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfBlock;
@@ -53,6 +54,7 @@ public interface BCBlocks {
     WoodTypeDeferredHolder<Block, GrandfatherClockBlock> GRANDFATHER_CLOCK = woodenBlock("grandfather_clock", GrandfatherClockBlock::new);
     WoodTypeDeferredHolder<Block, LabelBlock>            LABEL             = woodenBlock("label",             LabelBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock>      POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
+    WoodTypeDeferredHolder<Block, PrintingTableBlock>    PRINTING_TABLE    = woodenBlock("printing_table",    PrintingTableBlock::new);
     WoodTypeDeferredHolder<Block, ShelfBlock>            SHELF             = woodenBlock("shelf",             ShelfBlock::new);
     WoodTypeDeferredHolder<Block, TableBlock>            TABLE             = woodenBlock("table",             TableBlock::new);
     WoodTypeDeferredHolder<Block, ToolRackBlock>         TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
@@ -82,12 +84,11 @@ public interface BCBlocks {
     DeferredBlock<LanternBlock>         GOLD_LANTERN           = BCRegistries.BLOCKS.register("gold_lantern",           () -> new LanternBlock        (BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN)));
     DeferredBlock<LanternBlock>         GOLD_SOUL_LANTERN      = BCRegistries.BLOCKS.register("gold_soul_lantern",      () -> new LanternBlock        (BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_LANTERN)));
     DeferredBlock<FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    DeferredBlock<PrintingTableBlock>   IRON_PRINTING_TABLE    = BCRegistries.BLOCKS.register("iron_printing_table",    () -> new PrintingTableBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredBlock<SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
     //TODO Map Frame
     //TODO Painting Frame
     //TODO Painting Press
-    //TODO Printing Press
-    //TODO Typesetting Table
     //TODO Writing Desk
 
     /**

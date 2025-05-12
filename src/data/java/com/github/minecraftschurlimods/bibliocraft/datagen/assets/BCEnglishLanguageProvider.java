@@ -48,6 +48,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultBlock(BCBlocks.GOLD_LANTERN);
         addDefaultBlock(BCBlocks.GOLD_SOUL_LANTERN);
         addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
+        addDefaultBlock(BCBlocks.IRON_PRINTING_TABLE);
         addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
         addDefaultItem(BCItems.BIG_BOOK);
         add(BCItems.WRITTEN_BIG_BOOK.get(), "Big Book");
@@ -81,6 +82,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Blocks.GRANDFATHER_CLOCKS, "Grandfather Clocks");
         add(BCTags.Blocks.LABELS, "Labels");
         add(BCTags.Blocks.POTION_SHELVES, "Potion Shelves");
+        add(BCTags.Blocks.PRINTING_TABLES_WOOD, "Wooden Printing Tables");
+        add(BCTags.Blocks.PRINTING_TABLES, "Printing Tables");
         add(BCTags.Blocks.SEATS, "Seats");
         add(BCTags.Blocks.SEAT_BACKS, "Seat Backs");
         add(BCTags.Blocks.SHELVES, "Shelves");
@@ -102,6 +105,8 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Items.GRANDFATHER_CLOCKS, "Grandfather Clocks");
         add(BCTags.Items.LABELS, "Labels");
         add(BCTags.Items.POTION_SHELVES, "Potion Shelves");
+        add(BCTags.Items.PRINTING_TABLES_WOOD, "Wooden Printing Tables");
+        add(BCTags.Items.PRINTING_TABLES, "Printing Tables");
         add(BCTags.Items.SEATS, "Seats");
         add(BCTags.Items.SEAT_BACKS, "Seat Backs");
         add(BCTags.Items.SHELVES, "Shelves");
@@ -129,6 +134,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "fancy_crafter", "Crafting");
         add("container", "label", "Label");
         add("container", "potion_shelf", "Potion Shelf");
+        add("container", "printing_table", "Printing Table");
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");
         add("itemGroup." + BibliocraftApi.MOD_ID, "Bibliocraft");
