@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:printing_tables",
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "P": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "SSS",
+    "PRP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:dark_oak_printing_table"
+  }
+}

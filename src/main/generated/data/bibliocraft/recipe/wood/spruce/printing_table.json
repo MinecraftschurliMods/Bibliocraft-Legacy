@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:printing_tables",
+  "key": {
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "P": {
+      "item": "minecraft:spruce_planks"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "item": "minecraft:spruce_slab"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "SSS",
+    "PRP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:spruce_printing_table"
+  }
+}
