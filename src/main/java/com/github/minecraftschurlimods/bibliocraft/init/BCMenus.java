@@ -7,6 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.Fancy
 import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
@@ -23,6 +24,7 @@ public interface BCMenus {
     Supplier<MenuType<FancyCrafterMenu>>    FANCY_CRAFTER     = BCRegistries.MENUS.register("fancy_crafter",     () -> IMenuTypeExtension.create(FancyCrafterMenu::new));
     Supplier<MenuType<LabelMenu>>           LABEL             = BCRegistries.MENUS.register("label",             () -> IMenuTypeExtension.create(LabelMenu::new));
     Supplier<MenuType<PotionShelfMenu>>     POTION_SHELF      = BCRegistries.MENUS.register("potion_shelf",      () -> IMenuTypeExtension.create(PotionShelfMenu::new));
+    Supplier<MenuType<PrintingTableMenu>>   PRINTING_TABLE    = BCRegistries.MENUS.register("printing_table",    () -> IMenuTypeExtension.create(PrintingTableMenu::new));
     Supplier<MenuType<ShelfMenu>>           SHELF             = BCRegistries.MENUS.register("shelf",             () -> IMenuTypeExtension.create(ShelfMenu::new));
     Supplier<MenuType<SlottedBookMenu>>     SLOTTED_BOOK      = BCRegistries.MENUS.register("slotted_book",      () -> IMenuTypeExtension.create(SlottedBookMenu::new));
     Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = BCRegistries.MENUS.register("tool_rack",         () -> IMenuTypeExtension.create(ToolRackMenu::new));

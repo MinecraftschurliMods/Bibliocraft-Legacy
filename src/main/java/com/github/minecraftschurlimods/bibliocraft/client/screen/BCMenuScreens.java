@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackMenu
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -58,6 +59,14 @@ public final class BCMenuScreens {
         private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/potion_shelf.png");
 
         public PotionShelf(PotionShelfMenu menu, Inventory inventory, Component title) {
+            super(menu, inventory, title, BACKGROUND);
+        }
+    }
+
+    public static class PrintingTable extends BCMenuScreen<PrintingTableMenu> {
+        private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/printing_table.png");
+
+        public PrintingTable(PrintingTableMenu menu, Inventory inventory, Component title) {
             super(menu, inventory, title, BACKGROUND);
         }
     }
