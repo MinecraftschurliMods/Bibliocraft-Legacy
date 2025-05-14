@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -14,7 +15,7 @@ public record BigBookSignPacket(WrittenBigBookContent content, InteractionHand h
     public static final Type<BigBookSignPacket> TYPE = new Type<>(BCUtil.bcLoc("big_book_sign"));
     public static final StreamCodec<RegistryFriendlyByteBuf, BigBookSignPacket> STREAM_CODEC = StreamCodec.composite(
             WrittenBigBookContent.STREAM_CODEC, BigBookSignPacket::content,
-            BCUtil.INTERACTION_HAND_STREAM_CODEC, BigBookSignPacket::hand,
+            CodecUtil.INTERACTION_HAND_STREAM_CODEC, BigBookSignPacket::hand,
             BigBookSignPacket::new);
 
     public void handle(IPayloadContext context) {

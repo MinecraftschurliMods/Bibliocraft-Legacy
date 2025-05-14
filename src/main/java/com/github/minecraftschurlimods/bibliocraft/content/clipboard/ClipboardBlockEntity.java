@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.clipboard;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
@@ -23,14 +23,14 @@ public class ClipboardBlockEntity extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         if (tag.contains(CONTENT_KEY)) {
-            setContent(BCUtil.decodeNbt(ClipboardContent.CODEC, tag.get(CONTENT_KEY)));
+            setContent(CodecUtil.decodeNbt(ClipboardContent.CODEC, tag.get(CONTENT_KEY)));
         }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put(CONTENT_KEY, BCUtil.encodeNbt(ClipboardContent.CODEC, getContent()));
+        tag.put(CONTENT_KEY, CodecUtil.encodeNbt(ClipboardContent.CODEC, getContent()));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ClipboardBlockEntity extends BlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = super.getUpdateTag(registries);
         if (!content.equals(ClipboardContent.DEFAULT)) {
-            tag.put(CONTENT_KEY, BCUtil.encodeNbt(ClipboardContent.CODEC, getContent()));
+            tag.put(CONTENT_KEY, CodecUtil.encodeNbt(ClipboardContent.CODEC, getContent()));
         }
         return tag;
     }
@@ -66,7 +66,7 @@ public class ClipboardBlockEntity extends BlockEntity {
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
         super.handleUpdateTag(tag, registries);
         if (tag.contains(CONTENT_KEY)) {
-            setContent(BCUtil.decodeNbt(ClipboardContent.CODEC, tag.get(CONTENT_KEY)));
+            setContent(CodecUtil.decodeNbt(ClipboardContent.CODEC, tag.get(CONTENT_KEY)));
         }
     }
 

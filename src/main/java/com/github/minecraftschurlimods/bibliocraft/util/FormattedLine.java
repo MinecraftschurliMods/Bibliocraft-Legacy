@@ -55,8 +55,8 @@ public record FormattedLine(String text, Style style, int size, Mode mode, Align
 
     public enum Mode implements StringRepresentable {
         NORMAL, SHADOW, GLOWING;
-        public static final Codec<Mode> CODEC = BCUtil.enumCodec(Mode::values);
-        public static final StreamCodec<ByteBuf, Mode> STREAM_CODEC = BCUtil.enumStreamCodec(Mode::values, Mode::ordinal);
+        public static final Codec<Mode> CODEC = CodecUtil.enumCodec(Mode::values);
+        public static final StreamCodec<ByteBuf, Mode> STREAM_CODEC = CodecUtil.enumStreamCodec(Mode::values, Mode::ordinal);
 
         @Override
         public String getSerializedName() {
@@ -70,8 +70,8 @@ public record FormattedLine(String text, Style style, int size, Mode mode, Align
 
     public enum Alignment implements StringRepresentable {
         LEFT, CENTER, RIGHT;
-        public static final Codec<Alignment> CODEC = BCUtil.enumCodec(Alignment::values);
-        public static final StreamCodec<ByteBuf, Alignment> STREAM_CODEC = BCUtil.enumStreamCodec(Alignment::values, Alignment::ordinal);
+        public static final Codec<Alignment> CODEC = CodecUtil.enumCodec(Alignment::values);
+        public static final StreamCodec<ByteBuf, Alignment> STREAM_CODEC = CodecUtil.enumStreamCodec(Alignment::values, Alignment::ordinal);
 
         @Override
         public String getSerializedName() {

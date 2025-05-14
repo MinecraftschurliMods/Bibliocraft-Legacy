@@ -1,22 +1,14 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.mojang.serialization.Codec;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.Container;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.Entity;
@@ -39,21 +31,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
  * Utility class holding various helper methods.
  */
 public final class BCUtil {
-    public static final StreamCodec<ByteBuf, InteractionHand> INTERACTION_HAND_STREAM_CODEC = ByteBufCodecs.BOOL.map(
-            bool -> bool ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND,
-            hand -> hand == InteractionHand.MAIN_HAND
-    );
-
     /**
      * @param path The path to use.
      * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
@@ -88,26 +71,58 @@ public final class BCUtil {
     }
 
     /**
-     * Helper to reduce {@link Objects#requireNonNull(Object)} boilerplate.
-     * @param t The nullable object.
-     * @return The input object, guarded by a non-null check.
-     * @param <T> The type of the object.
+     * Extends the given {@link List} to the given size, filling the new spaces with the provided values.
+     *
+     * @param list The {@link List} to extend.
+     * @param size The size the {@link List} should be extended to.
+     * @param fill The value to fill the new spots with.
+     * @param <T>  The generic type of the list.
+     * @return The given {@link List}, extended to the given size.
      */
-    public static <T> T nonNull(T t) {
-        return Objects.requireNonNull(t);
+    public static <T> List<T> extend(List<T> list, int size, T fill) {
+        for (int i = list.size(); i < size; i++) {
+            list.add(fill);
+        }
+        return list;
     }
 
     /**
-     * Shorthand to open a menu for the block entity at the given position.
-     *
-     * @param player The player to open the menu for.
-     * @param level  The level of the block entity.
-     * @param pos    The position of the block entity.
+     * @return A {@link Stream} of all {@link ChatFormatting}s that represent a color.
      */
-    public static void openBEMenu(Player player, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof MenuProvider mp && player instanceof ServerPlayer sp) {
-            sp.openMenu(mp, buf -> buf.writeBlockPos(pos));
-        }
+    public static Stream<ChatFormatting> getChatFormattingColors() {
+        return Arrays.stream(ChatFormatting.values()).filter(ChatFormatting::isColor);
+    }
+
+    /**
+     * Returns a display name for the given position. If there is a nameable block entity at the position, the block entity's name is returned, otherwise the block's name is returned.
+     *
+     * @param level The {@link Level} to get the display name for.
+     * @param pos   The {@link BlockPos} to get the display name for.
+     * @return The display name to use for the given position.
+     */
+    public static Component getNameAtPos(Level level, BlockPos pos) {
+        return level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName();
+    }
+
+    /**
+     * Returns a display name for the given {@link BlockEntity}. If it is nameable, the block entity's name is returned, otherwise the block's name is returned.
+     *
+     * @param blockEntity The {@link BlockEntity} to get the display name for.
+     * @return The display name to use for the given {@link BlockEntity}.
+     */
+    public static Component getNameForBE(BlockEntity blockEntity) {
+        return blockEntity instanceof Nameable nameable ? nameable.getDisplayName() : blockEntity.getBlockState().getBlock().getName();
+    }
+
+    /**
+     * Returns the max of multiple ints.
+     *
+     * @param ints The ints to get the max of.
+     * @return The max int in the input.
+     * @throws RuntimeException If the input array is empty.
+     */
+    public static int max(int... ints) {
+        return Arrays.stream(ints).max().orElseThrow(RuntimeException::new);
     }
 
     /**
@@ -155,104 +170,26 @@ public final class BCUtil {
     }
 
     /**
-     * Extends the given {@link List} to the given size, filling the new spaces with the provided values.
-     *
-     * @param list The {@link List} to extend.
-     * @param size The size the {@link List} should be extended to.
-     * @param fill The value to fill the new spots with.
-     * @param <T>  The generic type of the list.
-     * @return The given {@link List}, extended to the given size.
+     * Helper to reduce {@link Objects#requireNonNull(Object)} boilerplate.
+     * @param t The nullable object.
+     * @return The input object, guarded by a non-null check.
+     * @param <T> The type of the object.
      */
-    public static <T> List<T> extend(List<T> list, int size, T fill) {
-        for (int i = list.size(); i < size; i++) {
-            list.add(fill);
+    public static <T> T nonNull(T t) {
+        return Objects.requireNonNull(t);
+    }
+
+    /**
+     * Shorthand to open a menu for the block entity at the given position.
+     *
+     * @param player The player to open the menu for.
+     * @param level  The level of the block entity.
+     * @param pos    The position of the block entity.
+     */
+    public static void openBEMenu(Player player, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof MenuProvider mp && player instanceof ServerPlayer sp) {
+            sp.openMenu(mp, buf -> buf.writeBlockPos(pos));
         }
-        return list;
-    }
-
-    /**
-     * Returns the max of multiple ints.
-     *
-     * @param ints The ints to get the max of.
-     * @return The max int in the input.
-     */
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public static int max(int i, int... ints) {
-        return IntStream.concat(IntStream.of(i), Arrays.stream(ints)).max().getAsInt();
-    }
-
-    /**
-     * Copies the list and performs the given operation on it.
-     * @param list     The list to copy.
-     * @param consumer The operation to perform.
-     * @return A copy of the original list, with the operation performed on it.
-     * @param <T> The type of the list.
-     */
-    public static <T> List<T> copyListAndDo(List<T> list, Consumer<List<T>> consumer) {
-        List<T> copy = new ArrayList<>(list);
-        consumer.accept(copy);
-        return copy;
-    }
-
-    /**
-     * @param valuesSupplier The enum's {@code values()} method.
-     * @param <E>            The enum type.
-     * @return An enum codec.
-     */
-    public static <E extends Enum<E> & StringRepresentable> Codec<E> enumCodec(Supplier<E[]> valuesSupplier) {
-        return StringRepresentable.fromEnum(valuesSupplier);
-    }
-
-    /**
-     * @param valuesSupplier  The enum's {@code values()} method.
-     * @param ordinalSupplier The enum's {@code ordinal()} method.
-     * @param <E>             The enum type.
-     * @return An enum stream codec.
-     */
-    public static <E extends Enum<E>> StreamCodec<ByteBuf, E> enumStreamCodec(Supplier<E[]> valuesSupplier, Function<E, Integer> ordinalSupplier) {
-        return ByteBufCodecs.VAR_INT.map(e -> valuesSupplier.get()[e], ordinalSupplier);
-    }
-
-    /**
-     * Encodes the given value to NBT using the given codec.
-     *
-     * @param codec The codec to use for encoding.
-     * @param value The value to encode to NBT.
-     * @param <T>   The type of the value and the codec.
-     * @return The NBT representation of the given value.
-     */
-    public static <T> Tag encodeNbt(Codec<T> codec, T value) {
-        return codec.encodeStart(NbtOps.INSTANCE, value).getOrThrow();
-    }
-
-    /**
-     * Decodes the given value from NBT using the given codec.
-     *
-     * @param codec The codec to use for decoding.
-     * @param tag   The NBT representation to decode.
-     * @param <T>   The type of the value and the codec.
-     * @return The decoded value.
-     */
-    public static <T> T decodeNbt(Codec<T> codec, Tag tag) {
-        return codec.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
-    }
-
-    /**
-     * @return A {@link Stream} of all {@link ChatFormatting}s that represent a color.
-     */
-    public static Stream<ChatFormatting> getChatFormattingColors() {
-        return Arrays.stream(ChatFormatting.values()).filter(ChatFormatting::isColor);
-    }
-
-    /**
-     * Returns a display name for the given position. If there is a nameable block entity at the position, the block entity's name is returned, otherwise the block's name is returned.
-     *
-     * @param level The {@link Level} to get the display name for.
-     * @param pos   The {@link BlockPos} to get the display name for.
-     * @return The display name to use for the given position.
-     */
-    public static Component getNameAtPos(Level level, BlockPos pos) {
-        return level.getBlockEntity(pos) instanceof Nameable nameable ? nameable.getDisplayName() : level.getBlockState(pos).getBlock().getName();
     }
 
     /**
@@ -264,6 +201,14 @@ public final class BCUtil {
      */
     public static <T> Comparator<T> reverseComparator(Comparator<T> comparator) {
         return (a, b) -> -comparator.compare(a, b);
+    }
+
+    /**
+     * @param vec A {@link Vec3i}.
+     * @return The given {@link Vec3i}, represented as a {@link Vec3}.
+     */
+    public static Vec3 toVec3(Vec3i vec) {
+        return new Vec3(vec.getX(), vec.getY(), vec.getZ());
     }
 
     /**
@@ -297,23 +242,5 @@ public final class BCUtil {
             }
         }
         return stack;
-    }
-
-    /**
-     * Returns a display name for the given {@link BlockEntity}. If it is nameable, the block entity's name is returned, otherwise the block's name is returned.
-     *
-     * @param blockEntity The {@link BlockEntity} to get the display name for.
-     * @return The display name to use for the given {@link BlockEntity}.
-     */
-    public static Component getNameForBE(BlockEntity blockEntity) {
-        return blockEntity instanceof Nameable nameable ? nameable.getDisplayName() : blockEntity.getBlockState().getBlock().getName();
-    }
-
-    /**
-     * @param vec A {@link Vec3i}.
-     * @return The given {@link Vec3i}, represented as a {@link Vec3}.
-     */
-    public static Vec3 toVec3(Vec3i vec) {
-        return new Vec3(vec.getX(), vec.getY(), vec.getZ());
     }
 }

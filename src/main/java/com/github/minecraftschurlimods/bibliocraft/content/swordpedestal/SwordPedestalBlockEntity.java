@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.swordpedestal;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -44,14 +44,14 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         if (tag.contains(COLOR_KEY)) {
-            setColor(BCUtil.decodeNbt(DyedItemColor.CODEC, tag.get(COLOR_KEY)));
+            setColor(CodecUtil.decodeNbt(DyedItemColor.CODEC, tag.get(COLOR_KEY)));
         }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put(COLOR_KEY, BCUtil.encodeNbt(DyedItemColor.CODEC, getColor()));
+        tag.put(COLOR_KEY, CodecUtil.encodeNbt(DyedItemColor.CODEC, getColor()));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag tag = super.getUpdateTag(registries);
         if (!color.equals(SwordPedestalBlock.DEFAULT_COLOR)) {
-            tag.put(COLOR_KEY, BCUtil.encodeNbt(DyedItemColor.CODEC, getColor()));
+            tag.put(COLOR_KEY, CodecUtil.encodeNbt(DyedItemColor.CODEC, getColor()));
         }
         return tag;
     }
@@ -88,7 +88,7 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         super.handleUpdateTag(tag, lookupProvider);
         if (tag.contains(COLOR_KEY)) {
-            setColor(BCUtil.decodeNbt(DyedItemColor.CODEC, tag.get(COLOR_KEY)));
+            setColor(CodecUtil.decodeNbt(DyedItemColor.CODEC, tag.get(COLOR_KEY)));
         }
     }
 }

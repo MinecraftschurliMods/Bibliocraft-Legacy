@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog;
 
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
 import com.mojang.datafixers.util.Either;
 import io.netty.buffer.ByteBuf;
@@ -23,7 +24,7 @@ public record StockroomCatalogRequestListPacket(StockroomCatalogSorting.Containe
     public static final StreamCodec<ByteBuf, StockroomCatalogRequestListPacket> STREAM_CODEC = StreamCodec.composite(
             StockroomCatalogSorting.Container.STREAM_CODEC, StockroomCatalogRequestListPacket::containerSorting,
             StockroomCatalogSorting.Item.STREAM_CODEC, StockroomCatalogRequestListPacket::itemSorting,
-            ByteBufCodecs.either(BCUtil.INTERACTION_HAND_STREAM_CODEC, BlockPos.STREAM_CODEC), StockroomCatalogRequestListPacket::target,
+            ByteBufCodecs.either(CodecUtil.INTERACTION_HAND_STREAM_CODEC, BlockPos.STREAM_CODEC), StockroomCatalogRequestListPacket::target,
             StockroomCatalogRequestListPacket::new);
 
     public void handle(IPayloadContext context) {

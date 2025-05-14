@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
@@ -17,7 +17,7 @@ public interface StockroomCatalogSorting {
         COUNT_ASC,
         COUNT_DESC;
         
-        public static final StreamCodec<ByteBuf, Item> STREAM_CODEC = BCUtil.enumStreamCodec(Item::values, Item::ordinal);
+        public static final StreamCodec<ByteBuf, Item> STREAM_CODEC = CodecUtil.enumStreamCodec(Item::values, Item::ordinal);
 
         @Override
         public String getSerializedName() {
@@ -36,7 +36,7 @@ public interface StockroomCatalogSorting {
         DISTANCE_ASC,
         DISTANCE_DESC;
 
-        public static final StreamCodec<ByteBuf, Container> STREAM_CODEC = BCUtil.enumStreamCodec(Container::values, Container::ordinal);
+        public static final StreamCodec<ByteBuf, Container> STREAM_CODEC = CodecUtil.enumStreamCodec(Container::values, Container::ordinal);
 
         @Override
         public String getSerializedName() {

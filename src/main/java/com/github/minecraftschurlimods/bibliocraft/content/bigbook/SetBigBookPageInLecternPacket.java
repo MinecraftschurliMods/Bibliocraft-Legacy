@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
 import com.mojang.datafixers.util.Either;
 import io.netty.buffer.ByteBuf;
@@ -20,7 +21,7 @@ public record SetBigBookPageInLecternPacket(int page, Either<InteractionHand, Bl
     public static final Type<SetBigBookPageInLecternPacket> TYPE = new Type<>(BCUtil.bcLoc("set_big_book_page_in_lectern"));
     public static final StreamCodec<ByteBuf, SetBigBookPageInLecternPacket> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.INT, SetBigBookPageInLecternPacket::page,
-            ByteBufCodecs.either(BCUtil.INTERACTION_HAND_STREAM_CODEC, BlockPos.STREAM_CODEC), SetBigBookPageInLecternPacket::target,
+            ByteBufCodecs.either(CodecUtil.INTERACTION_HAND_STREAM_CODEC, BlockPos.STREAM_CODEC), SetBigBookPageInLecternPacket::target,
             SetBigBookPageInLecternPacket::new);
 
     public void handle(IPayloadContext context) {

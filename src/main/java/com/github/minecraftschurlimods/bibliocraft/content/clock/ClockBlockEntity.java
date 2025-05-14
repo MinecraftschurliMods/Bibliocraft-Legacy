@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
@@ -102,7 +102,7 @@ public class ClockBlockEntity extends BlockEntity {
         tickSound = tag.getBoolean(TICK_SOUND_KEY);
         List<ClockTrigger> list = new ArrayList<>();
         for (Tag trigger : tag.getList(TRIGGERS_KEY, Tag.TAG_COMPOUND)) {
-            list.add(BCUtil.decodeNbt(ClockTrigger.CODEC, trigger));
+            list.add(CodecUtil.decodeNbt(ClockTrigger.CODEC, trigger));
         }
         addTriggers(list);
     }
@@ -113,7 +113,7 @@ public class ClockBlockEntity extends BlockEntity {
         tag.putBoolean(TICK_SOUND_KEY, tickSound);
         ListTag list = new ListTag();
         for (ClockTrigger trigger : triggers) {
-            list.add(BCUtil.encodeNbt(ClockTrigger.CODEC, trigger));
+            list.add(CodecUtil.encodeNbt(ClockTrigger.CODEC, trigger));
         }
         tag.put(TRIGGERS_KEY, list);
     }

@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
-import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -40,13 +40,13 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        page = BCUtil.decodeNbt(TypewriterPage.CODEC, tag.getCompound(PAGE_KEY));
+        page = CodecUtil.decodeNbt(TypewriterPage.CODEC, tag.getCompound(PAGE_KEY));
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put(PAGE_KEY, BCUtil.encodeNbt(TypewriterPage.CODEC, page));
+        tag.put(PAGE_KEY, CodecUtil.encodeNbt(TypewriterPage.CODEC, page));
     }
 
     @Override
