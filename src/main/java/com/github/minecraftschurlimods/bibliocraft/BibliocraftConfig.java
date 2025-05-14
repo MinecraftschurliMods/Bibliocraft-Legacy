@@ -19,10 +19,12 @@ public final class BibliocraftConfig {
         ENABLE_PRIDE = builder
                 .comment("Whether to enable pride-themed cosmetics during pride month or not.")
                 .translation("config." + BibliocraftApi.MOD_ID + ".cosmetic.enable_pride")
+                .gameRestart()
                 .define("enable_pride", true);
         ENABLE_PRIDE_ALWAYS = builder
                 .comment("Whether to enable pride-themed cosmetics all year or only during pride month. Does nothing if enable_pride is false.")
                 .translation("config." + BibliocraftApi.MOD_ID + ".cosmetic.enable_pride_always")
+                .gameRestart()
                 .define("enable_pride_always", false);
         builder
                 .comment("Contains compatibility options.")
