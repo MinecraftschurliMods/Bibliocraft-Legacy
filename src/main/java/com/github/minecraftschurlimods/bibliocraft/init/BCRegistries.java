@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -21,6 +22,7 @@ public interface BCRegistries {
     DeferredRegister<BlockEntityType<?>>  BLOCK_ENTITIES     = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, BibliocraftApi.MOD_ID);
     DeferredRegister<EntityType<?>>       ENTITIES           = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE,       BibliocraftApi.MOD_ID);
     DeferredRegister<MenuType<?>>         MENUS              = DeferredRegister.create(BuiltInRegistries.MENU,              BibliocraftApi.MOD_ID);
+    DeferredRegister<RecipeType<?>>       RECIPE_TYPES       = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE,       BibliocraftApi.MOD_ID);
     DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, BibliocraftApi.MOD_ID);
     DeferredRegister<SoundEvent>          SOUND_EVENTS       = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT,       BibliocraftApi.MOD_ID);
 
@@ -44,6 +46,7 @@ public interface BCRegistries {
         BLOCK_ENTITIES.register(bus);
         ENTITIES.register(bus);
         MENUS.register(bus);
+        RECIPE_TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
         SOUND_EVENTS.register(bus);
     }

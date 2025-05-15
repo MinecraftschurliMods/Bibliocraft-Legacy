@@ -7,6 +7,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
@@ -45,6 +46,40 @@ public final class CodecUtil {
      */
     public static <E extends Enum<E>> StreamCodec<ByteBuf, E> enumStreamCodec(Supplier<E[]> valuesSupplier, Function<E, Integer> ordinalSupplier) {
         return ByteBufCodecs.VAR_INT.map(e -> valuesSupplier.get()[e], ordinalSupplier);
+    }
+
+    /**
+     * @param baseCodec The {@link Codec} to base the list codec on.
+     * @param fieldName The name of the codec field.
+     * @param converter A {@link Function} to convert the {@link List} to a {@link DataResult}.
+     * @return A {@link MapCodec} that is serialized to a {@link List} but is deserialized to a {@link NonNullList}.
+     * @param <T> The generic type of the lists.
+     */
+    public static <T> MapCodec<NonNullList<T>> nonNullListMapCodec(Codec<T> baseCodec, String fieldName, Function<List<T>, DataResult<NonNullList<T>>> converter) {
+        return baseCodec.listOf().fieldOf(fieldName).flatXmap(converter, DataResult::success);
+    }
+
+    /**
+     * @param baseStreamCodec The {@link StreamCodec} to base the list stream codec on.
+     * @return A {@link StreamCodec} for synchronizing a {@link NonNullList}.
+     * @param <B> The buffer type.
+     * @param <T> The generic type of the {@link NonNullList}.
+     */
+    public static <B extends FriendlyByteBuf, T> StreamCodec<B, NonNullList<T>> nonNullListStreamCodec(StreamCodec<B, T> baseStreamCodec) {
+        return new StreamCodec<>() {
+            @Override
+            public NonNullList<T> decode(B buffer) {
+                NonNullList<T> result = NonNullList.createWithCapacity(buffer.readVarInt());
+                result.replaceAll($ -> baseStreamCodec.decode(buffer));
+                return result;
+            }
+
+            @Override
+            public void encode(B buffer, NonNullList<T> value) {
+                buffer.writeVarInt(value.size());
+                value.forEach(t -> baseStreamCodec.encode(buffer, t));
+            }
+        };
     }
 
     /**

@@ -1,15 +1,47 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 
 import java.util.function.Supplier;
 
 public interface BCRecipes {
+    Supplier<RecipeType<PrintingTableRecipe>> PRINTING_TABLE = BCRegistries.RECIPE_TYPES.register("printing_table", () -> RecipeType.simple(BCUtil.bcLoc("printing_table")));
+
     Supplier<RecipeSerializer<BigBookCloningRecipe>>        BIG_BOOK_CLONING        = BCRegistries.RECIPE_SERIALIZERS.register("big_book_cloning",        () -> new SimpleCraftingRecipeSerializer<>(BigBookCloningRecipe::new));
     Supplier<RecipeSerializer<TypewriterPageCloningRecipe>> TYPEWRITER_PAGE_CLONING = BCRegistries.RECIPE_SERIALIZERS.register("typewriter_page_cloning", () -> new SimpleCraftingRecipeSerializer<>(TypewriterPageCloningRecipe::new));
+    Supplier<RecipeSerializer<PrintingTableCloningRecipe>>  PRINTING_TABLE_CLONING  = BCRegistries.RECIPE_SERIALIZERS.register("printing_table_cloning",  serializer(PrintingTableCloningRecipe.CODEC, PrintingTableCloningRecipe.STREAM_CODEC));
+
+    /**
+     * Returns a {@link Supplier} for a {@link RecipeSerializer} created using the given {@link MapCodec} and {@link StreamCodec}.
+     * @param codec       The {@link MapCodec} to use.
+     * @param streamCodec The {@link StreamCodec} to use.
+     * @return A {@link Supplier} for a {@link RecipeSerializer}.
+     * @param <T> The generic type of the {@link RecipeSerializer}.
+     */
+    static <T extends Recipe<?>> Supplier<RecipeSerializer<T>> serializer(MapCodec<T> codec, StreamCodec<RegistryFriendlyByteBuf, T> streamCodec) {
+        return () -> new RecipeSerializer<>() {
+            @Override
+            public MapCodec<T> codec() {
+                return codec;
+            }
+
+            @Override
+            public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
+                return streamCodec;
+            }
+        };
+    }
 
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.

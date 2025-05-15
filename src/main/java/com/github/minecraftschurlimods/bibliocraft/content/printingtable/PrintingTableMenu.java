@@ -21,11 +21,11 @@ public class PrintingTableMenu extends BCMenu<PrintingTableBlockEntity> {
     protected void addSlots(Inventory inventory) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlot(new Slot(blockEntity, j + i * 3, 12 + j * 18, 17 + i * 18));
+                addSlot(new Slot(blockEntity, j + i * 3, 17 + j * 18, 17 + i * 18));
             }
         }
-        addSlot(new Slot(blockEntity, 9, 102, 35));
-        addSlot(new ResultSlot(blockEntity, 10, 148, 35));
+        addSlot(new Slot(blockEntity, 9, 89, 35));
+        addSlot(new ResultSlot(blockEntity, 10, 143, 35));
         addInventorySlots(inventory, 8, 84);
     }
 
