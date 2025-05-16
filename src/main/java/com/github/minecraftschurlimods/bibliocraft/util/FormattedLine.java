@@ -9,9 +9,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.util.StringRepresentable;
-
-import java.util.Locale;
 
 public record FormattedLine(String text, Style style, int size, Mode mode, Alignment alignment) {
     public static final int MIN_SIZE = 5;
@@ -53,30 +50,20 @@ public record FormattedLine(String text, Style style, int size, Mode mode, Align
         return new FormattedLine(text, style, size, mode, alignment);
     }
 
-    public enum Mode implements StringRepresentable {
+    public enum Mode implements StringRepresentableEnum {
         NORMAL, SHADOW, GLOWING;
         public static final Codec<Mode> CODEC = CodecUtil.enumCodec(Mode::values);
         public static final StreamCodec<ByteBuf, Mode> STREAM_CODEC = CodecUtil.enumStreamCodec(Mode::values, Mode::ordinal);
-
-        @Override
-        public String getSerializedName() {
-            return name().toLowerCase(Locale.ROOT);
-        }
 
         public String getTranslationKey() {
             return "gui." + BibliocraftApi.MOD_ID + ".formatted_line.mode." + getSerializedName();
         }
     }
 
-    public enum Alignment implements StringRepresentable {
+    public enum Alignment implements StringRepresentableEnum {
         LEFT, CENTER, RIGHT;
         public static final Codec<Alignment> CODEC = CodecUtil.enumCodec(Alignment::values);
         public static final StreamCodec<ByteBuf, Alignment> STREAM_CODEC = CodecUtil.enumStreamCodec(Alignment::values, Alignment::ordinal);
-
-        @Override
-        public String getSerializedName() {
-            return name().toLowerCase(Locale.ROOT);
-        }
 
         public String getTranslationKey() {
             return "gui." + BibliocraftApi.MOD_ID + ".formatted_line.alignment." + getSerializedName();
