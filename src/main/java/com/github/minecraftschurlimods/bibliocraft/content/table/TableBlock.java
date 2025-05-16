@@ -2,10 +2,10 @@ package com.github.minecraftschurlimods.bibliocraft.content.table;
 
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.StringRepresentableEnum;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -27,8 +27,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
-import java.util.Locale;
 
 public class TableBlock extends BCFacingEntityBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
@@ -170,17 +168,7 @@ public class TableBlock extends BCFacingEntityBlock {
         }
     }
 
-    public enum Type implements StringRepresentable {
-        NONE,
-        ONE,
-        STRAIGHT,
-        CURVE,
-        THREE,
-        ALL;
-
-        @Override
-        public String getSerializedName() {
-            return name().toLowerCase(Locale.ROOT);
-        }
+    public enum Type implements StringRepresentableEnum {
+        NONE, ONE, STRAIGHT, CURVE, THREE, ALL
     }
 }
