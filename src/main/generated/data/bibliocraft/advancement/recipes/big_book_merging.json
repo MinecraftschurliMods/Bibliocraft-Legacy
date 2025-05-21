@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_paper": {
+    "has_big_book": {
       "conditions": {
         "items": [
           {
-            "items": "#bibliocraft:typewriter_paper"
+            "items": "bibliocraft:big_book"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bibliocraft:typewriter_page"
+        "recipe": "bibliocraft:big_book_merging"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_paper"
+      "has_big_book"
     ]
   ],
   "rewards": {
     "recipes": [
-      "bibliocraft:typewriter_page"
+      "bibliocraft:big_book_merging"
     ]
   }
 }

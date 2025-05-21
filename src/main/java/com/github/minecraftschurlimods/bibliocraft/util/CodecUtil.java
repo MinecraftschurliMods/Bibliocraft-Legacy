@@ -1,7 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
+import com.google.gson.JsonElement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.MapCodec;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.NonNullList;
@@ -13,7 +15,9 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -83,6 +87,18 @@ public final class CodecUtil {
     }
 
     /**
+     * @param keyCodec   The key {@link StreamCodec} to use.
+     * @param valueCodec The value {@link StreamCodec} to use.
+     * @return A {@link StreamCodec} representing a {@link Map}.
+     * @param <B> The buffer type.
+     * @param <K> The generic type of the map key.
+     * @param <V> The generic type of the map value.
+     */
+    public static <B extends ByteBuf, K, V> StreamCodec<B, Map<K, V>> mapStreamCodec(StreamCodec<? super B, K> keyCodec, StreamCodec<? super B, V> valueCodec) {
+        return ByteBufCodecs.map(HashMap::new, keyCodec, valueCodec);
+    }
+
+    /**
      * Encodes the given value to NBT using the given codec.
      *
      * @param codec The codec to use for encoding.
@@ -104,5 +120,29 @@ public final class CodecUtil {
      */
     public static <T> T decodeNbt(Codec<T> codec, Tag tag) {
         return codec.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
+    }
+
+    /**
+     * Encodes the given value to JSON using the given codec.
+     *
+     * @param codec The codec to use for encoding.
+     * @param value The value to encode to NBT.
+     * @param <T>   The type of the value and the codec.
+     * @return The JSON representation of the given value.
+     */
+    public static <T> JsonElement encodeJson(Codec<T> codec, T value) {
+        return codec.encodeStart(JsonOps.INSTANCE, value).getOrThrow();
+    }
+
+    /**
+     * Decodes the given value from JSON using the given codec.
+     *
+     * @param codec The codec to use for decoding.
+     * @param json  The JSON representation to decode.
+     * @param <T>   The type of the value and the codec.
+     * @return The decoded value.
+     */
+    public static <T> T decodeJson(Codec<T> codec, JsonElement json) {
+        return codec.decode(JsonOps.INSTANCE, json).getOrThrow().getFirst();
     }
 }

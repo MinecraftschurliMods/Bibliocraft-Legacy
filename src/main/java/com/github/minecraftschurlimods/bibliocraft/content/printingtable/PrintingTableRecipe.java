@@ -1,9 +1,15 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -69,5 +75,17 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         public Item getResult() {
             return result.getItem();
         }
+
+        @Override
+        public void save(RecipeOutput output, ResourceLocation id) {
+            Advancement.Builder advancement = output.advancement()
+                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
+                    .rewards(AdvancementRewards.Builder.recipe(id))
+                    .requirements(AdvancementRequirements.Strategy.OR);
+            criteria.forEach(advancement::addCriterion);
+            output.accept(id, build(), advancement.build(id.withPrefix("recipes/")));
+        }
+
+        public abstract PrintingTableRecipe build();
     }
 }

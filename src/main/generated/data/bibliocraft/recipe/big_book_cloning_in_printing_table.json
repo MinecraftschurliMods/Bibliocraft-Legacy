@@ -1,0 +1,15 @@
+{
+  "type": "bibliocraft:printing_table_cloning",
+  "data_components": [
+    "bibliocraft:big_book_content"
+  ],
+  "ingredients": [
+    {
+      "item": "bibliocraft:big_book"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:big_book"
+  }
+}

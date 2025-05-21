@@ -1,0 +1,17 @@
+{
+  "type": "bibliocraft:printing_table_merging",
+  "component_mergers": {
+    "bibliocraft:clipboard_content": {
+      "active": "first",
+      "pages": "append",
+      "title": "first"
+    }
+  },
+  "ingredient": {
+    "item": "bibliocraft:clipboard"
+  },
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:clipboard"
+  }
+}

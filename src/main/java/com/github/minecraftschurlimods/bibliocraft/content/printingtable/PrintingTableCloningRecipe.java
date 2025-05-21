@@ -120,14 +120,8 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
         }
 
         @Override
-        public void save(RecipeOutput output, ResourceLocation id) {
-            Advancement.Builder advancement = output.advancement()
-                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                    .rewards(AdvancementRewards.Builder.recipe(id))
-                    .requirements(AdvancementRequirements.Strategy.OR);
-            criteria.forEach(advancement::addCriterion);
-            PrintingTableCloningRecipe recipe = new PrintingTableCloningRecipe(dataComponentTypes, NonNullList.copyOf(left), result);
-            output.accept(id, recipe, advancement.build(id.withPrefix("recipes/")));
+        public PrintingTableRecipe build() {
+            return new PrintingTableCloningRecipe(dataComponentTypes, NonNullList.copyOf(left), result);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookCloningRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMergingRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageCloningRecipe;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
@@ -325,10 +326,65 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .save(output);
         SpecialRecipeBuilder.special(BigBookCloningRecipe::new).save(output, "big_book_cloning");
         SpecialRecipeBuilder.special(TypewriterPageCloningRecipe::new).save(output, "typewriter_page_cloning");
+        new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.CLIPBOARD.get()))
+                .addDataComponentType(BCDataComponents.CLIPBOARD_CONTENT.get())
+                .addIngredient(Ingredient.of(BCItems.CLIPBOARD.get()))
+                .unlockedBy("has_clipboard", has(BCItems.CLIPBOARD.get()))
+                .save(output, BCUtil.bcLoc("clipboard_cloning_in_printing_table"));
         new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.TYPEWRITER_PAGE.get()))
                 .addDataComponentType(BCDataComponents.TYPEWRITER_PAGE.get())
                 .addIngredient(Ingredient.of(BCTags.Items.TYPEWRITER_PAPER))
                 .unlockedBy("has_paper", has(BCTags.Items.TYPEWRITER_PAPER))
-                .save(output);
+                .save(output, BCUtil.bcLoc("typewriter_page_cloning_in_printing_table"));
+        new PrintingTableCloningRecipe.Builder(new ItemStack(Items.WRITABLE_BOOK))
+                .addDataComponentType(DataComponents.WRITABLE_BOOK_CONTENT)
+                .addIngredient(Ingredient.of(Items.WRITABLE_BOOK))
+                .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
+                .save(output, BCUtil.bcLoc("writable_book_cloning_in_printing_table"));
+        new PrintingTableCloningRecipe.Builder(new ItemStack(Items.WRITTEN_BOOK))
+                .addDataComponentType(DataComponents.WRITTEN_BOOK_CONTENT)
+                .addIngredient(Ingredient.of(Items.WRITABLE_BOOK))
+                .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
+                .save(output, BCUtil.bcLoc("written_book_cloning_in_printing_table"));
+        new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.BIG_BOOK.get()))
+                .addDataComponentType(BCDataComponents.BIG_BOOK_CONTENT.get())
+                .addIngredient(Ingredient.of(BCItems.BIG_BOOK.get()))
+                .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
+                .save(output, BCUtil.bcLoc("big_book_cloning_in_printing_table"));
+        new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.WRITTEN_BIG_BOOK.get()))
+                .addDataComponentType(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get())
+                .addIngredient(Ingredient.of(BCItems.BIG_BOOK.get()))
+                .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
+                .save(output, BCUtil.bcLoc("written_big_book_cloning_in_printing_table"));
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.CLIPBOARD.get()), new ItemStack(BCItems.CLIPBOARD.get()))
+                .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "title", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "active", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
+                .unlockedBy("has_clipboard", has(BCItems.CLIPBOARD.get()))
+                .save(output, BCUtil.bcLoc("clipboard_merging"));
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(Items.WRITABLE_BOOK), new ItemStack(Items.WRITABLE_BOOK))
+                .addMerger(DataComponents.WRITABLE_BOOK_CONTENT, "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
+                .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
+                .save(output, BCUtil.bcLoc("writable_book_merging"));
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(Items.WRITABLE_BOOK), new ItemStack(Items.WRITTEN_BOOK))
+                .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "title", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "author", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "generation", PrintingTableMergingRecipe.MergeMethod.MIN)
+                .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
+                .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
+                .save(output, BCUtil.bcLoc("written_book_merging"));
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.BIG_BOOK.get()), new ItemStack(BCItems.BIG_BOOK.get()))
+                .addMerger(BCDataComponents.BIG_BOOK_CONTENT.get(), "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
+                .addMerger(BCDataComponents.BIG_BOOK_CONTENT.get(), "current_page", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
+                .save(output, BCUtil.bcLoc("big_book_merging"));
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.BIG_BOOK.get()), new ItemStack(BCItems.WRITTEN_BIG_BOOK.get()))
+                .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
+                .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "title", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "author", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "generation", PrintingTableMergingRecipe.MergeMethod.MIN)
+                .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "current_page", PrintingTableMergingRecipe.MergeMethod.FIRST)
+                .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
+                .save(output, BCUtil.bcLoc("written_big_book_merging"));
     }
 }
