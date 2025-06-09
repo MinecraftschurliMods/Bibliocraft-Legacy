@@ -16,10 +16,10 @@ import org.jetbrains.annotations.Nullable;
 public class PrintingTableBlock extends BCFacingEntityBlock {
     private static final VoxelShape Z_SHAPE = ShapeUtil.combine(
             Shapes.box(0, 0, 0, 1, 0.9375, 1),
-            Shapes.box(0/16d, 0.9375, 0, 1/16d, 1, 1),
-            Shapes.box(3/16d, 0.9375, 0, 4/16d, 1, 1),
-            Shapes.box(12/16d, 0.9375, 0, 13/16d, 1, 1),
-            Shapes.box(15/16d, 0.9375, 0, 16/16d, 1, 1));
+            Shapes.box(0, 0.9375, 0, 0.0625, 1, 1),
+            Shapes.box(0.1875, 0.9375, 0, 0.25, 1, 1),
+            Shapes.box(0.75, 0.9375, 0, 0.8125, 1, 1),
+            Shapes.box(0.9375, 0.9375, 0, 1, 1, 1));
     private static final VoxelShape X_SHAPE = ShapeUtil.rotate(Z_SHAPE, Rotation.CLOCKWISE_90);
 
     public PrintingTableBlock(Properties properties) {
