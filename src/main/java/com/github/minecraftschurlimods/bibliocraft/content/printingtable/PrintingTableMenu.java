@@ -24,8 +24,8 @@ public class PrintingTableMenu extends BCMenu<PrintingTableBlockEntity> {
                 addSlot(new Slot(blockEntity, j + i * 3, 17 + j * 18, 17 + i * 18));
             }
         }
-        addSlot(new Slot(blockEntity, 9, 89, 35));
-        addSlot(new ResultSlot(blockEntity, 10, 143, 35));
+        addSlot(new Slot(blockEntity, 9, 90, 35));
+        addSlot(new ResultSlot(blockEntity, 10, 142, 35));
         addInventorySlots(inventory, 8, 84);
     }
 
