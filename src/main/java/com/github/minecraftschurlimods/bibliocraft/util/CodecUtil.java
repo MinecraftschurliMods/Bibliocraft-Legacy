@@ -73,8 +73,11 @@ public final class CodecUtil {
         return new StreamCodec<>() {
             @Override
             public NonNullList<T> decode(B buffer) {
-                NonNullList<T> result = NonNullList.createWithCapacity(buffer.readVarInt());
-                result.replaceAll($ -> baseStreamCodec.decode(buffer));
+                int size = buffer.readVarInt();
+                NonNullList<T> result = NonNullList.createWithCapacity(size);
+                for (int i = 0; i < size; i++) {
+                    result.add(baseStreamCodec.decode(buffer));
+                }
                 return result;
             }
 

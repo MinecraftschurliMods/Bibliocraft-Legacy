@@ -326,7 +326,6 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .save(output);
         SpecialRecipeBuilder.special(BigBookCloningRecipe::new).save(output, "big_book_cloning");
         SpecialRecipeBuilder.special(TypewriterPageCloningRecipe::new).save(output, "typewriter_page_cloning");
-/*
         new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.CLIPBOARD.get()))
                 .addDataComponentType(BCDataComponents.CLIPBOARD_CONTENT.get())
                 .addIngredient(Ingredient.of(BCItems.CLIPBOARD.get()))
@@ -387,6 +386,5 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "current_page", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
                 .save(output, BCUtil.bcLoc("written_big_book_merging"));
-*/
     }
 }

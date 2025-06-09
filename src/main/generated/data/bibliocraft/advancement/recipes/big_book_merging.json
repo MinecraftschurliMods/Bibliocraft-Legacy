@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_big_book": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bibliocraft:big_book"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bibliocraft:big_book_merging"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_big_book"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bibliocraft:big_book_merging"
+    ]
+  }
+}

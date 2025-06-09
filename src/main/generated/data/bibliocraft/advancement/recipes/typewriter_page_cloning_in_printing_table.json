@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_paper": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#bibliocraft:typewriter_paper"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bibliocraft:typewriter_page_cloning_in_printing_table"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_paper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bibliocraft:typewriter_page_cloning_in_printing_table"
+    ]
+  }
+}

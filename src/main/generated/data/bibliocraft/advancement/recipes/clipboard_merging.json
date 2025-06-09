@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_clipboard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "bibliocraft:clipboard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bibliocraft:clipboard_merging"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_clipboard"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bibliocraft:clipboard_merging"
+    ]
+  }
+}
