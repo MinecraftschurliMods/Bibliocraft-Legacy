@@ -36,18 +36,20 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     public static final MapCodec<PrintingTableMergingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Codec.unboundedMap(BuiltInRegistries.DATA_COMPONENT_TYPE.byNameCodec(), Codec.unboundedMap(Codec.STRING, MergeMethod.CODEC)).fieldOf("component_mergers").forGetter(e -> e.mergers),
             Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(e -> e.ingredient),
-            ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result)
+            ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
+            Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
     ).apply(inst, PrintingTableMergingRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableMergingRecipe> STREAM_CODEC = StreamCodec.composite(
             CodecUtil.mapStreamCodec(ByteBufCodecs.registry(Registries.DATA_COMPONENT_TYPE), CodecUtil.mapStreamCodec(ByteBufCodecs.STRING_UTF8, MergeMethod.STREAM_CODEC)), e -> e.mergers,
             Ingredient.CONTENTS_STREAM_CODEC, e -> e.ingredient,
             ItemStack.STREAM_CODEC, e -> e.result,
+            ByteBufCodecs.INT, e -> e.duration,
             PrintingTableMergingRecipe::new);
     private final Map<DataComponentType<?>, Map<String, MergeMethod>> mergers;
     private final Ingredient ingredient;
 
-    public PrintingTableMergingRecipe(Map<DataComponentType<?>, Map<String, MergeMethod>> mergers, Ingredient ingredient, ItemStack result) {
-        super(result);
+    public PrintingTableMergingRecipe(Map<DataComponentType<?>, Map<String, MergeMethod>> mergers, Ingredient ingredient, ItemStack result, int duration) {
+        super(result, duration);
         this.mergers = mergers;
         this.ingredient = ingredient;
     }
@@ -151,8 +153,8 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         private final Map<DataComponentType<?>, Map<String, MergeMethod>> mergers = new HashMap<>();
         private final Ingredient ingredient;
 
-        public Builder(Ingredient ingredient, ItemStack result) {
-            super(result);
+        public Builder(Ingredient ingredient, ItemStack result, int duration) {
+            super(result, duration);
             this.ingredient = ingredient;
         }
 
@@ -164,7 +166,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
 
         @Override
         public PrintingTableRecipe build() {
-            return new PrintingTableMergingRecipe(mergers, ingredient, result);
+            return new PrintingTableMergingRecipe(mergers, ingredient, result, duration);
         }
     }
 }

@@ -3,6 +3,7 @@
   "data_components": [
     "bibliocraft:written_big_book_content"
   ],
+  "duration": 100,
   "ingredients": [
     {
       "item": "bibliocraft:big_book"

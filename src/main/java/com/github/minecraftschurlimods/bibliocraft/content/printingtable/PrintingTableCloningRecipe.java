@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -30,18 +31,20 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
                         ? DataResult.error(() -> "Too many inputs for printing table clone recipe. The maximum is: %s".formatted(size))
                         : DataResult.success(NonNullList.of(Ingredient.EMPTY, list.toArray(Ingredient[]::new)));
             }).forGetter(e -> e.left),
-            ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result)
+            ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
+            Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
     ).apply(inst, PrintingTableCloningRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableCloningRecipe> STREAM_CODEC = StreamCodec.composite(
             DataComponentType.STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.dataComponentTypes,
             CodecUtil.nonNullListStreamCodec(Ingredient.CONTENTS_STREAM_CODEC), e -> e.left,
             ItemStack.STREAM_CODEC, e -> e.result,
+            ByteBufCodecs.INT, e -> e.duration,
             PrintingTableCloningRecipe::new);
     private final List<DataComponentType<?>> dataComponentTypes;
     private final NonNullList<Ingredient> left;
 
-    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, NonNullList<Ingredient> left, ItemStack result) {
-        super(result);
+    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, NonNullList<Ingredient> left, ItemStack result, int duration) {
+        super(result, duration);
         this.dataComponentTypes = dataComponentTypes;
         this.left = left;
     }
@@ -99,8 +102,8 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
         private final List<DataComponentType<?>> dataComponentTypes = new ArrayList<>();
         private final List<Ingredient> left = new ArrayList<>();
 
-        public Builder(ItemStack result) {
-            super(result);
+        public Builder(ItemStack result, int duration) {
+            super(result, duration);
         }
 
         public Builder addDataComponentType(DataComponentType<?> type) {
@@ -115,7 +118,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
 
         @Override
         public PrintingTableRecipe build() {
-            return new PrintingTableCloningRecipe(dataComponentTypes, NonNullList.copyOf(left), result);
+            return new PrintingTableCloningRecipe(dataComponentTypes, NonNullList.copyOf(left), result, duration);
         }
     }
 }

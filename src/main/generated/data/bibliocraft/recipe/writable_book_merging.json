@@ -5,6 +5,7 @@
       "pages": "append"
     }
   },
+  "duration": 200,
   "ingredient": {
     "item": "minecraft:writable_book"
   },

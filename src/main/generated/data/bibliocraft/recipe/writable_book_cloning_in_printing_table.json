@@ -3,6 +3,7 @@
   "data_components": [
     "minecraft:writable_book_content"
   ],
+  "duration": 100,
   "ingredients": [
     {
       "item": "minecraft:writable_book"

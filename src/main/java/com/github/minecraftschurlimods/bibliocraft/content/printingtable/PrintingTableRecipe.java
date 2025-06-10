@@ -21,10 +21,12 @@ import java.util.Map;
 
 public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeInput> {
     protected final ItemStack result;
+    protected final int duration;
     private final ItemStack resultCopy;
 
-    public PrintingTableRecipe(ItemStack result) {
+    public PrintingTableRecipe(ItemStack result, int duration) {
         this.result = result;
+        this.duration = duration;
         resultCopy = result.copy();
     }
 
@@ -43,6 +45,10 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         return resultCopy;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
     public boolean requiresExperience() {
         return false;
     }
@@ -51,12 +57,14 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
     public static abstract class Builder implements RecipeBuilder {
         protected final ItemStack result;
+        protected final int duration;
         protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
         @Nullable
         protected String group;
 
-        public Builder(ItemStack result) {
+        public Builder(ItemStack result, int duration) {
             this.result = result;
+            this.duration = duration;
         }
 
         @Override

@@ -3,6 +3,7 @@
   "data_components": [
     "bibliocraft:typewriter_page"
   ],
+  "duration": 100,
   "ingredients": [
     {
       "tag": "bibliocraft:typewriter_paper"
