@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class PrintingTableBlockEntity extends BCMenuBlockEntity {
@@ -15,5 +16,9 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new PrintingTableMenu(id, inventory, this);
+    }
+
+    public static void tick(Level level, BlockPos pos, BlockState state, PrintingTableBlockEntity blockEntity) {
+
     }
 }

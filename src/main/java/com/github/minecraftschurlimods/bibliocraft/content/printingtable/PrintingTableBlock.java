@@ -1,12 +1,16 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
+import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -30,6 +34,13 @@ public class PrintingTableBlock extends BCFacingEntityBlock {
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new PrintingTableBlockEntity(pos, state);
+    }
+
+    @Override
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        if (type != BCBlockEntities.PRINTING_TABLE.get()) return null;
+        return (l, p, s, b) -> PrintingTableBlockEntity.tick(l, p, s, (PrintingTableBlockEntity) b);
     }
 
     @Override

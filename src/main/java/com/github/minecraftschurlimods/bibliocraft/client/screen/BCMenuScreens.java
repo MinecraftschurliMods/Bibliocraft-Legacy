@@ -63,14 +63,6 @@ public final class BCMenuScreens {
         }
     }
 
-    public static class PrintingTable extends BCMenuScreen<PrintingTableMenu> {
-        private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/printing_table.png");
-
-        public PrintingTable(PrintingTableMenu menu, Inventory inventory, Component title) {
-            super(menu, inventory, title, BACKGROUND);
-        }
-    }
-
     public static class Shelf extends BCMenuScreen<ShelfMenu> {
         private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/shelf.png");
 

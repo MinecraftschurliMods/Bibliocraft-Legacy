@@ -1,9 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
-import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
@@ -15,7 +13,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
@@ -24,26 +21,20 @@ import java.util.List;
 public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     public static final MapCodec<PrintingTableCloningRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             DataComponentType.CODEC.listOf(1, 256).fieldOf("data_components").forGetter(e -> e.dataComponentTypes),
-            CodecUtil.nonNullListMapCodec(Ingredient.CODEC_NONEMPTY, "ingredients", list -> {
-                if (list.isEmpty()) return DataResult.error(() -> "No ingredients for printing table clone recipe");
-                int size = ShapedRecipePattern.getMaxHeight() * ShapedRecipePattern.getMaxWidth();
-                return list.size() > size
-                        ? DataResult.error(() -> "Too many inputs for printing table clone recipe. The maximum is: %s".formatted(size))
-                        : DataResult.success(NonNullList.of(Ingredient.EMPTY, list.toArray(Ingredient[]::new)));
-            }).forGetter(e -> e.left),
+            Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(e -> e.left),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
     ).apply(inst, PrintingTableCloningRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableCloningRecipe> STREAM_CODEC = StreamCodec.composite(
             DataComponentType.STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.dataComponentTypes,
-            CodecUtil.nonNullListStreamCodec(Ingredient.CONTENTS_STREAM_CODEC), e -> e.left,
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.left,
             ItemStack.STREAM_CODEC, e -> e.result,
             ByteBufCodecs.INT, e -> e.duration,
             PrintingTableCloningRecipe::new);
     private final List<DataComponentType<?>> dataComponentTypes;
-    private final NonNullList<Ingredient> left;
+    private final List<Ingredient> left;
 
-    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, NonNullList<Ingredient> left, ItemStack result, int duration) {
+    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, List<Ingredient> left, ItemStack result, int duration) {
         super(result, duration);
         this.dataComponentTypes = dataComponentTypes;
         this.left = left;
@@ -118,7 +109,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
 
         @Override
         public PrintingTableRecipe build() {
-            return new PrintingTableCloningRecipe(dataComponentTypes, NonNullList.copyOf(left), result, duration);
+            return new PrintingTableCloningRecipe(dataComponentTypes, List.copyOf(left), result, duration);
         }
     }
 }
