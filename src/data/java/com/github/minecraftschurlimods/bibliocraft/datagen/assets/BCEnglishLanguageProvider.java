@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.assets;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMode;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSorting;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
@@ -144,6 +145,9 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(FormattedLine.Alignment.LEFT.getTranslationKey(), "Left");
         add(FormattedLine.Alignment.CENTER.getTranslationKey(), "Center");
         add(FormattedLine.Alignment.RIGHT.getTranslationKey(), "Right");
+        add(PrintingTableMode.BIND.getTranslationKey(), "Bind");
+        add(PrintingTableMode.CLONE.getTranslationKey(), "Clone");
+        add(PrintingTableMode.MERGE.getTranslationKey(), "Merge");
         add(StockroomCatalogSorting.Container.ALPHABETICAL_ASC.getTranslationKey(), "A-Z");
         add(StockroomCatalogSorting.Container.ALPHABETICAL_DESC.getTranslationKey(), "Z-A");
         add(StockroomCatalogSorting.Container.DISTANCE_ASC.getTranslationKey(), "<-->");
@@ -201,6 +205,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.FANCY_TEXT_AREA_STRIKETHROUGH_SHORT_KEY, "S");
         add(Translations.FANCY_TEXT_AREA_UNDERLINED_KEY, "Underlined");
         add(Translations.FANCY_TEXT_AREA_UNDERLINED_SHORT_KEY, "U");
+        add(Translations.PRINTING_TABLE_MODE_KEY, "Mode: %s");
         add(Translations.STOCKROOM_CATALOG_LOCATE_KEY, "Locate");
         add(Translations.STOCKROOM_CATALOG_REMOVE_KEY, "Remove");
         add(Translations.STOCKROOM_CATALOG_SEARCH_KEY, "Search");

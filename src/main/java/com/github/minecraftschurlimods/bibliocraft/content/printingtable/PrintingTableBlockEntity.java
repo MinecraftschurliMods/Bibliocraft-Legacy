@@ -3,8 +3,11 @@ package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,9 +19,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.stream.IntStream;
 
 public class PrintingTableBlockEntity extends BCMenuBlockEntity {
+    private static final String MODE_KEY = "mode";
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
-    private PrintingTableMode mode;
+    private PrintingTableMode mode = PrintingTableMode.BIND;
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.PRINTING_TABLE.get(), 11, defaultName("printing_table"), pos, state);
@@ -34,12 +38,33 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
     }
 
     @Override
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        setMode(CodecUtil.decodeNbt(PrintingTableMode.CODEC, tag.get(MODE_KEY)));
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.put(MODE_KEY, CodecUtil.encodeNbt(PrintingTableMode.CODEC, getMode()));
+    }
+
+    @Override
     public void setItem(int slot, ItemStack stack) {
         super.setItem(slot, stack);
         recipeInput = null;
-        if (!recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
+        if (recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
             calculateRecipe();
         }
+    }
+
+    public PrintingTableMode getMode() {
+        return mode;
+    }
+
+    public void setMode(PrintingTableMode mode) {
+        this.mode = mode;
+        calculateRecipe();
     }
 
     private void calculateRecipe() {

@@ -114,6 +114,7 @@ public interface Translations {
     Component VANILLA_TAKE_BOOK                    = Component.translatable(VANILLA_TAKE_BOOK_KEY);
     Component VANILLA_TOGGLABLE_SLOT               = Component.translatable(VANILLA_TOGGLABLE_SLOT_KEY);
 
+    String PRINTING_TABLE_MODE_KEY                 = "gui."  + BibliocraftApi.MOD_ID + ".printing_table.mode";
     String STOCKROOM_CATALOG_COUNT_KEY             = "gui."  + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";
     String STOCKROOM_CATALOG_DISTANCE_KEY          = "gui."  + BibliocraftApi.MOD_ID + ".stockroom_catalog.distance";
     String STOCKROOM_CATALOG_SORT_KEY              = "gui."  + BibliocraftApi.MOD_ID + ".stockroom_catalog.sort";
