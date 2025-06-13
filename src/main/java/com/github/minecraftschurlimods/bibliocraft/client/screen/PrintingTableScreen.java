@@ -6,14 +6,17 @@ import com.github.minecraftschurlimods.bibliocraft.content.printingtable.Printin
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableSetModePacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class PrintingTableScreen extends BCMenuScreen<PrintingTableMenu> {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/printing_table.png");
+    private static final ResourceLocation PROGRESS = BCUtil.bcLoc("printing_table_progress");
     private Button modeButton;
 
     public PrintingTableScreen(PrintingTableMenu menu, Inventory inventory, Component title) {
@@ -35,6 +38,14 @@ public class PrintingTableScreen extends BCMenuScreen<PrintingTableMenu> {
             PacketDistributor.sendToServer(new PrintingTableSetModePacket(blockEntity.getBlockPos(), blockEntity.getMode()));
         }).bounds(leftPos + 83, topPos + 6, 80, 20).build());
         setModeButtonMessage();
+    }
+
+    @Override
+    protected void renderBg(GuiGraphics graphics, float partialTicks, int x, int y) {
+        super.renderBg(graphics, partialTicks, x, y);
+        int width = 24;
+        int progress = Mth.ceil(menu.getBlockEntity().getProgress() * width);
+        graphics.blitSprite(PROGRESS, width, 16, 0, 0, leftPos + 79, topPos + 34, progress, 16);
     }
 
     private void setModeButtonMessage() {

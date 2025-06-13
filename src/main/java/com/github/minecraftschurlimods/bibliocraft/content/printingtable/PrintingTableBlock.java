@@ -39,7 +39,7 @@ public class PrintingTableBlock extends BCFacingEntityBlock {
     @Override
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (type != BCBlockEntities.PRINTING_TABLE.get()) return null;
+        if (level.isClientSide() || type != BCBlockEntities.PRINTING_TABLE.get()) return null;
         return (l, p, s, b) -> PrintingTableBlockEntity.tick(l, p, s, (PrintingTableBlockEntity) b);
     }
 
