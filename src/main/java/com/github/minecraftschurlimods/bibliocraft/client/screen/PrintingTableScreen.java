@@ -43,9 +43,10 @@ public class PrintingTableScreen extends BCMenuScreen<PrintingTableMenu> {
     @Override
     protected void renderBg(GuiGraphics graphics, float partialTicks, int x, int y) {
         super.renderBg(graphics, partialTicks, x, y);
-        int width = 24;
-        int progress = Mth.ceil(menu.getBlockEntity().getProgress() * width);
-        graphics.blitSprite(PROGRESS, width, 16, 0, 0, leftPos + 79, topPos + 34, progress, 16);
+        int arrowWidth = 24;
+        float progress = menu.getBlockEntity().getProgress();
+        int width = progress == 1f ? 0 : Mth.ceil(progress * arrowWidth);
+        graphics.blitSprite(PROGRESS, arrowWidth, 16, 0, 0, leftPos + 110, topPos + 35, width, 16);
     }
 
     private void setModeButtonMessage() {
