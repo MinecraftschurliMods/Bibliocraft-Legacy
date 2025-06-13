@@ -48,7 +48,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
         if (!dataComponentTypes.stream().allMatch(e -> input.right().has(e))) return false;
         if (input.left().stream().filter(e -> e != ItemStack.EMPTY).count() != left.size()) return false;
         List<Ingredient> copy = new ArrayList<>(left);
-        outer: for (int i = 0; i < input.size(); i++) {
+        outer: for (int i = 0; i < input.left().size(); i++) {
             ItemStack stack = input.getItem(i);
             if (stack.isEmpty()) continue;
             for (Ingredient ingredient : copy) {
@@ -85,7 +85,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     @Override
     public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
         NonNullList<ItemStack> remainingItems = super.getRemainingItems(input);
-        remainingItems.set(9, input.right());
+        remainingItems.set(9, input.right().copy());
         return remainingItems;
     }
 

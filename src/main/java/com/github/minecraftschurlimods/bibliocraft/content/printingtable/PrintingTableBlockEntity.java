@@ -18,31 +18,34 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class PrintingTableBlockEntity extends BCMenuBlockEntity {
     private static final String MODE_KEY = "mode";
     private static final String DURATION_KEY = "duration";
+    private static final String MAX_DURATION_KEY = "duration";
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
     private int duration = 0;
+    private int maxDuration = 0;
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.PRINTING_TABLE.get(), 11, defaultName("printing_table"), pos, state);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, PrintingTableBlockEntity blockEntity) {
-        if (blockEntity.recipe == null) return;
-        int maxDuration = blockEntity.recipe.getDuration();
-        if (blockEntity.duration < maxDuration) {
+        if (blockEntity.duration < blockEntity.maxDuration) {
             blockEntity.duration++;
         }
-        if (blockEntity.duration >= maxDuration) {
+        if (blockEntity.duration >= blockEntity.maxDuration) {
             blockEntity.duration = 0;
+            if (level.isClientSide()) return;
+            PrintingTableRecipe recipe = blockEntity.recipe;
+            if (recipe == null) return;
+            List<ItemStack> remainingItems = recipe.getRemainingItems(blockEntity.getRecipeInput());
             ItemStack result = blockEntity.getItem(10);
             if (result.isEmpty()) {
-                blockEntity.setItem(10, blockEntity.recipe.assemble(blockEntity.getRecipeInput(), level.registryAccess()));
+                blockEntity.setItem(10, recipe.assemble(blockEntity.getRecipeInput(), level.registryAccess()));
             } else {
                 result = result.copy();
                 result.grow(1);
@@ -51,12 +54,12 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
             IntStream.range(0, 10)
                     .mapToObj(blockEntity::getItem)
                     .forEach(e -> e.shrink(1));
-            List<ItemStack> remainingItems = blockEntity.recipe.getRemainingItems(blockEntity.getRecipeInput());
             for (int i = 0; i < remainingItems.size(); i++) {
                 ItemStack remaining = remainingItems.get(i);
                 if (remaining.isEmpty()) continue;
-                remainingItems.set(i, remaining.copy());
+                blockEntity.setItem(i, remaining.copy());
             }
+            blockEntity.calculateRecipe();
         }
         blockEntity.setChanged();
     }
@@ -71,6 +74,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         super.loadAdditional(tag, registries);
         setMode(CodecUtil.decodeNbt(PrintingTableMode.CODEC, tag.get(MODE_KEY)));
         duration = tag.getInt(DURATION_KEY);
+        maxDuration = tag.getInt(MAX_DURATION_KEY);
     }
 
     @Override
@@ -78,6 +82,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         super.saveAdditional(tag, registries);
         tag.put(MODE_KEY, CodecUtil.encodeNbt(PrintingTableMode.CODEC, getMode()));
         tag.putInt(DURATION_KEY, duration);
+        tag.putInt(MAX_DURATION_KEY, maxDuration);
     }
 
     @Override
@@ -86,6 +91,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         recipeInput = null;
         if (recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
             calculateRecipe();
+            setChanged();
         }
     }
 
@@ -96,11 +102,13 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
     public void setMode(PrintingTableMode mode) {
         this.mode = mode;
         calculateRecipe();
+        setChanged();
     }
 
     public float getProgress() {
-        if (recipe == null) return 0;
-        return (float) duration / recipe.getDuration();
+        if (maxDuration == 0) return 0;
+        System.out.println("Duration: " + duration + ", Max Duration: " + maxDuration);
+        return duration / (float) maxDuration;
     }
 
     private void calculateRecipe() {
@@ -113,11 +121,14 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
                 .filter(e -> e.getMode() == mode)
                 .findFirst()
                 .orElse(null);
-        ItemStack output = getItem(10);
-        if (!output.isEmpty() && output.getCount() >= output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(recipe.assemble(getRecipeInput(), getLevel().registryAccess()), output)) {
-            recipe = null;
+        if (recipe != null) {
+            ItemStack output = getItem(10);
+            if (!output.isEmpty() && (output.getCount() >= output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(recipe.assemble(getRecipeInput(), getLevel().registryAccess()), output))) {
+                recipe = null;
+            }
         }
-        duration = recipe == null ? 0 : recipe.getDuration();
+        duration = 0;
+        maxDuration = recipe == null ? 0 : recipe.getDuration();
     }
 
     private PrintingTableRecipeInput getRecipeInput() {
