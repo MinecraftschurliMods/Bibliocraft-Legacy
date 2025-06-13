@@ -13,6 +13,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -118,6 +119,17 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     @Override
     public RecipeSerializer<?> getSerializer() {
         return BCRecipes.PRINTING_TABLE_MERGING.get();
+    }
+
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
+        NonNullList<ItemStack> remainingItems = super.getRemainingItems(input);
+        for (int i = 0; i < 9; i++) {
+            ItemStack stack = input.left().get(i);
+            if (stack.isEmpty()) continue;
+            remainingItems.set(i, stack.copy());
+        }
+        return remainingItems;
     }
 
     private MergeMethod getMerger(DataComponentType<?> type, String key, List<Map<DataComponentType<?>, JsonObject>> jsons) {
