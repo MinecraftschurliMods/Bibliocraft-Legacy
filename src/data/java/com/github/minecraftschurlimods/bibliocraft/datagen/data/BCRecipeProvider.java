@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBindingTypewriterPagesRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMergingRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageCloningRecipe;
@@ -386,5 +387,8 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "current_page", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
                 .save(output, BCUtil.bcLoc("written_big_book_merging"));
+        new PrintingTableBindingTypewriterPagesRecipe.Builder(Ingredient.of(Tags.Items.LEATHERS), 200)
+                .unlockedBy("has_leather", has(Tags.Items.LEATHERS))
+                .save(output, BCUtil.bcLoc("typewriter_pages_binding"));
     }
 }
