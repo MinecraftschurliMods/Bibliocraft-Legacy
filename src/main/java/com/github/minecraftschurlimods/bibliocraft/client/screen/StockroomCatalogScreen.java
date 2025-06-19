@@ -348,7 +348,7 @@ public class StockroomCatalogScreen extends Screen {
                 .limit(ROWS_PER_PAGE)
                 .toList();
     }
-    
+
     private void addParticles(StockroomCatalogItemEntry entry) {
         for (BlockPos pos : entry.containers()) {
             addParticles(pos);
@@ -381,7 +381,7 @@ public class StockroomCatalogScreen extends Screen {
             this.value = value;
             setMessage(message(value));
         }
-        
+
         private static <T extends StockroomCatalogSorting> Component message(T t) {
             return Component.translatable(Translations.STOCKROOM_CATALOG_SORT_KEY, Component.translatable(t.getTranslationKey()));
         }

@@ -139,11 +139,11 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
         saveAdditional(tag, registries);
         return tag;
     }
-    
+
     public IItemHandler getCapability(@Nullable Direction side) {
         return items;
     }
-    
+
     public Level level() {
         return level;
     }

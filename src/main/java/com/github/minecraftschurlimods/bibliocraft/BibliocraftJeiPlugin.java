@@ -116,9 +116,10 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
     @SuppressWarnings("DataFlowIssue")
     private static class ColorSubtypeInterpreter implements ISubtypeInterpreter<ItemStack> {
         public static final ColorSubtypeInterpreter INSTANCE = new ColorSubtypeInterpreter();
-        
-        private ColorSubtypeInterpreter() {}
-        
+
+        private ColorSubtypeInterpreter() {
+        }
+
         @Override
         @Nullable
         public Object getSubtypeData(ItemStack ingredient, UidContext context) {

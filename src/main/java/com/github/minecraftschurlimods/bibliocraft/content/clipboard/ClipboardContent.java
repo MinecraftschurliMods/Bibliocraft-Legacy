@@ -58,7 +58,7 @@ public record ClipboardContent(String title, int active, List<Page> pages) {
             this.checkboxes = BCUtil.extend(checkboxes, MAX_LINES, CheckboxState.EMPTY);
             this.lines = BCUtil.extend(lines, MAX_LINES, "");
         }
-        
+
         public static final Page DEFAULT = new Page(new ArrayList<>(MAX_LINES), new ArrayList<>(MAX_LINES));
         public static final Codec<Page> CODEC = RecordCodecBuilder.create(inst -> inst.group(
                 CheckboxState.CODEC.listOf().fieldOf("checkboxes").forGetter(Page::checkboxes),

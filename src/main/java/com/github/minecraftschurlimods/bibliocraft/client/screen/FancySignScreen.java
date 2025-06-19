@@ -119,7 +119,8 @@ public class FancySignScreen extends Screen {
         sizeBox.setResponder(s -> {
             try {
                 textArea.setSize(Integer.parseInt(s));
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         });
         scaleDownButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_DOWN, button -> {
             int size = textArea.getSize() - 1;

@@ -50,8 +50,8 @@ public class WallDiscRackBlock extends BCFacingInteractibleBlock {
     @Override
     protected boolean canAccessFromDirection(BlockState state, Direction direction) {
         return state.getValue(FACING) == direction ||
-               state.getValue(FACING).getAxis() == Direction.Axis.X && direction.getAxis() == Direction.Axis.Z ||
-               state.getValue(FACING).getAxis() == Direction.Axis.Z && direction.getAxis() == Direction.Axis.X;
+                state.getValue(FACING).getAxis() == Direction.Axis.X && direction.getAxis() == Direction.Axis.Z ||
+                state.getValue(FACING).getAxis() == Direction.Axis.Z && direction.getAxis() == Direction.Axis.X;
     }
 
     @Override

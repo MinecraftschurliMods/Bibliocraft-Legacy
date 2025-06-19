@@ -76,15 +76,15 @@ public class ClockTriggerEditScreen extends Screen {
         redstone = addRenderableWidget(Checkbox.builder(Component.empty(), font).pos(contentLeftPos, contentTopPos + 22).build());
         sound = addRenderableWidget(Checkbox.builder(Component.empty(), font).pos(contentLeftPos, contentTopPos + 41).build());
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> {
-                    try {
-                        if (old != null) {
-                            parent.removeTrigger(old);
-                        }
-                        parent.addTrigger(new ClockTrigger(Integer.parseInt(hours.getValue()), Integer.parseInt(minutes.getValue()), redstone.selected(), sound.selected()));
-                    } catch (NumberFormatException ignored) {
-                    }
-                    onClose();
-                }).bounds(leftPos, topPos + HEIGHT + 4, WIDTH, 20).build());
+            try {
+                if (old != null) {
+                    parent.removeTrigger(old);
+                }
+                parent.addTrigger(new ClockTrigger(Integer.parseInt(hours.getValue()), Integer.parseInt(minutes.getValue()), redstone.selected(), sound.selected()));
+            } catch (NumberFormatException ignored) {
+            }
+            onClose();
+        }).bounds(leftPos, topPos + HEIGHT + 4, WIDTH, 20).build());
         if (old != null) {
             hours.setValue(String.valueOf(old.hour()));
             minutes.setValue(String.valueOf(old.minute()));

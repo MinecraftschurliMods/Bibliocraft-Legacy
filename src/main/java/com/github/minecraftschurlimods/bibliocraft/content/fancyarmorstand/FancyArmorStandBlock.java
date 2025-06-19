@@ -195,13 +195,14 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
 
     /**
      * Attempts to swap the armor in the given slot with the given armor stack.
-     * @param stack The armor stack from the player inventory that should be swapped with.
-     * @param slot The slot index. A result from {@link FancyArmorStandBlock#lookingAtSlot(BlockState, BlockHitResult)}.
+     *
+     * @param stack      The armor stack from the player inventory that should be swapped with.
+     * @param slot       The slot index. A result from {@link FancyArmorStandBlock#lookingAtSlot(BlockState, BlockHitResult)}.
      * @param playerSlot The player inventory slot the armor stack (first parameter) is in, and where a swapped item will end up.
-     * @param state The {@link BlockState} to use.
-     * @param level The {@link Level} to use.
-     * @param pos The {@link BlockPos} to use.
-     * @param player The {@link Player} attempting to swap the items.
+     * @param state      The {@link BlockState} to use.
+     * @param level      The {@link Level} to use.
+     * @param pos        The {@link BlockPos} to use.
+     * @param player     The {@link Player} attempting to swap the items.
      * @return Whether swapping the items was successful or not.
      */
     private boolean trySwapArmor(ItemStack stack, int slot, int playerSlot, BlockState state, Level level, BlockPos pos, Player player) {

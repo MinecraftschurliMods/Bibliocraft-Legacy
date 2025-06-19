@@ -36,6 +36,7 @@ public final class LecternUtil {
 
     /**
      * Runs the given {@link Consumer} if a {@link LecternBlockEntity} is found at the given location.
+     *
      * @param level    The {@link Level} of the lectern.
      * @param pos      The {@link BlockPos} of the lectern.
      * @param consumer The {@link Consumer} to run.
@@ -49,6 +50,7 @@ public final class LecternUtil {
 
     /**
      * Runs the given {@link Function} and returns its result if a {@link LecternBlockEntity} is found at the given location.
+     *
      * @param level    The {@link Level} of the lectern.
      * @param pos      The {@link BlockPos} of the lectern.
      * @param function The {@link Function} to run.

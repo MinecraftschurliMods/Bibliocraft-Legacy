@@ -171,9 +171,10 @@ public final class BCUtil {
 
     /**
      * Helper to reduce {@link Objects#requireNonNull(Object)} boilerplate.
-     * @param t The nullable object.
-     * @return The input object, guarded by a non-null check.
+     *
+     * @param t   The nullable object.
      * @param <T> The type of the object.
+     * @return The input object, guarded by a non-null check.
      */
     public static <T> T nonNull(T t) {
         return Objects.requireNonNull(t);
@@ -214,13 +215,14 @@ public final class BCUtil {
     /**
      * Attempts to insert the given {@link ItemStack} into a container at the given {@link BlockPos} in the given {@link Level} from the given {@link Direction}, if possible.
      * First, the vanilla way using {@link Container} is checked. If that doesn't work, the NeoForge way using {@link IItemHandler} is checked.
-     * @param level The {@link Level} the insertion takes place in.
-     * @param pos The {@link BlockPos} the insertion takes place at.
+     *
+     * @param level     The {@link Level} the insertion takes place in.
+     * @param pos       The {@link BlockPos} the insertion takes place at.
      * @param direction The {@link Direction} from which the insertion happens.
-     * @param stack The {@link ItemStack} to be inserted.
-     * @param source The source of the insertion. May be null.
+     * @param stack     The {@link ItemStack} to be inserted.
+     * @param source    The source of the insertion. May be null.
+     * @param <T>       The generic type of the source.
      * @return The {@link ItemStack} left after the insertion has been attempted and, if applicable, succeeded.
-     * @param <T> The generic type of the source.
      */
     public static <T extends BlockEntity & Container> ItemStack tryInsert(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable T source) {
         Container container = HopperBlockEntity.getContainerAt(level, pos.relative(direction));

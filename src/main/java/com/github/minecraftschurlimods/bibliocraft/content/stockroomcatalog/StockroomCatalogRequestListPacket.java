@@ -34,7 +34,7 @@ public record StockroomCatalogRequestListPacket(StockroomCatalogSorting.Containe
         List<StockroomCatalogItemEntry> items = StockroomCatalogItem.calculateItems(containers, player.level(), itemSorting);
         PacketDistributor.sendToPlayer((ServerPlayer) player, new StockroomCatalogListPacket(containers, items));
     }
-    
+
     @Override
     public Type<? extends CustomPacketPayload> type() {
         return TYPE;

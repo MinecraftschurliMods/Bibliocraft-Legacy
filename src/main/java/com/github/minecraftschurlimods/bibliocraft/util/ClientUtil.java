@@ -270,6 +270,7 @@ public final class ClientUtil {
 
     /**
      * Classloading guard for setting the stockroom catalog contents from a packet.
+     *
      * @param packet The packet containing the stockroom catalog contents.
      */
     public static void setStockroomCatalogList(StockroomCatalogListPacket packet) {

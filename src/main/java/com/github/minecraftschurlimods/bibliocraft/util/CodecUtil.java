@@ -50,10 +50,10 @@ public final class CodecUtil {
     /**
      * @param keyCodec   The key {@link StreamCodec} to use.
      * @param valueCodec The value {@link StreamCodec} to use.
+     * @param <B>        The buffer type.
+     * @param <K>        The generic type of the map key.
+     * @param <V>        The generic type of the map value.
      * @return A {@link StreamCodec} representing a {@link Map}.
-     * @param <B> The buffer type.
-     * @param <K> The generic type of the map key.
-     * @param <V> The generic type of the map value.
      */
     public static <B extends ByteBuf, K, V> StreamCodec<B, Map<K, V>> mapStreamCodec(StreamCodec<? super B, K> keyCodec, StreamCodec<? super B, V> valueCodec) {
         return ByteBufCodecs.map(HashMap::new, keyCodec, valueCodec);

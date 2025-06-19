@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.RenderType;
 
 public class ColorButton extends Button {
     private final int color;
-    
+
     public ColorButton(int color, Builder builder) {
         super(builder);
         this.color = 0xff000000 | color;

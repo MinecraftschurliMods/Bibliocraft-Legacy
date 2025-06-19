@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
  * Utility class holding various translation keys and components.
  */
 public interface Translations {
+    // @formatter:off
     String TYPEWRITER_NO_PAPER_KEY                 = "block." + BibliocraftApi.MOD_ID + ".typewriter.no_paper";
     String CLOCK_ADD_TRIGGER_KEY                   = "gui."   + BibliocraftApi.MOD_ID + ".clock.add_trigger";
     String CLOCK_DELETE_TRIGGER_KEY                = "gui."   + BibliocraftApi.MOD_ID + ".clock.delete_trigger";
@@ -127,4 +128,5 @@ public interface Translations {
     String TAPE_MEASURE_DISTANCE_KEY               = "item." + BibliocraftApi.MOD_ID + ".tape_measure.distance";
     String VANILLA_BY_AUTHOR_KEY      = "book.byAuthor";
     String VANILLA_PAGE_INDICATOR_KEY = "book.pageIndicator";
+    // @formatter:on
 }

@@ -78,11 +78,11 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> {
         blockEntity.setSlotDisabled(slot, disabled);
         broadcastChanges();
     }
-    
+
     public boolean isSlotDisabled(int slot) {
         return blockEntity.isSlotDisabled(slot);
     }
-    
+
     @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "SameParameterValue"})
     private boolean moveItemStackToEnabled(ItemStack stack, int start, int end) {
         for (int i = start; i < end; i++) {

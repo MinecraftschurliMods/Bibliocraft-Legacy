@@ -53,7 +53,7 @@ public final class ClipboardReadOnlyRenderer {
         if (visibleText.isEmpty()) return;
         font.drawInBatch(visibleText, x, y, 0, false, pose.last().pose(), bufferSource, Font.DisplayMode.POLYGON_OFFSET, 0, LightTexture.FULL_BRIGHT, font.isBidirectional());
     }
-    
+
     private static void blitSprite(PoseStack pose, ResourceLocation location, int x, int y, int width, int height) {
         TextureAtlasSprite sprite = ClientUtil.getMc().getGuiSprites().getSprite(location);
         innerBlit(pose, sprite.atlasLocation(), x, x + width, y, y + width, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1());
@@ -66,7 +66,7 @@ public final class ClipboardReadOnlyRenderer {
         float maxV = (vOffset + vHeight) / textureHeight;
         innerBlit(pose, atlasLocation, x, x + uWidth, y, y + vHeight, minU, maxU, minV, maxV);
     }
-    
+
     private static void innerBlit(PoseStack pose, ResourceLocation atlasLocation, float x1, float x2, float y1, float y2, float minU, float maxU, float minV, float maxV) {
         RenderSystem.setShaderTexture(0, atlasLocation);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

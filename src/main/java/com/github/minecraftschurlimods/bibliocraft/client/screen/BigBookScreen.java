@@ -122,9 +122,9 @@ public class BigBookScreen extends Screen {
                     .build());
             finalizeButton.active = false;
             addRenderableWidget(Button.builder(CommonComponents.GUI_CANCEL, $ -> {
-                isSigning = false;
-                rebuildWidgets();
-            })
+                        isSigning = false;
+                        rebuildWidgets();
+                    })
                     .bounds(rightX + 16, BACKGROUND_HEIGHT - 32, 64, 16)
                     .build());
         } else if (writable) {
@@ -224,35 +224,36 @@ public class BigBookScreen extends Screen {
             sizeBox.setResponder(s -> {
                 try {
                     textArea.setSize(Integer.parseInt(s));
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             });
             scaleDownButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_DOWN, $ -> {
-                int size = textArea.getSize() - 1;
-                sizeBox.setValue(String.valueOf(size));
-                // call again to account for invalid values
-                sizeBox.setValue(String.valueOf(textArea.getSize()));
-                updateSizeButtons(size);
-            })
+                        int size = textArea.getSize() - 1;
+                        sizeBox.setValue(String.valueOf(size));
+                        // call again to account for invalid values
+                        sizeBox.setValue(String.valueOf(textArea.getSize()));
+                        updateSizeButtons(size);
+                    })
                     .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_DOWN_TOOLTIP))
                     .bounds(rightX + 16, 112 + 16 * colorRows, 16, 16)
                     .build());
             addRenderableWidget(sizeBox);
             scaleUpButton = addRenderableWidget(Button.builder(Translations.FANCY_TEXT_AREA_SCALE_UP, $ -> {
-                int size = textArea.getSize() + 1;
-                sizeBox.setValue(String.valueOf(size));
-                // call again to account for invalid values
-                sizeBox.setValue(String.valueOf(textArea.getSize()));
-                updateSizeButtons(size);
-            })
+                        int size = textArea.getSize() + 1;
+                        sizeBox.setValue(String.valueOf(size));
+                        // call again to account for invalid values
+                        sizeBox.setValue(String.valueOf(textArea.getSize()));
+                        updateSizeButtons(size);
+                    })
                     .tooltip(Tooltip.create(Translations.FANCY_TEXT_AREA_SCALE_UP_TOOLTIP))
                     .bounds(rightX + 64, 112 + 16 * colorRows, 16, 16)
                     .build());
 
             onLineChange(textArea.getLines().getFirst());
             addRenderableWidget(Button.builder(Translations.VANILLA_SIGN_BUTTON, $ -> {
-                isSigning = true;
-                rebuildWidgets();
-            })
+                        isSigning = true;
+                        rebuildWidgets();
+                    })
                     .bounds(rightX + 16, BACKGROUND_HEIGHT - 48, 64, 16)
                     .build());
             addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())
@@ -280,10 +281,10 @@ public class BigBookScreen extends Screen {
             updateButtonVisibility();
             if (lectern != null) {
                 addRenderableWidget(Button.builder(Translations.VANILLA_TAKE_BOOK, button -> {
-                    onClose();
-                    LecternUtil.takeLecternBook(player, player.level(), lectern);
-                    PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
-                })
+                            onClose();
+                            LecternUtil.takeLecternBook(player, player.level(), lectern);
+                            PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
+                        })
                         .bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH / 2 - 4, 20)
                         .build());
                 addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose())

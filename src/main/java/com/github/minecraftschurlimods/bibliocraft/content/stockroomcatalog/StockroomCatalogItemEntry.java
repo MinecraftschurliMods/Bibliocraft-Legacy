@@ -22,7 +22,7 @@ public record StockroomCatalogItemEntry(ItemStack item, int count, List<BlockPos
             ByteBufCodecs.INT, StockroomCatalogItemEntry::count,
             BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()), StockroomCatalogItemEntry::containers,
             StockroomCatalogItemEntry::new);
-    
+
     public StockroomCatalogItemEntry(ItemStack item, List<BlockPos> containers) {
         this(item.copy(), item.getCount(), containers);
         this.item.setCount(1);
@@ -35,7 +35,7 @@ public record StockroomCatalogItemEntry(ItemStack item, int count, List<BlockPos
     public StockroomCatalogItemEntry add(int count) {
         return new StockroomCatalogItemEntry(item, this.count + count, new ArrayList<>(containers));
     }
-    
+
     public StockroomCatalogItemEntry add(BlockPos container) {
         List<BlockPos> list = new ArrayList<>(containers);
         list.add(container);

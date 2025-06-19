@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class SwordPedestalBlockEntity extends BCBlockEntity {
     private static final String COLOR_KEY = "color";
     private DyedItemColor color = SwordPedestalBlock.DEFAULT_COLOR;
-    
+
     public SwordPedestalBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.SWORD_PEDESTAL.get(), 1, pos, state);
     }
