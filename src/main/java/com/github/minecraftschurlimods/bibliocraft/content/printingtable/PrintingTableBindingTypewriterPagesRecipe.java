@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
+import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPage;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
-import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.mojang.serialization.Codec;
@@ -21,9 +21,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBindingRecipe {
     public static final MapCodec<PrintingTableBindingTypewriterPagesRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
@@ -59,8 +57,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
                 .left()
                 .stream()
                 .filter(e -> e.has(BCDataComponents.TYPEWRITER_PAGE))
-                .map(e -> BCUtil.nonNull(e.get(BCDataComponents.TYPEWRITER_PAGE)))
-                .<Filterable<Component>>map(e -> Filterable.passThrough(Component.literal(String.join("", e.lines()))))
+                .map(e -> concatTypewriterPageText(BCUtil.nonNull(e.get(BCDataComponents.TYPEWRITER_PAGE))))
                 .toList();
         result.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(Filterable.passThrough(""), "", 0, list, false));
         return result;
@@ -69,6 +66,33 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
     @Override
     public RecipeSerializer<?> getSerializer() {
         return BCRecipes.PRINTING_TABLE_BINDING_TYPEWRITER_PAGES.get();
+    }
+
+    @Override
+    public ItemStack postProcess(ItemStack result, PrintingTableBlockEntity blockEntity) {
+        Component name = blockEntity.getPlayerName();
+        if (name != null && result.has(DataComponents.WRITTEN_BOOK_CONTENT)) {
+            WrittenBookContent content = BCUtil.nonNull(result.get(DataComponents.WRITTEN_BOOK_CONTENT));
+            result.set(DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(content.title(), name.getString(), content.generation(), content.pages(), content.resolved()));
+        }
+        return result;
+    }
+
+    private Filterable<Component> concatTypewriterPageText(TypewriterPage page) {
+        StringBuilder builder = new StringBuilder();
+        boolean hasNewLine = true;
+        for (int i = 0; i < page.lines().size(); i++) {
+            String line = page.lines().get(i);
+            if (!line.isEmpty()) {
+                builder.append(line);
+                if (line.length() < TypewriterPage.MAX_LINES) {
+                    builder.append('\n');
+                }
+            } else {
+                builder.append('\n');
+            }
+        }
+        return Filterable.passThrough(Component.literal(builder.toString()));
     }
 
     public static class Builder extends PrintingTableRecipe.Builder {

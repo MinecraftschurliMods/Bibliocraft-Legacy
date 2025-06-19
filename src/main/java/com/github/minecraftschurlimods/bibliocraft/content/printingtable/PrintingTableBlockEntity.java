@@ -8,6 +8,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -23,11 +24,13 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
     private static final String MODE_KEY = "mode";
     private static final String DURATION_KEY = "duration";
     private static final String MAX_DURATION_KEY = "duration";
+    private static final String PLAYER_NAME_KEY = "player_name";
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
     private int duration = 0;
     private int maxDuration = 0;
+    private Component playerName = null;
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.PRINTING_TABLE.get(), 11, defaultName("printing_table"), pos, state);
@@ -43,14 +46,11 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
             PrintingTableRecipe recipe = blockEntity.recipe;
             if (recipe == null) return;
             List<ItemStack> remainingItems = recipe.getRemainingItems(blockEntity.getRecipeInput());
-            ItemStack result = blockEntity.getItem(10);
-            if (result.isEmpty()) {
-                blockEntity.setItem(10, recipe.assemble(blockEntity.getRecipeInput(), level.registryAccess()));
-            } else {
-                result = result.copy();
-                result.grow(1);
-                blockEntity.setItem(10, result);
-            }
+            ItemStack stack = blockEntity.getItem(10);
+            ItemStack result = recipe.postProcess(recipe.assemble(blockEntity.getRecipeInput(), level.registryAccess()), blockEntity);
+            if (!stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, result)) return;
+            result.setCount(stack.getCount() + 1);
+            blockEntity.setItem(10, result);
             IntStream.range(0, 10)
                     .mapToObj(blockEntity::getItem)
                     .forEach(e -> e.shrink(1));
@@ -75,6 +75,9 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         setMode(CodecUtil.decodeNbt(PrintingTableMode.CODEC, tag.get(MODE_KEY)));
         duration = tag.getInt(DURATION_KEY);
         maxDuration = tag.getInt(MAX_DURATION_KEY);
+        if (tag.contains(PLAYER_NAME_KEY, CompoundTag.TAG_STRING)) {
+            playerName = Component.Serializer.fromJson(tag.getString(PLAYER_NAME_KEY), registries);
+        }
     }
 
     @Override
@@ -83,6 +86,9 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         tag.put(MODE_KEY, CodecUtil.encodeNbt(PrintingTableMode.CODEC, getMode()));
         tag.putInt(DURATION_KEY, duration);
         tag.putInt(MAX_DURATION_KEY, maxDuration);
+        if (playerName != null) {
+            tag.putString(PLAYER_NAME_KEY, Component.Serializer.toJson(playerName, registries));
+        }
     }
 
     @Override
@@ -103,6 +109,14 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         this.mode = mode;
         calculateRecipe();
         setChanged();
+    }
+
+    public Component getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(Component playerName) {
+        this.playerName = playerName;
     }
 
     public float getProgress() {

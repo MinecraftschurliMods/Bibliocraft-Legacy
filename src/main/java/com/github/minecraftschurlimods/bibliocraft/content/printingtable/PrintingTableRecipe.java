@@ -53,6 +53,10 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         return false;
     }
 
+    public ItemStack postProcess(ItemStack result, PrintingTableBlockEntity blockEntity) {
+        return result;
+    }
+
     public abstract PrintingTableMode getMode();
 
     public static abstract class Builder implements RecipeBuilder {
