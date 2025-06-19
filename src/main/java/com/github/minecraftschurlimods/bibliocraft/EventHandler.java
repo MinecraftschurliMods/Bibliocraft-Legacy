@@ -61,6 +61,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.jetbrains.annotations.ApiStatus;
 
 public final class EventHandler {
+    // @formatter:off
     @ApiStatus.Internal
     public static void init(IEventBus modBus) {
         modBus.addListener(EventPriority.LOWEST, FMLConstructModEvent.class, EventHandler::constructMod);
@@ -72,6 +73,7 @@ public final class EventHandler {
         modBus.addListener(RegisterBibliocraftWoodTypesEvent.class, EventHandler::registerBibliocraftWoodTypes);
         NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, EventHandler::rightClickBlock);
     }
+    // @formatter:on
 
     private static void constructMod(FMLConstructModEvent event) {
         ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register();
@@ -86,6 +88,7 @@ public final class EventHandler {
         event.put(BCEntities.FANCY_ARMOR_STAND.get(), LivingEntity.createLivingAttributes().build());
     }
 
+    // @formatter:off
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.BOOKCASE.get(),          BCBlockEntity::getCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.COOKIE_JAR.get(),        BCBlockEntity::getCapability);
@@ -139,6 +142,7 @@ public final class EventHandler {
         registerVanilla(event, WoodType.BAMBOO,   Blocks.BAMBOO_PLANKS,   BlockFamilies.BAMBOO_PLANKS);
         registerVanilla(event, WoodType.CHERRY,   Blocks.CHERRY_PLANKS,   BlockFamilies.CHERRY_PLANKS);
     }
+    // @formatter:on
 
     /**
      * Private helper for registering the vanilla variants.

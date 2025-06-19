@@ -42,6 +42,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.jetbrains.annotations.ApiStatus;
 
 public final class ClientHandler {
+    // @formatter:off
     @ApiStatus.Internal
     public static void init(IEventBus modBus) {
         modBus.addListener(RegisterMenuScreensEvent.class,                      ClientHandler::registerMenuScreens);
@@ -67,6 +68,7 @@ public final class ClientHandler {
         event.register(BCMenus.FANCY_CRAFTER.get(),     FancyCrafterScreen::new);
         event.register(BCMenus.SLOTTED_BOOK.get(),      SlottedBookScreen::new);
     }
+    // @formatter:on
 
     private static void registerAdditional(ModelEvent.RegisterAdditional event) {
         for (TableBlock.Type type : TableBlock.Type.values()) {
@@ -89,6 +91,7 @@ public final class ClientHandler {
         event.registerLayerDefinition(ClockBER.LOCATION, ClockBER::createLayerDefinition);
     }
 
+    // @formatter:off
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
         event.registerEntityRenderer(BCEntities.SEAT.get(),              EmptyEntityRenderer::new);
@@ -108,6 +111,7 @@ public final class ClientHandler {
         event.registerBlockEntityRenderer(BCBlockEntities.TABLE.get(),             $ -> new TableBER());
         event.registerBlockEntityRenderer(BCBlockEntities.TOOL_RACK.get(),         $ -> new ToolRackBER());
     }
+    // @formatter:on
 
     private static void registerColorHandlersBlock(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 && level != null && pos != null && level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe ? spbe.getColor().rgb() : -1, BCBlocks.SWORD_PEDESTAL.get());

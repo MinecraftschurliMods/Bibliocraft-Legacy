@@ -17,6 +17,7 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import java.util.function.Supplier;
 
 public interface BCMenus {
+    // @formatter:off
     Supplier<MenuType<BookcaseMenu>>        BOOKCASE          = BCRegistries.MENUS.register("bookcase",          () -> IMenuTypeExtension.create(BookcaseMenu::new));
     Supplier<MenuType<CookieJarMenu>>       COOKIE_JAR        = BCRegistries.MENUS.register("cookie_jar",        () -> IMenuTypeExtension.create(CookieJarMenu::new));
     Supplier<MenuType<DiscRackMenu>>        DISC_RACK         = BCRegistries.MENUS.register("disc_rack",         () -> IMenuTypeExtension.create(DiscRackMenu::new));
@@ -28,9 +29,11 @@ public interface BCMenus {
     Supplier<MenuType<ShelfMenu>>           SHELF             = BCRegistries.MENUS.register("shelf",             () -> IMenuTypeExtension.create(ShelfMenu::new));
     Supplier<MenuType<SlottedBookMenu>>     SLOTTED_BOOK      = BCRegistries.MENUS.register("slotted_book",      () -> IMenuTypeExtension.create(SlottedBookMenu::new));
     Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = BCRegistries.MENUS.register("tool_rack",         () -> IMenuTypeExtension.create(ToolRackMenu::new));
+    // @formatter:on
 
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
-    static void init() {}
+    static void init() {
+    }
 }

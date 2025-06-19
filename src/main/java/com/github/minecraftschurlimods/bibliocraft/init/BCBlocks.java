@@ -44,6 +44,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface BCBlocks {
+    // @formatter:off
     WoodTypeDeferredHolder<Block, BookcaseBlock>         BOOKCASE          = woodenBlock("bookcase",          BookcaseBlock::new);
     WoodTypeDeferredHolder<Block, FancyArmorStandBlock>  FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
     WoodTypeDeferredHolder<Block, FancyClockBlock>       FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockBlock::new);
@@ -90,14 +91,15 @@ public interface BCBlocks {
     //TODO Painting Frame
     //TODO Painting Press
     //TODO Writing Desk
+    // @formatter:on
 
     /**
      * Registration helper method for {@link WoodTypeDeferredHolder}s.
      *
      * @param suffix  The suffix for the {@link WoodTypeDeferredHolder}.
      * @param creator An adapted creator function for the {@link WoodTypeDeferredHolder}. Passes in a copy of the wood type's associated plank block properties.
+     * @param <T>     The type of the block registered.
      * @return A {@code WoodTypeDeferredHolder<Block, T>}.
-     * @param <T> The type of the block registered.
      */
     static <T extends Block> WoodTypeDeferredHolder<Block, T> woodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
         return new WoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, wood -> creator.apply(wood.properties().get().noOcclusion()));
@@ -108,8 +110,8 @@ public interface BCBlocks {
      *
      * @param suffix   The suffix for the {@link ColoredDeferredHolder}.
      * @param supplier A supplier for the {@link ColoredDeferredHolder}.
+     * @param <T>      The type of the block registered.
      * @return A {@code ColoredDeferredHolder<Block, T>}.
-     * @param <T> The type of the block registered.
      */
     static <T extends Block> ColoredDeferredHolder<Block, T> coloredBlock(String suffix, Supplier<T> supplier) {
         return new ColoredDeferredHolder<>(BCRegistries.BLOCKS, suffix, color -> supplier.get());
@@ -120,8 +122,8 @@ public interface BCBlocks {
      *
      * @param suffix  The suffix for the {@link ColoredWoodTypeDeferredHolder}.
      * @param creator An adapted creator function for the {@link ColoredWoodTypeDeferredHolder}. Passes in a copy of the wood type's associated plank block properties.
+     * @param <T>     The type of the block registered.
      * @return A {@code WoodTypeDeferredHolder<Block, T>}.
-     * @param <T> The type of the block registered.
      */
     static <T extends Block> ColoredWoodTypeDeferredHolder<Block, T> coloredWoodenBlock(String suffix, Function<BlockBehaviour.Properties, T> creator) {
         return new ColoredWoodTypeDeferredHolder<>(BCRegistries.BLOCKS, suffix, (wood, color) -> creator.apply(wood.properties().get().noOcclusion()));
@@ -130,5 +132,6 @@ public interface BCBlocks {
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
-    static void init() {}
+    static void init() {
+    }
 }

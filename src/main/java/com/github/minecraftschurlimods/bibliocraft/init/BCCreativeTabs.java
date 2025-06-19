@@ -95,5 +95,6 @@ public interface BCCreativeTabs {
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
-    static void init() {}
+    static void init() {
+    }
 }

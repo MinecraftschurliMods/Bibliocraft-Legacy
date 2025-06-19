@@ -15,16 +15,18 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public interface BCRegistries {
-    DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
-    DeferredRegister.Items  ITEMS  = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
-    DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
-    DeferredRegister<CreativeModeTab>     CREATIVE_TABS      = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, BibliocraftApi.MOD_ID);
-    DeferredRegister<BlockEntityType<?>>  BLOCK_ENTITIES     = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, BibliocraftApi.MOD_ID);
-    DeferredRegister<EntityType<?>>       ENTITIES           = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE,       BibliocraftApi.MOD_ID);
-    DeferredRegister<MenuType<?>>         MENUS              = DeferredRegister.create(BuiltInRegistries.MENU,              BibliocraftApi.MOD_ID);
-    DeferredRegister<RecipeType<?>>       RECIPE_TYPES       = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE,       BibliocraftApi.MOD_ID);
-    DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, BibliocraftApi.MOD_ID);
-    DeferredRegister<SoundEvent>          SOUND_EVENTS       = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT,       BibliocraftApi.MOD_ID);
+    // @formatter:off
+    DeferredRegister.Blocks                BLOCKS             = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
+    DeferredRegister.Items                 ITEMS              = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
+    DeferredRegister<DataComponentType<?>> DATA_COMPONENTS    = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
+    DeferredRegister<CreativeModeTab>      CREATIVE_TABS      = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, BibliocraftApi.MOD_ID);
+    DeferredRegister<BlockEntityType<?>>   BLOCK_ENTITIES     = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, BibliocraftApi.MOD_ID);
+    DeferredRegister<EntityType<?>>        ENTITIES           = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE,       BibliocraftApi.MOD_ID);
+    DeferredRegister<MenuType<?>>          MENUS              = DeferredRegister.create(BuiltInRegistries.MENU,              BibliocraftApi.MOD_ID);
+    DeferredRegister<RecipeType<?>>        RECIPE_TYPES       = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE,       BibliocraftApi.MOD_ID);
+    DeferredRegister<RecipeSerializer<?>>  RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, BibliocraftApi.MOD_ID);
+    DeferredRegister<SoundEvent>           SOUND_EVENTS       = DeferredRegister.create(BuiltInRegistries.SOUND_EVENT,       BibliocraftApi.MOD_ID);
+    // @formatter:on
 
     /**
      * Central registration method. Classloads the registration classes and registers the registries to the mod bus.

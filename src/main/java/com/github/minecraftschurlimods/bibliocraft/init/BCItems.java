@@ -35,6 +35,7 @@ import java.util.function.Function;
 public interface BCItems {
     Item.Properties PROPERTIES = new Item.Properties();
 
+    // @formatter:off
     WoodTypeDeferredHolder<Item, BlockItem>           BOOKCASE          = woodenBlock("bookcase",          BCBlocks.BOOKCASE);
     WoodTypeDeferredHolder<Item, DoubleHighBlockItem> FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", wood -> new DoubleHighBlockItem(BCBlocks.FANCY_ARMOR_STAND.get(wood), PROPERTIES));
     WoodTypeDeferredHolder<Item, FancyClockItem>      FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockItem::new);
@@ -96,6 +97,7 @@ public interface BCItems {
     //TODO Drafting Compass
     //TODO Painting Canvas
     //TODO Recipe Book
+    // @formatter:on
 
     /**
      * Helper method to register a {@code WoodTypeDeferredHolder<Item, BlockItem>} for a {@code WoodTypeDeferredHolder<Block, ?>}.
@@ -122,5 +124,6 @@ public interface BCItems {
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
-    static void init() {}
+    static void init() {
+    }
 }

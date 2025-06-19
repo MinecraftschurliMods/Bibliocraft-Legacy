@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Block;
 
 public interface BCTags {
     interface Blocks {
+        // @formatter:off
         TagKey<Block> BOOKCASES               = tag("bookcases");
         TagKey<Block> DISPLAY_CASES           = tag("display_cases");
         TagKey<Block> FANCY_ARMOR_STANDS_WOOD = tag("fancy_armor_stands/wood");
@@ -32,6 +33,7 @@ public interface BCTags {
         TagKey<Block> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
         TagKey<Block> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
         TagKey<Block> TYPEWRITERS             = tag("typewriters");
+        // @formatter:on
 
         /**
          * @param name The path of the tag.
@@ -43,6 +45,7 @@ public interface BCTags {
     }
 
     interface Items {
+        // @formatter:off
         TagKey<Item> BOOKCASES               = tag("bookcases");
         TagKey<Item> DISPLAY_CASES           = tag("display_cases");
         TagKey<Item> FANCY_ARMOR_STANDS_WOOD = tag("fancy_armor_stands/wood");
@@ -80,6 +83,7 @@ public interface BCTags {
         TagKey<Item> SWORD_PEDESTAL_SWORDS   = tag("sword_pedestal_swords");
         TagKey<Item> TOOL_RACK_TOOLS         = tag("tool_rack_tools");
         TagKey<Item> TYPEWRITER_PAPER        = tag("typewriter_paper");
+        // @formatter:on
 
         /**
          * @param name The path of the tag.

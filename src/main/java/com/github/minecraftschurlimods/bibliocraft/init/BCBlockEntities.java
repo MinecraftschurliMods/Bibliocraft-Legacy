@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public interface BCBlockEntities {
+    // @formatter:off
     Supplier<BlockEntityType<BookcaseBlockEntity>>        BOOKCASE          = register("bookcase",          BookcaseBlockEntity::new,        BCBlocks.BOOKCASE.holders());
     Supplier<BlockEntityType<ClipboardBlockEntity>>       CLIPBOARD         = register("clipboard",         ClipboardBlockEntity::new,       BCBlocks.CLIPBOARD);
     Supplier<BlockEntityType<ClockBlockEntity>>           CLOCK             = register("clock",             ClockBlockEntity::new,           BCUtil.mergeRaw(BCBlocks.FANCY_CLOCK.holders(), BCBlocks.WALL_FANCY_CLOCK.holders(), BCBlocks.GRANDFATHER_CLOCK.holders()));
@@ -46,6 +47,7 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<TableBlockEntity>>           TABLE             = register("table",             TableBlockEntity::new,           BCBlocks.TABLE.holders());
     Supplier<BlockEntityType<ToolRackBlockEntity>>        TOOL_RACK         = register("tool_rack",         ToolRackBlockEntity::new,        BCBlocks.TOOL_RACK.holders());
     Supplier<BlockEntityType<TypewriterBlockEntity>>      TYPEWRITER        = register("typewriter",        TypewriterBlockEntity::new,      BCUtil.merge(BCBlocks.TYPEWRITER.holders(), BCBlocks.CLEAR_TYPEWRITER));
+    // @formatter:on
 
     /**
      * Registration helper method that takes a supplier list instead of a vararg parameter.
@@ -78,5 +80,6 @@ public interface BCBlockEntities {
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
-    static void init() {}
+    static void init() {
+    }
 }
