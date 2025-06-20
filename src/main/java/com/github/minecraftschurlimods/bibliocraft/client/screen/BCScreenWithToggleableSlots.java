@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.slot.HasTogglableSlots;
-import com.github.minecraftschurlimods.bibliocraft.util.slot.TogglableSlot;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.ToggleableSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,11 +15,11 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class BCScreenWithTogglableSlots<T extends BCMenu<?> & HasTogglableSlots> extends BCMenuScreen<T> {
+public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlots> extends BCMenuScreen<T> {
     private static final ResourceLocation DISABLED_SLOT = BCUtil.mcLoc("container/crafter/disabled_slot");
     private final Player player;
 
-    public BCScreenWithTogglableSlots(T menu, Inventory inventory, Component title, ResourceLocation background) {
+    public BCScreenWithToggleableSlots(T menu, Inventory inventory, Component title, ResourceLocation background) {
         super(menu, inventory, title, background);
         player = inventory.player;
     }
@@ -27,14 +27,14 @@ public class BCScreenWithTogglableSlots<T extends BCMenu<?> & HasTogglableSlots>
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
-        if (hoveredSlot instanceof TogglableSlot && !menu.isSlotDisabled(hoveredSlot.index) && menu.getCarried().isEmpty() && !hoveredSlot.hasItem() && !player.isSpectator()) {
+        if (hoveredSlot instanceof ToggleableSlot && !menu.isSlotDisabled(hoveredSlot.index) && menu.getCarried().isEmpty() && !hoveredSlot.hasItem() && !player.isSpectator()) {
             graphics.renderTooltip(font, Translations.VANILLA_TOGGLABLE_SLOT, mouseX, mouseY);
         }
     }
 
     @Override
     protected void renderSlot(GuiGraphics graphics, Slot slot) {
-        if (slot instanceof TogglableSlot && menu.isSlotDisabled(slot.index)) {
+        if (slot instanceof ToggleableSlot && menu.isSlotDisabled(slot.index)) {
             graphics.blitSprite(DISABLED_SLOT, slot.x - 1, slot.y - 1, 18, 18);
         }
         super.renderSlot(graphics, slot);
@@ -42,7 +42,7 @@ public class BCScreenWithTogglableSlots<T extends BCMenu<?> & HasTogglableSlots>
 
     @Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
-        if (slot instanceof TogglableSlot<?> && !slot.hasItem() && !player.isSpectator()) {
+        if (slot instanceof ToggleableSlot<?> && !slot.hasItem() && !player.isSpectator()) {
             switch (type) {
                 case PICKUP -> {
                     if (menu.isSlotDisabled(slotId)) {

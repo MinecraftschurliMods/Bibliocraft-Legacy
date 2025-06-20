@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class FancyCrafterScreen extends BCScreenWithTogglableSlots<FancyCrafterMenu> {
+public class FancyCrafterScreen extends BCScreenWithToggleableSlots<FancyCrafterMenu> {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/fancy_crafter.png");
 
     public FancyCrafterScreen(FancyCrafterMenu menu, Inventory inventory, Component title) {

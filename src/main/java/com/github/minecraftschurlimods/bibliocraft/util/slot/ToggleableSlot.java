@@ -9,10 +9,10 @@ import net.minecraft.world.item.ItemStack;
  *
  * @param <T> The type of the owning block entity.
  */
-public class TogglableSlot<T extends Container & HasTogglableSlots> extends Slot {
+public class ToggleableSlot<T extends Container & HasToggleableSlots> extends Slot {
     public final T container;
 
-    public TogglableSlot(T container, int slot, int x, int y) {
+    public ToggleableSlot(T container, int slot, int x, int y) {
         super(container, slot, x, y);
         this.container = container;
     }

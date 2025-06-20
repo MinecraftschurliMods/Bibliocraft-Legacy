@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.slot.HasTogglableSlots;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTogglableSlots {
+public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasToggleableSlots {
     private static final String MODE_KEY = "mode";
     private static final String DURATION_KEY = "duration";
     private static final String MAX_DURATION_KEY = "duration";

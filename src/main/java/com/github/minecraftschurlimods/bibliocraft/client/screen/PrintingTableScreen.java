@@ -14,7 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-public class PrintingTableScreen extends BCScreenWithTogglableSlots<PrintingTableMenu> {
+public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTableMenu> {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/printing_table.png");
     private static final ResourceLocation PROGRESS = BCUtil.bcLoc("printing_table_progress");
     private Button modeButton;

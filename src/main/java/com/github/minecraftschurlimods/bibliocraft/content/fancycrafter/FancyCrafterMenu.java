@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancycrafter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
-import com.github.minecraftschurlimods.bibliocraft.util.slot.HasTogglableSlots;
-import com.github.minecraftschurlimods.bibliocraft.util.slot.TogglableSlot;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.ToggleableSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.ViewSlot;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements HasTogglableSlots {
+public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements HasToggleableSlots {
     public FancyCrafterMenu(int id, Inventory inventory, FancyCrafterBlockEntity blockEntity) {
         super(BCMenus.FANCY_CRAFTER.get(), id, inventory, blockEntity);
     }
@@ -24,7 +24,7 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
     protected void addSlots(Inventory inventory) {
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                addSlot(new TogglableSlot<>(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
+                addSlot(new ToggleableSlot<>(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
             }
         }
         addSlot(new ViewSlot(blockEntity, 9, 124, 35));
