@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancycrafter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.HasTogglableSlots;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,10 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
+public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTogglableSlots {
     private static final String CRAFTING_TICKS_REMAINING_KEY = "crafting_ticks_remaining";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
-    private static final String TRIGGERED_KEY = "triggered";
     private static final int SLOT_DISABLED = 1;
     private static final int SLOT_ENABLED = 0;
     private static final int MAX_CRAFTING_TICKS = 6;
@@ -150,11 +150,13 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity {
         return wrapper;
     }
 
+    @Override
     public void setSlotDisabled(int slot, boolean disabled) {
         if (!canSlotBeDisabled(slot)) return;
         disabledSlots[slot] = disabled;
     }
 
+    @Override
     public boolean isSlotDisabled(int slot) {
         return isCraftingSlot(slot) && disabledSlots[slot];
     }

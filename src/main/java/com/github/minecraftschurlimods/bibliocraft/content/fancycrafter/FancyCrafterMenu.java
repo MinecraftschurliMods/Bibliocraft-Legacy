@@ -1,6 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancycrafter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
+import com.github.minecraftschurlimods.bibliocraft.util.HasTogglableSlots;
+import com.github.minecraftschurlimods.bibliocraft.util.TogglableSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -9,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> {
+public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements HasTogglableSlots {
     public FancyCrafterMenu(int id, Inventory inventory, FancyCrafterBlockEntity blockEntity) {
         super(BCMenus.FANCY_CRAFTER.get(), id, inventory, blockEntity);
     }
@@ -22,7 +24,7 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> {
     protected void addSlots(Inventory inventory) {
         for (int x = 0; x < 3; x++) {
             for (int y = 0; y < 3; y++) {
-                addSlot(new FancyCrafterSlot(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
+                addSlot(new TogglableSlot<>(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
             }
         }
         addSlot(new ViewSlot(blockEntity, 9, 124, 35));
@@ -73,12 +75,14 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> {
         return originalStack;
     }
 
+    @Override
     public void setSlotDisabled(int slot, boolean disabled) {
         if (slot > 8) return;
         blockEntity.setSlotDisabled(slot, disabled);
         broadcastChanges();
     }
 
+    @Override
     public boolean isSlotDisabled(int slot) {
         return blockEntity.isSlotDisabled(slot);
     }
