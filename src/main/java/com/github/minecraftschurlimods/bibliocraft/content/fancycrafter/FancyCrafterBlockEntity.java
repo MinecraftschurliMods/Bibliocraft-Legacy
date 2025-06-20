@@ -154,6 +154,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     public void setSlotDisabled(int slot, boolean disabled) {
         if (!canDisableSlot(slot)) return;
         disabledSlots[slot] = disabled;
+        setChanged();
     }
 
     @Override

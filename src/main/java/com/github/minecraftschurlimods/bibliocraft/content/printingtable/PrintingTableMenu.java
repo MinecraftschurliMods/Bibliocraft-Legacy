@@ -31,12 +31,19 @@ public class PrintingTableMenu extends BCMenu<PrintingTableBlockEntity> implemen
     }
 
     @Override
-    public boolean isSlotDisabled(int index) {
-        return blockEntity.isSlotDisabled(index);
+    public boolean isSlotDisabled(int slot) {
+        return blockEntity.isSlotDisabled(slot);
     }
 
     @Override
-    public void setSlotDisabled(int index, boolean disabled) {
-        blockEntity.setSlotDisabled(index, disabled);
+    public void setSlotDisabled(int slot, boolean disabled) {
+        if (slot > 8) return;
+        blockEntity.setSlotDisabled(slot, disabled);
+        broadcastChanges();
+    }
+
+    @Override
+    public boolean canDisableSlot(int slot) {
+        return blockEntity.canDisableSlot(slot);
     }
 }

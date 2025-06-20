@@ -24,6 +24,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.OpenBookInLecternPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookPacket;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.ToggleableSlotSyncPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
@@ -110,6 +111,7 @@ public final class EventHandler {
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
                 .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
                 .playToServer(TakeLecternBookPacket.TYPE,             TakeLecternBookPacket.STREAM_CODEC,             TakeLecternBookPacket::handle)
+                .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle)
                 .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle);
     }
 
