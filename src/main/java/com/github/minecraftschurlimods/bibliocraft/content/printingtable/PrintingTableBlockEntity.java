@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.HasTogglableSlots;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.HasTogglableSlots;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

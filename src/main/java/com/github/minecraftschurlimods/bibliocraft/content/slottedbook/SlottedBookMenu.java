@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.slottedbook;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.ViewSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -24,7 +25,7 @@ public class SlottedBookMenu extends AbstractContainerMenu {
             for (int j = 0; j < 9; j++) {
                 int slot = i * 9 + j + 9;
                 if (inventory.getItem(slot).is(BCItems.SLOTTED_BOOK.get())) {
-                    addSlot(new ReadOnlySlot(inventory, slot, 8 + j * 18, 141 + i * 18));
+                    addSlot(new ViewSlot(inventory, slot, 8 + j * 18, 141 + i * 18));
                 } else {
                     addSlot(new Slot(inventory, slot, 8 + j * 18, 141 + i * 18));
                 }
@@ -32,7 +33,7 @@ public class SlottedBookMenu extends AbstractContainerMenu {
         }
         for (int i = 0; i < 9; i++) {
             if (inventory.getItem(i).is(BCItems.SLOTTED_BOOK.get())) {
-                addSlot(new ReadOnlySlot(inventory, i, 8 + i * 18, 199));
+                addSlot(new ViewSlot(inventory, i, 8 + i * 18, 199));
             } else {
                 addSlot(new Slot(inventory, i, 8 + i * 18, 199));
             }
@@ -82,19 +83,14 @@ public class SlottedBookMenu extends AbstractContainerMenu {
         return player.getItemInHand(hand).is(BCItems.SLOTTED_BOOK.get());
     }
 
-    private static class ReadOnlySlot extends Slot {
-        public ReadOnlySlot(Container container, int slot, int x, int y) {
+    public static class SlottedBookSlot extends Slot {
+        public SlottedBookSlot(Container container, int slot, int x, int y) {
             super(container, slot, x, y);
         }
 
         @Override
-        public boolean mayPickup(Player player) {
-            return false;
-        }
-
-        @Override
         public boolean mayPlace(ItemStack stack) {
-            return false;
+            return !stack.is(BCItems.SLOTTED_BOOK) && super.mayPlace(stack);
         }
     }
 }

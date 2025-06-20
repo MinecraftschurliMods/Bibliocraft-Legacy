@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.util;
+package com.github.minecraftschurlimods.bibliocraft.util.slot;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;

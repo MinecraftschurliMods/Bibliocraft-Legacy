@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.HasTogglableSlots;
-import com.github.minecraftschurlimods.bibliocraft.util.TogglableSlot;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.HasTogglableSlots;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.TogglableSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.client.gui.GuiGraphics;

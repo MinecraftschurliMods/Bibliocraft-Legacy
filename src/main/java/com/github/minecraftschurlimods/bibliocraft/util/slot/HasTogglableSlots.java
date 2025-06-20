@@ -1,4 +1,4 @@
-package com.github.minecraftschurlimods.bibliocraft.util;
+package com.github.minecraftschurlimods.bibliocraft.util.slot;
 
 /**
  * Represents that the implementer has {@link TogglableSlot}s.

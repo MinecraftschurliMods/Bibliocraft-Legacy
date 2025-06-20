@@ -1,11 +1,11 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancycrafter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
-import com.github.minecraftschurlimods.bibliocraft.util.HasTogglableSlots;
-import com.github.minecraftschurlimods.bibliocraft.util.TogglableSlot;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.HasTogglableSlots;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.TogglableSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
+import com.github.minecraftschurlimods.bibliocraft.util.slot.ViewSlot;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -94,21 +94,5 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
                 return false;
         }
         return true;
-    }
-
-    private static class ViewSlot extends Slot {
-        public ViewSlot(Container container, int slot, int x, int y) {
-            super(container, slot, x, y);
-        }
-
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-            return false;
-        }
-
-        @Override
-        public boolean mayPickup(Player player) {
-            return false;
-        }
     }
 }
