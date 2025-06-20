@@ -17,7 +17,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.Stoc
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
-import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -28,23 +27,15 @@ import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookP
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
@@ -56,7 +47,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.jetbrains.annotations.ApiStatus;
 
@@ -151,38 +141,10 @@ public final class EventHandler {
         event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), () -> family);
     }
 
-    @SuppressWarnings("DataFlowIssue")
     private static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        Player player = event.getEntity();
         Level level = event.getLevel();
         BlockPos pos = event.getPos();
-        BlockState state = level.getBlockState(pos);
-        if (!(level.getBlockEntity(pos) instanceof LecternBlockEntity lectern)) return;
-        ItemStack book = lectern.getBook();
-        if (book.isEmpty()) {
-            // this workaround is needed to set the page count correctly
-            // if it can be added to vanilla/neo somehow, this can be scrapped
-            ItemStack stack = player.getItemInHand(event.getHand());
-            if (!stack.is(ItemTags.LECTERN_BOOKS)) return;
-            if (!stack.has(BCDataComponents.BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) return;
-            lectern.setBook(stack.consumeAndReturn(1, player));
-            LecternBlock.resetBookState(player, level, pos, state, true);
-            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1f, 1f);
-            if (stack.has(BCDataComponents.BIG_BOOK_CONTENT)) {
-                lectern.pageCount = stack.get(BCDataComponents.BIG_BOOK_CONTENT).pages().size();
-            } else if (stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT)) {
-                lectern.pageCount = stack.get(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT).pages().size();
-            } else if (stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
-                lectern.pageCount = 1;
-            }
-            event.setCancellationResult(InteractionResult.SUCCESS);
-            event.setCanceled(true);
-        } else if (book.has(BCDataComponents.BIG_BOOK_CONTENT) || book.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) || book.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) {
-            if (player.isSecondaryUseActive()) {
-                LecternUtil.takeLecternBook(player, level, pos);
-            } else if (!level.isClientSide() && player instanceof ServerPlayer sp) {
-                PacketDistributor.sendToPlayer(sp, new OpenBookInLecternPacket(pos, book));
-            }
+        if (level.getBlockEntity(pos) instanceof LecternBlockEntity lectern && LecternUtil.handleLecternUse(level, pos, level.getBlockState(pos), lectern, event.getEntity(), event.getHand())) {
             event.setCancellationResult(InteractionResult.SUCCESS);
             event.setCanceled(true);
         }
