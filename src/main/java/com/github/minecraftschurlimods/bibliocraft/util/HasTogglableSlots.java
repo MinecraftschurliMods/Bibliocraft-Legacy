@@ -17,4 +17,12 @@ public interface HasTogglableSlots {
      * @param disabled The disabled flag to set.
      */
     void setSlotDisabled(int index, boolean disabled);
+
+    /**
+     * @param index The index of the {@link TogglableSlot}.
+     * @return Whether the {@link TogglableSlot} can be disabled or not.
+     */
+    default boolean canDisableSlot(int index) {
+        return true;
+    }
 }

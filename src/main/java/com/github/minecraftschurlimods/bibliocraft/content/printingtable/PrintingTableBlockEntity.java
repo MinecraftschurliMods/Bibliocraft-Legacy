@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.HasTogglableSlots;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -20,11 +21,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class PrintingTableBlockEntity extends BCMenuBlockEntity {
+public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTogglableSlots {
     private static final String MODE_KEY = "mode";
     private static final String DURATION_KEY = "duration";
     private static final String MAX_DURATION_KEY = "duration";
     private static final String PLAYER_NAME_KEY = "player_name";
+    private static final String DISABLED_SLOTS_KEY = "disabled_slots";
+    private static final int SLOT_DISABLED = 1;
+    private static final int SLOT_ENABLED = 0;
+    private final boolean[] disabledSlots = new boolean[9];
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
@@ -78,6 +83,10 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         if (tag.contains(PLAYER_NAME_KEY, CompoundTag.TAG_STRING)) {
             playerName = Component.Serializer.fromJson(tag.getString(PLAYER_NAME_KEY), registries);
         }
+        int[] tagSlots = tag.getIntArray(DISABLED_SLOTS_KEY);
+        for (int i = 0; i < 9; i++) {
+            disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
+        }
     }
 
     @Override
@@ -89,16 +98,42 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
         if (playerName != null) {
             tag.putString(PLAYER_NAME_KEY, Component.Serializer.toJson(playerName, registries));
         }
+        int[] tagSlots = new int[9];
+        for (int i = 0; i < 9; i++) {
+            tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
+        }
+        tag.putIntArray(DISABLED_SLOTS_KEY, tagSlots);
     }
 
     @Override
     public void setItem(int slot, ItemStack stack) {
+        if (isSlotDisabled(slot)) {
+            disabledSlots[slot] = false;
+            setChanged();
+        }
         super.setItem(slot, stack);
         recipeInput = null;
         if (recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
             calculateRecipe();
             setChanged();
         }
+    }
+
+    @Override
+    public void setSlotDisabled(int slot, boolean disabled) {
+        if (!canDisableSlot(slot)) return;
+        disabledSlots[slot] = disabled;
+        setChanged();
+    }
+
+    @Override
+    public boolean isSlotDisabled(int slot) {
+        return isCraftingSlot(slot) && disabledSlots[slot];
+    }
+
+    @Override
+    public boolean canDisableSlot(int slot) {
+        return isCraftingSlot(slot) && getItem(slot).isEmpty();
     }
 
     public PrintingTableMode getMode() {
@@ -150,5 +185,9 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity {
             recipeInput = new PrintingTableRecipeInput(IntStream.range(0, 9).mapToObj(this::getItem).toList(), getItem(9));
         }
         return recipeInput;
+    }
+
+    private boolean isCraftingSlot(int slot) {
+        return slot >= 0 && slot < 9;
     }
 }

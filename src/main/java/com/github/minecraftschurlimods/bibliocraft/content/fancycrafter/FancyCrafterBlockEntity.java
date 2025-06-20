@@ -130,7 +130,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         craftingTicksRemaining = tag.getInt(CRAFTING_TICKS_REMAINING_KEY);
         int[] tagSlots = tag.getIntArray(DISABLED_SLOTS_KEY);
         for (int i = 0; i < 9; i++) {
-            disabledSlots[i] = canSlotBeDisabled(i) && tagSlots[i] == SLOT_DISABLED;
+            disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
         }
     }
 
@@ -152,7 +152,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
 
     @Override
     public void setSlotDisabled(int slot, boolean disabled) {
-        if (!canSlotBeDisabled(slot)) return;
+        if (!canDisableSlot(slot)) return;
         disabledSlots[slot] = disabled;
     }
 
@@ -161,7 +161,8 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         return isCraftingSlot(slot) && disabledSlots[slot];
     }
 
-    public boolean canSlotBeDisabled(int slot) {
+    @Override
+    public boolean canDisableSlot(int slot) {
         return isCraftingSlot(slot) && items.getStackInSlot(slot).isEmpty();
     }
 
