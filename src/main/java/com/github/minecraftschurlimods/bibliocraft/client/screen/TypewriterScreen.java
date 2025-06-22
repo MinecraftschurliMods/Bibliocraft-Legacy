@@ -22,7 +22,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class TypewriterScreen extends Screen {
     public static final int IMAGE_WIDTH = 100;
-    public static final int IMAGE_HEIGHT = 164;
+    public static final int IMAGE_HEIGHT = 144;
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/typewriter_page.png");
     private final RandomSource random = RandomSource.create(Util.getNanos());
     private final BlockPos pos;

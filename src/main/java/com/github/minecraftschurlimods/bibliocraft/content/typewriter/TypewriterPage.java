@@ -13,7 +13,7 @@ import java.util.List;
 
 public record TypewriterPage(List<String> lines, int line) {
     public static final int MAX_LINE_LENGTH = 16;
-    public static final int MAX_LINES = 16;
+    public static final int MAX_LINES = 14;
     public static final Codec<TypewriterPage> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.string(0, MAX_LINE_LENGTH).listOf(MAX_LINES, MAX_LINES).fieldOf("lines").forGetter(TypewriterPage::lines),
             ExtraCodecs.intRange(0, MAX_LINES).optionalFieldOf("line", 0).forGetter(TypewriterPage::line)

@@ -64,14 +64,6 @@
       "model": "bibliocraft:block/color/cyan/typewriter_7",
       "y": 90
     },
-    "facing=east,paper=8,waterlogged=false": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8",
-      "y": 90
-    },
-    "facing=east,paper=8,waterlogged=true": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8",
-      "y": 90
-    },
     "facing=north,paper=0,waterlogged=false": {
       "model": "bibliocraft:block/color/cyan/typewriter_0"
     },
@@ -119,12 +111,6 @@
     },
     "facing=north,paper=7,waterlogged=true": {
       "model": "bibliocraft:block/color/cyan/typewriter_7"
-    },
-    "facing=north,paper=8,waterlogged=false": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8"
-    },
-    "facing=north,paper=8,waterlogged=true": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8"
     },
     "facing=south,paper=0,waterlogged=false": {
       "model": "bibliocraft:block/color/cyan/typewriter_0",
@@ -190,14 +176,6 @@
       "model": "bibliocraft:block/color/cyan/typewriter_7",
       "y": 180
     },
-    "facing=south,paper=8,waterlogged=false": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8",
-      "y": 180
-    },
-    "facing=south,paper=8,waterlogged=true": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8",
-      "y": 180
-    },
     "facing=west,paper=0,waterlogged=false": {
       "model": "bibliocraft:block/color/cyan/typewriter_0",
       "y": 270
@@ -260,14 +238,6 @@
     },
     "facing=west,paper=7,waterlogged=true": {
       "model": "bibliocraft:block/color/cyan/typewriter_7",
-      "y": 270
-    },
-    "facing=west,paper=8,waterlogged=false": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8",
-      "y": 270
-    },
-    "facing=west,paper=8,waterlogged=true": {
-      "model": "bibliocraft:block/color/cyan/typewriter_8",
       "y": 270
     }
   }

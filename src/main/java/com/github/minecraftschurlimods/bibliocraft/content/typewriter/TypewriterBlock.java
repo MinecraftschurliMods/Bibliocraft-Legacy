@@ -50,7 +50,7 @@ public class TypewriterBlock extends BCFacingEntityBlock {
     private static final VoxelShape EAST_COLLISION_SHAPE = ShapeUtil.rotate(NORTH_COLLISION_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_COLLISION_SHAPE = ShapeUtil.rotate(NORTH_COLLISION_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_COLLISION_SHAPE = ShapeUtil.rotate(NORTH_COLLISION_SHAPE, Rotation.COUNTERCLOCKWISE_90);
-    public static final IntegerProperty PAPER = IntegerProperty.create("paper", 0, 8);
+    public static final IntegerProperty PAPER = IntegerProperty.create("paper", 0, 7);
 
     public TypewriterBlock(Properties properties) {
         super(properties);

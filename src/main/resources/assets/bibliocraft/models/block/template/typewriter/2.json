@@ -4,7 +4,6 @@
 		"0": "#color",
 		"1": "block/iron_block",
 		"2": "bibliocraft:block/typewriter_paper",
-		"3": "bibliocraft:block/typewriter_paper_filled",
 		"particle": "#color"
 	},
 	"elements": [
@@ -869,7 +868,7 @@
 			"to": [12, 10.5, 11.5],
 			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8.5, 11.5]},
 			"faces": {
-				"north": {"uv": [0, 0, 8, 2], "texture": "#3"},
+				"north": {"uv": [8, 0, 16, 2], "texture": "#2"},
 				"east": {"uv": [0, 0, 0, 2], "texture": "#missing"},
 				"south": {"uv": [0, 0, 8, 2], "texture": "#2"},
 				"west": {"uv": [0, 0, 0, 2], "texture": "#missing"},
