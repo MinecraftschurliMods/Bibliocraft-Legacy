@@ -55,7 +55,6 @@ public interface BCBlocks {
     WoodTypeDeferredHolder<Block, GrandfatherClockBlock> GRANDFATHER_CLOCK = woodenBlock("grandfather_clock", GrandfatherClockBlock::new);
     WoodTypeDeferredHolder<Block, LabelBlock>            LABEL             = woodenBlock("label",             LabelBlock::new);
     WoodTypeDeferredHolder<Block, PotionShelfBlock>      POTION_SHELF      = woodenBlock("potion_shelf",      PotionShelfBlock::new);
-    WoodTypeDeferredHolder<Block, PrintingTableBlock>    PRINTING_TABLE    = woodenBlock("printing_table",    PrintingTableBlock::new);
     WoodTypeDeferredHolder<Block, ShelfBlock>            SHELF             = woodenBlock("shelf",             ShelfBlock::new);
     WoodTypeDeferredHolder<Block, TableBlock>            TABLE             = woodenBlock("table",             TableBlock::new);
     WoodTypeDeferredHolder<Block, ToolRackBlock>         TOOL_RACK         = woodenBlock("tool_rack",         ToolRackBlock::new);
@@ -81,10 +80,11 @@ public interface BCBlocks {
     DeferredBlock<DinnerPlateBlock>     DINNER_PLATE           = BCRegistries.BLOCKS.register("dinner_plate",           () -> new DinnerPlateBlock    (BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_QUARTZ).noOcclusion()));
     DeferredBlock<DiscRackBlock>        DISC_RACK              = BCRegistries.BLOCKS.register("disc_rack",              () -> new DiscRackBlock       (BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
     DeferredBlock<WallDiscRackBlock>    WALL_DISC_RACK         = BCRegistries.BLOCKS.register("wall_disc_rack",         () -> new WallDiscRackBlock   (BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
+    DeferredBlock<FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredBlock<ChainBlock>           GOLD_CHAIN             = BCRegistries.BLOCKS.register("gold_chain",             () -> new ChainBlock          (BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)));
     DeferredBlock<LanternBlock>         GOLD_LANTERN           = BCRegistries.BLOCKS.register("gold_lantern",           () -> new LanternBlock        (BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN)));
     DeferredBlock<LanternBlock>         GOLD_SOUL_LANTERN      = BCRegistries.BLOCKS.register("gold_soul_lantern",      () -> new LanternBlock        (BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_LANTERN)));
-    DeferredBlock<FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
+    DeferredBlock<PrintingTableBlock>   PRINTING_TABLE         = BCRegistries.BLOCKS.register("printing_table",         () -> new PrintingTableBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion()));
     DeferredBlock<PrintingTableBlock>   IRON_PRINTING_TABLE    = BCRegistries.BLOCKS.register("iron_printing_table",    () -> new PrintingTableBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
     DeferredBlock<SwordPedestalBlock>   SWORD_PEDESTAL         = BCRegistries.BLOCKS.register("sword_pedestal",         () -> new SwordPedestalBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion()));
     //TODO Map Frame

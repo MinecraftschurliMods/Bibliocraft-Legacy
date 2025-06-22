@@ -19,7 +19,6 @@ public interface BCTags {
         TagKey<Block> GRANDFATHER_CLOCKS      = tag("grandfather_clocks");
         TagKey<Block> LABELS                  = tag("labels");
         TagKey<Block> POTION_SHELVES          = tag("potion_shelves");
-        TagKey<Block> PRINTING_TABLES_WOOD    = tag("printing_tables/wood");
         TagKey<Block> PRINTING_TABLES         = tag("printing_tables");
         TagKey<Block> SEATS                   = tag("seats");
         TagKey<Block> SEAT_BACKS              = tag("seat_backs");
@@ -56,7 +55,6 @@ public interface BCTags {
         TagKey<Item> GRANDFATHER_CLOCKS      = tag("grandfather_clocks");
         TagKey<Item> LABELS                  = tag("labels");
         TagKey<Item> POTION_SHELVES          = tag("potion_shelves");
-        TagKey<Item> PRINTING_TABLES_WOOD    = tag("printing_tables/wood");
         TagKey<Item> PRINTING_TABLES         = tag("printing_tables");
         TagKey<Item> SEATS                   = tag("seats");
         TagKey<Item> SEAT_BACKS_SMALL        = tag("seat_backs/small");

@@ -29,7 +29,6 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.GRANDFATHER_CLOCK.values());
                 addToTab(output, BCItems.LABEL.values());
                 addToTab(output, BCItems.POTION_SHELF.values());
-                addToTab(output, BCItems.PRINTING_TABLE.values());
                 addToTab(output, BCItems.SHELF.values());
                 addToTab(output, BCItems.TABLE.values());
                 addToTab(output, BCItems.TOOL_RACK.values());
@@ -61,10 +60,11 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.DESK_BELL);
                 output.accept(BCItems.DINNER_PLATE);
                 output.accept(BCItems.DISC_RACK);
+                output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
                 output.accept(BCItems.GOLD_CHAIN);
                 output.accept(BCItems.GOLD_LANTERN);
                 output.accept(BCItems.GOLD_SOUL_LANTERN);
-                output.accept(BCItems.IRON_FANCY_ARMOR_STAND);
+                output.accept(BCItems.PRINTING_TABLE);
                 output.accept(BCItems.IRON_PRINTING_TABLE);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());

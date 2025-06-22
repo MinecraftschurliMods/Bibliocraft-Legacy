@@ -17,11 +17,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "bibliocraft:jungle_printing_table"
+          "name": "bibliocraft:printing_table"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bibliocraft:blocks/jungle_printing_table"
+  "random_sequence": "bibliocraft:blocks/printing_table"
 }

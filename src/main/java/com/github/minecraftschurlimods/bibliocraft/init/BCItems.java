@@ -44,7 +44,6 @@ public interface BCItems {
     WoodTypeDeferredHolder<Item, DoubleHighBlockItem> GRANDFATHER_CLOCK = woodenBlock("grandfather_clock", wood -> new DoubleHighBlockItem(BCBlocks.GRANDFATHER_CLOCK.get(wood), PROPERTIES));
     WoodTypeDeferredHolder<Item, BlockItem>           LABEL             = woodenBlock("label",             BCBlocks.LABEL);
     WoodTypeDeferredHolder<Item, BlockItem>           POTION_SHELF      = woodenBlock("potion_shelf",      BCBlocks.POTION_SHELF);
-    WoodTypeDeferredHolder<Item, BlockItem>           PRINTING_TABLE    = woodenBlock("printing_table",    BCBlocks.PRINTING_TABLE);
     WoodTypeDeferredHolder<Item, BlockItem>           SHELF             = woodenBlock("shelf",             BCBlocks.SHELF);
     WoodTypeDeferredHolder<Item, BlockItem>           TABLE             = woodenBlock("table",             BCBlocks.TABLE);
     WoodTypeDeferredHolder<Item, BlockItem>           TOOL_RACK         = woodenBlock("tool_rack",         BCBlocks.TOOL_RACK);
@@ -72,10 +71,11 @@ public interface BCItems {
     DeferredItem<BlockItem>            DESK_BELL              = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DESK_BELL);
     DeferredItem<BlockItem>            DINNER_PLATE           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.DINNER_PLATE);
     DeferredItem<DiscRackItem>         DISC_RACK              = BCRegistries.ITEMS.registerItem("disc_rack", DiscRackItem::new);
+    DeferredItem<DoubleHighBlockItem>  IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
     DeferredItem<BlockItem>            GOLD_CHAIN             = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_CHAIN);
     DeferredItem<BlockItem>            GOLD_LANTERN           = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_LANTERN);
     DeferredItem<BlockItem>            GOLD_SOUL_LANTERN      = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.GOLD_SOUL_LANTERN);
-    DeferredItem<DoubleHighBlockItem>  IRON_FANCY_ARMOR_STAND = BCRegistries.ITEMS.register("iron_fancy_armor_stand", () -> new DoubleHighBlockItem(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), PROPERTIES));
+    DeferredItem<BlockItem>            PRINTING_TABLE         = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.PRINTING_TABLE);
     DeferredItem<BlockItem>            IRON_PRINTING_TABLE    = BCRegistries.ITEMS.registerSimpleBlockItem(BCBlocks.IRON_PRINTING_TABLE);
     DeferredItem<BlockItem>            SWORD_PEDESTAL         = BCRegistries.ITEMS.registerSimpleBlockItem("sword_pedestal", BCBlocks.SWORD_PEDESTAL, new Item.Properties().component(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR));
     DeferredItem<BigBookItem>          BIG_BOOK               = BCRegistries.ITEMS.register("big_book", () -> new BigBookItem(false));

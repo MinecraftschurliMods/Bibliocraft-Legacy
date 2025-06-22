@@ -45,10 +45,11 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         addDefaultBlock(BCBlocks.DINNER_PLATE);
         addDefaultBlock(BCBlocks.DISC_RACK);
         add(BCBlocks.WALL_DISC_RACK.get(), "Disc Rack");
+        addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
         addDefaultBlock(BCBlocks.GOLD_CHAIN);
         addDefaultBlock(BCBlocks.GOLD_LANTERN);
         addDefaultBlock(BCBlocks.GOLD_SOUL_LANTERN);
-        addDefaultBlock(BCBlocks.IRON_FANCY_ARMOR_STAND);
+        addDefaultBlock(BCBlocks.PRINTING_TABLE);
         addDefaultBlock(BCBlocks.IRON_PRINTING_TABLE);
         addDefaultBlock(BCBlocks.SWORD_PEDESTAL);
         addDefaultItem(BCItems.BIG_BOOK);
@@ -83,7 +84,6 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Blocks.GRANDFATHER_CLOCKS, "Grandfather Clocks");
         add(BCTags.Blocks.LABELS, "Labels");
         add(BCTags.Blocks.POTION_SHELVES, "Potion Shelves");
-        add(BCTags.Blocks.PRINTING_TABLES_WOOD, "Wooden Printing Tables");
         add(BCTags.Blocks.PRINTING_TABLES, "Printing Tables");
         add(BCTags.Blocks.SEATS, "Seats");
         add(BCTags.Blocks.SEAT_BACKS, "Seat Backs");
@@ -106,7 +106,6 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Items.GRANDFATHER_CLOCKS, "Grandfather Clocks");
         add(BCTags.Items.LABELS, "Labels");
         add(BCTags.Items.POTION_SHELVES, "Potion Shelves");
-        add(BCTags.Items.PRINTING_TABLES_WOOD, "Wooden Printing Tables");
         add(BCTags.Items.PRINTING_TABLES, "Printing Tables");
         add(BCTags.Items.SEATS, "Seats");
         add(BCTags.Items.SEAT_BACKS, "Seat Backs");

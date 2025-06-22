@@ -55,10 +55,11 @@ public final class BCLootTableProvider extends LootTableProvider {
             add(BCBlocks.DINNER_PLATE.get(),           DatagenUtil.createDefaultTable(BCBlocks.DINNER_PLATE.get()));
             add(BCBlocks.DISC_RACK.get(),              DatagenUtil.createNameableTable(BCBlocks.DISC_RACK.get()));
             add(BCBlocks.WALL_DISC_RACK.get(),         DatagenUtil.createNameableTable(BCBlocks.DISC_RACK.get()));
+            add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), DatagenUtil.createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
             add(BCBlocks.GOLD_CHAIN.get(),             DatagenUtil.createDefaultTable(BCBlocks.GOLD_CHAIN.get()));
             add(BCBlocks.GOLD_LANTERN.get(),           DatagenUtil.createDefaultTable(BCBlocks.GOLD_LANTERN.get()));
             add(BCBlocks.GOLD_SOUL_LANTERN.get(),      DatagenUtil.createDefaultTable(BCBlocks.GOLD_SOUL_LANTERN.get()));
-            add(BCBlocks.IRON_FANCY_ARMOR_STAND.get(), DatagenUtil.createFancyArmorStandTable(BCBlocks.IRON_FANCY_ARMOR_STAND.get()));
+            add(BCBlocks.PRINTING_TABLE.get(),         DatagenUtil.createNameableTable(BCBlocks.PRINTING_TABLE.get()));
             add(BCBlocks.IRON_PRINTING_TABLE.get(),    DatagenUtil.createNameableTable(BCBlocks.IRON_PRINTING_TABLE.get()));
             add(BCBlocks.SWORD_PEDESTAL.get(),         DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.SWORD_PEDESTAL.get()).apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(DataComponents.DYED_COLOR))));
         }

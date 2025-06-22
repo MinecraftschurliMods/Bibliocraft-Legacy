@@ -9,13 +9,13 @@
     "#bibliocraft:grandfather_clocks",
     "#bibliocraft:labels",
     "#bibliocraft:potion_shelves",
-    "#bibliocraft:printing_tables/wood",
     "#bibliocraft:seats",
     "#bibliocraft:seat_backs",
     "#bibliocraft:shelves",
     "#bibliocraft:tables",
     "#bibliocraft:tool_racks",
     "bibliocraft:disc_rack",
-    "bibliocraft:wall_disc_rack"
+    "bibliocraft:wall_disc_rack",
+    "bibliocraft:printing_table"
   ]
 }

@@ -41,7 +41,7 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<FancySignBlockEntity>>       FANCY_SIGN        = register("fancy_sign",        FancySignBlockEntity::new,       BCUtil.mergeRaw(BCBlocks.FANCY_SIGN.holders(), BCBlocks.WALL_FANCY_SIGN.holders()));
     Supplier<BlockEntityType<LabelBlockEntity>>           LABEL             = register("label",             LabelBlockEntity::new,           BCBlocks.LABEL.holders());
     Supplier<BlockEntityType<PotionShelfBlockEntity>>     POTION_SHELF      = register("potion_shelf",      PotionShelfBlockEntity::new,     BCBlocks.POTION_SHELF.holders());
-    Supplier<BlockEntityType<PrintingTableBlockEntity>>   PRINTING_TABLE    = register("printing_table",    PrintingTableBlockEntity::new,   BCUtil.merge(BCBlocks.PRINTING_TABLE.holders(), BCBlocks.IRON_PRINTING_TABLE));
+    Supplier<BlockEntityType<PrintingTableBlockEntity>>   PRINTING_TABLE    = register("printing_table",    PrintingTableBlockEntity::new,   BCBlocks.PRINTING_TABLE, BCBlocks.IRON_PRINTING_TABLE);
     Supplier<BlockEntityType<ShelfBlockEntity>>           SHELF             = register("shelf",             ShelfBlockEntity::new,           BCBlocks.SHELF.holders());
     Supplier<BlockEntityType<SwordPedestalBlockEntity>>   SWORD_PEDESTAL    = register("sword_pedestal",    SwordPedestalBlockEntity::new,   BCBlocks.SWORD_PEDESTAL);
     Supplier<BlockEntityType<TableBlockEntity>>           TABLE             = register("table",             TableBlockEntity::new,           BCBlocks.TABLE.holders());
