@@ -154,9 +154,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     public float getProgress() {
-        if (maxDuration == 0) return 0;
-        System.out.println("Duration: " + duration + ", Max Duration: " + maxDuration);
-        return duration / (float) maxDuration;
+        return maxDuration == 0 ? 0 : duration / (float) maxDuration;
     }
 
     private void calculateRecipe() {
