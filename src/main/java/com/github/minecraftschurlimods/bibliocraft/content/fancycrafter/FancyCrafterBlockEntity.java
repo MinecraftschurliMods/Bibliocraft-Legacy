@@ -105,7 +105,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
 
     @Override
     public void setItem(int slot, ItemStack stack) {
-        if (isSlotDisabled(slot)) {
+        if (isSlotDisabled(slot) && !stack.isEmpty()) {
             disabledSlots[slot] = false;
         }
         super.setItem(slot, stack);

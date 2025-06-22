@@ -107,9 +107,8 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     @Override
     public void setItem(int slot, ItemStack stack) {
-        if (isSlotDisabled(slot)) {
-            disabledSlots[slot] = false;
-            setChanged();
+        if (isSlotDisabled(slot) && !stack.isEmpty()) {
+            setSlotDisabled(slot, false);
         }
         super.setItem(slot, stack);
         recipeInput = null;
