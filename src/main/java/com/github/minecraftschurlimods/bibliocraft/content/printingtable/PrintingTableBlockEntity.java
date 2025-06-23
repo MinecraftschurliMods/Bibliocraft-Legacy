@@ -15,8 +15,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -24,8 +26,6 @@ import java.util.stream.IntStream;
 public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasToggleableSlots {
     private static final String MODE_KEY = "mode";
     private static final String DURATION_KEY = "duration";
-    private static final String MAX_DURATION_KEY = "duration";
-    private static final String EXPERIENCE_COST_KEY = "experience_cost";
     private static final String PLAYER_NAME_KEY = "player_name";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
     private static final int SLOT_DISABLED = 1;
@@ -66,7 +66,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
                 if (remaining.isEmpty()) continue;
                 blockEntity.setItem(i, remaining.copy());
             }
-            blockEntity.calculateRecipe();
+            blockEntity.calculateRecipe(false);
         }
         blockEntity.setChanged();
     }
@@ -80,9 +80,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         setMode(CodecUtil.decodeNbt(PrintingTableMode.CODEC, tag.get(MODE_KEY)));
-        experienceCost = tag.getInt(EXPERIENCE_COST_KEY);
         duration = tag.getInt(DURATION_KEY);
-        maxDuration = tag.getInt(MAX_DURATION_KEY);
         if (tag.contains(PLAYER_NAME_KEY, CompoundTag.TAG_STRING)) {
             playerName = Component.Serializer.fromJson(tag.getString(PLAYER_NAME_KEY), registries);
         }
@@ -96,9 +94,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put(MODE_KEY, CodecUtil.encodeNbt(PrintingTableMode.CODEC, getMode()));
-        tag.putInt(EXPERIENCE_COST_KEY, experienceCost);
         tag.putInt(DURATION_KEY, duration);
-        tag.putInt(MAX_DURATION_KEY, maxDuration);
         if (playerName != null) {
             tag.putString(PLAYER_NAME_KEY, Component.Serializer.toJson(playerName, registries));
         }
@@ -117,7 +113,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         super.setItem(slot, stack);
         recipeInput = null;
         if (recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
-            calculateRecipe();
+            calculateRecipe(false);
             setChanged();
         }
     }
@@ -139,13 +135,22 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         return isCraftingSlot(slot) && getItem(slot).isEmpty();
     }
 
+    @Override
+    public void onLoad() {
+        if (!level().isClientSide()) {
+            calculateRecipe(true);
+        } else {
+            PacketDistributor.sendToServer(new PrintingTableSetRecipePacket(getBlockPos(), 0, 0, 0));
+        }
+    }
+
     public PrintingTableMode getMode() {
         return mode;
     }
 
     public void setMode(PrintingTableMode mode) {
         this.mode = mode;
-        calculateRecipe();
+        calculateRecipe(false);
         setChanged();
     }
 
@@ -161,11 +166,25 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         return maxDuration == 0 ? 0 : duration / (float) maxDuration;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getMaxDuration() {
+        return maxDuration;
+    }
+
     public int getExperienceCost() {
         return experienceCost;
     }
 
-    private void calculateRecipe() {
+    public void setFromPacket(PrintingTableSetRecipePacket packet) {
+        duration = packet.duration();
+        maxDuration = packet.maxDuration();
+        experienceCost = packet.experienceCost();
+    }
+
+    private void calculateRecipe(boolean onLoad) {
         if (!(level() instanceof ServerLevel serverLevel)) return;
         recipe = serverLevel
                 .getRecipeManager()
@@ -181,9 +200,12 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
                 recipe = null;
             }
         }
-        experienceCost = recipe == null ? 0 : recipe.getExperienceCost(recipeInput.right().copy(), serverLevel);
-        duration = 0;
+        if (!onLoad) {
+            duration = 0;
+        }
         maxDuration = recipe == null ? 0 : recipe.getDuration();
+        experienceCost = recipe == null ? 0 : recipe.getExperienceCost(recipeInput.right().copy(), serverLevel);
+        PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), new PrintingTableSetRecipePacket(getBlockPos(), duration, maxDuration, experienceCost));
     }
 
     private PrintingTableRecipeInput getRecipeInput() {

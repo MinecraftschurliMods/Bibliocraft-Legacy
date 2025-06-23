@@ -63,7 +63,7 @@ public final class CodecUtil {
 
     /**
      * @param codec A {@link Codec}.
-     * @param <T> The type of the {@link Codec}.
+     * @param <T>   The type of the {@link Codec}.
      * @return A {@link StreamCodec} for the given {@link Codec}.
      */
     public static <T> StreamCodec<FriendlyByteBuf, T> toStreamCodec(Codec<T> codec) {

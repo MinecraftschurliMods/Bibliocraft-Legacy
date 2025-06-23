@@ -12,6 +12,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSy
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableSetModePacket;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableSetRecipePacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogRequestListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
@@ -106,6 +107,7 @@ public final class BCEventHandler {
                 .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
                 .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
                 .playToServer(PrintingTableSetModePacket.TYPE,        PrintingTableSetModePacket.STREAM_CODEC,        PrintingTableSetModePacket::handle)
+                .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle)
                 .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
