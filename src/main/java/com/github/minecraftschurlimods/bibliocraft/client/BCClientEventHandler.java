@@ -41,18 +41,18 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.jetbrains.annotations.ApiStatus;
 
-public final class ClientHandler {
+public final class BCClientEventHandler {
     // @formatter:off
     @ApiStatus.Internal
     public static void init(IEventBus modBus) {
-        modBus.addListener(RegisterMenuScreensEvent.class,                      ClientHandler::registerMenuScreens);
-        modBus.addListener(ModelEvent.RegisterAdditional.class,                 ClientHandler::registerAdditional);
-        modBus.addListener(ModelEvent.BakingCompleted.class,                    ClientHandler::bakingCompleted);
-        modBus.addListener(ModelEvent.RegisterGeometryLoaders.class,            ClientHandler::registerGeometryLoaders);
-        modBus.addListener(EntityRenderersEvent.RegisterLayerDefinitions.class, ClientHandler::registerLayerDefinitions);
-        modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,        ClientHandler::registerRenderers);
-        modBus.addListener(RegisterColorHandlersEvent.Block.class,              ClientHandler::registerColorHandlersBlock);
-        modBus.addListener(RegisterColorHandlersEvent.Item.class,               ClientHandler::registerColorHandlersItem);
+        modBus.addListener(RegisterMenuScreensEvent.class,                      BCClientEventHandler::registerMenuScreens);
+        modBus.addListener(ModelEvent.RegisterAdditional.class,                 BCClientEventHandler::registerAdditional);
+        modBus.addListener(ModelEvent.BakingCompleted.class,                    BCClientEventHandler::bakingCompleted);
+        modBus.addListener(ModelEvent.RegisterGeometryLoaders.class,            BCClientEventHandler::registerGeometryLoaders);
+        modBus.addListener(EntityRenderersEvent.RegisterLayerDefinitions.class, BCClientEventHandler::registerLayerDefinitions);
+        modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,        BCClientEventHandler::registerRenderers);
+        modBus.addListener(RegisterColorHandlersEvent.Block.class,              BCClientEventHandler::registerColorHandlersBlock);
+        modBus.addListener(RegisterColorHandlersEvent.Item.class,               BCClientEventHandler::registerColorHandlersItem);
     }
 
     private static void registerMenuScreens(RegisterMenuScreensEvent event) {

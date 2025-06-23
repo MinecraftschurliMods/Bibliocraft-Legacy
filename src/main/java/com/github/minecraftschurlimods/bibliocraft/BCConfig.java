@@ -3,8 +3,8 @@ package com.github.minecraftschurlimods.bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public final class BibliocraftConfig {
-    public static final ModConfigSpec SPEC;
+public final class BCConfig {
+    public static final ModConfigSpec CLIENT_SPEC;
     public static final ModConfigSpec.BooleanValue ENABLE_PRIDE;
     public static final ModConfigSpec.BooleanValue ENABLE_PRIDE_ALWAYS;
     public static final ModConfigSpec.BooleanValue JEI_SHOW_WOOD_TYPES;
@@ -44,6 +44,6 @@ public final class BibliocraftConfig {
                 .define("show_color_types", true);
         builder.pop();
         builder.pop();
-        SPEC = builder.build();
+        CLIENT_SPEC = builder.build();
     }
 }

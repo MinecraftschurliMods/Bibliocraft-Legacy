@@ -51,18 +51,18 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.jetbrains.annotations.ApiStatus;
 
-public final class EventHandler {
+public final class BCEventHandler {
     // @formatter:off
     @ApiStatus.Internal
     public static void init(IEventBus modBus) {
-        modBus.addListener(EventPriority.LOWEST, FMLConstructModEvent.class, EventHandler::constructMod);
-        modBus.addListener(EventPriority.LOWEST, FMLCommonSetupEvent.class,  EventHandler::commonSetup);
-        modBus.addListener(EntityAttributeCreationEvent.class,      EventHandler::entityAttributeCreation);
-        modBus.addListener(RegisterCapabilitiesEvent.class,         EventHandler::registerCapabilities);
-        modBus.addListener(RegisterPayloadHandlersEvent.class,      EventHandler::registerPayloadHandlers);
-        modBus.addListener(RegisterLockAndKeyBehaviorEvent.class,   EventHandler::registerLockAndKeyBehaviors);
-        modBus.addListener(RegisterBibliocraftWoodTypesEvent.class, EventHandler::registerBibliocraftWoodTypes);
-        NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, EventHandler::rightClickBlock);
+        modBus.addListener(EventPriority.LOWEST, FMLConstructModEvent.class, BCEventHandler::constructMod);
+        modBus.addListener(EventPriority.LOWEST, FMLCommonSetupEvent.class,  BCEventHandler::commonSetup);
+        modBus.addListener(EntityAttributeCreationEvent.class,      BCEventHandler::entityAttributeCreation);
+        modBus.addListener(RegisterCapabilitiesEvent.class,         BCEventHandler::registerCapabilities);
+        modBus.addListener(RegisterPayloadHandlersEvent.class,      BCEventHandler::registerPayloadHandlers);
+        modBus.addListener(RegisterLockAndKeyBehaviorEvent.class,   BCEventHandler::registerLockAndKeyBehaviors);
+        modBus.addListener(RegisterBibliocraftWoodTypesEvent.class, BCEventHandler::registerBibliocraftWoodTypes);
+        NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, BCEventHandler::rightClickBlock);
     }
     // @formatter:on
 

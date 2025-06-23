@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @JeiPlugin
-public final class BibliocraftJeiPlugin implements IModPlugin {
+public final class BCJeiPlugin implements IModPlugin {
     private static final ResourceLocation UID = BCUtil.bcLoc("jei_plugin");
     private static final Lazy<BibliocraftWoodType> OAK = Lazy.of(() -> BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")));
     private static final DyeColor WHITE = DyeColor.WHITE;
@@ -54,13 +54,13 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                 registration.addIngredientInfo(holder.get(OAK.get()), Translations.ALL_WOOD_TYPES);
             }
         }
-        if (!BibliocraftConfig.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BCConfig.JEI_SHOW_COLOR_TYPES.get()) {
+            if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     registration.addIngredientInfo(holder.get(OAK.get(), WHITE), Translations.ALL_COLORS_AND_WOOD_TYPES);
                 }
@@ -79,13 +79,13 @@ public final class BibliocraftJeiPlugin implements IModPlugin {
 
     @Override
     public void onRuntimeAvailable(IJeiRuntime runtime) {
-        if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                 removeAllExcept(runtime, holder, holder.get(OAK.get()));
             }
         }
-        if (!BibliocraftConfig.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!BibliocraftConfig.JEI_SHOW_WOOD_TYPES.get()) {
+        if (!BCConfig.JEI_SHOW_COLOR_TYPES.get()) {
+            if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
                 for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     removeAllExcept(runtime, holder, holder.get(OAK.get(), WHITE));
                 }
