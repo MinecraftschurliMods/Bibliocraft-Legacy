@@ -1,0 +1,22 @@
+{
+  "type": "bibliocraft:printing_table_cloning",
+  "data_components": [
+    "minecraft:stored_enchantments"
+  ],
+  "duration": 600,
+  "experience_cost": {
+    "type": "bibliocraft:enchantment_levels",
+    "data_component": "minecraft:stored_enchantments",
+    "normal_cost": 1.0,
+    "treasure_cost": 2.0
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:enchanted_book"
+  }
+}

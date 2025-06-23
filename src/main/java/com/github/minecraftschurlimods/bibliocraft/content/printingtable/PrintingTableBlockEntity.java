@@ -25,6 +25,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private static final String MODE_KEY = "mode";
     private static final String DURATION_KEY = "duration";
     private static final String MAX_DURATION_KEY = "duration";
+    private static final String EXPERIENCE_COST_KEY = "experience_cost";
     private static final String PLAYER_NAME_KEY = "player_name";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
     private static final int SLOT_DISABLED = 1;
@@ -33,6 +34,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
+    private int experienceCost = 0;
     private int duration = 0;
     private int maxDuration = 0;
     private Component playerName = null;
@@ -78,6 +80,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         setMode(CodecUtil.decodeNbt(PrintingTableMode.CODEC, tag.get(MODE_KEY)));
+        experienceCost = tag.getInt(EXPERIENCE_COST_KEY);
         duration = tag.getInt(DURATION_KEY);
         maxDuration = tag.getInt(MAX_DURATION_KEY);
         if (tag.contains(PLAYER_NAME_KEY, CompoundTag.TAG_STRING)) {
@@ -93,6 +96,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put(MODE_KEY, CodecUtil.encodeNbt(PrintingTableMode.CODEC, getMode()));
+        tag.putInt(EXPERIENCE_COST_KEY, experienceCost);
         tag.putInt(DURATION_KEY, duration);
         tag.putInt(MAX_DURATION_KEY, maxDuration);
         if (playerName != null) {
@@ -157,8 +161,12 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         return maxDuration == 0 ? 0 : duration / (float) maxDuration;
     }
 
+    public int getExperienceCost() {
+        return experienceCost;
+    }
+
     private void calculateRecipe() {
-        if (!(getLevel() instanceof ServerLevel serverLevel)) return;
+        if (!(level() instanceof ServerLevel serverLevel)) return;
         recipe = serverLevel
                 .getRecipeManager()
                 .getRecipesFor(BCRecipes.PRINTING_TABLE.get(), getRecipeInput(), serverLevel)
@@ -169,10 +177,11 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
                 .orElse(null);
         if (recipe != null) {
             ItemStack output = getItem(10);
-            if (!output.isEmpty() && (output.getCount() >= output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(recipe.assemble(getRecipeInput(), getLevel().registryAccess()), output))) {
+            if (!output.isEmpty() && (output.getCount() >= output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(recipe.assemble(getRecipeInput(), level().registryAccess()), output))) {
                 recipe = null;
             }
         }
+        experienceCost = recipe == null ? 0 : recipe.getExperienceCost(recipeInput.right().copy(), serverLevel);
         duration = 0;
         maxDuration = recipe == null ? 0 : recipe.getDuration();
     }

@@ -1,11 +1,13 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
@@ -57,6 +59,25 @@ public final class CodecUtil {
      */
     public static <B extends ByteBuf, K, V> StreamCodec<B, Map<K, V>> mapStreamCodec(StreamCodec<? super B, K> keyCodec, StreamCodec<? super B, V> valueCodec) {
         return ByteBufCodecs.map(HashMap::new, keyCodec, valueCodec);
+    }
+
+    /**
+     * @param codec A {@link Codec}.
+     * @param <T> The type of the {@link Codec}.
+     * @return A {@link StreamCodec} for the given {@link Codec}.
+     */
+    public static <T> StreamCodec<FriendlyByteBuf, T> toStreamCodec(Codec<T> codec) {
+        return new StreamCodec<>() {
+            @Override
+            public void encode(FriendlyByteBuf buffer, T value) {
+                buffer.writeUtf(encodeJson(codec, value).toString());
+            }
+
+            @Override
+            public T decode(FriendlyByteBuf buffer) {
+                return decodeJson(codec, JsonParser.parseString(buffer.readUtf()));
+            }
+        };
     }
 
     /**

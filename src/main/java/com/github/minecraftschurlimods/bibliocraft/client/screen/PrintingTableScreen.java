@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.printingtable.Printin
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMode;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableSetModePacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -47,6 +48,15 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
         float progress = menu.getBlockEntity().getProgress();
         int width = progress == 1f ? 0 : Mth.ceil(progress * arrowWidth);
         graphics.blitSprite(PROGRESS, arrowWidth, 16, 0, 0, leftPos + 110, topPos + 35, width, 16);
+    }
+
+    @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        int experienceCost = menu.getBlockEntity().getExperienceCost();
+        if (experienceCost > 0) {
+            ClientUtil.renderXpText(experienceCost + "", graphics, leftPos + 122, topPos + 39);
+        }
     }
 
     private void setModeButtonMessage() {

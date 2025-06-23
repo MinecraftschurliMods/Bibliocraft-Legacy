@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.datagen.data;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.EnchantmentLevelsNumberProvider;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBindingTypewriterPagesRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMergingRecipe;
@@ -27,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
@@ -367,6 +369,12 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .addIngredient(Ingredient.of(BCItems.BIG_BOOK.get()))
                 .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
                 .save(output, BCUtil.bcLoc("written_big_book_cloning_in_printing_table"));
+        new PrintingTableCloningRecipe.Builder(new ItemStack(Items.ENCHANTED_BOOK), 600)
+                .addDataComponentType(DataComponents.STORED_ENCHANTMENTS)
+                .addIngredient(Ingredient.of(Items.BOOK))
+                .experienceCost(new EnchantmentLevelsNumberProvider(DataComponents.STORED_ENCHANTMENTS, ConstantValue.exactly(1), ConstantValue.exactly(2)))
+                .unlockedBy("has_enchanted_book", has(Items.ENCHANTED_BOOK))
+                .save(output, BCUtil.bcLoc("enchanted_book_cloning_in_printing_table"));
         new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.CLIPBOARD.get()), new ItemStack(BCItems.CLIPBOARD.get()), 200)
                 .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "title", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "active", PrintingTableMergingRecipe.MergeMethod.FIRST)

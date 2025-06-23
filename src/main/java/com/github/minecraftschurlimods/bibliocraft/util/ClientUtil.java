@@ -14,6 +14,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -259,6 +260,25 @@ public final class ClientUtil {
         for (RenderType type : model.getRenderTypes(state, random, modelData)) {
             renderer.renderModel(stack.last(), buffer.getBuffer(RenderTypeHelper.getEntityRenderType(type, false)), state, model, red, green, blue, light, OverlayTexture.NO_OVERLAY, modelData, type);
         }
+    }
+
+    /**
+     * Renders text in the formatting of the experience level number above the hotbar.
+     *
+     * @param text     The text to render.
+     * @param graphics The {@link GuiGraphics} to use.
+     * @param centerX  The horizontal center of the text.
+     * @param startY   The y coordinate of the text. Be aware that there will be a 1px outline above this position.
+     * @see net.minecraft.client.gui.Gui#renderExperienceLevel(GuiGraphics, net.minecraft.client.DeltaTracker)
+     */
+    public static void renderXpText(String text, GuiGraphics graphics, int centerX, int startY) {
+        Font font = getFont();
+        int startX = centerX - font.width(text) / 2;
+        graphics.drawString(font, text, startX + 1, startY, 0, false);
+        graphics.drawString(font, text, startX - 1, startY, 0, false);
+        graphics.drawString(font, text, startX, startY + 1, 0, false);
+        graphics.drawString(font, text, startX, startY - 1, 0, false);
+        graphics.drawString(font, text, startX, startY, 0x80ff20, false);
     }
 
     /**

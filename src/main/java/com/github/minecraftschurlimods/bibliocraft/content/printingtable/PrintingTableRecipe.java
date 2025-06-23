@@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -49,8 +50,8 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         return duration;
     }
 
-    public boolean requiresExperience() {
-        return false;
+    public int getExperienceCost(ItemStack result, ServerLevel level) {
+        return 0;
     }
 
     public ItemStack postProcess(ItemStack result, PrintingTableBlockEntity blockEntity) {
