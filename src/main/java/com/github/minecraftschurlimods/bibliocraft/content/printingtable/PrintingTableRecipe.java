@@ -50,7 +50,7 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         return duration;
     }
 
-    public int getExperienceCost(ItemStack result, ServerLevel level) {
+    public int getExperienceLevelCost(ItemStack result, ServerLevel level) {
         return 0;
     }
 

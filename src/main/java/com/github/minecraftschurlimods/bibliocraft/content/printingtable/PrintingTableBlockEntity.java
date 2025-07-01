@@ -27,6 +27,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private static final String MODE_KEY = "mode";
     private static final String DURATION_KEY = "duration";
     private static final String PLAYER_NAME_KEY = "player_name";
+    private static final String EXPERIENCE_KEY = "experience";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
     private static final int SLOT_DISABLED = 1;
     private static final int SLOT_ENABLED = 0;
@@ -34,9 +35,10 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
-    private int experienceCost = 0;
+    private int levelCost = 0;
     private int duration = 0;
     private int maxDuration = 0;
+    private int experience = 0;
     private Component playerName = null;
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
@@ -44,7 +46,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, PrintingTableBlockEntity blockEntity) {
-        if (blockEntity.duration < blockEntity.maxDuration) {
+        if (blockEntity.duration < blockEntity.maxDuration && blockEntity.getExperience() >= blockEntity.getExperienceCost()) {
             blockEntity.duration++;
         }
         if (blockEntity.duration >= blockEntity.maxDuration) {
@@ -84,6 +86,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         if (tag.contains(PLAYER_NAME_KEY, CompoundTag.TAG_STRING)) {
             playerName = Component.Serializer.fromJson(tag.getString(PLAYER_NAME_KEY), registries);
         }
+        experience = tag.getInt(EXPERIENCE_KEY);
         int[] tagSlots = tag.getIntArray(DISABLED_SLOTS_KEY);
         for (int i = 0; i < 9; i++) {
             disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
@@ -98,6 +101,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         if (playerName != null) {
             tag.putString(PLAYER_NAME_KEY, Component.Serializer.toJson(playerName, registries));
         }
+        tag.putInt(EXPERIENCE_KEY, experience);
         int[] tagSlots = new int[9];
         for (int i = 0; i < 9; i++) {
             tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
@@ -162,8 +166,17 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         this.playerName = playerName;
     }
 
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+        setChanged();
+    }
+
     public float getProgress() {
-        return maxDuration == 0 ? 0 : duration / (float) maxDuration;
+        return getExperience() < getExperienceCost() || maxDuration == 0 ? 0 : duration / (float) maxDuration;
     }
 
     public int getDuration() {
@@ -174,14 +187,20 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         return maxDuration;
     }
 
+    public int getLevelCost() {
+        return levelCost;
+    }
+
     public int getExperienceCost() {
-        return experienceCost;
+        return BCUtil.getExperienceForLevel(levelCost);
     }
 
     public void setFromPacket(PrintingTableSetRecipePacket packet) {
         duration = packet.duration();
         maxDuration = packet.maxDuration();
-        experienceCost = packet.experienceCost();
+        levelCost = packet.levelCost();
+        experience = 0;
+        setChanged();
     }
 
     private void calculateRecipe(boolean onLoad) {
@@ -204,8 +223,9 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
             duration = 0;
         }
         maxDuration = recipe == null ? 0 : recipe.getDuration();
-        experienceCost = recipe == null ? 0 : recipe.getExperienceCost(recipeInput.right().copy(), serverLevel);
-        PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), new PrintingTableSetRecipePacket(getBlockPos(), duration, maxDuration, experienceCost));
+        levelCost = recipe == null ? 0 : recipe.getExperienceLevelCost(recipeInput.right().copy(), serverLevel);
+        experience = 0;
+        PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), new PrintingTableSetRecipePacket(getBlockPos(), duration, maxDuration, levelCost));
     }
 
     private PrintingTableRecipeInput getRecipeInput() {

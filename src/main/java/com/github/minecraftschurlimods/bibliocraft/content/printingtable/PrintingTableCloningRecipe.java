@@ -105,7 +105,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public int getExperienceCost(ItemStack stack, ServerLevel level) {
+    public int getExperienceLevelCost(ItemStack stack, ServerLevel level) {
         return experienceCost.map(e -> e.getInt(new LootContext.Builder(new LootParams(level, Map.of(LootContextParams.TOOL, stack), Map.of(), 0)).create(Optional.empty()))).orElse(0);
     }
 

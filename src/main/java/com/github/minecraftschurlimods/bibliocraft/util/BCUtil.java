@@ -1,7 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import it.unimi.dsi.fastutil.ints.Int2IntMap;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -37,6 +40,12 @@ import java.util.stream.Stream;
  * Utility class holding various helper methods.
  */
 public final class BCUtil {
+    private static final Int2IntMap XP_LEVEL_CACHE = Util.make(new Int2IntOpenHashMap(), map -> {
+        for (int i = 0; i <= 30; i++) {
+            map.put(i, calculateExperienceForLevel(i));
+        }
+    });
+
     /**
      * @param path The path to use.
      * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
@@ -94,6 +103,48 @@ public final class BCUtil {
     }
 
     /**
+     * Looks up the total amount of experience represented by a certain level.
+     *
+     * @param level The experience level to lookup the experience amount for.
+     * @return The total amount of experience represented by the given level.
+     */
+    public static int getExperienceForLevel(int level) {
+        if (!XP_LEVEL_CACHE.containsKey(level)) {
+            XP_LEVEL_CACHE.put(level, calculateExperienceForLevel(level));
+        }
+        return XP_LEVEL_CACHE.get(level);
+    }
+
+    /**
+     * Looks up the level for a corresponding experience value.
+     *
+     * @param experience The experience to lookup the level amount for.
+     * @return The level represented by the given amount of experience.
+     */
+    public static int getLevelForExperience(int experience) {
+        int i = 0;
+        while (true) {
+            int value = getExperienceForLevel(i);
+            if (value == experience) return i;
+            if (value > experience) return i - 1;
+            i++;
+        }
+    }
+
+    /**
+     * Calculates the total amount of experience represented by the given level.
+     * See <a href="https://minecraft.wiki/w/Experience#Leveling_up">the Minecraft Wiki article</a> for more information.
+     *
+     * @param level The experience level to calculate the experience amount for.
+     * @return The total amount of experience represented by the given level.
+     */
+    private static int calculateExperienceForLevel(int level) {
+        if (level <= 16) return level * level + 6 * level;
+        if (level <= 31) return (int) (2.5 * level * level - 40.5 * level + 360);
+        return (int) (4.5 * level * level + 162.5 * level + 2220);
+    }
+
+    /**
      * Returns a display name for the given position. If there is a nameable block entity at the position, the block entity's name is returned, otherwise the block's name is returned.
      *
      * @param level The {@link Level} to get the display name for.
@@ -119,10 +170,10 @@ public final class BCUtil {
      *
      * @param ints The ints to get the max of.
      * @return The max int in the input.
-     * @throws RuntimeException If the input array is empty.
+     * @throws IllegalArgumentException If the input array is empty.
      */
     public static int max(int... ints) {
-        return Arrays.stream(ints).max().orElseThrow(RuntimeException::new);
+        return Arrays.stream(ints).max().orElseThrow(IllegalArgumentException::new);
     }
 
     /**

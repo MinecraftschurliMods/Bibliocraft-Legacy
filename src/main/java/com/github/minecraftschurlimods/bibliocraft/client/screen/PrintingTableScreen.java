@@ -4,12 +4,13 @@ import com.github.minecraftschurlimods.bibliocraft.client.widget.ExperienceBarBu
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMode;
-import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableSetModePacket;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableInputPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -32,8 +33,8 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
     protected void init() {
         leftPos = (width - 192) / 2;
         topPos = (height - 192) / 2;
+        PrintingTableBlockEntity blockEntity = menu.getBlockEntity();
         modeButton = addRenderableWidget(Button.builder(Component.empty(), $ -> {
-            PrintingTableBlockEntity blockEntity = menu.getBlockEntity();
             blockEntity.setMode(switch (blockEntity.getMode()) {
                 case BIND -> PrintingTableMode.CLONE;
                 case CLONE -> PrintingTableMode.MERGE;
@@ -41,11 +42,33 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
             });
             setModeButtonMessage();
             experienceBarButton.visible = blockEntity.getMode() == PrintingTableMode.CLONE;
-            PacketDistributor.sendToServer(new PrintingTableSetModePacket(blockEntity.getBlockPos(), blockEntity.getMode()));
+            PacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), blockEntity.getMode()));
         }).bounds(leftPos + 81, topPos + 6, 82, 20).build());
         setModeButtonMessage();
-        experienceBarButton = addRenderableWidget(new ExperienceBarButton(leftPos + 81, topPos + 65, 82, 5, EXPERIENCE_BAR_BACKGROUND, EXPERIENCE_BAR_PROGRESS, () -> 1, () -> 0.25f, $ -> {
-        }));
+        experienceBarButton = addRenderableWidget(new ExperienceBarButton(leftPos + 81, topPos + 65, 82, 5, EXPERIENCE_BAR_BACKGROUND, EXPERIENCE_BAR_PROGRESS,
+            () -> BCUtil.getLevelForExperience(blockEntity.getExperience()),
+            () -> {
+                int experienceCost = blockEntity.getExperienceCost();
+                if (experienceCost <= 0) return 0f;
+                int experience = blockEntity.getExperience();
+                if (experience >= experienceCost) return 1f;
+                int level = BCUtil.getLevelForExperience(experience);
+                float experienceForLevel = BCUtil.getExperienceForLevel(level);
+                float experienceForNextLevel = BCUtil.getExperienceForLevel(level + 1);
+                return Mth.clamp((experience - experienceForLevel) / (experienceForNextLevel - experienceForLevel), 0, 1);
+            },
+            $ -> {
+                int experienceCost = blockEntity.getExperienceCost();
+                if (blockEntity.getExperience() >= experienceCost) return;
+                LocalPlayer player = ClientUtil.getPlayer();
+                int experienceToGive = player.isCreative() ? experienceCost : Math.min(player.totalExperience, experienceCost);
+                if (experienceToGive > 0) {
+                    blockEntity.setExperience(blockEntity.getExperience() + experienceToGive);
+                    player.giveExperiencePoints(-experienceToGive);
+                    PacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), experienceToGive));
+                }
+            }
+        ));
     }
 
     @Override
@@ -59,7 +82,7 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
-        int experienceCost = menu.getBlockEntity().getExperienceCost();
+        int experienceCost = menu.getBlockEntity().getLevelCost();
         if (experienceCost > 0) {
             ClientUtil.renderXpText(experienceCost + "", graphics, leftPos + 122, topPos + 39);
         }
