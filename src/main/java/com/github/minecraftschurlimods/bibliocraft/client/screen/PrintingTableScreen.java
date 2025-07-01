@@ -69,6 +69,7 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
                 }
             }
         ));
+        experienceBarButton.visible = blockEntity.getMode() == PrintingTableMode.CLONE;
     }
 
     @Override
