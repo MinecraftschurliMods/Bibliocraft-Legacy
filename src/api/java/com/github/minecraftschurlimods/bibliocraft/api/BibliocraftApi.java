@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.api;
 
 import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.LockAndKeyBehaviors;
+import com.github.minecraftschurlimods.bibliocraft.api.story.StoryManager;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
@@ -42,6 +43,13 @@ public interface BibliocraftApi {
     }
 
     /**
+     * @return The only instance of {@link StoryManager}.
+     */
+    static StoryManager getStoryManager() {
+        return InstanceHolder.STORY_MANAGER.get();
+    }
+
+    /**
      * The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
      */
     @ApiStatus.Internal
@@ -49,6 +57,7 @@ public interface BibliocraftApi {
         private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.of(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.of(fromServiceLoader(BibliocraftWoodTypeRegistry.class));
         private static final Lazy<LockAndKeyBehaviors> LOCK_AND_KEY_BEHAVIORS = Lazy.of(fromServiceLoader(LockAndKeyBehaviors.class));
+        private static final Lazy<StoryManager> STORY_MANAGER = Lazy.of(fromServiceLoader(StoryManager.class));
 
         private InstanceHolder() {}
 
