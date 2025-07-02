@@ -45,7 +45,7 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
             PacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), blockEntity.getMode()));
         }).bounds(leftPos + 81, topPos + 6, 82, 20).build());
         setModeButtonMessage();
-        experienceBarButton = addRenderableWidget(new ExperienceBarButton(leftPos + 81, topPos + 65, 82, 5, EXPERIENCE_BAR_BACKGROUND, EXPERIENCE_BAR_PROGRESS,
+        experienceBarButton = addRenderableWidget(new ExperienceBarButton(Translations.PRINTING_TABLE_ADD_EXPERIENCE, leftPos + 81, topPos + 65, 82, 5, EXPERIENCE_BAR_BACKGROUND, EXPERIENCE_BAR_PROGRESS,
             () -> BCUtil.getLevelForExperience(blockEntity.getExperience()),
             () -> {
                 int experienceCost = blockEntity.getExperienceCost();

@@ -38,6 +38,7 @@ public interface Translations {
     String FANCY_TEXT_AREA_SCALE_UP_TOOLTIP_KEY    = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.scale_up.tooltip";
     String FANCY_TEXT_AREA_STRIKETHROUGH_KEY       = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.strikethrough";
     String FANCY_TEXT_AREA_UNDERLINED_KEY          = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.underlined";
+    String PRINTING_TABLE_ADD_EXPERIENCE_KEY       = "gui."   + BibliocraftApi.MOD_ID + ".printing_table.add_experience";
     String STOCKROOM_CATALOG_LOCATE_KEY            = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.locate";
     String STOCKROOM_CATALOG_REMOVE_KEY            = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.remove";
     String STOCKROOM_CATALOG_SEARCH_KEY            = "gui."   + BibliocraftApi.MOD_ID + ".stockroom_catalog.search";
@@ -91,6 +92,7 @@ public interface Translations {
     Component FANCY_TEXT_AREA_SCALE_UP_TOOLTIP     = Component.translatable(FANCY_TEXT_AREA_SCALE_UP_TOOLTIP_KEY);
     Component FANCY_TEXT_AREA_STRIKETHROUGH        = Component.translatable(FANCY_TEXT_AREA_STRIKETHROUGH_KEY);
     Component FANCY_TEXT_AREA_UNDERLINED           = Component.translatable(FANCY_TEXT_AREA_UNDERLINED_KEY);
+    Component PRINTING_TABLE_ADD_EXPERIENCE        = Component.translatable(PRINTING_TABLE_ADD_EXPERIENCE_KEY);
     Component STOCKROOM_CATALOG_LOCATE             = Component.translatable(STOCKROOM_CATALOG_LOCATE_KEY);
     Component STOCKROOM_CATALOG_REMOVE             = Component.translatable(STOCKROOM_CATALOG_REMOVE_KEY);
     Component STOCKROOM_CATALOG_SEARCH             = Component.translatable(STOCKROOM_CATALOG_SEARCH_KEY);

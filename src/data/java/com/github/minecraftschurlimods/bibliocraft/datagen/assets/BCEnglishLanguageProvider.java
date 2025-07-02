@@ -204,6 +204,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.FANCY_TEXT_AREA_STRIKETHROUGH_SHORT_KEY, "S");
         add(Translations.FANCY_TEXT_AREA_UNDERLINED_KEY, "Underlined");
         add(Translations.FANCY_TEXT_AREA_UNDERLINED_SHORT_KEY, "U");
+        add(Translations.PRINTING_TABLE_ADD_EXPERIENCE_KEY, "Add Experience");
         add(Translations.PRINTING_TABLE_MODE_KEY, "Mode: %s");
         add(Translations.STOCKROOM_CATALOG_LOCATE_KEY, "Locate");
         add(Translations.STOCKROOM_CATALOG_REMOVE_KEY, "Remove");

@@ -1026,6 +1026,7 @@
   "gui.bibliocraft.formatted_line.mode.glowing": "Glowing",
   "gui.bibliocraft.formatted_line.mode.normal": "Normal",
   "gui.bibliocraft.formatted_line.mode.shadow": "Shadow",
+  "gui.bibliocraft.printing_table.add_experience": "Add Experience",
   "gui.bibliocraft.printing_table.mode": "Mode: %s",
   "gui.bibliocraft.printing_table.mode.bind": "Bind",
   "gui.bibliocraft.printing_table.mode.clone": "Clone",
