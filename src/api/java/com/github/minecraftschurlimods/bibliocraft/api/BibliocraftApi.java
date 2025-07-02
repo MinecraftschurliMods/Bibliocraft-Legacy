@@ -7,7 +7,6 @@ import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodT
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.util.Lazy;
-import org.jetbrains.annotations.ApiStatus;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
@@ -17,49 +16,51 @@ import java.util.function.Supplier;
 /**
  * The main accessor class for Bibliocraft's API. Use this to get references to the singleton instances of {@link BibliocraftWoodTypeRegistry} and {@link BibliocraftDatagenHelper}.
  */
-@ApiStatus.NonExtendable
-public interface BibliocraftApi {
-    String MOD_ID = "bibliocraft";
+public final class BibliocraftApi {
+    public static final String MOD_ID = "bibliocraft";
+
+    private BibliocraftApi() {
+    }
 
     /**
      * @return The only instance of {@link BibliocraftDatagenHelper}.
      */
-    static BibliocraftDatagenHelper getDatagenHelper() {
+    public static BibliocraftDatagenHelper getDatagenHelper() {
         return InstanceHolder.DATAGEN_HELPER.get();
     }
 
     /**
      * @return The only instance of {@link BibliocraftWoodTypeRegistry}.
      */
-    static BibliocraftWoodTypeRegistry getWoodTypeRegistry() {
+    public static BibliocraftWoodTypeRegistry getWoodTypeRegistry() {
         return InstanceHolder.WOOD_TYPE_REGISTRY.get();
     }
 
     /**
      * @return The only instance of {@link LockAndKeyBehaviors}.
      */
-    static LockAndKeyBehaviors getLockAndKeyBehaviors() {
+    public static LockAndKeyBehaviors getLockAndKeyBehaviors() {
         return InstanceHolder.LOCK_AND_KEY_BEHAVIORS.get();
     }
 
     /**
      * @return The only instance of {@link StoryManager}.
      */
-    static StoryManager getStoryManager() {
+    public static StoryManager getStoryManager() {
         return InstanceHolder.STORY_MANAGER.get();
     }
 
     /**
      * The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
      */
-    @ApiStatus.Internal
-    final class InstanceHolder {
+    private static class InstanceHolder {
         private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.of(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.of(fromServiceLoader(BibliocraftWoodTypeRegistry.class));
         private static final Lazy<LockAndKeyBehaviors> LOCK_AND_KEY_BEHAVIORS = Lazy.of(fromServiceLoader(LockAndKeyBehaviors.class));
         private static final Lazy<StoryManager> STORY_MANAGER = Lazy.of(fromServiceLoader(StoryManager.class));
 
-        private InstanceHolder() {}
+        private InstanceHolder() {
+        }
 
         private static <T> Supplier<T> fromServiceLoader(Class<T> clazz) {
             return () -> {
