@@ -16,7 +16,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.printingtable.Printin
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogRequestListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
-import com.github.minecraftschurlimods.bibliocraft.apiimpl.StoryManagerImpl;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
@@ -48,11 +47,9 @@ import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.registries.NewRegistryEvent;
 import org.jetbrains.annotations.ApiStatus;
 
 public final class BCEventHandler {
@@ -62,12 +59,10 @@ public final class BCEventHandler {
         modBus.addListener(EventPriority.LOWEST, FMLConstructModEvent.class, BCEventHandler::constructMod);
         modBus.addListener(EventPriority.LOWEST, FMLCommonSetupEvent.class,  BCEventHandler::commonSetup);
         modBus.addListener(EntityAttributeCreationEvent.class,      BCEventHandler::entityAttributeCreation);
-        modBus.addListener(NewRegistryEvent.class,                  BCEventHandler::newRegistry);
         modBus.addListener(RegisterCapabilitiesEvent.class,         BCEventHandler::registerCapabilities);
         modBus.addListener(RegisterPayloadHandlersEvent.class,      BCEventHandler::registerPayloadHandlers);
         modBus.addListener(RegisterLockAndKeyBehaviorEvent.class,   BCEventHandler::registerLockAndKeyBehaviors);
         modBus.addListener(RegisterBibliocraftWoodTypesEvent.class, BCEventHandler::registerBibliocraftWoodTypes);
-        NeoForge.EVENT_BUS.addListener(AddReloadListenerEvent.class,              BCEventHandler::addReloadListeners);
         NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, BCEventHandler::rightClickBlock);
     }
     // @formatter:on
@@ -83,10 +78,6 @@ public final class BCEventHandler {
 
     private static void entityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(BCEntities.FANCY_ARMOR_STAND.get(), LivingEntity.createLivingAttributes().build());
-    }
-
-    private static void newRegistry(NewRegistryEvent event) {
-        event.register(StoryManagerImpl.REGISTRY);
     }
 
     // @formatter:off
@@ -152,10 +143,6 @@ public final class BCEventHandler {
      */
     private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
         event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), () -> family);
-    }
-
-    private static void addReloadListeners(AddReloadListenerEvent event) {
-        event.addListener(BibliocraftApi.getStoryManager());
     }
 
     private static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {

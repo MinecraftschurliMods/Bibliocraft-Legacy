@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.api;
 
 import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
 import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.LockAndKeyBehaviors;
-import com.github.minecraftschurlimods.bibliocraft.api.story.StoryManager;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
@@ -14,7 +13,7 @@ import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
 /**
- * The main accessor class for Bibliocraft's API. Use this to get references to the singleton instances of {@link BibliocraftWoodTypeRegistry} and {@link BibliocraftDatagenHelper}.
+ * The main accessor class for Bibliocraft's API. Use this to get references to the singleton instances of various classes.
  */
 public final class BibliocraftApi {
     public static final String MOD_ID = "bibliocraft";
@@ -44,20 +43,12 @@ public final class BibliocraftApi {
     }
 
     /**
-     * @return The only instance of {@link StoryManager}.
-     */
-    public static StoryManager getStoryManager() {
-        return InstanceHolder.STORY_MANAGER.get();
-    }
-
-    /**
      * The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
      */
     private static class InstanceHolder {
         private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.of(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.of(fromServiceLoader(BibliocraftWoodTypeRegistry.class));
         private static final Lazy<LockAndKeyBehaviors> LOCK_AND_KEY_BEHAVIORS = Lazy.of(fromServiceLoader(LockAndKeyBehaviors.class));
-        private static final Lazy<StoryManager> STORY_MANAGER = Lazy.of(fromServiceLoader(StoryManager.class));
 
         private InstanceHolder() {
         }
