@@ -67,11 +67,17 @@ public class BCBlockStateProvider extends BlockStateProvider {
                 .rotationY(state.getValue(ChainBlock.AXIS) == Direction.Axis.X ? 90 : 0)
                 .build());
         getVariantBuilder(BCBlocks.GOLD_LANTERN.get()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(models().withExistingParent("block/gold_lantern", mcLoc(state.getValue(BlockStateProperties.HANGING) ? "block/template_hanging_lantern" : "block/template_lantern")).renderType("cutout").texture("lantern", modLoc("block/gold_lantern")))
-                .build());
+                .modelFile(models().withExistingParent(
+                                state.getValue(BlockStateProperties.HANGING) ? "block/gold_lantern_hanging" : "block/gold_lantern",
+                                mcLoc(state.getValue(BlockStateProperties.HANGING) ? "block/template_hanging_lantern" : "block/template_lantern")
+                        ).renderType("cutout").texture("lantern", modLoc("block/gold_lantern"))
+                ).build());
         getVariantBuilder(BCBlocks.GOLD_SOUL_LANTERN.get()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(models().withExistingParent("block/gold_soul_lantern", mcLoc(state.getValue(BlockStateProperties.HANGING) ? "block/template_hanging_lantern" : "block/template_lantern")).renderType("cutout").texture("lantern", modLoc("block/gold_soul_lantern")))
-                .build());
+                .modelFile(models().withExistingParent(
+                                state.getValue(BlockStateProperties.HANGING) ? "block/gold_soul_lantern_hanging" : "block/gold_soul_lantern",
+                                mcLoc(state.getValue(BlockStateProperties.HANGING) ? "block/template_hanging_lantern" : "block/template_lantern")
+                        ).renderType("cutout").texture("lantern", modLoc("block/gold_soul_lantern"))
+                ).build());
         DatagenUtil.horizontalBlockModel(this, BCBlocks.PRINTING_TABLE, state -> models().getExistingFile(modLoc("block/printing_table")), false);
         DatagenUtil.horizontalBlockModel(this, BCBlocks.IRON_PRINTING_TABLE, state -> models().getExistingFile(modLoc("block/printing_table")), false); // TODO
         DatagenUtil.horizontalBlockModel(this, BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);
