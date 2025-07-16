@@ -6,7 +6,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.discrack.DiscRackMenu
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.potionshelf.PotionShelfMenu;
-import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;

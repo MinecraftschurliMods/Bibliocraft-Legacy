@@ -1,10 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.ResultSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.ToggleableSlot;
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;

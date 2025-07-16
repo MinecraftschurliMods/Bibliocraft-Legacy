@@ -1,9 +1,9 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancycrafter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
+import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.ToggleableSlot;
-import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.ViewSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;

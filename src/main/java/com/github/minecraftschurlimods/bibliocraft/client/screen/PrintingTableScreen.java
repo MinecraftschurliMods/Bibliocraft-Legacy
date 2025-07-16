@@ -2,9 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 
 import com.github.minecraftschurlimods.bibliocraft.client.widget.ExperienceBarButton;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableInputPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMode;
-import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableInputPacket;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;

@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.content.typewriter;
 
-import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBookContent;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
