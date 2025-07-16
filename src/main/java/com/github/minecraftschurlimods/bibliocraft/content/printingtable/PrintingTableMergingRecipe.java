@@ -91,7 +91,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
             for (String key : mergers.get(type).keySet()) {
                 MergeMethod merger = getMerger(type, key, jsons);
                 json.add(key, switch (merger) {
-                    case FIRST, RANDOM -> jsons.getFirst().get(type).get(key); //TODO random
+                    case FIRST -> jsons.getFirst().get(type).get(key);
                     case LAST -> jsons.getLast().get(type).get(key);
                     case MIN -> new JsonPrimitive(jsons.stream()
                             .mapToInt(e -> e.get(type).get(key).getAsInt())
@@ -156,7 +156,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     }
 
     public enum MergeMethod implements StringRepresentableEnum {
-        FIRST, LAST, RANDOM, MIN, MAX, APPEND;
+        FIRST, LAST, MIN, MAX, APPEND;
         public static final Codec<MergeMethod> CODEC = CodecUtil.enumCodec(MergeMethod::values);
         public static final StreamCodec<ByteBuf, MergeMethod> STREAM_CODEC = CodecUtil.enumStreamCodec(MergeMethod::values, MergeMethod::ordinal);
     }
