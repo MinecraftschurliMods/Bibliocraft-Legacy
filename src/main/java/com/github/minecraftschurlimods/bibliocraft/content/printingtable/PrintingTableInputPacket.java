@@ -32,7 +32,7 @@ public record PrintingTableInputPacket(BlockPos pos, Optional<PrintingTableMode>
         if (!(player.level().getBlockEntity(pos) instanceof PrintingTableBlockEntity blockEntity)) return;
         mode.ifPresent(blockEntity::setMode);
         if (experience.isPresent() && (player.isCreative() || player.totalExperience >= experience.get())) {
-            blockEntity.setExperience(blockEntity.getExperience() + experience.get());
+            blockEntity.addExperience(experience.get());
             player.giveExperiencePoints(-experience.get());
         }
     }

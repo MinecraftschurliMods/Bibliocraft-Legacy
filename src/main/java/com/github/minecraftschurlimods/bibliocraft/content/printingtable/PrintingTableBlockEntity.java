@@ -7,7 +7,10 @@ import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -18,8 +21,16 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -31,6 +42,8 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
     private static final int SLOT_DISABLED = 1;
     private static final int SLOT_ENABLED = 0;
+    private final Direction[] directions;
+    private final EnumMap<Direction, BlockCapabilityCache<IFluidHandler, @Nullable Direction>> capabilities = new EnumMap<>(Direction.class);
     private final boolean[] disabledSlots = new boolean[9];
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
@@ -43,32 +56,26 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.PRINTING_TABLE.get(), 11, defaultName("printing_table"), pos, state);
+        Direction facing = state.getValue(PrintingTableBlock.FACING);
+        directions = new Direction[]{Direction.UP, facing, facing.getClockWise(), facing.getOpposite(), facing.getCounterClockWise(), Direction.DOWN};
+        for (Direction direction : directions) {
+            setupCapabilityCache(direction);
+        }
     }
 
+    @SuppressWarnings("unused")
     public static void tick(Level level, BlockPos pos, BlockState state, PrintingTableBlockEntity blockEntity) {
-        if (blockEntity.duration < blockEntity.maxDuration && blockEntity.getExperience() >= blockEntity.getExperienceCost()) {
+        if (blockEntity.duration < blockEntity.maxDuration && blockEntity.isExperienceFull()) {
             blockEntity.duration++;
         }
         if (blockEntity.duration >= blockEntity.maxDuration) {
             blockEntity.duration = 0;
-            if (level.isClientSide()) return;
-            PrintingTableRecipe recipe = blockEntity.recipe;
-            if (recipe == null) return;
-            List<ItemStack> remainingItems = recipe.getRemainingItems(blockEntity.getRecipeInput());
-            ItemStack stack = blockEntity.getItem(10);
-            ItemStack result = recipe.postProcess(recipe.assemble(blockEntity.getRecipeInput(), level.registryAccess()), blockEntity);
-            if (!stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, result)) return;
-            result.setCount(stack.getCount() + 1);
-            blockEntity.setItem(10, result);
-            IntStream.range(0, 10)
-                    .mapToObj(blockEntity::getItem)
-                    .forEach(e -> e.shrink(1));
-            for (int i = 0; i < remainingItems.size(); i++) {
-                ItemStack remaining = remainingItems.get(i);
-                if (remaining.isEmpty()) continue;
-                blockEntity.setItem(i, remaining.copy());
+            if (!level.isClientSide()) {
+                blockEntity.finishRecipe();
             }
-            blockEntity.calculateRecipe(false);
+        }
+        if (!blockEntity.isExperienceFull()) {
+            blockEntity.pullExperience();
         }
         blockEntity.setChanged();
     }
@@ -170,13 +177,13 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         return experience;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
+    public void addExperience(int experience) {
+        this.experience += experience;
         setChanged();
     }
 
     public float getProgress() {
-        return getExperience() < getExperienceCost() || maxDuration == 0 ? 0 : duration / (float) maxDuration;
+        return !isExperienceFull() || maxDuration == 0 ? 0 : duration / (float) maxDuration;
     }
 
     public int getDuration() {
@@ -195,12 +202,66 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         return BCUtil.getExperienceForLevel(levelCost);
     }
 
+    public boolean isExperienceFull() {
+        return experience >= getExperienceCost();
+    }
+
     public void setFromPacket(PrintingTableSetRecipePacket packet) {
         duration = packet.duration();
         maxDuration = packet.maxDuration();
         levelCost = packet.levelCost();
         experience = 0;
         setChanged();
+    }
+
+    private void setupCapabilityCache(Direction direction) {
+        if (level() instanceof ServerLevel serverLevel) {
+            capabilities.put(direction, BlockCapabilityCache.create(
+                    Capabilities.FluidHandler.BLOCK,
+                    serverLevel,
+                    getBlockPos().offset(direction.getNormal()),
+                    direction.getOpposite(),
+                    () -> !isRemoved(),
+                    () -> setupCapabilityCache(direction)));
+        }
+    }
+
+    private void finishRecipe() {
+        if (recipe == null) return;
+        List<ItemStack> remainingItems = recipe.getRemainingItems(getRecipeInput());
+        ItemStack stack = getItem(10);
+        ItemStack result = recipe.postProcess(recipe.assemble(getRecipeInput(), level().registryAccess()), this);
+        if (!stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, result)) return;
+        result.setCount(stack.getCount() + 1);
+        setItem(10, result);
+        IntStream.range(0, 10)
+                .mapToObj(this::getItem)
+                .forEach(e -> e.shrink(1));
+        for (int i = 0; i < remainingItems.size(); i++) {
+            ItemStack remaining = remainingItems.get(i);
+            if (remaining.isEmpty()) continue;
+            setItem(i, remaining.copy());
+        }
+        calculateRecipe(false);
+    }
+
+    private void pullExperience() {
+        List<Fluid> fluids = level()
+                .registryAccess()
+                .lookupOrThrow(Registries.FLUID)
+                .getOrThrow(Tags.Fluids.EXPERIENCE)
+                .stream()
+                .map(Holder::value)
+                .toList();
+        for (Direction direction : directions) {
+            IFluidHandler capability = capabilities.get(direction).getCapability();
+            if (capability == null) continue;
+            for (Fluid fluid : fluids) {
+                FluidStack stack = capability.drain(new FluidStack(fluid, getExperienceCost() - experience), IFluidHandler.FluidAction.EXECUTE);
+                experience += stack.getAmount();
+                if (isExperienceFull()) return;
+            }
+        }
     }
 
     private void calculateRecipe(boolean onLoad) {
