@@ -1,33 +1,33 @@
 {
   "variants": {
     "facing=east,waterlogged=false": {
-      "model": "bibliocraft:block/printing_table",
+      "model": "bibliocraft:block/iron_printing_table",
       "y": 90
     },
     "facing=east,waterlogged=true": {
-      "model": "bibliocraft:block/printing_table",
+      "model": "bibliocraft:block/iron_printing_table",
       "y": 90
     },
     "facing=north,waterlogged=false": {
-      "model": "bibliocraft:block/printing_table"
+      "model": "bibliocraft:block/iron_printing_table"
     },
     "facing=north,waterlogged=true": {
-      "model": "bibliocraft:block/printing_table"
+      "model": "bibliocraft:block/iron_printing_table"
     },
     "facing=south,waterlogged=false": {
-      "model": "bibliocraft:block/printing_table",
+      "model": "bibliocraft:block/iron_printing_table",
       "y": 180
     },
     "facing=south,waterlogged=true": {
-      "model": "bibliocraft:block/printing_table",
+      "model": "bibliocraft:block/iron_printing_table",
       "y": 180
     },
     "facing=west,waterlogged=false": {
-      "model": "bibliocraft:block/printing_table",
+      "model": "bibliocraft:block/iron_printing_table",
       "y": 270
     },
     "facing=west,waterlogged=true": {
-      "model": "bibliocraft:block/printing_table",
+      "model": "bibliocraft:block/iron_printing_table",
       "y": 270
     }
   }

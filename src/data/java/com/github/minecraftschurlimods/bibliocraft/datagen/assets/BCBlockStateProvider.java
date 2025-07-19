@@ -79,7 +79,7 @@ public class BCBlockStateProvider extends BlockStateProvider {
                         ).renderType("cutout").texture("lantern", modLoc("block/gold_soul_lantern"))
                 ).build());
         DatagenUtil.horizontalBlockModel(this, BCBlocks.PRINTING_TABLE, state -> models().getExistingFile(modLoc("block/printing_table")), false);
-        DatagenUtil.horizontalBlockModel(this, BCBlocks.IRON_PRINTING_TABLE, state -> models().getExistingFile(modLoc("block/printing_table")), false); // TODO
+        DatagenUtil.horizontalBlockModel(this, BCBlocks.IRON_PRINTING_TABLE, state -> models().getExistingFile(modLoc("block/iron_printing_table")), false);
         DatagenUtil.horizontalBlockModel(this, BCBlocks.SWORD_PEDESTAL, state -> models().getExistingFile(modLoc("block/sword_pedestal")), false);
         for (TableBlock.Type type : TableBlock.Type.values()) {
             String name = type.getSerializedName();

@@ -3,10 +3,10 @@
 	"parent": "minecraft:block/block",
 	"textures": {
 		"1": "block/copper_block",
-		"2": "bibliocraft:block/printing_table_bottom",
-		"3": "bibliocraft:block/printing_table_side",
-		"4": "bibliocraft:block/printing_table_front",
-		"particle": "bibliocraft:block/printing_table_bottom"
+		"2": "block/iron_block",
+		"3": "bibliocraft:block/iron_printing_table_side",
+		"4": "bibliocraft:block/iron_printing_table_front",
+		"particle": "block/iron_block"
 	},
 	"elements": [
 		{
