@@ -13,9 +13,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -23,7 +21,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -51,7 +48,6 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
             PrintingTableMergingRecipe::new);
     private final Map<DataComponentType<?>, Map<String, MergeMethod>> mergers;
     private final Ingredient ingredient;
-    private Pair<List<Ingredient>, Ingredient> cachedDisplayIngredients;
 
     public PrintingTableMergingRecipe(Map<DataComponentType<?>, Map<String, MergeMethod>> mergers, Ingredient ingredient, ItemStack result, int duration) {
         super(result, duration);
@@ -71,8 +67,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         List<ItemStack> left = new ArrayList<>(input.left());
         left.removeIf(ItemStack::isEmpty);
         if (left.size() < 2) return false;
-        Item item = left.getFirst().getItem();
-        return left.stream().allMatch(stack -> stack.is(item) && mergers.keySet().stream().allMatch(stack::has));
+        return left.stream().allMatch(stack -> ItemStack.isSameItem(stack, result) && mergers.keySet().stream().allMatch(stack::has));
     }
 
     @SuppressWarnings("unchecked")
@@ -138,16 +133,8 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
 
     @Override
     public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
-        // this calculation is quite heavy, so we cache it
-        if (cachedDisplayIngredients == null) {
-            Ingredient input = new DataComponentPresentIngredient(HolderSet.direct(mergers.keySet()
-                    .stream()
-                    .<Holder<DataComponentType<?>>>map(Holder::direct)
-                    .toList())
-            ).toVanilla();
-            cachedDisplayIngredients = Pair.of(List.of(input, input), ingredient);
-        }
-        return cachedDisplayIngredients;
+        Ingredient input = Ingredient.of(result.copy());
+        return Pair.of(List.of(input, input), ingredient);
     }
 
     private MergeMethod getMerger(DataComponentType<?> type, String key, List<Map<DataComponentType<?>, JsonObject>> jsons) {
