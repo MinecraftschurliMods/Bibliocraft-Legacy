@@ -1,6 +1,6 @@
-package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
+package com.github.minecraftschurlimods.bibliocraft.client.jei;
 
-import com.github.minecraftschurlimods.bibliocraft.client.widget.JeiSpriteWidget;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableRecipe;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -67,7 +67,7 @@ public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHo
                 .setTextAlignment(HorizontalAlignment.RIGHT)
                 .setColor(0xFF808080);
         if (recipe.canHaveExperienceCost()) {
-            builder.addWidget(new JeiSpriteWidget(LEVEL, LEVEL_X, LEVEL_Y, 10, LEVEL_SIZE, LEVEL_SIZE));
+            builder.addWidget(new SpriteWidget(LEVEL, LEVEL_X, LEVEL_Y, 10, LEVEL_SIZE, LEVEL_SIZE));
         }
     }
 

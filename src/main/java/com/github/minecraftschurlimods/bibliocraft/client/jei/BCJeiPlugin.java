@@ -1,12 +1,12 @@
-package com.github.minecraftschurlimods.bibliocraft;
+package com.github.minecraftschurlimods.bibliocraft.client.jei;
 
+import com.github.minecraftschurlimods.bibliocraft.BCConfig;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancyCrafterScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.PrintingTableScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
-import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableRecipeCategory;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
@@ -22,8 +22,6 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
-import mezz.jei.api.ingredients.subtypes.UidContext;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -31,14 +29,12 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.util.Lazy;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -63,7 +59,7 @@ public final class BCJeiPlugin implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(BCItems.SWORD_PEDESTAL.get(), ColorSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(BCItems.SWORD_PEDESTAL.get(), DyedColorSubtypeInterpreter.INSTANCE);
     }
 
     @Override
@@ -153,24 +149,5 @@ public final class BCJeiPlugin implements IModPlugin {
 
     private void removeAllExcept(IJeiRuntime runtime, GroupingDeferredHolder<Item, ?> holder, Item except) {
         remove(runtime, holder.values().stream().filter(e -> e != except).map(ItemStack::new).toList());
-    }
-
-    @SuppressWarnings("DataFlowIssue")
-    private static class ColorSubtypeInterpreter implements ISubtypeInterpreter<ItemStack> {
-        public static final ColorSubtypeInterpreter INSTANCE = new ColorSubtypeInterpreter();
-
-        private ColorSubtypeInterpreter() {
-        }
-
-        @Override
-        @Nullable
-        public Object getSubtypeData(ItemStack ingredient, UidContext context) {
-            return ingredient.has(DataComponents.DYED_COLOR) ? ingredient.get(DataComponents.DYED_COLOR).rgb() : null;
-        }
-
-        @Override
-        public String getLegacyStringSubtypeInfo(ItemStack ingredient, UidContext context) {
-            return ingredient.has(DataComponents.DYED_COLOR) ? String.valueOf(ingredient.get(DataComponents.DYED_COLOR).rgb()) : "";
-        }
     }
 }
