@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -107,6 +108,11 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     @Override
     public int getExperienceLevelCost(ItemStack stack, ServerLevel level) {
         return experienceCost.map(e -> e.getInt(new LootContext.Builder(new LootParams(level, Map.of(LootContextParams.TOOL, stack), Map.of(), 0)).create(Optional.empty()))).orElse(0);
+    }
+
+    @Override
+    public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
+        return Pair.of(left, Ingredient.of(result));
     }
 
     public static class Builder extends PrintingTableRecipe.Builder {

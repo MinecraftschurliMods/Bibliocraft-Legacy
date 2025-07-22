@@ -13,7 +13,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.crafting.IngredientType;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public interface BCRegistries {
     // @formatter:off
@@ -24,6 +26,7 @@ public interface BCRegistries {
     DeferredRegister<BlockEntityType<?>>     BLOCK_ENTITIES     = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE,          BibliocraftApi.MOD_ID);
     DeferredRegister<EntityType<?>>          ENTITIES           = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE,                BibliocraftApi.MOD_ID);
     DeferredRegister<MenuType<?>>            MENUS              = DeferredRegister.create(BuiltInRegistries.MENU,                       BibliocraftApi.MOD_ID);
+    DeferredRegister<IngredientType<?>>      INGREDIENTS        = DeferredRegister.create(NeoForgeRegistries.INGREDIENT_TYPES,          BibliocraftApi.MOD_ID);
     DeferredRegister<LootNumberProviderType> NUMBER_PROVIDERS   = DeferredRegister.create(BuiltInRegistries.LOOT_NUMBER_PROVIDER_TYPE,  BibliocraftApi.MOD_ID);
     DeferredRegister<RecipeType<?>>          RECIPE_TYPES       = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE,                BibliocraftApi.MOD_ID);
     DeferredRegister<RecipeSerializer<?>>    RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER,          BibliocraftApi.MOD_ID);
@@ -50,6 +53,7 @@ public interface BCRegistries {
         BLOCK_ENTITIES.register(bus);
         ENTITIES.register(bus);
         MENUS.register(bus);
+        INGREDIENTS.register(bus);
         NUMBER_PROVIDERS.register(bus);
         RECIPE_TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);

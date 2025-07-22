@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -13,11 +14,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeInput> {
@@ -43,6 +46,10 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
     @Override
     public ItemStack getResultItem(HolderLookup.Provider registries) {
+        return getResultItem();
+    }
+
+    public ItemStack getResultItem() {
         return resultCopy;
     }
 
@@ -56,6 +63,10 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
     public ItemStack postProcess(ItemStack result, PrintingTableBlockEntity blockEntity) {
         return result;
+    }
+
+    public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
+        return Pair.of(List.of(), Ingredient.EMPTY);
     }
 
     public abstract PrintingTableMode getMode();

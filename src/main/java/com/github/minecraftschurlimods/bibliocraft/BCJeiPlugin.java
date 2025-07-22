@@ -2,8 +2,11 @@ package com.github.minecraftschurlimods.bibliocraft;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableRecipeCategory;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CompatUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
@@ -15,6 +18,7 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
@@ -53,6 +57,11 @@ public final class BCJeiPlugin implements IModPlugin {
     }
 
     @Override
+    public void registerCategories(IRecipeCategoryRegistration registration) {
+        registration.addRecipeCategories(new PrintingTableRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+    }
+
+    @Override
     public void registerRecipes(IRecipeRegistration registration) {
         if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
             for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
@@ -75,6 +84,7 @@ public final class BCJeiPlugin implements IModPlugin {
                 registration.addIngredientInfo(holder.get(WHITE), Translations.ALL_COLORS);
             }
         }
+        registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getLevel().getRecipeManager().getAllRecipesFor(BCRecipes.PRINTING_TABLE.get()));
     }
 
     @Override

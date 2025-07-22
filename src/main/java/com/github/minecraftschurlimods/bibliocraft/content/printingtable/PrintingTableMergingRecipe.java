@@ -8,11 +8,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -48,6 +51,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
             PrintingTableMergingRecipe::new);
     private final Map<DataComponentType<?>, Map<String, MergeMethod>> mergers;
     private final Ingredient ingredient;
+    private Pair<List<Ingredient>, Ingredient> cachedDisplayIngredients;
 
     public PrintingTableMergingRecipe(Map<DataComponentType<?>, Map<String, MergeMethod>> mergers, Ingredient ingredient, ItemStack result, int duration) {
         super(result, duration);
@@ -130,6 +134,20 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
             remainingItems.set(i, stack.copy());
         }
         return remainingItems;
+    }
+
+    @Override
+    public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
+        // this calculation is quite heavy, so we cache it
+        if (cachedDisplayIngredients == null) {
+            Ingredient input = new DataComponentPresentIngredient(HolderSet.direct(mergers.keySet()
+                    .stream()
+                    .<Holder<DataComponentType<?>>>map(Holder::direct)
+                    .toList())
+            ).toVanilla();
+            cachedDisplayIngredients = Pair.of(List.of(input, input), ingredient);
+        }
+        return cachedDisplayIngredients;
     }
 
     private MergeMethod getMerger(DataComponentType<?> type, String key, List<Map<DataComponentType<?>, JsonObject>> jsons) {

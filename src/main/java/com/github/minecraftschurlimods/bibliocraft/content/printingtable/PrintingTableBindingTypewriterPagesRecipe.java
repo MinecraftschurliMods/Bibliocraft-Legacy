@@ -2,8 +2,10 @@ package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPage;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -78,9 +80,13 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
         return result;
     }
 
+    @Override
+    public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
+        return Pair.of(List.of(Ingredient.of(BCItems.TYPEWRITER_PAGE)), ingredient);
+    }
+
     private Filterable<Component> concatTypewriterPageText(TypewriterPage page) {
         StringBuilder builder = new StringBuilder();
-        boolean hasNewLine = true;
         for (int i = 0; i < page.lines().size(); i++) {
             String line = page.lines().get(i);
             if (!line.isEmpty()) {
