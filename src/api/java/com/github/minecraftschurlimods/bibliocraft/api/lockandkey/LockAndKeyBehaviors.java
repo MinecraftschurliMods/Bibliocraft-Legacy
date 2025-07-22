@@ -12,8 +12,8 @@ import org.jetbrains.annotations.Nullable;
 public interface LockAndKeyBehaviors {
     /**
      * @param blockEntity The {@link BlockEntity} to get the behavior for.
+     * @param <T>         The type of the {@link BlockEntity}.
      * @return The {@link LockAndKeyBehavior} associated with the given {@link BlockEntity}, or null if no such {@link LockAndKeyBehavior} has been registered.
-     * @param <T> The type of the {@link BlockEntity}.
      */
     @Nullable
     <T extends BlockEntity> LockAndKeyBehavior<T> get(T blockEntity);

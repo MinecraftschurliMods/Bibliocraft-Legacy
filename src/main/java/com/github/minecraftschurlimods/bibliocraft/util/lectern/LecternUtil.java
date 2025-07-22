@@ -43,7 +43,8 @@ public final class LecternUtil {
             // if it can be added to vanilla/neo somehow, this can be scrapped
             ItemStack stack = player.getItemInHand(hand);
             if (!stack.is(ItemTags.LECTERN_BOOKS)) return false;
-            if (!stack.has(BCDataComponents.BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT)) return false;
+            if (!stack.has(BCDataComponents.BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT) && !stack.has(BCDataComponents.STOCKROOM_CATALOG_CONTENT))
+                return false;
             lectern.setBook(stack.consumeAndReturn(1, player));
             LecternBlock.resetBookState(player, level, pos, state, true);
             level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1f, 1f);

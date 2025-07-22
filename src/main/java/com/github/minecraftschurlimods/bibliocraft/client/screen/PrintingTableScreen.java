@@ -46,27 +46,27 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
         }).bounds(leftPos + 81, topPos + 6, 82, 20).build());
         setModeButtonMessage();
         experienceBarButton = addRenderableWidget(new ExperienceBarButton(Translations.PRINTING_TABLE_ADD_EXPERIENCE, leftPos + 81, topPos + 65, 82, 5, EXPERIENCE_BAR_BACKGROUND, EXPERIENCE_BAR_PROGRESS,
-            () -> BCUtil.getLevelForExperience(blockEntity.getExperience()),
-            () -> {
-                if (blockEntity.getExperienceCost() <= 0) return 0f;
-                if (blockEntity.isExperienceFull()) return 1f;
-                int experience = blockEntity.getExperience();
-                int level = BCUtil.getLevelForExperience(experience);
-                float experienceForLevel = BCUtil.getExperienceForLevel(level);
-                float experienceForNextLevel = BCUtil.getExperienceForLevel(level + 1);
-                return Mth.clamp((experience - experienceForLevel) / (experienceForNextLevel - experienceForLevel), 0, 1);
-            },
-            $ -> {
-                if (blockEntity.isExperienceFull()) return;
-                int experienceCost = blockEntity.getExperienceCost();
-                LocalPlayer player = ClientUtil.getPlayer();
-                int experienceToGive = player.isCreative() ? experienceCost : Math.min(player.totalExperience, experienceCost);
-                if (experienceToGive > 0) {
-                    blockEntity.addExperience(experienceToGive);
-                    player.giveExperiencePoints(-experienceToGive);
-                    PacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), experienceToGive));
+                () -> BCUtil.getLevelForExperience(blockEntity.getExperience()),
+                () -> {
+                    if (blockEntity.getExperienceCost() <= 0) return 0f;
+                    if (blockEntity.isExperienceFull()) return 1f;
+                    int experience = blockEntity.getExperience();
+                    int level = BCUtil.getLevelForExperience(experience);
+                    float experienceForLevel = BCUtil.getExperienceForLevel(level);
+                    float experienceForNextLevel = BCUtil.getExperienceForLevel(level + 1);
+                    return Mth.clamp((experience - experienceForLevel) / (experienceForNextLevel - experienceForLevel), 0, 1);
+                },
+                $ -> {
+                    if (blockEntity.isExperienceFull()) return;
+                    int experienceCost = blockEntity.getExperienceCost();
+                    LocalPlayer player = ClientUtil.getPlayer();
+                    int experienceToGive = player.isCreative() ? experienceCost : Math.min(player.totalExperience, experienceCost);
+                    if (experienceToGive > 0) {
+                        blockEntity.addExperience(experienceToGive);
+                        player.giveExperiencePoints(-experienceToGive);
+                        PacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), experienceToGive));
+                    }
                 }
-            }
         ));
         experienceBarButton.visible = blockEntity.getMode() == PrintingTableMode.CLONE;
     }

@@ -42,14 +42,14 @@ public class BCBlockStateProvider extends BlockStateProvider {
         }
         DatagenUtil.fancyLanternModel(this, BCBlocks.SOUL_FANCY_IRON_LANTERN, "block/soul_", "iron", BCUtil.modLoc("buzzier_bees", "block/soul_candle_lit"));
         DatagenUtil.horizontalBlockModel(this, BCBlocks.CLEAR_TYPEWRITER, state -> models()
-                .withExistingParent("block/typewriter_" + state.getValue(TypewriterBlock.PAPER), modLoc("block/template/typewriter/" + state.getValue(TypewriterBlock.PAPER)))
-                .texture("color", mcLoc("block/terracotta")),
+                        .withExistingParent("block/typewriter_" + state.getValue(TypewriterBlock.PAPER), modLoc("block/template/typewriter/" + state.getValue(TypewriterBlock.PAPER)))
+                        .texture("color", mcLoc("block/terracotta")),
                 false);
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
             DatagenUtil.horizontalBlockModel(this, BCBlocks.TYPEWRITER.holder(color), state -> models()
-                    .withExistingParent("block/color/" + name + "/typewriter_" + state.getValue(TypewriterBlock.PAPER), modLoc("block/template/typewriter/" + state.getValue(TypewriterBlock.PAPER)))
-                    .texture("color", mcLoc("block/" + name + "_terracotta")),
+                            .withExistingParent("block/color/" + name + "/typewriter_" + state.getValue(TypewriterBlock.PAPER), modLoc("block/template/typewriter/" + state.getValue(TypewriterBlock.PAPER)))
+                            .texture("color", mcLoc("block/" + name + "_terracotta")),
                     false);
         }
         horizontalBlock(BCBlocks.CLIPBOARD.get(), models().getExistingFile(modLoc("block/clipboard")));

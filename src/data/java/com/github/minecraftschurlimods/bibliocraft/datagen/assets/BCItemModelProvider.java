@@ -25,6 +25,7 @@ public class BCItemModelProvider extends ItemModelProvider {
         basicItem(BCItems.TAPE_MEASURE.get());
         basicItem(BCItems.TAPE_REEL.get());
         basicItem(BCItems.TYPEWRITER_PAGE.get());
+        // @formatter:off
         withExistingParent("fancy_gold_lamp",         modLoc("block/fancy_gold_lamp_standing"));
         withExistingParent("fancy_iron_lamp",         modLoc("block/fancy_iron_lamp_standing"));
         withExistingParent("fancy_gold_lantern",      modLoc("block/fancy_gold_lantern_standing"));
@@ -51,5 +52,6 @@ public class BCItemModelProvider extends ItemModelProvider {
         withExistingParent("redstone_book",          mcLoc("item/written_book"));
         withExistingParent("slotted_book",           mcLoc("item/written_book"));
         withExistingParent("written_big_book",       modLoc("item/big_book"));
+        // @formatter:on
     }
 }

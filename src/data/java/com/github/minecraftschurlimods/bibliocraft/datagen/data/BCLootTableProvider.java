@@ -28,13 +28,14 @@ public final class BCLootTableProvider extends LootTableProvider {
 
     private static final class BCBlockLootProvider extends BlockLootSubProvider {
         private final List<Block> blocks = new ArrayList<>();
-        
+
         private BCBlockLootProvider(HolderLookup.Provider registries) {
             super(Set.of(), FeatureFlags.DEFAULT_FLAGS, registries);
         }
 
         @Override
         protected void generate() {
+            // @formatter:off
             add(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get(),    DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get()));
             add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(),    DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_IRON_LAMP.get()));
             add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), DatagenUtil.createDefaultTable(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get()));
@@ -62,6 +63,7 @@ public final class BCLootTableProvider extends LootTableProvider {
             add(BCBlocks.PRINTING_TABLE.get(),         DatagenUtil.createNameableTable(BCBlocks.PRINTING_TABLE.get()));
             add(BCBlocks.IRON_PRINTING_TABLE.get(),    DatagenUtil.createNameableTable(BCBlocks.IRON_PRINTING_TABLE.get()));
             add(BCBlocks.SWORD_PEDESTAL.get(),         DatagenUtil.createStandardTable(LootItem.lootTableItem(BCBlocks.SWORD_PEDESTAL.get()).apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(DataComponents.DYED_COLOR))));
+            // @formatter:on
         }
 
         @Override

@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 /**
  * Register your own {@link LockAndKeyBehavior}s here.
- * 
+ * <p>
  * This event is not cancelable. This event is fired on the {@link net.neoforged.fml.common.EventBusSubscriber.Bus#MOD mod event bus}.
  */
 @SuppressWarnings("JavadocBlankLines")
@@ -27,12 +27,12 @@ public class RegisterLockAndKeyBehaviorEvent extends Event implements IModBusEve
 
     /**
      * Registers a new {@link LockAndKeyBehavior}.
-     * 
-     * @param clazz The class of the {@link BlockEntity} to register the behavior for.
+     *
+     * @param clazz      The class of the {@link BlockEntity} to register the behavior for.
      * @param lockGetter The getter for the {@link BlockEntity}'s {@link LockCode}.
      * @param lockSetter The setter for the {@link BlockEntity}'s {@link LockCode}.
      * @param nameGetter The getter for the {@link BlockEntity}'s display name.
-     * @param <T> The type of the {@link BlockEntity}.
+     * @param <T>        The type of the {@link BlockEntity}.
      */
     public <T extends BlockEntity> void register(Class<T> clazz, Function<T, LockCode> lockGetter, BiConsumer<T, LockCode> lockSetter, Function<T, Component> nameGetter) {
         values.put(clazz, new LockAndKeyBehavior.Simple<>(lockGetter, lockSetter, nameGetter));

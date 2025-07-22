@@ -41,7 +41,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
     private final Map<ResourceKey<LootTable>, WithConditionsBuilder<LootTable.Builder>> map = new HashMap<>();
 
     /**
-     * @param output The {@link PackOutput} to use.
+     * @param output     The {@link PackOutput} to use.
      * @param registries The {@link HolderLookup.Provider} to use.
      */
     public BlockLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
@@ -85,7 +85,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
     /**
      * Adds a loot table for a block.
      *
-     * @param block The block to add the loot table for.
+     * @param block   The block to add the loot table for.
      * @param builder The builder from which to generate the loot table.
      */
     public void add(Block block, WithConditionsBuilder<LootTable.Builder> builder) {
@@ -95,7 +95,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
     /**
      * Adds a loot table for a block.
      *
-     * @param block The block to add the loot table for.
+     * @param block   The block to add the loot table for.
      * @param factory A function for the builder from which to generate the loot table.
      */
     public void add(Block block, Function<Block, WithConditionsBuilder<LootTable.Builder>> factory) {
@@ -112,6 +112,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
 
     /**
      * A variant of {@link WithConditions.Builder} that has a {@link WithConditionsBuilder#map(Function) map} operation and does no validation on whether there are actually conditions added to the builder.
+     *
      * @param <T> The wrapped builder's type.
      */
     public static class WithConditionsBuilder<T> extends WithConditions.Builder<T> {
@@ -120,6 +121,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
 
         /**
          * Constructs a new {@link WithConditionsBuilder} using the provided existing list of conditions.
+         *
          * @param conditions The existing list of conditions to use.
          */
         public WithConditionsBuilder(List<ICondition> conditions) {
@@ -135,9 +137,10 @@ public abstract class BlockLootTableProvider implements DataProvider {
 
         /**
          * Transforms this {@code WithConditionsBuilder<T>} to a {@code WithConditionsBuilder<N>} using the provided mapper.
+         *
          * @param mapper The function to use for transforming.
+         * @param <N>    The new generic type of the {@link WithConditionsBuilder}.
          * @return A transformed variant of this {@link WithConditionsBuilder}.
-         * @param <N> The new generic type of the {@link WithConditionsBuilder}.
          */
         public <N> WithConditionsBuilder<N> map(Function<T, N> mapper) {
             return new WithConditionsBuilder<N>(conditions).withCarrier(mapper.apply(carrier));
@@ -145,6 +148,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
 
         /**
          * Adds a condition to the builder.
+         *
          * @param conditions The condition to add to the builder.
          * @return This builder, for chaining.
          */
@@ -155,6 +159,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
 
         /**
          * Adds one or multiple conditions to the builder.
+         *
          * @param conditions The condition(s) to add to the builder.
          * @return This builder, for chaining.
          */
@@ -165,6 +170,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
 
         /**
          * Sets the carrier of the conditions, i.e. the underlying object the conditions will be applied to.
+         *
          * @param carrier The carrier to set.
          * @return This builder, for chaining.
          */
