@@ -12,8 +12,4 @@ public class WoodTypeBlockItem extends BlockItem {
         super(holder.get(woodType), new Properties());
         this.woodType = woodType;
     }
-
-    public BibliocraftWoodType getWoodType() {
-        return woodType;
-    }
 }

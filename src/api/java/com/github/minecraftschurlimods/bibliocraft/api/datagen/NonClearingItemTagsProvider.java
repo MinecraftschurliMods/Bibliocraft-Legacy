@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * The default {@link ItemTagsProvider} implementation clears the builders before calling {@link ItemTagsProvider#addTags(HolderLookup.Provider)}.
  * We don't want that, so we override {@link ItemTagsProvider#addTags(HolderLookup.Provider)} to not do that.
  */
+@SuppressWarnings("unused")
 public abstract class NonClearingItemTagsProvider extends ItemTagsProvider {
     // Store the provider here because while the superclass has it, it is private there.
     private final CompletableFuture<HolderLookup.Provider> lookupProvider;

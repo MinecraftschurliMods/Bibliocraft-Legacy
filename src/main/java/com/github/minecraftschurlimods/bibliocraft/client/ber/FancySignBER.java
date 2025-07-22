@@ -63,7 +63,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity> {
         float scale = 1 / 160f;
         stack.scale(scale, scale, 0);
         stack.translate(0, 1, 0);
-        FormattedTextArea.renderLines(lines, stack, bufferSource, 0, 0, FancySignScreen.WIDTH, FancySignScreen.HEIGHT);
+        FormattedTextArea.renderLines(lines, stack, bufferSource, 0, 0, FancySignScreen.WIDTH);
         stack.popPose();
     }
 }

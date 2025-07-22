@@ -16,7 +16,6 @@ import java.util.function.Supplier;
  * <p>
  * This event is not cancelable. This event is fired on the {@link net.neoforged.fml.common.EventBusSubscriber.Bus#MOD mod event bus}.
  */
-@SuppressWarnings("JavadocBlankLines")
 public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusEvent {
     private final SequencedMap<ResourceLocation, BibliocraftWoodType> values;
 

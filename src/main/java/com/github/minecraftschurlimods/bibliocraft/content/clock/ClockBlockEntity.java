@@ -79,12 +79,6 @@ public class ClockBlockEntity extends BlockEntity {
         }
     }
 
-    private void addTrigger(ClockTrigger trigger) {
-        triggers.add(trigger);
-        triggers.sort(ClockTrigger::compareTo);
-        triggersMap.put(trigger.getInGameTime(), trigger);
-    }
-
     private void addTriggers(Collection<ClockTrigger> triggers) {
         this.triggers.clear();
         this.triggersMap.clear();

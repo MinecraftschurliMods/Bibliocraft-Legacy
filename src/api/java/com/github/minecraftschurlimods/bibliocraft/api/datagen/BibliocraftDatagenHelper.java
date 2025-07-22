@@ -22,6 +22,7 @@ import java.util.function.Function;
  * To use this class, during {@link net.neoforged.neoforge.data.event.GatherDataEvent}, create a new instance of this class with your mod id.
  * Then, call whatever methods you need from the respective providers. Always pass in your mod's corresponding data provider.
  */
+@SuppressWarnings("unused")
 public interface BibliocraftDatagenHelper {
     /**
      * Marks a {@link BibliocraftWoodType} as to-be-datagenned. This method is thread-safe.

@@ -77,8 +77,6 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         protected final ItemStack result;
         protected final int duration;
         protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
-        @Nullable
-        protected String group;
 
         public Builder(ItemStack result, int duration) {
             this.result = result;
@@ -93,7 +91,6 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
         @Override
         public Builder group(@Nullable String group) {
-            this.group = group;
             return this;
         }
 

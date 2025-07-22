@@ -17,6 +17,7 @@ public record TypewriterSyncPacket(BlockPos pos, TypewriterPage page, boolean pl
             ByteBufCodecs.BOOL, TypewriterSyncPacket::playSound,
             TypewriterSyncPacket::new);
 
+    @SuppressWarnings("unused")
     public TypewriterSyncPacket(BlockPos pos, TypewriterPage page) {
         this(pos, page, false);
     }

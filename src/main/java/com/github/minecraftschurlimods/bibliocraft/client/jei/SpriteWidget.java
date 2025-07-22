@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("unused")
 public class SpriteWidget implements IRecipeWidget {
     private final ResourceLocation sprite;
     private final ScreenPosition position;

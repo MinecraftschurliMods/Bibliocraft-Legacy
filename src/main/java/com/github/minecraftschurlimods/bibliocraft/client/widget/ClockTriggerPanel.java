@@ -15,8 +15,6 @@ import java.util.List;
 
 public class ClockTriggerPanel extends ScrollPanel {
     public final ClockScreen owner;
-    public final int x;
-    public final int y;
     public final int width;
     public final int height;
     private final List<ClockTriggerElement> elements;
@@ -24,8 +22,6 @@ public class ClockTriggerPanel extends ScrollPanel {
     public ClockTriggerPanel(int x, int y, int width, int height, List<ClockTrigger> triggers, ClockScreen owner) {
         super(ClientUtil.getMc(), width, height, y, x, 0);
         this.owner = owner;
-        this.x = x;
-        this.y = y;
         this.width = width;
         this.height = height;
         elements = new ArrayList<>();

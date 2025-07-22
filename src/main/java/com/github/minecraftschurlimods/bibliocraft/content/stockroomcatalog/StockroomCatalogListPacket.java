@@ -18,6 +18,7 @@ public record StockroomCatalogListPacket(List<BlockPos> containers, List<Stockro
             StockroomCatalogItemEntry.STREAM_CODEC.apply(ByteBufCodecs.list()), StockroomCatalogListPacket::items,
             StockroomCatalogListPacket::new);
 
+    @SuppressWarnings("unused")
     public void handle(IPayloadContext context) {
         ClientUtil.setStockroomCatalogList(this);
     }

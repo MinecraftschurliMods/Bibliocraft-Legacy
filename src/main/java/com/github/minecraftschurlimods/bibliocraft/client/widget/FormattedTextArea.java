@@ -44,15 +44,15 @@ public class FormattedTextArea extends AbstractWidget {
         this.lines = new ArrayList<>(lines);
     }
 
-    public static void renderLines(List<FormattedLine> lines, PoseStack stack, MultiBufferSource bufferSource, int x, int y, int width, int height) {
+    public static void renderLines(List<FormattedLine> lines, PoseStack stack, MultiBufferSource bufferSource, int x, int y, int width) {
         int i = y;
         for (FormattedLine line : lines) {
-            renderLine(line, stack, bufferSource, x, i, width, height);
+            renderLine(line, stack, bufferSource, x, i, width);
             i += line.size();
         }
     }
 
-    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width, int height, int cursor, DrawCursor drawCursor) {
+    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width, int cursor, DrawCursor drawCursor) {
         String text = line.text();
         Style style = line.style();
         int size = line.size();
@@ -71,8 +71,8 @@ public class FormattedTextArea extends AbstractWidget {
         }
     }
 
-    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width, int height) {
-        renderLine(line, poseStack, bufferSource, x, y, width, height, 0, DrawCursor.NONE);
+    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width) {
+        renderLine(line, poseStack, bufferSource, x, y, width, 0, DrawCursor.NONE);
     }
 
     /**
@@ -123,7 +123,7 @@ public class FormattedTextArea extends AbstractWidget {
                 : cursorY == index
                 ? DrawCursor.HORIZONTAL
                 : DrawCursor.NONE;
-        renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, height, cursorX, cursorBlink ? DrawCursor.NONE : draw);
+        renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, cursorX, cursorBlink ? DrawCursor.NONE : draw);
         if (draw != DrawCursor.NONE && cursorX != highlightX) {
             int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
             int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
@@ -478,15 +478,6 @@ public class FormattedTextArea extends AbstractWidget {
             case LEFT -> 1;
             case CENTER -> width / 2 - textWidth / 2;
             case RIGHT -> width - 1 - textWidth;
-        };
-    }
-
-    private static int getLineRightX(FormattedLine line, float scale, int width) {
-        int textWidth = (int) (ClientUtil.getFont().width(format(line.text(), line.style())) * scale);
-        return switch (line.alignment()) {
-            case LEFT -> 1 + textWidth;
-            case CENTER -> width / 2 + textWidth / 2;
-            case RIGHT -> width - 1;
         };
     }
 

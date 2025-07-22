@@ -22,7 +22,7 @@ import org.joml.Matrix4f;
 /**
  * Holds methods for rendering clipboard contents in a read-only manner. A lot of code in here is boiled-down code from GuiGraphics.
  */
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({"SameParameterValue", "unused"})
 public final class ClipboardReadOnlyRenderer {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard_block.png");
     private static final ResourceLocation CHECK_TEXTURE = BCUtil.bcLoc("check");

@@ -57,7 +57,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,10 +68,6 @@ import java.util.function.Function;
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {
     private final List<BibliocraftWoodType> WOOD_TYPES = new ArrayList<>();
-
-    @ApiStatus.Internal
-    public BibliocraftDatagenHelperImpl() {
-    }
 
     @Override
     public synchronized void addWoodTypeToGenerate(BibliocraftWoodType woodType) {
