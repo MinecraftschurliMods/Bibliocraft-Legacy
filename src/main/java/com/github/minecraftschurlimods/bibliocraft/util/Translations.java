@@ -132,5 +132,6 @@ public interface Translations {
     String TAPE_MEASURE_DISTANCE_KEY               = "item." + BibliocraftApi.MOD_ID + ".tape_measure.distance";
     String VANILLA_BY_AUTHOR_KEY      = "book.byAuthor";
     String VANILLA_PAGE_INDICATOR_KEY = "book.pageIndicator";
+    String JEI_SECONDS_KEY            = "gui.jei.category.smelting.time.seconds";
     // @formatter:on
 }
