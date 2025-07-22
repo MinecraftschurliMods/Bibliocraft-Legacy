@@ -160,7 +160,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     }
 
     private static boolean isJsonNumber(JsonElement json) {
-        return json.isJsonPrimitive() && json.getAsJsonPrimitive().isNumber();
+        return json != null && json.isJsonPrimitive() && json.getAsJsonPrimitive().isNumber();
     }
 
     @Nullable

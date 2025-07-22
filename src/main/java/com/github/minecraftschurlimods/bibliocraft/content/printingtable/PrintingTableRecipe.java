@@ -26,12 +26,10 @@ import java.util.Map;
 public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeInput> {
     protected final ItemStack result;
     protected final int duration;
-    private final ItemStack resultCopy;
 
     public PrintingTableRecipe(ItemStack result, int duration) {
         this.result = result;
         this.duration = duration;
-        resultCopy = result.copy();
     }
 
     @Override
@@ -50,7 +48,7 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     }
 
     public ItemStack getResultItem() {
-        return resultCopy;
+        return result.copy();
     }
 
     public int getDuration() {
@@ -59,6 +57,10 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
     public int getExperienceLevelCost(ItemStack result, ServerLevel level) {
         return 0;
+    }
+
+    public boolean canHaveExperienceCost() {
+        return false;
     }
 
     public ItemStack postProcess(ItemStack result, PrintingTableBlockEntity blockEntity) {

@@ -1,5 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
+import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
@@ -8,6 +10,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.HolderSetCodec;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
@@ -41,7 +44,10 @@ public class DataComponentPresentIngredient implements ICustomIngredient {
 
     @Override
     public Stream<ItemStack> getItems() {
-        return BuiltInRegistries.ITEM.stream().map(Item::getDefaultInstance);
+        return BCUtil.nonNull(BuiltInRegistries.CREATIVE_MODE_TAB.get(CreativeModeTabs.SEARCH))
+                .getDisplayItems()
+                .stream()
+                .filter(this::hasAllDataComponents);
     }
 
     @Override
@@ -51,6 +57,13 @@ public class DataComponentPresentIngredient implements ICustomIngredient {
 
     @Override
     public IngredientType<?> getType() {
-        return null;
+        return BCRecipes.DATA_COMPONENT_PRESENT_INGREDIENT.get();
+    }
+
+    private boolean hasAllDataComponents(ItemStack stack) {
+        return dataComponents
+                .stream()
+                .map(Holder::value)
+                .allMatch(stack::has);
     }
 }

@@ -111,6 +111,11 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     }
 
     @Override
+    public boolean canHaveExperienceCost() {
+        return experienceCost.isPresent();
+    }
+
+    @Override
     public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
         return Pair.of(left, Ingredient.of(result));
     }
