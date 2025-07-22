@@ -220,6 +220,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.ALL_COLORS_AND_WOOD_TYPES_KEY, "This block can be crafted in all colors and wood types.");
         add(Translations.ALL_WOOD_TYPES_KEY, "This block can be crafted in all wood types.");
         add(Translations.PRINTING_TABLE_CATEGORY_KEY, "Printing Table");
+        add(Translations.REQUIRES_EXPERIENCE_KEY, "This recipe also requires some experience!");
         add(Translations.STOCKROOM_CATALOG_COUNT_KEY, "x%s");
         add(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, "%s blocks away");
         add(Translations.STOCKROOM_CATALOG_SORT_KEY, "Sort: %s");

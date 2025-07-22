@@ -52,6 +52,7 @@ public interface Translations {
     String ALL_COLORS_AND_WOOD_TYPES_KEY           = "jei."   + BibliocraftApi.MOD_ID + ".all_colors_and_wood_types";
     String ALL_WOOD_TYPES_KEY                      = "jei."   + BibliocraftApi.MOD_ID + ".all_wood_types";
     String PRINTING_TABLE_CATEGORY_KEY             = "jei."   + BibliocraftApi.MOD_ID + ".category.printing_table";
+    String REQUIRES_EXPERIENCE_KEY                 = "jei."   + BibliocraftApi.MOD_ID + ".requires_experience";
     String FANCY_TEXT_AREA_BOLD_SHORT_KEY          = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.bold.short";
     String FANCY_TEXT_AREA_ITALIC_SHORT_KEY        = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.italic.short";
     String FANCY_TEXT_AREA_OBFUSCATED_SHORT_KEY    = "gui."   + BibliocraftApi.MOD_ID + ".fancy_text_area.obfuscated.short";
@@ -107,6 +108,7 @@ public interface Translations {
     Component ALL_COLORS_AND_WOOD_TYPES            = Component.translatable(ALL_COLORS_AND_WOOD_TYPES_KEY);
     Component ALL_WOOD_TYPES                       = Component.translatable(ALL_WOOD_TYPES_KEY);
     Component PRINTING_TABLE_CATEGORY              = Component.translatable(PRINTING_TABLE_CATEGORY_KEY);
+    Component REQUIRES_EXPERIENCE                  = Component.translatable(REQUIRES_EXPERIENCE_KEY);
     Component FANCY_TEXT_AREA_BOLD_SHORT           = Component.translatable(FANCY_TEXT_AREA_BOLD_SHORT_KEY).withStyle(ChatFormatting.BOLD);
     Component FANCY_TEXT_AREA_ITALIC_SHORT         = Component.translatable(FANCY_TEXT_AREA_ITALIC_SHORT_KEY).withStyle(ChatFormatting.ITALIC);
     Component FANCY_TEXT_AREA_OBFUSCATED_SHORT     = Component.translatable(FANCY_TEXT_AREA_OBFUSCATED_SHORT_KEY).withStyle(ChatFormatting.OBFUSCATED);

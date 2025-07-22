@@ -2,8 +2,11 @@ package com.github.minecraftschurlimods.bibliocraft;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.PrintingTableScreen;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableRecipeCategory;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
+import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
@@ -18,8 +21,11 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.core.component.DataComponents;
@@ -85,6 +91,21 @@ public final class BCJeiPlugin implements IModPlugin {
             }
         }
         registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getLevel().getRecipeManager().getAllRecipesFor(BCRecipes.PRINTING_TABLE.get()));
+    }
+
+    @Override
+    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(PrintingTableMenu.class, BCMenus.PRINTING_TABLE.get(), PrintingTableRecipeCategory.TYPE, 0, 10, 11, 36);
+    }
+
+    @Override
+    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalysts(PrintingTableRecipeCategory.TYPE, BCItems.PRINTING_TABLE, BCItems.IRON_PRINTING_TABLE);
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(PrintingTableScreen.class, 108, 28, 28, 23, PrintingTableRecipeCategory.TYPE);
     }
 
     @Override

@@ -1953,6 +1953,7 @@
   "jei.bibliocraft.all_colors_and_wood_types": "This block can be crafted in all colors and wood types.",
   "jei.bibliocraft.all_wood_types": "This block can be crafted in all wood types.",
   "jei.bibliocraft.category.printing_table": "Printing Table",
+  "jei.bibliocraft.requires_experience": "This recipe also requires some experience!",
   "subtitles.bibliocraft.clock.chime": "Clock chimes",
   "subtitles.bibliocraft.clock.tick": "Clock ticks",
   "subtitles.bibliocraft.clock.tock": "Clock tocks",
