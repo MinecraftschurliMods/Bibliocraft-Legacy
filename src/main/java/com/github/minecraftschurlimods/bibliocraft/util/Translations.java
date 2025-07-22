@@ -62,7 +62,7 @@ public interface Translations {
     String VANILLA_FINALIZE_WARNING_KEY = "book.finalizeWarning";
     String VANILLA_SIGN_BUTTON_KEY      = "book.signButton";
     String VANILLA_TAKE_BOOK_KEY        = "lectern.take_book";
-    String VANILLA_TOGGLABLE_SLOT_KEY   = "gui.togglable_slot";
+    String VANILLA_TOGGLEABLE_SLOT_KEY  = "gui.toggleable_slot";
 
     Component TYPEWRITER_NO_PAPER                  = Component.translatable(TYPEWRITER_NO_PAPER_KEY);
     Component CLOCK_ADD_TRIGGER                    = Component.translatable(CLOCK_ADD_TRIGGER_KEY);
@@ -117,7 +117,7 @@ public interface Translations {
     Component VANILLA_FINALIZE_WARNING             = Component.translatable(VANILLA_FINALIZE_WARNING_KEY);
     Component VANILLA_SIGN_BUTTON                  = Component.translatable(VANILLA_SIGN_BUTTON_KEY);
     Component VANILLA_TAKE_BOOK                    = Component.translatable(VANILLA_TAKE_BOOK_KEY);
-    Component VANILLA_TOGGLABLE_SLOT               = Component.translatable(VANILLA_TOGGLABLE_SLOT_KEY);
+    Component VANILLA_TOGGLEABLE_SLOT              = Component.translatable(VANILLA_TOGGLEABLE_SLOT_KEY);
 
     String PRINTING_TABLE_MODE_KEY                 = "gui."  + BibliocraftApi.MOD_ID + ".printing_table.mode";
     String STOCKROOM_CATALOG_COUNT_KEY             = "gui."  + BibliocraftApi.MOD_ID + ".stockroom_catalog.count";
