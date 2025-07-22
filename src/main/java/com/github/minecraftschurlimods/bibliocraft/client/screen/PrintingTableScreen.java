@@ -48,8 +48,8 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
         experienceBarButton = addRenderableWidget(new ExperienceBarButton(Translations.PRINTING_TABLE_ADD_EXPERIENCE, leftPos + 81, topPos + 65, 82, 5, EXPERIENCE_BAR_BACKGROUND, EXPERIENCE_BAR_PROGRESS,
             () -> BCUtil.getLevelForExperience(blockEntity.getExperience()),
             () -> {
-                if (blockEntity.isExperienceFull()) return 1f;
                 if (blockEntity.getExperienceCost() <= 0) return 0f;
+                if (blockEntity.isExperienceFull()) return 1f;
                 int experience = blockEntity.getExperience();
                 int level = BCUtil.getLevelForExperience(experience);
                 float experienceForLevel = BCUtil.getExperienceForLevel(level);

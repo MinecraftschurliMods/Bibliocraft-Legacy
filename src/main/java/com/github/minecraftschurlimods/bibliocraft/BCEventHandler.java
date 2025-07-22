@@ -11,13 +11,16 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.SetBigBookPag
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignSyncPacket;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableInputPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableSetRecipePacket;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableTankSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogRequestListPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
+import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
@@ -96,6 +99,9 @@ public final class BCEventHandler {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TOOL_RACK.get(),         BCBlockEntity::getCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TYPEWRITER.get(),        BCBlockEntity::getCapability);
+        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+                (level, pos, state, blockEntity, context) -> blockEntity instanceof PrintingTableBlockEntity printingTable ? printingTable.getFluidCapability() : null,
+                BCBlocks.IRON_PRINTING_TABLE.get());
     }
 
     private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
@@ -108,6 +114,7 @@ public final class BCEventHandler {
                 .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
                 .playToServer(PrintingTableInputPacket.TYPE,          PrintingTableInputPacket.STREAM_CODEC,          PrintingTableInputPacket::handle)
                 .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle)
+                .playToClient(PrintingTableTankSyncPacket.TYPE,       PrintingTableTankSyncPacket.STREAM_CODEC,       PrintingTableTankSyncPacket::handle)
                 .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
