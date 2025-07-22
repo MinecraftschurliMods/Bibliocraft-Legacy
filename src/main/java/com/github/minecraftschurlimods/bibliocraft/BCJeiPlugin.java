@@ -2,7 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
+import com.github.minecraftschurlimods.bibliocraft.client.screen.FancyCrafterScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.PrintingTableScreen;
+import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCrafterMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableRecipeCategory;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
@@ -18,6 +20,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupingDeferredH
 import com.github.minecraftschurlimods.bibliocraft.util.holder.WoodTypeDeferredHolder;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
@@ -33,6 +36,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.util.Lazy;
 import org.jetbrains.annotations.Nullable;
 
@@ -95,16 +99,23 @@ public final class BCJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(FancyCrafterMenu.class, BCMenus.FANCY_CRAFTER.get(), RecipeTypes.CRAFTING, 0, 9, 10, 44);
         registration.addRecipeTransferHandler(PrintingTableMenu.class, BCMenus.PRINTING_TABLE.get(), PrintingTableRecipeCategory.TYPE, 0, 10, 11, 36);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        if (BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
+            registration.addRecipeCatalysts(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.values().toArray(ItemLike[]::new));
+        } else {
+            registration.addRecipeCatalysts(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.get(OAK.get()));
+        }
         registration.addRecipeCatalysts(PrintingTableRecipeCategory.TYPE, BCItems.PRINTING_TABLE, BCItems.IRON_PRINTING_TABLE);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(FancyCrafterScreen.class, 88, 32, 28, 23, RecipeTypes.CRAFTING);
         registration.addRecipeClickArea(PrintingTableScreen.class, 108, 28, 28, 23, PrintingTableRecipeCategory.TYPE);
     }
 

@@ -8,6 +8,7 @@
   - Copy enchanted books at the cost of XP
 - New sounds for opening and closing Display Cases.
 - Subtitles for all sounds.
+- JEI support for Fancy Crafters.
 
 # Fixes
 
