@@ -7,15 +7,28 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.util.Lazy;
 
 public class FancyLanternBlock extends AbstractFancyLightBlock {
     private static final VoxelShape STANDING_SHAPE = ShapeUtil.combine(
@@ -38,7 +51,7 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
     private static final VoxelShape SOUTH_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.COUNTERCLOCKWISE_90);
     private static final ResourceLocation DEFAULT_PARTICLE = BCUtil.mcLoc("small_flame");
-    private final ResourceLocation particle;
+    private final Lazy<ParticleOptions> particle;
 
     public FancyLanternBlock(Properties properties) {
         this(properties, DEFAULT_PARTICLE);
@@ -46,7 +59,7 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
 
     public FancyLanternBlock(Properties properties, ResourceLocation particle) {
         super(properties);
-        this.particle = particle;
+        this.particle = Lazy.of(() -> BuiltInRegistries.PARTICLE_TYPE.get(particle) instanceof ParticleOptions options ? options : null);
     }
 
     @Override
@@ -65,12 +78,28 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(LIT)) return;
         Vec3 offset = Vec3.atCenterOf(pos);
         if (random.nextFloat() < 0.3f) {
             level.addParticle(ParticleTypes.SMOKE, offset.x, offset.y, offset.z, 0, 0, 0);
         }
-        if (BuiltInRegistries.PARTICLE_TYPE.get(particle) instanceof ParticleOptions options) {
-            level.addParticle(options, offset.x, offset.y, offset.z, 0, 0, 0);
+        level.addParticle(BCUtil.nonNull(particle.get()), offset.x, offset.y, offset.z, 0, 0, 0);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.isEmpty() && player.getAbilities().mayBuild && state.getValue(LIT)) {
+            level.setBlock(pos, state.setValue(LIT, false), Block.UPDATE_ALL_IMMEDIATE);
+            level.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1f, 1f);
+            level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        } else {
+            return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }
+    }
+
+    @Override
+    public BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
+        return itemAbility == ItemAbilities.FIRESTARTER_LIGHT && !state.getValue(LIT) ? state.setValue(LIT, true) : super.getToolModifiedState(state, context, itemAbility, simulate);
     }
 }

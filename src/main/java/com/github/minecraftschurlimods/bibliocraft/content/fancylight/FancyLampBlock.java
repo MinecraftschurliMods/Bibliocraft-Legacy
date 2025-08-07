@@ -1,9 +1,15 @@
 package com.github.minecraftschurlimods.bibliocraft.content.fancylight;
 
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -79,5 +85,29 @@ public class FancyLampBlock extends AbstractFancyLightBlock {
                 case EAST -> EAST_WALL_SHAPE;
             };
         };
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return BCUtil.nonNull(super.getStateForPlacement(context)).setValue(LIT, !context.getLevel().hasNeighborSignal(context.getClickedPos()));
+    }
+
+    @Override
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if (level.isClientSide) return;
+        boolean lit = state.getValue(LIT);
+        if (lit != level.hasNeighborSignal(pos)) return;
+        if (lit) {
+            level.setBlock(pos, state.cycle(LIT), Block.UPDATE_CLIENTS);
+        } else {
+            level.scheduleTick(pos, this, 4);
+        }
+    }
+
+    @Override
+    protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!state.getValue(LIT) && !level.hasNeighborSignal(pos)) {
+            level.setBlock(pos, state.cycle(LIT), Block.UPDATE_CLIENTS);
+        }
     }
 }

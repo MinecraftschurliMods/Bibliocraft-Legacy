@@ -5,6 +5,8 @@
 # Changes
 
 - Printing table cloning involving enchantments now uses the separate `bibliocraft:printing_table_cloning_with_enchantments` recipe type
+- Fancy Lanterns can now be unlit and lit, similar to candles (#35)
+- Fancy Lamps can now be toggled off and on using redstone, similar to reverse redstone lamps (#35)
 
 # Fixes
 
