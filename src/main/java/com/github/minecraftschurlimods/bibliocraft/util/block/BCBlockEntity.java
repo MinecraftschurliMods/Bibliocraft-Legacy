@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -26,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class BCBlockEntity extends BlockEntity implements Container {
     private static final String ITEMS_TAG = "items";
-    protected final ItemStackHandler items;
+    protected final BCItemHandler items;
     private LockCode lockKey = LockCode.NO_LOCK;
 
     /**
@@ -37,14 +36,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
      */
     public BCBlockEntity(BlockEntityType<?> type, int containerSize, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        items = new ItemStackHandler(containerSize) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                super.onContentsChanged(slot);
-                setChanged();
-                level().sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
-            }
-        };
+        items = new BCItemHandler(containerSize, this);
     }
 
     public LockCode getLockKey() {
