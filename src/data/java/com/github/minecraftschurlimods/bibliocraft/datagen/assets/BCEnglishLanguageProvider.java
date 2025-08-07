@@ -127,6 +127,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Items.SWORD_PEDESTAL_SWORDS, "Swords for Sword Pedestals");
         add(BCTags.Items.TOOL_RACK_TOOLS, "Tools for Tool Racks");
         add(BCTags.Items.TYPEWRITER_PAPER, "Paper for Typewriters");
+        add(BCTags.Enchantments.PRINTING_TABLE_CLONING_BLACKLIST, "Printing Table Cloning Blacklist");
         add("container", "bookcase", "Bookcase");
         add("container", "cookie_jar", "Cookie Jar");
         add("container", "disc_rack", "Disc Rack");

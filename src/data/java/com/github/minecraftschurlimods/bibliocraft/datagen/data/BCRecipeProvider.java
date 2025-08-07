@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookClonin
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.EnchantmentLevelsNumberProvider;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBindingTypewriterPagesRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningWithEnchantmentsRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMergingRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageCloningRecipe;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
@@ -369,8 +370,7 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .addIngredient(Ingredient.of(BCItems.BIG_BOOK.get()))
                 .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
                 .save(output, BCUtil.bcLoc("written_big_book_cloning_in_printing_table"));
-        new PrintingTableCloningRecipe.Builder(new ItemStack(Items.ENCHANTED_BOOK), 600)
-                .addDataComponentType(DataComponents.STORED_ENCHANTMENTS)
+        new PrintingTableCloningWithEnchantmentsRecipe.Builder(new ItemStack(Items.ENCHANTED_BOOK), 600)
                 .addIngredient(Ingredient.of(Items.BOOK))
                 .experienceCost(new EnchantmentLevelsNumberProvider(DataComponents.STORED_ENCHANTMENTS, ConstantValue.exactly(1), ConstantValue.exactly(2)))
                 .unlockedBy("has_enchanted_book", has(Items.ENCHANTED_BOOK))

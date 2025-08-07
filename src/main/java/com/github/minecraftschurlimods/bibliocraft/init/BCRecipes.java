@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookClonin
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.EnchantmentLevelsNumberProvider;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableBindingTypewriterPagesRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningRecipe;
+import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableCloningWithEnchantmentsRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMergingRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableRecipe;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageCloningRecipe;
@@ -31,6 +32,8 @@ public interface BCRecipes {
             BCRegistries.RECIPE_SERIALIZERS.register("printing_table_binding_typewriter_pages", serializer(PrintingTableBindingTypewriterPagesRecipe.CODEC, PrintingTableBindingTypewriterPagesRecipe.STREAM_CODEC));
     Supplier<RecipeSerializer<PrintingTableCloningRecipe>> PRINTING_TABLE_CLONING =
             BCRegistries.RECIPE_SERIALIZERS.register("printing_table_cloning", serializer(PrintingTableCloningRecipe.CODEC, PrintingTableCloningRecipe.STREAM_CODEC));
+    Supplier<RecipeSerializer<PrintingTableCloningWithEnchantmentsRecipe>> PRINTING_TABLE_CLONING_WITH_ENCHANTMENTS =
+            BCRegistries.RECIPE_SERIALIZERS.register("printing_table_cloning_with_enchantments", serializer(PrintingTableCloningWithEnchantmentsRecipe.CODEC, PrintingTableCloningWithEnchantmentsRecipe.STREAM_CODEC));
     Supplier<RecipeSerializer<PrintingTableMergingRecipe>> PRINTING_TABLE_MERGING =
             BCRegistries.RECIPE_SERIALIZERS.register("printing_table_merging", serializer(PrintingTableMergingRecipe.CODEC, PrintingTableMergingRecipe.STREAM_CODEC));
 

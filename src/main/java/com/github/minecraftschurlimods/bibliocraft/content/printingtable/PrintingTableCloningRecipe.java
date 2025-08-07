@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
-import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -12,47 +11,34 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     public static final MapCodec<PrintingTableCloningRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             DataComponentType.CODEC.listOf(1, 256).fieldOf("data_components").forGetter(e -> e.dataComponentTypes),
-            Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(e -> e.left),
+            Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
-            Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
-            NumberProviders.CODEC.optionalFieldOf("experience_cost").forGetter(e -> e.experienceCost)
+            Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
     ).apply(inst, PrintingTableCloningRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableCloningRecipe> STREAM_CODEC = StreamCodec.composite(
             DataComponentType.STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.dataComponentTypes,
-            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.left,
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.ingredients,
             ItemStack.STREAM_CODEC, e -> e.result,
             ByteBufCodecs.INT, e -> e.duration,
-            CodecUtil.toStreamCodec(NumberProviders.CODEC).apply(ByteBufCodecs::optional), e -> e.experienceCost,
             PrintingTableCloningRecipe::new);
-    private final List<DataComponentType<?>> dataComponentTypes;
-    private final List<Ingredient> left;
-    private final Optional<NumberProvider> experienceCost;
+    protected final List<DataComponentType<?>> dataComponentTypes;
+    protected final List<Ingredient> ingredients;
 
-    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, List<Ingredient> left, ItemStack result, int duration, Optional<NumberProvider> experienceCost) {
+    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, List<Ingredient> ingredients, ItemStack result, int duration) {
         super(result, duration);
         this.dataComponentTypes = dataComponentTypes;
-        this.left = left;
-        this.experienceCost = experienceCost;
+        this.ingredients = ingredients;
     }
 
     @Override
@@ -61,8 +47,8 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
         if (input.right().isEmpty()) return false;
         if (!input.right().is(result.getItem())) return false;
         if (!dataComponentTypes.stream().allMatch(e -> input.right().has(e))) return false;
-        if (input.left().stream().filter(e -> e != ItemStack.EMPTY).count() != left.size()) return false;
-        List<Ingredient> copy = new ArrayList<>(left);
+        if (input.left().stream().filter(e -> e != ItemStack.EMPTY).count() != ingredients.size()) return false;
+        List<Ingredient> copy = new ArrayList<>(ingredients);
         outer:
         for (int i = 0; i < input.left().size(); i++) {
             ItemStack stack = input.getItem(i);
@@ -106,24 +92,13 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public int getExperienceLevelCost(ItemStack stack, ServerLevel level) {
-        return experienceCost.map(e -> e.getInt(new LootContext.Builder(new LootParams(level, Map.of(LootContextParams.TOOL, stack), Map.of(), 0)).create(Optional.empty()))).orElse(0);
-    }
-
-    @Override
-    public boolean canHaveExperienceCost() {
-        return experienceCost.isPresent();
-    }
-
-    @Override
     public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
-        return Pair.of(left, Ingredient.of(result));
+        return Pair.of(ingredients, Ingredient.of(result));
     }
 
     public static class Builder extends PrintingTableRecipe.Builder {
         private final List<DataComponentType<?>> dataComponentTypes = new ArrayList<>();
-        private final List<Ingredient> left = new ArrayList<>();
-        private NumberProvider experienceCost = null;
+        private final List<Ingredient> ingredients = new ArrayList<>();
 
         public Builder(ItemStack result, int duration) {
             super(result, duration);
@@ -135,18 +110,13 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
         }
 
         public Builder addIngredient(Ingredient ingredient) {
-            left.add(ingredient);
-            return this;
-        }
-
-        public Builder experienceCost(NumberProvider experienceCost) {
-            this.experienceCost = experienceCost;
+            ingredients.add(ingredient);
             return this;
         }
 
         @Override
         public PrintingTableRecipe build() {
-            return new PrintingTableCloningRecipe(dataComponentTypes, List.copyOf(left), result, duration, Optional.ofNullable(experienceCost));
+            return new PrintingTableCloningRecipe(dataComponentTypes, List.copyOf(ingredients), result, duration);
         }
     }
 }

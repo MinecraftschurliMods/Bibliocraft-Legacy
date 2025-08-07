@@ -1,9 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 
 public interface BCTags {
@@ -39,7 +40,7 @@ public interface BCTags {
          * @return A {@link TagKey<Block>} with this mod's namespace and the given path.
          */
         static TagKey<Block> tag(String name) {
-            return TagKey.create(BuiltInRegistries.BLOCK.key(), BCUtil.bcLoc(name));
+            return TagKey.create(Registries.BLOCK, BCUtil.bcLoc(name));
         }
     }
 
@@ -88,7 +89,11 @@ public interface BCTags {
          * @return A {@link TagKey<Item>} with this mod's namespace and the given path.
          */
         static TagKey<Item> tag(String name) {
-            return TagKey.create(BuiltInRegistries.ITEM.key(), BCUtil.bcLoc(name));
+            return TagKey.create(Registries.ITEM, BCUtil.bcLoc(name));
         }
+    }
+
+    interface Enchantments {
+        TagKey<Enchantment> PRINTING_TABLE_CLONING_BLACKLIST = TagKey.create(Registries.ENCHANTMENT, BCUtil.bcLoc("printing_table_cloning_blacklist"));
     }
 }

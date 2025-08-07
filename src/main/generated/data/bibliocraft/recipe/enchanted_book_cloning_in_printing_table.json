@@ -1,8 +1,5 @@
 {
-  "type": "bibliocraft:printing_table_cloning",
-  "data_components": [
-    "minecraft:stored_enchantments"
-  ],
+  "type": "bibliocraft:printing_table_cloning_with_enchantments",
   "duration": 600,
   "experience_cost": {
     "type": "bibliocraft:enchantment_levels",
