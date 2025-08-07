@@ -1,1 +1,1 @@
-Typewriters, printing tables and more!
+Various small fixes and improvements
