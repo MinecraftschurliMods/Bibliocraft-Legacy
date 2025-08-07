@@ -1,92 +1,182 @@
 {
   "variants": {
-    "facing=east,type=hanging,waterlogged=false": {
+    "facing=east,lit=false,type=hanging,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging",
       "y": 90
     },
-    "facing=east,type=hanging,waterlogged=true": {
+    "facing=east,lit=false,type=hanging,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging",
       "y": 90
     },
-    "facing=east,type=standing,waterlogged=false": {
+    "facing=east,lit=false,type=standing,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing",
       "y": 90
     },
-    "facing=east,type=standing,waterlogged=true": {
+    "facing=east,lit=false,type=standing,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing",
       "y": 90
     },
-    "facing=east,type=wall,waterlogged=false": {
+    "facing=east,lit=false,type=wall,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall",
       "y": 90
     },
-    "facing=east,type=wall,waterlogged=true": {
+    "facing=east,lit=false,type=wall,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall",
       "y": 90
     },
-    "facing=north,type=hanging,waterlogged=false": {
+    "facing=east,lit=true,type=hanging,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging",
+      "y": 90
+    },
+    "facing=east,lit=true,type=hanging,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging",
+      "y": 90
+    },
+    "facing=east,lit=true,type=standing,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing",
+      "y": 90
+    },
+    "facing=east,lit=true,type=standing,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing",
+      "y": 90
+    },
+    "facing=east,lit=true,type=wall,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall",
+      "y": 90
+    },
+    "facing=east,lit=true,type=wall,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall",
+      "y": 90
+    },
+    "facing=north,lit=false,type=hanging,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging"
     },
-    "facing=north,type=hanging,waterlogged=true": {
+    "facing=north,lit=false,type=hanging,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging"
     },
-    "facing=north,type=standing,waterlogged=false": {
+    "facing=north,lit=false,type=standing,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing"
     },
-    "facing=north,type=standing,waterlogged=true": {
+    "facing=north,lit=false,type=standing,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing"
     },
-    "facing=north,type=wall,waterlogged=false": {
+    "facing=north,lit=false,type=wall,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall"
     },
-    "facing=north,type=wall,waterlogged=true": {
+    "facing=north,lit=false,type=wall,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall"
     },
-    "facing=south,type=hanging,waterlogged=false": {
+    "facing=north,lit=true,type=hanging,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging"
+    },
+    "facing=north,lit=true,type=hanging,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging"
+    },
+    "facing=north,lit=true,type=standing,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing"
+    },
+    "facing=north,lit=true,type=standing,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing"
+    },
+    "facing=north,lit=true,type=wall,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall"
+    },
+    "facing=north,lit=true,type=wall,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall"
+    },
+    "facing=south,lit=false,type=hanging,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging",
       "y": 180
     },
-    "facing=south,type=hanging,waterlogged=true": {
+    "facing=south,lit=false,type=hanging,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging",
       "y": 180
     },
-    "facing=south,type=standing,waterlogged=false": {
+    "facing=south,lit=false,type=standing,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing",
       "y": 180
     },
-    "facing=south,type=standing,waterlogged=true": {
+    "facing=south,lit=false,type=standing,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing",
       "y": 180
     },
-    "facing=south,type=wall,waterlogged=false": {
+    "facing=south,lit=false,type=wall,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall",
       "y": 180
     },
-    "facing=south,type=wall,waterlogged=true": {
+    "facing=south,lit=false,type=wall,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall",
       "y": 180
     },
-    "facing=west,type=hanging,waterlogged=false": {
+    "facing=south,lit=true,type=hanging,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging",
+      "y": 180
+    },
+    "facing=south,lit=true,type=hanging,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging",
+      "y": 180
+    },
+    "facing=south,lit=true,type=standing,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing",
+      "y": 180
+    },
+    "facing=south,lit=true,type=standing,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing",
+      "y": 180
+    },
+    "facing=south,lit=true,type=wall,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall",
+      "y": 180
+    },
+    "facing=south,lit=true,type=wall,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall",
+      "y": 180
+    },
+    "facing=west,lit=false,type=hanging,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging",
       "y": 270
     },
-    "facing=west,type=hanging,waterlogged=true": {
+    "facing=west,lit=false,type=hanging,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_hanging",
       "y": 270
     },
-    "facing=west,type=standing,waterlogged=false": {
+    "facing=west,lit=false,type=standing,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing",
       "y": 270
     },
-    "facing=west,type=standing,waterlogged=true": {
+    "facing=west,lit=false,type=standing,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_standing",
       "y": 270
     },
-    "facing=west,type=wall,waterlogged=false": {
+    "facing=west,lit=false,type=wall,waterlogged=false": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall",
       "y": 270
     },
-    "facing=west,type=wall,waterlogged=true": {
+    "facing=west,lit=false,type=wall,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall",
+      "y": 270
+    },
+    "facing=west,lit=true,type=hanging,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging",
+      "y": 270
+    },
+    "facing=west,lit=true,type=hanging,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_hanging",
+      "y": 270
+    },
+    "facing=west,lit=true,type=standing,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing",
+      "y": 270
+    },
+    "facing=west,lit=true,type=standing,waterlogged=true": {
+      "model": "bibliocraft:block/fancy_iron_lamp_standing",
+      "y": 270
+    },
+    "facing=west,lit=true,type=wall,waterlogged=false": {
+      "model": "bibliocraft:block/fancy_iron_lamp_wall",
+      "y": 270
+    },
+    "facing=west,lit=true,type=wall,waterlogged=true": {
       "model": "bibliocraft:block/fancy_iron_lamp_wall",
       "y": 270
     }
