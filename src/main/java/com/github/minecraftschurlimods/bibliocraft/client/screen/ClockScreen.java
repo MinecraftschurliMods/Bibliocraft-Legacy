@@ -45,7 +45,7 @@ public class ClockScreen extends Screen {
         topPos = (height - IMAGE_HEIGHT) / 2;
         tickSound = addRenderableWidget(Checkbox.builder(Component.empty(), ClientUtil.getFont())
                 .pos(leftPos + 7, topPos + 6)
-                .selected(clock.tickSound)
+                .selected(clock.getTickSound())
                 .build());
         triggerPanel = addRenderableWidget(new ClockTriggerPanel(leftPos + 8, topPos + 36, 160, 122, triggers, this));
         addRenderableWidget(Button.builder(Translations.CLOCK_ADD_TRIGGER, $ -> ClientUtil.getMc().pushGuiLayer(new ClockTriggerEditScreen(this, null)))

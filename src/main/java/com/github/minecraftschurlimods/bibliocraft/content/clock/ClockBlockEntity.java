@@ -31,7 +31,7 @@ public class ClockBlockEntity extends BlockEntity {
     private final List<ClockTrigger> triggers = new ArrayList<>();
     private final Multimap<Integer, ClockTrigger> triggersMap = HashMultimap.create();
     private int redstoneTick = 0;
-    public boolean tickSound = true;
+    private boolean tickSound = true;
 
     public ClockBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.CLOCK.get(), pos, state);
@@ -55,15 +55,19 @@ public class ClockBlockEntity extends BlockEntity {
                 setPowered(level, pos, true);
             }
         }
-        if (blockEntity.tickSound && level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT) && time % 20 == 0) {
+        if (blockEntity.getTickSound() && level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT) && time % 20 == 0) {
             level.playSound(null, pos, time % 40 == 0 ? BCSoundEvents.CLOCK_TICK.value() : BCSoundEvents.CLOCK_TOCK.value(), SoundSource.BLOCKS, 1, 1);
         }
     }
 
     private static void setPowered(Level level, BlockPos pos, boolean powered) {
-        level.setBlock(pos, level.getBlockState(pos).setValue(AbstractClockBlock.POWERED, powered), Block.UPDATE_ALL);
-        if (level.getBlockState(pos.below()).getBlock() instanceof GrandfatherClockBlock) {
-            level.setBlock(pos.below(), level.getBlockState(pos.below()).setValue(AbstractClockBlock.POWERED, powered), Block.UPDATE_ALL);
+        BlockState state = level.getBlockState(pos);
+        if (!state.hasProperty(AbstractClockBlock.POWERED)) return;
+        level.setBlock(pos, state.setValue(AbstractClockBlock.POWERED, powered), Block.UPDATE_ALL);
+        pos = pos.below();
+        state = level.getBlockState(pos);
+        if (state.getBlock() instanceof GrandfatherClockBlock) {
+            level.setBlock(pos, state.setValue(AbstractClockBlock.POWERED, powered), Block.UPDATE_ALL);
         }
     }
 
@@ -123,5 +127,9 @@ public class ClockBlockEntity extends BlockEntity {
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         super.handleUpdateTag(tag, lookupProvider);
         loadAdditional(tag, lookupProvider);
+    }
+
+    public boolean getTickSound() {
+        return tickSound;
     }
 }
