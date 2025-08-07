@@ -26,6 +26,7 @@ public final class BCConfig {
                 .translation("config." + BibliocraftApi.MOD_ID + ".cosmetic.enable_pride_always")
                 .gameRestart()
                 .define("enable_pride_always", false);
+        builder.pop();
         builder
                 .comment("Contains compatibility options.")
                 .translation("config." + BibliocraftApi.MOD_ID + ".compatibility")
@@ -42,7 +43,6 @@ public final class BCConfig {
                 .comment("Whether to show blocks for all color types in JEI, or just the default white.")
                 .translation("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types")
                 .define("show_color_types", true);
-        builder.pop();
         builder.pop();
         CLIENT_SPEC = builder.build();
     }
