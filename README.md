@@ -42,7 +42,7 @@ type="optional"
 # Bibliocraft bumps the minor version whenever a breaking API change occurs,
 # or when addons are expected to update (e.g. when a new wooden block is added).
 # As such, we can allow any patch of the current minor version.
-versionRange="[1.5.0,1.6)"
+versionRange="[1.6.0,1.7)"
 ordering="BEFORE"
 side="BOTH"
 ```
