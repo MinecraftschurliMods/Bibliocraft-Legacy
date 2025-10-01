@@ -93,17 +93,29 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
                     case FIRST -> jsons.getFirst().get(type).get(key);
                     case LAST -> jsons.getLast().get(type).get(key);
                     case MIN -> new JsonPrimitive(jsons.stream()
-                            .mapToInt(e -> e.get(type).get(key).getAsInt())
+                            .map(e -> e.get(type))
+                            .filter(Objects::nonNull)
+                            .map(e -> e.get(key))
+                            .filter(Objects::nonNull)
+                            .mapToInt(JsonElement::getAsInt)
                             .min()
                             .orElseThrow());
                     case MAX -> new JsonPrimitive(jsons.stream()
-                            .mapToInt(e -> e.get(type).get(key).getAsInt())
+                            .map(e -> e.get(type))
+                            .filter(Objects::nonNull)
+                            .map(e -> e.get(key))
+                            .filter(Objects::nonNull)
+                            .mapToInt(JsonElement::getAsInt)
                             .max()
                             .orElseThrow());
                     case APPEND -> {
                         JsonArray array = new JsonArray();
                         jsons.stream()
-                                .map(e -> e.get(type).get(key).getAsJsonArray().asList())
+                                .map(e -> e.get(type))
+                                .filter(Objects::nonNull)
+                                .map(e -> e.get(key))
+                                .filter(Objects::nonNull)
+                                .map(e -> e.getAsJsonArray().asList())
                                 .flatMap(List::stream)
                                 .forEach(array::add);
                         yield array;
