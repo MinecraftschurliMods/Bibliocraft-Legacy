@@ -76,7 +76,7 @@ public class FancySignBlock extends AbstractFancySignBlock {
         if (state.getValue(WAXED) || player.isSecondaryUseActive()) return InteractionResult.PASS;
         Direction direction = hit.getDirection();
         if (level.isClientSide() && direction.getAxis() == state.getValue(FACING).getAxis()) {
-            ClientUtil.openFancySignScreen(pos, direction == state.getValue(FACING));
+            ClientUtil.openFancySignScreen(pos, direction != state.getValue(FACING));
         }
         return InteractionResult.SUCCESS;
     }

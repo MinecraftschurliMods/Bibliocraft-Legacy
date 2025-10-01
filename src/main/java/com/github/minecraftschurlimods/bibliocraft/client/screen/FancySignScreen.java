@@ -67,7 +67,7 @@ public class FancySignScreen extends Screen {
         int leftX = (width - WIDTH) / 2;
         int rightX = (width + WIDTH) / 2;
         int y = (height - HEIGHT) / 2 - 16;
-        textArea = addRenderableWidget(new FormattedTextArea(leftX, y, WIDTH, HEIGHT, sign.getFrontContent().lines()));
+        textArea = addRenderableWidget(new FormattedTextArea(leftX, y, WIDTH, HEIGHT, back ? sign.getBackContent().lines() : sign.getFrontContent().lines()));
         textArea.setOnLineChange(this::onLineChange);
 
         // Formatting buttons
