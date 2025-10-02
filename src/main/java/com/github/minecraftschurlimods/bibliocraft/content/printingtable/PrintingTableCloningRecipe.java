@@ -12,9 +12,9 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
 public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     public static final MapCodec<PrintingTableCloningRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             DataComponentType.CODEC.listOf(1, 256).fieldOf("data_components").forGetter(e -> e.dataComponentTypes),
-            Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
+            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
     ).apply(inst, PrintingTableCloningRecipe::new));
@@ -75,7 +75,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<PrintingTableRecipeInput>> getSerializer() {
         return BCRecipes.PRINTING_TABLE_CLONING.get();
     }
 
@@ -93,7 +93,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
 
     @Override
     public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
-        return Pair.of(ingredients, Ingredient.of(result));
+        return Pair.of(ingredients, DataComponentIngredient.of(true, result));
     }
 
     public static class Builder extends PrintingTableRecipe.Builder {

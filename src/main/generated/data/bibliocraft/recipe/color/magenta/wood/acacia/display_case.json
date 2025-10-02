@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:display_cases",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "S": {
-      "item": "minecraft:acacia_slab"
-    },
-    "W": {
-      "item": "minecraft:magenta_wool"
-    }
+    "G": "#c:glass_blocks",
+    "S": "minecraft:acacia_slab",
+    "W": "minecraft:magenta_wool"
   },
   "pattern": [
     "SGS",

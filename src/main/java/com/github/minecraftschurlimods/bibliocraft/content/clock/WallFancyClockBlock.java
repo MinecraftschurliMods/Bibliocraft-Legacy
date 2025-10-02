@@ -50,7 +50,7 @@ public class WallFancyClockBlock extends AbstractClockBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return woodType != null ? new ItemStack(BCItems.FANCY_CLOCK.get(woodType)) : super.getCloneItemStack(state, target, level, pos, player);
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+        return woodType != null ? new ItemStack(BCItems.FANCY_CLOCK.get(woodType)) : super.getCloneItemStack(level, pos, state, includeData, player);
     }
 }

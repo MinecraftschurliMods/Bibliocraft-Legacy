@@ -5,21 +5,52 @@ import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
-public class ToolRackBER implements BlockEntityRenderer<ToolRackBlockEntity> {
+public class ToolRackBER implements BlockEntityRenderer<ToolRackBlockEntity, MultiItemContainerRenderState> {
+    private final ItemModelResolver itemModelResolver;
+
+    public ToolRackBER(BlockEntityRendererProvider.Context context) {
+        this.itemModelResolver = context.itemModelResolver();
+    }
+
     @Override
-    public void render(ToolRackBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
+    public MultiItemContainerRenderState createRenderState() {
+        return new MultiItemContainerRenderState();
+    }
+
+    @Override
+    public void extractRenderState(ToolRackBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
+        state.fill(blockEntity, ItemDisplayContext.FIXED, itemModelResolver);
+    }
+
+    @Override
+    public void submit(MultiItemContainerRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
         stack.pushPose();
-        ClientUtil.setupCenteredBER(stack, blockEntity);
+        ClientUtil.setupCenteredBER(stack, state);
         stack.translate(-0.21875f, 0.21875f, -0.03125f); // -3.5 / 16, 3.5 / 16, -1 / 32
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
+                ItemStackRenderState item = state.items[i * 2 + j];
+                if (item == null) {
+                    continue;
+                }
                 stack.pushPose();
                 stack.translate(j * 0.4375f, -i * 0.4375f, 0); // j * 7 / 16, -i * 7 / 16
                 stack.scale(0.4375f, 0.4375f, 0.4375f); // 7 / 16
                 stack.mulPose(Axis.YP.rotationDegrees(180));
-                ClientUtil.renderFixedItem(blockEntity.getItem(i * 2 + j), stack, buffer, light, overlay);
+                item.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
                 stack.popPose();
             }
         }

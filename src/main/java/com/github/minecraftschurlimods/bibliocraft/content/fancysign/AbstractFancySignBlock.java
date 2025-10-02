@@ -9,7 +9,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -47,21 +47,21 @@ public abstract class AbstractFancySignBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(BCTags.Items.FANCY_SIGN_WAX) && !state.getValue(WAXED)) {
             handleWaxing(true, stack, state, level, pos, player, hand);
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         if (stack.canPerformAction(ItemAbilities.AXE_WAX_OFF) && state.getValue(WAXED)) {
             handleWaxing(false, stack, state, level, pos, player, hand);
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         Component component = stack.get(DataComponents.CUSTOM_NAME);
         if (component != null) {
             String text = component.getString();
             if ("Dinnerbone".equals(text) || "Grumm".equals(text)) {
                 level.setBlockAndUpdate(pos, state.setValue(UPSIDE_DOWN, !state.getValue(UPSIDE_DOWN)));
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);

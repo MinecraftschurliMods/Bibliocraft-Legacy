@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.slottedbook;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,11 +20,11 @@ public class SlottedBookItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if (level.isClientSide()) return InteractionResultHolder.success(player.getItemInHand(usedHand));
+    public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
         if (player instanceof ServerPlayer sp) {
-            sp.openMenu(new SimpleMenuProvider((id, inv, p) -> new SlottedBookMenu(id, inv, usedHand), getDescription()), buf -> buf.writeEnum(usedHand));
+            sp.openMenu(new SimpleMenuProvider((id, inv, p) -> new SlottedBookMenu(id, inv, usedHand), getName()), buf -> buf.writeEnum(usedHand));
         }
-        return InteractionResultHolder.consume(player.getItemInHand(usedHand));
+        return InteractionResult.CONSUME;
     }
 }

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:fancy_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:red_jungle_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:jungle_slab"
-    }
+    "#": "bibliocraft:red_jungle_flat_seat_back",
+    "S": "minecraft:jungle_slab"
   },
   "pattern": [
     "S#S"

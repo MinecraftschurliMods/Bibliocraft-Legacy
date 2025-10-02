@@ -122,7 +122,7 @@ public class SeatBackBlock extends BCFacingBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         return new ItemStack(SeatBackItem.BLOCK_MAP.get(this).get(state.getValue(TYPE)).get());
     }
 }

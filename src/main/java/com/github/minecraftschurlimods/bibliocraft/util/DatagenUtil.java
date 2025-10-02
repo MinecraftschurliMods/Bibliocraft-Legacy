@@ -1,16 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
-import com.github.minecraftschurlimods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
-import net.minecraft.Util;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.core.Registry;
-import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.DyeColor;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -18,28 +10,18 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * Utility class holding various helper methods specifically for datagen.
  */
 @SuppressWarnings("unused")
 public final class DatagenUtil {
-    public static final Map<DyeColor, ResourceLocation> CANDLE_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_candle_lit"))));
-    public static final Map<DyeColor, ResourceLocation> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_stained_glass"))));
-    public static final Map<DyeColor, ResourceLocation> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_wool"))));
 
     /**
      * @param s The string to create a translation for.
@@ -60,138 +42,6 @@ public final class DatagenUtil {
             }
         }
         return builder.toString();
-    }
-
-    /**
-     * Adds a block with horizontal rotations and a parent model. Enables UV-locking.
-     *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    A {@link Supplier} for the {@link Block} to add the model for.
-     * @param name     The name of the model file.
-     * @param parent   The parent id of the model file.
-     * @param texture  The texture to apply.
-     */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, String name, ResourceLocation parent, ResourceLocation texture) {
-        horizontalBlockModel(provider, block, $ -> provider.models().withExistingParent(name, parent).texture("texture", texture), true);
-    }
-
-    /**
-     * Adds a block with horizontal rotations and a parent model.
-     *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    A {@link Supplier} for the {@link Block} to add the model for.
-     * @param name     The name of the model file.
-     * @param parent   The parent id of the model file.
-     * @param texture  The texture to apply.
-     * @param uvLock   Whether to UV-lock the models or not.
-     */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, String name, ResourceLocation parent, ResourceLocation texture, boolean uvLock) {
-        horizontalBlockModel(provider, block, $ -> provider.models().withExistingParent(name, parent).texture("texture", texture), uvLock);
-    }
-
-    /**
-     * Adds a block with horizontal rotations. Enables UV-locking.
-     *
-     * @param provider      Your mod's {@link BlockStateProvider}.
-     * @param block         A {@link Supplier} for the {@link Block} to add the model for.
-     * @param modelFunction A {@link Function} determining which {@link ModelFile} to use for which {@link BlockState}.
-     */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, Function<BlockState, ModelFile> modelFunction) {
-        horizontalBlockModel(provider, block, modelFunction, true);
-    }
-
-    /**
-     * Adds a block with horizontal rotations.
-     *
-     * @param provider      Your mod's {@link BlockStateProvider}.
-     * @param block         A {@link Supplier} for the {@link Block} to add the model for.
-     * @param modelFunction A {@link Function} determining which {@link ModelFile} to use for which {@link BlockState}.
-     * @param uvLock        Whether to UV-lock the block models or not.
-     */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, Function<BlockState, ModelFile> modelFunction, boolean uvLock) {
-        provider.getVariantBuilder(block.get()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(modelFunction.apply(state))
-                .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                .uvLock(uvLock)
-                .build());
-    }
-
-    /**
-     * Adds a double-high block with a bottom and top model file.
-     *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    The block to add the model for.
-     * @param bottom   The bottom model file.
-     * @param top      The top model file.
-     * @param uvLock   Whether to UV-lock the models or not.
-     */
-    public static void doubleHighHorizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, ModelFile bottom, ModelFile top, boolean uvLock) {
-        horizontalBlockModel(provider, block, state -> state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER ? bottom : top, uvLock);
-    }
-
-    /**
-     * Adds a block with an open/closed property.
-     *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    The block to add the model for.
-     * @param open     The open model file.
-     * @param closed   The closed model file.
-     * @param uvLock   Whether to UV-lock the models or not.
-     */
-    public static void openClosedHorizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, ModelFile open, ModelFile closed, boolean uvLock) {
-        horizontalBlockModel(provider, block, state -> state.getValue(BlockStateProperties.OPEN) ? open : closed, uvLock);
-    }
-
-    /**
-     * Adds a block with a fancy light type property.
-     *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    The block to add the model for.
-     * @param standing The standing model file.
-     * @param hanging  The hanging model file.
-     * @param wall     The wall model file.
-     * @param uvLock   Whether to UV-lock the models or not.
-     */
-    public static void fancyLightBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, ModelFile standing, ModelFile hanging, ModelFile wall, boolean uvLock) {
-        horizontalBlockModel(provider, block, state -> switch (state.getValue(AbstractFancyLightBlock.TYPE)) {
-            case STANDING -> standing;
-            case HANGING -> hanging;
-            case WALL -> wall;
-        }, uvLock);
-    }
-
-    /**
-     * Adds a fancy lamp model.
-     *
-     * @param provider     Your mod's {@link BlockStateProvider}.
-     * @param block        The block to add the model for.
-     * @param folderPrefix The folder prefix of the model.
-     * @param material     The material of the lamp. E.g. gold, iron.
-     * @param texture      The glass texture to use.
-     */
-    public static void fancyLampModel(BlockStateProvider provider, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
-        fancyLightBlockModel(provider, block,
-                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_standing", BCUtil.bcLoc("block/template/fancy_lamp/standing_" + material)).texture("color", texture),
-                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_hanging", BCUtil.bcLoc("block/template/fancy_lamp/hanging_" + material)).texture("color", texture),
-                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_wall", BCUtil.bcLoc("block/template/fancy_lamp/wall_" + material)).texture("color", texture),
-                false);
-    }
-
-    /**
-     * Adds a fancy lantern model.
-     *
-     * @param provider     Your mod's {@link BlockStateProvider}.
-     * @param block        The block to add the model for.
-     * @param folderPrefix The folder prefix of the model.
-     * @param material     The material of the lantern. E.g. gold, iron.
-     * @param texture      The candle texture to use.
-     */
-    public static void fancyLanternModel(BlockStateProvider provider, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
-        fancyLightBlockModel(provider, block,
-                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_standing", BCUtil.bcLoc("block/template/fancy_lantern/standing_" + material)).texture("color", texture),
-                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_hanging", BCUtil.bcLoc("block/template/fancy_lantern/hanging_" + material)).texture("color", texture),
-                provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_wall", BCUtil.bcLoc("block/template/fancy_lantern/wall_" + material)).texture("color", texture),
-                false);
     }
 
     /**
@@ -221,7 +71,8 @@ public final class DatagenUtil {
      * @return A standard loot table that drops the given nameable block.
      */
     public static LootTable.Builder createNameableTable(Block block) {
-        return createStandardTable(LootItem.lootTableItem(block).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)));
+        return createStandardTable(LootItem.lootTableItem(block)
+                .apply(CopyNameFunction.copyName(new CopyNameFunction.Source(LootContextParams.BLOCK_ENTITY))));
     }
 
     /**
@@ -233,7 +84,7 @@ public final class DatagenUtil {
     public static LootTable.Builder createFancyArmorStandTable(Block block) {
         return createStandardTable(LootItem.lootTableItem(block)
                 .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)))
-                .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)));
+                .apply(CopyNameFunction.copyName(new CopyNameFunction.Source(LootContextParams.BLOCK_ENTITY))));
     }
 
     /**
@@ -248,28 +99,24 @@ public final class DatagenUtil {
     }
 
     /**
-     * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
+     * Adds all elements of the given collection to the {@link TagAppender}
      *
-     * @param registry   The {@link Registry} associated with the collection elements.
      * @param collection The collection containing the elements to add.
-     * @param tag        The given {@link TagsProvider.TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
+     * @param tag        The given {@link TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
      * @param <T>        The type of the collection elements.
      */
-    @SuppressWarnings("DataFlowIssue")
-    public static <T> void addAll(Registry<T> registry, Collection<? extends T> collection, TagsProvider.TagAppender<T> tag) {
-        collection.stream().map(e -> ResourceKey.create(registry.key(), registry.getKey(e))).forEach(tag::add);
+    public static <T> void addAll(Collection<? extends T> collection, TagAppender<T, T> tag) {
+        collection.forEach(tag::add);
     }
 
     /**
-     * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
+     * Adds all elements of the given collection to the {@link TagAppender}
      *
-     * @param registry   The {@link Registry} associated with the collection elements.
      * @param collection The collection containing the elements to add.
-     * @param tag        The given {@link TagsProvider.TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
+     * @param tag        The given {@link TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
      * @param <T>        The type of the collection elements.
      */
-    @SuppressWarnings("DataFlowIssue")
-    public static <T> void addAllOptional(Registry<T> registry, Collection<? extends T> collection, TagsProvider.TagAppender<T> tag) {
-        collection.stream().map(registry::getKey).forEach(tag::addOptional);
+    public static <T> void addAllOptional(Collection<? extends T> collection, TagAppender<T, T> tag) {
+        collection.forEach(tag::addOptional);
     }
 }

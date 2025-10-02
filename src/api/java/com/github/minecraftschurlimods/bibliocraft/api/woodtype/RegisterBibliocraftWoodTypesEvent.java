@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 /**
  * Register your own {@link BibliocraftWoodType}s here.
  * <p>
- * This event is not cancelable. This event is fired on the {@link net.neoforged.fml.common.EventBusSubscriber.Bus#MOD mod event bus}.
+ * This event is not cancelable. This event is fired on the mod event bus.
  */
 public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusEvent {
     private final SequencedMap<ResourceLocation, BibliocraftWoodType> values;

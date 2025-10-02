@@ -3,18 +3,10 @@
   "category": "misc",
   "group": "bibliocraft:fancy_lamp",
   "key": {
-    "C": {
-      "tag": "c:glass_blocks/colorless"
-    },
-    "G": {
-      "item": "minecraft:glowstone"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "N": {
-      "tag": "c:nuggets/iron"
-    }
+    "C": "#c:glass_blocks/colorless",
+    "G": "minecraft:glowstone",
+    "I": "#c:ingots/iron",
+    "N": "#c:nuggets/iron"
   },
   "pattern": [
     "CGC",

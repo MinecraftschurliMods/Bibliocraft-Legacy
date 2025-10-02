@@ -11,7 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -59,7 +59,7 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
 
     public FancyLanternBlock(Properties properties, ResourceLocation particle) {
         super(properties);
-        this.particle = Lazy.of(() -> BuiltInRegistries.PARTICLE_TYPE.get(particle) instanceof ParticleOptions options ? options : null);
+        this.particle = Lazy.of(() -> BuiltInRegistries.PARTICLE_TYPE.getValue(particle) instanceof ParticleOptions options ? options : null);
     }
 
     @Override
@@ -87,12 +87,12 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.isEmpty() && player.getAbilities().mayBuild && state.getValue(LIT)) {
             level.setBlock(pos, state.setValue(LIT, false), Block.UPDATE_ALL_IMMEDIATE);
             level.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1f, 1f);
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         } else {
             return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
         }

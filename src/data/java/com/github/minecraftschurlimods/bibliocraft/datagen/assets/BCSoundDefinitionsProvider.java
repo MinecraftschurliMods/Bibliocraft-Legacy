@@ -6,15 +6,14 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.sounds.SoundEvent;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinition;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 
 import java.util.stream.IntStream;
 
 public class BCSoundDefinitionsProvider extends SoundDefinitionsProvider {
-    public BCSoundDefinitionsProvider(PackOutput output, ExistingFileHelper helper) {
-        super(output, BibliocraftApi.MOD_ID, helper);
+    public BCSoundDefinitionsProvider(PackOutput output) {
+        super(output, BibliocraftApi.MOD_ID);
     }
 
     @Override

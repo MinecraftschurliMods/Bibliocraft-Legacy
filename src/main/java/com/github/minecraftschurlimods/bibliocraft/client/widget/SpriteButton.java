@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
@@ -18,7 +19,7 @@ public abstract class SpriteButton extends Button {
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         ResourceLocation sprite = getSprite();
         if (sprite != null) {
-            guiGraphics.blitSprite(sprite, getX(), getY(), getWidth(), getHeight());
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, getX(), getY(), getWidth(), getHeight());
         }
     }
 

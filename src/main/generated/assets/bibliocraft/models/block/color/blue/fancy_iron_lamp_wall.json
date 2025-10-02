@@ -1,6 +1,7 @@
 {
-  "parent": "bibliocraft:block/template/fancy_lamp/wall_iron",
+  "parent": "bibliocraft:block/template/fancy_lamp/wall",
   "textures": {
-    "color": "minecraft:block/blue_stained_glass"
+    "color": "minecraft:block/blue_stained_glass",
+    "metal": "minecraft:block/iron_block"
   }
 }

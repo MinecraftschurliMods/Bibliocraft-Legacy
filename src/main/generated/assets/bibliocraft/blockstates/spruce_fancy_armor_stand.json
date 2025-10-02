@@ -1,77 +1,39 @@
 {
   "variants": {
-    "facing=east,half=lower,waterlogged=false": {
+    "facing=east,half=lower": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,half=lower,waterlogged=true": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,half=upper,waterlogged=false": {
+    "facing=east,half=upper": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,half=upper,waterlogged=true": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=north,half=lower,waterlogged=false": {
+    "facing=north,half=lower": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
       "uvlock": true
     },
-    "facing=north,half=lower,waterlogged=true": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
-      "uvlock": true
-    },
-    "facing=north,half=upper,waterlogged=false": {
+    "facing=north,half=upper": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
       "uvlock": true
     },
-    "facing=north,half=upper,waterlogged=true": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
-      "uvlock": true
-    },
-    "facing=south,half=lower,waterlogged=false": {
+    "facing=south,half=lower": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,half=lower,waterlogged=true": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,half=upper,waterlogged=false": {
+    "facing=south,half=upper": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,half=upper,waterlogged=true": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=west,half=lower,waterlogged=false": {
+    "facing=west,half=lower": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,half=lower,waterlogged=true": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_bottom",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,half=upper,waterlogged=false": {
-      "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,half=upper,waterlogged=true": {
+    "facing=west,half=upper": {
       "model": "bibliocraft:block/wood/spruce/fancy_armor_stand_top",
       "uvlock": true,
       "y": 270

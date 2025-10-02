@@ -6,22 +6,21 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.item.equipment.Equippable;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -72,11 +71,11 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos currentPos, Direction facing, BlockPos neighborPos, BlockState facingState, RandomSource random) {
         DoubleBlockHalf half = state.getValue(HALF);
         if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP) && (!facingState.is(this) || facingState.getValue(HALF) == half))
             return Blocks.AIR.defaultBlockState();
-        return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+        return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, level, scheduledTickAccess, currentPos, facing, neighborPos, facingState, random);
     }
 
     @Override
@@ -84,7 +83,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        return pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)
+        return level.isInsideBuildHeight(pos.getY() + 1) && level.getBlockState(pos.above()).canBeReplaced(context)
                 ? BCUtil.nonNull(super.getStateForPlacement(context))
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER)
@@ -107,7 +106,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (player.isCreative()) {
                 //Copy of protected method DoublePlantBlock#preventDropFromBottomPart
                 if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
@@ -140,7 +139,13 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
-            if (slot != -1 && trySwapArmor(player.getInventory().getArmor(3 - slot), slot, 39 - slot, state, level, pos, player))
+            if (slot != -1 && trySwapArmor(player.getItemBySlot(switch (3 - slot) {
+                case 0 -> EquipmentSlot.FEET;
+                case 1 -> EquipmentSlot.LEGS;
+                case 2 -> EquipmentSlot.CHEST;
+                case 3 -> EquipmentSlot.HEAD;
+                default -> throw new IllegalStateException("Invalid slot index: " + slot);
+            }), slot, 39 - slot, state, level, pos, player))
                 return InteractionResult.SUCCESS;
         }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
@@ -150,11 +155,11 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
-    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
-            if (slot != -1 && trySwapArmor(stack, slot, hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : Inventory.SLOT_OFFHAND, state, level, pos, player))
-                return ItemInteractionResult.SUCCESS;
+            if (slot != -1 && trySwapArmor(stack, slot, hand == InteractionHand.MAIN_HAND ? player.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND, state, level, pos, player))
+                return InteractionResult.SUCCESS;
         }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();
@@ -215,8 +220,8 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         if (!bcbe.canPlaceItem(slot, stack)) return false;
         bcbe.setItem(slot, stack);
         player.getInventory().setItem(playerSlot, slotStack);
-        if (slotStack.getItem() instanceof Equipable equipable) {
-            level.playSound(null, player, equipable.getEquipSound().value(), SoundSource.PLAYERS, 1, 1);
+        if (slotStack.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {
+            level.playSound(null, player, equipable.equipSound().value(), SoundSource.PLAYERS, 1, 1);
         }
         return true;
     }

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bibliocraft:grandfather_clock",
+  "ingredients": [
+    "bibliocraft:pale_oak_fancy_clock",
+    "bibliocraft:pale_oak_fancy_clock"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:pale_oak_grandfather_clock"
+  }
+}
