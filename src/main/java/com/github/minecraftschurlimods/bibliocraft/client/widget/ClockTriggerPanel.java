@@ -3,12 +3,12 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.neoforged.neoforge.client.gui.widget.ScrollPanel;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix3x2fStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,28 +34,28 @@ public class ClockTriggerPanel extends ScrollPanel {
     }
 
     @Override
-    protected void drawPanel(GuiGraphics graphics, int entryRight, int relativeY, Tesselator tess, int mouseX, int mouseY) {
-        PoseStack pose = graphics.pose();
-        pose.pushPose();
-        pose.translate(left, relativeY, 0);
+    protected void drawPanel(GuiGraphics graphics, int entryRight, int relativeY, int mouseX, int mouseY) {
+        Matrix3x2fStack pose = graphics.pose();
+        pose.pushMatrix();
+        pose.translate(left, relativeY);
         for (int i = 0; i < elements.size(); i++) {
-            pose.pushPose();
+            pose.pushMatrix();
             elements.get(i).render(graphics, mouseX - left, mouseY - i * ClockTriggerElement.HEIGHT - relativeY, 1);
-            pose.popPose();
-            pose.translate(0, ClockTriggerElement.HEIGHT, 0);
+            pose.popMatrix();
+            pose.translate(0, ClockTriggerElement.HEIGHT);
         }
-        pose.popPose();
+        pose.popMatrix();
     }
 
     public void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
         ClockTriggerElement hovered = getHovered(mouseX, mouseY);
         if (hovered == null) return;
         float y = mouseY - top + scrollDistance;
-        PoseStack pose = graphics.pose();
-        pose.pushPose();
-        pose.translate(left, mouseY, 0);
+        Matrix3x2fStack pose = graphics.pose();
+        pose.pushMatrix();
+        pose.translate(left, mouseY);
         hovered.renderTooltip(graphics, mouseX - left, (int) (y % ClockTriggerElement.HEIGHT));
-        pose.popPose();
+        pose.popMatrix();
     }
 
     @Override
@@ -73,21 +73,21 @@ public class ClockTriggerPanel extends ScrollPanel {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        ClockTriggerElement hovered = getHovered(mouseX, mouseY);
-        return hovered == null ? super.mouseClicked(mouseX, mouseY, button) : hovered.mouseClicked(mouseX - left, (mouseY - top + scrollDistance) % ClockTriggerElement.HEIGHT, button);
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+        ClockTriggerElement hovered = getHovered(event.x(), event.y());
+        return hovered == null ? super.mouseClicked(event, doubleClick) : hovered.mouseClicked(new MouseButtonEvent(event.x() - left, (event.y() - top + scrollDistance) % ClockTriggerElement.HEIGHT, event.buttonInfo()), doubleClick);
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        ClockTriggerElement hovered = getHovered(mouseX, mouseY);
-        return hovered == null ? super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY) : hovered.mouseDragged(mouseX - left, (mouseY - top + scrollDistance) % ClockTriggerElement.HEIGHT, button, deltaX, deltaY);
+    public boolean mouseDragged(MouseButtonEvent event, double deltaX, double deltaY) {
+        ClockTriggerElement hovered = getHovered(event.x(), event.y());
+        return hovered == null ? super.mouseDragged(event, deltaX, deltaY) : hovered.mouseDragged(new MouseButtonEvent(event.x() - left, (event.y() - top + scrollDistance) % ClockTriggerElement.HEIGHT, event.buttonInfo()), deltaX, deltaY);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        ClockTriggerElement hovered = getHovered(mouseX, mouseY);
-        return hovered == null ? super.mouseReleased(mouseX, mouseY, button) : hovered.mouseReleased(mouseX - left, (mouseY - top + scrollDistance) % ClockTriggerElement.HEIGHT, button);
+    public boolean mouseReleased(MouseButtonEvent event) {
+        ClockTriggerElement hovered = getHovered(event.x(), event.y());
+        return hovered == null ? super.mouseReleased(event) : hovered.mouseReleased(new MouseButtonEvent(event.x() - left, (event.y() - top + scrollDistance) % ClockTriggerElement.HEIGHT, event.buttonInfo()));
     }
 
     @Override

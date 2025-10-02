@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.util.block;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
@@ -15,8 +16,11 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Abstract superclass for non-rotatable entity blocks in this mod.
@@ -41,15 +45,8 @@ public abstract class BCEntityBlock extends BCWaterloggedBlock implements Entity
     }
 
     @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean flag) {
-        if (!state.is(newState.getBlock())) {
-            BlockEntity blockentity = level.getBlockEntity(pos);
-            if (blockentity instanceof Container container) {
-                Containers.dropContents(level, pos, container);
-                level.updateNeighbourForOutputSignal(pos, this);
-            }
-            super.onRemove(state, level, pos, newState, flag);
-        }
+    protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+        Containers.updateNeighboursAfterDestroy(state, level, pos);
     }
 
     @Override

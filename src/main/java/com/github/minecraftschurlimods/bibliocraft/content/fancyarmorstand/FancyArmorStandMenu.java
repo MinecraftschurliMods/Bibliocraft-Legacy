@@ -2,14 +2,15 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
 import org.jetbrains.annotations.Nullable;
 
 public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
@@ -121,7 +122,7 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() instanceof Equipable equipable && equipable.getEquipmentSlot() == slotType;
+            return stack.get(DataComponents.EQUIPPABLE) instanceof Equippable equippable && equippable.slot() == slotType;
         }
 
         @Override

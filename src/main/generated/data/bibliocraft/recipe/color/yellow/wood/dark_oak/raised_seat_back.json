@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:raised_seat_backs",
   "key": {
-    "R": {
-      "tag": "c:rods/wooden"
-    },
-    "S": {
-      "item": "minecraft:dark_oak_slab"
-    },
-    "W": {
-      "item": "minecraft:yellow_wool"
-    }
+    "R": "#c:rods/wooden",
+    "S": "minecraft:dark_oak_slab",
+    "W": "minecraft:yellow_wool"
   },
   "pattern": [
     " W ",

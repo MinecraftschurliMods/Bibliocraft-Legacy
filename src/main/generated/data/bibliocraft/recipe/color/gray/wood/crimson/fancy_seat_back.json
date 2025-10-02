@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:fancy_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:gray_crimson_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:crimson_slab"
-    }
+    "#": "bibliocraft:gray_crimson_flat_seat_back",
+    "S": "minecraft:crimson_slab"
   },
   "pattern": [
     "S#S"

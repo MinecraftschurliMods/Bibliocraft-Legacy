@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "minecraft:smooth_stone_slab"
-    }
+    "I": "#c:ingots/iron",
+    "S": "minecraft:smooth_stone_slab"
   },
   "pattern": [
     " I ",

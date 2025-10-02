@@ -67,7 +67,7 @@ public class LabelBlock extends BCFacingEntityBlock {
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (!player.isSecondaryUseActive()) {
-            BlockPos newPos = pos.offset(state.getValue(FACING).getOpposite().getNormal());
+            BlockPos newPos = pos.offset(state.getValue(FACING).getOpposite().getUnitVec3i());
             return level.getBlockState(newPos).useWithoutItem(level, player, hit.withPosition(newPos));
         }
         BCUtil.openBEMenu(player, level, pos);

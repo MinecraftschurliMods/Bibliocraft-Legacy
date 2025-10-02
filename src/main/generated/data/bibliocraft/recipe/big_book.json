@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": {
-      "item": "minecraft:writable_book"
-    },
-    "P": {
-      "item": "minecraft:paper"
-    }
+    "B": "minecraft:writable_book",
+    "P": "minecraft:paper"
   },
   "pattern": [
     "PPP",

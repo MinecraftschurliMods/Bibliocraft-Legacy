@@ -14,6 +14,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WeatheringCopper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -25,10 +26,16 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add(BCBlocks.CLEAR_FANCY_GOLD_LAMP.get(), "Fancy Gold Lamp");
-        add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get(), "Fancy Iron Lamp");
-        add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get(), "Fancy Gold Lantern");
-        add(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get(), "Fancy Iron Lantern");
+        addDefaultBlock(BCBlocks.CLEAR_FANCY_GOLD_LAMP);
+        addDefaultBlock(BCBlocks.CLEAR_FANCY_IRON_LAMP);
+        addDefaultBlock(BCBlocks.CLEAR_FANCY_GOLD_LANTERN);
+        addDefaultBlock(BCBlocks.CLEAR_FANCY_IRON_LANTERN);
+        for (WeatheringCopper.WeatherState weatherState : WeatheringCopper.WeatherState.values()) {
+            addDefaultBlock(BCBlocks.CLEAR_FANCY_COPPER_LAMP.getWeathering(weatherState));
+            addDefaultBlock(BCBlocks.CLEAR_FANCY_COPPER_LAMP.getWaxed(weatherState));
+            addDefaultBlock(BCBlocks.CLEAR_FANCY_COPPER_LANTERN.getWeathering(weatherState));
+            addDefaultBlock(BCBlocks.CLEAR_FANCY_COPPER_LANTERN.getWaxed(weatherState));
+        }
         add(BCBlocks.CLEAR_TYPEWRITER.get(), "Typewriter");
         for (DyeColor color : DyeColor.values()) {
             addDefaultBlock(BCBlocks.FANCY_GOLD_LAMP.holder(color));
@@ -36,6 +43,12 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
             addDefaultBlock(BCBlocks.FANCY_GOLD_LANTERN.holder(color));
             addDefaultBlock(BCBlocks.FANCY_IRON_LANTERN.holder(color));
             addDefaultBlock(BCBlocks.TYPEWRITER.holder(color));
+            for (WeatheringCopper.WeatherState weatherState : WeatheringCopper.WeatherState.values()) {
+                addDefaultBlock(BCBlocks.FANCY_COPPER_LAMP.getWeathering(weatherState).holder(color));
+                addDefaultBlock(BCBlocks.FANCY_COPPER_LAMP.getWaxed(weatherState).holder(color));
+                addDefaultBlock(BCBlocks.FANCY_COPPER_LANTERN.getWeathering(weatherState).holder(color));
+                addDefaultBlock(BCBlocks.FANCY_COPPER_LANTERN.getWaxed(weatherState).holder(color));
+            }
         }
         addDefaultBlock(BCBlocks.SOUL_FANCY_GOLD_LANTERN);
         addDefaultBlock(BCBlocks.SOUL_FANCY_IRON_LANTERN);
@@ -93,9 +106,11 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Blocks.FANCY_LAMPS, "Fancy Lamps");
         add(BCTags.Blocks.FANCY_LAMPS_GOLD, "Gold Fancy Lamps");
         add(BCTags.Blocks.FANCY_LAMPS_IRON, "Iron Fancy Lamps");
+        add(BCTags.Blocks.FANCY_LAMPS_COPPER, "Copper Fancy Lamps");
         add(BCTags.Blocks.FANCY_LANTERNS, "Fancy Lanterns");
         add(BCTags.Blocks.FANCY_LANTERNS_GOLD, "Gold Fancy Lanterns");
         add(BCTags.Blocks.FANCY_LANTERNS_IRON, "Iron Fancy Lanterns");
+        add(BCTags.Blocks.FANCY_LANTERNS_COPPER, "Copper Fancy Lanterns");
         add(BCTags.Blocks.TYPEWRITERS, "Typewriters");
         add(BCTags.Items.BOOKCASES, "Bookcases");
         add(BCTags.Items.DISPLAY_CASES, "Display Cases");
@@ -115,9 +130,11 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(BCTags.Items.FANCY_LAMPS, "Fancy Lamps");
         add(BCTags.Items.FANCY_LAMPS_GOLD, "Gold Fancy Lamps");
         add(BCTags.Items.FANCY_LAMPS_IRON, "Iron Fancy Lamps");
+        add(BCTags.Items.FANCY_LAMPS_COPPER, "Copper Fancy Lamps");
         add(BCTags.Items.FANCY_LANTERNS, "Fancy Lanterns");
         add(BCTags.Items.FANCY_LANTERNS_GOLD, "Gold Fancy Lanterns");
         add(BCTags.Items.FANCY_LANTERNS_IRON, "Iron Fancy Lanterns");
+        add(BCTags.Items.FANCY_LANTERNS_COPPER, "Copper Fancy Lanterns");
         add(BCTags.Items.TYPEWRITERS, "Typewriters");
         add(BCTags.Items.BOOKCASE_BOOKS, "Books for Bookcases");
         add(BCTags.Items.COOKIE_JAR_COOKIES, "Cookies for Cookie Jars");

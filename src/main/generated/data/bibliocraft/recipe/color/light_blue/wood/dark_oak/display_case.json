@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:display_cases",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "S": {
-      "item": "minecraft:dark_oak_slab"
-    },
-    "W": {
-      "item": "minecraft:light_blue_wool"
-    }
+    "G": "#c:glass_blocks",
+    "S": "minecraft:dark_oak_slab",
+    "W": "minecraft:light_blue_wool"
   },
   "pattern": [
     "SGS",

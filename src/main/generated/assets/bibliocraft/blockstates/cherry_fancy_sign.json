@@ -1,305 +1,39 @@
 {
   "variants": {
-    "facing=east,hanging=false,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=east,hanging=false": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,hanging=false,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=false,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=false,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=false,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=false,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=false,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=false,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=true,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=east,hanging=true": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,hanging=true,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=true,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=true,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=true,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=true,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=true,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,hanging=true,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=north,hanging=false,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=north,hanging=false": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign",
       "uvlock": true
     },
-    "facing=north,hanging=false,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,hanging=false,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,hanging=false,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,hanging=false,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,hanging=false,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,hanging=false,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,hanging=false,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,hanging=true,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=north,hanging=true": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
       "uvlock": true
     },
-    "facing=north,hanging=true,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true
-    },
-    "facing=north,hanging=true,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true
-    },
-    "facing=north,hanging=true,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true
-    },
-    "facing=north,hanging=true,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true
-    },
-    "facing=north,hanging=true,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true
-    },
-    "facing=north,hanging=true,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true
-    },
-    "facing=north,hanging=true,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true
-    },
-    "facing=south,hanging=false,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=south,hanging=false": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,hanging=false,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=false,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=false,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=false,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=false,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=false,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=false,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=true,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=south,hanging=true": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,hanging=true,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=true,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=true,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=true,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=true,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=true,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,hanging=true,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=west,hanging=false,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=west,hanging=false": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,hanging=false,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=false,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=false,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=false,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=false,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=false,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=false,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=false,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,hanging=true,upside_down=true,waterlogged=true,waxed=true": {
+    "facing=west,hanging=true": {
       "model": "bibliocraft:block/wood/cherry/fancy_sign_hanging",
       "uvlock": true,
       "y": 270

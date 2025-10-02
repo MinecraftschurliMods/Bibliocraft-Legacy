@@ -10,7 +10,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +20,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -46,7 +47,7 @@ public class StockroomCatalogItem extends Item {
                 .filter(e -> e.dimension() == level.dimension())
                 .map(GlobalPos::pos)
                 .filter(level::hasChunkAt)
-                .filter(e -> level.getCapability(Capabilities.ItemHandler.BLOCK, e, null) != null)
+                .filter(e -> level.getCapability(Capabilities.Item.BLOCK, e, null) != null)
                 .sorted(switch (containerSorting) {
                     case ALPHABETICAL_ASC, DISTANCE_ASC -> COMPARE_DISTANCE;
                     case ALPHABETICAL_DESC, DISTANCE_DESC -> BCUtil.reverseComparator(COMPARE_DISTANCE);
@@ -62,10 +63,11 @@ public class StockroomCatalogItem extends Item {
     public static List<StockroomCatalogItemEntry> calculateItems(List<BlockPos> positions, Level level, StockroomCatalogSorting.Item itemSorting) {
         SequencedMap<ItemStack, StockroomCatalogItemEntry> tempItems = new LinkedHashMap<>();
         for (BlockPos pos : positions) {
-            IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+            ResourceHandler<ItemResource> cap = level.getCapability(Capabilities.Item.BLOCK, pos, null);
             if (cap == null) continue;
-            for (int i = 0; i < cap.getSlots(); i++) {
-                ItemStack originalStack = cap.getStackInSlot(i);
+            IItemHandler handler = IItemHandler.of(cap);
+            for (int i = 0; i < handler.getSlots(); i++) {
+                ItemStack originalStack = handler.getStackInSlot(i);
                 if (originalStack.isEmpty()) continue;
                 ItemStack stack = originalStack.copy();
                 int count = stack.getCount();
@@ -108,7 +110,7 @@ public class StockroomCatalogItem extends Item {
             ItemStack stack = context.getItemInHand();
             StockroomCatalogContent list = stack.getOrDefault(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT);
             boolean hasNeighbor = state.hasProperty(ChestBlock.TYPE) && state.getValue(ChestBlock.TYPE) != ChestType.SINGLE;
-            GlobalPos neighborPos = hasNeighbor ? new GlobalPos(level.dimension(), pos.offset(ChestBlock.getConnectedDirection(state).getNormal())) : null;
+            GlobalPos neighborPos = hasNeighbor ? new GlobalPos(level.dimension(), pos.offset(ChestBlock.getConnectedDirection(state).getUnitVec3i())) : null;
             boolean hasPositionAtNeighbor = hasNeighbor && list.positions().contains(neighborPos);
             GlobalPos globalPos = hasPositionAtNeighbor ? neighborPos : new GlobalPos(level.dimension(), pos);
             if (list.positions().contains(globalPos)) {
@@ -116,7 +118,7 @@ public class StockroomCatalogItem extends Item {
                 player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE_CONTAINER_KEY, BCUtil.getNameAtPos(level, pos)), true);
                 return InteractionResult.SUCCESS;
             }
-            IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, context.getClickedFace());
+            ResourceHandler<ItemResource> cap = level.getCapability(Capabilities.Item.BLOCK, pos, context.getClickedFace());
             if (cap != null) {
                 stack.update(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT, component -> component.add(globalPos));
                 player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_ADD_CONTAINER_KEY, BCUtil.getNameAtPos(level, pos)), true);
@@ -127,11 +129,11 @@ public class StockroomCatalogItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public InteractionResult use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (level.isClientSide()) {
             ClientUtil.openStockroomCatalogScreen(stack, player, hand);
         }
-        return InteractionResultHolder.success(stack);
+        return InteractionResult.SUCCESS;
     }
 }

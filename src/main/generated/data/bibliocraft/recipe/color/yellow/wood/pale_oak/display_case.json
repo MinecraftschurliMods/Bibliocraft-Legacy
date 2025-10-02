@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:display_cases",
+  "key": {
+    "G": "#c:glass_blocks",
+    "S": "minecraft:pale_oak_slab",
+    "W": "minecraft:yellow_wool"
+  },
+  "pattern": [
+    "SGS",
+    "SWS",
+    "SSS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:yellow_pale_oak_display_case"
+  }
+}

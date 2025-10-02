@@ -40,14 +40,16 @@ public class DiscRackBlock extends BCFacingInteractibleBlock {
             case WEST -> 12.5 - pos.x();
             default -> -1;
         };
-        return value == -1 ? -1 : (int) value;
+        return value == -1 || value >= 9 ? -1 : (int) value;
     }
 
     @Override
     protected boolean canAccessFromDirection(BlockState state, Direction direction) {
+        Direction.Axis facingAxis = state.getValue(FACING).getAxis();
+        Direction.Axis directionAxis = direction.getAxis();
         return direction == Direction.UP ||
-                state.getValue(FACING).getAxis() == Direction.Axis.X && direction.getAxis() == Direction.Axis.Z ||
-                state.getValue(FACING).getAxis() == Direction.Axis.Z && direction.getAxis() == Direction.Axis.X;
+                facingAxis == Direction.Axis.X && directionAxis == Direction.Axis.Z ||
+                facingAxis == Direction.Axis.Z && directionAxis == Direction.Axis.X;
     }
 
     @Override

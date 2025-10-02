@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/table/one",
+  "textures": {
+    "texture": "minecraft:block/mangrove_planks"
+  }
+}

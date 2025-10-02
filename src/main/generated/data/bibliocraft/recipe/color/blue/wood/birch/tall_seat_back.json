@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:blue_birch_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:birch_slab"
-    }
+    "#": "bibliocraft:blue_birch_flat_seat_back",
+    "S": "minecraft:birch_slab"
   },
   "pattern": [
     "S",

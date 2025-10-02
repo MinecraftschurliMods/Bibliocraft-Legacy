@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:magenta_acacia_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:acacia_slab"
-    }
+    "#": "bibliocraft:magenta_acacia_flat_seat_back",
+    "S": "minecraft:acacia_slab"
   },
   "pattern": [
     "S",

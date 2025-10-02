@@ -5,15 +5,13 @@ import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -74,11 +72,11 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         DoubleBlockHalf half = state.getValue(HALF);
-        if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP) && (!facingState.is(this) || facingState.getValue(HALF) == half))
+        if (direction.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (direction == Direction.UP) && (!neighborState.is(this) || neighborState.getValue(HALF) == half))
             return Blocks.AIR.defaultBlockState();
-        return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+        return half == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     @Override
@@ -86,7 +84,7 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        return pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)
+        return level.isInsideBuildHeight(pos.getY() + 1) && level.getBlockState(pos.above()).canBeReplaced(context)
                 ? BCUtil.nonNull(super.getStateForPlacement(context))
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER)
@@ -109,7 +107,7 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
 
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (player.isCreative()) {
                 //Copy of protected method DoublePlantBlock#preventDropFromBottomPart
                 if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {

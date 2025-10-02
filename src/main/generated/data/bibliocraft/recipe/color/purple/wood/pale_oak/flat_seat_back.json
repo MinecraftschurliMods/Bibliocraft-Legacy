@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:flat_seat_backs",
+  "key": {
+    "R": "#c:rods/wooden",
+    "S": "minecraft:pale_oak_slab",
+    "W": "minecraft:purple_wool"
+  },
+  "pattern": [
+    "RWR",
+    "RSR",
+    "R R"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:purple_pale_oak_flat_seat_back"
+  }
+}

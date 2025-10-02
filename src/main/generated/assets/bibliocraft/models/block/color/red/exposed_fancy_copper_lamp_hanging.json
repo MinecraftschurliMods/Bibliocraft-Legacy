@@ -1,0 +1,7 @@
+{
+  "parent": "bibliocraft:block/template/fancy_lamp/hanging",
+  "textures": {
+    "color": "minecraft:block/red_stained_glass",
+    "metal": "minecraft:block/exposed_copper"
+  }
+}

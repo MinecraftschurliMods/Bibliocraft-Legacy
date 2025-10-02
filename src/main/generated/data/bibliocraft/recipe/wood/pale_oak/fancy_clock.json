@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:fancy_clock",
+  "key": {
+    "C": "minecraft:clock",
+    "I": "#c:ingots/copper",
+    "R": "#c:rods/wooden",
+    "S": "minecraft:pale_oak_slab"
+  },
+  "pattern": [
+    "SCS",
+    "SRS",
+    "SIS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:pale_oak_fancy_clock"
+  }
+}

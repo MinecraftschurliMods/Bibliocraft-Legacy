@@ -1,26 +1,14 @@
 {
   "variants": {
-    "axis=x,waterlogged=false": {
+    "axis=x": {
       "model": "bibliocraft:block/gold_chain",
       "x": 90,
       "y": 90
     },
-    "axis=x,waterlogged=true": {
-      "model": "bibliocraft:block/gold_chain",
-      "x": 90,
-      "y": 90
-    },
-    "axis=y,waterlogged=false": {
+    "axis=y": {
       "model": "bibliocraft:block/gold_chain"
     },
-    "axis=y,waterlogged=true": {
-      "model": "bibliocraft:block/gold_chain"
-    },
-    "axis=z,waterlogged=false": {
-      "model": "bibliocraft:block/gold_chain",
-      "x": 90
-    },
-    "axis=z,waterlogged=true": {
+    "axis=z": {
       "model": "bibliocraft:block/gold_chain",
       "x": 90
     }

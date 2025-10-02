@@ -1,0 +1,412 @@
+{
+  "values": {
+    "bibliocraft:black_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:black_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:black_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:black_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:black_fancy_copper_lamp": {
+      "waxed": "bibliocraft:black_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:black_fancy_copper_lantern": {
+      "waxed": "bibliocraft:black_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:black_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:black_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:black_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:black_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:black_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:black_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:black_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:black_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:blue_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:blue_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:blue_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:blue_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:blue_fancy_copper_lamp": {
+      "waxed": "bibliocraft:blue_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:blue_fancy_copper_lantern": {
+      "waxed": "bibliocraft:blue_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:blue_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:blue_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:blue_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:blue_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:blue_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:blue_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:blue_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:blue_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:brown_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:brown_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:brown_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:brown_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:brown_fancy_copper_lamp": {
+      "waxed": "bibliocraft:brown_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:brown_fancy_copper_lantern": {
+      "waxed": "bibliocraft:brown_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:brown_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:brown_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:brown_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:brown_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:brown_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:brown_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:brown_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:brown_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:cyan_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:cyan_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:cyan_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:cyan_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:cyan_fancy_copper_lamp": {
+      "waxed": "bibliocraft:cyan_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:cyan_fancy_copper_lantern": {
+      "waxed": "bibliocraft:cyan_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:cyan_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:cyan_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:cyan_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:cyan_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:cyan_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:cyan_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:cyan_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:cyan_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:fancy_copper_lamp": {
+      "waxed": "bibliocraft:waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:fancy_copper_lantern": {
+      "waxed": "bibliocraft:waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:gray_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:gray_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:gray_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:gray_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:gray_fancy_copper_lamp": {
+      "waxed": "bibliocraft:gray_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:gray_fancy_copper_lantern": {
+      "waxed": "bibliocraft:gray_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:gray_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:gray_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:gray_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:gray_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:gray_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:gray_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:gray_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:gray_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:green_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:green_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:green_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:green_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:green_fancy_copper_lamp": {
+      "waxed": "bibliocraft:green_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:green_fancy_copper_lantern": {
+      "waxed": "bibliocraft:green_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:green_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:green_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:green_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:green_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:green_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:green_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:green_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:green_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:light_blue_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_blue_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:light_blue_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_blue_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:light_blue_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_blue_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:light_blue_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_blue_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:light_blue_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_blue_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:light_blue_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_blue_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:light_blue_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_blue_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:light_blue_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_blue_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:light_gray_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_gray_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:light_gray_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_gray_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:light_gray_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_gray_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:light_gray_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_gray_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:light_gray_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_gray_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:light_gray_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_gray_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:light_gray_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:light_gray_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:light_gray_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:light_gray_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:lime_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:lime_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:lime_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:lime_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:lime_fancy_copper_lamp": {
+      "waxed": "bibliocraft:lime_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:lime_fancy_copper_lantern": {
+      "waxed": "bibliocraft:lime_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:lime_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:lime_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:lime_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:lime_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:lime_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:lime_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:lime_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:lime_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:magenta_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:magenta_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:magenta_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:magenta_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:magenta_fancy_copper_lamp": {
+      "waxed": "bibliocraft:magenta_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:magenta_fancy_copper_lantern": {
+      "waxed": "bibliocraft:magenta_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:magenta_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:magenta_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:magenta_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:magenta_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:magenta_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:magenta_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:magenta_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:magenta_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:orange_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:orange_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:orange_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:orange_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:orange_fancy_copper_lamp": {
+      "waxed": "bibliocraft:orange_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:orange_fancy_copper_lantern": {
+      "waxed": "bibliocraft:orange_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:orange_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:orange_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:orange_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:orange_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:orange_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:orange_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:orange_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:orange_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:pink_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:pink_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:pink_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:pink_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:pink_fancy_copper_lamp": {
+      "waxed": "bibliocraft:pink_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:pink_fancy_copper_lantern": {
+      "waxed": "bibliocraft:pink_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:pink_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:pink_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:pink_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:pink_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:pink_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:pink_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:pink_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:pink_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:purple_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:purple_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:purple_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:purple_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:purple_fancy_copper_lamp": {
+      "waxed": "bibliocraft:purple_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:purple_fancy_copper_lantern": {
+      "waxed": "bibliocraft:purple_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:purple_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:purple_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:purple_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:purple_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:purple_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:purple_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:purple_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:purple_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:red_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:red_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:red_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:red_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:red_fancy_copper_lamp": {
+      "waxed": "bibliocraft:red_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:red_fancy_copper_lantern": {
+      "waxed": "bibliocraft:red_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:red_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:red_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:red_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:red_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:red_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:red_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:red_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:red_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:white_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:white_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:white_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:white_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:white_fancy_copper_lamp": {
+      "waxed": "bibliocraft:white_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:white_fancy_copper_lantern": {
+      "waxed": "bibliocraft:white_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:white_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:white_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:white_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:white_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:white_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:white_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:white_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:white_waxed_weathered_fancy_copper_lantern"
+    },
+    "bibliocraft:yellow_exposed_fancy_copper_lamp": {
+      "waxed": "bibliocraft:yellow_waxed_exposed_fancy_copper_lamp"
+    },
+    "bibliocraft:yellow_exposed_fancy_copper_lantern": {
+      "waxed": "bibliocraft:yellow_waxed_exposed_fancy_copper_lantern"
+    },
+    "bibliocraft:yellow_fancy_copper_lamp": {
+      "waxed": "bibliocraft:yellow_waxed_fancy_copper_lamp"
+    },
+    "bibliocraft:yellow_fancy_copper_lantern": {
+      "waxed": "bibliocraft:yellow_waxed_fancy_copper_lantern"
+    },
+    "bibliocraft:yellow_oxidized_fancy_copper_lamp": {
+      "waxed": "bibliocraft:yellow_waxed_oxidized_fancy_copper_lamp"
+    },
+    "bibliocraft:yellow_oxidized_fancy_copper_lantern": {
+      "waxed": "bibliocraft:yellow_waxed_oxidized_fancy_copper_lantern"
+    },
+    "bibliocraft:yellow_weathered_fancy_copper_lamp": {
+      "waxed": "bibliocraft:yellow_waxed_weathered_fancy_copper_lamp"
+    },
+    "bibliocraft:yellow_weathered_fancy_copper_lantern": {
+      "waxed": "bibliocraft:yellow_waxed_weathered_fancy_copper_lantern"
+    }
+  }
+}

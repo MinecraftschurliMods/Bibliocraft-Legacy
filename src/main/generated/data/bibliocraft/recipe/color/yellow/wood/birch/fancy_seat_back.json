@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:fancy_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:yellow_birch_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:birch_slab"
-    }
+    "#": "bibliocraft:yellow_birch_flat_seat_back",
+    "S": "minecraft:birch_slab"
   },
   "pattern": [
     "S#S"
