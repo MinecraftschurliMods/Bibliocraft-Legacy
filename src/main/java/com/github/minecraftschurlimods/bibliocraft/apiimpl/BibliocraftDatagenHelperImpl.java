@@ -22,8 +22,11 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -32,36 +35,29 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.neoforged.neoforge.client.model.generators.BlockModelProvider;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
@@ -83,7 +79,6 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     public void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider) {
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         generateEnglishTranslationsFor(englishLanguageProvider, woodType);
@@ -98,10 +93,10 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 return super.getName() + " (Bibliocraft datagen helper for wood type " + woodType.id() + ")";
             }
         });
-        generator.addProvider(event.includeClient(), new ItemModelProvider(output, BibliocraftApi.MOD_ID, existingFileHelper) {
+        generator.addProvider(true, new ModelProvider(output, BibliocraftApi.MOD_ID) {
             @Override
-            protected void registerModels() {
-                generateItemModelsFor(this, woodType);
+            protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+                generateItemModelsFor(this, blockModels, itemModels, woodType);
             }
 
             @Override
@@ -280,7 +275,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     }
 
     @Override
-    public void generateBlockTagsFor(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor, BibliocraftWoodType woodType) {
+    public void generateBlockTagsFor(Function<TagKey<Block>, TagAppender<Block, Block>> tagAccessor, BibliocraftWoodType woodType) {
         // @formatter:off
         if (woodType.getNamespace().equals("minecraft")) {
             tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .add(BCBlocks.BOOKCASE.get(woodType));
@@ -296,34 +291,34 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Blocks.SHELVES)                .add(BCBlocks.SHELF.get(woodType));
             tagAccessor.apply(BCTags.Blocks.TABLES)                 .add(BCBlocks.TABLE.get(woodType));
             tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .add(BCBlocks.TOOL_RACK.get(woodType));
-            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
-            DatagenUtil.addAll(BuiltInRegistries.BLOCK, BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
+            DatagenUtil.addAll(BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAll(BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAll(BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
+            DatagenUtil.addAll(BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
         } else {
-            tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .addOptional(BCBlocks.BOOKCASE.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).addOptional(BCBlocks.FANCY_ARMOR_STAND.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .addOptional(BCBlocks.FANCY_CLOCK.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .addOptional(BCBlocks.WALL_FANCY_CLOCK.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.FANCY_CRAFTERS)         .addOptional(BCBlocks.FANCY_CRAFTER.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.FANCY_SIGNS)            .addOptional(BCBlocks.FANCY_SIGN.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.FANCY_SIGNS)            .addOptional(BCBlocks.WALL_FANCY_SIGN.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.GRANDFATHER_CLOCKS)     .addOptional(BCBlocks.GRANDFATHER_CLOCK.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.LABELS)                 .addOptional(BCBlocks.LABEL.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .addOptional(BCBlocks.POTION_SHELF.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.SHELVES)                .addOptional(BCBlocks.SHELF.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.TABLES)                 .addOptional(BCBlocks.TABLE.id(woodType));
-            tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .addOptional(BCBlocks.TOOL_RACK.id(woodType));
-            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
-            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
-            DatagenUtil.addAllOptional(BuiltInRegistries.BLOCK, BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
+            tagAccessor.apply(BCTags.Blocks.BOOKCASES)              .addOptional(BCBlocks.BOOKCASE.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD).addOptional(BCBlocks.FANCY_ARMOR_STAND.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .addOptional(BCBlocks.FANCY_CLOCK.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_CLOCKS)           .addOptional(BCBlocks.WALL_FANCY_CLOCK.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_CRAFTERS)         .addOptional(BCBlocks.FANCY_CRAFTER.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_SIGNS)            .addOptional(BCBlocks.FANCY_SIGN.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.FANCY_SIGNS)            .addOptional(BCBlocks.WALL_FANCY_SIGN.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.GRANDFATHER_CLOCKS)     .addOptional(BCBlocks.GRANDFATHER_CLOCK.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.LABELS)                 .addOptional(BCBlocks.LABEL.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.POTION_SHELVES)         .addOptional(BCBlocks.POTION_SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.SHELVES)                .addOptional(BCBlocks.SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.TABLES)                 .addOptional(BCBlocks.TABLE.get(woodType));
+            tagAccessor.apply(BCTags.Blocks.TOOL_RACKS)             .addOptional(BCBlocks.TOOL_RACK.get(woodType));
+            DatagenUtil.addAllOptional(BCBlocks.DISPLAY_CASE.element(woodType).values(),      tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAllOptional(BCBlocks.WALL_DISPLAY_CASE.element(woodType).values(), tagAccessor.apply(BCTags.Blocks.DISPLAY_CASES));
+            DatagenUtil.addAllOptional(BCBlocks.SEAT.element(woodType).values(),              tagAccessor.apply(BCTags.Blocks.SEATS));
+            DatagenUtil.addAllOptional(BCBlocks.SEAT_BACK.element(woodType).values(),         tagAccessor.apply(BCTags.Blocks.SEAT_BACKS));
         }
         // @formatter:on
     }
 
     @Override
-    public void generateItemTagsFor(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor, BibliocraftWoodType woodType) {
+    public void generateItemTagsFor(Function<TagKey<Item>, TagAppender<Item, Item>> tagAccessor, BibliocraftWoodType woodType) {
         // @formatter:off
         if (woodType.getNamespace().equals("minecraft")) {
             tagAccessor.apply(BCTags.Items.BOOKCASES)              .add(BCItems.BOOKCASE.get(woodType));
@@ -337,32 +332,32 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tagAccessor.apply(BCTags.Items.SHELVES)                .add(BCItems.SHELF.get(woodType));
             tagAccessor.apply(BCTags.Items.TABLES)                 .add(BCItems.TABLE.get(woodType));
             tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .add(BCItems.TOOL_RACK.get(woodType));
-            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
-            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
-            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
-            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
-            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
-            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
-            DatagenUtil.addAll(BuiltInRegistries.ITEM, BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
+            DatagenUtil.addAll(BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
+            DatagenUtil.addAll(BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
+            DatagenUtil.addAll(BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
+            DatagenUtil.addAll(BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
+            DatagenUtil.addAll(BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
+            DatagenUtil.addAll(BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
+            DatagenUtil.addAll(BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
         } else {
-            tagAccessor.apply(BCTags.Items.BOOKCASES)              .addOptional(BCItems.BOOKCASE.id(woodType));
-            tagAccessor.apply(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).addOptional(BCItems.FANCY_ARMOR_STAND.id(woodType));
-            tagAccessor.apply(BCTags.Items.FANCY_CLOCKS)           .addOptional(BCItems.FANCY_CLOCK.id(woodType));
-            tagAccessor.apply(BCTags.Items.FANCY_CRAFTERS)         .addOptional(BCItems.FANCY_CRAFTER.id(woodType));
-            tagAccessor.apply(BCTags.Items.FANCY_SIGNS)            .addOptional(BCItems.FANCY_SIGN.id(woodType));
-            tagAccessor.apply(BCTags.Items.GRANDFATHER_CLOCKS)     .addOptional(BCItems.GRANDFATHER_CLOCK.id(woodType));
-            tagAccessor.apply(BCTags.Items.LABELS)                 .addOptional(BCItems.LABEL.id(woodType));
-            tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .addOptional(BCItems.POTION_SHELF.id(woodType));
-            tagAccessor.apply(BCTags.Items.SHELVES)                .addOptional(BCItems.SHELF.id(woodType));
-            tagAccessor.apply(BCTags.Items.TABLES)                 .addOptional(BCItems.TABLE.id(woodType));
-            tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .addOptional(BCItems.TOOL_RACK.id(woodType));
-            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
-            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
-            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
-            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
-            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
-            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
-            DatagenUtil.addAllOptional(BuiltInRegistries.ITEM, BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
+            tagAccessor.apply(BCTags.Items.BOOKCASES)              .addOptional(BCItems.BOOKCASE.get(woodType));
+            tagAccessor.apply(BCTags.Items.FANCY_ARMOR_STANDS_WOOD).addOptional(BCItems.FANCY_ARMOR_STAND.get(woodType));
+            tagAccessor.apply(BCTags.Items.FANCY_CLOCKS)           .addOptional(BCItems.FANCY_CLOCK.get(woodType));
+            tagAccessor.apply(BCTags.Items.FANCY_CRAFTERS)         .addOptional(BCItems.FANCY_CRAFTER.get(woodType));
+            tagAccessor.apply(BCTags.Items.FANCY_SIGNS)            .addOptional(BCItems.FANCY_SIGN.get(woodType));
+            tagAccessor.apply(BCTags.Items.GRANDFATHER_CLOCKS)     .addOptional(BCItems.GRANDFATHER_CLOCK.get(woodType));
+            tagAccessor.apply(BCTags.Items.LABELS)                 .addOptional(BCItems.LABEL.get(woodType));
+            tagAccessor.apply(BCTags.Items.POTION_SHELVES)         .addOptional(BCItems.POTION_SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Items.SHELVES)                .addOptional(BCItems.SHELF.get(woodType));
+            tagAccessor.apply(BCTags.Items.TABLES)                 .addOptional(BCItems.TABLE.get(woodType));
+            tagAccessor.apply(BCTags.Items.TOOL_RACKS)             .addOptional(BCItems.TOOL_RACK.get(woodType));
+            DatagenUtil.addAllOptional(BCItems.DISPLAY_CASE.element(woodType).values(),     tagAccessor.apply(BCTags.Items.DISPLAY_CASES));
+            DatagenUtil.addAllOptional(BCItems.SEAT.element(woodType).values(),             tagAccessor.apply(BCTags.Items.SEATS));
+            DatagenUtil.addAllOptional(BCItems.SMALL_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_SMALL));
+            DatagenUtil.addAllOptional(BCItems.RAISED_SEAT_BACK.element(woodType).values(), tagAccessor.apply(BCTags.Items.SEAT_BACKS_RAISED));
+            DatagenUtil.addAllOptional(BCItems.FLAT_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_FLAT));
+            DatagenUtil.addAllOptional(BCItems.TALL_SEAT_BACK.element(woodType).values(),   tagAccessor.apply(BCTags.Items.SEAT_BACKS_TALL));
+            DatagenUtil.addAllOptional(BCItems.FANCY_SEAT_BACK.element(woodType).values(),  tagAccessor.apply(BCTags.Items.SEAT_BACKS_FANCY));
         }
         // @formatter:on
     }
@@ -398,29 +393,30 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     }
 
     @Override
-    public void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType, String modId) {
+    public void generateRecipesFor(RecipeOutput output, HolderLookup.Provider registries, BibliocraftWoodType woodType, String modId) {
         if (!woodType.getNamespace().equals("minecraft")) {
             output = output.withConditions(new ModLoadedCondition(woodType.getNamespace()));
         }
+        HolderLookup.RegistryLookup<Item> itemLookup = registries.lookupOrThrow(Registries.ITEM);
         String prefix = "wood/" + woodType.getRegistrationPrefix() + "/";
         Block planks = woodType.family().get().getBaseBlock();
         Block slab = woodType.family().get().get(BlockFamily.Variant.SLAB);
         TagKey<Item> stick = Tags.Items.RODS_WOODEN;
-        shapedRecipe(BCItems.BOOKCASE.get(woodType), woodType, "bookcases")
+        shapedRecipe(itemLookup, BCItems.BOOKCASE.get(woodType), woodType, "bookcases")
                 .pattern("PSP")
                 .pattern("PSP")
                 .pattern("PSP")
                 .define('P', planks)
                 .define('S', slab)
-                .save(output, BCUtil.modLoc(modId, prefix + "bookcase"));
-        shapedRecipe(BCItems.FANCY_ARMOR_STAND.get(woodType), woodType, "fancy_armor_stands")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "bookcase")));
+        shapedRecipe(itemLookup, BCItems.FANCY_ARMOR_STAND.get(woodType), woodType, "fancy_armor_stands")
                 .pattern(" R ")
                 .pattern(" R ")
                 .pattern("SSS")
                 .define('S', slab)
                 .define('R', Tags.Items.RODS_WOODEN)
-                .save(output, BCUtil.modLoc(modId, prefix + "fancy_armor_stand"));
-        shapedRecipe(BCItems.FANCY_CLOCK.get(woodType), woodType, "fancy_clock")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "fancy_armor_stand")));
+        shapedRecipe(itemLookup, BCItems.FANCY_CLOCK.get(woodType), woodType, "fancy_clock")
                 .pattern("SCS")
                 .pattern("SRS")
                 .pattern("SIS")
@@ -428,8 +424,8 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 .define('C', Items.CLOCK)
                 .define('R', Tags.Items.RODS_WOODEN)
                 .define('I', Tags.Items.INGOTS_COPPER)
-                .save(output, BCUtil.modLoc(modId, prefix + "fancy_clock"));
-        shapedRecipe(BCItems.FANCY_CRAFTER.get(woodType), woodType, "fancy_crafter")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "fancy_clock")));
+        shapedRecipe(itemLookup, BCItems.FANCY_CRAFTER.get(woodType), woodType, "fancy_crafter")
                 .pattern("ITF")
                 .pattern("PGP")
                 .pattern("PCP")
@@ -439,105 +435,105 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 .define('F', Tags.Items.FEATHERS)
                 .define('G', Tags.Items.GLASS_BLOCKS)
                 .define('C', Items.CRAFTER)
-                .save(output, BCUtil.modLoc(modId, prefix + "fancy_crafter"));
-        shapedRecipe(BCItems.FANCY_SIGN.get(woodType), woodType, "fancy_sign")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "fancy_crafter")));
+        shapedRecipe(itemLookup, BCItems.FANCY_SIGN.get(woodType), woodType, "fancy_sign")
                 .pattern("P#P")
                 .pattern("P#P")
                 .pattern(" R ")
                 .define('P', planks)
                 .define('#', Items.PAPER)
                 .define('R', Tags.Items.RODS_WOODEN)
-                .save(output, BCUtil.modLoc(modId, prefix + "fancy_sign"));
-        shapelessRecipe(BCItems.GRANDFATHER_CLOCK.get(woodType), woodType, "grandfather_clock")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "fancy_sign")));
+        shapelessRecipe(itemLookup, BCItems.GRANDFATHER_CLOCK.get(woodType), woodType, "grandfather_clock")
                 .requires(BCItems.FANCY_CLOCK.get(woodType))
                 .requires(BCItems.FANCY_CLOCK.get(woodType))
-                .save(output, BCUtil.modLoc(modId, prefix + "grandfather_clock"));
-        shapedRecipe(BCItems.LABEL.get(woodType), woodType, "labels")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "grandfather_clock")));
+        shapedRecipe(itemLookup, BCItems.LABEL.get(woodType), woodType, "labels")
                 .pattern("SSS")
                 .pattern("SSS")
                 .define('S', slab)
-                .save(output, BCUtil.modLoc(modId, prefix + "label"));
-        shapedRecipe(BCItems.POTION_SHELF.get(woodType), woodType, "potion_shelves")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "label")));
+        shapedRecipe(itemLookup, BCItems.POTION_SHELF.get(woodType), woodType, "potion_shelves")
                 .pattern("SSS")
                 .pattern("P#P")
                 .pattern("SSS")
                 .define('P', planks)
                 .define('S', slab)
                 .define('#', Items.GLASS_BOTTLE)
-                .save(output, BCUtil.modLoc(modId, prefix + "potion_shelf"));
-        shapedRecipe(BCItems.SHELF.get(woodType), woodType, "shelves")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "potion_shelf")));
+        shapedRecipe(itemLookup, BCItems.SHELF.get(woodType), woodType, "shelves")
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern("SSS")
                 .define('P', planks)
                 .define('S', slab)
-                .save(output, BCUtil.modLoc(modId, prefix + "shelf"));
-        shapedRecipe(BCItems.TABLE.get(woodType), woodType, "tables")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "shelf")));
+        shapedRecipe(itemLookup, BCItems.TABLE.get(woodType), woodType, "tables")
                 .pattern("SSS")
                 .pattern(" P ")
                 .pattern(" P ")
                 .define('P', planks)
                 .define('S', slab)
-                .save(output, BCUtil.modLoc(modId, prefix + "table"));
-        shapedRecipe(BCItems.TOOL_RACK.get(woodType), woodType, "tool_racks")
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "table")));
+        shapedRecipe(itemLookup, BCItems.TOOL_RACK.get(woodType), woodType, "tool_racks")
                 .pattern("SSS")
                 .pattern("S#S")
                 .pattern("SSS")
                 .define('S', slab)
                 .define('#', Tags.Items.INGOTS_IRON)
-                .save(output, BCUtil.modLoc(modId, prefix + "tool_rack"));
+                .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "tool_rack")));
         for (DyeColor color : DyeColor.values()) {
-            Item wool = BuiltInRegistries.ITEM.get(BCUtil.mcLoc(color.getName() + "_wool"));
+            Item wool = itemLookup.getOrThrow(ResourceKey.create(Registries.ITEM, BCUtil.mcLoc(color.getName() + "_wool"))).value();
             prefix = "color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/";
-            shapedRecipe(BCItems.DISPLAY_CASE.get(woodType, color), woodType, "display_cases")
+            shapedRecipe(itemLookup, BCItems.DISPLAY_CASE.get(woodType, color), woodType, "display_cases")
                     .pattern("SGS")
                     .pattern("SWS")
                     .pattern("SSS")
                     .define('S', slab)
                     .define('W', wool)
                     .define('G', Tags.Items.GLASS_BLOCKS)
-                    .save(output, BCUtil.modLoc(modId, prefix + "display_case"));
-            shapedRecipe(BCItems.SEAT.get(woodType, color), woodType, "seats")
+                    .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "display_case")));
+            shapedRecipe(itemLookup, BCItems.SEAT.get(woodType, color), woodType, "seats")
                     .pattern(" W ")
                     .pattern(" S ")
                     .pattern("RSR")
                     .define('S', slab)
                     .define('R', stick)
                     .define('W', wool)
-                    .save(output, BCUtil.modLoc(modId, prefix + "seat"));
-            shapedRecipe(BCItems.SMALL_SEAT_BACK.get(woodType, color), woodType, "small_seat_backs")
+                    .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "seat")));
+            shapedRecipe(itemLookup, BCItems.SMALL_SEAT_BACK.get(woodType, color), woodType, "small_seat_backs")
                     .pattern("W")
                     .pattern("S")
                     .define('S', slab)
                     .define('W', wool)
-                    .save(output, BCUtil.modLoc(modId, prefix + "small_seat_back"));
-            shapedRecipe(BCItems.RAISED_SEAT_BACK.get(woodType, color), woodType, "raised_seat_backs")
+                    .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "small_seat_back")));
+            shapedRecipe(itemLookup, BCItems.RAISED_SEAT_BACK.get(woodType, color), woodType, "raised_seat_backs")
                     .pattern(" W ")
                     .pattern(" S ")
                     .pattern("R R")
                     .define('S', slab)
                     .define('R', stick)
                     .define('W', wool)
-                    .save(output, BCUtil.modLoc(modId, prefix + "raised_seat_back"));
-            shapedRecipe(BCItems.FLAT_SEAT_BACK.get(woodType, color), woodType, "flat_seat_backs")
+                    .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "raised_seat_back")));
+            shapedRecipe(itemLookup, BCItems.FLAT_SEAT_BACK.get(woodType, color), woodType, "flat_seat_backs")
                     .pattern("RWR")
                     .pattern("RSR")
                     .pattern("R R")
                     .define('S', slab)
                     .define('R', stick)
                     .define('W', wool)
-                    .save(output, BCUtil.modLoc(modId, prefix + "flat_seat_back"));
-            shapedRecipe(BCItems.TALL_SEAT_BACK.get(woodType, color), woodType, "tall_seat_backs")
+                    .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "flat_seat_back")));
+            shapedRecipe(itemLookup, BCItems.TALL_SEAT_BACK.get(woodType, color), woodType, "tall_seat_backs")
                     .pattern("S")
                     .pattern("#")
                     .define('S', slab)
                     .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
-                    .save(output, BCUtil.modLoc(modId, prefix + "tall_seat_back"));
-            shapedRecipe(BCItems.FANCY_SEAT_BACK.get(woodType, color), woodType, "fancy_seat_backs")
+                    .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "tall_seat_back")));
+            shapedRecipe(itemLookup, BCItems.FANCY_SEAT_BACK.get(woodType, color), woodType, "fancy_seat_backs")
                     .pattern("S#S")
                     .define('S', slab)
                     .define('#', BCItems.FLAT_SEAT_BACK.get(woodType, color))
-                    .save(output, BCUtil.modLoc(modId, prefix + "fancy_seat_back"));
+                    .save(output, ResourceKey.create(Registries.RECIPE, BCUtil.modLoc(modId, prefix + "fancy_seat_back")));
         }
     }
 
@@ -619,8 +615,8 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
      * @param woodType The {@link BibliocraftWoodType}.
      * @return A {@link ShapedRecipeBuilder} with the
      */
-    private static ShapedRecipeBuilder shapedRecipe(Item item, BibliocraftWoodType woodType, String group) {
-        return ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, item)
+    private static ShapedRecipeBuilder shapedRecipe(HolderLookup.RegistryLookup<Item> lookup, Item item, BibliocraftWoodType woodType, String group) {
+        return ShapedRecipeBuilder.shaped(lookup, RecipeCategory.DECORATIONS, item)
                 .group(BibliocraftApi.MOD_ID + ":" + group)
                 .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().get().getBaseBlock()).build()))));
     }
@@ -632,8 +628,8 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
      * @param woodType The {@link BibliocraftWoodType}.
      * @return A {@link ShapelessRecipeBuilder} with the
      */
-    private static ShapelessRecipeBuilder shapelessRecipe(Item item, BibliocraftWoodType woodType, String group) {
-        return ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, item)
+    private static ShapelessRecipeBuilder shapelessRecipe(HolderLookup.RegistryLookup<Item> lookup, Item item, BibliocraftWoodType woodType, String group) {
+        return ShapelessRecipeBuilder.shapeless(lookup, RecipeCategory.DECORATIONS, item)
                 .group(BibliocraftApi.MOD_ID + ":" + group)
                 .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().get().getBaseBlock()).build()))));
     }

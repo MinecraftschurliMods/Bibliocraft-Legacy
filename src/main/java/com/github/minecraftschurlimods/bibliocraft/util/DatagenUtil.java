@@ -3,11 +3,8 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.core.Registry;
-import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -248,28 +245,24 @@ public final class DatagenUtil {
     }
 
     /**
-     * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
+     * Adds all elements of the given collection to the {@link TagAppender}
      *
-     * @param registry   The {@link Registry} associated with the collection elements.
      * @param collection The collection containing the elements to add.
-     * @param tag        The given {@link TagsProvider.TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
+     * @param tag        The given {@link TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
      * @param <T>        The type of the collection elements.
      */
-    @SuppressWarnings("DataFlowIssue")
-    public static <T> void addAll(Registry<T> registry, Collection<? extends T> collection, TagsProvider.TagAppender<T> tag) {
-        collection.stream().map(e -> ResourceKey.create(registry.key(), registry.getKey(e))).forEach(tag::add);
+    public static <T> void addAll(Collection<? extends T> collection, TagAppender<T, T> tag) {
+        collection.forEach(tag::add);
     }
 
     /**
-     * Adds all elements of the given collection to the {@link TagsProvider.TagAppender}
+     * Adds all elements of the given collection to the {@link TagAppender}
      *
-     * @param registry   The {@link Registry} associated with the collection elements.
      * @param collection The collection containing the elements to add.
-     * @param tag        The given {@link TagsProvider.TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
+     * @param tag        The given {@link TagAppender}, obtainable through {@link TagsProvider#tag(TagKey)}.
      * @param <T>        The type of the collection elements.
      */
-    @SuppressWarnings("DataFlowIssue")
-    public static <T> void addAllOptional(Registry<T> registry, Collection<? extends T> collection, TagsProvider.TagAppender<T> tag) {
-        collection.stream().map(registry::getKey).forEach(tag::addOptional);
+    public static <T> void addAllOptional(Collection<? extends T> collection, TagAppender<T, T> tag) {
+        collection.forEach(tag::addOptional);
     }
 }

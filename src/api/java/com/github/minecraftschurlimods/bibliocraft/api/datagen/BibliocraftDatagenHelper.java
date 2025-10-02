@@ -2,14 +2,13 @@ package com.github.minecraftschurlimods.bibliocraft.api.datagen;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -66,7 +65,7 @@ public interface BibliocraftDatagenHelper {
      * @param tagAccessor A reference to your mod's {@link BlockTagsProvider#tag(TagKey)} method, as it is protected for some reason.
      * @param woodType    The {@link BibliocraftWoodType} to generate the block tags for.
      */
-    void generateBlockTagsFor(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor, BibliocraftWoodType woodType);
+    void generateBlockTagsFor(Function<TagKey<Block>, TagAppender<Block, Block>> tagAccessor, BibliocraftWoodType woodType);
 
     /**
      * Generates the item tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
@@ -74,7 +73,7 @@ public interface BibliocraftDatagenHelper {
      * @param tagAccessor A reference to your mod's {@link ItemTagsProvider#tag(TagKey)} method, as it is protected for some reason.
      * @param woodType    The {@link BibliocraftWoodType} to generate the item tags for.
      */
-    void generateItemTagsFor(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor, BibliocraftWoodType woodType);
+    void generateItemTagsFor(Function<TagKey<Item>, TagAppender<Item, Item>> tagAccessor, BibliocraftWoodType woodType);
 
     /**
      * Generates the loot table files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
@@ -91,7 +90,7 @@ public interface BibliocraftDatagenHelper {
      * @param woodType The {@link BibliocraftWoodType} to generate the recipes for.
      * @param modId    The namespace to store the recipes under.
      */
-    void generateRecipesFor(RecipeOutput output, BibliocraftWoodType woodType, String modId);
+    void generateRecipesFor(RecipeOutput output, HolderLookup.Provider registries, BibliocraftWoodType woodType, String modId);
 
     /**
      * Generates language files, block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with a {@link BibliocraftWoodType}. Call this directly from a {@link GatherDataEvent} handler!
