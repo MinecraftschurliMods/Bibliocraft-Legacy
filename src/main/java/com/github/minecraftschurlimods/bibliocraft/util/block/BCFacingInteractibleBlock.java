@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -31,8 +31,8 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
     public abstract int lookingAtSlot(BlockState state, BlockHitResult hit);
 
     @Override
-    public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.isSecondaryUseActive()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (player.isSecondaryUseActive()) return InteractionResult.PASS;
         if (!canAccessFromDirection(state, hit.getDirection()))
             return super.useItemOn(stack, state, level, pos, player, hand, hit);
         int slot = lookingAtSlot(state, hit);
@@ -40,12 +40,12 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BCBlockEntity bcbe) {
                 if (bcbe.getLockKey() != null && !BaseContainerBlockEntity.canUnlock(player, bcbe.getLockKey(), BCUtil.getNameAtPos(level, pos)))
-                    return ItemInteractionResult.CONSUME;
+                    return InteractionResult.CONSUME;
                 ItemStack slotStack = bcbe.getItem(slot);
                 if (stack.isEmpty() || bcbe.canPlaceItem(slot, stack)) {
                     bcbe.setItem(slot, stack);
                     player.setItemInHand(hand, slotStack);
-                    return ItemInteractionResult.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             }
         }

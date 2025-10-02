@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:shelves",
   "key": {
-    "P": {
-      "item": "minecraft:bamboo_planks"
-    },
-    "S": {
-      "item": "minecraft:bamboo_slab"
-    }
+    "P": "minecraft:bamboo_planks",
+    "S": "minecraft:bamboo_slab"
   },
   "pattern": [
     "SSS",

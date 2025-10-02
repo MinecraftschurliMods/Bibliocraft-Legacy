@@ -62,8 +62,8 @@ public class BigBookCloningRecipe extends CustomRecipe {
         NonNullList<ItemStack> list = NonNullList.withSize(input.size(), ItemStack.EMPTY);
         for (int i = 0; i < list.size(); i++) {
             ItemStack stack = input.getItem(i);
-            if (stack.hasCraftingRemainingItem()) {
-                list.set(i, stack.getCraftingRemainingItem());
+            if (!stack.getCraftingRemainder().isEmpty()) {
+                list.set(i, stack.getCraftingRemainder());
             } else if (stack.is(BCItems.WRITTEN_BIG_BOOK)) {
                 list.set(i, stack.copyWithCount(1));
             }
@@ -72,12 +72,7 @@ public class BigBookCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width >= 3 && height >= 3;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<BigBookCloningRecipe> getSerializer() {
         return BCRecipes.BIG_BOOK_CLONING.get();
     }
 }

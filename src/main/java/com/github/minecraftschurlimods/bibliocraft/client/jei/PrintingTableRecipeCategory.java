@@ -15,8 +15,8 @@ import mezz.jei.api.gui.placement.VerticalAlignment;
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeHolderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,7 +25,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import java.util.List;
 
 public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHolder<PrintingTableRecipe>> {
-    public static final RecipeType<RecipeHolder<PrintingTableRecipe>> TYPE = RecipeType.createRecipeHolderType(BCRecipes.PRINTING_TABLE.getId());
+    public static final IRecipeHolderType<PrintingTableRecipe> TYPE = IRecipeHolderType.create(BCRecipes.PRINTING_TABLE.getId());
     private static final ResourceLocation LEVEL = BCUtil.bcLoc("level");
     private static final int LEVEL_X = 98;
     private static final int LEVEL_Y = 24;
@@ -44,12 +44,12 @@ public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHo
             for (int j = 0; j < 3; j++) {
                 IRecipeSlotBuilder slot = builder.addInputSlot(j * 18 + 1, i * 18 + 1).setStandardSlotBackground();
                 if (i * 3 + j < left.size()) {
-                    slot.addIngredients(left.get(i * 3 + j));
+                    slot.add(left.get(i * 3 + j));
                 }
             }
         }
-        builder.addInputSlot(74, 19).setStandardSlotBackground().addIngredients(ingredients.getSecond());
-        builder.addOutputSlot(126, 19).setOutputSlotBackground().addItemStack(recipe.getResultItem());
+        builder.addInputSlot(74, 19).setStandardSlotBackground().add(ingredients.getSecond());
+        builder.addOutputSlot(126, 19).setOutputSlotBackground().add(recipe.getResultItem());
     }
 
     @Override

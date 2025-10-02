@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tables",
   "key": {
-    "P": {
-      "item": "minecraft:mangrove_planks"
-    },
-    "S": {
-      "item": "minecraft:mangrove_slab"
-    }
+    "P": "minecraft:mangrove_planks",
+    "S": "minecraft:mangrove_slab"
   },
   "pattern": [
     "SSS",

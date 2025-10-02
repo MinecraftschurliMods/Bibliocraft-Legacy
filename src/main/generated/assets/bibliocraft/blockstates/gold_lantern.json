@@ -1,15 +1,9 @@
 {
   "variants": {
-    "hanging=false,waterlogged=false": {
+    "hanging=false": {
       "model": "bibliocraft:block/gold_lantern"
     },
-    "hanging=false,waterlogged=true": {
-      "model": "bibliocraft:block/gold_lantern"
-    },
-    "hanging=true,waterlogged=false": {
-      "model": "bibliocraft:block/gold_lantern_hanging"
-    },
-    "hanging=true,waterlogged=true": {
+    "hanging=true": {
       "model": "bibliocraft:block/gold_lantern_hanging"
     }
   }

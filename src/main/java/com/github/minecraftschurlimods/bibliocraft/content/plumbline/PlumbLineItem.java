@@ -18,7 +18,7 @@ public class PlumbLineItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         Direction face = context.getClickedFace();
         if (face == Direction.UP || context.getPlayer() == null) return super.useOn(context);
-        BlockPos pos = context.getClickedPos().offset(face.getNormal());
+        BlockPos pos = context.getClickedPos().offset(face.getUnitVec3i());
         BlockState state = context.getLevel().getBlockState(pos);
         int count = 0;
         while (state.isAir() || state.getCollisionShape(context.getLevel(), pos).isEmpty()) {

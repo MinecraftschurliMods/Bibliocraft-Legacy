@@ -5,14 +5,12 @@ import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -49,22 +47,14 @@ public class ClockTriggerElement extends Screen {
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         boolean hasScrollbar = owner.hasScrollbar(listSize);
-        graphics.blit(BACKGROUND, 0, 0, 0, hasScrollbar ? 20 : 0, hasScrollbar ? WIDTH - 6 : WIDTH, HEIGHT);
-        PoseStack pose = graphics.pose();
-        MultiBufferSource.BufferSource buffer = graphics.bufferSource();
-        pose.pushPose();
-        pose.translate(8, 12, 0);
-        pose.scale(16, -16, 0);
-        pose.translate(0.125, 0.125, 0);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, 0, 0, 0, hasScrollbar ? 20 : 0, hasScrollbar ? WIDTH - 6 : WIDTH, HEIGHT, 256, 256);
         if (trigger.redstone()) {
-            ClientUtil.renderGuiItem(REDSTONE, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            graphics.renderItem(REDSTONE, 2, 1);
         }
-        pose.translate(1.0625, 0, 0);
         if (trigger.sound()) {
-            ClientUtil.renderGuiItem(NOTE_BLOCK, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            graphics.renderItem(NOTE_BLOCK, 19, 1);
         }
-        pose.popPose();
-        graphics.drawString(ClientUtil.getFont(), getTitle(), 36, 7, 0x404040, false);
+        graphics.drawString(ClientUtil.getFont(), getTitle(), 42, 6, 0xFF111111, false);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
 
@@ -76,13 +66,13 @@ public class ClockTriggerElement extends Screen {
         if (mouseY >= 2 && mouseY < 18) {
             Font font = ClientUtil.getFont();
             if (trigger.redstone() && mouseX >= 2 && mouseX < 18) {
-                graphics.renderTooltip(font, Translations.CLOCK_EMIT_REDSTONE, mouseX, mouseY);
+                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_REDSTONE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (trigger.sound() && mouseX >= 19 && mouseX < 37) {
-                graphics.renderTooltip(font, Translations.CLOCK_EMIT_SOUND, mouseX, mouseY);
-            } else if (editButton.isHovered()) {
-                graphics.renderTooltip(font, Translations.CLOCK_EDIT_TRIGGER, mouseX, mouseY);
-            } else if (deleteButton.isHovered()) {
-                graphics.renderTooltip(font, Translations.CLOCK_DELETE_TRIGGER, mouseX, mouseY);
+                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_SOUND), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+            } else if (editButton.getRectangle().containsPoint(mouseX, mouseY)) {
+                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EDIT_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+            } else if (deleteButton.getRectangle().containsPoint(mouseX, mouseY)) {
+                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_DELETE_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             }
         }
     }

@@ -2,12 +2,15 @@ package com.github.minecraftschurlimods.bibliocraft.content.seat;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class SeatEntity extends Entity {
     public SeatEntity(EntityType<?> entityType, Level level) {
@@ -39,10 +42,15 @@ public class SeatEntity extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
+    public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+        return false;
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
+    protected void readAdditionalSaveData(ValueInput input) {
+    }
+
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output) {
     }
 }

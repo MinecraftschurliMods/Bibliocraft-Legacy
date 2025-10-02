@@ -2,17 +2,19 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Helper entity for rendering the contents of a {@link FancyArmorStandBlockEntity}. Defers item querying and rotations to the block entity.
  */
 public class FancyArmorStandEntity extends ArmorStand {
-    private FancyArmorStandBlockEntity blockEntity;
+    private @Nullable FancyArmorStandBlockEntity blockEntity;
 
     public FancyArmorStandEntity(EntityType<? extends ArmorStand> entityType, Level level) {
         super(entityType, level);
@@ -29,7 +31,7 @@ public class FancyArmorStandEntity extends ArmorStand {
     }
 
     @Override
-    protected boolean shouldDropLoot() {
+    protected boolean shouldDropLoot(ServerLevel level) {
         return false;
     }
 

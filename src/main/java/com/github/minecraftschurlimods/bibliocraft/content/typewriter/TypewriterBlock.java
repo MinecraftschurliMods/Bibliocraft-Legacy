@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -102,9 +101,9 @@ public class TypewriterBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter && stack.is(BCTags.Items.TYPEWRITER_PAPER))
-            return typewriter.insertPaper(stack) ? ItemInteractionResult.SUCCESS : ItemInteractionResult.FAIL;
+            return typewriter.insertPaper(stack) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
         return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 

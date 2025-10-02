@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:fancy_armor_stands",
   "key": {
-    "R": {
-      "tag": "c:rods/wooden"
-    },
-    "S": {
-      "item": "minecraft:warped_slab"
-    }
+    "R": "#c:rods/wooden",
+    "S": "minecraft:warped_slab"
   },
   "pattern": [
     " R ",

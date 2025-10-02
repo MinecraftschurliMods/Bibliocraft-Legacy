@@ -1,182 +1,47 @@
 {
   "variants": {
-    "facing=east,lit=false,type=hanging,waterlogged=false": {
+    "facing=east,type=hanging": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
       "y": 90
     },
-    "facing=east,lit=false,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 90
-    },
-    "facing=east,lit=false,type=standing,waterlogged=false": {
+    "facing=east,type=standing": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
       "y": 90
     },
-    "facing=east,lit=false,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 90
-    },
-    "facing=east,lit=false,type=wall,waterlogged=false": {
+    "facing=east,type=wall": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
       "y": 90
     },
-    "facing=east,lit=false,type=wall,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 90
-    },
-    "facing=east,lit=true,type=hanging,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 90
-    },
-    "facing=east,lit=true,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 90
-    },
-    "facing=east,lit=true,type=standing,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 90
-    },
-    "facing=east,lit=true,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 90
-    },
-    "facing=east,lit=true,type=wall,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 90
-    },
-    "facing=east,lit=true,type=wall,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 90
-    },
-    "facing=north,lit=false,type=hanging,waterlogged=false": {
+    "facing=north,type=hanging": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging"
     },
-    "facing=north,lit=false,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging"
-    },
-    "facing=north,lit=false,type=standing,waterlogged=false": {
+    "facing=north,type=standing": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing"
     },
-    "facing=north,lit=false,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing"
-    },
-    "facing=north,lit=false,type=wall,waterlogged=false": {
+    "facing=north,type=wall": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall"
     },
-    "facing=north,lit=false,type=wall,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall"
-    },
-    "facing=north,lit=true,type=hanging,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging"
-    },
-    "facing=north,lit=true,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging"
-    },
-    "facing=north,lit=true,type=standing,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing"
-    },
-    "facing=north,lit=true,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing"
-    },
-    "facing=north,lit=true,type=wall,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall"
-    },
-    "facing=north,lit=true,type=wall,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall"
-    },
-    "facing=south,lit=false,type=hanging,waterlogged=false": {
+    "facing=south,type=hanging": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
       "y": 180
     },
-    "facing=south,lit=false,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 180
-    },
-    "facing=south,lit=false,type=standing,waterlogged=false": {
+    "facing=south,type=standing": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
       "y": 180
     },
-    "facing=south,lit=false,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 180
-    },
-    "facing=south,lit=false,type=wall,waterlogged=false": {
+    "facing=south,type=wall": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
       "y": 180
     },
-    "facing=south,lit=false,type=wall,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 180
-    },
-    "facing=south,lit=true,type=hanging,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 180
-    },
-    "facing=south,lit=true,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 180
-    },
-    "facing=south,lit=true,type=standing,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 180
-    },
-    "facing=south,lit=true,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 180
-    },
-    "facing=south,lit=true,type=wall,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 180
-    },
-    "facing=south,lit=true,type=wall,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 180
-    },
-    "facing=west,lit=false,type=hanging,waterlogged=false": {
+    "facing=west,type=hanging": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
       "y": 270
     },
-    "facing=west,lit=false,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 270
-    },
-    "facing=west,lit=false,type=standing,waterlogged=false": {
+    "facing=west,type=standing": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
       "y": 270
     },
-    "facing=west,lit=false,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 270
-    },
-    "facing=west,lit=false,type=wall,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 270
-    },
-    "facing=west,lit=false,type=wall,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 270
-    },
-    "facing=west,lit=true,type=hanging,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 270
-    },
-    "facing=west,lit=true,type=hanging,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_hanging",
-      "y": 270
-    },
-    "facing=west,lit=true,type=standing,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 270
-    },
-    "facing=west,lit=true,type=standing,waterlogged=true": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_standing",
-      "y": 270
-    },
-    "facing=west,lit=true,type=wall,waterlogged=false": {
-      "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
-      "y": 270
-    },
-    "facing=west,lit=true,type=wall,waterlogged=true": {
+    "facing=west,type=wall": {
       "model": "bibliocraft:block/color/light_blue/fancy_gold_lantern_wall",
       "y": 270
     }

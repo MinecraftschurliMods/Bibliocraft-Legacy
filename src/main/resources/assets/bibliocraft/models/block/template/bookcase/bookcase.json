@@ -1,5 +1,4 @@
 {
-  "loader": "bibliocraft:bookcase",
   "parent": "minecraft:block/block",
   "textures": {
     "0": "#texture",
@@ -83,60 +82,6 @@
         "up": {"uv": [0, 15, 16, 16], "texture": "#0"},
         "down": {"uv": [0, 0, 16, 1], "texture": "#0"}
       }
-    }
-  ],
-  "book_0": {"parent": "bibliocraft:block/template/bookcase/book_0"},
-  "book_1": {"parent": "bibliocraft:block/template/bookcase/book_1"},
-  "book_2": {"parent": "bibliocraft:block/template/bookcase/book_2"},
-  "book_3": {"parent": "bibliocraft:block/template/bookcase/book_3"},
-  "book_4": {"parent": "bibliocraft:block/template/bookcase/book_4"},
-  "book_5": {"parent": "bibliocraft:block/template/bookcase/book_5"},
-  "book_6": {"parent": "bibliocraft:block/template/bookcase/book_6"},
-  "book_7": {"parent": "bibliocraft:block/template/bookcase/book_7"},
-  "book_8": {"parent": "bibliocraft:block/template/bookcase/book_8"},
-  "book_9": {"parent": "bibliocraft:block/template/bookcase/book_9"},
-  "book_10": {"parent": "bibliocraft:block/template/bookcase/book_10"},
-  "book_11": {"parent": "bibliocraft:block/template/bookcase/book_11"},
-  "book_12": {"parent": "bibliocraft:block/template/bookcase/book_12"},
-  "book_13": {"parent": "bibliocraft:block/template/bookcase/book_13"},
-  "book_14": {"parent": "bibliocraft:block/template/bookcase/book_14"},
-  "book_15": {"parent": "bibliocraft:block/template/bookcase/book_15"},
-  "pride_books": [
-    {
-      "book_0": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_0"},
-      "book_1": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_1"},
-      "book_2": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_2"},
-      "book_3": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_3"},
-      "book_4": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_4"},
-      "book_5": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_5"},
-      "book_6": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_6"},
-      "book_7": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_7"},
-      "book_8": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_8"},
-      "book_9": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_9"},
-      "book_10": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_10"},
-      "book_11": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_11"},
-      "book_12": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_12"},
-      "book_13": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_13"},
-      "book_14": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_14"},
-      "book_15": {"parent": "bibliocraft:block/template/bookcase/rainbow/book_15"}
-    },
-    {
-      "book_0": {"parent": "bibliocraft:block/template/bookcase/trans/book_0"},
-      "book_1": {"parent": "bibliocraft:block/template/bookcase/trans/book_1"},
-      "book_2": {"parent": "bibliocraft:block/template/bookcase/trans/book_2"},
-      "book_3": {"parent": "bibliocraft:block/template/bookcase/trans/book_3"},
-      "book_4": {"parent": "bibliocraft:block/template/bookcase/trans/book_4"},
-      "book_5": {"parent": "bibliocraft:block/template/bookcase/trans/book_5"},
-      "book_6": {"parent": "bibliocraft:block/template/bookcase/trans/book_6"},
-      "book_7": {"parent": "bibliocraft:block/template/bookcase/trans/book_7"},
-      "book_8": {"parent": "bibliocraft:block/template/bookcase/trans/book_8"},
-      "book_9": {"parent": "bibliocraft:block/template/bookcase/trans/book_9"},
-      "book_10": {"parent": "bibliocraft:block/template/bookcase/trans/book_10"},
-      "book_11": {"parent": "bibliocraft:block/template/bookcase/trans/book_11"},
-      "book_12": {"parent": "bibliocraft:block/template/bookcase/trans/book_12"},
-      "book_13": {"parent": "bibliocraft:block/template/bookcase/trans/book_13"},
-      "book_14": {"parent": "bibliocraft:block/template/bookcase/trans/book_14"},
-      "book_15": {"parent": "bibliocraft:block/template/bookcase/trans/book_15"}
     }
   ]
 }

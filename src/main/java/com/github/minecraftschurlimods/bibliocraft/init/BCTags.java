@@ -29,10 +29,12 @@ public interface BCTags {
         TagKey<Block> FANCY_LAMPS             = tag("fancy_lamps");
         TagKey<Block> FANCY_LAMPS_GOLD        = tag("fancy_lamps/gold");
         TagKey<Block> FANCY_LAMPS_IRON        = tag("fancy_lamps/iron");
+        TagKey<Block> FANCY_LAMPS_COPPER      = tag("fancy_lamps/copper");
         TagKey<Block> FANCY_LANTERNS          = tag("fancy_lanterns");
         TagKey<Block> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
         TagKey<Block> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
-        TagKey<Block> TYPEWRITERS             = tag("typewriters");
+        TagKey<Block> FANCY_LANTERNS_COPPER   = tag("fancy_lanterns/copper");
+        TagKey<Block> TYPEWRITERS             = tag("typewriters"); 
         // @formatter:on
 
         /**
@@ -70,9 +72,11 @@ public interface BCTags {
         TagKey<Item> FANCY_LAMPS             = tag("fancy_lamps");
         TagKey<Item> FANCY_LAMPS_GOLD        = tag("fancy_lamps/gold");
         TagKey<Item> FANCY_LAMPS_IRON        = tag("fancy_lamps/iron");
+        TagKey<Item> FANCY_LAMPS_COPPER      = tag("fancy_lamps/copper");
         TagKey<Item> FANCY_LANTERNS          = tag("fancy_lanterns");
         TagKey<Item> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
         TagKey<Item> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
+        TagKey<Item> FANCY_LANTERNS_COPPER   = tag("fancy_lanterns/copper");
         TagKey<Item> TYPEWRITERS             = tag("typewriters");
         TagKey<Item> BOOKCASE_BOOKS          = tag("bookcase_books");
         TagKey<Item> COOKIE_JAR_COOKIES      = tag("cookie_jar_cookies");

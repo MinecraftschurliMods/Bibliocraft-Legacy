@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class DisplayCaseItem extends ColoredWoodTypeBlockItem {
-    public DisplayCaseItem(BibliocraftWoodType woodType, DyeColor color) {
-        super(BCBlocks.DISPLAY_CASE, woodType, color);
+    public DisplayCaseItem(BibliocraftWoodType woodType, DyeColor color, Properties properties) {
+        super(BCBlocks.DISPLAY_CASE, woodType, color, properties);
     }
 
     @Override

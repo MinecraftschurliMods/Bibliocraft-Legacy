@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -37,13 +38,18 @@ public class TypewriterPageScreen extends Screen {
         super.render(graphics, mouseX, mouseY, partialTick);
         Font font = ClientUtil.getFont();
         for (int i = 0; i < page.lines().size(); i++) {
-            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0, false);
+            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
         }
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, leftPos, topPos, 0, 0, TypewriterScreen.IMAGE_WIDTH, TypewriterScreen.IMAGE_HEIGHT);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, TypewriterScreen.IMAGE_WIDTH, TypewriterScreen.IMAGE_HEIGHT, 256, 256);
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 }
