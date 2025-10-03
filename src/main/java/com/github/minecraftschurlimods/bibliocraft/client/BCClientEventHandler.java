@@ -97,8 +97,8 @@ public final class BCClientEventHandler {
         event.registerEntityRenderer(BCEntities.SEAT.get(),              EmptyEntityRenderer::new);
         event.registerBlockEntityRenderer(BCBlockEntities.CLOCK.get(),       ClockBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.CLIPBOARD.get(),         $ -> new ClipboardBER());
-        event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(),        $ -> new CookieJarBER());
-        event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(),      $ -> new DinnerPlateBER());
+        event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(),        CookieJarBER::new);
+        event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(),      DinnerPlateBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(),      $ -> new DisplayCaseBER());
         event.registerBlockEntityRenderer(BCBlockEntities.DISC_RACK.get(),         $ -> new DiscRackBER());
         event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), $ -> new FancyArmorStandBER());
@@ -106,7 +106,7 @@ public final class BCClientEventHandler {
         event.registerBlockEntityRenderer(BCBlockEntities.FANCY_SIGN.get(),        $ -> new FancySignBER());
         event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(),             $ -> new LabelBER());
         event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(),      $ -> new PotionShelfBER());
-        event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(),             $ -> new ShelfBER());
+        event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(),             ShelfBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.SWORD_PEDESTAL.get(),    $ -> new SwordPedestalBER());
         event.registerBlockEntityRenderer(BCBlockEntities.TABLE.get(),             $ -> new TableBER());
         event.registerBlockEntityRenderer(BCBlockEntities.TOOL_RACK.get(),         $ -> new ToolRackBER());

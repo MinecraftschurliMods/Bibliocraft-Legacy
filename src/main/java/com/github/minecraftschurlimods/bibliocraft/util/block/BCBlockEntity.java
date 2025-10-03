@@ -3,12 +3,14 @@ package com.github.minecraftschurlimods.bibliocraft.util.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.LockCode;
+import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
@@ -25,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Abstract superclass for all block entities in this mod.
  */
-public abstract class BCBlockEntity extends BlockEntity implements Container {
+public abstract class BCBlockEntity extends BlockEntity implements Container, ItemOwner {
     private static final String ITEMS_TAG = "items";
     protected final BCItemHandler items;
     private LockCode lockKey = LockCode.NO_LOCK;
@@ -49,6 +52,10 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
         this.lockKey = lockKey;
         setChanged();
         level().sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+    }
+
+    public NonNullList<ItemStack> getItems() {
+        return items.getItems();
     }
 
     @Override
@@ -136,5 +143,16 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
 
     public Level level() {
         return level;
+    }
+
+    @Override
+    public Vec3 position() {
+        return Vec3.atCenterOf(worldPosition);
+    }
+
+    @Override
+    public float getVisualRotationYInDegrees() {
+        BlockState blockState = getBlockState();
+        return blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING) ? blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() : 0;
     }
 }

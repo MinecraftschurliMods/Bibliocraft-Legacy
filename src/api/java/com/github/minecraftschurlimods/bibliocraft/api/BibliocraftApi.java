@@ -55,9 +55,9 @@ public final class BibliocraftApi {
 
         private static <T> Supplier<T> fromServiceLoader(Class<T> clazz) {
             return () -> {
-                Optional<T> impl = ServiceLoader.load(FMLLoader.getGameLayer(), clazz).findFirst();
+                Optional<T> impl = ServiceLoader.load(FMLLoader.getCurrent().getGameLayer(), clazz).findFirst();
                 String msg = "Unable to find implementation for " + clazz.getSimpleName() + "!";
-                if (!FMLEnvironment.production) {
+                if (!FMLEnvironment.isProduction()) {
                     return impl.orElseThrow(() -> {
                         IllegalStateException exception = new IllegalStateException(msg);
                         LoggerFactory.getLogger(MOD_ID).error(exception.getMessage(), exception);
