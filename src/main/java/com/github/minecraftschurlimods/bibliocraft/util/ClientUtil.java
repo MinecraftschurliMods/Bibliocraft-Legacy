@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
@@ -183,9 +184,9 @@ public final class ClientUtil {
      * @param stack       The pose stack to transform.
      * @param blockEntity The block entity to get the rotation from.
      */
-    public static void setupCenteredBER(PoseStack stack, BlockEntity blockEntity) {
+    public static void setupCenteredBER(PoseStack stack, BlockEntityRenderState blockEntity) {
         stack.translate(0.5, 0.5, 0.5);
-        BlockState state = blockEntity.getBlockState();
+        BlockState state = blockEntity.blockState;
         if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
             stack.mulPose(Axis.YP.rotationDegrees(switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
                 case SOUTH -> 0;

@@ -2,9 +2,8 @@ package com.github.minecraftschurlimods.bibliocraft.datagen;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
-import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCBlockStateProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCEnglishLanguageProvider;
-import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCItemModelProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCModelProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCSoundDefinitionsProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCBlockTagsProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCEnchantmentTagsProvider;
@@ -13,36 +12,42 @@ import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCLootTableProvi
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiFunction;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
+@EventBusSubscriber(modid = BibliocraftApi.MOD_ID)
 public final class BCDatagen {
     @SubscribeEvent
-    private static void gatherData(GatherDataEvent event) {
+    private static void gatherData(GatherDataEvent.Client event) {
         DataGenerator generator = event.getGenerator();
-        PackOutput output = generator.getPackOutput();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        boolean includeClient = true;
+        boolean includeServer = true;
+        DataGenerator.PackGenerator clientPack = generator.getVanillaPack(includeClient);
+        DataGenerator.PackGenerator serverPack = generator.getVanillaPack(includeServer);
 
-        BCEnglishLanguageProvider language = generator.addProvider(event.includeClient(), new BCEnglishLanguageProvider(output));
-        generator.addProvider(event.includeClient(), new BCBlockStateProvider(output, existingFileHelper));
-        generator.addProvider(event.includeClient(), new BCItemModelProvider(output, existingFileHelper));
-        generator.addProvider(event.includeClient(), new BCSoundDefinitionsProvider(output, existingFileHelper));
+        BCEnglishLanguageProvider language = clientPack.addProvider(BCEnglishLanguageProvider::new);
+        clientPack.addProvider(BCModelProvider::new);
+        clientPack.addProvider(BCSoundDefinitionsProvider::new);
 
-        generator.addProvider(event.includeServer(), new BCLootTableProvider(output, lookupProvider));
-        generator.addProvider(event.includeServer(), new BCRecipeProvider(output, lookupProvider));
-        BCBlockTagsProvider blockTags = generator.addProvider(event.includeServer(), new BCBlockTagsProvider(output, lookupProvider, existingFileHelper));
-        BCItemTagsProvider itemTags = generator.addProvider(event.includeServer(), new BCItemTagsProvider(output, lookupProvider, blockTags.contentsGetter(), existingFileHelper));
-        generator.addProvider(event.includeServer(), new BCEnchantmentTagsProvider(output, lookupProvider, existingFileHelper));
+        serverPack.addProvider(wrap(lookupProvider, BCLootTableProvider::new));
+        serverPack.addProvider(wrap(lookupProvider, BCRecipeProvider.Runner::new));
+        BCBlockTagsProvider blockTags = serverPack.addProvider(wrap(lookupProvider, BCBlockTagsProvider::new));
+        BCItemTagsProvider itemTags = serverPack.addProvider(wrap(lookupProvider, BCItemTagsProvider::new));
+        serverPack.addProvider(wrap(lookupProvider, BCEnchantmentTagsProvider::new));
 
         BibliocraftDatagenHelper helper = BibliocraftApi.getDatagenHelper();
         helper.addWoodTypesToGenerateByModid("minecraft");
-        helper.generateAll(BibliocraftApi.MOD_ID, event, language, blockTags, itemTags);
+        helper.generateAll(BibliocraftApi.MOD_ID, lookupProvider, clientPack, serverPack, language, blockTags, itemTags);
+    }
+
+    private static <T extends DataProvider, P1> DataProvider.Factory<T> wrap(P1 p1, BiFunction<PackOutput, P1, T> factory) {
+        return output -> factory.apply(output, p1);
     }
 }

@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
@@ -103,20 +105,18 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        lockKey = LockCode.fromTag(tag);
-        if (tag.contains(ITEMS_TAG)) {
-            items.deserializeNBT(registries, tag.getCompound(ITEMS_TAG));
-        }
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        lockKey = LockCode.fromTag(input);
+        input.child(ITEMS_TAG).ifPresent(items::deserialize);
         requestModelDataUpdate();
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        lockKey.addToTag(tag);
-        tag.put(ITEMS_TAG, items.serializeNBT(registries));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        lockKey.addToTag(output);
+        items.serialize(output.child(ITEMS_TAG));
     }
 
     @Override
@@ -127,9 +127,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = super.getUpdateTag(registries);
-        saveAdditional(tag, registries);
-        return tag;
+        return saveCustomOnly(registries);
     }
 
     public IItemHandler getCapability(@Nullable Direction side) {

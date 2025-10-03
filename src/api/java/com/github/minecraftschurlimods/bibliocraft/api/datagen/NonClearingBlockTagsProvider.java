@@ -3,8 +3,6 @@ package com.github.minecraftschurlimods.bibliocraft.api.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,8 +17,8 @@ public abstract class NonClearingBlockTagsProvider extends BlockTagsProvider {
     /**
      * See super constructor for information.
      */
-    public NonClearingBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, modId, existingFileHelper);
+    public NonClearingBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId) {
+        super(output, lookupProvider, modId);
         this.lookupProvider = lookupProvider;
     }
 

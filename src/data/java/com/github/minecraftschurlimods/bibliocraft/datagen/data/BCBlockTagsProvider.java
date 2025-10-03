@@ -8,14 +8,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
 public final class BCBlockTagsProvider extends NonClearingBlockTagsProvider {
-    public BCBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, BibliocraftApi.MOD_ID, existingFileHelper);
+    public BCBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider, BibliocraftApi.MOD_ID);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,9 +28,9 @@ public final class BCBlockTagsProvider extends NonClearingBlockTagsProvider {
         collection3.forEach(tag(BCTags.Blocks.FANCY_LAMPS_IRON).add(BCBlocks.CLEAR_FANCY_IRON_LAMP.get())::add);
         tag(BCTags.Blocks.FANCY_LANTERNS).addTags(BCTags.Blocks.FANCY_LANTERNS_GOLD, BCTags.Blocks.FANCY_LANTERNS_IRON);
         Collection<? extends Block> collection2 = BCBlocks.FANCY_GOLD_LANTERN.values();
-        collection2.forEach(tag(BCTags.Blocks.FANCY_LANTERNS_GOLD).add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get()).addOptional(BCBlocks.SOUL_FANCY_GOLD_LANTERN.getId())::add);
+        collection2.forEach(tag(BCTags.Blocks.FANCY_LANTERNS_GOLD).add(BCBlocks.CLEAR_FANCY_GOLD_LANTERN.get()).addOptional(BCBlocks.SOUL_FANCY_GOLD_LANTERN.get())::add);
         Collection<? extends Block> collection1 = BCBlocks.FANCY_IRON_LANTERN.values();
-        collection1.forEach(tag(BCTags.Blocks.FANCY_LANTERNS_IRON).add(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get()).addOptional(BCBlocks.SOUL_FANCY_IRON_LANTERN.getId())::add);
+        collection1.forEach(tag(BCTags.Blocks.FANCY_LANTERNS_IRON).add(BCBlocks.CLEAR_FANCY_IRON_LANTERN.get()).addOptional(BCBlocks.SOUL_FANCY_IRON_LANTERN.get())::add);
         tag(BCTags.Blocks.PRINTING_TABLES).add(BCBlocks.PRINTING_TABLE.get(), BCBlocks.IRON_PRINTING_TABLE.get());
         Collection<? extends Block> collection = BCBlocks.TYPEWRITER.values();
         collection.forEach(tag(BCTags.Blocks.TYPEWRITERS).add(BCBlocks.CLEAR_TYPEWRITER.get())::add);

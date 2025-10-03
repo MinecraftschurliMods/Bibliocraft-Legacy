@@ -5,24 +5,72 @@ import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBl
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
+import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.DatagenUtil;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class BCBlockStateProvider extends BlockStateProvider {
-    public BCBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, BibliocraftApi.MOD_ID, exFileHelper);
+public class BCModelProvider extends ModelProvider {
+    public BCModelProvider(PackOutput output) {
+        super(output, BibliocraftApi.MOD_ID);
     }
 
     @Override
-    protected void registerStatesAndModels() {
+    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        registerItemModels(itemModels);
+        registerBlockModels(blockModels);
+    }
+
+    private void registerItemModels(ItemModelGenerators itemModels) {
+        basicItem(BCItems.BIG_BOOK.get());
+        basicItem(BCItems.CLIPBOARD.get());
+        basicItem(BCItems.GOLD_CHAIN.get());
+        basicItem(BCItems.GOLD_LANTERN.get());
+        basicItem(BCItems.GOLD_SOUL_LANTERN.get());
+        basicItem(BCItems.LOCK_AND_KEY.get());
+        basicItem(BCItems.PLUMB_LINE.get());
+        basicItem(BCItems.STOCKROOM_CATALOG.get());
+        basicItem(BCItems.TAPE_MEASURE.get());
+        basicItem(BCItems.TAPE_REEL.get());
+        basicItem(BCItems.TYPEWRITER_PAGE.get());
+        // @formatter:off
+        withExistingParent("fancy_gold_lamp",         modLoc("block/fancy_gold_lamp_standing"));
+        withExistingParent("fancy_iron_lamp",         modLoc("block/fancy_iron_lamp_standing"));
+        withExistingParent("fancy_gold_lantern",      modLoc("block/fancy_gold_lantern_standing"));
+        withExistingParent("fancy_iron_lantern",      modLoc("block/fancy_iron_lantern_standing"));
+        withExistingParent("soul_fancy_gold_lantern", modLoc("block/soul_fancy_gold_lantern_standing"));
+        withExistingParent("soul_fancy_iron_lantern", modLoc("block/soul_fancy_iron_lantern_standing"));
+        withExistingParent("typewriter",              modLoc("block/typewriter_0"));
+        for (DyeColor color : DyeColor.values()) {
+            String name = color.getSerializedName();
+            withExistingParent(name + "_fancy_gold_lamp",    modLoc("block/color/" + name + "/fancy_gold_lamp_standing"));
+            withExistingParent(name + "_fancy_iron_lamp",    modLoc("block/color/" + name + "/fancy_iron_lamp_standing"));
+            withExistingParent(name + "_fancy_gold_lantern", modLoc("block/color/" + name + "/fancy_gold_lantern_standing"));
+            withExistingParent(name + "_fancy_iron_lantern", modLoc("block/color/" + name + "/fancy_iron_lantern_standing"));
+            withExistingParent(name + "_typewriter",         modLoc("block/color/" + name + "/typewriter_0"));
+        }
+        withExistingParent("cookie_jar",             modLoc("block/cookie_jar"));
+        withExistingParent("desk_bell",              modLoc("block/desk_bell"));
+        withExistingParent("dinner_plate",           modLoc("block/dinner_plate"));
+        withExistingParent("disc_rack",              modLoc("block/disc_rack"));
+        withExistingParent("iron_fancy_armor_stand", modLoc("block/template/fancy_armor_stand/iron_inventory"));
+        withExistingParent("printing_table",         modLoc("block/printing_table"));
+        withExistingParent("iron_printing_table",    modLoc("block/iron_printing_table"));
+        withExistingParent("sword_pedestal",         modLoc("block/sword_pedestal"));
+        withExistingParent("redstone_book",          mcLoc("item/written_book"));
+        withExistingParent("slotted_book",           mcLoc("item/written_book"));
+        withExistingParent("written_big_book",       modLoc("item/big_book"));
+        // @formatter:on
+    }
+
+    private void registerBlockModels(BlockModelGenerators blockModels) {
         DatagenUtil.fancyLampModel(this, BCBlocks.CLEAR_FANCY_GOLD_LAMP, "block/", "gold", mcLoc("block/glass"));
         for (DyeColor color : DyeColor.values()) {
             DatagenUtil.fancyLampModel(this, BCBlocks.FANCY_GOLD_LAMP.holder(color), "block/color/" + color.getSerializedName() + "/", "gold", DatagenUtil.GLASS_TEXTURES.get(color));

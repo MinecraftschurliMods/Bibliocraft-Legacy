@@ -2,7 +2,10 @@ package com.github.minecraftschurlimods.bibliocraft.api.datagen;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.data.tags.TagAppender;
@@ -10,10 +13,12 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 /**
@@ -46,18 +51,18 @@ public interface BibliocraftDatagenHelper {
     /**
      * Generates the blockstates and block model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
      *
-     * @param provider The {@link BlockStateProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
-     * @param woodType The {@link BibliocraftWoodType} to generate the blockstates and block models for.
+     * @param generators The {@link BlockStateProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
+     * @param woodType   The {@link BibliocraftWoodType} to generate the blockstates and block models for.
      */
-    void generateBlockStatesFor(BlockStateProvider provider, BibliocraftWoodType woodType);
+    void generateBlockStatesFor(BlockModelGenerators generators, BibliocraftWoodType woodType);
 
     /**
      * Generates the item model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
      *
-     * @param provider The {@link ItemModelProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
-     * @param woodType The {@link BibliocraftWoodType} to generate the item models for.
+     * @param generators The {@link ItemModelProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
+     * @param woodType   The {@link BibliocraftWoodType} to generate the item models for.
      */
-    void generateItemModelsFor(ItemModelProvider provider, BibliocraftWoodType woodType);
+    void generateItemModelsFor(ItemModelGenerators generators, BibliocraftWoodType woodType);
 
     /**
      * Generates the block tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
@@ -102,7 +107,7 @@ public interface BibliocraftDatagenHelper {
      * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
      * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
      */
-    void generateAllFor(BibliocraftWoodType woodType, String modId, GatherDataEvent event, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider);
+    void generateAllFor(BibliocraftWoodType woodType, String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider);
 
     /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
@@ -129,8 +134,8 @@ public interface BibliocraftDatagenHelper {
      *
      * @param provider Your mod's {@link BlockStateProvider}.
      */
-    default void generateBlockStates(BlockStateProvider provider) {
-        getWoodTypesToGenerate().forEach(woodType -> generateBlockStatesFor(provider, woodType));
+    default void generateBlockStates(BlockModelGenerators blockModels) {
+        getWoodTypesToGenerate().forEach(woodType -> generateBlockStatesFor(blockModels, woodType));
     }
 
     /**
@@ -138,8 +143,8 @@ public interface BibliocraftDatagenHelper {
      *
      * @param provider Your mod's {@link ItemModelProvider}.
      */
-    default void generateItemModels(ItemModelProvider provider) {
-        getWoodTypesToGenerate().forEach(woodType -> generateItemModelsFor(provider, woodType));
+    default void generateItemModels(ItemModelGenerators itemModels) {
+        getWoodTypesToGenerate().forEach(woodType -> generateItemModelsFor(itemModels, woodType));
     }
 
     /**
@@ -147,7 +152,7 @@ public interface BibliocraftDatagenHelper {
      *
      * @param tagAccessor A reference to your mod's {@link BlockTagsProvider#tag(TagKey)} method, as it is protected for some reason.
      */
-    default void generateBlockTags(Function<TagKey<Block>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block>> tagAccessor) {
+    default void generateBlockTags(Function<TagKey<Block>, TagAppender<Block, Block>> tagAccessor) {
         getWoodTypesToGenerate().forEach(woodType -> generateBlockTagsFor(tagAccessor, woodType));
     }
 
@@ -156,7 +161,7 @@ public interface BibliocraftDatagenHelper {
      *
      * @param tagAccessor A reference to your mod's {@link ItemTagsProvider#tag(TagKey)} method, as it is protected for some reason.
      */
-    default void generateItemTags(Function<TagKey<Item>, IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item>> tagAccessor) {
+    default void generateItemTags(Function<TagKey<Item>, TagAppender<Item, Item>> tagAccessor) {
         getWoodTypesToGenerate().forEach(woodType -> generateItemTagsFor(tagAccessor, woodType));
     }
 
@@ -175,8 +180,8 @@ public interface BibliocraftDatagenHelper {
      * @param output Your mod's {@link RecipeOutput}.
      * @param modId  Your mod's namespace.
      */
-    default void generateRecipes(RecipeOutput output, String modId) {
-        getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, woodType, modId));
+    default void generateRecipes(RecipeOutput output, HolderLookup.Provider registries, String modId) {
+        getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, registries, woodType, modId));
     }
 
     /**
@@ -188,7 +193,7 @@ public interface BibliocraftDatagenHelper {
      * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
      * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
      */
-    default void generateAll(String modId, GatherDataEvent event, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider) {
-        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, event, englishLanguageProvider, blockTagsProvider, itemTagsProvider));
+    default void generateAll(String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider) {
+        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, lookupProvider, clientPack, serverPack, englishLanguageProvider, blockTagsProvider, itemTagsProvider));
     }
 }

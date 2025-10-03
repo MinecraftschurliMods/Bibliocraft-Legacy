@@ -16,8 +16,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import java.util.concurrent.CompletableFuture;
 
 public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
-    public BCItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> lookup, ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, lookup, BibliocraftApi.MOD_ID, existingFileHelper);
+    public BCItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider, BibliocraftApi.MOD_ID);
     }
 
     @SuppressWarnings("unchecked")
