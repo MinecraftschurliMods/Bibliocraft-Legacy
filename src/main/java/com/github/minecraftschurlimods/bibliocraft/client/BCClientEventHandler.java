@@ -101,10 +101,10 @@ public final class BCClientEventHandler {
         event.registerBlockEntityRenderer(BCBlockEntities.DINNER_PLATE.get(),      DinnerPlateBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.DISPLAY_CASE.get(),      DisplayCaseBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.DISC_RACK.get(),         DiscRackBER::new);
-        event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), $ -> new FancyArmorStandBER());
-        event.registerBlockEntityRenderer(BCBlockEntities.FANCY_CRAFTER.get(),     $ -> new FancyCrafterBER());
+        event.registerBlockEntityRenderer(BCBlockEntities.FANCY_ARMOR_STAND.get(), FancyArmorStandBER::new);
+        event.registerBlockEntityRenderer(BCBlockEntities.FANCY_CRAFTER.get(),     FancyCrafterBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.FANCY_SIGN.get(),        $ -> new FancySignBER());
-        event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(),             $ -> new LabelBER());
+        event.registerBlockEntityRenderer(BCBlockEntities.LABEL.get(),             LabelBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.POTION_SHELF.get(),      PotionShelfBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.SHELF.get(),             ShelfBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.SWORD_PEDESTAL.get(),    SwordPedestalBER::new);
