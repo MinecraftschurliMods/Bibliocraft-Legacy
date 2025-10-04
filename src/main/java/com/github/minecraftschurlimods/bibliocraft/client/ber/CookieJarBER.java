@@ -2,11 +2,9 @@ package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
 import com.github.minecraftschurlimods.bibliocraft.content.cookiejar.CookieJarBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
-import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.HashCommon;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -17,7 +15,6 @@ import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
@@ -33,6 +30,51 @@ public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, C
 
     public CookieJarBER(BlockEntityRendererProvider.Context context) {
         this.itemModelResolver = context.itemModelResolver();
+    }
+
+    @Override
+    public State createRenderState() {
+        return new State();
+    }
+
+    @Override
+    public void extractRenderState(CookieJarBlockEntity blockEntity, State state, float partialTicks, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
+        LegacyRandomSource random = new LegacyRandomSource(blockEntity.getBlockPos().asLong());
+        int i = HashCommon.long2int(blockEntity.getBlockPos().asLong());
+        List<ItemStack> items = IntStream.rangeClosed(0, blockEntity.getContainerSize() - 1)
+                .mapToObj(blockEntity::getItem)
+                .filter(e -> !e.isEmpty())
+                .toList();
+        List<ItemStack> cookies = BuiltInRegistries.ITEM.get(BCTags.Items.COOKIE_JAR_COOKIES)
+                .orElseThrow()
+                .stream()
+                .sorted(Comparator.comparing(a -> BuiltInRegistries.ITEM.getKey(a.value())))
+                .map(ItemStack::new)
+                .toList();
+        state.items = new ItemStackRenderState[items.size()];
+        for (int j = 0; j < items.size(); j++) {
+            ItemStack item = items.get(j);
+            ItemStack cookie = cookies.get(random.nextInt(cookies.size()));
+            ItemStack stack = item.is(BCTags.Items.COOKIE_JAR_COOKIES) ? item : cookie;
+            ItemStackRenderState itemstackrenderstate = new ItemStackRenderState();
+            this.itemModelResolver.updateForTopItem(itemstackrenderstate, stack, ItemDisplayContext.FIXED, blockEntity.level(), blockEntity, i + j);
+            state.items[j] = itemstackrenderstate;
+        }
+    }
+
+    @Override
+    public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState p_451022_) {
+        stack.translate(0.5, 0.5, 0.5);
+        for (int i = 0; i < state.items.length; i++) {
+            if (state.items[i] == null) {
+                continue;
+            }
+            stack.pushPose();
+            cookiePosition(i, stack);
+            state.items[i].submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+            stack.popPose();
+        }
     }
 
     private void cookiePosition(int index, PoseStack stack) {
@@ -80,52 +122,7 @@ public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, C
         stack.scale(0.6f, 0.6f, 0.6f);
     }
 
-    @Override
-    public State createRenderState() {
-        return new State();
-    }
-
-    @Override
-    public void extractRenderState(CookieJarBlockEntity blockEntity, State state, float partialTicks, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
-        LegacyRandomSource random = new LegacyRandomSource(blockEntity.getBlockPos().asLong());
-        int i = HashCommon.long2int(blockEntity.getBlockPos().asLong());
-        List<ItemStack> items = IntStream.rangeClosed(0, blockEntity.getContainerSize() - 1)
-                .mapToObj(blockEntity::getItem)
-                .filter(e -> !e.isEmpty())
-                .toList();
-        List<ItemStack> cookies = BuiltInRegistries.ITEM.get(BCTags.Items.COOKIE_JAR_COOKIES)
-                .orElseThrow()
-                .stream()
-                .sorted(Comparator.comparing(a -> BuiltInRegistries.ITEM.getKey(a.value())))
-                .map(ItemStack::new)
-                .toList();
-        state.items = new ItemStackRenderState[items.size()];
-        for (int j = 0; j < items.size(); j++) {
-            ItemStack item = items.get(j);
-            ItemStack cookie = cookies.get(random.nextInt(cookies.size()));
-            ItemStack stack = item.is(BCTags.Items.COOKIE_JAR_COOKIES) ? item : cookie;
-            ItemStackRenderState itemstackrenderstate = new ItemStackRenderState();
-            this.itemModelResolver.updateForTopItem(itemstackrenderstate, stack, ItemDisplayContext.FIXED, blockEntity.level(), blockEntity, i + j);
-            state.items[j] = itemstackrenderstate;
-        }
-    }
-
-    @Override
-    public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState p_451022_) {
-        stack.translate(0.5, 0.5, 0.5);
-        for (int i = 0; i < state.items.length; i++) {
-            if (state.items[i] == null) {
-                continue;
-            }
-            stack.pushPose();
-            cookiePosition(i, stack);
-            state.items[i].submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
-            stack.popPose();
-        }
-    }
-    
     public static class State extends BlockEntityRenderState {
-        public ItemStackRenderState[] items;
+        private ItemStackRenderState[] items = new ItemStackRenderState[0];
     }
 }

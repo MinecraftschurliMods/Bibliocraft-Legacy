@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.util.block;
 
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,10 +14,6 @@ public class BCItemHandler extends ItemStackHandler {
     public BCItemHandler(int size, BCBlockEntity blockEntity) {
         super(size);
         this.blockEntity = blockEntity;
-    }
-
-    public NonNullList<ItemStack> getItems() {
-        return stacks;
     }
 
     @Override
