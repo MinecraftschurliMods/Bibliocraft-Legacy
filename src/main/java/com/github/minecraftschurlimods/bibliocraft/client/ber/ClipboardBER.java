@@ -10,7 +10,10 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, ClipboardBER.State> {
     @Override
@@ -19,7 +22,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
     }
 
     @Override
-    public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
+    public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
         stack.pushPose();
         ClientUtil.setupCenteredBER(stack, state);
         stack.mulPose(Axis.XP.rotationDegrees(180));
@@ -27,11 +30,19 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         stack.translate(0, 0, -1 / 1024d);
         float scale = 1 / 256f;
         stack.scale(scale, scale, 0);
+        // FIXME: big rendering changes go brrr
         ClipboardReadOnlyRenderer.render(stack, collector, state.content, 128, 148);
         stack.popPose();
     }
 
+    @Override
+    public void extractRenderState(ClipboardBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
+        state.content = blockEntity.getContent();
+    }
+
+    @SuppressWarnings("DataFlowIssue")
     public static class State extends BlockEntityRenderState {
-        public ClipboardContent content;
+        public ClipboardContent content = null;
     }
 }
