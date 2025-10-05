@@ -3,11 +3,12 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +40,7 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
 
     @Override
     public boolean canPlaceItem(int index, ItemStack stack) {
-        return stack.isEmpty() || (stack.getItem() instanceof Equipable equipable && equipable.getEquipmentSlot().isArmor() && equipable.getEquipmentSlot().getIndex() == 3 - index && super.canPlaceItem(index, stack));
+        return stack.isEmpty() || (stack.get(DataComponents.EQUIPPABLE) instanceof Equippable equippable && equippable.slot().isArmor() && equippable.slot().getIndex() == 3 - index && super.canPlaceItem(index, stack));
     }
 
     @Override
