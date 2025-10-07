@@ -14,6 +14,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.Nullable;
@@ -38,15 +40,15 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        page = CodecUtil.decodeNbt(TypewriterPage.CODEC, tag.getCompound(PAGE_KEY));
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.read(PAGE_KEY, TypewriterPage.CODEC).ifPresent(page -> this.page = page);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put(PAGE_KEY, CodecUtil.encodeNbt(TypewriterPage.CODEC, page));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.store(PAGE_KEY, TypewriterPage.CODEC, page);
     }
 
     @Override

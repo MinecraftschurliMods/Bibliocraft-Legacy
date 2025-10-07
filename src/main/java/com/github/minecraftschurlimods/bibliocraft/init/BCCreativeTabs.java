@@ -68,7 +68,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.IRON_PRINTING_TABLE);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-                    stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor(), true));
+                    stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor()));
                     output.accept(stack);
                 }
                 output.accept(BCItems.BIG_BOOK);

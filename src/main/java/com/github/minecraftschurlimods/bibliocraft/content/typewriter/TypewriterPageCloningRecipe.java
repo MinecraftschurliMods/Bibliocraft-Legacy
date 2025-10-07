@@ -7,10 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
 public class TypewriterPageCloningRecipe extends CustomRecipe {
@@ -60,8 +57,9 @@ public class TypewriterPageCloningRecipe extends CustomRecipe {
         NonNullList<ItemStack> list = NonNullList.withSize(input.size(), ItemStack.EMPTY);
         for (int i = 0; i < list.size(); i++) {
             ItemStack stack = input.getItem(i);
-            if (stack.hasCraftingRemainingItem()) {
-                list.set(i, stack.getCraftingRemainingItem());
+            ItemStack craftingRemainder = stack.getCraftingRemainder();
+            if (!craftingRemainder.isEmpty()) {
+                list.set(i, craftingRemainder);
             } else if (stack.is(BCItems.TYPEWRITER_PAGE)) {
                 list.set(i, stack.copyWithCount(1));
             }
@@ -70,12 +68,7 @@ public class TypewriterPageCloningRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width >= 3 && height >= 3;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends CustomRecipe> getSerializer() {
         return BCRecipes.TYPEWRITER_PAGE_CLONING.get();
     }
 }

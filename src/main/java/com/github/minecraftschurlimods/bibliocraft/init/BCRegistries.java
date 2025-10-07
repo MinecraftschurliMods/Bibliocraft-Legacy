@@ -19,10 +19,10 @@ public interface BCRegistries {
     // @formatter:off
     DeferredRegister.Blocks                  BLOCKS             = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
     DeferredRegister.Items                   ITEMS              = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
+    DeferredRegister.Entities                ENTITIES           = DeferredRegister.createEntities(BibliocraftApi.MOD_ID);
     DeferredRegister<DataComponentType<?>>   DATA_COMPONENTS    = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
     DeferredRegister<CreativeModeTab>        CREATIVE_TABS      = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB,          BibliocraftApi.MOD_ID);
     DeferredRegister<BlockEntityType<?>>     BLOCK_ENTITIES     = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE,          BibliocraftApi.MOD_ID);
-    DeferredRegister<EntityType<?>>          ENTITIES           = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE,                BibliocraftApi.MOD_ID);
     DeferredRegister<MenuType<?>>            MENUS              = DeferredRegister.create(BuiltInRegistries.MENU,                       BibliocraftApi.MOD_ID);
     DeferredRegister<LootNumberProviderType> NUMBER_PROVIDERS   = DeferredRegister.create(BuiltInRegistries.LOOT_NUMBER_PROVIDER_TYPE,  BibliocraftApi.MOD_ID);
     DeferredRegister<RecipeType<?>>          RECIPE_TYPES       = DeferredRegister.create(BuiltInRegistries.RECIPE_TYPE,                BibliocraftApi.MOD_ID);

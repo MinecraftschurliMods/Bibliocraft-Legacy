@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public interface BCBlockEntities {
     // @formatter:off
@@ -58,9 +59,8 @@ public interface BCBlockEntities {
      * @param <T>      The exact type of the block entity.
      * @return A block entity type supplier.
      */
-    @SuppressWarnings("DataFlowIssue")
     static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> supplier, Collection<? extends Supplier<? extends Block>> blocks) {
-        return BCRegistries.BLOCK_ENTITIES.register(name, () -> BlockEntityType.Builder.of(supplier, blocks.stream().map(Supplier::get).toList().toArray(new Block[0])).build(null));
+        return BCRegistries.BLOCK_ENTITIES.register(name, () -> new BlockEntityType<>(supplier, blocks.stream().map(Supplier::get).collect(Collectors.toSet())));
     }
 
     /**

@@ -12,6 +12,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -24,9 +25,9 @@ public interface BCRecipes {
     DeferredHolder<RecipeType<?>, RecipeType<PrintingTableRecipe>> PRINTING_TABLE = BCRegistries.RECIPE_TYPES.register("printing_table", () -> RecipeType.simple(BCUtil.bcLoc("printing_table")));
 
     Supplier<RecipeSerializer<BigBookCloningRecipe>> BIG_BOOK_CLONING =
-            BCRegistries.RECIPE_SERIALIZERS.register("big_book_cloning", () -> new SimpleCraftingRecipeSerializer<>(BigBookCloningRecipe::new));
+            BCRegistries.RECIPE_SERIALIZERS.register("big_book_cloning", () -> new CustomRecipe.Serializer<>(BigBookCloningRecipe::new));
     Supplier<RecipeSerializer<TypewriterPageCloningRecipe>> TYPEWRITER_PAGE_CLONING =
-            BCRegistries.RECIPE_SERIALIZERS.register("typewriter_page_cloning", () -> new SimpleCraftingRecipeSerializer<>(TypewriterPageCloningRecipe::new));
+            BCRegistries.RECIPE_SERIALIZERS.register("typewriter_page_cloning", () -> new CustomRecipe.Serializer<>(TypewriterPageCloningRecipe::new));
     Supplier<RecipeSerializer<PrintingTableBindingTypewriterPagesRecipe>> PRINTING_TABLE_BINDING_TYPEWRITER_PAGES =
             BCRegistries.RECIPE_SERIALIZERS.register("printing_table_binding_typewriter_pages", serializer(PrintingTableBindingTypewriterPagesRecipe.CODEC, PrintingTableBindingTypewriterPagesRecipe.STREAM_CODEC));
     Supplier<RecipeSerializer<PrintingTableCloningRecipe>> PRINTING_TABLE_CLONING =

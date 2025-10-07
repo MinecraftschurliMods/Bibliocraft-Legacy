@@ -82,7 +82,7 @@ public interface BCBlocks {
     DeferredBlock<DiscRackBlock>        DISC_RACK              = BCRegistries.BLOCKS.register("disc_rack",              () -> new DiscRackBlock       (BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
     DeferredBlock<WallDiscRackBlock>    WALL_DISC_RACK         = BCRegistries.BLOCKS.register("wall_disc_rack",         () -> new WallDiscRackBlock   (BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX).noOcclusion()));
     DeferredBlock<FancyArmorStandBlock> IRON_FANCY_ARMOR_STAND = BCRegistries.BLOCKS.register("iron_fancy_armor_stand", () -> new FancyArmorStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()));
-    DeferredBlock<ChainBlock>           GOLD_CHAIN             = BCRegistries.BLOCKS.register("gold_chain",             () -> new ChainBlock          (BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)));
+    DeferredBlock<ChainBlock>           GOLD_CHAIN             = BCRegistries.BLOCKS.register("gold_chain",             () -> new ChainBlock          (BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_CHAIN)));
     DeferredBlock<LanternBlock>         GOLD_LANTERN           = BCRegistries.BLOCKS.register("gold_lantern",           () -> new LanternBlock        (BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN)));
     DeferredBlock<LanternBlock>         GOLD_SOUL_LANTERN      = BCRegistries.BLOCKS.register("gold_soul_lantern",      () -> new LanternBlock        (BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_LANTERN)));
     DeferredBlock<PrintingTableBlock>   PRINTING_TABLE         = BCRegistries.BLOCKS.register("printing_table",         () -> new PrintingTableBlock  (BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion()));

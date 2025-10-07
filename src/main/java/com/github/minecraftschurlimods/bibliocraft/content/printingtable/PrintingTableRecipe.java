@@ -10,11 +10,13 @@ import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 
@@ -33,22 +35,8 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width * height >= 1;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<PrintingTableRecipeInput>> getType() {
         return BCRecipes.PRINTING_TABLE.get();
-    }
-
-    @Override
-    public ItemStack getResultItem(HolderLookup.Provider registries) {
-        return getResultItem();
-    }
-
-    public ItemStack getResultItem() {
-        return result.copy();
     }
 
     public int getDuration() {
@@ -100,13 +88,13 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         }
 
         @Override
-        public void save(RecipeOutput output, ResourceLocation id) {
+        public void save(RecipeOutput output, ResourceKey<Recipe<?>> resourceKey) {
             Advancement.Builder advancement = output.advancement()
-                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-                    .rewards(AdvancementRewards.Builder.recipe(id))
+                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceKey))
+                    .rewards(AdvancementRewards.Builder.recipe(resourceKey))
                     .requirements(AdvancementRequirements.Strategy.OR);
             criteria.forEach(advancement::addCriterion);
-            output.accept(id, build(), advancement.build(id.withPrefix("recipes/")));
+            output.accept(resourceKey, build(), advancement.build(resourceKey.location().withPrefix("recipes/")));
         }
 
         public abstract PrintingTableRecipe build();

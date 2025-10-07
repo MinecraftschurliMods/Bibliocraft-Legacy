@@ -18,12 +18,13 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,7 +37,7 @@ import java.util.Objects;
 public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     public static final MapCodec<PrintingTableMergingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Codec.unboundedMap(BuiltInRegistries.DATA_COMPONENT_TYPE.byNameCodec(), Codec.unboundedMap(Codec.STRING, MergeMethod.CODEC)).fieldOf("component_mergers").forGetter(e -> e.mergers),
-            Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(e -> e.ingredient),
+            Ingredient.CODEC.fieldOf("ingredient").forGetter(e -> e.ingredient),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
     ).apply(inst, PrintingTableMergingRecipe::new));
@@ -128,8 +129,18 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<PrintingTableRecipeInput>> getSerializer() {
         return BCRecipes.PRINTING_TABLE_MERGING.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(ingredient);
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return null;
     }
 
     @Override
@@ -196,6 +207,11 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         @Override
         public PrintingTableRecipe build() {
             return new PrintingTableMergingRecipe(mergers, ingredient, result, duration);
+        }
+
+        @Override
+        public void save(RecipeOutput output, ResourceKey<Recipe<?>> resourceKey) {
+            output.accept(resourceKey, build(), null);
         }
     }
 }
