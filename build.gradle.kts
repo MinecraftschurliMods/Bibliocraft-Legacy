@@ -1,5 +1,6 @@
 import com.github.minecraftschurlimods.helperplugin.api
 import com.github.minecraftschurlimods.helperplugin.version
+import org.gradle.api.tasks.compile.JavaCompile
 
 plugins {
     idea
@@ -38,8 +39,8 @@ dependencies {
     testImplementation(helper.testframework())
 
     // jei for integration
-    val jeiApiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-${mc}-common-api:${version}" }
-    val jeiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-${mc}-neoforge:${version}" }
+    val jeiApiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-1.21.9-common-api:${version}" }
+    val jeiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-1.21.9-neoforge:${version}" }
     compileOnly(jeiApiDep)
     if (!helper.runningInCI.getOrElse(false)) {
         runtimeOnly(jeiDep)
@@ -66,7 +67,7 @@ helper.withCommonRuns()
 helper.withGameTestRuns()
 helper.withDataGenRuns {
     if (abnormalsCompat) {
-        programArguments("--existing-mod", "buzzier_bees")
+        arguments("--existing-mod", "buzzier_bees")
     }
 }
 
