@@ -44,10 +44,5 @@ public class SeatBackItem extends ColoredWoodTypeBlockItem {
         BlockState state = BCUtil.nonNull(getBlock().getStateForPlacement(context));
         return canPlace(context, state) ? state.setValue(SeatBackBlock.TYPE, type) : null;
     }
-
-    @Override
-    public String getDescriptionId() {
-        return super.getOrCreateDescriptionId();
-    }
 }
 

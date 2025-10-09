@@ -12,9 +12,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public class FancyLampBlock extends AbstractFancyLightBlock {
     private static final VoxelShape NORTH_STANDING_SHAPE = ShapeUtil.combine(
@@ -93,8 +95,8 @@ public class FancyLampBlock extends AbstractFancyLightBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if (level.isClientSide) return;
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (level.isClientSide()) return;
         boolean lit = state.getValue(LIT);
         if (lit != level.hasNeighborSignal(pos)) return;
         if (lit) {

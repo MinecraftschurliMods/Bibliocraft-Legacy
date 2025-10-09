@@ -6,8 +6,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -21,6 +19,8 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
@@ -114,7 +114,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        if (stack.hasCraftingRemainingItem() || isSlotDisabled(slot)) return false;
+        if (!stack.getCraftingRemainder().isEmpty() || isSlotDisabled(slot)) return false;
         ItemStack slotStack = getItem(slot);
         return slotStack.isEmpty() || slotStack.getCount() < slotStack.getMaxStackSize() && !smallerStackExists(slotStack.getCount(), stack, slot);
     }
@@ -125,24 +125,24 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        craftingTicksRemaining = tag.getInt(CRAFTING_TICKS_REMAINING_KEY);
-        int[] tagSlots = tag.getIntArray(DISABLED_SLOTS_KEY);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        craftingTicksRemaining = input.getIntOr(CRAFTING_TICKS_REMAINING_KEY, MAX_CRAFTING_TICKS);
+        int[] tagSlots = input.getIntArray(DISABLED_SLOTS_KEY).orElse(new int[9]);
         for (int i = 0; i < 9; i++) {
             disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
         }
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putInt(CRAFTING_TICKS_REMAINING_KEY, craftingTicksRemaining);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt(CRAFTING_TICKS_REMAINING_KEY, craftingTicksRemaining);
         int[] tagSlots = new int[9];
         for (int i = 0; i < 9; i++) {
             tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
         }
-        tag.putIntArray(DISABLED_SLOTS_KEY, tagSlots);
+        output.putIntArray(DISABLED_SLOTS_KEY, tagSlots);
     }
 
     @Override
@@ -183,7 +183,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     private void calculateRecipe() {
-        RecipeManager recipes = level().getRecipeManager();
+        RecipeManager recipes = level().getServer().getRecipeManager();
         CraftingInput input = CraftingInput.of(3, 3, getInputs());
         recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level()).orElse(null);
         items.setStackInSlot(9, recipe == null ? ItemStack.EMPTY : recipe.value().getResultItem(level().registryAccess()).copy());

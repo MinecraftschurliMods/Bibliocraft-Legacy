@@ -59,7 +59,7 @@ public abstract class AbstractClockBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return state.getValue(POWERED) ? 15 : 0;
     }
 }

@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -56,7 +58,7 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
         return new FancyCrafterBlockEntity(pos, state);
     }
 
-    @Override
+/*    @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean flag) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockentity = level.getBlockEntity(pos);
@@ -73,7 +75,7 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
                 level.removeBlockEntity(pos);
             }
         }
-    }
+    }*/
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
@@ -94,8 +96,8 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
-        super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston);
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, neighborBlock, orientation, movedByPiston);
         level.setBlock(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)), UPDATE_CLIENTS);
     }
 
@@ -118,7 +120,7 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return level.getBlockEntity(pos) instanceof FancyCrafterBlockEntity blockEntity ? blockEntity.getRedstoneSignal() : 0;
     }
 }

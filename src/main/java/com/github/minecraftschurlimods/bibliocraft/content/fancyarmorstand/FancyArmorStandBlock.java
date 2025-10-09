@@ -71,11 +71,11 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction facing, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos currentPos, Direction facing, BlockPos neighborPos, BlockState facingState, RandomSource random) {
         DoubleBlockHalf half = state.getValue(HALF);
         if (facing.getAxis() == Direction.Axis.Y && half == DoubleBlockHalf.LOWER == (facing == Direction.UP) && (!facingState.is(this) || facingState.getValue(HALF) == half))
             return Blocks.AIR.defaultBlockState();
-        return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+        return half == DoubleBlockHalf.LOWER && facing == Direction.DOWN && !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, level, scheduledTickAccess, currentPos, facing, neighborPos, facingState, random);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
-        return pos.getY() < level.getMaxBuildHeight() - 1 && level.getBlockState(pos.above()).canBeReplaced(context)
+        return level.isInsideBuildHeight(pos.getY() + 1) && level.getBlockState(pos.above()).canBeReplaced(context)
                 ? BCUtil.nonNull(super.getStateForPlacement(context))
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER)
@@ -152,7 +152,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
-            if (slot != -1 && trySwapArmor(stack, slot, hand == InteractionHand.MAIN_HAND ? player.getInventory().selected : Inventory.SLOT_OFFHAND, state, level, pos, player))
+            if (slot != -1 && trySwapArmor(stack, slot, hand == InteractionHand.MAIN_HAND ? player.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND, state, level, pos, player))
                 return InteractionResult.SUCCESS;
         }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {

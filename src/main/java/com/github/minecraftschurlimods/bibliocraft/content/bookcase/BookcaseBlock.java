@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.redstonebook.Redstone
 import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -55,14 +56,14 @@ public class BookcaseBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
-        if (level.isClientSide()) return super.getAnalogOutputSignal(state, level, pos);
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
+        if (level.isClientSide()) return super.getAnalogOutputSignal(state, level, pos, direction);
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof BookcaseBlockEntity bcbe)) return super.getAnalogOutputSignal(state, level, pos);
+        if (!(blockEntity instanceof BookcaseBlockEntity bcbe)) return super.getAnalogOutputSignal(state, level, pos, direction);
         for (int i = 15; i >= 0; i--) {
             if (bcbe.getItem(i).getItem() instanceof RedstoneBookItem) return i;
         }
-        return super.getAnalogOutputSignal(state, level, pos);
+        return super.getAnalogOutputSignal(state, level, pos, direction);
     }
 
     @Override
