@@ -19,8 +19,11 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -33,7 +36,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -107,17 +110,17 @@ public class StockroomCatalogScreen extends Screen {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
                     BlockPos container = visibleContainers.get(y / 19);
                     int distance = (int) (lectern != null ? Math.sqrt(lectern.distSqr(container)) : ClientUtil.getPlayer().position().distanceTo(BCUtil.toVec3(container)));
-                    graphics.renderTooltip(font, Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance), mouseX, mouseY);
+                    graphics.renderTooltip(font, ClientUtil.forTooltip(Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance)), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, Translations.STOCKROOM_CATALOG_REMOVE, mouseX, mouseY);
+                    graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_REMOVE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, Translations.STOCKROOM_CATALOG_LOCATE, mouseX, mouseY);
+                    graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
         } else {
@@ -134,12 +137,12 @@ public class StockroomCatalogScreen extends Screen {
             if (mouseX >= x + 34 && mouseX < x + 50) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
                     ItemStack item = visibleItems.get(y / 19).item();
-                    graphics.renderTooltip(font, getTooltipFromItem(getMinecraft(), item), item.getTooltipImage(), item, mouseX, mouseY);
+                    graphics.setTooltipForNextFrame(font, item, mouseX, mouseY);
                 }
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
-                    graphics.renderTooltip(font, Translations.STOCKROOM_CATALOG_LOCATE, mouseX, mouseY);
+                    graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
         }
@@ -166,7 +169,7 @@ public class StockroomCatalogScreen extends Screen {
         if (lectern != null) {
             addRenderableWidget(Button.builder(Translations.VANILLA_TAKE_BOOK, $ -> {
                 LecternUtil.takeLecternBook(player, player.level(), lectern);
-                PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
+                ClientPacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
                 onClose();
             }).bounds(width / 2 - 151, 260, 98, 20).build());
             addRenderableWidget(Button.builder(switchComponent, $ -> toggleMode()).bounds(width / 2 - 49, 260, 98, 20).build());
@@ -239,7 +242,7 @@ public class StockroomCatalogScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, (width - 256) / 2 + 18, 2, 0, 0, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, (width - 256) / 2 + 18, 2, 0, 0, 256, 256, 256, 256);
     }
 
     @Override
@@ -256,15 +259,15 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (super.keyPressed(keyCode, scanCode, modifiers)) return true;
-        return switch (keyCode) {
+    public boolean keyPressed(KeyEvent event) {
+        if (super.keyPressed(event)) return true;
+        return switch (event.key()) {
             case GLFW.GLFW_KEY_PAGE_UP -> {
-                backButton.onPress();
+                backButton.onPress(event);
                 yield true;
             }
             case GLFW.GLFW_KEY_PAGE_DOWN -> {
-                forwardButton.onPress();
+                forwardButton.onPress(event);
                 yield true;
             }
             default -> false;
@@ -283,18 +286,18 @@ public class StockroomCatalogScreen extends Screen {
 
     private void requestPacket() {
         if (hand != null) {
-            PacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting, Either.left(hand)));
+            ClientPacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting, Either.left(hand)));
         } else if (lectern != null) {
-            PacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting, Either.right(lectern)));
+            ClientPacketDistributor.sendToServer(new StockroomCatalogRequestListPacket(containerSorting, itemSorting, Either.right(lectern)));
         }
     }
 
     private void setDataOnStack() {
         stack.set(BCDataComponents.STOCKROOM_CATALOG_CONTENT, data);
         if (hand != null) {
-            PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, Either.left(hand)));
+            ClientPacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, Either.left(hand)));
         } else if (lectern != null) {
-            PacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, Either.right(lectern)));
+            ClientPacketDistributor.sendToServer(new StockroomCatalogSyncPacket(data, Either.right(lectern)));
         }
     }
 

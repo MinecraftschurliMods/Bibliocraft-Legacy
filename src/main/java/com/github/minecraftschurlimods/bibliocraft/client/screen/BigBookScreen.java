@@ -23,6 +23,8 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -33,7 +35,7 @@ import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -266,7 +268,7 @@ public class BigBookScreen extends Screen {
                 }
                 updateButtonVisibility();
                 if (lectern != null) {
-                    PacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.right(lectern)));
+                    ClientPacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.right(lectern)));
                 }
             }, true));
             forwardButton = addRenderableWidget(new PageButton(leftX + 184, BACKGROUND_HEIGHT - 32, true, $ -> {
@@ -275,7 +277,7 @@ public class BigBookScreen extends Screen {
                 }
                 updateButtonVisibility();
                 if (lectern != null) {
-                    PacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.right(lectern)));
+                    ClientPacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.right(lectern)));
                 }
             }, true));
             updateButtonVisibility();
@@ -283,7 +285,7 @@ public class BigBookScreen extends Screen {
                 addRenderableWidget(Button.builder(Translations.VANILLA_TAKE_BOOK, button -> {
                             onClose();
                             LecternUtil.takeLecternBook(player, player.level(), lectern);
-                            PacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
+                            ClientPacketDistributor.sendToServer(new TakeLecternBookPacket(lectern));
                         })
                         .bounds((width - BACKGROUND_WIDTH) / 2, BACKGROUND_HEIGHT + 4, BACKGROUND_WIDTH / 2 - 4, 20)
                         .build());
@@ -324,23 +326,23 @@ public class BigBookScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent event) {
         if (isSigning) {
-            if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER) {
+            if (event.isConfirmation()) {
                 finalizeBook();
                 return true;
             }
             clearFocus();
             setFocused(titleBox);
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         int x = (width - (writable ? BACKGROUND_WIDTH + 80 : BACKGROUND_WIDTH)) / 2;
-        graphics.blit(BACKGROUND, x, 0, 0, 0, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x, 0, 0, 0, 256, 256, 256, 256);
     }
 
     @Override
@@ -350,11 +352,11 @@ public class BigBookScreen extends Screen {
             savePages();
             BigBookContent content = new BigBookContent(pages, currentPage);
             stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
-            PacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
+            ClientPacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
         } else if (hand != null) {
-            PacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.left(hand)));
+            ClientPacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.left(hand)));
         } else if (lectern != null) {
-            PacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.right(lectern)));
+            ClientPacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.right(lectern)));
         }
     }
 
@@ -423,7 +425,7 @@ public class BigBookScreen extends Screen {
         WrittenBigBookContent content = new WrittenBigBookContent(pages, titleBox.getValue(), player.getName().getString(), 0, currentPage);
         stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
         player.setItemInHand(hand, stack);
-        PacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
+        ClientPacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
         super.onClose();
     }
 }

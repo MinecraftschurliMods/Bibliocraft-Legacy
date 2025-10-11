@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.screen;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +18,7 @@ public class BCMenuScreen<T extends BCMenu<?>> extends AbstractContainerScreen<T
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-        guiGraphics.blit(background, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, background, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 
     @Override

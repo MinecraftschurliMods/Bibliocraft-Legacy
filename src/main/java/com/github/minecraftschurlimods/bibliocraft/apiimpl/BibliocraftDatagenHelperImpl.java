@@ -607,7 +607,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     private static ShapedRecipeBuilder shapedRecipe(HolderLookup.RegistryLookup<Item> lookup, Item item, BibliocraftWoodType woodType, String group) {
         return ShapedRecipeBuilder.shaped(lookup, RecipeCategory.DECORATIONS, item)
                 .group(BibliocraftApi.MOD_ID + ":" + group)
-                .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().get().getBaseBlock()).build()))));
+                .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(lookup, woodType.family().get().getBaseBlock()).build()))));
     }
 
     /**
@@ -620,6 +620,6 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     private static ShapelessRecipeBuilder shapelessRecipe(HolderLookup.RegistryLookup<Item> lookup, Item item, BibliocraftWoodType woodType, String group) {
         return ShapelessRecipeBuilder.shapeless(lookup, RecipeCategory.DECORATIONS, item)
                 .group(BibliocraftApi.MOD_ID + ":" + group)
-                .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(woodType.family().get().getBaseBlock()).build()))));
+                .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(lookup, woodType.family().get().getBaseBlock()).build()))));
     }
 }

@@ -11,12 +11,15 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -45,7 +48,7 @@ public class ClipboardScreen extends Screen {
     public void onClose() {
         super.onClose();
         stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
-        PacketDistributor.sendToServer(new ClipboardSyncPacket(data, hand));
+        ClientPacketDistributor.sendToServer(new ClipboardSyncPacket(data, hand));
     }
 
     @Override
@@ -94,7 +97,7 @@ public class ClipboardScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192, 256, 256);
     }
 
     @Override
@@ -111,15 +114,15 @@ public class ClipboardScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (super.keyPressed(keyCode, scanCode, modifiers)) return true;
-        return switch (keyCode) {
+    public boolean keyPressed(KeyEvent event) {
+        if (super.keyPressed(event)) return true;
+        return switch (event.key()) {
             case GLFW.GLFW_KEY_PAGE_UP -> {
-                backButton.onPress();
+                backButton.onPress(event);
                 yield true;
             }
             case GLFW.GLFW_KEY_PAGE_DOWN -> {
-                forwardButton.onPress();
+                forwardButton.onPress(event);
                 yield true;
             }
             default -> false;
@@ -154,13 +157,13 @@ public class ClipboardScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY, int button) {
+        public void onClick(MouseButtonEvent event, boolean doubleClick) {
             state = switch (state) {
                 case EMPTY -> CheckboxState.CHECK;
                 case CHECK -> CheckboxState.X;
                 case X -> CheckboxState.EMPTY;
             };
-            super.onClick(mouseX, mouseY, button);
+            super.onClick(event, doubleClick);
         }
 
         @Override
