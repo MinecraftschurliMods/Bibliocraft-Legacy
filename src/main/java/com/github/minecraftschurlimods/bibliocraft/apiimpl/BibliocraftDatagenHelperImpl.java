@@ -25,6 +25,12 @@ import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
@@ -152,50 +158,28 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     public void generateBlockStatesFor(BlockModelGenerators generators, BibliocraftWoodType woodType) {
         ResourceLocation woodTexture = woodType.texture();
         String prefix = "block/wood/" + woodType.getRegistrationPrefix() + "/";
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.BOOKCASE.holder(woodType),
-                prefix + "bookcase",
-                bcLoc("block/template/bookcase/bookcase"),
-                woodTexture);
-        DatagenUtil.doubleHighHorizontalBlockModel(generators, BCBlocks.FANCY_ARMOR_STAND.holder(woodType),
-                models.withExistingParent(prefix + "fancy_armor_stand_bottom", bcLoc("block/template/fancy_armor_stand/bottom")).texture("texture", woodTexture),
-                models.withExistingParent(prefix + "fancy_armor_stand_top", bcLoc("block/template/fancy_armor_stand/top")).texture("texture", woodTexture),
+        TextureMapping textureMapping = TextureMapping.defaultTexture(woodTexture);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.BOOKCASE.holder(woodType), ModelTemplates.BOOKCASE, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.FANCY_CLOCK.holder(woodType), ModelTemplates.FANCY_CLOCK, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.WALL_FANCY_CLOCK.holder(woodType), ModelTemplates.WALL_FANCY_CLOCK, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.FANCY_CRAFTER.holder(woodType), ModelTemplates.FANCY_CRAFTER, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.LABEL.holder(woodType), ModelTemplates.LABEL, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.POTION_SHELF.holder(woodType), ModelTemplates.POTION_SHELF, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.SHELF.holder(woodType), ModelTemplates.SHELF, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.TOOL_RACK.holder(woodType), ModelTemplates.TOOL_RACK, textureMapping);
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.WALL_FANCY_SIGN.holder(woodType), ModelTemplates.WALL_FANCY_SIGN, textureMapping);
+        DatagenUtil.doubleHighHorizontalBlockModel(generators, BCBlocks.FANCY_ARMOR_STAND.holder(woodType), ModelTemplates.FANCY_ARMOR_STAND_BOTTOM, ModelTemplates.FANCY_ARMOR_STAND_TOP, textureMapping, true);
+        DatagenUtil.doubleHighHorizontalBlockModel(generators, BCBlocks.GRANDFATHER_CLOCK.holder(woodType), ModelTemplates.GRANDFATHER_CLOCK_BOTTOM, ModelTemplates.GRANDFATHER_CLOCK_TOP, textureMapping, true);
+        DeferredHolder<Block, FancySignBlock> fancySign = BCBlocks.FANCY_SIGN.holder(woodType);
+        DatagenUtil.horizontalBlockModel(
+                generators,
+                fancySign,
+                FancySignBlock.HANGING,
+                hanging -> hanging ? ModelTemplates.FANCY_SIGN_HANGING : ModelTemplates.FANCY_SIGN,
+                textureMapping,
                 true);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.FANCY_CLOCK.holder(woodType),
-                prefix + "fancy_clock",
-                bcLoc("block/template/clock/fancy"),
-                woodTexture);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.WALL_FANCY_CLOCK.holder(woodType),
-                prefix + "wall_fancy_clock",
-                bcLoc("block/template/clock/wall_fancy"),
-                woodTexture);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.FANCY_CRAFTER.holder(woodType),
-                prefix + "fancy_crafter",
-                bcLoc("block/template/fancy_crafter"),
-                woodTexture);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.FANCY_SIGN.holder(woodType), state -> state.getValue(FancySignBlock.HANGING)
-                ? models.withExistingParent(prefix + "fancy_sign_hanging", bcLoc("block/template/fancy_sign/hanging")).texture("texture", woodTexture)
-                : models.withExistingParent(prefix + "fancy_sign", bcLoc("block/template/fancy_sign/standing")).texture("texture", woodTexture));
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.WALL_FANCY_SIGN.holder(woodType),
-                prefix + "wall_fancy_sign",
-                bcLoc("block/template/fancy_sign/wall"),
-                woodTexture);
-        DatagenUtil.doubleHighHorizontalBlockModel(generators, BCBlocks.GRANDFATHER_CLOCK.holder(woodType),
-                models.withExistingParent(prefix + "grandfather_clock_bottom", bcLoc("block/template/clock/grandfather_bottom")).texture("texture", woodTexture),
-                models.withExistingParent(prefix + "grandfather_clock_top", bcLoc("block/template/clock/grandfather_top")).texture("texture", woodTexture),
-                true);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.LABEL.holder(woodType),
-                prefix + "label",
-                bcLoc("block/template/label"),
-                woodTexture);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.POTION_SHELF.holder(woodType),
-                prefix + "potion_shelf",
-                bcLoc("block/template/potion_shelf"),
-                woodTexture);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.SHELF.holder(woodType),
-                prefix + "shelf",
-                bcLoc("block/template/shelf"),
-                woodTexture);
-        TableModel.Builder tableBuilder = models.getBuilder(prefix + "table").customLoader(TableModel.Builder::new).withParticle(woodTexture);
+        // TODO: table
+        /*TableModel.Builder tableBuilder = models.getBuilder(prefix + "table").customLoader(TableModel.Builder::new).withParticle(woodTexture);
         for (TableBlock.Type type : TableBlock.Type.values()) {
             String name = type.getSerializedName();
             JsonObject model = new JsonObject();
@@ -206,12 +190,9 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             tableBuilder.withModelForType(type, model);
         }
         models.withExistingParent(prefix + "table_inventory", bcLoc("block/template/table/none")).texture("texture", woodTexture);
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(generators.modLoc(prefix + "table")));
-        DatagenUtil.horizontalBlockModel(generators, BCBlocks.TOOL_RACK.holder(woodType),
-                prefix + "tool_rack",
-                bcLoc("block/template/tool_rack"),
-                woodTexture);
-        for (DyeColor color : DyeColor.values()) {
+        DatagenUtil.horizontalBlockModel(generators, BCBlocks.TABLE.holder(woodType), state -> models.getExistingFile(generators.modLoc(prefix + "table")));*/
+        // TODO: color based
+        /*for (DyeColor color : DyeColor.values()) {
             ResourceLocation wool = DatagenUtil.WOOL_TEXTURES.get(color);
             DeferredHolder<Block, ?> holder = BCBlocks.DISPLAY_CASE.holder(woodType, color);
             String colorPrefix = "block/color/" + color.getSerializedName() + "/wood/" + woodType.getRegistrationPrefix() + "/";
@@ -233,7 +214,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 String suffix = state.getValue(SeatBackBlock.TYPE).getSerializedName() + "_seat_back";
                 return models.withExistingParent(finalColorPrefix + suffix, BCUtil.bcLoc("block/template/seat/" + suffix)).texture("texture", woodTexture).texture("color", DatagenUtil.WOOL_TEXTURES.get(color));
             }, true);
-        }
+        }*/
     }
 
     @Override
@@ -575,11 +556,14 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
     /**
      * Generates an item with a seat back model.
      *
-     * @param provider Your mod's {@link ItemModelProvider}.
-     * @param item     The item to generate the models for.
+     * @param generators Your mod's {@link ItemModelGenerators}.
+     * @param item       The item to generate the models for.
      */
-    private static void seatBackItemModel(ItemModelProvider provider, SeatBackItem item) {
-        provider.withExistingParent(item.getColor().getName() + "_" + item.getWoodType().getRegistrationPrefix() + "_" + item.type.getSerializedName() + "_seat_back", bcLoc("block/color/" + item.getColor().getName() + "/wood/" + item.getWoodType().getRegistrationPrefix() + "/" + item.type.getSerializedName() + "_seat_back"));
+    private static void seatBackItemModel(ItemModelGenerators generators, SeatBackItem item) {
+        generators.withExistingParent(
+                item.getColor().getName() + "_" + item.getWoodType().getRegistrationPrefix() + "_" + item.type.getSerializedName() + "_seat_back",
+                bcLoc("block/color/" + item.getColor().getName() + "/wood/" + item.getWoodType().getRegistrationPrefix() + "/" + item.type.getSerializedName() + "_seat_back")
+        );
     }
 
     /**
@@ -621,5 +605,83 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         return ShapelessRecipeBuilder.shapeless(lookup, RecipeCategory.DECORATIONS, item)
                 .group(BibliocraftApi.MOD_ID + ":" + group)
                 .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(lookup, woodType.family().get().getBaseBlock()).build()))));
+    }
+
+    private static class ModelTemplates {
+        public static final ModelTemplate BOOKCASE = new ModelTemplate(
+                Optional.of(bcLoc("block/template/bookcase/bookcase")),
+                Optional.of("/bookcase"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate POTION_SHELF = new ModelTemplate(
+                Optional.of(bcLoc("block/template/potion_shelf")),
+                Optional.of("/potion_shelf"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate SHELF = new ModelTemplate(
+                Optional.of(bcLoc("block/template/shelf")),
+                Optional.of("/shelf"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate TOOL_RACK = new ModelTemplate(
+                Optional.of(bcLoc("block/template/tool_rack")),
+                Optional.of("/tool_rack"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate LABEL = new ModelTemplate(
+                Optional.of(bcLoc("block/template/label")),
+                Optional.of("/label"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate FANCY_CLOCK = new ModelTemplate(
+                Optional.of(bcLoc("block/template/clock/fancy")),
+                Optional.of("/fancy_clock"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate WALL_FANCY_CLOCK = new ModelTemplate(
+                Optional.of(bcLoc("block/template/clock/wall_fancy")),
+                Optional.of("/wall_fancy_clock"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate FANCY_CRAFTER = new ModelTemplate(
+                Optional.of(bcLoc("block/template/fancy_crafter")),
+                Optional.of("/fancy_crafter"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate FANCY_ARMOR_STAND_BOTTOM = new ModelTemplate(
+                Optional.of(bcLoc("block/template/fancy_armor_stand/bottom")),
+                Optional.of("/fancy_armor_stand_bottom"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate FANCY_ARMOR_STAND_TOP = new ModelTemplate(
+                Optional.of(bcLoc("block/template/fancy_armor_stand/top")),
+                Optional.of("fancy_armor_stand_top"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate GRANDFATHER_CLOCK_BOTTOM = new ModelTemplate(
+                Optional.of(bcLoc("block/template/clock/grandfather_bottom")),
+                Optional.of("/grandfather_clock_bottom"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate GRANDFATHER_CLOCK_TOP = new ModelTemplate(
+                Optional.of(bcLoc("block/template/clock/grandfather_top")),
+                Optional.of("/grandfather_clock_top"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate WALL_FANCY_SIGN = new ModelTemplate(
+                Optional.of(bcLoc("block/template/fancy_sign/wall")),
+                Optional.of("/wall_fancy_sign"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate FANCY_SIGN_HANGING = new ModelTemplate(
+                Optional.of(bcLoc("block/template/fancy_sign/hanging")),
+                Optional.of("/fancy_sign_hanging"),
+                TextureSlot.TEXTURE
+        );
+        public static final ModelTemplate FANCY_SIGN = new ModelTemplate(
+                Optional.of(bcLoc("block/template/fancy_sign/standing")),
+                Optional.of("/fancy_sign"),
+                TextureSlot.TEXTURE
+        );
     }
 }

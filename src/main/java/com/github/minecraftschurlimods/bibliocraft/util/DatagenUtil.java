@@ -1,8 +1,17 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
+import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
+import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -10,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -60,112 +70,148 @@ public final class DatagenUtil {
     /**
      * Adds a block with horizontal rotations and a parent model. Enables UV-locking.
      *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    A {@link Supplier} for the {@link Block} to add the model for.
-     * @param name     The name of the model file.
-     * @param parent   The parent id of the model file.
-     * @param texture  The texture to apply.
+     * @param generators     Your mod's {@link BlockModelGenerators}.
+     * @param block          A {@link Supplier} for the {@link Block} to add the model for.
+     * @param template       The template for the model file.
+     * @param textureMapping The texture to apply.
      */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, String name, ResourceLocation parent, ResourceLocation texture) {
-        horizontalBlockModel(provider, block, $ -> provider.models().withExistingParent(name, parent).texture("texture", texture), true);
+    public static void horizontalBlockModel(BlockModelGenerators generators, Supplier<? extends Block> block, ModelTemplate template, TextureMapping textureMapping) {
+        horizontalBlockModel(generators, block, template, textureMapping, true);
     }
 
     /**
-     * Adds a block with horizontal rotations and a parent model.
+     * Adds a block with horizontal rotations and a parent model. Enables UV-locking.
      *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    A {@link Supplier} for the {@link Block} to add the model for.
-     * @param name     The name of the model file.
-     * @param parent   The parent id of the model file.
-     * @param texture  The texture to apply.
-     * @param uvLock   Whether to UV-lock the models or not.
+     * @param generators     Your mod's {@link BlockModelGenerators}.
+     * @param block          A {@link Supplier} for the {@link Block} to add the model for.
+     * @param template       The template for the model file.
+     * @param textureMapping The texture to apply.
+     * @param uvLock         Whether to UV-lock the models or not.
      */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, String name, ResourceLocation parent, ResourceLocation texture, boolean uvLock) {
-        horizontalBlockModel(provider, block, $ -> provider.models().withExistingParent(name, parent).texture("texture", texture), uvLock);
+    public static void horizontalBlockModel(BlockModelGenerators generators, Supplier<? extends Block> block, ModelTemplate template, TextureMapping textureMapping, boolean uvLock) {
+        Block b = block.get();
+        ResourceLocation modelLoc = template.create(b, textureMapping, generators.modelOutput);
+        generators.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(b, BlockModelGenerators.plainVariant(modelLoc))
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+                .with(uvLock ? BlockModelGenerators.UV_LOCK : BlockModelGenerators.NOP));
     }
 
     /**
-     * Adds a block with horizontal rotations. Enables UV-locking.
+     * Adds a block with horizontal rotations and a parent model. Enables UV-locking.
      *
-     * @param provider      Your mod's {@link BlockStateProvider}.
-     * @param block         A {@link Supplier} for the {@link Block} to add the model for.
-     * @param modelFunction A {@link Function} determining which {@link ModelFile} to use for which {@link BlockState}.
+     * @param generators     Your mod's {@link BlockModelGenerators}.
+     * @param block          A {@link Supplier} for the {@link Block} to add the model for.
+     * @param propertyDispatch A {@link PropertyDispatch} for the {@link BlockState} to add the model for.
+     * @param uvLock         Whether to UV-lock the models or not.
      */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, Function<BlockState, ModelFile> modelFunction) {
-        horizontalBlockModel(provider, block, modelFunction, true);
+    public static void horizontalBlockModel(BlockModelGenerators generators, Supplier<? extends Block> block, PropertyDispatch<MultiVariant> propertyDispatch, boolean uvLock) {
+        Block b = block.get();
+        generators.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(b)
+                .with(propertyDispatch)
+                .with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING)
+                .with(uvLock ? BlockModelGenerators.UV_LOCK : BlockModelGenerators.NOP));
     }
 
     /**
-     * Adds a block with horizontal rotations.
+     * Adds a block with horizontal rotations and a parent model. Enables UV-locking.
      *
-     * @param provider      Your mod's {@link BlockStateProvider}.
-     * @param block         A {@link Supplier} for the {@link Block} to add the model for.
-     * @param modelFunction A {@link Function} determining which {@link ModelFile} to use for which {@link BlockState}.
-     * @param uvLock        Whether to UV-lock the block models or not.
+     * @param generators       Your mod's {@link BlockModelGenerators}.
+     * @param block            A {@link Supplier} for the {@link Block} to add the model for.
+     * @param property         The property to base the model selection on.
+     * @param templateFunction A {@link Function} that takes the property value and returns the {@link ModelTemplate} to use.
+     * @param textureMapping   The texture to apply.
+     * @param uvLock           Whether to UV-lock the models or not.
      */
-    public static void horizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, Function<BlockState, ModelFile> modelFunction, boolean uvLock) {
-        provider.getVariantBuilder(block.get()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(modelFunction.apply(state))
-                .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                .uvLock(uvLock)
-                .build());
+    public static <T extends Comparable<T>> void horizontalBlockModel(BlockModelGenerators generators, Supplier<? extends Block> block, Property<T> property, Function<T, ModelTemplate> templateFunction, TextureMapping textureMapping, boolean uvLock) {
+        Block b = block.get();
+        Map<T, MultiVariant> variantsCache = new HashMap<>();
+        Function<T, MultiVariant> factory = v -> BlockModelGenerators.plainVariant(templateFunction.apply(v).create(b, textureMapping, generators.modelOutput));
+        horizontalBlockModel(
+                generators,
+                block,
+                PropertyDispatch
+                        .initial(property)
+                        .generate(t -> variantsCache.computeIfAbsent(t, factory)),
+                uvLock);
     }
 
     /**
      * Adds a double-high block with a bottom and top model file.
      *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    The block to add the model for.
-     * @param bottom   The bottom model file.
-     * @param top      The top model file.
-     * @param uvLock   Whether to UV-lock the models or not.
+     * @param generators    Your mod's {@link BlockModelGenerators}.
+     * @param block          The block to add the model for.
+     * @param bottom         The bottom model file.
+     * @param top            The top model file.
+     * @param textureMapping The texture to apply.
+     * @param uvLock         Whether to UV-lock the models or not.
      */
-    public static void doubleHighHorizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, ModelFile bottom, ModelFile top, boolean uvLock) {
-        horizontalBlockModel(provider, block, state -> state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER ? bottom : top, uvLock);
+    public static void doubleHighHorizontalBlockModel(BlockModelGenerators generators, Supplier<? extends Block> block, ModelTemplate bottom, ModelTemplate top, TextureMapping textureMapping, boolean uvLock) {
+        Block b = block.get();
+        ResourceLocation bottomModelLoc = bottom.create(b, textureMapping, generators.modelOutput);
+        ResourceLocation topModelLoc = top.create(b, textureMapping, generators.modelOutput);
+        horizontalBlockModel(
+                generators,
+                block,
+                PropertyDispatch.initial(BlockStateProperties.DOUBLE_BLOCK_HALF)
+                        .select(DoubleBlockHalf.LOWER, BlockModelGenerators.plainVariant(bottomModelLoc))
+                        .select(DoubleBlockHalf.UPPER, BlockModelGenerators.plainVariant(topModelLoc)),
+                uvLock);
     }
 
     /**
      * Adds a block with an open/closed property.
      *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    The block to add the model for.
-     * @param open     The open model file.
-     * @param closed   The closed model file.
-     * @param uvLock   Whether to UV-lock the models or not.
+     * @param generators Your mod's {@link BlockModelGenerators}.
+     * @param block      The block to add the model for.
+     * @param open       The open model file.
+     * @param closed     The closed model file.
+     * @param uvLock     Whether to UV-lock the models or not.
      */
-    public static void openClosedHorizontalBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, ModelFile open, ModelFile closed, boolean uvLock) {
-        horizontalBlockModel(provider, block, state -> state.getValue(BlockStateProperties.OPEN) ? open : closed, uvLock);
+    public static void openClosedHorizontalBlockModel(BlockModelGenerators generators, Supplier<? extends Block> block, ModelTemplate open, ModelTemplate closed, TextureMapping textureMapping, boolean uvLock) {
+        Block b = block.get();
+        ResourceLocation openModelLoc = open.create(b, textureMapping, generators.modelOutput);
+        ResourceLocation closedModelLoc = closed.create(b, textureMapping, generators.modelOutput);
+        horizontalBlockModel(
+                generators,
+                block,
+                PropertyDispatch.initial(BlockStateProperties.OPEN)
+                        .select(true, BlockModelGenerators.plainVariant(openModelLoc))
+                        .select(false, BlockModelGenerators.plainVariant(closedModelLoc)),
+                uvLock);
     }
 
     /**
      * Adds a block with a fancy light type property.
      *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     * @param block    The block to add the model for.
-     * @param standing The standing model file.
-     * @param hanging  The hanging model file.
-     * @param wall     The wall model file.
-     * @param uvLock   Whether to UV-lock the models or not.
+     * @param generators     Your mod's {@link BlockModelGenerators}.
+     * @param block          The block to add the model for.
+     * @param standing       The standing model file.
+     * @param hanging        The hanging model file.
+     * @param wall           The wall model file.
+     * @param textureMapping The texture to apply.
+     * @param uvLock         Whether to UV-lock the models or not.
      */
-    public static void fancyLightBlockModel(BlockStateProvider provider, Supplier<? extends Block> block, ModelFile standing, ModelFile hanging, ModelFile wall, boolean uvLock) {
-        horizontalBlockModel(provider, block, state -> switch (state.getValue(AbstractFancyLightBlock.TYPE)) {
-            case STANDING -> standing;
-            case HANGING -> hanging;
-            case WALL -> wall;
-        }, uvLock);
+    public static void fancyLightBlockModel(BlockModelGenerators generators, Supplier<? extends Block> block, ModelTemplate standing, ModelTemplate hanging, ModelTemplate wall, TextureMapping textureMapping, boolean uvLock) {
+        horizontalBlockModel(generators, block, AbstractFancyLightBlock.TYPE, type -> switch (type) {
+            case AbstractFancyLightBlock.Type.STANDING -> standing;
+            case AbstractFancyLightBlock.Type.HANGING -> hanging;
+            case AbstractFancyLightBlock.Type.WALL -> wall;
+        }, textureMapping, uvLock);
     }
 
     /**
      * Adds a fancy lamp model.
      *
-     * @param provider     Your mod's {@link BlockStateProvider}.
+     * @param generators   Your mod's {@link BlockModelGenerators}.
      * @param block        The block to add the model for.
      * @param folderPrefix The folder prefix of the model.
      * @param material     The material of the lamp. E.g. gold, iron.
      * @param texture      The glass texture to use.
      */
-    public static void fancyLampModel(BlockStateProvider provider, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
-        fancyLightBlockModel(provider, block,
+    public static void fancyLampModel(BlockModelGenerators generators, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
+        fancyLightBlockModel(generators, block,
                 provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_standing", BCUtil.bcLoc("block/template/fancy_lamp/standing_" + material)).texture("color", texture),
                 provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_hanging", BCUtil.bcLoc("block/template/fancy_lamp/hanging_" + material)).texture("color", texture),
                 provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lamp_wall", BCUtil.bcLoc("block/template/fancy_lamp/wall_" + material)).texture("color", texture),
@@ -175,14 +221,14 @@ public final class DatagenUtil {
     /**
      * Adds a fancy lantern model.
      *
-     * @param provider     Your mod's {@link BlockStateProvider}.
+     * @param generators   Your mod's {@link BlockModelGenerators}.
      * @param block        The block to add the model for.
      * @param folderPrefix The folder prefix of the model.
      * @param material     The material of the lantern. E.g. gold, iron.
      * @param texture      The candle texture to use.
      */
-    public static void fancyLanternModel(BlockStateProvider provider, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
-        fancyLightBlockModel(provider, block,
+    public static void fancyLanternModel(BlockModelGenerators generators, Supplier<? extends Block> block, String folderPrefix, String material, ResourceLocation texture) {
+        fancyLightBlockModel(generators, block,
                 provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_standing", BCUtil.bcLoc("block/template/fancy_lantern/standing_" + material)).texture("color", texture),
                 provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_hanging", BCUtil.bcLoc("block/template/fancy_lantern/hanging_" + material)).texture("color", texture),
                 provider.models().withExistingParent(folderPrefix + "fancy_" + material + "_lantern_wall", BCUtil.bcLoc("block/template/fancy_lantern/wall_" + material)).texture("color", texture),
