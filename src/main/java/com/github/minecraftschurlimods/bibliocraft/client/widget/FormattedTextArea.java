@@ -12,12 +12,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Style;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
@@ -143,10 +145,10 @@ public class FormattedTextArea extends AbstractWidget {
         poseStack.translate(x, y, 0);
         poseStack.scale(scale, scale, 1);
         if (mode == FormattedLine.Mode.GLOWING) {
-            int outlineColor = color == 0 ? 0xfff0ebcc : FastColor.ARGB32.color(255,
-                    (int) ((double) FastColor.ARGB32.red(color) * 0.4),
-                    (int) ((double) FastColor.ARGB32.green(color) * 0.4),
-                    (int) ((double) FastColor.ARGB32.blue(color) * 0.4));
+            int outlineColor = color == 0 ? 0xfff0ebcc : ARGB.color(255,
+                    (int) ((double) ARGB.red(color) * 0.4),
+                    (int) ((double) ARGB.green(color) * 0.4),
+                    (int) ((double) ARGB.blue(color) * 0.4));
             font.drawInBatch8xOutline(text, 0, 0, color, outlineColor, poseStack.last().pose(), bufferSource, LightTexture.FULL_BRIGHT);
         } else {
             font.drawInBatch(text, 0, 0, color, mode == FormattedLine.Mode.SHADOW, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
@@ -164,38 +166,38 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent event) {
         if (!isActive() || !isFocused()) return false;
         FormattedLine line = lines.get(cursorY);
         String text = line.text();
         int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
         int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
-        switch (keyCode) {
+        switch (event.key()) {
             case GLFW.GLFW_KEY_DOWN, GLFW.GLFW_KEY_ENTER, GLFW.GLFW_KEY_KP_ENTER:
-                if (Screen.hasShiftDown()) {
+                if (event.hasShiftDown()) {
                     moveCursor(text.length(), cursorY, true);
                 } else if (cursorY < getEffectiveMaxLines()) {
                     moveCursor(getCursorXForNewLine(cursorY, cursorY + 1), cursorY + 1, false);
                 }
                 return true;
             case GLFW.GLFW_KEY_UP:
-                if (Screen.hasShiftDown()) {
+                if (event.hasShiftDown()) {
                     moveCursor(0, cursorY, true);
                 } else if (cursorY > 0) {
                     moveCursor(getCursorXForNewLine(cursorY, cursorY - 1), cursorY - 1, false);
                 }
                 return true;
             case GLFW.GLFW_KEY_LEFT:
-                moveCursor(Screen.hasControlDown() ? getWordPosition(-1) : Math.max(0, cursorX - 1), cursorY, Screen.hasShiftDown());
+                moveCursor(event.hasControlDown() ? getWordPosition(-1) : Math.max(0, cursorX - 1), cursorY, event.hasShiftDown());
                 return true;
             case GLFW.GLFW_KEY_RIGHT:
-                moveCursor(Screen.hasControlDown() ? getWordPosition(1) : Math.min(text.length(), cursorX + 1), cursorY, Screen.hasShiftDown());
+                moveCursor(event.hasControlDown() ? getWordPosition(1) : Math.min(text.length(), cursorX + 1), cursorY, event.hasShiftDown());
                 return true;
             case GLFW.GLFW_KEY_BACKSPACE:
                 if (highlightX != cursorX) {
                     deleteHighlight();
                 } else if (cursorX > 0) {
-                    int x = Screen.hasControlDown() ? getWordPosition(-1) : cursorX - 1;
+                    int x = event.hasControlDown() ? getWordPosition(-1) : cursorX - 1;
                     lines.set(cursorY, line.withText(text.substring(0, x) + text.substring(cursorX)));
                     moveCursor(x, cursorY, false);
                 }
@@ -204,36 +206,36 @@ public class FormattedTextArea extends AbstractWidget {
                 if (highlightX != cursorX) {
                     deleteHighlight();
                 } else if (cursorX < lines.get(cursorY).text().length()) {
-                    int x = Screen.hasControlDown() ? getWordPosition(1) : cursorX + 1;
+                    int x = event.hasControlDown() ? getWordPosition(1) : cursorX + 1;
                     lines.set(cursorY, line.withText(text.substring(0, cursorX) + text.substring(x)));
                 }
                 return true;
             case GLFW.GLFW_KEY_HOME:
-                moveCursor(0, cursorY, Screen.hasShiftDown());
+                moveCursor(0, cursorY, event.hasShiftDown());
                 return true;
             case GLFW.GLFW_KEY_END:
-                moveCursor(text.length(), cursorY, Screen.hasShiftDown());
+                moveCursor(text.length(), cursorY, event.hasShiftDown());
                 return true;
         }
-        if (Screen.isSelectAll(keyCode)) {
+        if (event.isSelectAll()) {
             cursorX = text.length();
             highlightX = 0;
             return true;
         }
-        if (Screen.isCopy(keyCode)) {
+        if (event.isCopy()) {
             ClientUtil.getMc().keyboardHandler.setClipboard(text.substring(min, max));
             return true;
         }
-        if (Screen.isPaste(keyCode) || keyCode == GLFW.GLFW_KEY_INSERT) {
+        if (event.isPaste() || event.key() == GLFW.GLFW_KEY_INSERT) {
             insertText(ClientUtil.getMc().keyboardHandler.getClipboard());
             return true;
         }
-        if (Screen.isCut(keyCode)) {
+        if (event.isCut()) {
             ClientUtil.getMc().keyboardHandler.setClipboard(text.substring(min, max));
             deleteHighlight();
             return true;
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
 
     private int getWordPosition(int numWords) {
@@ -277,11 +279,11 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     @Override
-    public boolean charTyped(char codePoint, int modifiers) {
-        if (!isActive() || !isFocused() || !StringUtil.isAllowedChatCharacter(codePoint)) return false;
+    public boolean charTyped(CharacterEvent event) {
+        if (!isActive() || !isFocused() || !StringUtil.isAllowedChatCharacter(event.codepoint())) return false;
         String oldText = lines.get(cursorY).text();
         return tryEdit(
-                () -> insertText(Character.toString(codePoint)),
+                () -> insertText(event.codepointAsString()),
                 () -> lines.set(cursorY, lines.get(cursorY).withText(oldText))
         );
     }
@@ -298,11 +300,11 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (!isMouseOver(mouseX, mouseY)) return super.mouseClicked(mouseX, mouseY, button);
-        mouseX -= getX();
-        mouseY -= getY();
-        if (!Screen.hasShiftDown() || !isFocused()) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+        if (!isMouseOver(event.x(), event.y())) return super.mouseClicked(event, doubleClick);
+        var mouseX = event.x() - getX();
+        var mouseY = event.y() - getY();
+        if (!event.hasShiftDown() || !isFocused()) {
             cursorY = lines.size() - 1;
             int y = 0;
             for (int i = 0; i < lines.size(); i++) {
@@ -330,7 +332,7 @@ public class FormattedTextArea extends AbstractWidget {
             index++;
         }
         cursorX = Mth.clamp(index, 0, line.text().length());
-        if (!Screen.hasShiftDown() && isFocused()) {
+        if (!event.hasShiftDown() && isFocused()) {
             highlightX = cursorX;
         }
         setFocused(true);

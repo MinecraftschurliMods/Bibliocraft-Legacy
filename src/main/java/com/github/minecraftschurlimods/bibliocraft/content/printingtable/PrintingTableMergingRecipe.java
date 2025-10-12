@@ -26,6 +26,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -139,11 +140,6 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public RecipeBookCategory recipeBookCategory() {
-        return null;
-    }
-
-    @Override
     public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
         NonNullList<ItemStack> remainingItems = super.getRemainingItems(input);
         for (int i = 0; i < 9; i++) {
@@ -156,7 +152,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
 
     @Override
     public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
-        Ingredient input = Ingredient.of(result.copy());
+        Ingredient input = DataComponentIngredient.of(true, result.copy());
         return Pair.of(List.of(input, input), ingredient);
     }
 

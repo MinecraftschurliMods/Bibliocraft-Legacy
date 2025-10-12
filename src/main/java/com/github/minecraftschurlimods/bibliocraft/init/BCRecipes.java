@@ -14,6 +14,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
@@ -39,6 +40,9 @@ public interface BCRecipes {
 
     Supplier<LootNumberProviderType> ENCHANTMENT_LEVELS_NUMBER_PROVIDER =
             BCRegistries.NUMBER_PROVIDERS.register("enchantment_levels", () -> new LootNumberProviderType(EnchantmentLevelsNumberProvider.CODEC));
+
+    Supplier<RecipeBookCategory> PRINTING_TABLE_RECIPE_CATEGORY =
+            BCRegistries.RECIPE_CATEGORIES.register("printing_table", RecipeBookCategory::new);
 
     /**
      * Returns a {@link Supplier} for a {@link RecipeSerializer} created using the given {@link MapCodec} and {@link StreamCodec}.

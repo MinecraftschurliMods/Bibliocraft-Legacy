@@ -7,18 +7,14 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.PlacementInfo;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -35,8 +31,37 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     }
 
     @Override
-    public RecipeType<? extends Recipe<PrintingTableRecipeInput>> getType() {
+    public RecipeType<PrintingTableRecipe> getType() {
         return BCRecipes.PRINTING_TABLE.get();
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return BCRecipes.PRINTING_TABLE_RECIPE_CATEGORY.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.NOT_PLACEABLE;
+    }
+
+    public ItemStack getResultItem() {
+        return result.copy();
+    }
+
+    public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
+        return defaultCraftingReminder(input);
+    }
+
+    static NonNullList<ItemStack> defaultCraftingReminder(PrintingTableRecipeInput input) {
+        NonNullList<ItemStack> nonnulllist = NonNullList.withSize(input.size(), ItemStack.EMPTY);
+
+        for (int i = 0; i < nonnulllist.size(); i++) {
+            ItemStack item = input.getItem(i);
+            nonnulllist.set(i, item.getCraftingRemainder());
+        }
+
+        return nonnulllist;
     }
 
     public int getDuration() {
@@ -56,7 +81,7 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     }
 
     public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
-        return Pair.of(List.of(), Ingredient.EMPTY);
+        return Pair.of(List.of(), Ingredient.of());
     }
 
     public abstract PrintingTableMode getMode();

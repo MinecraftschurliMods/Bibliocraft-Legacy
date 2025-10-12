@@ -4,16 +4,14 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -23,7 +21,10 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -79,34 +80,32 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        setMode(CodecUtil.decodeNbt(PrintingTableMode.CODEC, tag.get(MODE_KEY)));
-        duration = tag.getInt(DURATION_KEY);
-        if (tag.contains(PLAYER_NAME_KEY, CompoundTag.TAG_STRING)) {
-            playerName = Component.Serializer.fromJson(tag.getString(PLAYER_NAME_KEY), registries);
-        }
-        tank.loadAdditional(tag);
-        int[] tagSlots = tag.getIntArray(DISABLED_SLOTS_KEY);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.read(MODE_KEY, PrintingTableMode.CODEC).ifPresent(this::setMode);
+        duration = input.getIntOr(DURATION_KEY, 0);
+        input.read(PLAYER_NAME_KEY, ComponentSerialization.CODEC).ifPresent(this::setPlayerName);
+        tank.loadAdditional(input);
+        int[] tagSlots = input.getIntArray(DISABLED_SLOTS_KEY).orElse(new int[9]);
         for (int i = 0; i < 9; i++) {
             disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
         }
     }
 
     @Override
-    public void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put(MODE_KEY, CodecUtil.encodeNbt(PrintingTableMode.CODEC, getMode()));
-        tag.putInt(DURATION_KEY, duration);
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.store(MODE_KEY, PrintingTableMode.CODEC, getMode());
+        output.putInt(DURATION_KEY, duration);
         if (playerName != null) {
-            tag.putString(PLAYER_NAME_KEY, Component.Serializer.toJson(playerName, registries));
+            output.store(PLAYER_NAME_KEY, ComponentSerialization.CODEC, playerName);
         }
-        tank.saveAdditional(tag);
+        tank.saveAdditional(output);
         int[] tagSlots = new int[9];
         for (int i = 0; i < 9; i++) {
             tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
         }
-        tag.putIntArray(DISABLED_SLOTS_KEY, tagSlots);
+        output.putIntArray(DISABLED_SLOTS_KEY, tagSlots);
     }
 
     @Override
@@ -144,7 +143,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         if (!level().isClientSide()) {
             calculateRecipe(true);
         } else {
-            PacketDistributor.sendToServer(new PrintingTableSetRecipePacket(getBlockPos(), 0, 0, 0));
+            ClientPacketDistributor.sendToServer(new PrintingTableSetRecipePacket(getBlockPos(), 0, 0, 0));
         }
     }
 
@@ -252,9 +251,10 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private void calculateRecipe(boolean onLoad) {
         if (!(level() instanceof ServerLevel serverLevel)) return;
         recipe = serverLevel
+                .getServer()
                 .getRecipeManager()
+                .recipeMap()
                 .getRecipesFor(BCRecipes.PRINTING_TABLE.get(), getRecipeInput(), serverLevel)
-                .stream()
                 .map(RecipeHolder::value)
                 .filter(e -> e.getMode() == mode)
                 .findFirst()

@@ -2,17 +2,19 @@ package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.IFluidTank;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.util.Optional;
 
 public class PrintingTableTank implements IFluidHandler, IFluidTank {
     private static final String FLUID_KEY = "fluid";
@@ -107,22 +109,18 @@ public class PrintingTableTank implements IFluidHandler, IFluidTank {
         }
     }
 
-    public void loadAdditional(CompoundTag tag) {
-        if (!tag.contains(FLUID_KEY)) return;
-        CompoundTag fluidTag = tag.getCompound(FLUID_KEY);
-        if (fluidTag.contains(ID_KEY)) {
-            fluid = BuiltInRegistries.FLUID.get(ResourceLocation.parse(tag.getString(ID_KEY)));
-        }
-        if (fluidTag.contains(AMOUNT_KEY)) {
-            amount = tag.getInt(AMOUNT_KEY);
-        }
+    public void loadAdditional(ValueInput input) {
+        Optional<ValueInput> child = input.child(FLUID_KEY);
+        if (child.isEmpty()) return;
+        ValueInput fluid = child.get();
+        fluid.read(ID_KEY, BuiltInRegistries.FLUID.byNameCodec()).ifPresent(f -> this.fluid = f);
+        fluid.getInt(AMOUNT_KEY).ifPresent(a -> this.amount = a);
     }
 
-    public void saveAdditional(CompoundTag tag) {
-        CompoundTag fluidTag = new CompoundTag();
-        fluidTag.putString(ID_KEY, BuiltInRegistries.FLUID.getKey(fluid).toString());
-        fluidTag.putInt(AMOUNT_KEY, amount);
-        tag.put(FLUID_KEY, fluidTag);
+    public void saveAdditional(ValueOutput tag) {
+        ValueOutput fluid = tag.child(FLUID_KEY);
+        fluid.store(ID_KEY, BuiltInRegistries.FLUID.byNameCodec(), this.fluid);
+        fluid.putInt(AMOUNT_KEY, amount);
     }
 
     public int getExperience() {

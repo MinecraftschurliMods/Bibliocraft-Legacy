@@ -21,18 +21,15 @@ import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancyCrafterScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.PrintingTableScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.SlottedBookScreen;
-import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
-import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.world.item.DyeColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -52,7 +49,6 @@ public final class BCClientEventHandler {
         modBus.addListener(EntityRenderersEvent.RegisterLayerDefinitions.class, BCClientEventHandler::registerLayerDefinitions);
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,        BCClientEventHandler::registerRenderers);
         modBus.addListener(RegisterColorHandlersEvent.Block.class,              BCClientEventHandler::registerColorHandlersBlock);
-        modBus.addListener(RegisterColorHandlersEvent.Item.class,               BCClientEventHandler::registerColorHandlersItem);
     }
 
     private static void registerMenuScreens(RegisterMenuScreensEvent event) {
@@ -94,7 +90,7 @@ public final class BCClientEventHandler {
     // @formatter:off
     private static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(BCEntities.FANCY_ARMOR_STAND.get(), ArmorStandRenderer::new);
-        event.registerEntityRenderer(BCEntities.SEAT.get(),              EmptyEntityRenderer::new);
+        event.registerEntityRenderer(BCEntities.SEAT.get(),              NoopRenderer::new);
         event.registerBlockEntityRenderer(BCBlockEntities.CLOCK.get(),       ClockBER::new);
         event.registerBlockEntityRenderer(BCBlockEntities.CLIPBOARD.get(),         $ -> new ClipboardBER());
         event.registerBlockEntityRenderer(BCBlockEntities.COOKIE_JAR.get(),        CookieJarBER::new);
@@ -115,9 +111,5 @@ public final class BCClientEventHandler {
 
     private static void registerColorHandlersBlock(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, pos, tintIndex) -> tintIndex == 0 && level != null && pos != null && level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe ? spbe.getColor().rgb() : -1, BCBlocks.SWORD_PEDESTAL.get());
-    }
-
-    private static void registerColorHandlersItem(RegisterColorHandlersEvent.Item event) {
-        event.register((stack, tintIndex) -> tintIndex == 0 ? stack.getOrDefault(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR).rgb() : -1, BCItems.SWORD_PEDESTAL.get());
     }
 }

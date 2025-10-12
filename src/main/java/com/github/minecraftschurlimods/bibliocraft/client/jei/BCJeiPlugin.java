@@ -9,9 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCra
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
-import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CompatUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
@@ -90,7 +88,8 @@ public final class BCJeiPlugin implements IModPlugin {
                 registration.addIngredientInfo(holder.get(WHITE), Translations.ALL_COLORS);
             }
         }
-        registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getLevel().getRecipeManager().getAllRecipesFor(BCRecipes.PRINTING_TABLE.get()));
+        // FIXME: recipes are no longer synced, how do we do this now
+        // registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getLevel().getRecipeManager().getAllRecipesFor(BCRecipes.PRINTING_TABLE.get()));
     }
 
     @Override
@@ -102,11 +101,11 @@ public final class BCJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         if (BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-            registration.addRecipeCatalysts(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.values().toArray(ItemLike[]::new));
+            registration.addCraftingStation(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.values().toArray(ItemLike[]::new));
         } else {
-            registration.addRecipeCatalysts(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.get(OAK.get()));
+            registration.addCraftingStation(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.get(OAK.get()));
         }
-        registration.addRecipeCatalysts(PrintingTableRecipeCategory.TYPE, BCItems.PRINTING_TABLE, BCItems.IRON_PRINTING_TABLE);
+        registration.addCraftingStation(PrintingTableRecipeCategory.TYPE, BCItems.PRINTING_TABLE, BCItems.IRON_PRINTING_TABLE);
     }
 
     @Override

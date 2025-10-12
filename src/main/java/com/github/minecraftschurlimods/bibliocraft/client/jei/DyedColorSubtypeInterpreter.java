@@ -18,9 +18,4 @@ public class DyedColorSubtypeInterpreter implements ISubtypeInterpreter<ItemStac
     public Object getSubtypeData(ItemStack ingredient, UidContext context) {
         return ingredient.has(DataComponents.DYED_COLOR) ? ingredient.get(DataComponents.DYED_COLOR).rgb() : null;
     }
-
-    @Override
-    public String getLegacyStringSubtypeInfo(ItemStack ingredient, UidContext context) {
-        return ingredient.has(DataComponents.DYED_COLOR) ? String.valueOf(ingredient.get(DataComponents.DYED_COLOR).rgb()) : "";
-    }
 }
