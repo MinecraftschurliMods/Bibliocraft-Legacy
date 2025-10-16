@@ -9,6 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -26,8 +27,11 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -85,7 +89,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         input.read(MODE_KEY, PrintingTableMode.CODEC).ifPresent(this::setMode);
         duration = input.getIntOr(DURATION_KEY, 0);
         input.read(PLAYER_NAME_KEY, ComponentSerialization.CODEC).ifPresent(this::setPlayerName);
-        tank.loadAdditional(input);
+        tank.deserialize(input);
         int[] tagSlots = input.getIntArray(DISABLED_SLOTS_KEY).orElse(new int[9]);
         for (int i = 0; i < 9; i++) {
             disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
@@ -100,7 +104,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         if (playerName != null) {
             output.store(PLAYER_NAME_KEY, ComponentSerialization.CODEC, playerName);
         }
-        tank.saveAdditional(output);
+        tank.serialize(output);
         int[] tagSlots = new int[9];
         for (int i = 0; i < 9; i++) {
             tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
@@ -147,7 +151,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         }
     }
 
-    public PrintingTableTank getFluidCapability() {
+    public ResourceHandler<FluidResource> getFluidCapability() {
         return tank;
     }
 
@@ -170,12 +174,24 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     public int getExperience() {
-        return tank.getExperience();
+        return tank.getAmountAsInt(0) / PrintingTableTank.EXPERIENCE_MULTIPLIER;
     }
 
     public void addExperience(int experience) {
-        tank.addExperience(experience);
-        setChanged();
+        int amount = tank.getAmountAsInt(0);
+        tank.set(0, amount == 0 ? getExperienceResource() : tank.getResource(0), amount + experience * PrintingTableTank.EXPERIENCE_MULTIPLIER);
+    }
+
+    private FluidResource getExperienceResource() {
+        return level()
+                .registryAccess()
+                .lookupOrThrow(Registries.FLUID)
+                .get(Tags.Fluids.EXPERIENCE)
+                .stream()
+                .flatMap(HolderSet.ListBacked::stream)
+                .findFirst()
+                .map(FluidResource::of)
+                .orElseThrow();
     }
 
     public float getProgress() {
@@ -199,8 +215,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     public boolean isExperienceFull() {
-        int experienceCost = getExperienceCost();
-        return experienceCost <= 0 || getExperience() >= experienceCost;
+        return tank.isFull();
     }
 
     public void setFromPacket(PrintingTableSetRecipePacket packet) {
@@ -231,21 +246,26 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     private void pullExperience() {
-        List<Fluid> fluids = level()
+        List<FluidResource> fluids = level()
                 .registryAccess()
                 .lookupOrThrow(Registries.FLUID)
                 .getOrThrow(Tags.Fluids.EXPERIENCE)
                 .stream()
                 .map(Holder::value)
+                .map(FluidResource::of)
                 .toList();
-        for (Direction direction : directions) {
-            IFluidHandler capability = level().getCapability(Capabilities.FluidHandler.BLOCK, getBlockPos().offset(direction.getNormal()), direction);
-            if (capability == null) continue;
-            for (Fluid fluid : fluids) {
-                tank.fillFromCapability(capability, fluid);
-                if (isExperienceFull()) return;
+        try (var t = Transaction.open(null)) {
+            for (Direction direction : directions) {
+                ResourceHandler<FluidResource> capability = level().getCapability(Capabilities.Fluid.BLOCK, getBlockPos().offset(direction.getUnitVec3i()), direction);
+                if (capability == null) continue;
+                for (FluidResource fluid : fluids) {
+                    tank.fillFromCapability(capability, fluid, t);
+                    if (isExperienceFull()) return;
+                }
             }
+            t.commit();
         }
+        
     }
 
     private void calculateRecipe(boolean onLoad) {
@@ -283,5 +303,9 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     private boolean isCraftingSlot(int slot) {
         return slot >= 0 && slot < 9;
+    }
+
+    public void syncTank(PrintingTableTankSyncPacket packet) {
+        this.tank.update(packet);
     }
 }

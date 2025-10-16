@@ -110,11 +110,6 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
         output.discard(COLOR_KEY);
     }
 
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        return saveCustomOnly(registries);
-    }
-
     private int repairItem(ServerLevel level, ItemStack stack, int value) {
         int i = EnchantmentHelper.modifyDurabilityToRepairFromXp(level, stack, (int) (value * stack.getXpRepairRatio()));
         int j = Math.min(i, stack.getDamageValue());

@@ -22,7 +22,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.Objects;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = BibliocraftApi.MOD_ID)
+@EventBusSubscriber(modid = BibliocraftApi.MOD_ID)
 public final class Tests {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     private static void init(FMLConstructModEvent event) {

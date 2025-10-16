@@ -3,7 +3,6 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.Util;
@@ -32,6 +31,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+// TODO
 public class FormattedTextArea extends AbstractWidget {
     private final Font font = ClientUtil.getFont();
     private final List<FormattedLine> lines;
@@ -67,7 +67,7 @@ public class FormattedTextArea extends AbstractWidget {
         Font font = ClientUtil.getFont();
         if (drawCursor == DrawCursor.VERTICAL) {
             int textWidth = font.width(format(text.substring(0, cursor), style));
-            fill(poseStack, bufferSource, RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
+            //fill(poseStack, bufferSource, RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
         } else if (drawCursor == DrawCursor.HORIZONTAL) {
             drawText(poseStack, bufferSource, format("_", style), textX + font.width(formattedText) * scale, y, color, size, mode);
         }
@@ -98,9 +98,9 @@ public class FormattedTextArea extends AbstractWidget {
         vc.addVertex(matrix4f, maxX, maxY, 0).setColor(color);
         vc.addVertex(matrix4f, maxX, minY, 0).setColor(color);
         if (bufferSource instanceof MultiBufferSource.BufferSource guiBuffer) {
-            RenderSystem.disableDepthTest();
+            //RenderSystem.disableDepthTest();
             guiBuffer.endBatch();
-            RenderSystem.enableDepthTest();
+            //RenderSystem.enableDepthTest();
         }
     }
 
@@ -125,7 +125,7 @@ public class FormattedTextArea extends AbstractWidget {
                 : cursorY == index
                 ? DrawCursor.HORIZONTAL
                 : DrawCursor.NONE;
-        renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, cursorX, cursorBlink ? DrawCursor.NONE : draw);
+        //renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, cursorX, cursorBlink ? DrawCursor.NONE : draw);
         if (draw != DrawCursor.NONE && cursorX != highlightX) {
             int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
             int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
@@ -134,7 +134,7 @@ public class FormattedTextArea extends AbstractWidget {
             int textX = x + getLineLeftX(line, scale, width);
             int minWidth = (int) (font.width(format(text.substring(0, min), style)) * scale);
             int maxWidth = (int) (font.width(format(text.substring(0, max), style)) * scale);
-            graphics.fill(RenderType.guiTextHighlight(), textX + minWidth - 1, y - 1, textX + maxWidth - 1, (int) (y + 9 * scale + 1), 0xff0000ff);
+            //graphics.fill(RenderType.guiTextHighlight(), textX + minWidth - 1, y - 1, textX + maxWidth - 1, (int) (y + 9 * scale + 1), 0xff0000ff);
         }
     }
 

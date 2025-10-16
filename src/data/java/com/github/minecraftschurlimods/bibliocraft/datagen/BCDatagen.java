@@ -38,13 +38,13 @@ public final class BCDatagen {
 
         serverPack.addProvider(wrap(lookupProvider, BCLootTableProvider::new));
         serverPack.addProvider(wrap(lookupProvider, BCRecipeProvider.Runner::new));
-        BCBlockTagsProvider blockTags = serverPack.addProvider(wrap(lookupProvider, BCBlockTagsProvider::new));
-        BCItemTagsProvider itemTags = serverPack.addProvider(wrap(lookupProvider, BCItemTagsProvider::new));
+        serverPack.addProvider(wrap(lookupProvider, BCBlockTagsProvider::new));
+        serverPack.addProvider(wrap(lookupProvider, BCItemTagsProvider::new));
         serverPack.addProvider(wrap(lookupProvider, BCEnchantmentTagsProvider::new));
 
         BibliocraftDatagenHelper helper = BibliocraftApi.getDatagenHelper();
         helper.addWoodTypesToGenerateByModid("minecraft");
-        helper.generateAll(BibliocraftApi.MOD_ID, lookupProvider, clientPack, serverPack, language, blockTags, itemTags);
+        helper.generateAll(BibliocraftApi.MOD_ID, lookupProvider, clientPack, serverPack, language);
     }
 
     private static <T extends DataProvider, P1> DataProvider.Factory<T> wrap(P1 p1, BiFunction<PackOutput, P1, T> factory) {

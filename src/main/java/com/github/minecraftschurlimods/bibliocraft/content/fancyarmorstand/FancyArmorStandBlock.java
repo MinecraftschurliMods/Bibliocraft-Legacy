@@ -139,7 +139,13 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
-            if (slot != -1 && trySwapArmor(player.getInventory().getArmor(3 - slot), slot, 39 - slot, state, level, pos, player))
+            if (slot != -1 && trySwapArmor(player.getItemBySlot(switch (3 - slot) {
+                case 0 -> EquipmentSlot.FEET;
+                case 1 -> EquipmentSlot.LEGS;
+                case 2 -> EquipmentSlot.CHEST;
+                case 3 -> EquipmentSlot.HEAD;
+                default -> throw new IllegalStateException("Invalid slot index: " + slot);
+            }), slot, 39 - slot, state, level, pos, player))
                 return InteractionResult.SUCCESS;
         }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {

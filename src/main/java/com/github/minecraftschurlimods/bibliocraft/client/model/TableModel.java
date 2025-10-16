@@ -1,3 +1,4 @@
+/*
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
@@ -116,3 +117,4 @@ public class TableModel extends DynamicBlockModel {
         }
     }
 }
+*/

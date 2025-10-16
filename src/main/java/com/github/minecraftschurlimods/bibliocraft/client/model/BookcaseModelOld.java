@@ -1,3 +1,4 @@
+/*
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
 import com.github.minecraftschurlimods.bibliocraft.content.bookcase.BookcaseBlockEntity;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class BookcaseModel extends DynamicBlockModel {
+public class BookcaseModelOld extends DynamicBlockModel {
     private static final RandomSource RANDOM = RandomSource.create(Util.getNanos());
     public static final IGeometryLoader<BookcaseGeometry> LOADER = (jsonObject, context) -> {
         jsonObject.remove("loader");
@@ -53,7 +54,7 @@ public class BookcaseModel extends DynamicBlockModel {
     private final BakedModel base;
     private final BakedModel[] books;
 
-    public BookcaseModel(boolean useAmbientOcclusion, boolean isGui3d, boolean usesBlockLight, TextureAtlasSprite particle, BakedModel base, BakedModel[] books) {
+    public BookcaseModelOld(boolean useAmbientOcclusion, boolean isGui3d, boolean usesBlockLight, TextureAtlasSprite particle, BakedModel base, BakedModel[] books) {
         super(useAmbientOcclusion, isGui3d, usesBlockLight, particle);
         this.base = base;
         this.books = books;
@@ -94,7 +95,7 @@ public class BookcaseModel extends DynamicBlockModel {
             for (int j = 0; j < books.length; j++) {
                 books[j] = this.books[j].bake(baker, this.books[j], spriteGetter, bookState, useBlockLight);
             }
-            return new BookcaseModel(context.useAmbientOcclusion(), context.isGui3d(), useBlockLight, spriteGetter.apply(context.getMaterial("particle")), base, books);
+            return new BookcaseModelOld(context.useAmbientOcclusion(), context.isGui3d(), useBlockLight, spriteGetter.apply(context.getMaterial("particle")), base, books);
         }
 
         @Override
@@ -106,3 +107,4 @@ public class BookcaseModel extends DynamicBlockModel {
         }
     }
 }
+*/

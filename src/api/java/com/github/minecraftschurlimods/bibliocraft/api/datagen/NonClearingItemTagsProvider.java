@@ -1,7 +1,14 @@
 package com.github.minecraftschurlimods.bibliocraft.api.datagen;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
@@ -36,5 +43,10 @@ public abstract class NonClearingItemTagsProvider extends ItemTagsProvider {
             });
             return provider;
         })*/;
+    }
+
+    protected TagAppender<ResourceLocation, Item> lazyTag(TagKey<Item> key) {
+        TagBuilder tagbuilder = this.getOrCreateRawBuilder(key);
+        return TagAppender.<Item>forBuilder(tagbuilder).map(rl -> ResourceKey.create(Registries.ITEM, rl));
     }
 }

@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
@@ -20,13 +21,17 @@ import java.util.List;
 
 public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, FancySignBER.State> {
 
+    public FancySignBER(BlockEntityRendererProvider.Context context) {
+        
+    }
+
     private static void renderLines(List<FormattedLine> lines, PoseStack stack, SubmitNodeCollector collector) {
         stack.pushPose();
         float scale = 1 / 160f;
         stack.scale(scale, scale, 0);
         stack.translate(0, 1, 0);
         // FIXME: big rendering changes go brrr
-        FormattedTextArea.renderLines(lines, stack, collector, 0, 0, FancySignScreen.WIDTH);
+        //FormattedTextArea.renderLines(lines, stack, collector, 0, 0, FancySignScreen.WIDTH);
         stack.popPose();
     }
 

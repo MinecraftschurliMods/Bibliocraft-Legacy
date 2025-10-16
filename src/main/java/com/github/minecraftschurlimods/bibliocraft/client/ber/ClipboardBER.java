@@ -9,6 +9,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
@@ -16,6 +17,9 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, ClipboardBER.State> {
+    public ClipboardBER(BlockEntityRendererProvider.Context context) {
+    }
+
     @Override
     public State createRenderState() {
         return new State();
@@ -31,7 +35,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         float scale = 1 / 256f;
         stack.scale(scale, scale, 0);
         // FIXME: big rendering changes go brrr
-        ClipboardReadOnlyRenderer.render(stack, collector, state.content, 128, 148);
+        //ClipboardReadOnlyRenderer.render(stack, collector, state.content, 128, 148);
         stack.popPose();
     }
 

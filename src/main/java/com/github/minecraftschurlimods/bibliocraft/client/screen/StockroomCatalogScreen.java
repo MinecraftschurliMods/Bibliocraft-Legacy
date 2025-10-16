@@ -21,6 +21,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -248,11 +249,11 @@ public class StockroomCatalogScreen extends Screen {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         if (scrollY < 0 && forwardButton.visible) {
-            forwardButton.onPress();
+            forwardButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
         if (scrollY > 0 && backButton.visible) {
-            backButton.onPress();
+            backButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
@@ -278,7 +279,7 @@ public class StockroomCatalogScreen extends Screen {
         Level level = ClientUtil.getLevel();
         containers = packet.containers()
                 .stream()
-                .filter(e -> level.getCapability(Capabilities.ItemHandler.BLOCK, e, null) != null)
+                .filter(e -> level.getCapability(Capabilities.Item.BLOCK, e, null) != null)
                 .toList();
         items = packet.items();
         updateContents();

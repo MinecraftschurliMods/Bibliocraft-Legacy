@@ -1,3 +1,4 @@
+/*
 package com.github.minecraftschurlimods.bibliocraft.client.model;
 
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -47,3 +48,4 @@ public abstract class DynamicBlockModel implements IDynamicBakedModel {
         return ItemOverrides.EMPTY;
     }
 }
+*/

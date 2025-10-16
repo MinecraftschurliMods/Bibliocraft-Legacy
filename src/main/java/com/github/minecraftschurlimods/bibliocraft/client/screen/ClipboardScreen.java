@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -103,11 +104,11 @@ public class ClipboardScreen extends Screen {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         if (scrollY < 0 && forwardButton.visible) {
-            forwardButton.onPress();
+            forwardButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
         if (scrollY > 0 && backButton.visible) {
-            backButton.onPress();
+            backButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);

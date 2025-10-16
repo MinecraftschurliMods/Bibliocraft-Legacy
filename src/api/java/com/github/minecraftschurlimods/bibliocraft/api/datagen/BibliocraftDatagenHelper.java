@@ -107,7 +107,7 @@ public interface BibliocraftDatagenHelper {
      * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
      * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
      */
-    void generateAllFor(BibliocraftWoodType woodType, String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider);
+    void generateAllFor(BibliocraftWoodType woodType, String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider);
 
     /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
@@ -193,7 +193,7 @@ public interface BibliocraftDatagenHelper {
      * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
      * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
      */
-    default void generateAll(String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider, BlockTagsProvider blockTagsProvider, ItemTagsProvider itemTagsProvider) {
-        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, lookupProvider, clientPack, serverPack, englishLanguageProvider, blockTagsProvider, itemTagsProvider));
+    default void generateAll(String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider) {
+        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, lookupProvider, clientPack, serverPack, englishLanguageProvider));
     }
 }

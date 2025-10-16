@@ -4,20 +4,18 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
-import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
@@ -28,9 +26,9 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     private static final int[] INPUTS = new int[]{INPUT};
     private static final int[] OUTPUTS = new int[]{OUTPUT};
     private static final String PAGE_KEY = "page";
-    private final EnumMap<Direction, SidedInvWrapper> wrappers = Util.make(new EnumMap<>(Direction.class), map -> {
+    private final EnumMap<Direction, WorldlyContainerWrapper> wrappers = Util.make(new EnumMap<>(Direction.class), map -> {
         for (Direction direction : Direction.values()) {
-            map.put(direction, new SidedInvWrapper(this, direction));
+            map.put(direction, new WorldlyContainerWrapper(this, direction));
         }
     });
     private TypewriterPage page = new TypewriterPage();
@@ -57,7 +55,7 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     }
 
     @Override
-    public IItemHandler getCapability(@Nullable Direction side) {
+    public ResourceHandler<ItemResource> getCapability(@Nullable Direction side) {
         return side == null ? null : wrappers.get(side);
     }
 

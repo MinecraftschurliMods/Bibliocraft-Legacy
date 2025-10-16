@@ -3,7 +3,6 @@ package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,18 +14,12 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.model.data.ModelData;
 import net.neoforged.neoforge.model.data.ModelProperty;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BookcaseBlockEntity extends BCMenuBlockEntity {
-    public static final List<ModelProperty<Boolean>> MODEL_PROPERTIES = Util.make(new ArrayList<>(), list -> {
-        for (int i = 0; i < 16; i++) {
-            list.add(new ModelProperty<>());
-        }
-    });
+    private static final int SLOTS = 16;
+    public static final ModelProperty<Short> BOOKS = new ModelProperty<>();
 
     public BookcaseBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.BOOKCASE.get(), 16, defaultName("bookcase"), pos, state);
+        super(BCBlockEntities.BOOKCASE.get(), SLOTS, defaultName("bookcase"), pos, state);
     }
 
     @Override
@@ -50,9 +43,11 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
     @Override
     public ModelData getModelData() {
         ModelData.Builder builder = ModelData.builder();
-        for (int i = 0; i < MODEL_PROPERTIES.size(); i++) {
-            builder.with(MODEL_PROPERTIES.get(i), !items.getStackInSlot(i).isEmpty());
+        short books = 0;
+        for (int i = 0; i < SLOTS; i++) {
+            books |= (short) ((getItem(i).isEmpty() ? 0 : 1) << i);
         }
+        builder.with(BOOKS, books);
         return builder.build();
     }
 

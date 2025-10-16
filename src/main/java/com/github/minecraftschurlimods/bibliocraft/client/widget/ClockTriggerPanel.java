@@ -3,13 +3,12 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.neoforged.neoforge.client.gui.widget.ScrollPanel;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix3x2fStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,27 +35,27 @@ public class ClockTriggerPanel extends ScrollPanel {
 
     @Override
     protected void drawPanel(GuiGraphics graphics, int entryRight, int relativeY, int mouseX, int mouseY) {
-        PoseStack pose = graphics.pose();
-        pose.pushPose();
-        pose.translate(left, relativeY, 0);
+        Matrix3x2fStack pose = graphics.pose();
+        pose.pushMatrix();
+        pose.translate(left, relativeY);
         for (int i = 0; i < elements.size(); i++) {
-            pose.pushPose();
+            pose.pushMatrix();
             elements.get(i).render(graphics, mouseX - left, mouseY - i * ClockTriggerElement.HEIGHT - relativeY, 1);
-            pose.popPose();
-            pose.translate(0, ClockTriggerElement.HEIGHT, 0);
+            pose.popMatrix();
+            pose.translate(0, ClockTriggerElement.HEIGHT);
         }
-        pose.popPose();
+        pose.popMatrix();
     }
 
     public void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
         ClockTriggerElement hovered = getHovered(mouseX, mouseY);
         if (hovered == null) return;
         float y = mouseY - top + scrollDistance;
-        PoseStack pose = graphics.pose();
-        pose.pushPose();
-        pose.translate(left, mouseY, 0);
+        Matrix3x2fStack pose = graphics.pose();
+        pose.pushMatrix();
+        pose.translate(left, mouseY);
         hovered.renderTooltip(graphics, mouseX - left, (int) (y % ClockTriggerElement.HEIGHT));
-        pose.popPose();
+        pose.popMatrix();
     }
 
     @Override

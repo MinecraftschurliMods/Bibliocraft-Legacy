@@ -10,6 +10,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -90,10 +91,10 @@ public class ClockTriggerEditScreen extends Screen {
             hours.setValue(String.valueOf(old.hour()));
             minutes.setValue(String.valueOf(old.minute()));
             if (old.redstone()) {
-                redstone.onPress();
+                redstone.onPress(new MouseButtonInfo(0, 0));
             }
             if (old.sound()) {
-                sound.onPress();
+                sound.onPress(new MouseButtonInfo(0, 0));
             }
         }
     }

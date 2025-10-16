@@ -22,11 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -37,17 +33,6 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     private static final int SLOT_ENABLED = 0;
     private static final int MAX_CRAFTING_TICKS = 6;
     private final boolean[] disabledSlots = new boolean[9];
-    private final InvWrapper wrapper = new InvWrapper(this) {
-        @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return slot == 9 ? stack : super.insertItem(slot, stack, simulate);
-        }
-
-        @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return slot == 9 ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
-        }
-    };
     private int craftingTicksRemaining = MAX_CRAFTING_TICKS;
     private RecipeHolder<CraftingRecipe> recipe;
 
@@ -60,7 +45,8 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FancyCrafterBlockEntity blockEntity) {
-        if (blockEntity.recipe == null) return;
+        // TODO
+        /*if (blockEntity.recipe == null) return;
         CraftingRecipe recipe = blockEntity.recipe.value();
         ItemStack result = recipe.getResultItem(level.registryAccess());
         ItemStack resultStack = blockEntity.getItem(9);
@@ -100,7 +86,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
                 .stream()
                 .filter(e -> !e.isEmpty())
                 .forEach(e -> e.shrink(1));
-        blockEntity.setChanged();
+        blockEntity.setChanged();*/
     }
 
     @Override
@@ -114,7 +100,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        if (!stack.getCraftingRemainder().isEmpty() || isSlotDisabled(slot)) return false;
+        if (!stack.getCraftingRemainder().isEmpty() || isSlotDisabled(slot) || !isCraftingSlot(slot)) return false;
         ItemStack slotStack = getItem(slot);
         return slotStack.isEmpty() || slotStack.getCount() < slotStack.getMaxStackSize() && !smallerStackExists(slotStack.getCount(), stack, slot);
     }
@@ -146,11 +132,6 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     @Override
-    public IItemHandler getCapability(@Nullable Direction side) {
-        return wrapper;
-    }
-
-    @Override
     public void setSlotDisabled(int slot, boolean disabled) {
         if (!canDisableSlot(slot)) return;
         disabledSlots[slot] = disabled;
@@ -164,7 +145,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
 
     @Override
     public boolean canDisableSlot(int slot) {
-        return isCraftingSlot(slot) && items.getStackInSlot(slot).isEmpty();
+        return isCraftingSlot(slot) && getItem(slot).isEmpty();
     }
 
     private boolean isCraftingSlot(int slot) {
@@ -186,7 +167,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         RecipeManager recipes = level().getServer().getRecipeManager();
         CraftingInput input = CraftingInput.of(3, 3, getInputs());
         recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level()).orElse(null);
-        items.setStackInSlot(9, recipe == null ? ItemStack.EMPTY : recipe.value().getResultItem(level().registryAccess()).copy());
+        setItem(9, recipe == null ? ItemStack.EMPTY : recipe.value().assemble(input, level().registryAccess()).copy());
     }
 
     private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {

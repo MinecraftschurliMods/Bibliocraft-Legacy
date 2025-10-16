@@ -63,8 +63,6 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
                     LocalPlayer player = ClientUtil.getPlayer();
                     int experienceToGive = player.isCreative() ? experienceCost : Math.min(player.totalExperience, experienceCost);
                     if (experienceToGive > 0) {
-                        blockEntity.addExperience(experienceToGive);
-                        player.giveExperiencePoints(-experienceToGive);
                         ClientPacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), experienceToGive));
                     }
                 }

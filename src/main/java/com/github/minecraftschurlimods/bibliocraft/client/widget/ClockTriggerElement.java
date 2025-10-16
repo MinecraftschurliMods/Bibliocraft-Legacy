@@ -54,7 +54,7 @@ public class ClockTriggerElement extends Screen {
         boolean hasScrollbar = owner.hasScrollbar(listSize);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, 0, 0, 0, hasScrollbar ? 20 : 0, hasScrollbar ? WIDTH - 6 : WIDTH, HEIGHT, 256, 256);
         Matrix3x2fStack pose = graphics.pose();
-        pose.pushMatrix();
+        /*pose.pushMatrix();
         pose.translate(8, 12);
         pose.scale(16, -16);
         pose.translate(0.125f, 0.125f);
@@ -65,7 +65,7 @@ public class ClockTriggerElement extends Screen {
         if (trigger.sound()) {
             ClientUtil.renderGuiItem(NOTE_BLOCK, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
         }
-        pose.popMatrix();
+        pose.popMatrix();*/
         graphics.drawString(ClientUtil.getFont(), getTitle(), 36, 7, 0x404040, false);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
