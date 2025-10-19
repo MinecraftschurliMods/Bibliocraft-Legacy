@@ -39,21 +39,21 @@ dependencies {
     testImplementation(helper.testframework())
 
     // jei for integration
-    val jeiApiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-1.21.9-common-api:${version}" }
-    val jeiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-1.21.9-neoforge:${version}" }
+    val jeiApiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-${mc}-common-api:${version}" }
+    val jeiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-${mc}-neoforge:${version}" }
     compileOnly(jeiApiDep)
     if (!helper.runningInCI.getOrElse(false)) {
         runtimeOnly(jeiDep)
     }
 
     // abnormals mods for integration
-    if (abnormalsCompat) {
-        runtimeOnly("curse.maven:blueprint-382216:6449863")
-        runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
-        "dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
-        "dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
-        "dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
-    }
+    //if (abnormalsCompat) {
+        //runtimeOnly("curse.maven:blueprint-382216:6449863")
+        //runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
+        //"dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
+        //"dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
+        //"dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
+    //}
 
     testImplementation("org.junit.jupiter:junit-jupiter:${project.properties["junit_version"]}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -66,9 +66,9 @@ dependencies {
 helper.withCommonRuns()
 helper.withGameTestRuns()
 helper.withDataGenRuns {
-    if (abnormalsCompat) {
-        arguments("--existing-mod", "buzzier_bees")
-    }
+    //if (abnormalsCompat) {
+        //arguments("--existing-mod", "buzzier_bees")
+    //}
 }
 
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
