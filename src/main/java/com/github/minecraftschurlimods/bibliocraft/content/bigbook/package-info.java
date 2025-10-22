@@ -1,7 +1,7 @@
 @FieldsAreNonnullByDefault
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package com.github.minecraftschurlimods.bibliocraft.apiimpl;
+package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
