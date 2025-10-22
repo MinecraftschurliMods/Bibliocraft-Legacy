@@ -1,7 +1,5 @@
 {
   "type": "bibliocraft:printing_table_binding_typewriter_pages",
   "duration": 200,
-  "ingredient": {
-    "tag": "c:leathers"
-  }
+  "ingredient": "#c:leathers"
 }

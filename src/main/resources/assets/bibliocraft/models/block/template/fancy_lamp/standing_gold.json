@@ -1,6 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/fancy_lamp/standing",
-  "textures": {
-    "metal": "minecraft:block/gold_block"
-  }
-}

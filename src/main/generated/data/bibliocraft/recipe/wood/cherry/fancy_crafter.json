@@ -3,24 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:fancy_crafter",
   "key": {
-    "C": {
-      "item": "minecraft:crafter"
-    },
-    "F": {
-      "tag": "c:feathers"
-    },
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "I": {
-      "tag": "c:dyes/black"
-    },
-    "P": {
-      "item": "minecraft:cherry_planks"
-    },
-    "T": {
-      "tag": "c:player_workstations/crafting_tables"
-    }
+    "C": "minecraft:crafter",
+    "F": "#c:feathers",
+    "G": "#c:glass_blocks",
+    "I": "#c:dyes/black",
+    "P": "minecraft:cherry_planks",
+    "T": "#c:player_workstations/crafting_tables"
   },
   "pattern": [
     "ITF",

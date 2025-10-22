@@ -5,9 +5,7 @@
   ],
   "duration": 100,
   "ingredients": [
-    {
-      "item": "bibliocraft:big_book"
-    }
+    "bibliocraft:big_book"
   ],
   "result": {
     "count": 1,

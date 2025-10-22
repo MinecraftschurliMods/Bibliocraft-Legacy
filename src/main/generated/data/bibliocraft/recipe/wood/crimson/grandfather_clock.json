@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:grandfather_clock",
   "ingredients": [
-    {
-      "item": "bibliocraft:crimson_fancy_clock"
-    },
-    {
-      "item": "bibliocraft:crimson_fancy_clock"
-    }
+    "bibliocraft:crimson_fancy_clock",
+    "bibliocraft:crimson_fancy_clock"
   ],
   "result": {
     "count": 1,

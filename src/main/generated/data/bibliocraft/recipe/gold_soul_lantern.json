@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "N": {
-      "tag": "c:nuggets/gold"
-    },
-    "T": {
-      "item": "minecraft:soul_torch"
-    }
+    "N": "#c:nuggets/gold",
+    "T": "minecraft:soul_torch"
   },
   "pattern": [
     "NNN",

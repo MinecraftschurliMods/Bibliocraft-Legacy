@@ -8,9 +8,7 @@
     "treasure_cost": 2.0
   },
   "ingredients": [
-    {
-      "item": "minecraft:book"
-    }
+    "minecraft:book"
   ],
   "result": {
     "count": 1,

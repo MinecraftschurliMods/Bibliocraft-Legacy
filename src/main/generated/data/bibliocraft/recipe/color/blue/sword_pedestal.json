@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:sword_pedestal",
   "key": {
-    "S": {
-      "item": "minecraft:smooth_stone_slab"
-    },
-    "W": {
-      "item": "minecraft:blue_wool"
-    }
+    "S": "minecraft:smooth_stone_slab",
+    "W": "minecraft:blue_wool"
   },
   "pattern": [
     " S ",
@@ -16,9 +12,7 @@
   ],
   "result": {
     "components": {
-      "minecraft:dyed_color": {
-        "rgb": -12827478
-      }
+      "minecraft:dyed_color": -12827478
     },
     "count": 1,
     "id": "bibliocraft:sword_pedestal"

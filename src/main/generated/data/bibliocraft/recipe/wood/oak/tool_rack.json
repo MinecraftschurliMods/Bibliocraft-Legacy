@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tool_racks",
   "key": {
-    "#": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "minecraft:oak_slab"
-    }
+    "#": "#c:ingots/iron",
+    "S": "minecraft:oak_slab"
   },
   "pattern": [
     "SSS",

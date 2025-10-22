@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:display_cases",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "S": {
-      "item": "minecraft:crimson_slab"
-    },
-    "W": {
-      "item": "minecraft:purple_wool"
-    }
+    "G": "#c:glass_blocks",
+    "S": "minecraft:crimson_slab",
+    "W": "minecraft:purple_wool"
   },
   "pattern": [
     "SGS",

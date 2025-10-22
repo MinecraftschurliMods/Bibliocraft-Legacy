@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:lime_jungle_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:jungle_slab"
-    }
+    "#": "bibliocraft:lime_jungle_flat_seat_back",
+    "S": "minecraft:jungle_slab"
   },
   "pattern": [
     "S",

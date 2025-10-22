@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:potion_shelves",
   "key": {
-    "#": {
-      "item": "minecraft:glass_bottle"
-    },
-    "P": {
-      "item": "minecraft:bamboo_planks"
-    },
-    "S": {
-      "item": "minecraft:bamboo_slab"
-    }
+    "#": "minecraft:glass_bottle",
+    "P": "minecraft:bamboo_planks",
+    "S": "minecraft:bamboo_slab"
   },
   "pattern": [
     "SSS",

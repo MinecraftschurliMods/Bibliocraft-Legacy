@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:potion_shelves",
   "key": {
-    "#": {
-      "item": "minecraft:glass_bottle"
-    },
-    "P": {
-      "item": "minecraft:mangrove_planks"
-    },
-    "S": {
-      "item": "minecraft:mangrove_slab"
-    }
+    "#": "minecraft:glass_bottle",
+    "P": "minecraft:mangrove_planks",
+    "S": "minecraft:mangrove_slab"
   },
   "pattern": [
     "SSS",

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": {
-      "item": "minecraft:acacia_slab"
-    }
+    "S": "minecraft:acacia_slab"
   },
   "pattern": [
     "SSS",

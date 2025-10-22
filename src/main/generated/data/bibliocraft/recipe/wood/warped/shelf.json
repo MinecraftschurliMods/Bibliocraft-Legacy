@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:shelves",
   "key": {
-    "P": {
-      "item": "minecraft:warped_planks"
-    },
-    "S": {
-      "item": "minecraft:warped_slab"
-    }
+    "P": "minecraft:warped_planks",
+    "S": "minecraft:warped_slab"
   },
   "pattern": [
     "SSS",

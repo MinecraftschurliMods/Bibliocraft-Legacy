@@ -1,153 +1,20 @@
 {
   "variants": {
-    "facing=east,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=east": {
       "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=east,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=north,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=north": {
       "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
       "uvlock": true
     },
-    "facing=north,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true
-    },
-    "facing=north,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true
-    },
-    "facing=south,upside_down=false,waterlogged=false,waxed=false": {
+    "facing=south": {
       "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=south,upside_down=true,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=west,upside_down=false,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,upside_down=false,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,upside_down=false,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,upside_down=false,waterlogged=true,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,upside_down=true,waterlogged=false,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,upside_down=true,waterlogged=false,waxed=true": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,upside_down=true,waterlogged=true,waxed=false": {
-      "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,upside_down=true,waterlogged=true,waxed=true": {
+    "facing=west": {
       "model": "bibliocraft:block/wood/birch/wall_fancy_sign",
       "uvlock": true,
       "y": 270

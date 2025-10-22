@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "F": {
-      "tag": "c:feathers"
-    },
-    "I": {
-      "tag": "c:dyes/black"
-    },
-    "L": {
-      "tag": "minecraft:wooden_pressure_plates"
-    },
-    "P": {
-      "item": "minecraft:paper"
-    }
+    "F": "#c:feathers",
+    "I": "#c:dyes/black",
+    "L": "#minecraft:wooden_pressure_plates",
+    "P": "minecraft:paper"
   },
   "pattern": [
     "I F",

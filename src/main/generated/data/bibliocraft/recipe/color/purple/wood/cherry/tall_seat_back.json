@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:purple_cherry_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:cherry_slab"
-    }
+    "#": "bibliocraft:purple_cherry_flat_seat_back",
+    "S": "minecraft:cherry_slab"
   },
   "pattern": [
     "S",

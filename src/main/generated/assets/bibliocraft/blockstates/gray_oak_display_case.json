@@ -1,62 +1,32 @@
 {
   "variants": {
-    "facing=east,open=false,waterlogged=false": {
+    "facing=east,open=false": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed",
       "y": 90
     },
-    "facing=east,open=false,waterlogged=true": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed",
-      "y": 90
-    },
-    "facing=east,open=true,waterlogged=false": {
+    "facing=east,open=true": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_open",
       "y": 90
     },
-    "facing=east,open=true,waterlogged=true": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_open",
-      "y": 90
-    },
-    "facing=north,open=false,waterlogged=false": {
+    "facing=north,open=false": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed"
     },
-    "facing=north,open=false,waterlogged=true": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed"
-    },
-    "facing=north,open=true,waterlogged=false": {
+    "facing=north,open=true": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_open"
     },
-    "facing=north,open=true,waterlogged=true": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_open"
-    },
-    "facing=south,open=false,waterlogged=false": {
+    "facing=south,open=false": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed",
       "y": 180
     },
-    "facing=south,open=false,waterlogged=true": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed",
-      "y": 180
-    },
-    "facing=south,open=true,waterlogged=false": {
+    "facing=south,open=true": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_open",
       "y": 180
     },
-    "facing=south,open=true,waterlogged=true": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_open",
-      "y": 180
-    },
-    "facing=west,open=false,waterlogged=false": {
+    "facing=west,open=false": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed",
       "y": 270
     },
-    "facing=west,open=false,waterlogged=true": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_closed",
-      "y": 270
-    },
-    "facing=west,open=true,waterlogged=false": {
-      "model": "bibliocraft:block/color/gray/wood/oak/display_case_open",
-      "y": 270
-    },
-    "facing=west,open=true,waterlogged=true": {
+    "facing=west,open=true": {
       "model": "bibliocraft:block/color/gray/wood/oak/display_case_open",
       "y": 270
     }

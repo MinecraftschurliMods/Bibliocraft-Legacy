@@ -4,25 +4,15 @@
   "group": "bibliocraft:fancy_lamp",
   "key": {
     "C": {
-      "type": "neoforge:intersection",
+      "neoforge:ingredient_type": "neoforge:intersection",
       "children": [
-        {
-          "tag": "c:glass_blocks"
-        },
-        {
-          "tag": "c:dyed/orange"
-        }
+        "#c:glass_blocks",
+        "#c:dyed/orange"
       ]
     },
-    "G": {
-      "item": "minecraft:glowstone"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "N": {
-      "tag": "c:nuggets/iron"
-    }
+    "G": "minecraft:glowstone",
+    "I": "#c:ingots/iron",
+    "N": "#c:nuggets/iron"
   },
   "pattern": [
     "CGC",

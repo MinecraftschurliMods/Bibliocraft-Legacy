@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:seats",
   "key": {
-    "R": {
-      "tag": "c:rods/wooden"
-    },
-    "S": {
-      "item": "minecraft:cherry_slab"
-    },
-    "W": {
-      "item": "minecraft:cyan_wool"
-    }
+    "R": "#c:rods/wooden",
+    "S": "minecraft:cherry_slab",
+    "W": "minecraft:cyan_wool"
   },
   "pattern": [
     " W ",

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:bookcases",
   "key": {
-    "P": {
-      "item": "minecraft:jungle_planks"
-    },
-    "S": {
-      "item": "minecraft:jungle_slab"
-    }
+    "P": "minecraft:jungle_planks",
+    "S": "minecraft:jungle_slab"
   },
   "pattern": [
     "PSP",

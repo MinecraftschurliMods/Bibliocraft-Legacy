@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:fancy_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:green_bamboo_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:bamboo_slab"
-    }
+    "#": "bibliocraft:green_bamboo_flat_seat_back",
+    "S": "minecraft:bamboo_slab"
   },
   "pattern": [
     "S#S"

@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:black_mangrove_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:mangrove_slab"
-    }
+    "#": "bibliocraft:black_mangrove_flat_seat_back",
+    "S": "minecraft:mangrove_slab"
   },
   "pattern": [
     "S",

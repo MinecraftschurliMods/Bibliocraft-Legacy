@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:fancy_armor_stands",
   "key": {
-    "R": {
-      "tag": "c:rods/wooden"
-    },
-    "S": {
-      "item": "minecraft:acacia_slab"
-    }
+    "R": "#c:rods/wooden",
+    "S": "minecraft:acacia_slab"
   },
   "pattern": [
     " R ",

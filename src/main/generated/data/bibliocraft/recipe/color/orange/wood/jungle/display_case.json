@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:display_cases",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "S": {
-      "item": "minecraft:jungle_slab"
-    },
-    "W": {
-      "item": "minecraft:orange_wool"
-    }
+    "G": "#c:glass_blocks",
+    "S": "minecraft:jungle_slab",
+    "W": "minecraft:orange_wool"
   },
   "pattern": [
     "SGS",

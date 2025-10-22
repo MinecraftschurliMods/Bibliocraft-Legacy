@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:display_cases",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "S": {
-      "item": "minecraft:warped_slab"
-    },
-    "W": {
-      "item": "minecraft:green_wool"
-    }
+    "G": "#c:glass_blocks",
+    "S": "minecraft:warped_slab",
+    "W": "minecraft:green_wool"
   },
   "pattern": [
     "SGS",

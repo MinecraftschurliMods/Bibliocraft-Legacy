@@ -1,6 +1,7 @@
 {
-  "parent": "bibliocraft:block/template/fancy_lamp/wall_gold",
+  "parent": "bibliocraft:block/template/fancy_lamp/wall",
   "textures": {
-    "color": "minecraft:block/glass"
+    "color": "minecraft:block/glass",
+    "metal": "minecraft:block/gold_block"
   }
 }

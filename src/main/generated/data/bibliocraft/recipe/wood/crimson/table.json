@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tables",
   "key": {
-    "P": {
-      "item": "minecraft:crimson_planks"
-    },
-    "S": {
-      "item": "minecraft:crimson_slab"
-    }
+    "P": "minecraft:crimson_planks",
+    "S": "minecraft:crimson_slab"
   },
   "pattern": [
     "SSS",

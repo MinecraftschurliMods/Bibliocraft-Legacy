@@ -10,9 +10,7 @@
     }
   },
   "duration": 200,
-  "ingredient": {
-    "item": "bibliocraft:big_book"
-  },
+  "ingredient": "bibliocraft:big_book",
   "result": {
     "count": 1,
     "id": "bibliocraft:written_big_book"

@@ -1,39 +1,24 @@
 {
   "variants": {
-    "facing=east,waterlogged=false": {
+    "facing=east": {
+      "type": "bibliocraft:bookcase",
       "model": "bibliocraft:block/wood/crimson/bookcase",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,waterlogged=true": {
-      "model": "bibliocraft:block/wood/crimson/bookcase",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=north,waterlogged=false": {
+    "facing=north": {
+      "type": "bibliocraft:bookcase",
       "model": "bibliocraft:block/wood/crimson/bookcase",
       "uvlock": true
     },
-    "facing=north,waterlogged=true": {
-      "model": "bibliocraft:block/wood/crimson/bookcase",
-      "uvlock": true
-    },
-    "facing=south,waterlogged=false": {
+    "facing=south": {
+      "type": "bibliocraft:bookcase",
       "model": "bibliocraft:block/wood/crimson/bookcase",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,waterlogged=true": {
-      "model": "bibliocraft:block/wood/crimson/bookcase",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=west,waterlogged=false": {
-      "model": "bibliocraft:block/wood/crimson/bookcase",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,waterlogged=true": {
+    "facing=west": {
+      "type": "bibliocraft:bookcase",
       "model": "bibliocraft:block/wood/crimson/bookcase",
       "uvlock": true,
       "y": 270
