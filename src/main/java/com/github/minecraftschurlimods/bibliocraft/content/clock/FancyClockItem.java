@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class FancyClockItem extends WoodTypeBlockItem {
-    public FancyClockItem(BibliocraftWoodType woodType) {
-        super(BCBlocks.FANCY_CLOCK, woodType);
+    public FancyClockItem(BibliocraftWoodType woodType, Properties properties) {
+        super(BCBlocks.FANCY_CLOCK, woodType, properties);
     }
 
     @Override

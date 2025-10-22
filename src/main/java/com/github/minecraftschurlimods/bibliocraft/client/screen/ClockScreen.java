@@ -65,7 +65,6 @@ public class ClockScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TICK, leftPos + 28, topPos + 11, 0x404040, false);
         graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TRIGGERS, leftPos + 8, topPos + 26, 0x404040, false);

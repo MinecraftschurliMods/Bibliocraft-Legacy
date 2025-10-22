@@ -95,7 +95,8 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
             disabledSlots[slot] = false;
         }
         super.setItem(slot, stack);
-        calculateRecipe();
+        // TODO
+        //calculateRecipe();
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Rotation;
@@ -65,13 +66,13 @@ public class PrintingTableBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
         if (level.getBlockEntity(pos) instanceof PrintingTableBlockEntity blockEntity && level instanceof ServerLevel serverLevel) {
             int experience = blockEntity.getExperience();
             if (experience > 0) {
                 ExperienceOrb.award(serverLevel, Vec3.atBottomCenterOf(pos), experience);
             }
         }
-        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+        return super.onDestroyedByPlayer(state, level, pos, player, toolStack, willHarvest, fluid);
     }
 }

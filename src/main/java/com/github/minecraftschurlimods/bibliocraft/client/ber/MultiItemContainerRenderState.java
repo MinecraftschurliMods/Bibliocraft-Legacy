@@ -16,8 +16,8 @@ public class MultiItemContainerRenderState extends BlockEntityRenderState {
         items = new ItemStackRenderState[blockEntity.getContainerSize()];
         int i = HashCommon.long2int(blockEntity.getBlockPos().asLong());
         for (int j = 0; j < items.length; j++) {
-            ItemStack item = blockEntity.getItem(i);
-            if (!item.isEmpty()) {
+            ItemStack item = blockEntity.getItem(j);
+            if (item.isEmpty()) {
                 continue;
             }
             ItemStackRenderState itemstackrenderstate = new ItemStackRenderState();

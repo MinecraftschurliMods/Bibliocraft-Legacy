@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
@@ -19,13 +18,10 @@ import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
-import net.minecraft.world.level.block.WoolCarpetBlock;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
@@ -35,7 +31,6 @@ import org.joml.Matrix4f;
 public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.TableRenderState> {
     private static final RenderType MAP_BACKGROUND = RenderType.text(BCUtil.mcLoc("textures/map/map_background.png"));
     private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType.text(BCUtil.mcLoc("textures/map/map_background_checkerboard.png"));
-    //private static final Map<TableBlock.Type, Map<DyeColor, BakedModel>> CLOTH_MAP = new HashMap<>();
     private final MapRenderer mapRenderer;
     private final ItemModelResolver itemModelResolver;
 
@@ -43,19 +38,6 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.
         Minecraft minecraft = ClientUtil.getMc();
         mapRenderer = minecraft.getMapRenderer();
         itemModelResolver = context.itemModelResolver();
-    }
-
-    public static void rebuildClothModelCache() {
-        /*CLOTH_MAP.clear();
-        ModelManager models = ClientUtil.getMc().getModelManager();
-        for (TableBlock.Type type : TableBlock.Type.values()) {
-            Map<DyeColor, BakedModel> map = new HashMap<>();
-            for (DyeColor color : DyeColor.values()) {
-                ResourceLocation loc = BCUtil.bcLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName());
-                map.put(color, models.getModel(ModelResourceLocation.standalone(loc)));
-            }
-            CLOTH_MAP.put(type, map);
-        }*/
     }
 
     @Override
@@ -90,20 +72,6 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.
             state.itemStackState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         }
         stack.popPose();
-        if (state.clothColor == null)
-            return;
-        stack.pushPose();
-        stack.translate(0.5, 0, 0.5);
-        stack.mulPose(Axis.YP.rotationDegrees(switch (state.blockState.getValue(TableBlock.FACING)) {
-            case EAST -> 270;
-            case SOUTH -> 180;
-            case WEST -> 90;
-            default -> 0;
-        }));
-        stack.translate(-0.5, 0, -0.5);
-        // BakedModel clothModel = CLOTH_MAP.get(state.blockState.getValue(TableBlock.TYPE)).get(state.clothColor);
-        // TODO: How do we render the cloth model now?
-        stack.popPose();
     }
 
     @Override
@@ -115,7 +83,6 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.
     public static class TableRenderState extends SingleItemContainerRenderState {
         private @Nullable MapRenderState map;
         private boolean isMap;
-        private @Nullable DyeColor clothColor;
 
         public void fill(BCBlockEntity blockEntity, ItemDisplayContext displayContext, ItemModelResolver itemModelResolver, MapRenderer mapRenderer) {
             ItemStack item = blockEntity.getItem(0);
@@ -129,10 +96,6 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.
             if (mapData != null) {
                 map = new MapRenderState();
                 mapRenderer.extractRenderState(mapId, mapData, map);
-            }
-            ItemStack carpet = blockEntity.getItem(1);
-            if (!carpet.isEmpty() && carpet.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock carpetBlock) {
-                clothColor = carpetBlock.getColor();
             }
         }
     }

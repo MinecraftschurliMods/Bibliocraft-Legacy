@@ -8,7 +8,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -31,7 +29,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -246,26 +243,15 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     private void pullExperience() {
-        List<FluidResource> fluids = level()
-                .registryAccess()
-                .lookupOrThrow(Registries.FLUID)
-                .getOrThrow(Tags.Fluids.EXPERIENCE)
-                .stream()
-                .map(Holder::value)
-                .map(FluidResource::of)
-                .toList();
         try (var t = Transaction.open(null)) {
             for (Direction direction : directions) {
-                ResourceHandler<FluidResource> capability = level().getCapability(Capabilities.Fluid.BLOCK, getBlockPos().offset(direction.getUnitVec3i()), direction);
+                ResourceHandler<FluidResource> capability = level().getCapability(Capabilities.Fluid.BLOCK, getBlockPos().relative(direction), direction);
                 if (capability == null) continue;
-                for (FluidResource fluid : fluids) {
-                    tank.fillFromCapability(capability, fluid, t);
-                    if (isExperienceFull()) return;
-                }
+                tank.fillFromCapability(capability, t);
+                if (isExperienceFull()) break;
             }
             t.commit();
         }
-        
     }
 
     private void calculateRecipe(boolean onLoad) {

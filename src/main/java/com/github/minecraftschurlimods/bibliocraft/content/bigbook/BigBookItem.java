@@ -17,16 +17,8 @@ import net.minecraft.world.level.Level;
 import java.util.function.Consumer;
 
 public class BigBookItem extends Item {
-    public BigBookItem(boolean isWritten) {
-        super(isWritten
-                ? new Properties()
-                .component(DataComponents.MAX_STACK_SIZE, 1)
-                .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                .component(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, WrittenBigBookContent.DEFAULT)
-                : new Properties()
-                .component(DataComponents.MAX_STACK_SIZE, 1)
-                .component(BCDataComponents.BIG_BOOK_CONTENT, BigBookContent.DEFAULT)
-        );
+    public BigBookItem(Properties properties) {
+        super(properties);
     }
 
     @Override

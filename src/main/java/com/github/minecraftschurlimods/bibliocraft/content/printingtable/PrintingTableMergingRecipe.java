@@ -204,10 +204,5 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         public PrintingTableRecipe build() {
             return new PrintingTableMergingRecipe(mergers, ingredient, result, duration);
         }
-
-        @Override
-        public void save(RecipeOutput output, ResourceKey<Recipe<?>> resourceKey) {
-            output.accept(resourceKey, build(), null);
-        }
     }
 }

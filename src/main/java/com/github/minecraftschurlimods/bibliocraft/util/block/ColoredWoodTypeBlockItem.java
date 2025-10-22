@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util.block;
 
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.BibliocraftWoodType;
-import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -10,8 +10,8 @@ public class ColoredWoodTypeBlockItem extends BlockItem {
     protected final BibliocraftWoodType woodType;
     protected final DyeColor color;
 
-    public ColoredWoodTypeBlockItem(ColoredWoodTypeDeferredHolder<Block, ? extends Block> holder, BibliocraftWoodType woodType, DyeColor color) {
-        super(holder.get(woodType, color), new Properties());
+    public ColoredWoodTypeBlockItem(GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Block, ? extends Block> holder, BibliocraftWoodType woodType, DyeColor color, Properties properties) {
+        super(holder.get(woodType, color), properties.useBlockDescriptionPrefix());
         this.woodType = woodType;
         this.color = color;
     }

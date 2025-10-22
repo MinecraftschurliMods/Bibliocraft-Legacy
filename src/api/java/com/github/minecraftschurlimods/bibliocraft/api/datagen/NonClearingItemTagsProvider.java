@@ -49,4 +49,9 @@ public abstract class NonClearingItemTagsProvider extends ItemTagsProvider {
         TagBuilder tagbuilder = this.getOrCreateRawBuilder(key);
         return TagAppender.<Item>forBuilder(tagbuilder).map(rl -> ResourceKey.create(Registries.ITEM, rl));
     }
+
+    @Override
+    public TagAppender<Item, Item> tag(TagKey<Item> key) {
+        return super.tag(key);
+    }
 }

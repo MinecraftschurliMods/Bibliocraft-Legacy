@@ -109,19 +109,19 @@ public final class BCEventHandler {
                 .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
                 .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
-                .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
+                .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle, ClockSyncPacket::handle)
                 .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
                 .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
                 .playToServer(PrintingTableInputPacket.TYPE,          PrintingTableInputPacket.STREAM_CODEC,          PrintingTableInputPacket::handle)
-                .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle)
+                .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle, PrintingTableSetRecipePacket::handle)
                 .playToClient(PrintingTableTankSyncPacket.TYPE,       PrintingTableTankSyncPacket.STREAM_CODEC,       PrintingTableTankSyncPacket::handle)
                 .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
                 .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
                 .playToServer(TakeLecternBookPacket.TYPE,             TakeLecternBookPacket.STREAM_CODEC,             TakeLecternBookPacket::handle)
-                .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle)
-                .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle);
+                .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle, ToggleableSlotSyncPacket::handle)
+                .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle, TypewriterSyncPacket::handle);
     }
 
     private static void registerLockAndKeyBehaviors(RegisterLockAndKeyBehaviorEvent event) {

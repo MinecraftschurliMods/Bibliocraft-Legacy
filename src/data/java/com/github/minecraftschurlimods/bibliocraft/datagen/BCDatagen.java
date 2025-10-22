@@ -32,19 +32,19 @@ public final class BCDatagen {
         DataGenerator.PackGenerator clientPack = generator.getVanillaPack(includeClient);
         DataGenerator.PackGenerator serverPack = generator.getVanillaPack(includeServer);
 
-        BCEnglishLanguageProvider language = clientPack.addProvider(BCEnglishLanguageProvider::new);
+        BCEnglishLanguageProvider languageProvider = clientPack.addProvider(BCEnglishLanguageProvider::new);
         clientPack.addProvider(BCModelProvider::new);
         clientPack.addProvider(BCSoundDefinitionsProvider::new);
 
         serverPack.addProvider(wrap(lookupProvider, BCLootTableProvider::new));
         serverPack.addProvider(wrap(lookupProvider, BCRecipeProvider.Runner::new));
-        serverPack.addProvider(wrap(lookupProvider, BCBlockTagsProvider::new));
-        serverPack.addProvider(wrap(lookupProvider, BCItemTagsProvider::new));
+        BCBlockTagsProvider blockTagsProvider = serverPack.addProvider(wrap(lookupProvider, BCBlockTagsProvider::new));
+        BCItemTagsProvider itemTagsProvider = serverPack.addProvider(wrap(lookupProvider, BCItemTagsProvider::new));
         serverPack.addProvider(wrap(lookupProvider, BCEnchantmentTagsProvider::new));
 
         BibliocraftDatagenHelper helper = BibliocraftApi.getDatagenHelper();
         helper.addWoodTypesToGenerateByModid("minecraft");
-        helper.generateAll(BibliocraftApi.MOD_ID, lookupProvider, clientPack, serverPack, language);
+        helper.generateAll(BibliocraftApi.MOD_ID, lookupProvider, clientPack, serverPack, languageProvider, blockTagsProvider::tag, itemTagsProvider::tag);
     }
 
     private static <T extends DataProvider, P1> DataProvider.Factory<T> wrap(P1 p1, BiFunction<PackOutput, P1, T> factory) {

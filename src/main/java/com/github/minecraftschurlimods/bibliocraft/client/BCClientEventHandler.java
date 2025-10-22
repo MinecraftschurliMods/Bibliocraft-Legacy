@@ -16,6 +16,7 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.SwordPedestalBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.TableBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseBlockStateModel;
+import com.github.minecraftschurlimods.bibliocraft.client.model.TableBlockStateModel;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancyCrafterScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.PrintingTableScreen;
@@ -29,7 +30,10 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterBlockStateModels;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.jetbrains.annotations.ApiStatus;
 
 public final class BCClientEventHandler {
@@ -37,8 +41,6 @@ public final class BCClientEventHandler {
     @ApiStatus.Internal
     public static void init(IEventBus modBus) {
         modBus.addListener(RegisterMenuScreensEvent.class,                      BCClientEventHandler::registerMenuScreens);
-        //modBus.addListener(ModelEvent.RegisterAdditional.class,                 BCClientEventHandler::registerAdditional);
-        modBus.addListener(ModelEvent.BakingCompleted.class,                    BCClientEventHandler::bakingCompleted);
         modBus.addListener(RegisterBlockStateModels.class,                      BCClientEventHandler::registerGeometryLoaders);
         modBus.addListener(EntityRenderersEvent.RegisterLayerDefinitions.class, BCClientEventHandler::registerLayerDefinitions);
         modBus.addListener(EntityRenderersEvent.RegisterRenderers.class,        BCClientEventHandler::registerRenderers);
@@ -60,22 +62,9 @@ public final class BCClientEventHandler {
     }
     // @formatter:on
 
-    /*private static void registerAdditional(ModelEvent.RegisterStandalone event) {
-        for (TableBlock.Type type : TableBlock.Type.values()) {
-            for (DyeColor color : DyeColor.values()) {
-                event.register(ModelResourceLocation.standalone(BCUtil.bcLoc("block/color/" + color.getSerializedName() + "/table_cloth_" + type.getSerializedName())));
-            }
-        }
-    }*/
-
-    private static void bakingCompleted(ModelEvent.BakingCompleted event) {
-        TableBER.rebuildClothModelCache();
-    }
-
     private static void registerGeometryLoaders(RegisterBlockStateModels event) {
-        event.registerModel(BCUtil.bcLoc("bookcase"), BookcaseBlockStateModel.CODEC);
-        // TODO
-        //event.register(BCUtil.bcLoc("table"), TableModel.LOADER);
+        event.registerModel(BCUtil.bcLoc("bookcase"), BookcaseBlockStateModel.Unbaked.CODEC);
+        event.registerModel(BCUtil.bcLoc("table"), TableBlockStateModel.Unbaked.CODEC);
     }
 
     private static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

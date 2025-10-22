@@ -7,6 +7,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
@@ -22,11 +23,8 @@ public class PrintingTableTank extends FluidStacksResourceHandler {
         this.acceptAutomation = acceptAutomation;
     }
 
-    public void fillFromCapability(ResourceHandler<FluidResource> capability, FluidResource fluid, TransactionContext transaction) {
-        int drain = capability.extract(fluid, getCapacityAsInt(0, fluid) - getAmountAsInt(0), transaction);
-        if (drain > 0) {
-            insert(fluid, drain, transaction);
-        }
+    public void fillFromCapability(ResourceHandler<FluidResource> capability, TransactionContext transaction) {
+        ResourceHandlerUtil.move(capability, this, f -> f.is(Tags.Fluids.EXPERIENCE), Integer.MAX_VALUE, transaction);
     }
 
     public void clear() {

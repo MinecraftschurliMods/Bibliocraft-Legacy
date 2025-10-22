@@ -30,6 +30,7 @@ import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
@@ -164,26 +165,28 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .group("bibliocraft:typewriter")
                 .unlockedBy("has_terracotta", has(Items.TERRACOTTA))
                 .save(output);
-        shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_GOLD_LANTERN)
-                .pattern("GIG")
-                .pattern("ICI")
-                .pattern("GIG")
-                .define('G', tag(Tags.Items.GLASS_PANES_COLORLESS))
-                .define('I', Tags.Items.INGOTS_GOLD)
-                .define('C', Ingredient.of(BuiltInRegistries.ITEM.getValue(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
-                .group("bibliocraft:fancy_lantern")
-                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
-                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
-        shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_IRON_LANTERN)
-                .pattern("GIG")
-                .pattern("ICI")
-                .pattern("GIG")
-                .define('G', tag(Tags.Items.GLASS_PANES_COLORLESS))
-                .define('I', Tags.Items.INGOTS_IRON)
-                .define('C', Ingredient.of(BuiltInRegistries.ITEM.getValue(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
-                .group("bibliocraft:fancy_lantern")
-                .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
-                .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
+        if (ModList.get().isLoaded("buzzier_bees")) {
+            shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_GOLD_LANTERN)
+                    .pattern("GIG")
+                    .pattern("ICI")
+                    .pattern("GIG")
+                    .define('G', tag(Tags.Items.GLASS_PANES_COLORLESS))
+                    .define('I', Tags.Items.INGOTS_GOLD)
+                    .define('C', Ingredient.of(BuiltInRegistries.ITEM.getValue(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
+                    .group("bibliocraft:fancy_lantern")
+                    .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                    .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
+            shaped(RecipeCategory.DECORATIONS, BCItems.SOUL_FANCY_IRON_LANTERN)
+                    .pattern("GIG")
+                    .pattern("ICI")
+                    .pattern("GIG")
+                    .define('G', tag(Tags.Items.GLASS_PANES_COLORLESS))
+                    .define('I', Tags.Items.INGOTS_IRON)
+                    .define('C', Ingredient.of(BuiltInRegistries.ITEM.getValue(BCUtil.modLoc("buzzier_bees", "soul_candle"))))
+                    .group("bibliocraft:fancy_lantern")
+                    .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                    .save(output.withConditions(new ModLoadedCondition("buzzier_bees")));
+        }
         shaped(RecipeCategory.TOOLS, BCItems.CLIPBOARD)
                 .pattern("I F")
                 .pattern("PPP")

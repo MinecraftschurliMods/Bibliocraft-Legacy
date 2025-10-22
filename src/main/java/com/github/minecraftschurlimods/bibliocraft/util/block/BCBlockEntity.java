@@ -37,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public abstract class BCBlockEntity extends BlockEntity implements Container, ItemOwner {
     private static final String ITEMS_TAG = "items";
-    protected final ResourceHandler<ItemResource> capability = VanillaContainerWrapper.of(this);
+    protected final ResourceHandler<ItemResource> capability;
     protected final NonNullList<ItemStack> items;
     private LockCode lockKey = LockCode.NO_LOCK;
 
@@ -50,6 +50,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
     public BCBlockEntity(BlockEntityType<?> type, int containerSize, BlockPos pos, BlockState state) {
         super(type, pos, state);
         items = NonNullList.withSize(containerSize, ItemStack.EMPTY);
+        capability = VanillaContainerWrapper.of(this);
     }
 
     public LockCode getLockKey() {

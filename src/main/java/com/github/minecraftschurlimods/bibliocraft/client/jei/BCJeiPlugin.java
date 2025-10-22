@@ -12,10 +12,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CompatUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupingDeferredHolder;
-import com.github.minecraftschurlimods.bibliocraft.util.holder.WoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.*;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -43,11 +40,11 @@ public final class BCJeiPlugin implements IModPlugin {
     private static final ResourceLocation UID = BCUtil.bcLoc("jei_plugin");
     private static final Lazy<BibliocraftWoodType> OAK = Lazy.of(() -> BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")));
     private static final DyeColor WHITE = DyeColor.WHITE;
-    private static final Lazy<List<WoodTypeDeferredHolder<Item, ?>>> WOOD_TYPE_DEFERRED_HOLDERS =
+    private static final Lazy<List<GroupedHolder<BibliocraftWoodType, Item, ?>>> WOOD_TYPE_DEFERRED_HOLDERS =
             Lazy.of(() -> List.of(BCItems.BOOKCASE, BCItems.FANCY_ARMOR_STAND, BCItems.FANCY_CLOCK, BCItems.FANCY_CRAFTER, BCItems.GRANDFATHER_CLOCK, BCItems.LABEL, BCItems.POTION_SHELF, BCItems.SHELF, BCItems.TABLE, BCItems.TOOL_RACK));
-    private static final Lazy<List<ColoredDeferredHolder<Item, ?>>> COLORED_DEFERRED_HOLDERS =
+    private static final Lazy<List<GroupedHolder<DyeColor, Item, ?>>> COLORED_DEFERRED_HOLDERS =
             Lazy.of(() -> List.of(BCItems.FANCY_GOLD_LAMP, BCItems.FANCY_IRON_LAMP, BCItems.FANCY_GOLD_LANTERN, BCItems.FANCY_IRON_LANTERN));
-    private static final Lazy<List<ColoredWoodTypeDeferredHolder<Item, ?>>> COLORED_WOOD_TYPE_DEFERRED_HOLDERS =
+    private static final Lazy<List<GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, ?>>> COLORED_WOOD_TYPE_DEFERRED_HOLDERS =
             Lazy.of(() -> List.of(BCItems.DISPLAY_CASE, BCItems.SEAT, BCItems.SMALL_SEAT_BACK, BCItems.RAISED_SEAT_BACK, BCItems.FLAT_SEAT_BACK, BCItems.TALL_SEAT_BACK, BCItems.FANCY_SEAT_BACK));
 
     @Override
@@ -68,23 +65,23 @@ public final class BCJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-            for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+            for (GroupedHolder<BibliocraftWoodType, Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                 registration.addIngredientInfo(holder.get(OAK.get()), Translations.ALL_WOOD_TYPES);
             }
         }
         if (!BCConfig.JEI_SHOW_COLOR_TYPES.get()) {
             if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+                for (GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     registration.addIngredientInfo(holder.get(OAK.get(), WHITE), Translations.ALL_COLORS_AND_WOOD_TYPES);
                 }
             } else {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+                for (GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     for (BibliocraftWoodType woodType : BibliocraftApi.getWoodTypeRegistry().getAll()) {
                         registration.addIngredientInfo(holder.get(woodType, WHITE), Translations.ALL_COLORS);
                     }
                 }
             }
-            for (ColoredDeferredHolder<Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
+            for (GroupedHolder<DyeColor, Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
                 registration.addIngredientInfo(holder.get(WHITE), Translations.ALL_COLORS);
             }
         }
@@ -117,23 +114,23 @@ public final class BCJeiPlugin implements IModPlugin {
     @Override
     public void onRuntimeAvailable(IJeiRuntime runtime) {
         if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-            for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+            for (GroupedHolder<BibliocraftWoodType, Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                 removeAllExcept(runtime, holder, holder.get(OAK.get()));
             }
         }
         if (!BCConfig.JEI_SHOW_COLOR_TYPES.get()) {
             if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+                for (GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     removeAllExcept(runtime, holder, holder.get(OAK.get(), WHITE));
                 }
             } else {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+                for (GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
                     for (BibliocraftWoodType woodType : BibliocraftApi.getWoodTypeRegistry().getAll()) {
                         removeAllExcept(runtime, holder, holder.get(woodType, WHITE));
                     }
                 }
             }
-            for (ColoredDeferredHolder<Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
+            for (GroupedHolder<DyeColor, Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
                 removeAllExcept(runtime, holder, holder.get(WHITE));
             }
         }

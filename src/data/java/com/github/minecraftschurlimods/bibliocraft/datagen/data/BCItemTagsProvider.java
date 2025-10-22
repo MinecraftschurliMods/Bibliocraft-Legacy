@@ -8,11 +8,15 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
@@ -23,18 +27,21 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
     @SuppressWarnings("unchecked")
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
-        // TODO
-        /*copy(BCTags.Blocks.FANCY_ARMOR_STANDS, BCTags.Items.FANCY_ARMOR_STANDS);
-        copy(BCTags.Blocks.FANCY_LAMPS, BCTags.Items.FANCY_LAMPS);
-        copy(BCTags.Blocks.FANCY_LAMPS_GOLD, BCTags.Items.FANCY_LAMPS_GOLD);
-        copy(BCTags.Blocks.FANCY_LAMPS_IRON, BCTags.Items.FANCY_LAMPS_IRON);
-        copy(BCTags.Blocks.FANCY_LANTERNS, BCTags.Items.FANCY_LANTERNS);
-        copy(BCTags.Blocks.FANCY_LANTERNS_GOLD, BCTags.Items.FANCY_LANTERNS_GOLD);
-        copy(BCTags.Blocks.FANCY_LANTERNS_IRON, BCTags.Items.FANCY_LANTERNS_IRON);
-        copy(BCTags.Blocks.PRINTING_TABLES, BCTags.Items.PRINTING_TABLES);
-        copy(BCTags.Blocks.TYPEWRITERS, BCTags.Items.TYPEWRITERS);*/
-        tag(BCTags.Items.SEAT_BACKS).addTags(BCTags.Items.SEAT_BACKS_SMALL, BCTags.Items.SEAT_BACKS_RAISED, BCTags.Items.SEAT_BACKS_FLAT, BCTags.Items.SEAT_BACKS_TALL, BCTags.Items.SEAT_BACKS_FANCY);
-        tag(BCTags.Items.BOOKCASE_BOOKS).addTags(ItemTags.BOOKSHELF_BOOKS, ItemTags.LECTERN_BOOKS);
+        BCBlockItemTagsProvider.addBlockTags(blockTagKey -> new BlockToItemConverter(this.tag(BlockToItemConverter.blockTagToItemTag(blockTagKey))));
+        tag(BCTags.Items.SEAT_BACKS_SMALL);
+        tag(BCTags.Items.SEAT_BACKS_RAISED);
+        tag(BCTags.Items.SEAT_BACKS_FLAT);
+        tag(BCTags.Items.SEAT_BACKS_TALL);
+        tag(BCTags.Items.SEAT_BACKS_FANCY);
+        tag(BCTags.Items.SEAT_BACKS)
+                .addTags(BCTags.Items.SEAT_BACKS_SMALL,
+                        BCTags.Items.SEAT_BACKS_RAISED,
+                        BCTags.Items.SEAT_BACKS_FLAT,
+                        BCTags.Items.SEAT_BACKS_TALL,
+                        BCTags.Items.SEAT_BACKS_FANCY);
+        tag(BCTags.Items.BOOKCASE_BOOKS)
+                .addTags(ItemTags.BOOKSHELF_BOOKS,
+                        ItemTags.LECTERN_BOOKS);
         lazyTag(BCTags.Items.BOOKCASE_BOOKS)
                 .addOptional(BCUtil.modLoc("actuallyadditions", "booklet"))
                 .addOptional(BCUtil.modLoc("aether", "book_of_lore"))
@@ -130,12 +137,21 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
                 .addOptional(BCUtil.modLoc("ubesdelight", "cookie_ube"))
                 .addOptional(BCUtil.modLoc("vampiresdelight", "orchid_cookie"));
         tag(BCTags.Items.DISC_RACK_DISCS).addTag(Tags.Items.MUSIC_DISCS);
-        lazyTag(BCTags.Items.DISC_RACK_DISCS).addOptionalTag(TagKey.create(Registries.ITEM, BCUtil.modLoc("computercraft", "disks")));
+        lazyTag(BCTags.Items.DISC_RACK_DISCS)
+                .addOptionalTag(TagKey.create(Registries.ITEM, BCUtil.modLoc("computercraft", "disks")));
         tag(BCTags.Items.FANCY_SIGN_WAX).add(Items.HONEYCOMB);
         lazyTag(BCTags.Items.FANCY_SIGN_WAX)
                 .addOptional(BCUtil.modLoc("modern_industrialization", "wax"))
                 .addOptional(BCUtil.modLoc("productivebees", "wax"));
-        tag(BCTags.Items.POTION_SHELF_POTIONS).add(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE, Items.HONEY_BOTTLE, Items.OMINOUS_BOTTLE, Items.DRAGON_BREATH);
+        tag(BCTags.Items.POTION_SHELF_POTIONS)
+                .add(Items.POTION,
+                        Items.SPLASH_POTION,
+                        Items.LINGERING_POTION,
+                        Items.GLASS_BOTTLE,
+                        Items.EXPERIENCE_BOTTLE,
+                        Items.HONEY_BOTTLE,
+                        Items.OMINOUS_BOTTLE,
+                        Items.DRAGON_BREATH);
         lazyTag(BCTags.Items.POTION_SHELF_POTIONS)
                 .addOptional(BCUtil.modLoc("apothic_enchanting", "infused_breath"))
                 .addOptional(BCUtil.modLoc("aquaculture", "message_in_a_bottle"))
@@ -420,5 +436,63 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
         tag(ItemTags.DYEABLE).add(BCItems.SWORD_PEDESTAL.get());
         tag(ItemTags.LECTERN_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
+    }
+
+    private static class BlockToItemConverter implements TagAppender<Block, Block> {
+        private final TagAppender<Item, Item> itemAppender;
+
+        public BlockToItemConverter(TagAppender<Item, Item> itemAppender) {
+            this.itemAppender = itemAppender;
+        }
+
+        public TagAppender<Block, Block> add(Block block) {
+            this.itemAppender.add(Objects.requireNonNull(block.asItem()));
+            return this;
+        }
+
+        public TagAppender<Block, Block> addOptional(Block block) {
+            this.itemAppender.addOptional(Objects.requireNonNull(block.asItem()));
+            return this;
+        }
+
+        private static TagKey<Item> blockTagToItemTag(TagKey<Block> tag) {
+            return TagKey.create(Registries.ITEM, tag.location());
+        }
+
+        @Override
+        public TagAppender<Block, Block> addTag(TagKey<Block> tag) {
+            this.itemAppender.addTag(blockTagToItemTag(tag));
+            return this;
+        }
+
+        @Override
+        public TagAppender<Block, Block> addOptionalTag(TagKey<Block> tag) {
+            this.itemAppender.addOptionalTag(blockTagToItemTag(tag));
+            return this;
+        }
+
+        @Override
+        public TagAppender<Block, Block> add(net.minecraft.tags.TagEntry entry) {
+            itemAppender.add(entry);
+            return this;
+        }
+
+        @Override
+        public TagAppender<Block, Block> replace(boolean value) {
+            itemAppender.replace(value);
+            return this;
+        }
+
+        @Override
+        public TagAppender<Block, Block> remove(Block block) {
+            itemAppender.remove(block.asItem());
+            return this;
+        }
+
+        @Override
+        public TagAppender<Block, Block> remove(TagKey<Block> tag) {
+            itemAppender.remove(blockTagToItemTag(tag));
+            return this;
+        }
     }
 }

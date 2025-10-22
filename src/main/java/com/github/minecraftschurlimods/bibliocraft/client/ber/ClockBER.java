@@ -23,8 +23,9 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.data.AtlasIds;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -35,8 +36,8 @@ import org.jetbrains.annotations.Nullable;
  * <a href="https://github.com/MehVahdJukaar/Supplementaries/blob/master/common/src/main/java/net/mehvahdjukaar/supplementaries/client/renderers/tiles/ClockBlockTileRenderer.java">ClockBlockTileRenderer from the Supplementaries mod</a>
  */
 public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.State> {
-    public static final Material HAND_MATERIAL = new Material(AtlasIds.BLOCKS, BCUtil.bcLoc("block/clock_hand"));
-    public static final Material PENDULUM_MATERIAL = new Material(AtlasIds.BLOCKS, BCUtil.mcLoc("block/copper_block"));
+    public static final Material HAND_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, BCUtil.bcLoc("block/clock_hand"));
+    public static final Material PENDULUM_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, BCUtil.mcLoc("block/copper_block"));
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(BCUtil.bcLoc("clock"), "main");
     private final ModelPart hourHand;
     private final ModelPart minuteHand;
@@ -44,11 +45,13 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
     private final ModelPart grandfatherHourHand;
     private final ModelPart grandfatherMinuteHand;
     private final ModelPart grandfatherPendulum;
+    private final MaterialSet materials;
     private float rotation;
     private float rotationOld;
     private long lastUpdateTick;
 
     public ClockBER(BlockEntityRendererProvider.Context context) {
+        materials = context.materials();
         ModelPart model = context.bakeLayer(LOCATION);
         hourHand = model.getChild("hour");
         minuteHand = model.getChild("minute");
@@ -106,18 +109,18 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
         stack.translate(0, state.handY, state.handZ);
         stack.pushPose();
         stack.mulPose(Axis.ZP.rotationDegrees(handsRotation));
-        collector.submitModelPart(hourHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, null);
+        collector.submitModelPart(hourHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(HAND_MATERIAL));
         stack.popPose();
         stack.pushPose();
         stack.mulPose(Axis.ZP.rotationDegrees((handsRotation * 12) % 360));
-        collector.submitModelPart(minuteHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, null);
+        collector.submitModelPart(minuteHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(HAND_MATERIAL));
         stack.popPose();
         stack.popPose();
         stack.pushPose();
         stack.translate(0, state.pendulumY, state.pendulumZ);
         stack.mulPose(Axis.ZP.rotationDegrees(180));
         stack.mulPose(Axis.ZP.rotation(pendulumRotation / state.pendulumSize));
-        collector.submitModelPart(pendulum, stack, pendulumRenderType, state.lightCoords, OverlayTexture.NO_OVERLAY, null);
+        collector.submitModelPart(pendulum, stack, pendulumRenderType, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(PENDULUM_MATERIAL));
         stack.popPose();
         stack.popPose();
     }

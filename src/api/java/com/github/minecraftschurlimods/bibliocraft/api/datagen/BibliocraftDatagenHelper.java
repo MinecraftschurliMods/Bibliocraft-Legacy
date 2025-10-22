@@ -41,75 +41,6 @@ public interface BibliocraftDatagenHelper {
     List<BibliocraftWoodType> getWoodTypesToGenerate();
 
     /**
-     * Generates the English (en_us) translation files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param provider The {@link LanguageProvider} to use.
-     * @param woodType The {@link BibliocraftWoodType} to generate the translations for.
-     */
-    void generateEnglishTranslationsFor(LanguageProvider provider, BibliocraftWoodType woodType);
-
-    /**
-     * Generates the blockstates and block model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param generators The {@link BlockStateProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
-     * @param woodType   The {@link BibliocraftWoodType} to generate the blockstates and block models for.
-     */
-    void generateBlockStatesFor(BlockModelGenerators generators, BibliocraftWoodType woodType);
-
-    /**
-     * Generates the item model files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param generators The {@link ItemModelProvider} to use. Note: The provider's mod id must be the same as {@link BibliocraftApi#MOD_ID}!
-     * @param woodType   The {@link BibliocraftWoodType} to generate the item models for.
-     */
-    void generateItemModelsFor(ItemModelGenerators generators, BibliocraftWoodType woodType);
-
-    /**
-     * Generates the block tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param tagAccessor A reference to your mod's {@link BlockTagsProvider#tag(TagKey)} method, as it is protected for some reason.
-     * @param woodType    The {@link BibliocraftWoodType} to generate the block tags for.
-     */
-    void generateBlockTagsFor(Function<TagKey<Block>, TagAppender<Block, Block>> tagAccessor, BibliocraftWoodType woodType);
-
-    /**
-     * Generates the item tag files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param tagAccessor A reference to your mod's {@link ItemTagsProvider#tag(TagKey)} method, as it is protected for some reason.
-     * @param woodType    The {@link BibliocraftWoodType} to generate the item tags for.
-     */
-    void generateItemTagsFor(Function<TagKey<Item>, TagAppender<Item, Item>> tagAccessor, BibliocraftWoodType woodType);
-
-    /**
-     * Generates the loot table files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param provider The {@link BlockLootTableProvider} to use.
-     * @param woodType The {@link BibliocraftWoodType} to generate the loot tables for.
-     */
-    void generateLootTablesFor(BlockLootTableProvider provider, BibliocraftWoodType woodType);
-
-    /**
-     * Generates the recipe files for Bibliocraft blocks with a {@link BibliocraftWoodType}.
-     *
-     * @param output   The {@link RecipeOutput} to use.
-     * @param woodType The {@link BibliocraftWoodType} to generate the recipes for.
-     * @param modId    The namespace to store the recipes under.
-     */
-    void generateRecipesFor(RecipeOutput output, HolderLookup.Provider registries, BibliocraftWoodType woodType, String modId);
-
-    /**
-     * Generates language files, block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with a {@link BibliocraftWoodType}. Call this directly from a {@link GatherDataEvent} handler!
-     *
-     * @param woodType                The {@link BibliocraftWoodType} to generate the files for.
-     * @param modId                   The namespace to store the files under, where applicable.
-     * @param event                   The {@link GatherDataEvent} whose handler this is called from.
-     * @param englishLanguageProvider The {@link LanguageProvider} to use for generating english translations.
-     * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
-     * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
-     */
-    void generateAllFor(BibliocraftWoodType woodType, String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider);
-
-    /**
      * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
      *
      * @param modid The id of the mod to mark the {@link BibliocraftWoodType}s of.
@@ -121,79 +52,13 @@ public interface BibliocraftDatagenHelper {
     }
 
     /**
-     * Generates the English (en_us) translation files for Bibliocraft blocks with your mod's wood type(s).
-     *
-     * @param provider Your mod's {@link LanguageProvider}.
-     */
-    default void generateEnglishTranslations(LanguageProvider provider) {
-        getWoodTypesToGenerate().forEach(woodType -> generateEnglishTranslationsFor(provider, woodType));
-    }
-
-    /**
-     * Generates the blockstates and block model files for Bibliocraft blocks with your mod's wood type(s).
-     *
-     * @param provider Your mod's {@link BlockStateProvider}.
-     */
-    default void generateBlockStates(BlockModelGenerators blockModels) {
-        getWoodTypesToGenerate().forEach(woodType -> generateBlockStatesFor(blockModels, woodType));
-    }
-
-    /**
-     * Generates the item model files for Bibliocraft items with your mod's wood type(s).
-     *
-     * @param provider Your mod's {@link ItemModelProvider}.
-     */
-    default void generateItemModels(ItemModelGenerators itemModels) {
-        getWoodTypesToGenerate().forEach(woodType -> generateItemModelsFor(itemModels, woodType));
-    }
-
-    /**
-     * Generates the block tag files for Bibliocraft blocks with your mod's wood type(s).
-     *
-     * @param tagAccessor A reference to your mod's {@link BlockTagsProvider#tag(TagKey)} method, as it is protected for some reason.
-     */
-    default void generateBlockTags(Function<TagKey<Block>, TagAppender<Block, Block>> tagAccessor) {
-        getWoodTypesToGenerate().forEach(woodType -> generateBlockTagsFor(tagAccessor, woodType));
-    }
-
-    /**
-     * Generates the item tag files for Bibliocraft blocks with your mod's wood type(s).
-     *
-     * @param tagAccessor A reference to your mod's {@link ItemTagsProvider#tag(TagKey)} method, as it is protected for some reason.
-     */
-    default void generateItemTags(Function<TagKey<Item>, TagAppender<Item, Item>> tagAccessor) {
-        getWoodTypesToGenerate().forEach(woodType -> generateItemTagsFor(tagAccessor, woodType));
-    }
-
-    /**
-     * Generates the loot table files for Bibliocraft blocks with your mod's wood type(s).
-     *
-     * @param provider Your mod's {@link BlockLootTableProvider}.
-     */
-    default void generateLootTables(BlockLootTableProvider provider) {
-        getWoodTypesToGenerate().forEach(woodType -> generateLootTablesFor(provider, woodType));
-    }
-
-    /**
-     * Generates the recipe files for Bibliocraft blocks with your mod's wood type(s).
-     *
-     * @param output Your mod's {@link RecipeOutput}.
-     * @param modId  Your mod's namespace.
-     */
-    default void generateRecipes(RecipeOutput output, HolderLookup.Provider registries, String modId) {
-        getWoodTypesToGenerate().forEach(woodType -> generateRecipesFor(output, registries, woodType, modId));
-    }
-
-    /**
      * Generates language files, block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with your mod's wood type(s). Call this directly from a {@link GatherDataEvent} handler!
      *
-     * @param modId                   The namespace to store the files under, where applicable.
-     * @param event                   The {@link GatherDataEvent} whose handler this is called from.
-     * @param englishLanguageProvider The {@link LanguageProvider} to use for generating english translations.
-     * @param blockTagsProvider       The {@link BlockTagsProvider} to use for generating block tags. It is strongly suggested this be a {@link NonClearingBlockTagsProvider}.
-     * @param itemTagsProvider        The {@link ItemTagsProvider} to use for generating item tags. It is strongly suggested this be a {@link NonClearingItemTagsProvider}.
+     * @param modId            The namespace to store the files under, where applicable.
+     * @param lookupProvider   The lookup provider to use for the datagen.
+     * @param clientPack       The client datagen pack to use.
+     * @param serverPack       The server datagen pack to use.
+     * @param languageProvider Your mod's {@link LanguageProvider}.
      */
-    default void generateAll(String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider englishLanguageProvider) {
-        getWoodTypesToGenerate().forEach(woodType -> generateAllFor(woodType, modId, lookupProvider, clientPack, serverPack, englishLanguageProvider));
-    }
+    void generateAll(String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider languageProvider, Function<TagKey<Block>, TagAppender<Block, Block>> blockTagAppenderFactory, Function<TagKey<Item>, TagAppender<Item, Item>> itemTagAppenderFactory);
 }
