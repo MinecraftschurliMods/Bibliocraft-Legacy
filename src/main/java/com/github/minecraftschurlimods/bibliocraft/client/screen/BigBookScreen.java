@@ -10,7 +10,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.bigbook.WrittenBigBoo
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
@@ -26,10 +25,7 @@ import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
@@ -37,7 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
+import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.ArrayList;
 import java.util.HexFormat;
@@ -45,30 +41,29 @@ import java.util.List;
 
 public class BigBookScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/big_book.png");
-    private static final Component OWNER = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, ClientUtil.getPlayer().getName()).withStyle(ChatFormatting.DARK_GRAY);
     private static final int BACKGROUND_WIDTH = 220;
     private static final int BACKGROUND_HEIGHT = 256;
     private static final int TEXT_WIDTH = 188;
     private static final int TEXT_HEIGHT = 204;
     private final ItemStack stack;
     private final Player player;
-    private final InteractionHand hand;
-    private final BlockPos lectern;
+    private final @Nullable InteractionHand hand;
+    private final @Nullable BlockPos lectern;
     private final boolean writable;
     private final List<List<FormattedLine>> pages;
     private int currentPage;
     private boolean isSigning = false;
-    private FormattedTextArea textArea;
-    private Button modeButton;
-    private Button alignmentButton;
-    private EditBox colorBox;
-    private EditBox sizeBox;
-    private Button scaleDownButton;
-    private Button scaleUpButton;
-    private PageButton backButton;
-    private PageButton forwardButton;
-    private Button finalizeButton;
-    private EditBox titleBox;
+    private @UnknownNullability FormattedTextArea textArea;
+    private @UnknownNullability Button modeButton;
+    private @UnknownNullability Button alignmentButton;
+    private @UnknownNullability EditBox colorBox;
+    private @UnknownNullability EditBox sizeBox;
+    private @UnknownNullability Button scaleDownButton;
+    private @UnknownNullability Button scaleUpButton;
+    private @UnknownNullability PageButton backButton;
+    private @UnknownNullability PageButton forwardButton;
+    private @UnknownNullability Button finalizeButton;
+    private @UnknownNullability EditBox titleBox;
 
     public BigBookScreen(ItemStack stack, Player player, InteractionHand hand) {
         this(stack, player, hand, null);
@@ -311,7 +306,8 @@ public class BigBookScreen extends Screen {
         if (isSigning) {
             int x = (width - BACKGROUND_WIDTH - 80) / 2;
             graphics.drawString(font, Translations.VANILLA_EDIT_TITLE, x + 18 + (TEXT_WIDTH - font.width(Translations.VANILLA_EDIT_TITLE)) / 2, 34, 0, false);
-            graphics.drawString(font, OWNER, x + 18 + (TEXT_WIDTH - font.width(OWNER)) / 2, 60, 0, false);
+            MutableComponent owner = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, player.getName()).withStyle(ChatFormatting.DARK_GRAY);
+            graphics.drawString(font, owner, x + 18 + (TEXT_WIDTH - font.width(owner)) / 2, 60, 0, false);
             graphics.drawWordWrap(font, Translations.VANILLA_FINALIZE_WARNING, x + 18, 82, TEXT_WIDTH, 0);
         } else {
             Component pageIndicator = Component.translatable(Translations.VANILLA_PAGE_INDICATOR_KEY, currentPage + 1, pages.size());
@@ -319,8 +315,7 @@ public class BigBookScreen extends Screen {
                 graphics.drawString(font, pageIndicator, (width - BACKGROUND_WIDTH - 80) / 2 + 16 + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
             } else {
                 int x = (width - BACKGROUND_WIDTH) / 2 + 16;
-                // TODO
-                //FormattedTextArea.renderLines(pages.get(currentPage), graphics.pose(), graphics.bufferSource(), x, 26, TEXT_WIDTH);
+                FormattedTextArea.renderLines(pages.get(currentPage), graphics, x, 26, TEXT_WIDTH);
                 graphics.drawString(font, pageIndicator, x + TEXT_WIDTH - font.width(pageIndicator), 18, 0, false);
             }
         }
@@ -353,7 +348,7 @@ public class BigBookScreen extends Screen {
             savePages();
             BigBookContent content = new BigBookContent(pages, currentPage);
             stack.set(BCDataComponents.BIG_BOOK_CONTENT, content);
-            ClientPacketDistributor.sendToServer(new BigBookSyncPacket(content, hand));
+            ClientPacketDistributor.sendToServer(new BigBookSyncPacket(content, BCUtil.nonNull(hand)));
         } else if (hand != null) {
             ClientPacketDistributor.sendToServer(new SetBigBookPageInLecternPacket(currentPage, Either.left(hand)));
         } else if (lectern != null) {
@@ -425,8 +420,13 @@ public class BigBookScreen extends Screen {
         ItemStack stack = new ItemStack(BCItems.WRITTEN_BIG_BOOK.get());
         WrittenBigBookContent content = new WrittenBigBookContent(pages, titleBox.getValue(), player.getName().getString(), 0, currentPage);
         stack.set(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT, content);
-        player.setItemInHand(hand, stack);
+        player.setItemInHand(BCUtil.nonNull(hand), stack);
         ClientPacketDistributor.sendToServer(new BigBookSignPacket(content, hand));
         super.onClose();
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 }

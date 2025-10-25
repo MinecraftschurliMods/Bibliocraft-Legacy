@@ -199,4 +199,9 @@ public class FancySignScreen extends Screen {
     private void updateAlignmentButton() {
         alignmentButton.setMessage(Component.translatable(textArea.getAlignment().getTranslationKey()));
     }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
+    }
 }

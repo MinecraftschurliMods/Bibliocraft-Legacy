@@ -147,4 +147,9 @@ public class TypewriterScreen extends Screen {
             sync();
         }
     }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
+    }
 }

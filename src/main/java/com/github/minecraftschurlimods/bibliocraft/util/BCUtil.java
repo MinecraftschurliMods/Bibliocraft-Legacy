@@ -27,6 +27,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -229,7 +230,8 @@ public final class BCUtil {
      * @param <T> The type of the object.
      * @return The input object, guarded by a non-null check.
      */
-    public static <T> T nonNull(T t) {
+    @Contract("null -> fail")
+    public static <T> T nonNull(@Nullable T t) {
         return Objects.requireNonNull(t);
     }
 

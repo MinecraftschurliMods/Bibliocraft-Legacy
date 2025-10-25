@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
-    private FancyArmorStandEntity entity;
+    private @Nullable FancyArmorStandEntity entity;
 
     public FancyArmorStandBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.FANCY_ARMOR_STAND.get(), 4, defaultName("fancy_armor_stand"), pos, state);
@@ -24,6 +24,7 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     public void setLevel(Level level) {
         super.setLevel(level);
         entity = new FancyArmorStandEntity(level, this);
+        entity.elytraAnimationState.tick();
     }
 
     @Override
@@ -34,8 +35,10 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     @Override
     public void setRemoved() {
         super.setRemoved();
-        entity.setRemoved(Entity.RemovalReason.KILLED);
-        entity = null;
+        if (entity != null) {
+            entity.setRemoved(Entity.RemovalReason.DISCARDED);
+            entity = null;
+        }
     }
 
     @Override

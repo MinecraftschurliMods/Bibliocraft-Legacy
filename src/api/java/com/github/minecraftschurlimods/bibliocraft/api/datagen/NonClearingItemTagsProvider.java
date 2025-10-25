@@ -35,14 +35,7 @@ public abstract class NonClearingItemTagsProvider extends ItemTagsProvider {
         return lookupProvider.thenApply(provider -> {
             addTags(provider);
             return provider;
-            // TODO commented out temporarily
-        })/*.thenCombine(blockTags, (provider, tagLookup) -> {
-            tagsToCopy.forEach((block, item) -> {
-                TagBuilder tagBuilder = getOrCreateRawBuilder(item);
-                tagLookup.apply(block).orElseThrow(() -> new IllegalStateException("Missing block tag " + item.location())).build().forEach(tagBuilder::add);
-            });
-            return provider;
-        })*/;
+        });
     }
 
     protected TagAppender<ResourceLocation, Item> lazyTag(TagKey<Item> key) {

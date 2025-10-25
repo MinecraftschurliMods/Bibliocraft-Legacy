@@ -17,14 +17,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import org.jetbrains.annotations.UnknownNullability;
 
 public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTableMenu> {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/printing_table.png");
     private static final ResourceLocation EXPERIENCE_BAR_BACKGROUND = BCUtil.bcLoc("experience_bar_background");
     private static final ResourceLocation EXPERIENCE_BAR_PROGRESS = BCUtil.bcLoc("experience_bar_progress");
     private static final ResourceLocation PROGRESS = BCUtil.bcLoc("printing_table_progress");
-    private Button modeButton;
-    private Button experienceBarButton;
+    private @UnknownNullability Button modeButton;
+    private @UnknownNullability Button experienceBarButton;
 
     public PrintingTableScreen(PrintingTableMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, BACKGROUND);

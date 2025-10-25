@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:seats",
+  "key": {
+    "R": "#c:rods/wooden",
+    "S": "minecraft:pale_oak_slab",
+    "W": "minecraft:gray_wool"
+  },
+  "pattern": [
+    " W ",
+    " S ",
+    "RSR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:gray_pale_oak_seat"
+  }
+}

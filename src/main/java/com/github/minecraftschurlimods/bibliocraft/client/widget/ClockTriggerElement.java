@@ -5,21 +5,16 @@ import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.joml.Matrix3x2fStack;
 
 public class ClockTriggerElement extends Screen {
     public static final int WIDTH = 160;
@@ -53,20 +48,13 @@ public class ClockTriggerElement extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         boolean hasScrollbar = owner.hasScrollbar(listSize);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, 0, 0, 0, hasScrollbar ? 20 : 0, hasScrollbar ? WIDTH - 6 : WIDTH, HEIGHT, 256, 256);
-        Matrix3x2fStack pose = graphics.pose();
-        /*pose.pushMatrix();
-        pose.translate(8, 12);
-        pose.scale(16, -16);
-        pose.translate(0.125f, 0.125f);
         if (trigger.redstone()) {
-            ClientUtil.renderGuiItem(REDSTONE, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            graphics.renderItem(REDSTONE, 2, 1);
         }
-        pose.translate(1.0625f, 0);
         if (trigger.sound()) {
-            ClientUtil.renderGuiItem(NOTE_BLOCK, pose, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            graphics.renderItem(NOTE_BLOCK, 19, 1);
         }
-        pose.popMatrix();*/
-        graphics.drawString(ClientUtil.getFont(), getTitle(), 36, 7, 0x404040, false);
+        graphics.drawString(ClientUtil.getFont(), getTitle(), 42, 6, 0xFF111111, false);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
 
@@ -81,9 +69,9 @@ public class ClockTriggerElement extends Screen {
                 graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_REDSTONE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (trigger.sound() && mouseX >= 19 && mouseX < 37) {
                 graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_SOUND), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
-            } else if (editButton.isHovered()) {
+            } else if (editButton.getRectangle().containsPoint(mouseX, mouseY)) {
                 graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EDIT_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
-            } else if (deleteButton.isHovered()) {
+            } else if (deleteButton.getRectangle().containsPoint(mouseX, mouseY)) {
                 graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_DELETE_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             }
         }

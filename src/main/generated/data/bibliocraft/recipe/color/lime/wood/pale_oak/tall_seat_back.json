@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:tall_seat_backs",
+  "key": {
+    "#": "bibliocraft:lime_pale_oak_flat_seat_back",
+    "S": "minecraft:pale_oak_slab"
+  },
+  "pattern": [
+    "S",
+    "#"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:lime_pale_oak_tall_seat_back"
+  }
+}

@@ -25,9 +25,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Calendar;
 import java.util.List;
@@ -36,6 +38,8 @@ import java.util.List;
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
 public final class ClientUtil {
+    private static RecipeMap recipeMap = RecipeMap.EMPTY;
+    
     /**
      * Helper to get the {@link Minecraft} instance.
      *
@@ -50,7 +54,7 @@ public final class ClientUtil {
      *
      * @return The {@link ClientLevel} instance.
      */
-    public static ClientLevel getLevel() {
+    public static @Nullable ClientLevel getLevel() {
         return getMc().level;
     }
 
@@ -59,7 +63,7 @@ public final class ClientUtil {
      *
      * @return The {@link LocalPlayer} instance.
      */
-    public static LocalPlayer getPlayer() {
+    public static @Nullable LocalPlayer getPlayer() {
         return getMc().player;
     }
 
@@ -183,8 +187,8 @@ public final class ClientUtil {
             stack.mulPose(Axis.YP.rotationDegrees(switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
                 case SOUTH -> 0;
                 case EAST -> 90;
-                default -> 180;
                 case WEST -> 270;
+                default -> 180;
             }));
         }
     }
@@ -205,7 +209,7 @@ public final class ClientUtil {
         graphics.drawString(font, text, startX - 1, startY, 0, false);
         graphics.drawString(font, text, startX, startY + 1, 0, false);
         graphics.drawString(font, text, startX, startY - 1, 0, false);
-        graphics.drawString(font, text, startX, startY, 0x80ff20, false);
+        graphics.drawString(font, text, startX, startY, 0xff80ff20, false);
     }
 
     /**
@@ -226,7 +230,15 @@ public final class ClientUtil {
         }
     }
 
-    public static @NotNull List<ClientTooltipComponent> forTooltip(Component component) {
+    public static List<ClientTooltipComponent> forTooltip(Component component) {
         return List.of(ClientTooltipComponent.create(component.getVisualOrderText()));
+    }
+
+    public static void onReceiveRecipes(RecipesReceivedEvent event) {
+        recipeMap = event.getRecipeMap();
+    }
+
+    public static RecipeMap getRecipeMap() {
+        return recipeMap;
     }
 }

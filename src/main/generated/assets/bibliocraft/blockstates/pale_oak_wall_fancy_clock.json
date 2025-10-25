@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bibliocraft:block/wood/pale_oak/wall_fancy_clock",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bibliocraft:block/wood/pale_oak/wall_fancy_clock",
+      "uvlock": true
+    },
+    "facing=south": {
+      "model": "bibliocraft:block/wood/pale_oak/wall_fancy_clock",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bibliocraft:block/wood/pale_oak/wall_fancy_clock",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}

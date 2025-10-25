@@ -38,6 +38,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.UnknownNullability;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -56,8 +58,8 @@ public class StockroomCatalogScreen extends Screen {
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
     private final Player player;
-    private final InteractionHand hand;
-    private final BlockPos lectern;
+    private final @Nullable InteractionHand hand;
+    private final @Nullable BlockPos lectern;
     private final RandomSource random = RandomSource.create();
     private final List<Button> removeButtons = new ArrayList<>();
     private final List<Button> locateButtons = new ArrayList<>();
@@ -65,8 +67,8 @@ public class StockroomCatalogScreen extends Screen {
     private boolean showContainerList = false;
     private int page = 0;
     private String search = "";
-    private PageButton forwardButton;
-    private PageButton backButton;
+    private @UnknownNullability PageButton forwardButton;
+    private @UnknownNullability PageButton backButton;
     private List<BlockPos> containers = List.of();
     private List<BlockPos> visibleContainers = List.of();
     private List<StockroomCatalogItemEntry> items = List.of();
@@ -82,7 +84,7 @@ public class StockroomCatalogScreen extends Screen {
         this(stack, player, null, lectern);
     }
 
-    private StockroomCatalogScreen(ItemStack stack, Player player, InteractionHand hand, BlockPos lectern) {
+    private StockroomCatalogScreen(ItemStack stack, Player player, @Nullable InteractionHand hand, @Nullable BlockPos lectern) {
         super(stack.getHoverName());
         this.stack = stack;
         this.player = player;
@@ -367,6 +369,11 @@ public class StockroomCatalogScreen extends Screen {
                 particle.setLifetime((int) (random.nextDouble() * 20) + 60);
             }
         }
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 
     private static class SortButton<E extends Enum<E> & StockroomCatalogSorting> extends Button {

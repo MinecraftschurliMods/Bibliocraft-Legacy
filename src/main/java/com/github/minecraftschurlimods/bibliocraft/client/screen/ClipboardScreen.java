@@ -140,6 +140,11 @@ public class ClipboardScreen extends Screen {
         }
     }
 
+    @Override
+    public boolean isInGameUi() {
+        return true;
+    }
+
     private static class CheckboxButton extends SpriteButton {
         private static final ResourceLocation CHECK_TEXTURE = BCUtil.bcLoc("check");
         private static final ResourceLocation X_TEXTURE = BCUtil.bcLoc("x");

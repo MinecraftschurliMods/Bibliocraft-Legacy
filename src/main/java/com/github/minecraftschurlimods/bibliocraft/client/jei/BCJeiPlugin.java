@@ -9,7 +9,9 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCra
 import com.github.minecraftschurlimods.bibliocraft.content.printingtable.PrintingTableMenu;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
+import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CompatUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.*;
@@ -85,8 +87,7 @@ public final class BCJeiPlugin implements IModPlugin {
                 registration.addIngredientInfo(holder.get(WHITE), Translations.ALL_COLORS);
             }
         }
-        // FIXME: recipes are no longer synced, how do we do this now
-        // registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getLevel().getRecipeManager().getAllRecipesFor(BCRecipes.PRINTING_TABLE.get()));
+        registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getRecipeMap().byType(BCRecipes.PRINTING_TABLE.get()).stream().toList());
     }
 
     @Override

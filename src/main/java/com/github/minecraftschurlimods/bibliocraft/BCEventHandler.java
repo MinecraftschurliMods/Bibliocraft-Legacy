@@ -142,6 +142,7 @@ public final class BCEventHandler {
         registerVanilla(event, WoodType.MANGROVE, Blocks.MANGROVE_PLANKS, BlockFamilies.MANGROVE_PLANKS);
         registerVanilla(event, WoodType.BAMBOO,   Blocks.BAMBOO_PLANKS,   BlockFamilies.BAMBOO_PLANKS);
         registerVanilla(event, WoodType.CHERRY,   Blocks.CHERRY_PLANKS,   BlockFamilies.CHERRY_PLANKS);
+        registerVanilla(event, WoodType.PALE_OAK, Blocks.PALE_OAK_PLANKS, BlockFamilies.PALE_OAK_PLANKS);
     }
     // @formatter:on
 

@@ -16,6 +16,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.UnknownNullability;
 
 public class ClockTriggerEditScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock_edit.png");
@@ -32,10 +33,10 @@ public class ClockTriggerEditScreen extends Screen {
     private int topPos;
     private int contentLeftPos;
     private int contentTopPos;
-    private EditBox hours;
-    private EditBox minutes;
-    private Checkbox redstone;
-    private Checkbox sound;
+    private @UnknownNullability EditBox hours;
+    private @UnknownNullability EditBox minutes;
+    private @UnknownNullability Checkbox redstone;
+    private @UnknownNullability Checkbox sound;
 
     public ClockTriggerEditScreen(ClockScreen parent, @Nullable ClockTrigger old) {
         super(Translations.CLOCK_TITLE);
@@ -101,17 +102,21 @@ public class ClockTriggerEditScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TIME, contentLeftPos, contentTopPos + 6, 0x404040, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TIME_SEPARATOR, contentLeftPos + timeWidth + 43, contentTopPos + 6, 0x404040, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_EMIT_REDSTONE, contentLeftPos + 19, contentTopPos + 27, 0x404040, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_EMIT_SOUND, contentLeftPos + 19, contentTopPos + 46, 0x404040, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TIME, contentLeftPos, contentTopPos + 6, 0xFF111111, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TIME_SEPARATOR, contentLeftPos + timeWidth + 43, contentTopPos + 6, 0xFF111111, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_EMIT_REDSTONE, contentLeftPos + 19, contentTopPos + 27, 0xFF111111, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_EMIT_SOUND, contentLeftPos + 19, contentTopPos + 46, 0xFF111111, false);
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, WIDTH, HEIGHT, 256, 256);
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 }

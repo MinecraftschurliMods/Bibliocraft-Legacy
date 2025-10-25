@@ -3,8 +3,6 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -14,15 +12,13 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
-import org.joml.Matrix4f;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -31,7 +27,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-// TODO
 public class FormattedTextArea extends AbstractWidget {
     private final Font font = ClientUtil.getFont();
     private final List<FormattedLine> lines;
@@ -39,22 +34,22 @@ public class FormattedTextArea extends AbstractWidget {
     private int cursorY = 0;
     private int highlightX = 0;
     private long focusedTimestamp = Util.getMillis();
-    private Consumer<FormattedLine> onLineChange;
+    private @Nullable Consumer<FormattedLine> onLineChange;
 
     public FormattedTextArea(int x, int y, int width, int height, List<FormattedLine> lines) {
         super(x, y, width, height, Translations.FANCY_TEXT_AREA_NARRATION);
         this.lines = new ArrayList<>(lines);
     }
 
-    public static void renderLines(List<FormattedLine> lines, PoseStack stack, MultiBufferSource bufferSource, int x, int y, int width) {
+    public static void renderLines(List<FormattedLine> lines, GuiGraphics graphics, int x, int y, int width) {
         int i = y;
         for (FormattedLine line : lines) {
-            renderLine(line, stack, bufferSource, x, i, width);
+            renderLine(line, graphics, x, i, width, 0, DrawCursor.NONE);
             i += line.size();
         }
     }
 
-    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width, int cursor, DrawCursor drawCursor) {
+    public static void renderLine(FormattedLine line, GuiGraphics graphics, int x, int y, int width, int cursor, DrawCursor drawCursor) {
         String text = line.text();
         Style style = line.style();
         int size = line.size();
@@ -63,44 +58,13 @@ public class FormattedTextArea extends AbstractWidget {
         float scale = getScale(size);
         int textX = x + getLineLeftX(line, scale, width);
         FormattedCharSequence formattedText = format(text, style);
-        drawText(poseStack, bufferSource, formattedText, textX, y, color, size, mode);
+        drawText(graphics, formattedText, textX, y, color, size, mode);
         Font font = ClientUtil.getFont();
         if (drawCursor == DrawCursor.VERTICAL) {
             int textWidth = font.width(format(text.substring(0, cursor), style));
-            //fill(poseStack, bufferSource, RenderType.guiOverlay(), textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
+            graphics.fill(textX + (int) ((textWidth - 1) * scale), y - 1, textX + (int) (textWidth * scale), (int) (y + 9 * scale + 1), color);
         } else if (drawCursor == DrawCursor.HORIZONTAL) {
-            drawText(poseStack, bufferSource, format("_", style), textX + font.width(formattedText) * scale, y, color, size, mode);
-        }
-    }
-
-    public static void renderLine(FormattedLine line, PoseStack poseStack, MultiBufferSource bufferSource, int x, int y, int width) {
-        renderLine(line, poseStack, bufferSource, x, y, width, 0, DrawCursor.NONE);
-    }
-
-    /**
-     * Static version of {@link GuiGraphics#fill(RenderType, int, int, int, int, int)}.
-     */
-    private static void fill(PoseStack stack, MultiBufferSource bufferSource, RenderType renderType, float minX, float minY, float maxX, float maxY, int color) {
-        Matrix4f matrix4f = stack.last().pose();
-        if (minX < maxX) {
-            float x = minX;
-            minX = maxX;
-            maxX = x;
-        }
-        if (minY < maxY) {
-            float y = minY;
-            minY = maxY;
-            maxY = y;
-        }
-        VertexConsumer vc = bufferSource.getBuffer(renderType);
-        vc.addVertex(matrix4f, minX, minY, 0).setColor(color);
-        vc.addVertex(matrix4f, minX, maxY, 0).setColor(color);
-        vc.addVertex(matrix4f, maxX, maxY, 0).setColor(color);
-        vc.addVertex(matrix4f, maxX, minY, 0).setColor(color);
-        if (bufferSource instanceof MultiBufferSource.BufferSource guiBuffer) {
-            //RenderSystem.disableDepthTest();
-            guiBuffer.endBatch();
-            //RenderSystem.enableDepthTest();
+            drawText(graphics, format("_", style), textX + font.width(formattedText) * scale, y, color, size, mode);
         }
     }
 
@@ -125,7 +89,7 @@ public class FormattedTextArea extends AbstractWidget {
                 : cursorY == index
                 ? DrawCursor.HORIZONTAL
                 : DrawCursor.NONE;
-        //renderLine(line, graphics.pose(), graphics.bufferSource(), x, y, width, cursorX, cursorBlink ? DrawCursor.NONE : draw);
+        renderLine(line, graphics, x, y, width, cursorX, cursorBlink ? DrawCursor.NONE : draw);
         if (draw != DrawCursor.NONE && cursorX != highlightX) {
             int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
             int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
@@ -134,26 +98,23 @@ public class FormattedTextArea extends AbstractWidget {
             int textX = x + getLineLeftX(line, scale, width);
             int minWidth = (int) (font.width(format(text.substring(0, min), style)) * scale);
             int maxWidth = (int) (font.width(format(text.substring(0, max), style)) * scale);
-            //graphics.fill(RenderType.guiTextHighlight(), textX + minWidth - 1, y - 1, textX + maxWidth - 1, (int) (y + 9 * scale + 1), 0xff0000ff);
+            graphics.fill(RenderPipelines.GUI_TEXT_HIGHLIGHT, textX + minWidth - 1, y - 1, textX + maxWidth - 1, (int) (y + 9 * scale + 1), 0xff0000ff);
         }
     }
 
-    private static void drawText(PoseStack poseStack, MultiBufferSource bufferSource, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
+    private static void drawText(GuiGraphics graphics, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
         Font font = ClientUtil.getFont();
         float scale = getScale(size);
-        poseStack.pushPose();
-        poseStack.translate(x, y, 0);
-        poseStack.scale(scale, scale, 1);
+        graphics.pose().pushMatrix();
+        graphics.pose().translate(x, y);
+        graphics.pose().scale(scale, scale);
         if (mode == FormattedLine.Mode.GLOWING) {
-            int outlineColor = color == 0 ? 0xfff0ebcc : ARGB.color(255,
-                    (int) ((double) ARGB.red(color) * 0.4),
-                    (int) ((double) ARGB.green(color) * 0.4),
-                    (int) ((double) ARGB.blue(color) * 0.4));
-            font.drawInBatch8xOutline(text, 0, 0, color, outlineColor, poseStack.last().pose(), bufferSource, LightTexture.FULL_BRIGHT);
+            int outlineColor = color == 0 ? 0xfff0ebcc : ARGB.scaleRGB(color, 0.4f);
+            graphics.drawString(font, text, 0, 0, outlineColor);
         } else {
-            font.drawInBatch(text, 0, 0, color, mode == FormattedLine.Mode.SHADOW, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
+            graphics.drawString(font, text, 0, 0, color, mode == FormattedLine.Mode.SHADOW);
         }
-        poseStack.popPose();
+        graphics.pose().popMatrix();
     }
 
     private static FormattedCharSequence format(String text, Style style) {
@@ -271,7 +232,9 @@ public class FormattedTextArea extends AbstractWidget {
         cursorX = x;
         cursorY = y;
         if (y != oldY) {
-            onLineChange.accept(lines.get(y));
+            if (onLineChange != null) {
+                onLineChange.accept(lines.get(y));
+            }
         }
         if (!highlight) {
             highlightX = cursorX;
@@ -320,7 +283,9 @@ public class FormattedTextArea extends AbstractWidget {
             }
         }
         FormattedLine line = lines.get(cursorY);
-        onLineChange.accept(line);
+        if (onLineChange != null) {
+            onLineChange.accept(line);
+        }
         float scale = getScale(line.size());
         int startX = getLineLeftX(line, scale, width);
         int targetWidth = (int) (mouseX - startX);

@@ -38,4 +38,9 @@ public class RedstoneBookScreen extends Screen {
     protected void init() {
         addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, $ -> onClose()).bounds(width / 2 - 100, 196, 200, 20).build());
     }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
+    }
 }

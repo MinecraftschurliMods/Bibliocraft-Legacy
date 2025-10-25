@@ -1,12 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.client.ClipboardReadOnlyRenderer;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardContent;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -34,7 +32,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         stack.translate(0, 0, -1 / 1024d);
         float scale = 1 / 256f;
         stack.scale(scale, scale, 0);
-        // FIXME: big rendering changes go brrr
+        // FIXME: IHH this is above my rendering abilities
         //ClipboardReadOnlyRenderer.render(stack, collector, state.content, 128, 148);
         stack.popPose();
     }

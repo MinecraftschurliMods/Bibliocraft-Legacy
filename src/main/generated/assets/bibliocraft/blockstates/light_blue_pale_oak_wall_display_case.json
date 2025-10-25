@@ -1,0 +1,42 @@
+{
+  "variants": {
+    "facing=east,open=false": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_closed",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,open=true": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_open",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,open=false": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_closed",
+      "uvlock": true
+    },
+    "facing=north,open=true": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_open",
+      "uvlock": true
+    },
+    "facing=south,open=false": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_closed",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,open=true": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_open",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,open=false": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_closed",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,open=true": {
+      "model": "bibliocraft:block/color/light_blue/wood/pale_oak/wall_display_case_open",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}

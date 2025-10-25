@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.Fancy
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -42,7 +43,8 @@ public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBl
         if (entity == null) {
             return;
         }
-        state.entity = entityRenderDispatcher.extractEntity(entity, partialTicks);
+        state.entity = entityRenderDispatcher.extractEntity(entity, 0);
+        state.entity.lightCoords = LightTexture.FULL_BRIGHT;
     }
 
     @Override

@@ -47,4 +47,9 @@ public class TypewriterPageScreen extends Screen {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, TypewriterScreen.IMAGE_WIDTH, TypewriterScreen.IMAGE_HEIGHT, 256, 256);
     }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
+    }
 }

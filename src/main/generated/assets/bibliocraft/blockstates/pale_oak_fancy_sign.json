@@ -1,0 +1,42 @@
+{
+  "variants": {
+    "facing=east,hanging=false": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,hanging=true": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign_hanging",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,hanging=false": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign",
+      "uvlock": true
+    },
+    "facing=north,hanging=true": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign_hanging",
+      "uvlock": true
+    },
+    "facing=south,hanging=false": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,hanging=true": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign_hanging",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,hanging=false": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,hanging=true": {
+      "model": "bibliocraft:block/wood/pale_oak/fancy_sign_hanging",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}
