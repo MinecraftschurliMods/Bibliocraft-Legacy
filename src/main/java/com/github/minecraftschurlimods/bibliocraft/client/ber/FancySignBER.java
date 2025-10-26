@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.client.screen.FancySignScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.*;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
@@ -16,16 +15,16 @@ import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, FancySignBER.State> {
+    private final Font font;
 
-    public FancySignBER(BlockEntityRendererProvider.Context context) {}
+    public FancySignBER(BlockEntityRendererProvider.Context context) {
+        font = context.font();
+    }
 
     @Override
     public State createRenderState() {
@@ -54,7 +53,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, F
             }
             stack.translate(-0.4375, -0.25, -0.03125);
             stack.translate(0, 0, -1 / 1024d);
-            renderLines(state, false, stack, collector);
+            submitLines(state, false, stack, collector);
             stack.popPose();
 
             stack.pushPose();
@@ -63,7 +62,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, F
             }
             stack.translate(-0.4375, -0.25, -0.03125);
             stack.translate(0, 0, -1 / 1024d);
-            renderLines(state, true, stack, collector);
+            submitLines(state, true, stack, collector);
             stack.popPose();
         } else if (block instanceof WallFancySignBlock) {
             stack.pushPose();
@@ -73,39 +72,49 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, F
             }
             stack.translate(-0.4375, -0.25, 0.40625);
             stack.translate(0, 0, -1 / 1024d);
-            renderLines(state, false, stack, collector);
+            submitLines(state, false, stack, collector);
             stack.popPose();
         }
 
         stack.popPose();
     }
 
-    private static void renderLines(State state, boolean back, PoseStack stack, SubmitNodeCollector collector) {
+    private void submitLines(State state, boolean back, PoseStack stack, SubmitNodeCollector collector) {
         stack.pushPose();
         float scale = 1 / 160f;
         stack.scale(scale, scale, 0);
         stack.translate(0, 1, 0);
         var lines = back ? state.backContent.lines() : state.frontContent.lines();
-        int y = 0;
+        float y = 0;
+        int width = 140;
+        int lightCoords = state.lightCoords;
         for (FormattedLine line : lines) {
             String text = line.text();
             Style style = line.style();
-            int size = line.size();
+            // scale the text, 8 is the default font size, and we subtract a padding of 1 on each side
+            float size = (line.size() - 2) / 8f;
             FormattedLine.Mode mode = line.mode();
             FormattedCharSequence formattedText = FormattedCharSequence.forward(text, style);
-            // scale the text, 8 is the default font size, and we subtract a padding of 1 on each side
-            float textWidth = (ClientUtil.getFont().width(formattedText) * ((size - 2) / 8f));
+            int lineWidth = font.width(formattedText);
             float textX =  switch (line.alignment()) {
                 case LEFT -> 1;
-                case CENTER -> FancySignScreen.WIDTH / 2f - textWidth / 2;
-                case RIGHT -> FancySignScreen.WIDTH - 1 - textWidth;
+                case CENTER -> width / 2f - (lineWidth * size) / 2;
+                case RIGHT -> width - 1 - (lineWidth * size);
             };
-            int color = style.getColor() == null ? 0 : style.getColor().getValue();
-            int lightCoords = state.lightCoords;
-            int outlineColor = mode == FormattedLine.Mode.GLOWING ? color == 0 ? 0xfff0ebcc : ARGB.scaleRGB(color, 0.4f) : color;
-            collector.submitText(stack, textX, y, formattedText, mode == FormattedLine.Mode.SHADOW, Font.DisplayMode.POLYGON_OFFSET, lightCoords, color, 0, outlineColor);
+            int color = (style.getColor() == null ? 0 : style.getColor().getValue());
+            int outlineColor = mode == FormattedLine.Mode.GLOWING ? 0xFF000000 | (color == 0 ? 0xf0ebcc : ARGB.scaleRGB(color, 0.4f)) : 0;
+            boolean renderWithShadow = mode == FormattedLine.Mode.SHADOW;
+            submitText(stack, collector, textX, y, size, formattedText, renderWithShadow, lightCoords, color, outlineColor);
             y += line.size();
         }
+        stack.popPose();
+    }
+
+    private void submitText(PoseStack stack, SubmitNodeCollector collector, float x, float y, float size, FormattedCharSequence text, boolean renderWithShadow, int lightCoords, int color, int outlineColor) {
+        stack.pushPose();
+        stack.translate(x, y, 0);
+        stack.scale(size, size, 1);
+        collector.submitText(stack, 0, 0, text, renderWithShadow, Font.DisplayMode.POLYGON_OFFSET, lightCoords, 0xFF000000 | color, 0, outlineColor);
         stack.popPose();
     }
 
