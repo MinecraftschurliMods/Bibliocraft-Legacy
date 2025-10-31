@@ -31,9 +31,9 @@ public class ClipboardScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
     private final InteractionHand hand;
-    private ClipboardContent data;
     private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardContent.MAX_LINES];
     private final EditBox[] lines = new EditBox[ClipboardContent.MAX_LINES];
+    private ClipboardContent data;
     private EditBox titleBox;
     private PageButton forwardButton;
     private PageButton backButton;
@@ -56,7 +56,7 @@ public class ClipboardScreen extends Screen {
     protected void init() {
         int x = (width - 192) / 2;
         titleBox = addRenderableWidget(new EditBox(getMinecraft().font, x + 57, 14, 72, 8, Component.empty()));
-        titleBox.setTextColor(0);
+        titleBox.setTextColor(0xff000000);
         titleBox.setBordered(false);
         titleBox.setTextShadow(false);
         titleBox.setResponder(e -> data = data.setTitle(e));
@@ -71,7 +71,7 @@ public class ClipboardScreen extends Screen {
                 data = data.setPages(pages);
             }));
             lines[i] = addRenderableWidget(new EditBox(getMinecraft().font, x + 45, 15 * i + 28, 109, 8, Component.empty()));
-            lines[i].setTextColor(0);
+            lines[i].setTextColor(0xff000000);
             lines[i].setBordered(false);
             lines[i].setTextShadow(false);
             lines[i].setResponder(e -> {

@@ -57,9 +57,9 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         stack.translate(-0.25, -0.25, 0.4375 + 0.0001);
         stack.translate(0, 0, -1 / 1024d);
         float scale = 1 / 256f;
-        stack.scale(scale, scale, 0);
+        stack.scale(scale, scale, 1);
         stack.pushPose();
-        blit(stack, collector, RenderType.entityCutout(ClipboardBER.BACKGROUND), 0, 128, 0, 148, 0.0f, 0.5f, 0.0f, 0.578125f, normal, 0xffffffff, state.lightCoords, OverlayTexture.NO_OVERLAY);
+        blit(stack, collector, RenderType.entityCutout(ClipboardBER.BACKGROUND), 0, 128, 0, 148, 0, 0.0f, 0.5f, 0.0f, 0.578125f, normal, 0xffffffff, state.lightCoords, OverlayTexture.NO_OVERLAY);
         drawText(stack, collector, state.content.title(), 29, 2, 72, state.lightCoords);
         ClipboardContent.Page page = state.content.pages().get(state.content.active());
         stack.translate(2, 14, 0);
@@ -92,16 +92,16 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
 
     private void blitSprite(PoseStack pose, OrderedSubmitNodeCollector collector, Vector3fc normal, Material material, int light, int overlay) {
         TextureAtlasSprite sprite = materials.get(material);
-        blit(pose, collector, material.renderType(RenderType::entityCutout), 0, ClipboardBER.CHECK_ICON_SIZE, 0, ClipboardBER.CHECK_ICON_SIZE, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), normal, 0, light, overlay);
+        blit(pose, collector, material.renderType(RenderType::entityCutout), 0, ClipboardBER.CHECK_ICON_SIZE, 0, ClipboardBER.CHECK_ICON_SIZE, -0.001f, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), normal, 0, light, overlay);
     }
 
-    private static void blit(PoseStack poseStack, OrderedSubmitNodeCollector collector, RenderType renderType, float x1, float x2, float y1, float y2, float minU, float maxU, float minV, float maxV, Vector3fc normal, int color, int light, int overlay) {
+    private static void blit(PoseStack poseStack, OrderedSubmitNodeCollector collector, RenderType renderType, float x1, float x2, float y1, float y2, float z, float minU, float maxU, float minV, float maxV, Vector3fc normal, int color, int light, int overlay) {
         Vector3f normalVector = new Vector3f(normal);
         collector.submitCustomGeometry(poseStack, renderType, (pose, consumer) -> {
-            consumer.addVertex(pose, x1, y1, 0).setColor(color).setUv(minU, minV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
-            consumer.addVertex(pose, x1, y2, 0).setColor(color).setUv(minU, maxV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
-            consumer.addVertex(pose, x2, y2, 0).setColor(color).setUv(maxU, maxV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
-            consumer.addVertex(pose, x2, y1, 0).setColor(color).setUv(maxU, minV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
+            consumer.addVertex(pose, x1, y1, z).setColor(color).setUv(minU, minV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
+            consumer.addVertex(pose, x1, y2, z).setColor(color).setUv(minU, maxV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
+            consumer.addVertex(pose, x2, y2, z).setColor(color).setUv(maxU, maxV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
+            consumer.addVertex(pose, x2, y1, z).setColor(color).setUv(maxU, minV).setLight(light).setOverlay(overlay).setNormal(pose, normalVector);
         });
     }
 
