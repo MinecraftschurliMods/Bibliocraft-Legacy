@@ -28,6 +28,9 @@ import org.jetbrains.annotations.UnknownNullability;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings({"SameParameterValue"})
 public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, ClipboardBER.State> {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard_block.png");
@@ -54,24 +57,25 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         stack.pushPose();
         ClientUtil.setupCenteredBER(stack, state);
         stack.mulPose(Axis.XP.rotationDegrees(180));
-        stack.translate(-0.25, -0.25, 0.4375 + 0.0001);
+        stack.translate(-0.25, -0.25, 0.4376);
         stack.translate(0, 0, -1 / 1024d);
         float scale = 1 / 256f;
         stack.scale(scale, scale, 1);
         stack.pushPose();
         blit(stack, collector, RenderType.entityCutout(ClipboardBER.BACKGROUND), 0, 128, 0, 148, 0, 0.0f, 0.5f, 0.0f, 0.578125f, normal, 0xffffffff, state.lightCoords, OverlayTexture.NO_OVERLAY);
-        drawText(stack, collector, state.content.title(), 29, 2, 72, state.lightCoords);
-        ClipboardContent.Page page = state.content.pages().get(state.content.active());
-        stack.translate(2, 14, 0);
-        for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
-            CheckboxState state1 = page.checkboxes().get(i);
-            if (state1 == CheckboxState.CHECK) {
-                blitSprite(stack, collector, normal, CHECK_TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY);
-            } else if (state1 == CheckboxState.X) {
-                blitSprite(stack, collector, normal, X_TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY);
-            }
-            drawText(stack, collector, page.lines().get(i), 15, 2, 109, state.lightCoords);
+        drawText(stack, collector, state.title, 29, 2, 72, state.lightCoords);
+        stack.translate(2, -1, 0);
+        for (State.Line line : state.lines) {
             stack.translate(0, 15, 0);
+            switch (line.state()) {
+                case CHECK:
+                    blitSprite(stack, collector, normal, CHECK_TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY);
+                    break;
+                case X:
+                    blitSprite(stack, collector, normal, X_TEXTURE, state.lightCoords, OverlayTexture.NO_OVERLAY);
+                    break;
+            }
+            drawText(stack, collector, line.text(), 15, 2, 109, state.lightCoords);
         }
         stack.popPose();
         stack.popPose();
@@ -80,7 +84,13 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
     @Override
     public void extractRenderState(ClipboardBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
-        state.content = blockEntity.getContent();
+        ClipboardContent content = blockEntity.getContent();
+        state.title = content.title();
+        state.lines = new ArrayList<>();
+        ClipboardContent.Page page = content.pages().get(content.active());
+        for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
+            state.lines.add(new State.Line(page.checkboxes().get(i), page.lines().get(i)));
+        }
         state.lightCoords = LightTexture.FULL_BRIGHT;
     }
 
@@ -106,6 +116,9 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
     }
 
     public static class State extends BlockEntityRenderState {
-        public @UnknownNullability ClipboardContent content = null;
+        public @UnknownNullability List<Line> lines;
+        public @UnknownNullability String title;
+        
+        public record Line(CheckboxState state, String text) {}
     }
 }

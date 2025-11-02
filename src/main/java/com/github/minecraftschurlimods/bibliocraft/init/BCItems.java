@@ -66,18 +66,18 @@ public interface BCItems {
     GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, SeatBackItem> TALL_SEAT_BACK    = coloredWoodItem("tall_seat_back",   (wood, color, p) -> new SeatBackItem(BCBlocks.SEAT_BACK, wood, color, SeatBackType.TALL, p));
     GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, SeatBackItem> FANCY_SEAT_BACK   = coloredWoodItem("fancy_seat_back",  (wood, color, p) -> new SeatBackItem(BCBlocks.SEAT_BACK, wood, color, SeatBackType.FANCY, p));
     DeferredItem<BlockItem>            CLEAR_FANCY_GOLD_LAMP = registerBlockItem(BCBlocks.CLEAR_FANCY_GOLD_LAMP);
-    GroupedHolder<DyeColor, Item, BlockItem> FANCY_GOLD_LAMP = coloredBlock("fancy_gold_lamp", BCBlocks.FANCY_GOLD_LAMP);
+    GroupedHolder<DyeColor, Item, BlockItem> FANCY_GOLD_LAMP = coloredBlock(BCBlocks.FANCY_GOLD_LAMP);
     DeferredItem<BlockItem>            CLEAR_FANCY_IRON_LAMP = registerBlockItem(BCBlocks.CLEAR_FANCY_IRON_LAMP);
-    GroupedHolder<DyeColor, Item, BlockItem> FANCY_IRON_LAMP = coloredBlock("fancy_iron_lamp", BCBlocks.FANCY_IRON_LAMP);
+    GroupedHolder<DyeColor, Item, BlockItem> FANCY_IRON_LAMP = coloredBlock(BCBlocks.FANCY_IRON_LAMP);
     DeferredItem<BlockItem>            CLEAR_FANCY_GOLD_LANTERN = registerBlockItem(BCBlocks.CLEAR_FANCY_GOLD_LANTERN);
-    GroupedHolder<DyeColor, Item, BlockItem> FANCY_GOLD_LANTERN = coloredBlock("fancy_gold_lantern", BCBlocks.FANCY_GOLD_LANTERN);
+    GroupedHolder<DyeColor, Item, BlockItem> FANCY_GOLD_LANTERN = coloredBlock(BCBlocks.FANCY_GOLD_LANTERN);
     DeferredItem<BlockItem>            CLEAR_FANCY_IRON_LANTERN = registerBlockItem(BCBlocks.CLEAR_FANCY_IRON_LANTERN);
-    GroupedHolder<DyeColor, Item, BlockItem> FANCY_IRON_LANTERN = coloredBlock("fancy_iron_lantern", BCBlocks.FANCY_IRON_LANTERN);
+    GroupedHolder<DyeColor, Item, BlockItem> FANCY_IRON_LANTERN = coloredBlock(BCBlocks.FANCY_IRON_LANTERN);
     DeferredItem<BlockItem>             SOUL_FANCY_GOLD_LANTERN = registerBlockItem(BCBlocks.SOUL_FANCY_GOLD_LANTERN);
     DeferredItem<BlockItem>             SOUL_FANCY_IRON_LANTERN = registerBlockItem(BCBlocks.SOUL_FANCY_IRON_LANTERN);
     DeferredItem<BlockItem>            CLEAR_TYPEWRITER       = registerBlockItem(BCBlocks.CLEAR_TYPEWRITER);
-    GroupedHolder<DyeColor, Item, BlockItem> TYPEWRITER       = coloredBlock("typewriter", BCBlocks.TYPEWRITER);
-    DeferredItem<ClipboardItem>        CLIPBOARD              = registerItem("clipboard", ClipboardItem::new, p -> p.stacksTo(1).component(BCDataComponents.CLIPBOARD_CONTENT.get(), ClipboardContent.DEFAULT));
+    GroupedHolder<DyeColor, Item, BlockItem> TYPEWRITER       = coloredBlock(BCBlocks.TYPEWRITER);
+    DeferredItem<ClipboardItem>        CLIPBOARD              = registerItem("clipboard", ClipboardItem::new, p -> p.stacksTo(1).component(BCDataComponents.CLIPBOARD_CONTENT.get(), ClipboardContent.DEFAULT).useBlockDescriptionPrefix());
     DeferredItem<BlockItem>            COOKIE_JAR             = registerBlockItem(BCBlocks.COOKIE_JAR);
     DeferredItem<BlockItem>            DESK_BELL              = registerBlockItem(BCBlocks.DESK_BELL);
     DeferredItem<BlockItem>            DINNER_PLATE           = registerBlockItem(BCBlocks.DINNER_PLATE);
@@ -116,8 +116,8 @@ public interface BCItems {
         return holder;
     }
 
-    private static GroupedHolder<DyeColor, Item, BlockItem> coloredBlock(String name, GroupedHolder<DyeColor, Block, ?> block) {
-        return coloredBlock(name, BlockItem::new, block);
+    private static GroupedHolder<DyeColor, Item, BlockItem> coloredBlock(GroupedHolder<DyeColor, Block, ?> block) {
+        return coloredBlock(block.getName(), BlockItem::new, block);
     }
 
     private static <T extends Item> GroupedHolder<DyeColor, Item, T> coloredBlock(String name, BiFunction<Block, Item.Properties, T> creator, GroupedHolder<DyeColor, Block, ?> block) {
