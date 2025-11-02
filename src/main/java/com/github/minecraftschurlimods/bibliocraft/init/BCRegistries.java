@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.inventory.MenuType;
@@ -19,7 +18,7 @@ public interface BCRegistries {
     DeferredRegister.Blocks                  BLOCKS             = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
     DeferredRegister.Items                   ITEMS              = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
     DeferredRegister.Entities                ENTITIES           = DeferredRegister.createEntities(BibliocraftApi.MOD_ID);
-    DeferredRegister<DataComponentType<?>>   DATA_COMPONENTS    = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
+    DeferredRegister.DataComponents          DATA_COMPONENTS    = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
     DeferredRegister<CreativeModeTab>        CREATIVE_TABS      = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,         BibliocraftApi.MOD_ID);
     DeferredRegister<BlockEntityType<?>>     BLOCK_ENTITIES     = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,         BibliocraftApi.MOD_ID);
     DeferredRegister<MenuType<?>>            MENUS              = DeferredRegister.create(Registries.MENU,                      BibliocraftApi.MOD_ID);

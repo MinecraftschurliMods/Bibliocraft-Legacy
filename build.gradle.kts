@@ -63,6 +63,8 @@ dependencies {
     }
 }
 
+helper.featureFlags.add("wip")
+
 helper.withCommonRuns()
 helper.withGameTestRuns()
 helper.withDataGenRuns {
