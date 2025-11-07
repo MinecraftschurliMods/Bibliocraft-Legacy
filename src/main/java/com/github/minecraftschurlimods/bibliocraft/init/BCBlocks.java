@@ -59,7 +59,7 @@ public interface BCBlocks {
     GroupedHolder<BibliocraftWoodType, Block, FancyArmorStandBlock>  FANCY_ARMOR_STAND = woodenBlock("fancy_armor_stand", FancyArmorStandBlock::new);
     GroupedHolder<BibliocraftWoodType, Block, FancyClockBlock>       FANCY_CLOCK       = woodenBlock("fancy_clock",       FancyClockBlock::new);
     GroupedHolder<BibliocraftWoodType, Block, WallFancyClockBlock>   WALL_FANCY_CLOCK  = woodenBlock("wall_fancy_clock",  WallFancyClockBlock::new);
-    GroupedHolder<BibliocraftWoodType, Block, FancyCrafterBlock>     FANCY_CRAFTER     = woodenBlock("fancy_crafter",     properties -> new FancyCrafterBlock(properties.requiredFeatures(BCFeatureFlags.WIP)));
+    GroupedHolder<BibliocraftWoodType, Block, FancyCrafterBlock>     FANCY_CRAFTER     = woodenBlock("fancy_crafter",     FancyCrafterBlock::new);
     GroupedHolder<BibliocraftWoodType, Block, FancySignBlock>        FANCY_SIGN        = woodenBlock("fancy_sign",        FancySignBlock::new);
     GroupedHolder<BibliocraftWoodType, Block, WallFancySignBlock>    WALL_FANCY_SIGN   = woodenBlock("wall_fancy_sign",   WallFancySignBlock::new);
     GroupedHolder<BibliocraftWoodType, Block, GrandfatherClockBlock> GRANDFATHER_CLOCK = woodenBlock("grandfather_clock", GrandfatherClockBlock::new);
@@ -94,8 +94,8 @@ public interface BCBlocks {
     DeferredBlock<ChainBlock>           GOLD_CHAIN             = basicBlock("gold_chain",             ChainBlock::new,           () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_CHAIN));
     DeferredBlock<LanternBlock>         GOLD_LANTERN           = basicBlock("gold_lantern",           LanternBlock::new,         () -> BlockBehaviour.Properties.ofFullCopy(Blocks.LANTERN));
     DeferredBlock<LanternBlock>         GOLD_SOUL_LANTERN      = basicBlock("gold_soul_lantern",      LanternBlock::new,         () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_LANTERN));
-    DeferredBlock<PrintingTableBlock>   PRINTING_TABLE         = basicBlock("printing_table",         PrintingTableBlock::new,   () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion().requiredFeatures(BCFeatureFlags.WIP));
-    DeferredBlock<PrintingTableBlock>   IRON_PRINTING_TABLE    = basicBlock("iron_printing_table",    PrintingTableBlock::new,   () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion().requiredFeatures(BCFeatureFlags.WIP));
+    DeferredBlock<PrintingTableBlock>   PRINTING_TABLE         = basicBlock("printing_table",         PrintingTableBlock::new,   () -> BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).noOcclusion());
+    DeferredBlock<PrintingTableBlock>   IRON_PRINTING_TABLE    = basicBlock("iron_printing_table",    PrintingTableBlock::new,   () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion());
     DeferredBlock<SwordPedestalBlock>   SWORD_PEDESTAL         = basicBlock("sword_pedestal",         SwordPedestalBlock::new,   () -> BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_STONE).noOcclusion());
     //TODO Map Frame
     //TODO Painting Frame

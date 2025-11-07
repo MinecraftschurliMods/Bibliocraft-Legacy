@@ -8,28 +8,36 @@ import com.github.minecraftschurlimods.bibliocraft.util.slot.ViewSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements HasToggleableSlots {
-    public FancyCrafterMenu(int id, Inventory inventory, FancyCrafterBlockEntity blockEntity) {
+    private final ContainerData containerData;
+
+    public FancyCrafterMenu(int id, Inventory inventory, FancyCrafterBlockEntity blockEntity, ContainerData containerData) {
         super(BCMenus.FANCY_CRAFTER.get(), id, inventory, blockEntity);
+        this.containerData = containerData;
+        addDataSlots(containerData);
     }
 
     public FancyCrafterMenu(int id, Inventory inventory, FriendlyByteBuf data) {
         super(BCMenus.FANCY_CRAFTER.get(), id, inventory, data);
+        this.containerData = new SimpleContainerData(FancyCrafterBlockEntity.CRAFTING_SLOTS);
+        addDataSlots(containerData);
     }
 
     @Override
     protected void addSlots(Inventory inventory) {
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
                 addSlot(new ToggleableSlot<>(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
             }
         }
-        addSlot(new ViewSlot(blockEntity, 9, 124, 35));
-        for (int i = 0; i < 8; i++) {
-            addSlot(new Slot(blockEntity, i + 10, 17 + i * 18, 78));
+        addSlot(new ViewSlot(blockEntity, FancyCrafterBlockEntity.CRAFTING_RESULT_SLOT_INDEX, 124, 35));
+        for (int i = 0; i < FancyCrafterBlockEntity.STORAGE_SLOTS; i++) {
+            addSlot(new Slot(blockEntity, i + FancyCrafterBlockEntity.CRAFTING_SLOTS + FancyCrafterBlockEntity.CRAFTING_RESULT_SLOTS, 17 + i * 18, 78));
         }
         addInventorySlots(inventory, 8, 110);
     }
@@ -77,25 +85,28 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
 
     @Override
     public void setSlotDisabled(int slot, boolean disabled) {
-        if (slot > 8) return;
-        blockEntity.setSlotDisabled(slot, disabled);
+        int slotIndex = getSlot(slot).getSlotIndex();
+        if (slotIndex >= FancyCrafterBlockEntity.CRAFTING_SLOTS || slotIndex < 0) return;
+        containerData.set(slotIndex, disabled ? FancyCrafterBlockEntity.SLOT_DISABLED : FancyCrafterBlockEntity.SLOT_ENABLED);
         broadcastChanges();
     }
 
     @Override
     public boolean isSlotDisabled(int slot) {
-        return blockEntity.isSlotDisabled(slot);
+        int slotIndex = getSlot(slot).getSlotIndex();
+        return containerData.get(slotIndex) == FancyCrafterBlockEntity.SLOT_DISABLED;
     }
 
     @Override
-    public boolean canDisableSlot(int slot) {
-        return blockEntity.canDisableSlot(slot);
+    public boolean canDisableSlot(int slotId) {
+        Slot slot = getSlot(slotId);
+        return slot instanceof ToggleableSlot && !slot.hasItem();
     }
 
     @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "SameParameterValue"})
     private boolean moveItemStackToEnabled(ItemStack stack, int start, int end) {
         for (int i = start; i < end; i++) {
-            if (!blockEntity.isSlotDisabled(i) && !moveItemStackTo(stack, i, i + 1, false))
+            if (!isSlotDisabled(i) && !moveItemStackTo(stack, i, i + 1, false))
                 return false;
         }
         return true;

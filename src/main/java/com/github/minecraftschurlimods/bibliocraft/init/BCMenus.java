@@ -25,10 +25,10 @@ public interface BCMenus {
     Supplier<MenuType<CookieJarMenu>>       COOKIE_JAR        = register("cookie_jar",        CookieJarMenu::new);
     Supplier<MenuType<DiscRackMenu>>        DISC_RACK         = register("disc_rack",         DiscRackMenu::new);
     Supplier<MenuType<FancyArmorStandMenu>> FANCY_ARMOR_STAND = register("fancy_armor_stand", FancyArmorStandMenu::new);
-    Supplier<MenuType<FancyCrafterMenu>>    FANCY_CRAFTER     = register("fancy_crafter",     FancyCrafterMenu::new, BCFeatureFlags.WORK_IN_PROGRESS);
+    Supplier<MenuType<FancyCrafterMenu>>    FANCY_CRAFTER     = register("fancy_crafter",     FancyCrafterMenu::new/*, BCFeatureFlags.WORK_IN_PROGRESS*/);
     Supplier<MenuType<LabelMenu>>           LABEL             = register("label",             LabelMenu::new);
     Supplier<MenuType<PotionShelfMenu>>     POTION_SHELF      = register("potion_shelf",      PotionShelfMenu::new);
-    Supplier<MenuType<PrintingTableMenu>>   PRINTING_TABLE    = register("printing_table",    PrintingTableMenu::new, BCFeatureFlags.WORK_IN_PROGRESS);
+    Supplier<MenuType<PrintingTableMenu>>   PRINTING_TABLE    = register("printing_table",    PrintingTableMenu::new/*, BCFeatureFlags.WORK_IN_PROGRESS*/);
     Supplier<MenuType<ShelfMenu>>           SHELF             = register("shelf",             ShelfMenu::new);
     Supplier<MenuType<SlottedBookMenu>>     SLOTTED_BOOK      = register("slotted_book",      SlottedBookMenu::new);
     Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = register("tool_rack",         ToolRackMenu::new);

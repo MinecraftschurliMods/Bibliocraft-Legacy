@@ -38,7 +38,7 @@ public class TypewriterPageScreen extends Screen {
         super.render(graphics, mouseX, mouseY, partialTick);
         Font font = ClientUtil.getFont();
         for (int i = 0; i < page.lines().size(); i++) {
-            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0, false);
+            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
         }
     }
 

@@ -80,13 +80,13 @@ public class TypewriterScreen extends Screen {
         Font font = ClientUtil.getFont();
         for (int i = 0; i < row; i++) {
             if (i >= page.lines().size()) continue;
-            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0, false);
+            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
         }
         if (row < TypewriterPage.MAX_LINES) {
             int width = font.width(currentLine);
-            graphics.drawString(font, currentLine, leftPos + 2, topPos + 2 + row * 10, 0, false);
+            graphics.drawString(font, currentLine, leftPos + 2, topPos + 2 + row * 10, 0xff000000, false);
             if (frameTick / 6 % 2 == 0) {
-                graphics.drawString(font, "_", leftPos + 2 + width, topPos + 2 + row * 10, 0, false);
+                graphics.drawString(font, "_", leftPos + 2 + width, topPos + 2 + row * 10, 0xff000000, false);
             }
         }
     }

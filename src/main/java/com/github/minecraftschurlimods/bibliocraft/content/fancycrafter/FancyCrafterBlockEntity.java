@@ -4,13 +4,21 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -22,53 +30,184 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
-public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasToggleableSlots {
+public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasToggleableSlots, CraftingContainer {
     private static final String CRAFTING_TICKS_REMAINING_KEY = "crafting_ticks_remaining";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
-    private static final int SLOT_DISABLED = 1;
-    private static final int SLOT_ENABLED = 0;
+    static final int WIDTH = 3;
+    static final int HEIGHT = 3;
+    static final int SLOT_DISABLED = 1;
+    static final int SLOT_ENABLED = 0;
+    static final int CRAFTING_SLOTS = WIDTH * HEIGHT;
+    static final int CRAFTING_RESULT_SLOTS = 1;
+    static final int STORAGE_SLOTS = 8;
+    static final int CRAFTING_RESULT_SLOT_INDEX = CRAFTING_SLOTS;
     private static final int MAX_CRAFTING_TICKS = 6;
-    private final boolean[] disabledSlots = new boolean[9];
+    final ContainerData containerData = new ContainerData() {
+        private final int[] slotStates = new int[CRAFTING_SLOTS];
+
+        @Override
+        public int get(int index) {
+            return slotStates[index];
+        }
+
+        @Override
+        public void set(int index, int value) {
+            slotStates[index] = value;
+        }
+
+        @Override
+        public int getCount() {
+            return CRAFTING_SLOTS;
+        }
+    };
     private int craftingTicksRemaining = MAX_CRAFTING_TICKS;
-    private RecipeHolder<CraftingRecipe> recipe;
+    private @Nullable RecipeHolder<CraftingRecipe> recipe;
 
     public FancyCrafterBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.FANCY_CRAFTER.get(), 18, defaultName("fancy_crafter"), pos, state);
+        super(BCBlockEntities.FANCY_CRAFTER.get(), CRAFTING_SLOTS + CRAFTING_RESULT_SLOTS + STORAGE_SLOTS, defaultName("fancy_crafter"), pos, state);
     }
 
-    public int getRedstoneSignal() {
-        return (int) IntStream.range(0, 9).filter(i -> !getItem(i).isEmpty() || isSlotDisabled(i)).count();
+    @Override
+    protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
+        return new FancyCrafterMenu(id, inventory, this, this.containerData);
+    }
+
+    @Override
+    public boolean canDisableSlot(int slot) {
+        return isCraftingSlot(slot) && this.items.get(slot).isEmpty();
+    }
+
+    @Override
+    public boolean isSlotDisabled(int slot) {
+        return isCraftingSlot(slot) && this.containerData.get(slot) == SLOT_DISABLED;
+    }
+
+    @Override
+    public void setSlotDisabled(int slot, boolean disabled) {
+        if (!this.canDisableSlot(slot)) return;
+        this.containerData.set(slot, disabled ? SLOT_DISABLED : SLOT_ENABLED);
+        this.setChanged();
+    }
+
+    @Override
+    public void setItem(int slot, ItemStack stack) {
+        if (isSlotDisabled(slot)) {
+            setSlotDisabled(slot, false);
+        }
+        super.setItem(slot, stack);
+        if (slot != CRAFTING_RESULT_SLOT_INDEX) {
+            calculateRecipe();
+        }
+    }
+
+    private void calculateRecipe() {
+        if (!(level() instanceof ServerLevel serverLevel)) return;
+        RecipeManager recipes = serverLevel.recipeAccess();
+        RegistryAccess registries = serverLevel.registryAccess();
+        CraftingInput input = asCraftInput();
+        recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, serverLevel).orElse(null);
+        super.setItem(CRAFTING_RESULT_SLOT_INDEX, recipe == null ? ItemStack.EMPTY : recipe.value().assemble(input, registries).copy());
+    }
+
+    @Override
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        if (!stack.getCraftingRemainder().isEmpty()) {
+            return false;
+        } else if (isSlotDisabled(slot)) {
+            return false;
+        } else if (!isCraftingSlot(slot)) {
+            return false;
+        }
+        ItemStack slotStack = getItem(slot);
+        return slotStack.isEmpty() || slotStack.getCount() < slotStack.getMaxStackSize() && !smallerStackExists(slotStack.getCount(), stack, slot);
+    }
+
+    @Override
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        craftingTicksRemaining = input.getIntOr(CRAFTING_TICKS_REMAINING_KEY, 0);
+        ContainerHelper.loadAllItems(input, this.items);
+
+        for (int i = 0; i < CRAFTING_SLOTS; i++) {
+            this.containerData.set(i, SLOT_ENABLED);
+        }
+
+        input.getIntArray(DISABLED_SLOTS_KEY).ifPresent(p_409682_ -> {
+            for (int j : p_409682_) {
+                if (this.canDisableSlot(j)) {
+                    this.containerData.set(j, SLOT_DISABLED);
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putInt(CRAFTING_TICKS_REMAINING_KEY, this.craftingTicksRemaining);
+        ContainerHelper.saveAllItems(output, this.items);
+
+        IntList intlist = new IntArrayList();
+
+        for (int i = 0; i < CRAFTING_SLOTS; i++) {
+            if (this.isSlotDisabled(i)) {
+                intlist.add(i);
+            }
+        }
+
+        output.putIntArray(DISABLED_SLOTS_KEY, intlist.toIntArray());
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
+    public List<ItemStack> getItems() {
+        return this.items.subList(0, CRAFTING_SLOTS);
+    }
+
+    @Override
+    public void fillStackedContents(StackedItemContents stackedContents) {
+        for (ItemStack itemstack : getItems()) {
+            stackedContents.accountSimpleStack(itemstack);
+        }
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FancyCrafterBlockEntity blockEntity) {
-        // TODO
-        /*if (blockEntity.recipe == null) return;
+        if (blockEntity.recipe == null) return;
         CraftingRecipe recipe = blockEntity.recipe.value();
-        ItemStack result = recipe.getResultItem(level.registryAccess());
-        ItemStack resultStack = blockEntity.getItem(9);
-        if (!resultStack.isEmpty() && (!ItemStack.isSameItemSameComponents(result, resultStack) || result.getCount() + resultStack.getCount() > result.getMaxStackSize()))
+        CraftingInput input = blockEntity.asCraftInput();
+        ItemStack result = recipe.assemble(input, level.registryAccess());
+        ItemStack resultStack = blockEntity.getItem(CRAFTING_RESULT_SLOT_INDEX);
+        if (!resultStack.isEmpty() && !ItemStack.isSameItemSameComponents(result, resultStack))
             return;
         blockEntity.craftingTicksRemaining--;
         if (blockEntity.craftingTicksRemaining > 0) return;
-        CraftingInput input = CraftingInput.of(3, 3, blockEntity.getInputs());
-        ItemStack assembled = recipe.assemble(input, level.registryAccess());
-        assembled.onCraftedBySystem(level);
-        blockEntity.setItem(9, blockEntity.tryDispense(level, pos, assembled, state));
+        result.onCraftedBySystem(level);
+        blockEntity.setItem(CRAFTING_RESULT_SLOT_INDEX, blockEntity.tryDispense(level, pos, result, state));
         blockEntity.craftingTicksRemaining = MAX_CRAFTING_TICKS;
-        recipe.getRemainingItems(CraftingInput.of(3, 3, blockEntity.getInputs()))
+        recipe.getRemainingItems(input)
                 .stream()
                 .filter(e -> !e.isEmpty())
                 .forEach(e -> blockEntity.tryDispense(level, pos, e, state));
-        List<ItemStack> inputs = new ArrayList<>(blockEntity.getInputs()
+        List<ItemStack> inputs = new ArrayList<>(input.items()
                 .stream()
                 .filter(e -> !e.isEmpty())
                 .toList());
         // for loop instead of stream chain to prevent CME
-        for (int i = 10; i < 18; i++) {
+        for (int i = CRAFTING_SLOTS + CRAFTING_RESULT_SLOTS; i < blockEntity.getContainerSize(); i++) {
             ItemStack stack = blockEntity.getItem(i);
             if (stack.isEmpty()) continue;
             List<ItemStack> toRemove = new ArrayList<>();
@@ -82,79 +221,15 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
             }
             toRemove.forEach(inputs::remove);
         }
-        blockEntity.getInputs()
+        input.items()
                 .stream()
                 .filter(e -> !e.isEmpty())
                 .forEach(e -> e.shrink(1));
-        blockEntity.setChanged();*/
-    }
-
-    @Override
-    public void setItem(int slot, ItemStack stack) {
-        if (isSlotDisabled(slot) && !stack.isEmpty()) {
-            disabledSlots[slot] = false;
-        }
-        super.setItem(slot, stack);
-        // TODO
-        //calculateRecipe();
-    }
-
-    @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
-        if (!stack.getCraftingRemainder().isEmpty() || isSlotDisabled(slot) || !isCraftingSlot(slot)) return false;
-        ItemStack slotStack = getItem(slot);
-        return slotStack.isEmpty() || slotStack.getCount() < slotStack.getMaxStackSize() && !smallerStackExists(slotStack.getCount(), stack, slot);
-    }
-
-    @Override
-    protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
-        return new FancyCrafterMenu(id, inventory, this);
-    }
-
-    @Override
-    protected void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
-        craftingTicksRemaining = input.getIntOr(CRAFTING_TICKS_REMAINING_KEY, MAX_CRAFTING_TICKS);
-        int[] tagSlots = input.getIntArray(DISABLED_SLOTS_KEY).orElse(new int[9]);
-        for (int i = 0; i < 9; i++) {
-            disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
-        }
-    }
-
-    @Override
-    protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
-        output.putInt(CRAFTING_TICKS_REMAINING_KEY, craftingTicksRemaining);
-        int[] tagSlots = new int[9];
-        for (int i = 0; i < 9; i++) {
-            tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
-        }
-        output.putIntArray(DISABLED_SLOTS_KEY, tagSlots);
-    }
-
-    @Override
-    public void setSlotDisabled(int slot, boolean disabled) {
-        if (!canDisableSlot(slot)) return;
-        disabledSlots[slot] = disabled;
-        setChanged();
-    }
-
-    @Override
-    public boolean isSlotDisabled(int slot) {
-        return isCraftingSlot(slot) && disabledSlots[slot];
-    }
-
-    @Override
-    public boolean canDisableSlot(int slot) {
-        return isCraftingSlot(slot) && getItem(slot).isEmpty();
-    }
-
-    private boolean isCraftingSlot(int slot) {
-        return slot >= 0 && slot < 9;
+        blockEntity.setChanged();
     }
 
     private boolean smallerStackExists(int currentSize, ItemStack stack, int slot) {
-        for (int i = slot + 1; i < 9; i++) {
+        for (int i = slot + 1; i < CRAFTING_SLOTS; i++) {
             if (!isSlotDisabled(i)) {
                 ItemStack slotStack = getItem(i);
                 if (slotStack.isEmpty() || slotStack.getCount() < currentSize && ItemStack.isSameItemSameComponents(slotStack, stack))
@@ -162,13 +237,6 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
             }
         }
         return false;
-    }
-
-    private void calculateRecipe() {
-        RecipeManager recipes = level().getServer().getRecipeManager();
-        CraftingInput input = CraftingInput.of(3, 3, getInputs());
-        recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level()).orElse(null);
-        setItem(9, recipe == null ? ItemStack.EMPTY : recipe.value().assemble(input, level().registryAccess()).copy());
     }
 
     private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {
@@ -184,7 +252,17 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         return stack;
     }
 
-    private List<ItemStack> getInputs() {
-        return IntStream.range(0, 9).mapToObj(this::getItem).toList();
+    public int getRedstoneSignal() {
+        int count = 0;
+        for (int i = 0; i < CRAFTING_SLOTS; i++) {
+            if (!getItem(i).isEmpty() || isSlotDisabled(i)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private boolean isCraftingSlot(int slot) {
+        return slot >= 0 && slot < CRAFTING_SLOTS;
     }
 }

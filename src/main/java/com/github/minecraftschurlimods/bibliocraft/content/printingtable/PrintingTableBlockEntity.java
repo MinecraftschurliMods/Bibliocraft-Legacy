@@ -29,6 +29,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -43,13 +44,13 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private final PrintingTableTank tank;
     private final Direction[] directions;
     private final boolean[] disabledSlots = new boolean[9];
-    private PrintingTableRecipe recipe;
-    private PrintingTableRecipeInput recipeInput;
+    private @Nullable PrintingTableRecipe recipe;
+    private @Nullable PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
     private int levelCost = 0;
     private int duration = 0;
     private int maxDuration = 0;
-    private Component playerName = null;
+    private @Nullable Component playerName = null;
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.PRINTING_TABLE.get(), 11, defaultName("printing_table"), pos, state);
@@ -162,7 +163,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         setChanged();
     }
 
-    public Component getPlayerName() {
+    public @Nullable Component getPlayerName() {
         return playerName;
     }
 
@@ -226,8 +227,8 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private void finishRecipe() {
         if (recipe == null) return;
         List<ItemStack> remainingItems = recipe.getRemainingItems(getRecipeInput());
-        ItemStack stack = getItem(10);
         ItemStack result = recipe.postProcess(recipe.assemble(getRecipeInput(), level().registryAccess()), this);
+        ItemStack stack = getItem(10);
         if (!stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, result)) return;
         result.setCount(stack.getCount() + 1);
         setItem(10, result);
@@ -256,18 +257,18 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     private void calculateRecipe(boolean onLoad) {
         if (!(level() instanceof ServerLevel serverLevel)) return;
-        recipe = serverLevel
-                .getServer()
-                .getRecipeManager()
+        PrintingTableRecipeInput recipeInput = getRecipeInput();
+        recipe = serverLevel.recipeAccess()
                 .recipeMap()
-                .getRecipesFor(BCRecipes.PRINTING_TABLE.get(), getRecipeInput(), serverLevel)
+                .getRecipesFor(BCRecipes.PRINTING_TABLE.get(), recipeInput, serverLevel)
                 .map(RecipeHolder::value)
                 .filter(e -> e.getMode() == mode)
                 .findFirst()
                 .orElse(null);
         if (recipe != null) {
             ItemStack output = getItem(10);
-            if (!output.isEmpty() && (output.getCount() >= output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(recipe.assemble(getRecipeInput(), level().registryAccess()), output))) {
+            ItemStack result = recipe.assemble(recipeInput, level().registryAccess());
+            if (!output.isEmpty() && (output.getCount() + result.getCount() > output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(output, result))) {
                 recipe = null;
             }
         }
@@ -282,7 +283,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     private PrintingTableRecipeInput getRecipeInput() {
         if (recipeInput == null) {
-            recipeInput = new PrintingTableRecipeInput(IntStream.range(0, 9).mapToObj(this::getItem).toList(), getItem(9));
+            recipeInput = new PrintingTableRecipeInput(this.items.subList(0, 9), getItem(9));
         }
         return recipeInput;
     }
