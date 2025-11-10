@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:fancy_lamp",
+  "key": {
+    "C": "#c:glass_blocks/colorless",
+    "G": "minecraft:glowstone",
+    "I": "#c:ingots/copper",
+    "N": "#c:nuggets/copper"
+  },
+  "pattern": [
+    "CGC",
+    " I ",
+    "NIN"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bibliocraft:fancy_copper_lamp"
+  }
+}

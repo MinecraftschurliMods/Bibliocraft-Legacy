@@ -1,0 +1,7 @@
+{
+  "parent": "bibliocraft:block/template/fancy_lamp/wall",
+  "textures": {
+    "color": "minecraft:block/green_stained_glass",
+    "metal": "minecraft:block/oxidized_copper"
+  }
+}

@@ -1,10 +1,6 @@
 {
   "values": [
     "bibliocraft:fancy_gold_lantern",
-    {
-      "id": "bibliocraft:soul_fancy_gold_lantern",
-      "required": false
-    },
     "bibliocraft:white_fancy_gold_lantern",
     "bibliocraft:orange_fancy_gold_lantern",
     "bibliocraft:magenta_fancy_gold_lantern",
@@ -20,6 +16,10 @@
     "bibliocraft:brown_fancy_gold_lantern",
     "bibliocraft:green_fancy_gold_lantern",
     "bibliocraft:red_fancy_gold_lantern",
-    "bibliocraft:black_fancy_gold_lantern"
+    "bibliocraft:black_fancy_gold_lantern",
+    {
+      "id": "bibliocraft:soul_fancy_gold_lantern",
+      "required": false
+    }
   ]
 }
