@@ -69,22 +69,22 @@ public class FancyLampBlock extends AbstractFancyLightBlock {
         Direction facing = state.getValue(FACING);
         return switch (type) {
             case STANDING -> switch (facing) {
-                default -> NORTH_STANDING_SHAPE;
+                case EAST -> EAST_STANDING_SHAPE;
                 case SOUTH -> SOUTH_STANDING_SHAPE;
                 case WEST -> WEST_STANDING_SHAPE;
-                case EAST -> EAST_STANDING_SHAPE;
+                default -> NORTH_STANDING_SHAPE;
             };
             case HANGING -> switch (facing) {
-                default -> NORTH_HANGING_SHAPE;
+                case EAST -> EAST_HANGING_SHAPE;
                 case SOUTH -> SOUTH_HANGING_SHAPE;
                 case WEST -> WEST_HANGING_SHAPE;
-                case EAST -> EAST_HANGING_SHAPE;
+                default -> NORTH_HANGING_SHAPE;
             };
             case WALL -> switch (facing) {
-                default -> NORTH_WALL_SHAPE;
+                case EAST -> EAST_WALL_SHAPE;
                 case SOUTH -> SOUTH_WALL_SHAPE;
                 case WEST -> WEST_WALL_SHAPE;
-                case EAST -> EAST_WALL_SHAPE;
+                default -> NORTH_WALL_SHAPE;
             };
         };
     }

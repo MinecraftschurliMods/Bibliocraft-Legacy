@@ -31,6 +31,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
@@ -52,6 +53,18 @@ public final class BlockModelDatagenUtil {
     public static final Map<DyeColor, ResourceLocation> CANDLE_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_candle_lit"))));
     public static final Map<DyeColor, ResourceLocation> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_stained_glass"))));
     public static final Map<DyeColor, ResourceLocation> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_wool"))));
+    public static final Map<WeatheringCopper.WeatherState, ResourceLocation> COPPER_BLOCKS = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> switch (weatherState) {
+        case UNAFFECTED -> BCUtil.mcLoc("block/copper_block");
+        case WEATHERED -> BCUtil.mcLoc("block/weathered_copper");
+        case EXPOSED -> BCUtil.mcLoc("block/exposed_copper");
+        case OXIDIZED -> BCUtil.mcLoc("block/oxidized_copper");
+    });
+    public static final Map<WeatheringCopper.WeatherState, ResourceLocation> COPPER_CHAINS = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> switch (weatherState) {
+        case UNAFFECTED -> BCUtil.mcLoc("block/copper_chain");
+        case WEATHERED -> BCUtil.mcLoc("block/weathered_copper_chain");
+        case EXPOSED -> BCUtil.mcLoc("block/exposed_copper_chain");
+        case OXIDIZED -> BCUtil.mcLoc("block/oxidized_copper_chain");
+    });
 
     public static final Function<BibliocraftWoodType, TextureMapping> DEFAULT_WOOD_TYPE_TEXTURE_MAPPING = wood -> TextureMapping.defaultTexture(wood.texture());
     public static final BiFunction<BibliocraftWoodType, DyeColor, TextureMapping> DEFAULT_WOOD_TYPE_COLOR_TEXTURE_MAPPING = (wood, color) -> BCModelTemplates.coloredAndTexturedMaterial(wood.texture(), WOOL_TEXTURES.get(color));
@@ -128,36 +141,36 @@ public final class BlockModelDatagenUtil {
                     .withItemModelFromDispatch(TypewriterBlock.PAPER, 0));
     public static final GroupedModelTemplate<DyeColor> FANCY_GOLD_LAMP = new GroupedModelTemplate<>(
             BCBlocks.FANCY_GOLD_LAMP,
-            (color) -> BCModelTemplates.lampMaterial(GLASS_TEXTURES.get(color), BCUtil.mcLoc("block/gold_block")),
+            coloredLampMaterial(BCUtil.mcLoc("block/gold_block")),
             BlockModelDatagenUtil::nameFor,
-            (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(BCModelTemplates.FANCY_LAMP_STANDING, BCModelTemplates.FANCY_LAMP_HANGING, BCModelTemplates.FANCY_LAMP_WALL), textureMapping)
-                    .withHorizontalRotation()
-                    .withItemModelFromDispatch(AbstractFancyLightBlock.TYPE, AbstractFancyLightBlock.Type.STANDING));
+            BlockModelDatagenUtil::buildLampModel);
     public static final GroupedModelTemplate<DyeColor> FANCY_IRON_LAMP = new GroupedModelTemplate<>(
             BCBlocks.FANCY_IRON_LAMP,
-            (color) -> BCModelTemplates.lampMaterial(GLASS_TEXTURES.get(color), BCUtil.mcLoc("block/iron_block")),
+            coloredLampMaterial(BCUtil.mcLoc("block/iron_block")),
             BlockModelDatagenUtil::nameFor,
-            (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(BCModelTemplates.FANCY_LAMP_STANDING, BCModelTemplates.FANCY_LAMP_HANGING, BCModelTemplates.FANCY_LAMP_WALL), textureMapping)
-                    .withHorizontalRotation()
-                    .withItemModelFromDispatch(AbstractFancyLightBlock.TYPE, AbstractFancyLightBlock.Type.STANDING));
+            BlockModelDatagenUtil::buildLampModel);
+    public static final Map<WeatheringCopper.WeatherState, GroupedModelTemplate<DyeColor>> FANCY_COPPER_LAMP = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> new GroupedModelTemplate<>(
+            BCBlocks.FANCY_COPPER_LAMP.getWeathering(weatherState),
+            coloredLampMaterial(COPPER_BLOCKS.get(weatherState)),
+            BlockModelDatagenUtil::nameFor,
+            BlockModelDatagenUtil::buildLampModel
+    ));
     public static final GroupedModelTemplate<DyeColor> FANCY_GOLD_LANTERN = new GroupedModelTemplate<>(
             BCBlocks.FANCY_GOLD_LANTERN,
-            (color) -> BCModelTemplates.lanternMaterial(CANDLE_TEXTURES.get(color), BCUtil.bcLoc("block/gold_chain"), BCUtil.mcLoc("block/gold_block")),
+            coloredLanternMaterial(BCUtil.bcLoc("block/gold_chain"), BCUtil.mcLoc("block/gold_block")),
             BlockModelDatagenUtil::nameFor,
-            (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(BCModelTemplates.FANCY_LANTERN_STANDING, BCModelTemplates.FANCY_LANTERN_HANGING, BCModelTemplates.FANCY_LANTERN_WALL), textureMapping)
-                    .withHorizontalRotation()
-                    .withItemModelFromDispatch(AbstractFancyLightBlock.TYPE, AbstractFancyLightBlock.Type.STANDING));
+            BlockModelDatagenUtil::buildLanternModel);
     public static final GroupedModelTemplate<DyeColor> FANCY_IRON_LANTERN = new GroupedModelTemplate<>(
             BCBlocks.FANCY_IRON_LANTERN,
-            (color) -> BCModelTemplates.lanternMaterial(CANDLE_TEXTURES.get(color), BCUtil.mcLoc("block/iron_chain"), BCUtil.mcLoc("block/iron_block")),
+            coloredLanternMaterial(BCUtil.mcLoc("block/iron_chain"), BCUtil.mcLoc("block/iron_block")),
             BlockModelDatagenUtil::nameFor,
-            (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(BCModelTemplates.FANCY_LANTERN_STANDING, BCModelTemplates.FANCY_LANTERN_HANGING, BCModelTemplates.FANCY_LANTERN_WALL), textureMapping)
-                    .withHorizontalRotation()
-                    .withItemModelFromDispatch(AbstractFancyLightBlock.TYPE, AbstractFancyLightBlock.Type.STANDING));
+            BlockModelDatagenUtil::buildLanternModel);
+    public static final Map<WeatheringCopper.WeatherState, GroupedModelTemplate<DyeColor>> FANCY_COPPER_LANTERN = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> new GroupedModelTemplate<>(
+            BCBlocks.FANCY_COPPER_LANTERN.getWeathering(weatherState),
+            coloredLanternMaterial(COPPER_CHAINS.get(weatherState), COPPER_BLOCKS.get(weatherState)),
+            BlockModelDatagenUtil::nameFor,
+            BlockModelDatagenUtil::buildLanternModel
+    ));
 
     public static final List<GroupedModelTemplate<BibliocraftWoodType>> WOODEN = List.of(
             BOOKCASE,
@@ -261,6 +274,28 @@ public final class BlockModelDatagenUtil {
         return builder(generators, block.get(), nameOverride);
     }
 
+    private static ModelBuilder buildLampModel(ModelBuilder modelBuilder, TextureMapping textureMapping) {
+        return modelBuilder
+                .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(BCModelTemplates.FANCY_LAMP_STANDING, BCModelTemplates.FANCY_LAMP_HANGING, BCModelTemplates.FANCY_LAMP_WALL), textureMapping)
+                .withHorizontalRotation()
+                .withItemModelFromDispatch(AbstractFancyLightBlock.TYPE, AbstractFancyLightBlock.Type.STANDING);
+    }
+
+    private static ModelBuilder buildLanternModel(ModelBuilder modelBuilder, TextureMapping textureMapping) {
+        return modelBuilder
+                .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(BCModelTemplates.FANCY_LANTERN_STANDING, BCModelTemplates.FANCY_LANTERN_HANGING, BCModelTemplates.FANCY_LANTERN_WALL), textureMapping)
+                .withHorizontalRotation()
+                .withItemModelFromDispatch(AbstractFancyLightBlock.TYPE, AbstractFancyLightBlock.Type.STANDING);
+    }
+
+    private static Function<DyeColor, TextureMapping> coloredLampMaterial(ResourceLocation metal) {
+        return (color) -> BCModelTemplates.lampMaterial(GLASS_TEXTURES.get(color), metal);
+    }
+
+    private static Function<DyeColor, TextureMapping> coloredLanternMaterial(ResourceLocation chain, ResourceLocation metal) {
+        return (color) -> BCModelTemplates.lanternMaterial(CANDLE_TEXTURES.get(color), chain, metal);
+    }
+
     public static class GroupedModelTemplate2<T1, T2> {
         private final GroupedHolder.Nested<T1, T2, Block, ? extends Block> holder;
         private final BiFunction<T1, T2, TextureMapping> textureMappingFunction;
@@ -312,7 +347,7 @@ public final class BlockModelDatagenUtil {
         private final @Nullable String nameOverride;
         private boolean generateItemModel = false;
         private @Nullable ResourceLocation itemModelLocation;
-        private @Nullable MultiVariantGenerator variantGenerator;
+        private @Nullable Function<Block, MultiVariantGenerator> variantGeneratorFunction;
         private @Nullable PropertyDispatch<MultiVariant> dispatchMap;
         private Function<ResourceLocation, MultiVariant> variantFunction = BlockModelGenerators::plainVariant;
 
@@ -327,8 +362,7 @@ public final class BlockModelDatagenUtil {
         }
 
         public ModelBuilder withWrappedVariantFunction(UnaryOperator<MultiVariant> wrapper) {
-            Function<ResourceLocation, MultiVariant> function = variantFunction;
-            return withVariantFunction((ResourceLocation modelLoc) -> wrapper.apply(function.apply(modelLoc)));
+            return withVariantFunction(this.variantFunction.andThen(wrapper));
         }
 
         public ModelBuilder withVariantFunction(Function<ResourceLocation, MultiVariant> variantFunction) {
@@ -399,17 +433,17 @@ public final class BlockModelDatagenUtil {
             return withModelDispatch(PropertyDispatch.initial(property1, property2).generate((t1, t2) -> variantFunction.apply(modelLocationFunction.apply(t1, t2))));
         }
 
-        public ModelBuilder withVariantGenerator(MultiVariantGenerator variantGenerator) {
-            this.variantGenerator = variantGenerator;
+        public ModelBuilder withVariantGenerator(Function<Block, MultiVariantGenerator> variantGeneratorFunction) {
+            this.variantGeneratorFunction = variantGeneratorFunction;
             return this;
         }
 
         public ModelBuilder withModelDispatch(PropertyDispatch<MultiVariant> propertyDispatch) {
-            if (variantGenerator != null) {
+            if (variantGeneratorFunction != null) {
                 throw new IllegalStateException("You cannot use withModelDispatch() after withVariantGenerator()!");
             }
             this.dispatchMap = propertyDispatch;
-            return withVariantGenerator(MultiVariantGenerator.dispatch(block).with(propertyDispatch));
+            return withVariantGenerator(b -> MultiVariantGenerator.dispatch(b).with(propertyDispatch));
         }
 
         public ModelBuilder withDefaultExistingModel() {
@@ -417,11 +451,11 @@ public final class BlockModelDatagenUtil {
         }
 
         public ModelBuilder withSingleModel(ResourceLocation modelLocation) {
-            if (variantGenerator != null) {
+            if (variantGeneratorFunction != null) {
                 throw new IllegalStateException("You cannot use withSingleVariant() after withVariantGenerator()!");
             }
             this.itemModelLocation = modelLocation;
-            return withVariantGenerator(MultiVariantGenerator.dispatch(block, variantFunction.apply(modelLocation)));
+            return withVariantGenerator(b -> MultiVariantGenerator.dispatch(b, variantFunction.apply(modelLocation)));
         }
 
         public ModelBuilder withSingleModel(ModelTemplate template, TextureMapping textureMapping) {
@@ -429,17 +463,17 @@ public final class BlockModelDatagenUtil {
         }
 
         public ModelBuilder withVariantDispatch(PropertyDispatch<VariantMutator> variantDispatch) {
-            if (this.variantGenerator == null) {
+            if (this.variantGeneratorFunction == null) {
                 throw new IllegalStateException("You must call withVariantGenerator() before calling withVariantDispatch()!");
             }
-            return withVariantGenerator(this.variantGenerator.with(variantDispatch));
+            return withVariantGenerator(this.variantGeneratorFunction.andThen(g -> g.with(variantDispatch)));
         }
 
         public ModelBuilder withVariantDispatch(VariantMutator variantDispatch) {
-            if (variantGenerator == null) {
+            if (variantGeneratorFunction == null) {
                 throw new IllegalStateException("You must call withVariantGenerator() before calling withVariantDispatch()!");
             }
-            return withVariantGenerator(this.variantGenerator.with(variantDispatch));
+            return withVariantGenerator(this.variantGeneratorFunction.andThen(g -> g.with(variantDispatch)));
         }
 
         public ModelBuilder withHorizontalRotation() {
@@ -450,7 +484,20 @@ public final class BlockModelDatagenUtil {
             return withVariantDispatch(BlockModelGenerators.UV_LOCK);
         }
 
-        public void build() {
+        public ModelBuilder build() {
+            build(block);
+            return this;
+        }
+
+        public ModelBuilder copyTo(Block block) {
+            build(block);
+            return this;
+        }
+
+        private void build(Block block) {
+            if (variantGeneratorFunction == null) {
+                throw new IllegalStateException("You must call withVariantGenerator() before calling build()!");
+            }
             if (generateItemModel) {
                 if (itemModelLocation != null) {
                     generators.registerSimpleItemModel(block, itemModelLocation);
@@ -458,7 +505,7 @@ public final class BlockModelDatagenUtil {
                     generators.registerSimpleFlatItemModel(block);
                 }
             }
-            generators.blockStateOutput.accept(variantGenerator);
+            generators.blockStateOutput.accept(variantGeneratorFunction.apply(block));
         }
 
         private ResourceLocation buildBlockModel(ModelTemplate template, TextureMapping textureMapping) {

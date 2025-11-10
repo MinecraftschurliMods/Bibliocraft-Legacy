@@ -29,6 +29,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.Tags;
@@ -78,6 +79,17 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .group("bibliocraft:fancy_lamp")
                     .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, recipeKey("color/" + name + "/fancy_iron_lamp"));
+            shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_COPPER_LAMP.getWeathering(WeatheringCopper.WeatherState.UNAFFECTED).get(color))
+                    .pattern("CGC")
+                    .pattern(" I ")
+                    .pattern("NIN")
+                    .define('C', IntersectionIngredient.of(tag(Tags.Items.GLASS_BLOCKS), tag(TagKey.create(Registries.ITEM, BCUtil.cLoc("dyed/" + name)))))
+                    .define('G', Items.GLOWSTONE)
+                    .define('I', Tags.Items.INGOTS_COPPER)
+                    .define('N', Tags.Items.NUGGETS_COPPER)
+                    .group("bibliocraft:fancy_lamp")
+                    .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
+                    .save(output, recipeKey("color/" + name + "/fancy_copper_lamp"));
             shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_GOLD_LANTERN.get(color))
                     .pattern("GIG")
                     .pattern("ICI")
@@ -98,6 +110,16 @@ public final class BCRecipeProvider extends RecipeProvider {
                     .group("bibliocraft:fancy_lantern")
                     .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                     .save(output, recipeKey("color/" + name + "/fancy_iron_lantern"));
+            shaped(RecipeCategory.DECORATIONS, BCItems.FANCY_COPPER_LANTERN.getWeathering(WeatheringCopper.WeatherState.UNAFFECTED).get(color))
+                    .pattern("GIG")
+                    .pattern("ICI")
+                    .pattern("GIG")
+                    .define('G', tag(Tags.Items.GLASS_PANES_COLORLESS))
+                    .define('I', Tags.Items.INGOTS_COPPER)
+                    .define('C', Ingredient.of(BuiltInRegistries.ITEM.getValue(BCUtil.mcLoc(name + "_candle"))))
+                    .group("bibliocraft:fancy_lantern")
+                    .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
+                    .save(output, recipeKey("color/" + name + "/fancy_copper_lantern"));
             shaped(RecipeCategory.DECORATIONS, BCItems.TYPEWRITER.get(color))
                     .pattern("IPI")
                     .pattern("BDB")
@@ -133,6 +155,17 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .group("bibliocraft:fancy_lamp")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
                 .save(output);
+        shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_COPPER_LAMP.getWeathering(WeatheringCopper.WeatherState.UNAFFECTED))
+                .pattern("CGC")
+                .pattern(" I ")
+                .pattern("NIN")
+                .define('C', Tags.Items.GLASS_BLOCKS_COLORLESS)
+                .define('G', Items.GLOWSTONE)
+                .define('I', Tags.Items.INGOTS_COPPER)
+                .define('N', Tags.Items.NUGGETS_COPPER)
+                .group("bibliocraft:fancy_lamp")
+                .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
+                .save(output);
         shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_GOLD_LANTERN)
                 .pattern("GIG")
                 .pattern("ICI")
@@ -152,6 +185,16 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .define('C', Ingredient.of(Items.CANDLE))
                 .group("bibliocraft:fancy_lantern")
                 .unlockedBy("has_iron_ingot", has(Tags.Items.INGOTS_IRON))
+                .save(output);
+        shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_FANCY_COPPER_LANTERN.getWeathering(WeatheringCopper.WeatherState.UNAFFECTED))
+                .pattern("GIG")
+                .pattern("ICI")
+                .pattern("GIG")
+                .define('G', tag(Tags.Items.GLASS_PANES_COLORLESS))
+                .define('I', Tags.Items.INGOTS_COPPER)
+                .define('C', Ingredient.of(Items.CANDLE))
+                .group("bibliocraft:fancy_lantern")
+                .unlockedBy("has_copper_ingot", has(Tags.Items.INGOTS_COPPER))
                 .save(output);
         shaped(RecipeCategory.DECORATIONS, BCItems.CLEAR_TYPEWRITER)
                 .pattern("IPI")

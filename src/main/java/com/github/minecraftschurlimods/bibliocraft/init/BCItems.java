@@ -23,6 +23,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.tapemeasure.TapeMeasu
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPage;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterPageItem;
 import com.github.minecraftschurlimods.bibliocraft.util.block.ColoredWoodTypeBlockItem;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.CopperSet;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.core.Holder;
@@ -69,12 +70,16 @@ public interface BCItems {
     GroupedHolder<DyeColor, Item, BlockItem> FANCY_GOLD_LAMP = coloredBlock(BCBlocks.FANCY_GOLD_LAMP);
     DeferredItem<BlockItem>            CLEAR_FANCY_IRON_LAMP = registerBlockItem(BCBlocks.CLEAR_FANCY_IRON_LAMP);
     GroupedHolder<DyeColor, Item, BlockItem> FANCY_IRON_LAMP = coloredBlock(BCBlocks.FANCY_IRON_LAMP);
+    CopperSet<DeferredItem<BlockItem>, DeferredItem<BlockItem>> CLEAR_FANCY_COPPER_LAMP = CopperSet.forBlockItems(BCBlocks.CLEAR_FANCY_COPPER_LAMP, BCItems::registerBlockItem, BCItems::registerBlockItem);
+    CopperSet<GroupedHolder<DyeColor, Item, BlockItem>, GroupedHolder<DyeColor, Item, BlockItem>> FANCY_COPPER_LAMP = CopperSet.forBlockItems(BCBlocks.FANCY_COPPER_LAMP, BCItems::coloredBlock, BCItems::coloredBlock);
     DeferredItem<BlockItem>            CLEAR_FANCY_GOLD_LANTERN = registerBlockItem(BCBlocks.CLEAR_FANCY_GOLD_LANTERN);
     GroupedHolder<DyeColor, Item, BlockItem> FANCY_GOLD_LANTERN = coloredBlock(BCBlocks.FANCY_GOLD_LANTERN);
+    DeferredItem<BlockItem>             SOUL_FANCY_GOLD_LANTERN = registerBlockItem(BCBlocks.SOUL_FANCY_GOLD_LANTERN);
     DeferredItem<BlockItem>            CLEAR_FANCY_IRON_LANTERN = registerBlockItem(BCBlocks.CLEAR_FANCY_IRON_LANTERN);
     GroupedHolder<DyeColor, Item, BlockItem> FANCY_IRON_LANTERN = coloredBlock(BCBlocks.FANCY_IRON_LANTERN);
-    DeferredItem<BlockItem>             SOUL_FANCY_GOLD_LANTERN = registerBlockItem(BCBlocks.SOUL_FANCY_GOLD_LANTERN);
     DeferredItem<BlockItem>             SOUL_FANCY_IRON_LANTERN = registerBlockItem(BCBlocks.SOUL_FANCY_IRON_LANTERN);
+    CopperSet<DeferredItem<BlockItem>, DeferredItem<BlockItem>> CLEAR_FANCY_COPPER_LANTERN = CopperSet.forBlockItems(BCBlocks.CLEAR_FANCY_COPPER_LANTERN, BCItems::registerBlockItem, BCItems::registerBlockItem);
+    CopperSet<GroupedHolder<DyeColor, Item, BlockItem>, GroupedHolder<DyeColor, Item, BlockItem>> FANCY_COPPER_LANTERN = CopperSet.forBlockItems(BCBlocks.FANCY_COPPER_LANTERN, BCItems::coloredBlock, BCItems::coloredBlock);
     DeferredItem<BlockItem>            CLEAR_TYPEWRITER       = registerBlockItem(BCBlocks.CLEAR_TYPEWRITER);
     GroupedHolder<DyeColor, Item, BlockItem> TYPEWRITER       = coloredBlock(BCBlocks.TYPEWRITER);
     DeferredItem<ClipboardItem>        CLIPBOARD              = registerItem("clipboard", ClipboardItem::new, p -> p.stacksTo(1).component(BCDataComponents.CLIPBOARD_CONTENT.get(), ClipboardContent.DEFAULT).useBlockDescriptionPrefix());

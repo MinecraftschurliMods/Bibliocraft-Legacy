@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCEnglishLangu
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCModelProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.assets.BCSoundDefinitionsProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCBlockTagsProvider;
+import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCDataMapProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCEnchantmentTagsProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCItemTagsProvider;
 import com.github.minecraftschurlimods.bibliocraft.datagen.data.BCLootTableProvider;
@@ -41,6 +42,7 @@ public final class BCDatagen {
         BCBlockTagsProvider blockTagsProvider = serverPack.addProvider(wrap(lookupProvider, BCBlockTagsProvider::new));
         BCItemTagsProvider itemTagsProvider = serverPack.addProvider(wrap(lookupProvider, BCItemTagsProvider::new));
         serverPack.addProvider(wrap(lookupProvider, BCEnchantmentTagsProvider::new));
+        serverPack.addProvider(wrap(lookupProvider, BCDataMapProvider::new));
 
         BibliocraftDatagenHelper helper = BibliocraftApi.getDatagenHelper();
         helper.addWoodTypesToGenerateByModid("minecraft");

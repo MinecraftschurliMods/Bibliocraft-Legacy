@@ -5,15 +5,12 @@ import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractibleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -35,10 +32,10 @@ public class WallDiscRackBlock extends BCFacingInteractibleBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> NORTH_SHAPE;
             case EAST -> EAST_SHAPE;
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
+            default -> NORTH_SHAPE;
         };
     }
 
@@ -55,13 +52,13 @@ public class WallDiscRackBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
-        return new ItemStack(BCItems.DISC_RACK.get());
-    }
-
-    @Override
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new DiscRackBlockEntity(pos, state);
+    }
+
+    @Override
+    public Item asItem() {
+        return BCItems.DISC_RACK.get();
     }
 }

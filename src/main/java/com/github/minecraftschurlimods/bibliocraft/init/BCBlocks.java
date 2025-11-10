@@ -19,6 +19,8 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancycrafter.FancyCra
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLampBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancylight.FancyLanternBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.fancylight.WeatheringCopperFancyLampBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.fancylight.WeatheringCopperFancyLanternBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.fancysign.WallFancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.label.LabelBlock;
@@ -32,6 +34,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.CopperSet;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -72,16 +75,47 @@ public interface BCBlocks {
     GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Block, WallDisplayCaseBlock> WALL_DISPLAY_CASE = coloredWoodenBlock("wall_display_case", WallDisplayCaseBlock::new);
     GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Block, SeatBlock>            SEAT              = coloredWoodenBlock("seat",              SeatBlock::new);
     GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Block, SeatBackBlock>        SEAT_BACK         = coloredWoodenBlock("seat_back",         SeatBackBlock::new);
-    DeferredBlock<FancyLampBlock>            CLEAR_FANCY_GOLD_LAMP = basicBlock("fancy_gold_lamp",   FancyLampBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    GroupedHolder<DyeColor, Block, FancyLampBlock> FANCY_GOLD_LAMP = coloredBlock("fancy_gold_lamp", FancyLampBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    DeferredBlock<FancyLampBlock>            CLEAR_FANCY_IRON_LAMP = basicBlock("fancy_iron_lamp",   FancyLampBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    GroupedHolder<DyeColor, Block, FancyLampBlock> FANCY_IRON_LAMP = coloredBlock("fancy_iron_lamp", FancyLampBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    DeferredBlock<FancyLanternBlock>            CLEAR_FANCY_GOLD_LANTERN = basicBlock("fancy_gold_lantern",   FancyLanternBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    GroupedHolder<DyeColor, Block, FancyLanternBlock> FANCY_GOLD_LANTERN = coloredBlock("fancy_gold_lantern", FancyLanternBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    DeferredBlock<FancyLanternBlock>            CLEAR_FANCY_IRON_LANTERN = basicBlock("fancy_iron_lantern",   FancyLanternBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    GroupedHolder<DyeColor, Block, FancyLanternBlock> FANCY_IRON_LANTERN = coloredBlock("fancy_iron_lantern", FancyLanternBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 15 : 0).noOcclusion());
-    DeferredBlock<FancyLanternBlock>             SOUL_FANCY_GOLD_LANTERN = basicBlock("soul_fancy_gold_lantern", properties -> new FancyLanternBlock(properties, BCUtil.modLoc("buzzier_bees", "small_soul_fire_flame")), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 10 : 0).noOcclusion());
-    DeferredBlock<FancyLanternBlock>             SOUL_FANCY_IRON_LANTERN = basicBlock("soul_fancy_iron_lantern", properties -> new FancyLanternBlock(properties, BCUtil.modLoc("buzzier_bees", "small_soul_fire_flame")), () -> BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? 10 : 0).noOcclusion());
+
+    DeferredBlock<FancyLampBlock>            CLEAR_FANCY_GOLD_LAMP = basicBlock("fancy_gold_lamp",   FancyLampBlock::new, () -> fancyLightProperties(Blocks.GOLD_BLOCK, 15));
+    GroupedHolder<DyeColor, Block, FancyLampBlock> FANCY_GOLD_LAMP = coloredBlock("fancy_gold_lamp", FancyLampBlock::new, () -> fancyLightProperties(Blocks.GOLD_BLOCK, 15));
+
+    DeferredBlock<FancyLampBlock>            CLEAR_FANCY_IRON_LAMP = basicBlock("fancy_iron_lamp",   FancyLampBlock::new, () -> fancyLightProperties(Blocks.IRON_BLOCK, 15));
+    GroupedHolder<DyeColor, Block, FancyLampBlock> FANCY_IRON_LAMP = coloredBlock("fancy_iron_lamp", FancyLampBlock::new, () -> fancyLightProperties(Blocks.IRON_BLOCK, 15));
+
+    CopperSet<DeferredBlock<FancyLampBlock>, DeferredBlock<WeatheringCopperFancyLampBlock>> CLEAR_FANCY_COPPER_LAMP = CopperSet.forBlocks(
+            "fancy_copper_lamp",
+            (s, properties) -> basicBlock(s, FancyLampBlock::new, properties),
+            (s, weatherState, properties) -> basicBlock(s, p -> new WeatheringCopperFancyLampBlock(weatherState, p), properties),
+            weatherState -> fancyLightProperties(Blocks.COPPER_BLOCK, 15)
+    );
+    CopperSet<GroupedHolder<DyeColor, Block, FancyLampBlock>, GroupedHolder<DyeColor, Block, WeatheringCopperFancyLampBlock>> FANCY_COPPER_LAMP = CopperSet.forBlocks(
+            "fancy_copper_lamp",
+            (s, properties) -> coloredBlock(s, FancyLampBlock::new, properties),
+            (s, weatherState, properties) -> coloredBlock(s, p -> new WeatheringCopperFancyLampBlock(weatherState, p), properties),
+            weatherState -> fancyLightProperties(Blocks.COPPER_BLOCK, 15)
+    );
+
+    DeferredBlock<FancyLanternBlock>            CLEAR_FANCY_GOLD_LANTERN = basicBlock("fancy_gold_lantern",   FancyLanternBlock::new, () -> fancyLightProperties(Blocks.GOLD_BLOCK, 15));
+    GroupedHolder<DyeColor, Block, FancyLanternBlock> FANCY_GOLD_LANTERN = coloredBlock("fancy_gold_lantern", FancyLanternBlock::new, () -> fancyLightProperties(Blocks.GOLD_BLOCK, 15));
+    DeferredBlock<FancyLanternBlock>             SOUL_FANCY_GOLD_LANTERN = basicBlock("soul_fancy_gold_lantern", properties -> new FancyLanternBlock(properties, BCUtil.modLoc("buzzier_bees", "small_soul_fire_flame")), () -> fancyLightProperties(Blocks.GOLD_BLOCK, 10));
+
+    DeferredBlock<FancyLanternBlock>            CLEAR_FANCY_IRON_LANTERN = basicBlock("fancy_iron_lantern",   FancyLanternBlock::new, () -> fancyLightProperties(Blocks.IRON_BLOCK, 15));
+    GroupedHolder<DyeColor, Block, FancyLanternBlock> FANCY_IRON_LANTERN = coloredBlock("fancy_iron_lantern", FancyLanternBlock::new, () -> fancyLightProperties(Blocks.IRON_BLOCK, 15));
+    DeferredBlock<FancyLanternBlock>             SOUL_FANCY_IRON_LANTERN = basicBlock("soul_fancy_iron_lantern", properties -> new FancyLanternBlock(properties, BCUtil.modLoc("buzzier_bees", "small_soul_fire_flame")), () -> fancyLightProperties(Blocks.IRON_BLOCK, 10));
+
+    CopperSet<DeferredBlock<FancyLanternBlock>, DeferredBlock<WeatheringCopperFancyLanternBlock>> CLEAR_FANCY_COPPER_LANTERN = CopperSet.forBlocks(
+            "fancy_copper_lantern",
+            (s, properties) -> basicBlock(s, FancyLanternBlock::new, properties),
+            (s, weatherState, properties) -> basicBlock(s, p -> new WeatheringCopperFancyLanternBlock(weatherState, p), properties),
+            weatherState -> fancyLightProperties(Blocks.COPPER_BLOCK, 15)
+    );
+    CopperSet<GroupedHolder<DyeColor, Block, FancyLanternBlock>, GroupedHolder<DyeColor, Block, WeatheringCopperFancyLanternBlock>> FANCY_COPPER_LANTERN = CopperSet.forBlocks(
+            "fancy_copper_lantern",
+            (s, properties) -> coloredBlock(s, FancyLanternBlock::new, properties),
+            (s, weatherState, properties) -> coloredBlock(s, p -> new WeatheringCopperFancyLanternBlock(weatherState, p), properties),
+            weatherState -> fancyLightProperties(Blocks.COPPER_BLOCK, 15)
+    );
+
     DeferredBlock<TypewriterBlock>            CLEAR_TYPEWRITER = basicBlock("typewriter",   TypewriterBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.TERRACOTTA).noOcclusion());
     GroupedHolder<DyeColor, Block, TypewriterBlock> TYPEWRITER = coloredBlock("typewriter", TypewriterBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(Blocks.TERRACOTTA).noOcclusion());
     DeferredBlock<CookieJarBlock>       COOKIE_JAR             = basicBlock("cookie_jar",             CookieJarBlock::new,       () -> BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS));
@@ -131,6 +165,10 @@ public interface BCBlocks {
         DeferredBlock<T> holder = BCRegistries.BLOCKS.registerBlock(name, factory, props);
         OTHER.add(holder);
         return holder;
+    }
+
+    static BlockBehaviour.Properties fancyLightProperties(Block base, int lightLevel) {
+        return BlockBehaviour.Properties.ofFullCopy(base).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? lightLevel : 0).noOcclusion();
     }
 
     /**
