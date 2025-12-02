@@ -1,20 +1,77 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/spruce/fancy_clock",
       "uvlock": true,
       "y": 90
     },
-    "facing=north": {
+    "facing=east,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/spruce/fancy_clock",
       "uvlock": true
     },
-    "facing=south": {
+    "facing=north,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true
+    },
+    "facing=north,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true
+    },
+    "facing=north,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true
+    },
+    "facing=south,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/spruce/fancy_clock",
       "uvlock": true,
       "y": 180
     },
-    "facing=west": {
+    "facing=south,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,powered=false,waterlogged=false": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/spruce/fancy_clock",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,powered=true,waterlogged=true": {
       "model": "bibliocraft:block/wood/spruce/fancy_clock",
       "uvlock": true,
       "y": 270

@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:seats",
   "key": {
-    "R": "#c:rods/wooden",
-    "S": "minecraft:crimson_slab",
-    "W": "minecraft:pink_wool"
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:crimson_slab"
+    },
+    "W": {
+      "item": "minecraft:pink_wool"
+    }
   },
   "pattern": [
     " W ",

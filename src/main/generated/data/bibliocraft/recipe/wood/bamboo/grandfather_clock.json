@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:grandfather_clock",
   "ingredients": [
-    "bibliocraft:bamboo_fancy_clock",
-    "bibliocraft:bamboo_fancy_clock"
+    {
+      "item": "bibliocraft:bamboo_fancy_clock"
+    },
+    {
+      "item": "bibliocraft:bamboo_fancy_clock"
+    }
   ],
   "result": {
     "count": 1,

@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:flat_seat_backs",
   "key": {
-    "R": "#c:rods/wooden",
-    "S": "minecraft:birch_slab",
-    "W": "minecraft:brown_wool"
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:birch_slab"
+    },
+    "W": {
+      "item": "minecraft:brown_wool"
+    }
   },
   "pattern": [
     "RWR",

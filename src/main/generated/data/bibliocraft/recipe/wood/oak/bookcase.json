@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:bookcases",
   "key": {
-    "P": "minecraft:oak_planks",
-    "S": "minecraft:oak_slab"
+    "P": {
+      "item": "minecraft:oak_planks"
+    },
+    "S": {
+      "item": "minecraft:oak_slab"
+    }
   },
   "pattern": [
     "PSP",

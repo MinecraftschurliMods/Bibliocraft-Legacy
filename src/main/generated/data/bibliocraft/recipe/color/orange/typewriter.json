@@ -3,11 +3,21 @@
   "category": "misc",
   "group": "bibliocraft:typewriter",
   "key": {
-    "B": "#c:storage_blocks/iron",
-    "C": "minecraft:orange_terracotta",
-    "D": "#c:dyes/black",
-    "I": "#c:ingots/iron",
-    "P": "minecraft:paper"
+    "B": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "C": {
+      "item": "minecraft:orange_terracotta"
+    },
+    "D": {
+      "tag": "c:dyes/black"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
   },
   "pattern": [
     "IPI",

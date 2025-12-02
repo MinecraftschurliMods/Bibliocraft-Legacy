@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": "minecraft:crimson_slab",
-    "W": "minecraft:red_wool"
+    "S": {
+      "item": "minecraft:crimson_slab"
+    },
+    "W": {
+      "item": "minecraft:red_wool"
+    }
   },
   "pattern": [
     "W",

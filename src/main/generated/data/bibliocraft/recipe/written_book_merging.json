@@ -9,7 +9,9 @@
     }
   },
   "duration": 200,
-  "ingredient": "minecraft:writable_book",
+  "ingredient": {
+    "item": "minecraft:writable_book"
+  },
   "result": {
     "count": 1,
     "id": "minecraft:written_book"
