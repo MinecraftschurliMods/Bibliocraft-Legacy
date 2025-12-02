@@ -3,7 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": "minecraft:birch_slab"
+    "S": {
+      "item": "minecraft:birch_slab"
+    }
   },
   "pattern": [
     "SSS",

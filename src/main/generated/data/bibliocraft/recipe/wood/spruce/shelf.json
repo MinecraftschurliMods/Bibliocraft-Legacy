@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:shelves",
   "key": {
-    "P": "minecraft:spruce_planks",
-    "S": "minecraft:spruce_slab"
+    "P": {
+      "item": "minecraft:spruce_planks"
+    },
+    "S": {
+      "item": "minecraft:spruce_slab"
+    }
   },
   "pattern": [
     "SSS",

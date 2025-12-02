@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    "minecraft:book",
-    "minecraft:redstone_torch"
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:redstone_torch"
+    }
   ],
   "result": {
     "count": 1,

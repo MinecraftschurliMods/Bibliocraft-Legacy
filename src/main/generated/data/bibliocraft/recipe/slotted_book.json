@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "category": "equipment",
   "ingredients": [
-    "minecraft:book",
-    "#bibliocraft:labels"
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "tag": "bibliocraft:labels"
+    }
   ],
   "result": {
     "count": 1,

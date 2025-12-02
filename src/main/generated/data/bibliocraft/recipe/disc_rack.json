@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "R": "#c:rods/wooden",
-    "S": "#minecraft:wooden_slabs"
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    }
   },
   "pattern": [
     "RRR",

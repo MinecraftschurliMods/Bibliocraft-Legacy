@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": "minecraft:mangrove_slab",
-    "W": "minecraft:purple_wool"
+    "S": {
+      "item": "minecraft:mangrove_slab"
+    },
+    "W": {
+      "item": "minecraft:purple_wool"
+    }
   },
   "pattern": [
     "W",

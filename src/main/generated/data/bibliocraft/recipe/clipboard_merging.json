@@ -8,7 +8,9 @@
     }
   },
   "duration": 200,
-  "ingredient": "bibliocraft:clipboard",
+  "ingredient": {
+    "item": "bibliocraft:clipboard"
+  },
   "result": {
     "count": 1,
     "id": "bibliocraft:clipboard"

@@ -1,97 +1,192 @@
 {
   "variants": {
-    "facing=east,type=fancy": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_fancy",
+    "facing=east,type=fancy,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,type=flat": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_flat",
+    "facing=east,type=fancy,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,type=raised": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_raised",
+    "facing=east,type=flat,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,type=small": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_small",
+    "facing=east,type=flat,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,type=tall": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_tall",
+    "facing=east,type=raised,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
       "uvlock": true,
       "y": 90
     },
-    "facing=north,type=fancy": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_fancy",
+    "facing=east,type=raised,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,type=small,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,type=small,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,type=tall,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,type=tall,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,type=fancy,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true
     },
-    "facing=north,type=flat": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_flat",
+    "facing=north,type=fancy,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true
     },
-    "facing=north,type=raised": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_raised",
+    "facing=north,type=flat,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true
     },
-    "facing=north,type=small": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_small",
+    "facing=north,type=flat,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true
     },
-    "facing=north,type=tall": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_tall",
+    "facing=north,type=raised,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
       "uvlock": true
     },
-    "facing=south,type=fancy": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_fancy",
+    "facing=north,type=raised,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
+      "uvlock": true
+    },
+    "facing=north,type=small,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true
+    },
+    "facing=north,type=small,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true
+    },
+    "facing=north,type=tall,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
+      "uvlock": true
+    },
+    "facing=north,type=tall,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
+      "uvlock": true
+    },
+    "facing=south,type=fancy,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,type=flat": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_flat",
+    "facing=south,type=fancy,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,type=raised": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_raised",
+    "facing=south,type=flat,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,type=small": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_small",
+    "facing=south,type=flat,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,type=tall": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_tall",
+    "facing=south,type=raised,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,type=fancy": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_fancy",
+    "facing=south,type=raised,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,type=small,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,type=small,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,type=tall,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,type=tall,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,type=fancy,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,type=flat": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_flat",
+    "facing=west,type=fancy,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/fancy_seat_back",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,type=raised": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_raised",
+    "facing=west,type=flat,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,type=small": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_small",
+    "facing=west,type=flat,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/flat_seat_back",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,type=tall": {
-      "model": "bibliocraft:block/color/light_gray/wood/birch/seat_back_tall",
+    "facing=west,type=raised,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,type=raised,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/raised_seat_back",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,type=small,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,type=small,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/small_seat_back",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,type=tall,waterlogged=false": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,type=tall,waterlogged=true": {
+      "model": "bibliocraft:block/color/light_gray/wood/birch/tall_seat_back",
       "uvlock": true,
       "y": 270
     }

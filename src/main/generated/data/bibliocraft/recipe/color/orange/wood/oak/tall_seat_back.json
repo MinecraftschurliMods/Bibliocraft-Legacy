@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": "bibliocraft:orange_oak_flat_seat_back",
-    "S": "minecraft:oak_slab"
+    "#": {
+      "item": "bibliocraft:orange_oak_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:oak_slab"
+    }
   },
   "pattern": [
     "S",

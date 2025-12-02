@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:fancy_seat_backs",
   "key": {
-    "#": "bibliocraft:green_dark_oak_flat_seat_back",
-    "S": "minecraft:dark_oak_slab"
+    "#": {
+      "item": "bibliocraft:green_dark_oak_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    }
   },
   "pattern": [
     "S#S"

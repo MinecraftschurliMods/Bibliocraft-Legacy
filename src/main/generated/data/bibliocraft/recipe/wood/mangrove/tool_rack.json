@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:tool_racks",
   "key": {
-    "#": "#c:ingots/iron",
-    "S": "minecraft:mangrove_slab"
+    "#": {
+      "tag": "c:ingots/iron"
+    },
+    "S": {
+      "item": "minecraft:mangrove_slab"
+    }
   },
   "pattern": [
     "SSS",
