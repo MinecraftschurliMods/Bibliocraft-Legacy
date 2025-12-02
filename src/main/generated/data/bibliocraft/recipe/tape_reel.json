@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "D": "#c:dyes/yellow",
-    "S": "#c:strings"
+    "D": {
+      "tag": "c:dyes/yellow"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
   },
   "pattern": [
     "SSS",

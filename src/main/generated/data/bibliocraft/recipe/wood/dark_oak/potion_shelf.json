@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:potion_shelves",
   "key": {
-    "#": "minecraft:glass_bottle",
-    "P": "minecraft:dark_oak_planks",
-    "S": "minecraft:dark_oak_slab"
+    "#": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    }
   },
   "pattern": [
     "SSS",

@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:tables",
   "key": {
-    "P": "minecraft:cherry_planks",
-    "S": "minecraft:cherry_slab"
+    "P": {
+      "item": "minecraft:cherry_planks"
+    },
+    "S": {
+      "item": "minecraft:cherry_slab"
+    }
   },
   "pattern": [
     "SSS",

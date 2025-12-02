@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:shelves",
   "key": {
-    "P": "minecraft:jungle_planks",
-    "S": "minecraft:jungle_slab"
+    "P": {
+      "item": "minecraft:jungle_planks"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    }
   },
   "pattern": [
     "SSS",

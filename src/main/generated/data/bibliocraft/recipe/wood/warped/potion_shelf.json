@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:potion_shelves",
   "key": {
-    "#": "minecraft:glass_bottle",
-    "P": "minecraft:warped_planks",
-    "S": "minecraft:warped_slab"
+    "#": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:warped_planks"
+    },
+    "S": {
+      "item": "minecraft:warped_slab"
+    }
   },
   "pattern": [
     "SSS",

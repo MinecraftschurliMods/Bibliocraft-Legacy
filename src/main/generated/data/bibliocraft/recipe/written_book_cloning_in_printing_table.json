@@ -5,7 +5,9 @@
   ],
   "duration": 100,
   "ingredients": [
-    "minecraft:writable_book"
+    {
+      "item": "minecraft:writable_book"
+    }
   ],
   "result": {
     "count": 1,

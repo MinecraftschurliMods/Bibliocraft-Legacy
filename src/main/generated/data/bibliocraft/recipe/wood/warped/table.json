@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:tables",
   "key": {
-    "P": "minecraft:warped_planks",
-    "S": "minecraft:warped_slab"
+    "P": {
+      "item": "minecraft:warped_planks"
+    },
+    "S": {
+      "item": "minecraft:warped_slab"
+    }
   },
   "pattern": [
     "SSS",

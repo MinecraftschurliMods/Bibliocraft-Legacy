@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:fancy_seat_backs",
   "key": {
-    "#": "bibliocraft:red_acacia_flat_seat_back",
-    "S": "minecraft:acacia_slab"
+    "#": {
+      "item": "bibliocraft:red_acacia_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:acacia_slab"
+    }
   },
   "pattern": [
     "S#S"

@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:potion_shelves",
   "key": {
-    "#": "minecraft:glass_bottle",
-    "P": "minecraft:crimson_planks",
-    "S": "minecraft:crimson_slab"
+    "#": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:crimson_planks"
+    },
+    "S": {
+      "item": "minecraft:crimson_slab"
+    }
   },
   "pattern": [
     "SSS",

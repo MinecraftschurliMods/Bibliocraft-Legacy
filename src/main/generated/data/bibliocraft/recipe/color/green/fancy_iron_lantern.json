@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:fancy_lantern",
   "key": {
-    "C": "minecraft:green_candle",
-    "G": "#c:glass_panes/colorless",
-    "I": "#c:ingots/iron"
+    "C": {
+      "item": "minecraft:green_candle"
+    },
+    "G": {
+      "tag": "c:glass_panes/colorless"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
   },
   "pattern": [
     "GIG",

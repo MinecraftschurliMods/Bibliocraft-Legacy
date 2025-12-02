@@ -1,7 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/fancy_lantern/standing",
-  "textures": {
-    "color": "minecraft:block/candle_lit",
-    "metal": "minecraft:block/exposed_copper"
-  }
-}

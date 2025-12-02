@@ -5,7 +5,9 @@
   ],
   "duration": 100,
   "ingredients": [
-    "#bibliocraft:typewriter_paper"
+    {
+      "tag": "bibliocraft:typewriter_paper"
+    }
   ],
   "result": {
     "count": 1,

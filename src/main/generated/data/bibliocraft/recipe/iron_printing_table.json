@@ -2,10 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": "#c:storage_blocks/iron",
-    "C": "#c:ingots/copper",
-    "I": "#c:ingots/iron",
-    "R": "#c:dusts/redstone"
+    "B": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "C": {
+      "tag": "c:ingots/copper"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
   },
   "pattern": [
     "CCC",

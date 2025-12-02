@@ -1,20 +1,39 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/tool_rack",
       "uvlock": true,
       "y": 90
     },
-    "facing=north": {
+    "facing=east,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/tool_rack",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/tool_rack",
       "uvlock": true
     },
-    "facing=south": {
+    "facing=north,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/tool_rack",
+      "uvlock": true
+    },
+    "facing=south,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/tool_rack",
       "uvlock": true,
       "y": 180
     },
-    "facing=west": {
+    "facing=south,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/tool_rack",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/tool_rack",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,waterlogged=true": {
       "model": "bibliocraft:block/wood/cherry/tool_rack",
       "uvlock": true,
       "y": 270

@@ -1,39 +1,153 @@
 {
   "variants": {
-    "facing=east,half=lower": {
+    "facing=east,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,half=upper": {
+    "facing=east,half=lower,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=upper,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
       "uvlock": true,
       "y": 90
     },
-    "facing=north,half=lower": {
+    "facing=east,half=upper,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=east,half=upper,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
       "uvlock": true
     },
-    "facing=north,half=upper": {
+    "facing=north,half=lower,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true
+    },
+    "facing=north,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true
+    },
+    "facing=north,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true
+    },
+    "facing=north,half=upper,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
       "uvlock": true
     },
-    "facing=south,half=lower": {
+    "facing=north,half=upper,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true
+    },
+    "facing=north,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true
+    },
+    "facing=north,half=upper,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true
+    },
+    "facing=south,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,half=upper": {
+    "facing=south,half=lower,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=upper,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
       "uvlock": true,
       "y": 180
     },
-    "facing=west,half=lower": {
+    "facing=south,half=upper,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=south,half=upper,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=lower,powered=false,waterlogged=false": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
       "uvlock": true,
       "y": 270
     },
-    "facing=west,half=upper": {
+    "facing=west,half=lower,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=lower,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=lower,powered=true,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_bottom",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=upper,powered=false,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=upper,powered=false,waterlogged=true": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=upper,powered=true,waterlogged=false": {
+      "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=west,half=upper,powered=true,waterlogged=true": {
       "model": "bibliocraft:block/wood/cherry/grandfather_clock_top",
       "uvlock": true,
       "y": 270

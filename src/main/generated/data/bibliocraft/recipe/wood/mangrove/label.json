@@ -3,7 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": "minecraft:mangrove_slab"
+    "S": {
+      "item": "minecraft:mangrove_slab"
+    }
   },
   "pattern": [
     "SSS",

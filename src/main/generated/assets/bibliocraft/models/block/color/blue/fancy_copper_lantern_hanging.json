@@ -1,8 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/fancy_lantern/hanging",
-  "textures": {
-    "chain": "minecraft:block/copper_chain",
-    "color": "minecraft:block/blue_candle_lit",
-    "metal": "minecraft:block/copper_block"
-  }
-}

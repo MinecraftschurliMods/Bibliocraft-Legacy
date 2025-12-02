@@ -3,10 +3,18 @@
   "category": "misc",
   "group": "bibliocraft:fancy_clock",
   "key": {
-    "C": "minecraft:clock",
-    "I": "#c:ingots/copper",
-    "R": "#c:rods/wooden",
-    "S": "minecraft:birch_slab"
+    "C": {
+      "item": "minecraft:clock"
+    },
+    "I": {
+      "tag": "c:ingots/copper"
+    },
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:birch_slab"
+    }
   },
   "pattern": [
     "SCS",

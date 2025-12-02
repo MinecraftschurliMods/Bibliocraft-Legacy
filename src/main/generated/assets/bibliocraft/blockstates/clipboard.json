@@ -1,22 +1,33 @@
 {
   "variants": {
-    "facing=east": {
+    "facing=east,waterlogged=false": {
       "model": "bibliocraft:block/clipboard",
-      "uvlock": true,
       "y": 90
     },
-    "facing=north": {
+    "facing=east,waterlogged=true": {
       "model": "bibliocraft:block/clipboard",
-      "uvlock": true
+      "y": 90
     },
-    "facing=south": {
+    "facing=north,waterlogged=false": {
+      "model": "bibliocraft:block/clipboard"
+    },
+    "facing=north,waterlogged=true": {
+      "model": "bibliocraft:block/clipboard"
+    },
+    "facing=south,waterlogged=false": {
       "model": "bibliocraft:block/clipboard",
-      "uvlock": true,
       "y": 180
     },
-    "facing=west": {
+    "facing=south,waterlogged=true": {
       "model": "bibliocraft:block/clipboard",
-      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "bibliocraft:block/clipboard",
+      "y": 270
+    },
+    "facing=west,waterlogged=true": {
+      "model": "bibliocraft:block/clipboard",
       "y": 270
     }
   }

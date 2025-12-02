@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": "minecraft:acacia_slab",
-    "W": "minecraft:cyan_wool"
+    "S": {
+      "item": "minecraft:acacia_slab"
+    },
+    "W": {
+      "item": "minecraft:cyan_wool"
+    }
   },
   "pattern": [
     "W",

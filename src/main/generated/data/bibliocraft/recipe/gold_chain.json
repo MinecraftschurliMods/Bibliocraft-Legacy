@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "I": "#c:ingots/gold",
-    "N": "#c:nuggets/gold"
+    "I": {
+      "tag": "c:ingots/gold"
+    },
+    "N": {
+      "tag": "c:nuggets/gold"
+    }
   },
   "pattern": [
     "N",

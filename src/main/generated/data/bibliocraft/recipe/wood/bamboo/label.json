@@ -3,7 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": "minecraft:bamboo_slab"
+    "S": {
+      "item": "minecraft:bamboo_slab"
+    }
   },
   "pattern": [
     "SSS",

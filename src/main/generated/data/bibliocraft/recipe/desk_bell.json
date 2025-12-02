@@ -2,9 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": "minecraft:stone_button",
-    "I": "#c:ingots/iron",
-    "R": "#c:dusts/redstone"
+    "B": {
+      "item": "minecraft:stone_button"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
   },
   "pattern": [
     " B ",

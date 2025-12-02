@@ -3,7 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": "minecraft:warped_slab"
+    "S": {
+      "item": "minecraft:warped_slab"
+    }
   },
   "pattern": [
     "SSS",

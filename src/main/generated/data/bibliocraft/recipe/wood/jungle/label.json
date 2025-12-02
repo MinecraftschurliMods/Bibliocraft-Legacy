@@ -3,7 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": "minecraft:jungle_slab"
+    "S": {
+      "item": "minecraft:jungle_slab"
+    }
   },
   "pattern": [
     "SSS",

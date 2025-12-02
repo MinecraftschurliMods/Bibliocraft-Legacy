@@ -1,7 +1,6 @@
 {
-  "parent": "bibliocraft:block/template/fancy_lamp/standing",
+  "parent": "bibliocraft:block/template/fancy_lamp/standing_gold",
   "textures": {
-    "color": "minecraft:block/yellow_stained_glass",
-    "metal": "minecraft:block/gold_block"
+    "color": "minecraft:block/yellow_stained_glass"
   }
 }

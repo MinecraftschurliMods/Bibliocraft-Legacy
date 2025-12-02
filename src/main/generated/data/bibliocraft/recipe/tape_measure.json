@@ -2,8 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "I": "#c:ingots/iron",
-    "R": "bibliocraft:tape_reel"
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "item": "bibliocraft:tape_reel"
+    }
   },
   "pattern": [
     " I ",

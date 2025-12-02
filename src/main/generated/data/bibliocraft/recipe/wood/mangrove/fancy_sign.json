@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:fancy_sign",
   "key": {
-    "#": "minecraft:paper",
-    "P": "minecraft:mangrove_planks",
-    "R": "#c:rods/wooden"
+    "#": {
+      "item": "minecraft:paper"
+    },
+    "P": {
+      "item": "minecraft:mangrove_planks"
+    },
+    "R": {
+      "tag": "c:rods/wooden"
+    }
   },
   "pattern": [
     "P#P",

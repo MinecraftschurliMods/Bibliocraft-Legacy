@@ -3,7 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": "minecraft:crimson_slab"
+    "S": {
+      "item": "minecraft:crimson_slab"
+    }
   },
   "pattern": [
     "SSS",

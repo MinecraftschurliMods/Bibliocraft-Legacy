@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": "bibliocraft:pink_crimson_flat_seat_back",
-    "S": "minecraft:crimson_slab"
+    "#": {
+      "item": "bibliocraft:pink_crimson_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:crimson_slab"
+    }
   },
   "pattern": [
     "S",

@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": "bibliocraft:pink_bamboo_flat_seat_back",
-    "S": "minecraft:bamboo_slab"
+    "#": {
+      "item": "bibliocraft:pink_bamboo_flat_seat_back"
+    },
+    "S": {
+      "item": "minecraft:bamboo_slab"
+    }
   },
   "pattern": [
     "S",

@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": "minecraft:warped_slab",
-    "W": "minecraft:magenta_wool"
+    "S": {
+      "item": "minecraft:warped_slab"
+    },
+    "W": {
+      "item": "minecraft:magenta_wool"
+    }
   },
   "pattern": [
     "W",

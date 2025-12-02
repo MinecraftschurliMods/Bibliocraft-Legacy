@@ -2,9 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "B": "minecraft:book",
-    "D": "#c:dyes/green",
-    "P": "minecraft:paper"
+    "B": {
+      "item": "minecraft:book"
+    },
+    "D": {
+      "tag": "c:dyes/green"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
   },
   "pattern": [
     "PDP",
