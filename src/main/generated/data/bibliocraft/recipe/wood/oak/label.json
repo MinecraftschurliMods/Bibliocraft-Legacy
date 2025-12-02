@@ -3,7 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": "minecraft:oak_slab"
+    "S": {
+      "item": "minecraft:oak_slab"
+    }
   },
   "pattern": [
     "SSS",

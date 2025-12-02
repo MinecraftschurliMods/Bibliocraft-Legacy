@@ -1,7 +1,6 @@
 {
-  "parent": "bibliocraft:block/template/fancy_lamp/hanging",
+  "parent": "bibliocraft:block/template/fancy_lamp/hanging_iron",
   "textures": {
-    "color": "minecraft:block/white_stained_glass",
-    "metal": "minecraft:block/iron_block"
+    "color": "minecraft:block/white_stained_glass"
   }
 }

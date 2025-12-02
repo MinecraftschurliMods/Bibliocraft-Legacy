@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:raised_seat_backs",
   "key": {
-    "R": "#c:rods/wooden",
-    "S": "minecraft:jungle_slab",
-    "W": "minecraft:green_wool"
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    },
+    "W": {
+      "item": "minecraft:green_wool"
+    }
   },
   "pattern": [
     " W ",

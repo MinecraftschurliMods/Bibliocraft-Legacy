@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:potion_shelves",
   "key": {
-    "#": "minecraft:glass_bottle",
-    "P": "minecraft:jungle_planks",
-    "S": "minecraft:jungle_slab"
+    "#": {
+      "item": "minecraft:glass_bottle"
+    },
+    "P": {
+      "item": "minecraft:jungle_planks"
+    },
+    "S": {
+      "item": "minecraft:jungle_slab"
+    }
   },
   "pattern": [
     "SSS",

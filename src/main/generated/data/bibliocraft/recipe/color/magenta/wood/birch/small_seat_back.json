@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": "minecraft:birch_slab",
-    "W": "minecraft:magenta_wool"
+    "S": {
+      "item": "minecraft:birch_slab"
+    },
+    "W": {
+      "item": "minecraft:magenta_wool"
+    }
   },
   "pattern": [
     "W",

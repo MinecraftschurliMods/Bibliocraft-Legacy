@@ -3,8 +3,12 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": "minecraft:dark_oak_slab",
-    "W": "minecraft:light_blue_wool"
+    "S": {
+      "item": "minecraft:dark_oak_slab"
+    },
+    "W": {
+      "item": "minecraft:light_blue_wool"
+    }
   },
   "pattern": [
     "W",

@@ -3,9 +3,15 @@
   "category": "misc",
   "group": "bibliocraft:seats",
   "key": {
-    "R": "#c:rods/wooden",
-    "S": "minecraft:acacia_slab",
-    "W": "minecraft:light_blue_wool"
+    "R": {
+      "tag": "c:rods/wooden"
+    },
+    "S": {
+      "item": "minecraft:acacia_slab"
+    },
+    "W": {
+      "item": "minecraft:light_blue_wool"
+    }
   },
   "pattern": [
     " W ",
