@@ -15,13 +15,14 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import java.util.HexFormat;
 
@@ -55,7 +56,7 @@ public class FancySignScreen extends Screen {
         } else {
             sign.setFrontContent(list);
         }
-        PacketDistributor.sendToServer(new FancySignSyncPacket(list, pos, back));
+        ClientPacketDistributor.sendToServer(new FancySignSyncPacket(list, pos, back));
         super.onClose();
     }
 
@@ -168,7 +169,7 @@ public class FancySignScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, (width - WIDTH) / 2 - 4, (height - HEIGHT) / 2 - 20, 0, 0, 192, 192);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, (width - WIDTH) / 2 - 4, (height - HEIGHT) / 2 - 20, 0, 0, 192, 192, 256, 256);
     }
 
     private void setColor(int color) {
@@ -197,5 +198,10 @@ public class FancySignScreen extends Screen {
 
     private void updateAlignmentButton() {
         alignmentButton.setMessage(Component.translatable(textArea.getAlignment().getTranslationKey()));
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 }

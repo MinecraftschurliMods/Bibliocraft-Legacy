@@ -12,8 +12,11 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.context.ContextKeySet;
+import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -30,7 +33,7 @@ import java.util.Optional;
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableCloningRecipe {
     public static final MapCodec<PrintingTableCloningWithEnchantmentsRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
+            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
             NumberProviders.CODEC.optionalFieldOf("experience_cost").forGetter(e -> e.experienceCost)
@@ -60,13 +63,13 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<PrintingTableRecipeInput>> getSerializer() {
         return BCRecipes.PRINTING_TABLE_CLONING_WITH_ENCHANTMENTS.get();
     }
 
     @Override
     public int getExperienceLevelCost(ItemStack stack, ServerLevel level) {
-        return experienceCost.map(e -> e.getInt(new LootContext.Builder(new LootParams(level, Map.of(LootContextParams.TOOL, stack), Map.of(), 0)).create(Optional.empty()))).orElse(0);
+        return experienceCost.map(e -> e.getInt(new LootContext.Builder(new LootParams(level, new ContextMap.Builder().withParameter(LootContextParams.TOOL, stack).create(new ContextKeySet.Builder().required(LootContextParams.TOOL).build()), Map.of(), 0)).create(Optional.empty()))).orElse(0);
     }
 
     @Override

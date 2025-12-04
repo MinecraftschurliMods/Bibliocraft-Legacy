@@ -12,12 +12,13 @@ import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.ItemLike;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 public interface BCCreativeTabs {
     Supplier<CreativeModeTab> BIBLIOCRAFT = BCRegistries.CREATIVE_TABS.register(BibliocraftApi.MOD_ID, () -> CreativeModeTab.builder()
-            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")))))
+            .icon(() -> new ItemStack(BCItems.BOOKCASE.get(Objects.requireNonNull(BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")), "Missing oak wood type! (HOW?)"))))
             .title(Component.translatable("itemGroup." + BibliocraftApi.MOD_ID))
             .withSearchBar()
             .displayItems((display, output) -> {
@@ -43,6 +44,12 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FANCY_GOLD_LAMP.values());
                 output.accept(BCItems.CLEAR_FANCY_IRON_LAMP);
                 addToTab(output, BCItems.FANCY_IRON_LAMP.values());
+                addToTab(output, BCItems.CLEAR_FANCY_COPPER_LAMP.getWeathering());
+                addToTab(output, BCItems.CLEAR_FANCY_COPPER_LAMP.getWaxed());
+                for (DyeColor value : DyeColor.values()) {
+                    addToTab(output, BCItems.FANCY_COPPER_LAMP.getWeathering().stream().map(g -> g.get(value)).toList());
+                    addToTab(output, BCItems.FANCY_COPPER_LAMP.getWaxed().stream().map(g -> g.get(value)).toList());
+                }
                 output.accept(BCItems.CLEAR_FANCY_GOLD_LANTERN);
                 addToTab(output, BCItems.FANCY_GOLD_LANTERN.values());
                 if (CompatUtil.hasSoulCandles()) {
@@ -52,6 +59,12 @@ public interface BCCreativeTabs {
                 addToTab(output, BCItems.FANCY_IRON_LANTERN.values());
                 if (CompatUtil.hasSoulCandles()) {
                     output.accept(BCItems.SOUL_FANCY_IRON_LANTERN);
+                }
+                addToTab(output, BCItems.CLEAR_FANCY_COPPER_LANTERN.getWeathering());
+                addToTab(output, BCItems.CLEAR_FANCY_COPPER_LANTERN.getWaxed());
+                for (DyeColor value : DyeColor.values()) {
+                    addToTab(output, BCItems.FANCY_COPPER_LANTERN.getWeathering().stream().map(g -> g.get(value)).toList());
+                    addToTab(output, BCItems.FANCY_COPPER_LANTERN.getWaxed().stream().map(g -> g.get(value)).toList());
                 }
                 output.accept(BCItems.CLEAR_TYPEWRITER);
                 addToTab(output, BCItems.TYPEWRITER.values());
@@ -68,7 +81,7 @@ public interface BCCreativeTabs {
                 output.accept(BCItems.IRON_PRINTING_TABLE);
                 for (DyeColor color : DyeColor.values()) {
                     ItemStack stack = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-                    stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor(), true));
+                    stack.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor()));
                     output.accept(stack);
                 }
                 output.accept(BCItems.BIG_BOOK);

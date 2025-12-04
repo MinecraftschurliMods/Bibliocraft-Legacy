@@ -11,12 +11,16 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.input.MouseButtonInfo;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -27,9 +31,9 @@ public class ClipboardScreen extends Screen {
     private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
     private final InteractionHand hand;
-    private ClipboardContent data;
     private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardContent.MAX_LINES];
     private final EditBox[] lines = new EditBox[ClipboardContent.MAX_LINES];
+    private ClipboardContent data;
     private EditBox titleBox;
     private PageButton forwardButton;
     private PageButton backButton;
@@ -45,14 +49,14 @@ public class ClipboardScreen extends Screen {
     public void onClose() {
         super.onClose();
         stack.set(BCDataComponents.CLIPBOARD_CONTENT, data);
-        PacketDistributor.sendToServer(new ClipboardSyncPacket(data, hand));
+        ClientPacketDistributor.sendToServer(new ClipboardSyncPacket(data, hand));
     }
 
     @Override
     protected void init() {
         int x = (width - 192) / 2;
         titleBox = addRenderableWidget(new EditBox(getMinecraft().font, x + 57, 14, 72, 8, Component.empty()));
-        titleBox.setTextColor(0);
+        titleBox.setTextColor(0xff000000);
         titleBox.setBordered(false);
         titleBox.setTextShadow(false);
         titleBox.setResponder(e -> data = data.setTitle(e));
@@ -67,7 +71,7 @@ public class ClipboardScreen extends Screen {
                 data = data.setPages(pages);
             }));
             lines[i] = addRenderableWidget(new EditBox(getMinecraft().font, x + 45, 15 * i + 28, 109, 8, Component.empty()));
-            lines[i].setTextColor(0);
+            lines[i].setTextColor(0xff000000);
             lines[i].setBordered(false);
             lines[i].setTextShadow(false);
             lines[i].setResponder(e -> {
@@ -94,32 +98,32 @@ public class ClipboardScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192, 256, 256);
     }
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         if (scrollY < 0 && forwardButton.visible) {
-            forwardButton.onPress();
+            forwardButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
         if (scrollY > 0 && backButton.visible) {
-            backButton.onPress();
+            backButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (super.keyPressed(keyCode, scanCode, modifiers)) return true;
-        return switch (keyCode) {
+    public boolean keyPressed(KeyEvent event) {
+        if (super.keyPressed(event)) return true;
+        return switch (event.key()) {
             case GLFW.GLFW_KEY_PAGE_UP -> {
-                backButton.onPress();
+                backButton.onPress(event);
                 yield true;
             }
             case GLFW.GLFW_KEY_PAGE_DOWN -> {
-                forwardButton.onPress();
+                forwardButton.onPress(event);
                 yield true;
             }
             default -> false;
@@ -134,6 +138,11 @@ public class ClipboardScreen extends Screen {
             checkboxes[i].setState(page.checkboxes().get(i));
             lines[i].setValue(page.lines().get(i));
         }
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 
     private static class CheckboxButton extends SpriteButton {
@@ -154,13 +163,13 @@ public class ClipboardScreen extends Screen {
         }
 
         @Override
-        public void onClick(double mouseX, double mouseY, int button) {
+        public void onClick(MouseButtonEvent event, boolean doubleClick) {
             state = switch (state) {
                 case EMPTY -> CheckboxState.CHECK;
                 case CHECK -> CheckboxState.X;
                 case X -> CheckboxState.EMPTY;
             };
-            super.onClick(mouseX, mouseY, button);
+            super.onClick(event, doubleClick);
         }
 
         @Override

@@ -33,12 +33,11 @@ public interface BCDataComponents {
      * @return The supplier for the registered data component type.
      */
     static <T> Supplier<DataComponentType<T>> register(String name, Codec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
-        return BCRegistries.DATA_COMPONENTS.register(name, () -> DataComponentType.<T>builder().persistent(codec).networkSynchronized(streamCodec).build());
+        return BCRegistries.DATA_COMPONENTS.registerComponentType(name, b -> b.persistent(codec).networkSynchronized(streamCodec));
     }
 
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
-    static void init() {
-    }
+    static void init() {}
 }

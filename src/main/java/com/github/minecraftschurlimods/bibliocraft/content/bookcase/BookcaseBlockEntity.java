@@ -3,32 +3,27 @@ package com.github.minecraftschurlimods.bibliocraft.content.bookcase;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.world.level.storage.ValueInput;
+import net.neoforged.neoforge.model.data.ModelData;
+import net.neoforged.neoforge.model.data.ModelProperty;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class BookcaseBlockEntity extends BCMenuBlockEntity {
-    public static final List<ModelProperty<Boolean>> MODEL_PROPERTIES = Util.make(new ArrayList<>(), list -> {
-        for (int i = 0; i < 16; i++) {
-            list.add(new ModelProperty<>());
-        }
-    });
+    private static final int SLOTS = 16;
+    public static final ModelProperty<Short> BOOKS = new ModelProperty<>();
 
     public BookcaseBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.BOOKCASE.get(), 16, defaultName("bookcase"), pos, state);
+        super(BCBlockEntities.BOOKCASE.get(), SLOTS, defaultName("bookcase"), pos, state);
     }
 
     @Override
@@ -37,36 +32,43 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
     }
 
     @Override
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.handleUpdateTag(tag, lookupProvider);
+    public void handleUpdateTag(ValueInput input) {
+        super.handleUpdateTag(input);
         requestModelDataUpdate();
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
-        super.onDataPacket(net, pkt, lookupProvider);
+    public void onDataPacket(Connection net, ValueInput valueInput) {
+        super.onDataPacket(net, valueInput);
         level().sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
         requestModelDataUpdate();
     }
 
     @Override
+    public void setChanged() {
+        super.setChanged();
+        requestModelDataUpdate();
+        if (level() instanceof ServerLevel serverLevel) {
+            for (ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)) {
+                player.connection.send(getUpdatePacket());
+            }
+        }
+    }
+
+    @Override
     public ModelData getModelData() {
         ModelData.Builder builder = ModelData.builder();
-        for (int i = 0; i < MODEL_PROPERTIES.size(); i++) {
-            builder.with(MODEL_PROPERTIES.get(i), !items.getStackInSlot(i).isEmpty());
+        short books = 0;
+        for (int i = 0; i < SLOTS; i++) {
+            books |= (short) ((getItem(i).isEmpty() ? 0 : 1) << i);
         }
+        builder.with(BOOKS, books);
         return builder.build();
     }
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
         return stack.is(BCTags.Items.BOOKCASE_BOOKS);
-    }
-
-    @Override
-    public void setItem(int slot, ItemStack stack) {
-        super.setItem(slot, stack);
-        requestModelDataUpdate();
     }
 
     @Override

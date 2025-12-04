@@ -2,14 +2,11 @@ package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
-import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.ChunkPos;
@@ -18,6 +15,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class ClockBlockEntity extends BlockEntity {
                 setPowered(level, pos, true);
             }
         }
-        if (blockEntity.getTickSound() && level.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT) && time % 20 == 0) {
+        if (blockEntity.getTickSound() && level instanceof ServerLevel serverLevel && serverLevel.getGameRules().getBoolean(GameRules.RULE_DAYLIGHT) && time % 20 == 0) {
             level.playSound(null, pos, time % 40 == 0 ? BCSoundEvents.CLOCK_TICK.value() : BCSoundEvents.CLOCK_TOCK.value(), SoundSource.BLOCKS, 1, 1);
         }
     }
@@ -95,38 +94,25 @@ public class ClockBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        tickSound = tag.getBoolean(TICK_SOUND_KEY);
-        List<ClockTrigger> list = new ArrayList<>();
-        for (Tag trigger : tag.getList(TRIGGERS_KEY, Tag.TAG_COMPOUND)) {
-            list.add(CodecUtil.decodeNbt(ClockTrigger.CODEC, trigger));
-        }
-        addTriggers(list);
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        tickSound = input.getBooleanOr(TICK_SOUND_KEY, true);
+        input.list(TRIGGERS_KEY, ClockTrigger.CODEC).ifPresent(clockTriggers -> addTriggers(clockTriggers.stream().toList()));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.putBoolean(TICK_SOUND_KEY, tickSound);
-        ListTag list = new ListTag();
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.putBoolean(TICK_SOUND_KEY, tickSound);
+        ValueOutput.TypedOutputList<ClockTrigger> list = output.list(TRIGGERS_KEY, ClockTrigger.CODEC);
         for (ClockTrigger trigger : triggers) {
-            list.add(CodecUtil.encodeNbt(ClockTrigger.CODEC, trigger));
+            list.add(trigger);
         }
-        tag.put(TRIGGERS_KEY, list);
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = super.getUpdateTag(registries);
-        saveAdditional(tag, registries);
-        return tag;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.handleUpdateTag(tag, lookupProvider);
-        loadAdditional(tag, lookupProvider);
+        return saveCustomOnly(registries);
     }
 
     public boolean getTickSound() {

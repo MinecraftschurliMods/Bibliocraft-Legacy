@@ -3,7 +3,11 @@ package com.github.minecraftschurlimods.bibliocraft.content.lockandkey;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.LockAndKeyBehavior;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
+import net.minecraft.advancements.critereon.DataComponentMatchers;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -47,7 +51,17 @@ public class LockAndKeyItem extends Item {
     }
 
     private LockCode newLockCode(ItemStack stack) {
-        return new LockCode(stack.getOrDefault(DataComponents.CUSTOM_NAME, Component.empty()).getString());
+        Component name = stack.getOrDefault(DataComponents.CUSTOM_NAME, Component.empty());
+        return new LockCode(ItemPredicate.Builder
+                .item()
+                .of(BuiltInRegistries.ITEM, this)
+                .withComponents(DataComponentMatchers.Builder
+                        .components()
+                        .exact(DataComponentExactPredicate.builder()
+                                .expect(DataComponents.CUSTOM_NAME, name)
+                                .build())
+                        .build())
+                .build());
     }
 
     private boolean hasNoCustomName(Player player, ItemStack stack, Component displayName) {

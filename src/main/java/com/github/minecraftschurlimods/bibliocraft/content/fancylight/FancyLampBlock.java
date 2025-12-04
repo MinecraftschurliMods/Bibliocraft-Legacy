@@ -12,9 +12,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 public class FancyLampBlock extends AbstractFancyLightBlock {
     private static final VoxelShape NORTH_STANDING_SHAPE = ShapeUtil.combine(
@@ -67,22 +69,22 @@ public class FancyLampBlock extends AbstractFancyLightBlock {
         Direction facing = state.getValue(FACING);
         return switch (type) {
             case STANDING -> switch (facing) {
-                default -> NORTH_STANDING_SHAPE;
+                case EAST -> EAST_STANDING_SHAPE;
                 case SOUTH -> SOUTH_STANDING_SHAPE;
                 case WEST -> WEST_STANDING_SHAPE;
-                case EAST -> EAST_STANDING_SHAPE;
+                default -> NORTH_STANDING_SHAPE;
             };
             case HANGING -> switch (facing) {
-                default -> NORTH_HANGING_SHAPE;
+                case EAST -> EAST_HANGING_SHAPE;
                 case SOUTH -> SOUTH_HANGING_SHAPE;
                 case WEST -> WEST_HANGING_SHAPE;
-                case EAST -> EAST_HANGING_SHAPE;
+                default -> NORTH_HANGING_SHAPE;
             };
             case WALL -> switch (facing) {
-                default -> NORTH_WALL_SHAPE;
+                case EAST -> EAST_WALL_SHAPE;
                 case SOUTH -> SOUTH_WALL_SHAPE;
                 case WEST -> WEST_WALL_SHAPE;
-                case EAST -> EAST_WALL_SHAPE;
+                default -> NORTH_WALL_SHAPE;
             };
         };
     }
@@ -93,8 +95,8 @@ public class FancyLampBlock extends AbstractFancyLightBlock {
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if (level.isClientSide) return;
+    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
+        if (level.isClientSide()) return;
         boolean lit = state.getValue(LIT);
         if (lit != level.hasNeighborSignal(pos)) return;
         if (lit) {

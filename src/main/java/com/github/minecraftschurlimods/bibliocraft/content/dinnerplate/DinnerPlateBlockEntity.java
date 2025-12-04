@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.dinnerplate;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -13,6 +14,6 @@ public class DinnerPlateBlockEntity extends BCBlockEntity {
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return stack.getItem().getFoodProperties(stack, null) != null;
+        return stack.get(DataComponents.FOOD) != null;
     }
 }

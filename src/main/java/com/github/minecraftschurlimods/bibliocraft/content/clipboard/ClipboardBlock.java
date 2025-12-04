@@ -37,10 +37,10 @@ public class ClipboardBlock extends BCFacingEntityBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> NORTH_SHAPE;
             case EAST -> EAST_SHAPE;
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
+            default -> NORTH_SHAPE;
         };
     }
 

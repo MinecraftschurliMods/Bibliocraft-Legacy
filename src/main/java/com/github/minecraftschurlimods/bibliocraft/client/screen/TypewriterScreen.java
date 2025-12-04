@@ -12,13 +12,15 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
-import net.neoforged.neoforge.network.PacketDistributor;
-import org.lwjgl.glfw.GLFW;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class TypewriterScreen extends Screen {
     public static final int IMAGE_WIDTH = 100;
@@ -78,12 +80,13 @@ public class TypewriterScreen extends Screen {
         Font font = ClientUtil.getFont();
         for (int i = 0; i < row; i++) {
             if (i >= page.lines().size()) continue;
-            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0, false);
+            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
         }
         if (row < TypewriterPage.MAX_LINES) {
-            int width = graphics.drawString(font, currentLine, leftPos + 2, topPos + 2 + row * 10, 0, false);
+            int width = font.width(currentLine);
+            graphics.drawString(font, currentLine, leftPos + 2, topPos + 2 + row * 10, 0xff000000, false);
             if (frameTick / 6 % 2 == 0) {
-                graphics.drawString(font, "_", width, topPos + 2 + row * 10, 0, false);
+                graphics.drawString(font, "_", leftPos + 2 + width, topPos + 2 + row * 10, 0xff000000, false);
             }
         }
     }
@@ -91,30 +94,30 @@ public class TypewriterScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, leftPos, topPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER) {
+    public boolean keyPressed(KeyEvent event) {
+        if (!event.isConfirmation()) {
+            return super.keyPressed(event);
+        }
+        lineBreak();
+        return true;
+    }
+
+    @Override
+    public boolean charTyped(CharacterEvent event) {
+        if (!StringUtil.isAllowedChatCharacter(event.codepoint())) {
+            return super.charTyped(event);
+        }
+        currentLine += event.codepointAsString();
+        if (currentLine.length() >= TypewriterPage.MAX_LINE_LENGTH) {
             lineBreak();
-            return true;
+        } else {
+            ClientUtil.getPlayer().playSound(BCSoundEvents.TYPEWRITER_TYPE.value(), 0.9f + random.nextFloat() * 0.2f, 0.9f + random.nextFloat() * 0.2f);
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
-    }
-
-    @Override
-    public boolean charTyped(char codePoint, int modifiers) {
-        if (StringUtil.isAllowedChatCharacter(codePoint)) {
-            currentLine += codePoint;
-            if (currentLine.length() >= TypewriterPage.MAX_LINE_LENGTH) {
-                lineBreak();
-            } else {
-                ClientUtil.getPlayer().playSound(BCSoundEvents.TYPEWRITER_TYPE.value(), 0.9f + random.nextFloat() * 0.2f, 0.9f + random.nextFloat() * 0.2f);
-            }
-            return true;
-        }
-        return super.charTyped(codePoint, modifiers);
+        return true;
     }
 
     private void sync() {
@@ -125,7 +128,7 @@ public class TypewriterScreen extends Screen {
         if (ClientUtil.getLevel().getBlockEntity(pos) instanceof TypewriterBlockEntity typewriter) {
             typewriter.setPage(page);
         }
-        PacketDistributor.sendToServer(new TypewriterSyncPacket(pos, page, hasPendingSound));
+        ClientPacketDistributor.sendToServer(new TypewriterSyncPacket(pos, page, hasPendingSound));
         if (hasPendingSound) {
             ClientUtil.getPlayer().playSound(BCSoundEvents.TYPEWRITER_CHIME.value());
             hasPendingSound = false;
@@ -143,5 +146,10 @@ public class TypewriterScreen extends Screen {
         } else {
             sync();
         }
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 }

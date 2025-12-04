@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCWaterloggedBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -80,7 +81,7 @@ public class SeatBlock extends BCWaterloggedBlock {
             player.startRiding(entity);
             level.setBlockAndUpdate(pos, state.setValue(OCCUPIED, true));
         }
-        return InteractionResult.sidedSuccess(level.isClientSide());
+        return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
     @Override
@@ -89,7 +90,7 @@ public class SeatBlock extends BCWaterloggedBlock {
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         return state.getValue(OCCUPIED) ? 15 : 0;
     }
 

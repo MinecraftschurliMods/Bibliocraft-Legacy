@@ -85,21 +85,21 @@ public final class BCEventHandler {
 
     // @formatter:off
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.BOOKCASE.get(),          BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.COOKIE_JAR.get(),        BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DINNER_PLATE.get(),      BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DISC_RACK.get(),         BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DISPLAY_CASE.get(),      BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.FANCY_ARMOR_STAND.get(), BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.FANCY_CRAFTER.get(),     BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.LABEL.get(),             BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.POTION_SHELF.get(),      BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SHELF.get(),             BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SWORD_PEDESTAL.get(),    BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TOOL_RACK.get(),         BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TYPEWRITER.get(),        BCBlockEntity::getCapability);
-        event.registerBlock(Capabilities.FluidHandler.BLOCK,
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.BOOKCASE.get(),          BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.COOKIE_JAR.get(),        BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.DINNER_PLATE.get(),      BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.DISC_RACK.get(),         BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.DISPLAY_CASE.get(),      BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.FANCY_ARMOR_STAND.get(), BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.FANCY_CRAFTER.get(),     BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.LABEL.get(),             BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.POTION_SHELF.get(),      BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.SHELF.get(),             BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.SWORD_PEDESTAL.get(),    BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.TOOL_RACK.get(),         BCBlockEntity::getCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.TYPEWRITER.get(),        BCBlockEntity::getCapability);
+        event.registerBlock(Capabilities.Fluid.BLOCK,
                 (level, pos, state, blockEntity, context) -> blockEntity instanceof PrintingTableBlockEntity printingTable ? printingTable.getFluidCapability() : null,
                 BCBlocks.IRON_PRINTING_TABLE.get());
     }
@@ -109,19 +109,19 @@ public final class BCEventHandler {
                 .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
                 .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
                 .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
-                .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle)
+                .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle, ClockSyncPacket::handle)
                 .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
                 .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
                 .playToServer(PrintingTableInputPacket.TYPE,          PrintingTableInputPacket.STREAM_CODEC,          PrintingTableInputPacket::handle)
-                .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle)
+                .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle, PrintingTableSetRecipePacket::handle)
                 .playToClient(PrintingTableTankSyncPacket.TYPE,       PrintingTableTankSyncPacket.STREAM_CODEC,       PrintingTableTankSyncPacket::handle)
                 .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
                 .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
                 .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
                 .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
                 .playToServer(TakeLecternBookPacket.TYPE,             TakeLecternBookPacket.STREAM_CODEC,             TakeLecternBookPacket::handle)
-                .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle)
-                .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle);
+                .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle, ToggleableSlotSyncPacket::handle)
+                .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle, TypewriterSyncPacket::handle);
     }
 
     private static void registerLockAndKeyBehaviors(RegisterLockAndKeyBehaviorEvent event) {
@@ -142,6 +142,7 @@ public final class BCEventHandler {
         registerVanilla(event, WoodType.MANGROVE, Blocks.MANGROVE_PLANKS, BlockFamilies.MANGROVE_PLANKS);
         registerVanilla(event, WoodType.BAMBOO,   Blocks.BAMBOO_PLANKS,   BlockFamilies.BAMBOO_PLANKS);
         registerVanilla(event, WoodType.CHERRY,   Blocks.CHERRY_PLANKS,   BlockFamilies.CHERRY_PLANKS);
+        registerVanilla(event, WoodType.PALE_OAK, Blocks.PALE_OAK_PLANKS, BlockFamilies.PALE_OAK_PLANKS);
     }
     // @formatter:on
 

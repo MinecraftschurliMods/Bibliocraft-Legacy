@@ -11,11 +11,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +31,8 @@ public class ClockScreen extends Screen {
     private final List<ClockTrigger> triggers;
     private int leftPos;
     private int topPos;
-    private Checkbox tickSound;
-    private ClockTriggerPanel triggerPanel;
+    private @UnknownNullability Checkbox tickSound;
+    private @UnknownNullability ClockTriggerPanel triggerPanel;
 
     public ClockScreen(BlockPos pos) {
         super(Translations.CLOCK_TITLE);
@@ -58,23 +60,22 @@ public class ClockScreen extends Screen {
 
     @Override
     public void onClose() {
-        PacketDistributor.sendToServer(new ClockSyncPacket(pos, tickSound.selected(), triggers));
+        ClientPacketDistributor.sendToServer(new ClockSyncPacket(pos, tickSound.selected(), triggers));
         super.onClose();
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TICK, leftPos + 28, topPos + 11, 0x404040, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TRIGGERS, leftPos + 8, topPos + 26, 0x404040, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TICK, leftPos + 28, topPos + 11, 0xFF111111, false);
+        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TRIGGERS, leftPos + 8, topPos + 26, 0xFF111111, false);
         triggerPanel.renderTooltip(graphics, mouseX, mouseY);
     }
 
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
-        graphics.blit(BACKGROUND, leftPos, topPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
     }
 
     public void addTrigger(ClockTrigger trigger) {
@@ -87,5 +88,10 @@ public class ClockScreen extends Screen {
         triggers.remove(trigger);
         triggers.sort(ClockTrigger::compareTo);
         triggerPanel.rebuildElements(triggers);
+    }
+
+    @Override
+    public boolean isInGameUi() {
+        return true;
     }
 }

@@ -1,5 +1,6 @@
 import com.github.minecraftschurlimods.helperplugin.api
 import com.github.minecraftschurlimods.helperplugin.version
+import org.gradle.api.tasks.compile.JavaCompile
 
 plugins {
     idea
@@ -46,13 +47,13 @@ dependencies {
     }
 
     // abnormals mods for integration
-    if (abnormalsCompat) {
-        runtimeOnly("curse.maven:blueprint-382216:6449863")
-        runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
-        "dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
-        "dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
-        "dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
-    }
+    //if (abnormalsCompat) {
+        //runtimeOnly("curse.maven:blueprint-382216:6449863")
+        //runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
+        //"dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
+        //"dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
+        //"dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
+    //}
 
     testImplementation("org.junit.jupiter:junit-jupiter:${project.properties["junit_version"]}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -62,12 +63,14 @@ dependencies {
     }
 }
 
+helper.featureFlags.add("wip")
+
 helper.withCommonRuns()
 helper.withGameTestRuns()
 helper.withDataGenRuns {
-    if (abnormalsCompat) {
-        programArguments("--existing-mod", "buzzier_bees")
-    }
+    //if (abnormalsCompat) {
+        //arguments("--existing-mod", "buzzier_bees")
+    //}
 }
 
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")

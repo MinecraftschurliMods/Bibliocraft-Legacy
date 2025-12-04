@@ -1,13 +1,15 @@
 package com.github.minecraftschurlimods.bibliocraft.api.datagen;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagBuilder;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -23,33 +25,8 @@ public abstract class NonClearingItemTagsProvider extends ItemTagsProvider {
     /**
      * See super constructor for information.
      */
-    public NonClearingItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags) {
-        super(output, lookupProvider, blockTags);
-        this.lookupProvider = lookupProvider;
-    }
-
-    /**
-     * See super constructor for information.
-     */
-    @Deprecated
-    public NonClearingItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Item>> parentProvider, CompletableFuture<TagLookup<Block>> blockTags) {
-        super(output, lookupProvider, parentProvider, blockTags);
-        this.lookupProvider = lookupProvider;
-    }
-
-    /**
-     * See super constructor for information.
-     */
-    public NonClearingItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, String modId, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, blockTags, modId, existingFileHelper);
-        this.lookupProvider = lookupProvider;
-    }
-
-    /**
-     * See super constructor for information.
-     */
-    public NonClearingItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Item>> parentProvider, CompletableFuture<TagLookup<Block>> blockTags, String modId, @Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, parentProvider, blockTags, modId, existingFileHelper);
+    public NonClearingItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId) {
+        super(output, lookupProvider, modId);
         this.lookupProvider = lookupProvider;
     }
 
@@ -58,12 +35,16 @@ public abstract class NonClearingItemTagsProvider extends ItemTagsProvider {
         return lookupProvider.thenApply(provider -> {
             addTags(provider);
             return provider;
-        }).thenCombine(blockTags, (provider, tagLookup) -> {
-            tagsToCopy.forEach((block, item) -> {
-                TagBuilder tagBuilder = getOrCreateRawBuilder(item);
-                tagLookup.apply(block).orElseThrow(() -> new IllegalStateException("Missing block tag " + item.location())).build().forEach(tagBuilder::add);
-            });
-            return provider;
         });
+    }
+
+    protected TagAppender<ResourceLocation, Item> lazyTag(TagKey<Item> key) {
+        TagBuilder tagbuilder = this.getOrCreateRawBuilder(key);
+        return TagAppender.<Item>forBuilder(tagbuilder).map(rl -> ResourceKey.create(Registries.ITEM, rl));
+    }
+
+    @Override
+    public TagAppender<Item, Item> tag(TagKey<Item> key) {
+        return super.tag(key);
     }
 }

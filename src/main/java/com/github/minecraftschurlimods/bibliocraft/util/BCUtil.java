@@ -25,6 +25,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -227,7 +230,8 @@ public final class BCUtil {
      * @param <T> The type of the object.
      * @return The input object, guarded by a non-null check.
      */
-    public static <T> T nonNull(T t) {
+    @Contract("null -> fail")
+    public static <T> T nonNull(@Nullable T t) {
         return Objects.requireNonNull(t);
     }
 
@@ -278,20 +282,21 @@ public final class BCUtil {
     public static <T extends BlockEntity & Container> ItemStack tryInsert(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable T source) {
         Container container = HopperBlockEntity.getContainerAt(level, pos.relative(direction));
         if (container != null) return HopperBlockEntity.addItem(source, container, stack, direction.getOpposite());
-        IItemHandler cap = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, level.getBlockState(pos), source, direction);
+        ResourceHandler<ItemResource> cap = level.getCapability(Capabilities.Item.BLOCK, pos, level.getBlockState(pos), source, direction);
         if (cap == null) {
             List<Entity> list = level.getEntities((Entity) null, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), EntitySelector.ENTITY_STILL_ALIVE);
             if (!list.isEmpty()) {
                 Collections.shuffle(list);
                 for (Entity entity : list) {
-                    cap = entity.getCapability(Capabilities.ItemHandler.ENTITY_AUTOMATION, direction);
+                    cap = entity.getCapability(Capabilities.Item.ENTITY_AUTOMATION, direction);
                     if (cap != null) break;
                 }
             }
         }
         if (cap != null) {
-            for (int slot = 0; slot < cap.getSlots() && !stack.isEmpty(); slot++) {
-                stack = cap.insertItem(slot, stack, false);
+            IItemHandler handler = IItemHandler.of(cap);
+            for (int slot = 0; slot < handler.getSlots() && !stack.isEmpty(); slot++) {
+                stack = handler.insertItem(slot, stack, false);
             }
         }
         return stack;

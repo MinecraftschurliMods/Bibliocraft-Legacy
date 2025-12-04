@@ -7,6 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -20,6 +21,8 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -75,23 +78,21 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        if (tag.contains(COLOR_KEY)) {
-            setColor(CodecUtil.decodeNbt(DyedItemColor.CODEC, tag.get(COLOR_KEY)));
-        }
+    protected void loadAdditional(ValueInput input) {
+        super.loadAdditional(input);
+        input.read(COLOR_KEY, DyedItemColor.CODEC).ifPresent(this::setColor);
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        tag.put(COLOR_KEY, CodecUtil.encodeNbt(DyedItemColor.CODEC, getColor()));
+    protected void saveAdditional(ValueOutput output) {
+        super.saveAdditional(output);
+        output.store(COLOR_KEY, DyedItemColor.CODEC, getColor());
     }
 
     @Override
-    protected void applyImplicitComponents(DataComponentInput componentInput) {
-        super.applyImplicitComponents(componentInput);
-        setColor(componentInput.getOrDefault(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR));
+    protected void applyImplicitComponents(DataComponentGetter componentGetter) {
+        super.applyImplicitComponents(componentGetter);
+        setColor(componentGetter.getOrDefault(DataComponents.DYED_COLOR, SwordPedestalBlock.DEFAULT_COLOR));
     }
 
     @Override
@@ -104,26 +105,9 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
 
     @SuppressWarnings("deprecation")
     @Override
-    public void removeComponentsFromTag(CompoundTag tag) {
-        super.removeComponentsFromTag(tag);
-        tag.remove(COLOR_KEY);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = super.getUpdateTag(registries);
-        if (!color.equals(SwordPedestalBlock.DEFAULT_COLOR)) {
-            tag.put(COLOR_KEY, CodecUtil.encodeNbt(DyedItemColor.CODEC, getColor()));
-        }
-        return tag;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        super.handleUpdateTag(tag, lookupProvider);
-        if (tag.contains(COLOR_KEY)) {
-            setColor(CodecUtil.decodeNbt(DyedItemColor.CODEC, tag.get(COLOR_KEY)));
-        }
+    public void removeComponentsFromTag(ValueOutput output) {
+        super.removeComponentsFromTag(output);
+        output.discard(COLOR_KEY);
     }
 
     private int repairItem(ServerLevel level, ItemStack stack, int value) {

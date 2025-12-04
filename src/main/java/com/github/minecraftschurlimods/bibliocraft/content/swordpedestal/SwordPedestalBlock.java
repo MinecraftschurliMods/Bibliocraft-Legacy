@@ -6,11 +6,9 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingInteractib
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -22,9 +20,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class SwordPedestalBlock extends BCFacingInteractibleBlock {
-    public static final DyedItemColor DEFAULT_COLOR = new DyedItemColor(DyeColor.GREEN.getTextureDiffuseColor(), true);
+    public static final DyedItemColor DEFAULT_COLOR = new DyedItemColor(DyeColor.GREEN.getTextureDiffuseColor());
     private static final VoxelShape Z_SHAPE = ShapeUtil.combine(
             Shapes.box(0, 0, 0.25, 1, 0.0625, 0.75),
             Shapes.box(0.0625, 0.0625, 0.25, 0.9375, 0.125, 0.75),
@@ -65,21 +62,14 @@ public class SwordPedestalBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        ItemStack stack = super.getCloneItemStack(level, pos, state);
-        level.getBlockEntity(pos, BCBlockEntities.SWORD_PEDESTAL.get()).ifPresent(e -> e.saveToItem(stack, level.registryAccess()));
-        return stack;
-    }
-
-    @Override
     public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe))
-            return super.getAnalogOutputSignal(state, level, pos);
+            return super.getAnalogOutputSignal(state, level, pos, direction);
         return spbe.getItem(0).isEmpty() ? 0 : 15;
     }
 }

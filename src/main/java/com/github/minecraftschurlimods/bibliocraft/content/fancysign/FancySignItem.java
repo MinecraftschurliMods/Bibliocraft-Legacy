@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class FancySignItem extends WoodTypeBlockItem {
-    public FancySignItem(BibliocraftWoodType woodType) {
-        super(BCBlocks.FANCY_SIGN, woodType);
+    public FancySignItem(BibliocraftWoodType woodType, Properties properties) {
+        super(BCBlocks.FANCY_SIGN, woodType, properties);
     }
 
     @Override

@@ -11,29 +11,40 @@ import com.github.minecraftschurlimods.bibliocraft.content.printingtable.Printin
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.network.IContainerFactory;
 
 import java.util.function.Supplier;
 
 public interface BCMenus {
     // @formatter:off
-    Supplier<MenuType<BookcaseMenu>>        BOOKCASE          = BCRegistries.MENUS.register("bookcase",          () -> IMenuTypeExtension.create(BookcaseMenu::new));
-    Supplier<MenuType<CookieJarMenu>>       COOKIE_JAR        = BCRegistries.MENUS.register("cookie_jar",        () -> IMenuTypeExtension.create(CookieJarMenu::new));
-    Supplier<MenuType<DiscRackMenu>>        DISC_RACK         = BCRegistries.MENUS.register("disc_rack",         () -> IMenuTypeExtension.create(DiscRackMenu::new));
-    Supplier<MenuType<FancyArmorStandMenu>> FANCY_ARMOR_STAND = BCRegistries.MENUS.register("fancy_armor_stand", () -> IMenuTypeExtension.create(FancyArmorStandMenu::new));
-    Supplier<MenuType<FancyCrafterMenu>>    FANCY_CRAFTER     = BCRegistries.MENUS.register("fancy_crafter",     () -> IMenuTypeExtension.create(FancyCrafterMenu::new));
-    Supplier<MenuType<LabelMenu>>           LABEL             = BCRegistries.MENUS.register("label",             () -> IMenuTypeExtension.create(LabelMenu::new));
-    Supplier<MenuType<PotionShelfMenu>>     POTION_SHELF      = BCRegistries.MENUS.register("potion_shelf",      () -> IMenuTypeExtension.create(PotionShelfMenu::new));
-    Supplier<MenuType<PrintingTableMenu>>   PRINTING_TABLE    = BCRegistries.MENUS.register("printing_table",    () -> IMenuTypeExtension.create(PrintingTableMenu::new));
-    Supplier<MenuType<ShelfMenu>>           SHELF             = BCRegistries.MENUS.register("shelf",             () -> IMenuTypeExtension.create(ShelfMenu::new));
-    Supplier<MenuType<SlottedBookMenu>>     SLOTTED_BOOK      = BCRegistries.MENUS.register("slotted_book",      () -> IMenuTypeExtension.create(SlottedBookMenu::new));
-    Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = BCRegistries.MENUS.register("tool_rack",         () -> IMenuTypeExtension.create(ToolRackMenu::new));
+    Supplier<MenuType<BookcaseMenu>>        BOOKCASE          = register("bookcase",          BookcaseMenu::new);
+    Supplier<MenuType<CookieJarMenu>>       COOKIE_JAR        = register("cookie_jar",        CookieJarMenu::new);
+    Supplier<MenuType<DiscRackMenu>>        DISC_RACK         = register("disc_rack",         DiscRackMenu::new);
+    Supplier<MenuType<FancyArmorStandMenu>> FANCY_ARMOR_STAND = register("fancy_armor_stand", FancyArmorStandMenu::new);
+    Supplier<MenuType<FancyCrafterMenu>>    FANCY_CRAFTER     = register("fancy_crafter",     FancyCrafterMenu::new);
+    Supplier<MenuType<LabelMenu>>           LABEL             = register("label",             LabelMenu::new);
+    Supplier<MenuType<PotionShelfMenu>>     POTION_SHELF      = register("potion_shelf",      PotionShelfMenu::new);
+    Supplier<MenuType<PrintingTableMenu>>   PRINTING_TABLE    = register("printing_table",    PrintingTableMenu::new);
+    Supplier<MenuType<ShelfMenu>>           SHELF             = register("shelf",             ShelfMenu::new);
+    Supplier<MenuType<SlottedBookMenu>>     SLOTTED_BOOK      = register("slotted_book",      SlottedBookMenu::new);
+    Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = register("tool_rack",         ToolRackMenu::new);
     // @formatter:on
 
+    @SuppressWarnings("SameParameterValue")
+    private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(String name, IContainerFactory<T> factory, FeatureFlagSet flags) {
+        return BCRegistries.MENUS.register(name, () -> new MenuType<>(factory, flags));
+    }
+
+    private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(String name, IContainerFactory<T> factory) {
+        return BCRegistries.MENUS.register(name, () -> IMenuTypeExtension.create(factory));
+    }
+    
     /**
      * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
      */
-    static void init() {
-    }
+    static void init() {}
 }

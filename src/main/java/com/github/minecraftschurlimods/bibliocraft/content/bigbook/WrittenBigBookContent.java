@@ -1,19 +1,28 @@
 package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
+import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.util.StringUtil;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
 import net.minecraft.world.item.component.WrittenBookContent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-public record WrittenBigBookContent(List<List<FormattedLine>> pages, String title, String author, int generation, int currentPage) {
+public record WrittenBigBookContent(List<List<FormattedLine>> pages, String title, String author, int generation, int currentPage) implements TooltipProvider {
     public static final Codec<WrittenBigBookContent> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             FormattedLine.CODEC.sizeLimitedListOf(256).listOf().fieldOf("pages").forGetter(WrittenBigBookContent::pages),
             Codec.string(0, WrittenBookContent.TITLE_MAX_LENGTH).fieldOf("title").forGetter(WrittenBigBookContent::title),
@@ -33,5 +42,13 @@ public record WrittenBigBookContent(List<List<FormattedLine>> pages, String titl
     @Nullable
     public WrittenBigBookContent tryCraftCopy() {
         return generation >= WrittenBookContent.MAX_CRAFTABLE_GENERATION ? null : new WrittenBigBookContent(new ArrayList<>(pages), title, author, generation + 1, currentPage);
+    }
+
+    @Override
+    public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter) {
+        if (!StringUtil.isBlank(author())) {
+            tooltipAdder.accept(Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, author()).withStyle(ChatFormatting.GRAY));
+        }
+        tooltipAdder.accept(Component.translatable("book.generation." + generation()).withStyle(ChatFormatting.GRAY));
     }
 }

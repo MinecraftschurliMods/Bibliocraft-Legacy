@@ -9,8 +9,8 @@ import java.util.function.Supplier;
 
 public interface BCEntities {
     // @formatter:off
-    Supplier<EntityType<FancyArmorStandEntity>> FANCY_ARMOR_STAND = BCRegistries.ENTITIES.register("fancy_armor_stand", () -> EntityType.Builder.<FancyArmorStandEntity>of(FancyArmorStandEntity::new, MobCategory.MISC).noSummon().build("fancy_armor_stand"));
-    Supplier<EntityType<SeatEntity>>            SEAT              = BCRegistries.ENTITIES.register("seat",              () -> EntityType.Builder.<SeatEntity>of(SeatEntity::new, MobCategory.MISC).sized(0, 0.875f).noSummon().build("seat"));
+    Supplier<EntityType<FancyArmorStandEntity>> FANCY_ARMOR_STAND = BCRegistries.ENTITIES.registerEntityType("fancy_armor_stand", FancyArmorStandEntity::new, MobCategory.MISC, EntityType.Builder::noSummon);
+    Supplier<EntityType<SeatEntity>>            SEAT              = BCRegistries.ENTITIES.registerEntityType("seat",              SeatEntity::new,            MobCategory.MISC, b -> b.sized(0, 0.875f).noSummon());
     // @formatter:on
 
     /**
