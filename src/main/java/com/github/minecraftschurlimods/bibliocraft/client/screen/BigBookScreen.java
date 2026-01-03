@@ -26,13 +26,13 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.HexFormat;
 import java.util.List;
 
 public class BigBookScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/big_book.png");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/big_book.png");
     private static final int BACKGROUND_WIDTH = 220;
     private static final int BACKGROUND_HEIGHT = 256;
     private static final int TEXT_WIDTH = 188;

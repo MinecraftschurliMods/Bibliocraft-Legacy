@@ -11,7 +11,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -21,10 +21,10 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlots> extends BCMenuScreen<T> {
-    private static final ResourceLocation DISABLED_SLOT = BCUtil.mcLoc("container/crafter/disabled_slot");
+    private static final Identifier DISABLED_SLOT = BCUtil.mcLoc("container/crafter/disabled_slot");
     private final Player player;
 
-    public BCScreenWithToggleableSlots(T menu, Inventory inventory, Component title, ResourceLocation background) {
+    public BCScreenWithToggleableSlots(T menu, Inventory inventory, Component title, Identifier background) {
         super(menu, inventory, title, background);
         player = inventory.player;
     }
@@ -38,12 +38,12 @@ public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlot
     }
 
     @Override
-    protected void renderSlot(GuiGraphics graphics, Slot slot) {
+    protected void renderSlot(GuiGraphics graphics, Slot slot, int mouseX, int mouseY) {
         if (slot instanceof ToggleableSlot && menu.isSlotDisabled(slot.getSlotIndex())) {
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISABLED_SLOT, slot.x - 1, slot.y - 1, 18, 18);
             return;
         }
-        super.renderSlot(graphics, slot);
+        super.renderSlot(graphics, slot, mouseX, mouseY);
     }
 
     @Override

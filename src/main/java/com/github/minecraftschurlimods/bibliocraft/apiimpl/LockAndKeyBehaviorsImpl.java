@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.RegisterLockAn
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.fml.ModLoader;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;

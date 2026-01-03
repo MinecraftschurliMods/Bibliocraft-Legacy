@@ -18,7 +18,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.AbstractRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeHolderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHolder<PrintingTableRecipe>> {
     public static final IRecipeHolderType<PrintingTableRecipe> TYPE = IRecipeHolderType.create(BCRecipes.PRINTING_TABLE.getId());
-    private static final ResourceLocation LEVEL = BCUtil.bcLoc("level");
+    private static final Identifier LEVEL = BCUtil.bcLoc("level");
     private static final int LEVEL_X = 98;
     private static final int LEVEL_Y = 24;
     private static final int LEVEL_SIZE = 9;

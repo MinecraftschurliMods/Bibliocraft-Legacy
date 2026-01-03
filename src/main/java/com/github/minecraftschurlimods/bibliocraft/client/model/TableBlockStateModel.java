@@ -6,14 +6,18 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.WrappingCustomBlockStateModelBuilder;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.Util;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
+import net.minecraft.client.renderer.block.model.SingleVariant;
+import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.util.Util;
 import net.minecraft.client.data.models.MultiVariant;
-import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -22,8 +26,7 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
 import net.neoforged.neoforge.client.model.block.CustomUnbakedBlockStateModel;
 import net.neoforged.neoforge.client.model.generators.blockstate.CustomBlockStateModelBuilder;
-import net.neoforged.neoforge.client.model.generators.blockstate.UnbakedMutator;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
@@ -70,13 +73,13 @@ public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<Table
 
     private record GeometryKey(BlockState state, @Nullable DyeColor clothColor) {}
 
-    public record Unbaked(SingleVariant.Unbaked base, Map<DyeColor, Map<TableBlock.Type, ResourceLocation>> cloths) implements CustomUnbakedBlockStateModel {
+    public record Unbaked(SingleVariant.Unbaked base, Map<DyeColor, Map<TableBlock.Type, Identifier>> cloths) implements CustomUnbakedBlockStateModel {
         public static final MapCodec<Unbaked> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
                 SingleVariant.Unbaked.MAP_CODEC.forGetter(Unbaked::base)
         ).apply(inst, Unbaked::create));
 
         public static Unbaked create(SingleVariant.Unbaked unbaked) {
-            Map<DyeColor, Map<TableBlock.Type, ResourceLocation>> cloths = Util.makeEnumMap(
+            Map<DyeColor, Map<TableBlock.Type, Identifier>> cloths = Util.makeEnumMap(
                     DyeColor.class,
                     color -> Util.makeEnumMap(
                             TableBlock.Type.class,
@@ -109,8 +112,8 @@ public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<Table
         @Override
         public void resolveDependencies(Resolver resolver) {
             base.resolveDependencies(resolver);
-            for (Map<TableBlock.Type, ResourceLocation> map : cloths.values()) {
-                for (ResourceLocation location : map.values()) {
+            for (Map<TableBlock.Type, Identifier> map : cloths.values()) {
+                for (Identifier location : map.values()) {
                     resolver.markDependency(location);
                 }
             }

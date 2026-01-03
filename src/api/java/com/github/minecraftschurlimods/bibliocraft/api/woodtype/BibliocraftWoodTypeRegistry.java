@@ -1,8 +1,8 @@
 package com.github.minecraftschurlimods.bibliocraft.api.woodtype;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.resources.Identifier;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 
@@ -17,7 +17,7 @@ public interface BibliocraftWoodTypeRegistry {
      * @return The wood type with the given id. May return null if no wood type with the given id exists.
      */
     @Nullable
-    BibliocraftWoodType get(ResourceLocation id);
+    BibliocraftWoodType get(Identifier id);
 
     /**
      * @param id The id of the wood type to get.
@@ -25,7 +25,7 @@ public interface BibliocraftWoodTypeRegistry {
      */
     @Nullable
     default BibliocraftWoodType get(String id) {
-        return get(ResourceLocation.parse(id));
+        return get(Identifier.parse(id));
     }
 
     /**

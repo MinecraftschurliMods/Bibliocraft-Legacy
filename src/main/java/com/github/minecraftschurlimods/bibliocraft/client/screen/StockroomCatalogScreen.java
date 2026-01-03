@@ -30,7 +30,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -38,7 +38,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 import org.lwjgl.glfw.GLFW;
 
@@ -49,11 +49,11 @@ import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 
 public class StockroomCatalogScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/stockroom_catalog.png");
-    private static final ResourceLocation LOCATE_ICON = BCUtil.bcLoc("locate");
-    private static final ResourceLocation LOCATE_ICON_HIGHLIGHTED = BCUtil.bcLoc("locate_highlighted");
-    private static final ResourceLocation REMOVE_ICON = BCUtil.bcLoc("remove");
-    private static final ResourceLocation REMOVE_ICON_HIGHLIGHTED = BCUtil.bcLoc("remove_highlighted");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/stockroom_catalog.png");
+    private static final Identifier LOCATE_ICON = BCUtil.bcLoc("locate");
+    private static final Identifier LOCATE_ICON_HIGHLIGHTED = BCUtil.bcLoc("locate_highlighted");
+    private static final Identifier REMOVE_ICON = BCUtil.bcLoc("remove");
+    private static final Identifier REMOVE_ICON_HIGHLIGHTED = BCUtil.bcLoc("remove_highlighted");
     private static final int ROWS_PER_PAGE = 11;
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
@@ -376,7 +376,7 @@ public class StockroomCatalogScreen extends Screen {
         return true;
     }
 
-    private static class SortButton<E extends Enum<E> & StockroomCatalogSorting> extends Button {
+    private static class SortButton<E extends Enum<E> & StockroomCatalogSorting> extends Button.Plain {
         private E value;
 
         public SortButton(E initialValue, int x, int y, int width, int height, OnPress onPress) {

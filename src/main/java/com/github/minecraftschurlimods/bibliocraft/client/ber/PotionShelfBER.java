@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class PotionShelfBER implements BlockEntityRenderer<PotionShelfBlockEntity, MultiItemContainerRenderState> {
     private final ItemModelResolver itemModelResolver;
@@ -29,7 +29,7 @@ public class PotionShelfBER implements BlockEntityRenderer<PotionShelfBlockEntit
     }
 
     @Override
-    public void extractRenderState(PotionShelfBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+    public void extractRenderState(PotionShelfBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
         state.fill(blockEntity, ItemDisplayContext.FIXED, itemModelResolver);
     }

@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.api.woodtype;
 
 import net.minecraft.data.BlockFamily;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
@@ -17,10 +17,10 @@ import java.util.function.Supplier;
  * @param family     A supplier for the corresponding {@link BlockFamily}. Used in datagen.
  */
 public record BibliocraftWoodType(
-        ResourceLocation id,
+        Identifier id,
         WoodType woodType,
         Supplier<BlockBehaviour.Properties> properties,
-        ResourceLocation texture,
+        Identifier texture,
         Supplier<BlockFamily> family
 ) {
     /**

@@ -3,10 +3,13 @@ package com.github.minecraftschurlimods.bibliocraft.util;
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatBackType;
 import com.github.minecraftschurlimods.bibliocraft.content.table.TableBlock;
 import com.github.minecraftschurlimods.bibliocraft.content.typewriter.TypewriterBlock;
-import net.minecraft.Util;
-import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.data.models.model.ModelInstance;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.util.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 
@@ -196,32 +199,32 @@ public class BCModelTemplates {
                     Optional.of("/" + type.getSerializedName()),
                     TextureSlot.TEXTURE));
 
-    public static TextureMapping lampMaterial(ResourceLocation color, ResourceLocation metal) {
+    public static TextureMapping lampMaterial(Identifier color, Identifier metal) {
         return color(color).put(METAL, metal);
     }
 
-    public static TextureMapping color(ResourceLocation color) {
+    public static TextureMapping color(Identifier color) {
         return new TextureMapping().put(COLOR, color);
     }
 
-    public static TextureMapping lanternMaterial(ResourceLocation candle, ResourceLocation chain, ResourceLocation metal) {
+    public static TextureMapping lanternMaterial(Identifier candle, Identifier chain, Identifier metal) {
         return lampMaterial(candle, metal).put(CHAIN, chain);
     }
 
-    public static TextureMapping coloredAndTexturedMaterial(ResourceLocation texture, ResourceLocation color) {
+    public static TextureMapping coloredAndTexturedMaterial(Identifier texture, Identifier color) {
         return color(color).put(TextureSlot.TEXTURE, texture);
     }
 
     private static class BCModelTemplate extends ModelTemplate {
         private static final Set<String> COLORS = Arrays.stream(DyeColor.values()).map(DyeColor::getName).collect(Collectors.toUnmodifiableSet());
 
-        public BCModelTemplate(Optional<ResourceLocation> model, Optional<String> suffix, TextureSlot... slots) {
+        public BCModelTemplate(Optional<Identifier> model, Optional<String> suffix, TextureSlot... slots) {
             super(model, suffix, slots);
         }
 
         @Override
-        public ResourceLocation create(Block block, TextureMapping textureMapping, BiConsumer<ResourceLocation, ModelInstance> output) {
-            ResourceLocation resourcelocation = BuiltInRegistries.BLOCK.getKey(block);
+        public Identifier create(Block block, TextureMapping textureMapping, BiConsumer<Identifier, ModelInstance> output) {
+            Identifier resourcelocation = BuiltInRegistries.BLOCK.getKey(block);
             return this.create(resourcelocation.withPath(path -> "block/" + convertColorPath(path) + this.suffix.orElse("")), textureMapping, output);
         }
 

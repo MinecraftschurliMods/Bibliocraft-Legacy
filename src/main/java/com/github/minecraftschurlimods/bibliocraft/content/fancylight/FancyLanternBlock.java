@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -50,14 +50,14 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
     private static final VoxelShape EAST_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_WALL_SHAPE = ShapeUtil.rotate(NORTH_WALL_SHAPE, Rotation.COUNTERCLOCKWISE_90);
-    private static final ResourceLocation DEFAULT_PARTICLE = BCUtil.mcLoc("small_flame");
+    private static final Identifier DEFAULT_PARTICLE = BCUtil.mcLoc("small_flame");
     private final Lazy<ParticleOptions> particle;
 
     public FancyLanternBlock(Properties properties) {
         this(properties, DEFAULT_PARTICLE);
     }
 
-    public FancyLanternBlock(Properties properties, ResourceLocation particle) {
+    public FancyLanternBlock(Properties properties, Identifier particle) {
         super(properties);
         this.particle = Lazy.of(() -> BuiltInRegistries.PARTICLE_TYPE.getValue(particle) instanceof ParticleOptions options ? options : null);
     }

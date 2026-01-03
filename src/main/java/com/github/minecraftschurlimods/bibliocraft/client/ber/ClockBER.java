@@ -15,12 +15,13 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -29,7 +30,7 @@ import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Conceptual credit for the clock hands:
@@ -95,8 +96,8 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
 
     @Override
     public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
-        RenderType handMaterial = HAND_MATERIAL.renderType(RenderType::entityCutout);
-        RenderType pendulumRenderType = PENDULUM_MATERIAL.renderType(RenderType::entityCutout);
+        RenderType handMaterial = HAND_MATERIAL.renderType(RenderTypes::entityCutout);
+        RenderType pendulumRenderType = PENDULUM_MATERIAL.renderType(RenderTypes::entityCutout);
         ModelPart hourHand = state.isGrandfather ? this.grandfatherHourHand : this.hourHand;
         ModelPart minuteHand = state.isGrandfather ? this.grandfatherMinuteHand : this.minuteHand;
         ModelPart pendulum = state.isGrandfather ? this.grandfatherPendulum : this.pendulum;
@@ -126,12 +127,12 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
     }
 
     @Override
-    public void extractRenderState(ClockBlockEntity blockEntity, State state, float p_446851_, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+    public void extractRenderState(ClockBlockEntity blockEntity, State state, float p_446851_, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, p_446851_, p_445788_, breakProgress);
         Level level = BCUtil.nonNull(blockEntity.getLevel());
         state.dayTime = level.getDayTime();
         state.gameTime = level.getGameTime();
-        state.isNaturalDimension = level.dimensionType().natural();
+        //state.isNaturalDimension = level.dimensionType().natural(); // TODO how to replace?
 
         if (blockEntity.getBlockState().getBlock() instanceof FancyClockBlock) {
             state.isGrandfather = false;

@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class ShelfBER implements BlockEntityRenderer<ShelfBlockEntity, MultiItemContainerRenderState> {
     private final ItemModelResolver itemModelResolver;
@@ -28,7 +28,7 @@ public class ShelfBER implements BlockEntityRenderer<ShelfBlockEntity, MultiItem
     }
 
     @Override
-    public void extractRenderState(ShelfBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+    public void extractRenderState(ShelfBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, breakProgress);
         state.fill(blockEntity, ItemDisplayContext.ON_SHELF, itemModelResolver);
     }
