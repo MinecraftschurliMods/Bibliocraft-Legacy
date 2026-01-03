@@ -2,9 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.util.block;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.world.MenuProvider;
@@ -17,8 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Abstract superclass for block entities with an associated menu.
@@ -27,7 +23,7 @@ import javax.annotation.Nullable;
 public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuProvider, Nameable {
     private static final String NAME_KEY = "CustomName";
     private final Component defaultName;
-    private Component name;
+    private @Nullable Component name;
 
     /**
      * @param type          The {@link BlockEntityType} to use.
@@ -86,7 +82,12 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
     @Override
     @Nullable
     public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-        return BaseContainerBlockEntity.canUnlock(player, getLockKey(), getDisplayName()) ? this.createMenu(id, inventory) : null;
+        if (getLockKey().canUnlock(player)) {
+            return this.createMenu(id, inventory);
+        } else {
+            BaseContainerBlockEntity.sendChestLockedNotifications(position(), player, getDisplayName());
+            return null;
+        }
     }
 
     @Override

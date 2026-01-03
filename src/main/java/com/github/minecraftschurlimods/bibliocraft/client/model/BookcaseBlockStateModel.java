@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.BlockAndTintGetter;
@@ -121,9 +121,9 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
             return books[index];
         }
 
-        public record Unbaked(ResourceLocation[] books) {
-            public static Unbaked of(ResourceLocation bookSet) {
-                ResourceLocation[] books = new ResourceLocation[16];
+        public record Unbaked(Identifier[] books) {
+            public static Unbaked of(Identifier bookSet) {
+                Identifier[] books = new Identifier[16];
                 for (int i = 0; i < books.length; i++) {
                     final int index = i;
                     books[i] = bookSet.withPath(path -> "bookcase_book/" + path + "/book_" + index);
@@ -143,7 +143,7 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
             }
 
             public void resolveDependencies(ResolvableModel.Resolver resolver) {
-                for (ResourceLocation book : books) {
+                for (Identifier book : books) {
                     resolver.markDependency(book);
                 }
             }

@@ -8,14 +8,14 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.List;
 
 public class SlottedBookScreen extends AbstractContainerScreen<SlottedBookMenu> {
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/slotted_book.png");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/slotted_book.png");
 
     public SlottedBookScreen(SlottedBookMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);

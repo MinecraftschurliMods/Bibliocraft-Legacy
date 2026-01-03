@@ -8,12 +8,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MapRenderer;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -25,12 +26,12 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.joml.Matrix4f;
 
 public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.TableRenderState> {
-    private static final RenderType MAP_BACKGROUND = RenderType.text(BCUtil.mcLoc("textures/map/map_background.png"));
-    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType.text(BCUtil.mcLoc("textures/map/map_background_checkerboard.png"));
+    private static final RenderType MAP_BACKGROUND = RenderTypes.text(BCUtil.mcLoc("textures/map/map_background.png"));
+    private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderTypes.text(BCUtil.mcLoc("textures/map/map_background_checkerboard.png"));
     private final MapRenderer mapRenderer;
     private final ItemModelResolver itemModelResolver;
 
@@ -75,7 +76,7 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.
     }
 
     @Override
-    public void extractRenderState(TableBlockEntity blockEntity, TableRenderState state, float partialTick, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+    public void extractRenderState(TableBlockEntity blockEntity, TableRenderState state, float partialTick, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
         state.fill(blockEntity, ItemDisplayContext.FIXED, itemModelResolver, mapRenderer);
     }

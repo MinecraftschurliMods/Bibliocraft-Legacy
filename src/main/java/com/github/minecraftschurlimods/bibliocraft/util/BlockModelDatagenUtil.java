@@ -11,7 +11,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.typewriter.Typewriter
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
 import com.mojang.datafixers.util.Function3;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
@@ -25,7 +25,7 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -38,7 +38,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.client.model.generators.blockstate.CustomBlockStateModelBuilder;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,16 +50,16 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public final class BlockModelDatagenUtil {
-    public static final Map<DyeColor, ResourceLocation> CANDLE_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_candle_lit"))));
-    public static final Map<DyeColor, ResourceLocation> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_stained_glass"))));
-    public static final Map<DyeColor, ResourceLocation> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_wool"))));
-    public static final Map<WeatheringCopper.WeatherState, ResourceLocation> COPPER_BLOCKS = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> switch (weatherState) {
+    public static final Map<DyeColor, Identifier> CANDLE_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_candle_lit"))));
+    public static final Map<DyeColor, Identifier> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_stained_glass"))));
+    public static final Map<DyeColor, Identifier> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_wool"))));
+    public static final Map<WeatheringCopper.WeatherState, Identifier> COPPER_BLOCKS = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> switch (weatherState) {
         case UNAFFECTED -> BCUtil.mcLoc("block/copper_block");
         case WEATHERED -> BCUtil.mcLoc("block/weathered_copper");
         case EXPOSED -> BCUtil.mcLoc("block/exposed_copper");
         case OXIDIZED -> BCUtil.mcLoc("block/oxidized_copper");
     });
-    public static final Map<WeatheringCopper.WeatherState, ResourceLocation> COPPER_CHAINS = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> switch (weatherState) {
+    public static final Map<WeatheringCopper.WeatherState, Identifier> COPPER_CHAINS = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> switch (weatherState) {
         case UNAFFECTED -> BCUtil.mcLoc("block/copper_chain");
         case WEATHERED -> BCUtil.mcLoc("block/weathered_copper_chain");
         case EXPOSED -> BCUtil.mcLoc("block/exposed_copper_chain");
@@ -238,7 +238,7 @@ public final class BlockModelDatagenUtil {
 
     public static void createItemModel(ItemModelGenerators itemModels, GroupedHolder<BibliocraftWoodType, Item, ?> holder, ModelTemplate template, BibliocraftWoodType woodType) {
         Item item = holder.get(woodType);
-        ResourceLocation location = ModelLocationUtils.getModelLocation(item).withPath("item/" + BlockModelDatagenUtil.nameFor(woodType, holder.getName()) + template.suffix.orElse(""));
+        Identifier location = ModelLocationUtils.getModelLocation(item).withPath("item/" + BlockModelDatagenUtil.nameFor(woodType, holder.getName()) + template.suffix.orElse(""));
         itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(template.create(location, TextureMapping.defaultTexture(woodType.texture()), itemModels.modelOutput)));
     }
 
@@ -288,11 +288,11 @@ public final class BlockModelDatagenUtil {
                 .withItemModelFromDispatch(AbstractFancyLightBlock.TYPE, AbstractFancyLightBlock.Type.STANDING);
     }
 
-    private static Function<DyeColor, TextureMapping> coloredLampMaterial(ResourceLocation metal) {
+    private static Function<DyeColor, TextureMapping> coloredLampMaterial(Identifier metal) {
         return (color) -> BCModelTemplates.lampMaterial(GLASS_TEXTURES.get(color), metal);
     }
 
-    private static Function<DyeColor, TextureMapping> coloredLanternMaterial(ResourceLocation chain, ResourceLocation metal) {
+    private static Function<DyeColor, TextureMapping> coloredLanternMaterial(Identifier chain, Identifier metal) {
         return (color) -> BCModelTemplates.lanternMaterial(CANDLE_TEXTURES.get(color), chain, metal);
     }
 
@@ -346,10 +346,10 @@ public final class BlockModelDatagenUtil {
         private final Block block;
         private final @Nullable String nameOverride;
         private boolean generateItemModel = false;
-        private @Nullable ResourceLocation itemModelLocation;
+        private @Nullable Identifier itemModelLocation;
         private @Nullable Function<Block, MultiVariantGenerator> variantGeneratorFunction;
         private @Nullable PropertyDispatch<MultiVariant> dispatchMap;
-        private Function<ResourceLocation, MultiVariant> variantFunction = BlockModelGenerators::plainVariant;
+        private Function<Identifier, MultiVariant> variantFunction = BlockModelGenerators::plainVariant;
 
         private ModelBuilder(BlockModelGenerators generators, Block block, @Nullable String nameOverride) {
             this.generators = generators;
@@ -365,14 +365,14 @@ public final class BlockModelDatagenUtil {
             return withVariantFunction(this.variantFunction.andThen(wrapper));
         }
 
-        public ModelBuilder withVariantFunction(Function<ResourceLocation, MultiVariant> variantFunction) {
+        public ModelBuilder withVariantFunction(Function<Identifier, MultiVariant> variantFunction) {
             this.variantFunction = variantFunction;
             return this;
         }
 
         public ModelBuilder withItemModel() {
             if (block.asItem() == Items.AIR) {
-                ResourceLocation location = BuiltInRegistries.BLOCK.getKey(block);
+                Identifier location = BuiltInRegistries.BLOCK.getKey(block);
                 throw new IllegalStateException("You cannot use withItemModel() on a block that has no item! (" + location + ")");
             }
             this.generateItemModel = true;
@@ -384,7 +384,7 @@ public final class BlockModelDatagenUtil {
             return withItemModel();
         }
 
-        public ModelBuilder withItemModel(ResourceLocation itemModelLocation) {
+        public ModelBuilder withItemModel(Identifier itemModelLocation) {
             this.itemModelLocation = itemModelLocation;
             return withItemModel();
         }
@@ -394,12 +394,12 @@ public final class BlockModelDatagenUtil {
         }
 
         public ModelBuilder withModelDispatch(BooleanProperty property, ModelTemplate templateOnTrue, ModelTemplate templateOnFalse, TextureMapping textureMapping) {
-            ResourceLocation modelOnTrue = buildBlockModel(templateOnTrue, textureMapping);
-            ResourceLocation modelOnFalse = buildBlockModel(templateOnFalse, textureMapping);
+            Identifier modelOnTrue = buildBlockModel(templateOnTrue, textureMapping);
+            Identifier modelOnFalse = buildBlockModel(templateOnFalse, textureMapping);
             return withModelDispatch(property, modelOnTrue, modelOnFalse);
         }
 
-        public ModelBuilder withModelDispatch(BooleanProperty property, ResourceLocation modelOnTrue, ResourceLocation modelOnFalse) {
+        public ModelBuilder withModelDispatch(BooleanProperty property, Identifier modelOnTrue, Identifier modelOnFalse) {
             return withModelDispatch(BlockModelGenerators.createBooleanModelDispatch(property, variantFunction.apply(modelOnTrue), variantFunction.apply(modelOnFalse)));
         }
 
@@ -410,7 +410,7 @@ public final class BlockModelDatagenUtil {
             return withModelDispatch(property, transformArray(models, m -> buildBlockModel(m, textureMapping)));
         }
 
-        public ModelBuilder withModelDispatch(IntegerProperty property, ResourceLocation... models) {
+        public ModelBuilder withModelDispatch(IntegerProperty property, Identifier... models) {
             if (property.getPossibleValues().size() != models.length) {
                 throw new IllegalArgumentException("The number of models must match the number of possible values for the given property!");
             }
@@ -421,7 +421,7 @@ public final class BlockModelDatagenUtil {
             return withModelDispatch(property, t -> buildBlockModel(modelTemplateFunction.apply(t), textureMapping));
         }
 
-        public <T extends Comparable<T>> ModelBuilder withModelDispatch(Property<T> property, Function<T, ResourceLocation> modelLocationFunction) {
+        public <T extends Comparable<T>> ModelBuilder withModelDispatch(Property<T> property, Function<T, Identifier> modelLocationFunction) {
             return withModelDispatch(PropertyDispatch.initial(property).generate(t -> variantFunction.apply(modelLocationFunction.apply(t))));
         }
 
@@ -429,7 +429,7 @@ public final class BlockModelDatagenUtil {
             return withModelDispatch(property1, property2, (t1, t2) -> buildBlockModel(modelTemplateFunction.apply(t1, t2), textureMapping));
         }
 
-        public <T1 extends Comparable<T1>, T2 extends Comparable<T2>> ModelBuilder withModelDispatch(Property<T1> property1, Property<T2> property2, BiFunction<T1, T2, ResourceLocation> modelLocationFunction) {
+        public <T1 extends Comparable<T1>, T2 extends Comparable<T2>> ModelBuilder withModelDispatch(Property<T1> property1, Property<T2> property2, BiFunction<T1, T2, Identifier> modelLocationFunction) {
             return withModelDispatch(PropertyDispatch.initial(property1, property2).generate((t1, t2) -> variantFunction.apply(modelLocationFunction.apply(t1, t2))));
         }
 
@@ -450,7 +450,7 @@ public final class BlockModelDatagenUtil {
             return withSingleModel(ModelLocationUtils.getModelLocation(block));
         }
 
-        public ModelBuilder withSingleModel(ResourceLocation modelLocation) {
+        public ModelBuilder withSingleModel(Identifier modelLocation) {
             if (variantGeneratorFunction != null) {
                 throw new IllegalStateException("You cannot use withSingleVariant() after withVariantGenerator()!");
             }
@@ -508,8 +508,8 @@ public final class BlockModelDatagenUtil {
             generators.blockStateOutput.accept(variantGeneratorFunction.apply(block));
         }
 
-        private ResourceLocation buildBlockModel(ModelTemplate template, TextureMapping textureMapping) {
-            ResourceLocation baseName = ModelLocationUtils.getModelLocation(block);
+        private Identifier buildBlockModel(ModelTemplate template, TextureMapping textureMapping) {
+            Identifier baseName = ModelLocationUtils.getModelLocation(block);
             if (nameOverride != null) {
                 baseName = baseName.withPath("block/" + nameOverride);
             }
@@ -538,8 +538,8 @@ public final class BlockModelDatagenUtil {
             return withItemModel(list.getFirst().value().modelLocation());
         }
 
-        private static ResourceLocation[] transformArray(ModelTemplate[] models, Function<ModelTemplate, ResourceLocation> mapper) {
-            ResourceLocation[] result = new ResourceLocation[models.length];
+        private static Identifier[] transformArray(ModelTemplate[] models, Function<ModelTemplate, Identifier> mapper) {
+            Identifier[] result = new Identifier[models.length];
             for (int i = 0; i < models.length; i++) {
                 result[i] = mapper.apply(models[i]);
             }

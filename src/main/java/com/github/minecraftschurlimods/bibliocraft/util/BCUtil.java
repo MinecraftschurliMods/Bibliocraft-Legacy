@@ -4,12 +4,12 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -28,7 +28,7 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,35 +51,35 @@ public final class BCUtil {
 
     /**
      * @param path The path to use.
-     * @return A {@link ResourceLocation} with the "minecraft" namespace and the given path.
+     * @return A {@link Identifier} with the "minecraft" namespace and the given path.
      */
-    public static ResourceLocation mcLoc(String path) {
-        return ResourceLocation.withDefaultNamespace(path);
+    public static Identifier mcLoc(String path) {
+        return Identifier.withDefaultNamespace(path);
     }
 
     /**
      * @param path The path to use.
-     * @return A {@link ResourceLocation} with the "c" namespace and the given path.
+     * @return A {@link Identifier} with the "c" namespace and the given path.
      */
-    public static ResourceLocation cLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath("c", path);
+    public static Identifier cLoc(String path) {
+        return Identifier.fromNamespaceAndPath("c", path);
     }
 
     /**
      * @param path The path to use.
-     * @return A {@link ResourceLocation} with the "bibliocraft" namespace and the given path.
+     * @return A {@link Identifier} with the "bibliocraft" namespace and the given path.
      */
-    public static ResourceLocation bcLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath(BibliocraftApi.MOD_ID, path);
+    public static Identifier bcLoc(String path) {
+        return Identifier.fromNamespaceAndPath(BibliocraftApi.MOD_ID, path);
     }
 
     /**
      * @param namespace The namespace to use.
      * @param path      The path to use.
-     * @return A {@link ResourceLocation} with the given namespace and path.
+     * @return A {@link Identifier} with the given namespace and path.
      */
-    public static ResourceLocation modLoc(String namespace, String path) {
-        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    public static Identifier modLoc(String namespace, String path) {
+        return Identifier.fromNamespaceAndPath(namespace, path);
     }
 
     /**

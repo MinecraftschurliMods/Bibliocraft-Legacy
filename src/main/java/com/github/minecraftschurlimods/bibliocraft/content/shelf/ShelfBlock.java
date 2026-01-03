@@ -12,7 +12,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class ShelfBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape NORTH_SHAPE = Shapes.box(0, 0, 0.5, 1, 1, 1);

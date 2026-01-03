@@ -178,7 +178,7 @@ public interface BCItems {
     }
 
     private static <I extends BlockItem> DeferredItem<I> registerBlockItem(Holder<Block> block, BiFunction<Block, Item.Properties, I> factory, UnaryOperator<Item.Properties> properties) {
-        DeferredItem<I> item = BCRegistries.ITEMS.registerItem(block.unwrapKey().orElseThrow().location().getPath(), p -> factory.apply(block.value(), p), properties);
+        DeferredItem<I> item = BCRegistries.ITEMS.registerItem(block.unwrapKey().orElseThrow().identifier().getPath(), p -> factory.apply(block.value(), p), properties);
         OTHER.add(item);
         return item;
     }

@@ -16,7 +16,7 @@ import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class FancyLampBlock extends AbstractFancyLightBlock {
     private static final VoxelShape NORTH_STANDING_SHAPE = ShapeUtil.combine(

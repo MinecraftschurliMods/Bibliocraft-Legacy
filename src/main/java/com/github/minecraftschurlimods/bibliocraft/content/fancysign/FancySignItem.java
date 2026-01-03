@@ -5,7 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.block.WoodTypeBlockItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class FancySignItem extends WoodTypeBlockItem {
     public FancySignItem(BibliocraftWoodType woodType, Properties properties) {
