@@ -5,13 +5,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class BCMenuScreen<T extends BCMenu<?>> extends AbstractContainerScreen<T> {
-    private final ResourceLocation background;
+    private final Identifier background;
 
-    public BCMenuScreen(T menu, Inventory inventory, Component title, ResourceLocation background) {
+    public BCMenuScreen(T menu, Inventory inventory, Component title, Identifier background) {
         super(menu, inventory, title);
         this.background = background;
     }

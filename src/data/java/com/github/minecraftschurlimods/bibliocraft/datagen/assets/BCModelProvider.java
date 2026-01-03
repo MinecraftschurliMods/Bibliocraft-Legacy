@@ -25,7 +25,7 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -74,14 +74,14 @@ public class BCModelProvider extends ModelProvider {
     }
 
     private void registerBlockModels(BlockModelGenerators blockModels) {
-        ResourceLocation goldMaterial = BCUtil.mcLoc("block/gold_block");
-        ResourceLocation ironMaterial = BCUtil.mcLoc("block/iron_block");
-        ResourceLocation clearColor = BCUtil.mcLoc("block/glass");
-        ResourceLocation candle = BCUtil.mcLoc("block/candle_lit");
+        Identifier goldMaterial = BCUtil.mcLoc("block/gold_block");
+        Identifier ironMaterial = BCUtil.mcLoc("block/iron_block");
+        Identifier clearColor = BCUtil.mcLoc("block/glass");
+        Identifier candle = BCUtil.mcLoc("block/candle_lit");
         fancyLampModel(blockModels, BCBlocks.CLEAR_FANCY_GOLD_LAMP, clearColor, goldMaterial);
         fancyLampModel(blockModels, BCBlocks.CLEAR_FANCY_IRON_LAMP, clearColor, ironMaterial);
         for (WeatheringCopper.WeatherState weatherState : WeatheringCopper.WeatherState.values()) {
-            ResourceLocation copperMaterial = COPPER_BLOCKS.get(weatherState);
+            Identifier copperMaterial = COPPER_BLOCKS.get(weatherState);
             DeferredBlock<FancyLampBlock> waxedLamp = BCBlocks.CLEAR_FANCY_COPPER_LAMP.getWaxed(weatherState);
             DeferredBlock<WeatheringCopperFancyLampBlock> weatheringLamp = BCBlocks.CLEAR_FANCY_COPPER_LAMP.getWeathering(weatherState);
             DeferredBlock<FancyLanternBlock> waxedLantern = BCBlocks.CLEAR_FANCY_COPPER_LANTERN.getWaxed(weatherState);
@@ -169,7 +169,7 @@ public class BCModelProvider extends ModelProvider {
         }
     }
 
-    private static ModelBuilder fancyLanternModel(BlockModelGenerators blockModels, Supplier<? extends FancyLanternBlock> block, ResourceLocation candle, ResourceLocation chain, ResourceLocation material) {
+    private static ModelBuilder fancyLanternModel(BlockModelGenerators blockModels, Supplier<? extends FancyLanternBlock> block, Identifier candle, Identifier chain, Identifier material) {
         return builder(blockModels, block)
                 .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(
                         BCModelTemplates.FANCY_LANTERN_STANDING,
@@ -181,7 +181,7 @@ public class BCModelProvider extends ModelProvider {
                 .build();
     }
 
-    private static ModelBuilder fancyLampModel(BlockModelGenerators blockModels, Supplier<? extends FancyLampBlock> block, ResourceLocation color, ResourceLocation material) {
+    private static ModelBuilder fancyLampModel(BlockModelGenerators blockModels, Supplier<? extends FancyLampBlock> block, Identifier color, Identifier material) {
         return builder(blockModels, block)
                 .withModelDispatch(AbstractFancyLightBlock.TYPE, lightBlockTypeDispatch(
                         BCModelTemplates.FANCY_LAMP_STANDING,

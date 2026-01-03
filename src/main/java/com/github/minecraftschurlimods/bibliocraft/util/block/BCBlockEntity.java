@@ -30,7 +30,9 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
+
+import java.util.Objects;
 
 /**
  * Abstract superclass for all block entities in this mod.
@@ -174,12 +176,13 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
         return saveCustomOnly(registries);
     }
 
-    public ResourceHandler<ItemResource> getCapability(@Nullable Direction side) {
+    public @Nullable ResourceHandler<ItemResource> getCapability(@Nullable Direction side) {
         return capability;
     }
 
+    @Override
     public Level level() {
-        return level;
+        return Objects.requireNonNull(level);
     }
 
     @Override

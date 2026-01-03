@@ -9,21 +9,26 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.OrderedSubmitNodeCollector;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
@@ -33,7 +38,7 @@ import java.util.List;
 
 @SuppressWarnings({"SameParameterValue"})
 public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, ClipboardBER.State> {
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard_block.png");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard_block.png");
     private static final Material CHECK_TEXTURE = new Material(Sheets.GUI_SHEET, BCUtil.bcLoc("check"));
     private static final Material X_TEXTURE = new Material(Sheets.GUI_SHEET, BCUtil.bcLoc("x"));
     private static final int CHECK_ICON_SIZE = 14;
@@ -62,7 +67,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         float scale = 1 / 256f;
         stack.scale(scale, scale, 1);
         stack.pushPose();
-        blit(stack, collector, RenderType.entityCutout(ClipboardBER.BACKGROUND), 0, 128, 0, 148, 0, 0.0f, 0.5f, 0.0f, 0.578125f, normal, 0xffffffff, state.lightCoords, OverlayTexture.NO_OVERLAY);
+        blit(stack, collector, RenderTypes.entityCutout(ClipboardBER.BACKGROUND), 0, 128, 0, 148, 0, 0.0f, 0.5f, 0.0f, 0.578125f, normal, 0xffffffff, state.lightCoords, OverlayTexture.NO_OVERLAY);
         drawText(stack, collector, state.title, 29, 2, 72, state.lightCoords);
         stack.translate(2, -1, 0);
         for (State.Line line : state.lines) {
@@ -82,7 +87,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
     }
 
     @Override
-    public void extractRenderState(ClipboardBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+    public void extractRenderState(ClipboardBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
         ClipboardContent content = blockEntity.getContent();
         state.title = content.title();
@@ -102,7 +107,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
 
     private void blitSprite(PoseStack pose, OrderedSubmitNodeCollector collector, Vector3fc normal, Material material, int light, int overlay) {
         TextureAtlasSprite sprite = materials.get(material);
-        blit(pose, collector, material.renderType(RenderType::entityCutout), 0, ClipboardBER.CHECK_ICON_SIZE, 0, ClipboardBER.CHECK_ICON_SIZE, -0.001f, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), normal, 0, light, overlay);
+        blit(pose, collector, material.renderType(RenderTypes::entityCutout), 0, ClipboardBER.CHECK_ICON_SIZE, 0, ClipboardBER.CHECK_ICON_SIZE, -0.001f, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), normal, 0, light, overlay);
     }
 
     private static void blit(PoseStack poseStack, OrderedSubmitNodeCollector collector, RenderType renderType, float x1, float x2, float y1, float y2, float z, float minU, float maxU, float minV, float maxV, Vector3fc normal, int color, int light, int overlay) {

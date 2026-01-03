@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import org.jetbrains.annotations.UnknownNullability;
 
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClockScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock.png");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/clock.png");
     private static final int IMAGE_WIDTH = 176;
     private static final int IMAGE_HEIGHT = 166;
     private final BlockPos pos;

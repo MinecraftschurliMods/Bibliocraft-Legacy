@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.api.woodtype;
 
 import net.minecraft.data.BlockFamily;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.Event;
@@ -17,10 +17,10 @@ import java.util.function.Supplier;
  * This event is not cancelable. This event is fired on the mod event bus.
  */
 public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusEvent {
-    private final SequencedMap<ResourceLocation, BibliocraftWoodType> values;
+    private final SequencedMap<Identifier, BibliocraftWoodType> values;
 
     @ApiStatus.Internal
-    public RegisterBibliocraftWoodTypesEvent(SequencedMap<ResourceLocation, BibliocraftWoodType> values) {
+    public RegisterBibliocraftWoodTypesEvent(SequencedMap<Identifier, BibliocraftWoodType> values) {
         this.values = values;
     }
 
@@ -33,7 +33,7 @@ public class RegisterBibliocraftWoodTypesEvent extends Event implements IModBusE
      * @param texture    The location of the wood type's planks texture, for use in datagen.
      * @param family     A supplier for the {@link BlockFamily} for the associated wood type, for use in datagen.
      */
-    public void register(ResourceLocation id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, ResourceLocation texture, Supplier<BlockFamily> family) {
+    public void register(Identifier id, WoodType woodType, Supplier<BlockBehaviour.Properties> properties, Identifier texture, Supplier<BlockFamily> family) {
         if (values.containsKey(id))
             throw new IllegalStateException("Wood type " + id + " is already registered");
         values.put(id, new BibliocraftWoodType(id, woodType, properties, texture, family));

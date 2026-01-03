@@ -26,7 +26,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +39,7 @@ import java.util.stream.Stream;
 
 @JeiPlugin
 public final class BCJeiPlugin implements IModPlugin {
-    private static final ResourceLocation UID = BCUtil.bcLoc("jei_plugin");
+    private static final Identifier UID = BCUtil.bcLoc("jei_plugin");
     private static final Lazy<BibliocraftWoodType> OAK = Lazy.of(() -> BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")));
     private static final DyeColor WHITE = DyeColor.WHITE;
     private static final Lazy<List<GroupedHolder<BibliocraftWoodType, Item, ?>>> WOOD_TYPE_DEFERRED_HOLDERS =
@@ -50,7 +50,7 @@ public final class BCJeiPlugin implements IModPlugin {
             Lazy.of(() -> List.of(BCItems.DISPLAY_CASE, BCItems.SEAT, BCItems.SMALL_SEAT_BACK, BCItems.RAISED_SEAT_BACK, BCItems.FLAT_SEAT_BACK, BCItems.TALL_SEAT_BACK, BCItems.FANCY_SEAT_BACK));
 
     @Override
-    public ResourceLocation getPluginUid() {
+    public Identifier getPluginUid() {
         return UID;
     }
 

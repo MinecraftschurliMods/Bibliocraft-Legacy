@@ -17,18 +17,18 @@ import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClipboardScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard.png");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard.png");
     private final ItemStack stack;
     private final InteractionHand hand;
     private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardContent.MAX_LINES];
@@ -146,8 +146,8 @@ public class ClipboardScreen extends Screen {
     }
 
     private static class CheckboxButton extends SpriteButton {
-        private static final ResourceLocation CHECK_TEXTURE = BCUtil.bcLoc("check");
-        private static final ResourceLocation X_TEXTURE = BCUtil.bcLoc("x");
+        private static final Identifier CHECK_TEXTURE = BCUtil.bcLoc("check");
+        private static final Identifier X_TEXTURE = BCUtil.bcLoc("x");
         private CheckboxState state = CheckboxState.EMPTY;
 
         public CheckboxButton(int x, int y, OnPress onPress) {
@@ -174,7 +174,7 @@ public class ClipboardScreen extends Screen {
 
         @Override
         @Nullable
-        protected ResourceLocation getSprite() {
+        protected Identifier getSprite() {
             return switch (state) {
                 case EMPTY -> null;
                 case CHECK -> CHECK_TEXTURE;

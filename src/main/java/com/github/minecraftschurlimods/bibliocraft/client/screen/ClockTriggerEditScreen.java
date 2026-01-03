@@ -14,12 +14,12 @@ import net.minecraft.client.input.MouseButtonInfo;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.resources.Identifier;
+import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 
 public class ClockTriggerEditScreen extends Screen {
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock_edit.png");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/clock_edit.png");
     private static final int WIDTH = 144;
     private static final int HEIGHT = 72;
     private final ClockScreen parent;

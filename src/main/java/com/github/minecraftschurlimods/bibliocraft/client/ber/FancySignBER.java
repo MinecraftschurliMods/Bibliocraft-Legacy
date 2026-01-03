@@ -17,7 +17,7 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, FancySignBER.State> {
     private final Font font;
@@ -32,7 +32,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, F
     }
 
     @Override
-    public void extractRenderState(FancySignBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+    public void extractRenderState(FancySignBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
         state.frontContent = blockEntity.getFrontContent();
         state.backContent = blockEntity.getBackContent();

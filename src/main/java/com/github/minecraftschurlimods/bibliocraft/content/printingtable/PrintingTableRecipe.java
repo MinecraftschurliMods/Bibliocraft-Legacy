@@ -6,7 +6,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +119,7 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
                     .rewards(AdvancementRewards.Builder.recipe(resourceKey))
                     .requirements(AdvancementRequirements.Strategy.OR);
             criteria.forEach(advancement::addCriterion);
-            output.accept(resourceKey, build(), advancement.build(resourceKey.location().withPrefix("recipes/")));
+            output.accept(resourceKey, build(), advancement.build(resourceKey.identifier().withPrefix("recipes/")));
         }
 
         public abstract PrintingTableRecipe build();

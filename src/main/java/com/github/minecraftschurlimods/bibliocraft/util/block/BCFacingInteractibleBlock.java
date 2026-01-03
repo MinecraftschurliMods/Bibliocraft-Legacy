@@ -39,8 +39,10 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
         if (slot != -1) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BCBlockEntity bcbe) {
-                if (bcbe.getLockKey() != null && !BaseContainerBlockEntity.canUnlock(player, bcbe.getLockKey(), BCUtil.getNameAtPos(level, pos)))
+                if (!bcbe.getLockKey().canUnlock(player)) {
+                    BaseContainerBlockEntity.sendChestLockedNotifications(pos.getCenter(), player, BCUtil.getNameAtPos(level, pos));
                     return InteractionResult.CONSUME;
+                }
                 ItemStack slotStack = bcbe.getItem(slot);
                 if (stack.isEmpty() || bcbe.canPlaceItem(slot, stack)) {
                     bcbe.setItem(slot, stack);

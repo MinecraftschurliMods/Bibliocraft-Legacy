@@ -12,18 +12,18 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class ClockTriggerElement extends Screen {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 20;
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/clock_trigger.png");
-    private static final ResourceLocation EDIT = BCUtil.bcLoc("edit");
-    private static final ResourceLocation EDIT_HIGHLIGHTED = BCUtil.bcLoc("edit_highlighted");
-    private static final ResourceLocation DELETE = BCUtil.bcLoc("delete");
-    private static final ResourceLocation DELETE_HIGHLIGHTED = BCUtil.bcLoc("delete_highlighted");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/clock_trigger.png");
+    private static final Identifier EDIT = BCUtil.bcLoc("edit");
+    private static final Identifier EDIT_HIGHLIGHTED = BCUtil.bcLoc("edit_highlighted");
+    private static final Identifier DELETE = BCUtil.bcLoc("delete");
+    private static final Identifier DELETE_HIGHLIGHTED = BCUtil.bcLoc("delete_highlighted");
     private static final ItemStack REDSTONE = new ItemStack(Items.REDSTONE);
     private static final ItemStack NOTE_BLOCK = new ItemStack(Items.NOTE_BLOCK);
     public final ClockTriggerPanel owner;

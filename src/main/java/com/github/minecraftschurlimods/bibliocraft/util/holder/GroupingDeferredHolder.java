@@ -1,6 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.util.holder;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.Unmodifiable;
 
@@ -28,7 +28,7 @@ public interface GroupingDeferredHolder<R, T extends R> {
     /**
      * @return An immutable collection of ids of all {@link DeferredHolder}s in this object.
      */
-    Collection<ResourceLocation> ids();
+    Collection<Identifier> ids();
 
     Stream<R> stream();
 }

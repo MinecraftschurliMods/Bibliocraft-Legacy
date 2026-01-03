@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -30,7 +30,7 @@ public final class Tests {
     }
 
     private static void init(ModContainer container) {
-        MutableTestFramework framework = FrameworkConfiguration.builder(ResourceLocation.fromNamespaceAndPath(container.getModId(), "tests"))
+        MutableTestFramework framework = FrameworkConfiguration.builder(Identifier.fromNamespaceAndPath(container.getModId(), "tests"))
                 .clientConfiguration(() -> ClientConfiguration.builder().toggleOverlayKey(GLFW.GLFW_KEY_J).openManagerKey(GLFW.GLFW_KEY_N).build())
                 .enable(Feature.CLIENT_SYNC, Feature.CLIENT_MODIFICATIONS, Feature.TEST_STORE)
                 .dumpers(new GitHubActionsStepSummaryDumper("Bibliocraft Gametest Summary"))

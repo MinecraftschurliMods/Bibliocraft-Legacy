@@ -2,7 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.api.lockandkey;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Holds the behaviors of the Lock and Key item for different block entities. Get via {@link BibliocraftApi#getLockAndKeyBehaviors()}.

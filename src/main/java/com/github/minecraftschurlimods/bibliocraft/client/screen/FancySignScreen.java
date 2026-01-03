@@ -21,7 +21,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import java.util.HexFormat;
@@ -29,7 +29,7 @@ import java.util.HexFormat;
 public class FancySignScreen extends Screen {
     public static final int WIDTH = 140;
     public static final int HEIGHT = 80;
-    private static final ResourceLocation BACKGROUND = BCUtil.bcLoc("textures/gui/fancy_sign.png");
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/fancy_sign.png");
     private final BlockPos pos;
     private final boolean back;
     private FormattedTextArea textArea;

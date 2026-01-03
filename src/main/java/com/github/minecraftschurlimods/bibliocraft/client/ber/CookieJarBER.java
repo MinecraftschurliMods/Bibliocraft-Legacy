@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Comparator;
 import java.util.List;
@@ -38,7 +38,7 @@ public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, C
     }
 
     @Override
-    public void extractRenderState(CookieJarBlockEntity blockEntity, State state, float partialTicks, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay p_446944_) {
+    public void extractRenderState(CookieJarBlockEntity blockEntity, State state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
         LegacyRandomSource random = new LegacyRandomSource(blockEntity.getBlockPos().asLong());
         int i = HashCommon.long2int(blockEntity.getBlockPos().asLong());

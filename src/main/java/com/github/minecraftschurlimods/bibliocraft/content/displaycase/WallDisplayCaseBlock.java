@@ -16,7 +16,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class WallDisplayCaseBlock extends AbstractDisplayCaseBlock {
     private static final VoxelShape NORTH_SHAPE = Shapes.box(0.0625, 0, 0.5, 0.9375, 1, 1);

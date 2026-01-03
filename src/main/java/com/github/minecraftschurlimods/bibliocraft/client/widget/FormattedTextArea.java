@@ -3,7 +3,8 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.Util;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.util.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -18,8 +19,7 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
-import org.jetbrains.annotations.Nullable;
-import org.lwjgl.glfw.GLFW;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,27 +134,27 @@ public class FormattedTextArea extends AbstractWidget {
         int min = Math.clamp(Math.min(cursorX, highlightX), 0, text.length());
         int max = Math.clamp(Math.max(cursorX, highlightX), 0, text.length());
         switch (event.key()) {
-            case GLFW.GLFW_KEY_DOWN, GLFW.GLFW_KEY_ENTER, GLFW.GLFW_KEY_KP_ENTER:
+            case InputConstants.KEY_DOWN, InputConstants.KEY_RETURN, InputConstants.KEY_NUMPADENTER:
                 if (event.hasShiftDown()) {
                     moveCursor(text.length(), cursorY, true);
                 } else if (cursorY < getEffectiveMaxLines()) {
                     moveCursor(getCursorXForNewLine(cursorY, cursorY + 1), cursorY + 1, false);
                 }
                 return true;
-            case GLFW.GLFW_KEY_UP:
+            case InputConstants.KEY_UP:
                 if (event.hasShiftDown()) {
                     moveCursor(0, cursorY, true);
                 } else if (cursorY > 0) {
                     moveCursor(getCursorXForNewLine(cursorY, cursorY - 1), cursorY - 1, false);
                 }
                 return true;
-            case GLFW.GLFW_KEY_LEFT:
+            case InputConstants.KEY_LEFT:
                 moveCursor(event.hasControlDown() ? getWordPosition(-1) : Math.max(0, cursorX - 1), cursorY, event.hasShiftDown());
                 return true;
-            case GLFW.GLFW_KEY_RIGHT:
+            case InputConstants.KEY_RIGHT:
                 moveCursor(event.hasControlDown() ? getWordPosition(1) : Math.min(text.length(), cursorX + 1), cursorY, event.hasShiftDown());
                 return true;
-            case GLFW.GLFW_KEY_BACKSPACE:
+            case InputConstants.KEY_BACKSPACE:
                 if (highlightX != cursorX) {
                     deleteHighlight();
                 } else if (cursorX > 0) {
@@ -163,7 +163,7 @@ public class FormattedTextArea extends AbstractWidget {
                     moveCursor(x, cursorY, false);
                 }
                 return true;
-            case GLFW.GLFW_KEY_DELETE:
+            case InputConstants.KEY_DELETE:
                 if (highlightX != cursorX) {
                     deleteHighlight();
                 } else if (cursorX < lines.get(cursorY).text().length()) {
@@ -171,10 +171,10 @@ public class FormattedTextArea extends AbstractWidget {
                     lines.set(cursorY, line.withText(text.substring(0, cursorX) + text.substring(x)));
                 }
                 return true;
-            case GLFW.GLFW_KEY_HOME:
+            case InputConstants.KEY_HOME:
                 moveCursor(0, cursorY, event.hasShiftDown());
                 return true;
-            case GLFW.GLFW_KEY_END:
+            case InputConstants.KEY_END:
                 moveCursor(text.length(), cursorY, event.hasShiftDown());
                 return true;
         }
@@ -187,7 +187,7 @@ public class FormattedTextArea extends AbstractWidget {
             ClientUtil.getMc().keyboardHandler.setClipboard(text.substring(min, max));
             return true;
         }
-        if (event.isPaste() || event.key() == GLFW.GLFW_KEY_INSERT) {
+        if (event.isPaste() || event.key() == InputConstants.KEY_INSERT) {
             insertText(ClientUtil.getMc().keyboardHandler.getClipboard());
             return true;
         }

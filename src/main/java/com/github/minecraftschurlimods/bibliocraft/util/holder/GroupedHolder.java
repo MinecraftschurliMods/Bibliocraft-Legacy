@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util.holder;
 
 import com.mojang.datafixers.util.Function3;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -59,7 +59,7 @@ public class GroupedHolder<K, R, T extends R> implements GroupingDeferredHolder<
     }
 
     @Override
-    public Collection<ResourceLocation> ids() {
+    public Collection<Identifier> ids() {
         return map.values().stream().map(DeferredHolder::getId).toList();
     }
 
@@ -141,7 +141,7 @@ public class GroupedHolder<K, R, T extends R> implements GroupingDeferredHolder<
         }
 
         @Override
-        public Collection<ResourceLocation> ids() {
+        public Collection<Identifier> ids() {
             return streamHolders().map(DeferredHolder::getId).toList();
         }
 

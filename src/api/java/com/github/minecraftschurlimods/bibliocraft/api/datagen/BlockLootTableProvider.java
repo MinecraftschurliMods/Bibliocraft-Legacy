@@ -2,14 +2,14 @@ package com.github.minecraftschurlimods.bibliocraft.api.datagen;
 
 import com.mojang.serialization.Codec;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.RandomSequence;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.RandomSupport;
@@ -66,10 +66,10 @@ public abstract class BlockLootTableProvider implements DataProvider {
 
     private CompletableFuture<?> run(CachedOutput output, HolderLookup.Provider provider) {
         generate();
-        Map<RandomSupport.Seed128bit, ResourceLocation> seeds = new Object2ObjectOpenHashMap<>();
+        Map<RandomSupport.Seed128bit, Identifier> seeds = new Object2ObjectOpenHashMap<>();
         return CompletableFuture.allOf(map.entrySet().stream().map(entry -> {
-            ResourceLocation location = entry.getKey().location();
-            ResourceLocation sequence = seeds.put(RandomSequence.seedForKey(location), location);
+            Identifier location = entry.getKey().identifier();
+            Identifier sequence = seeds.put(RandomSequence.seedForKey(location), location);
             if (sequence != null) {
                 Util.logAndPauseIfInIde("Loot table random sequence seed collision on " + sequence + " and " + location);
             }
