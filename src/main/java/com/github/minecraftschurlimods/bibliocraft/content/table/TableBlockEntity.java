@@ -46,7 +46,7 @@ public class TableBlockEntity extends BCBlockEntity {
         super.setChanged();
         requestModelDataUpdate();
         if (level() instanceof ServerLevel serverLevel) {
-            for (ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)) {
+            for (ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(ChunkPos.containing(worldPosition), false)) {
                 player.connection.send(getUpdatePacket());
             }
         }

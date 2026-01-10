@@ -8,7 +8,6 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -108,15 +107,14 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     private void calculateRecipe() {
         if (!(level() instanceof ServerLevel serverLevel)) return;
         RecipeManager recipes = serverLevel.recipeAccess();
-        RegistryAccess registries = serverLevel.registryAccess();
         CraftingInput input = asCraftInput();
         recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, serverLevel).orElse(null);
-        super.setItem(CRAFTING_RESULT_SLOT_INDEX, recipe == null ? ItemStack.EMPTY : recipe.value().assemble(input, registries).copy());
+        super.setItem(CRAFTING_RESULT_SLOT_INDEX, recipe == null ? ItemStack.EMPTY : recipe.value().assemble(input).copy());
     }
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        if (!stack.getCraftingRemainder().isEmpty()) {
+        if (stack.getCraftingRemainder() != null) {
             return false;
         } else if (isSlotDisabled(slot)) {
             return false;
@@ -189,7 +187,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         if (blockEntity.recipe == null) return;
         CraftingRecipe recipe = blockEntity.recipe.value();
         CraftingInput input = blockEntity.asCraftInput();
-        ItemStack result = recipe.assemble(input, level.registryAccess());
+        ItemStack result = recipe.assemble(input);
         ItemStack resultStack = blockEntity.getItem(CRAFTING_RESULT_SLOT_INDEX);
         if (!resultStack.isEmpty() && !ItemStack.isSameItemSameComponents(result, resultStack))
             return;

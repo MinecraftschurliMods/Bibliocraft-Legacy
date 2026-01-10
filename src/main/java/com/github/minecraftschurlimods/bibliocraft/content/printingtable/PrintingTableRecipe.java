@@ -12,7 +12,6 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 
@@ -58,7 +57,7 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
         for (int i = 0; i < nonnulllist.size(); i++) {
             ItemStack item = input.getItem(i);
-            nonnulllist.set(i, item.getCraftingRemainder());
+            nonnulllist.set(i, item.getCraftingRemainder() != null ? item.getCraftingRemainder().create() : ItemStack.EMPTY);
         }
 
         return nonnulllist;
@@ -108,11 +107,6 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         }
 
         @Override
-        public Item getResult() {
-            return result.getItem();
-        }
-
-        @Override
         public void save(RecipeOutput output, ResourceKey<Recipe<?>> resourceKey) {
             Advancement.Builder advancement = output.advancement()
                     .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceKey))
@@ -120,6 +114,11 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
                     .requirements(AdvancementRequirements.Strategy.OR);
             criteria.forEach(advancement::addCriterion);
             output.accept(resourceKey, build(), advancement.build(resourceKey.identifier().withPrefix("recipes/")));
+        }
+
+        @Override
+        public ResourceKey<Recipe<?>> defaultId() {
+            return RecipeBuilder.getDefaultRecipeId(result);
         }
 
         public abstract PrintingTableRecipe build();

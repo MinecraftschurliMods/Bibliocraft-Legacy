@@ -24,6 +24,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
 
     public static class Builder extends PrintingTableRecipe.Builder {
         private final List<Ingredient> ingredients = new ArrayList<>();
-        private NumberProvider experienceCost = null;
+        private @Nullable NumberProvider experienceCost = null;
 
         public Builder(ItemStack result, int duration) {
             super(result, duration);

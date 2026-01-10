@@ -10,8 +10,7 @@ public class FancyCrafterScreen extends BCScreenWithToggleableSlots<FancyCrafter
     private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/fancy_crafter.png");
 
     public FancyCrafterScreen(FancyCrafterMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title, BACKGROUND);
-        imageHeight = 192;
+        super(menu, inventory, title, BACKGROUND, 176, 192);
         inventoryLabelY = 99;
     }
 }

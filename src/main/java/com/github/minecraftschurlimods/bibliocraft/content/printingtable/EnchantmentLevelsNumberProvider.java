@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
-import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -8,13 +7,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.tags.EnchantmentTags;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
 
@@ -35,8 +33,8 @@ public record EnchantmentLevelsNumberProvider(DataComponentType<?> dataComponent
 
     @Override
     public float getFloat(LootContext context) {
-        ItemStack stack = context.getParameter(LootContextParams.TOOL);
-        if (stack.isEmpty() || !stack.has(dataComponent)) return 0;
+        ItemInstance stack = context.getOptionalParameter(LootContextParams.TOOL);
+        if (stack == null || !stack.has(dataComponent)) return 0;
         if (!(stack.get(dataComponent) instanceof ItemEnchantments enchantments)) return 0;
         float cost = 0;
         for (Holder<Enchantment> enchantment : enchantments.keySet()) {
@@ -59,7 +57,7 @@ public record EnchantmentLevelsNumberProvider(DataComponentType<?> dataComponent
     }
 
     @Override
-    public LootNumberProviderType getType() {
-        return BCRecipes.ENCHANTMENT_LEVELS_NUMBER_PROVIDER.get();
+    public MapCodec<? extends NumberProvider> codec() {
+        return CODEC;
     }
 }

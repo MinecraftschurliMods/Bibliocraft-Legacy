@@ -11,6 +11,11 @@ import net.minecraft.world.entity.player.Inventory;
 public class BCMenuScreen<T extends BCMenu<?>> extends AbstractContainerScreen<T> {
     private final Identifier background;
 
+    public BCMenuScreen(T menu, Inventory inventory, Component title, Identifier background, int imageWidth, int imageHeight) {
+        super(menu, inventory, title, imageWidth, imageHeight);
+        this.background = background;
+    }
+
     public BCMenuScreen(T menu, Inventory inventory, Component title, Identifier background) {
         super(menu, inventory, title);
         this.background = background;

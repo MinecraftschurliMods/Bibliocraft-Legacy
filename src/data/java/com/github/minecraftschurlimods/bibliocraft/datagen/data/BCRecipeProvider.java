@@ -25,6 +25,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -49,7 +50,7 @@ public final class BCRecipeProvider extends RecipeProvider {
             String name = color.getSerializedName();
             ItemStack swordPedestal = new ItemStack(BCItems.SWORD_PEDESTAL.get());
             swordPedestal.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor()));
-            shaped(RecipeCategory.DECORATIONS, swordPedestal)
+            shaped(RecipeCategory.DECORATIONS, ItemStackTemplate.fromNonEmptyStack(swordPedestal))
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
