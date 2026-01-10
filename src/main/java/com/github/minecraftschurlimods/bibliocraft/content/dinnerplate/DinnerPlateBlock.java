@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -108,14 +109,14 @@ public class DinnerPlateBlock extends BCEntityBlock {
         switch (consumable.animation()) {
             case DRINK -> {
                 volume = 0.5f;
-                pitch = player.level().random.nextFloat() * 0.1f + 0.9f;
+                pitch = player.level().getRandom().nextFloat() * 0.1f + 0.9f;
             }
             case EAT -> {
                 RandomSource random = player.getRandom();
                 for (int i = 0; i < amount; ++i) {
                     Vec3 speed = new Vec3(((double) random.nextFloat() - 0.5) * 0.1, Math.random() * 0.1 + 0.1, 0).xRot(-player.getXRot() * (float) (Math.PI / 180)).yRot(-player.getYRot() * (float) (Math.PI / 180));
                     Vec3 pos = new Vec3(((double) random.nextFloat() - 0.5) * 0.3, (double) (-random.nextFloat()) * 0.6 - 0.3, 0.6).xRot(-player.getXRot() * (float) (Math.PI / 180)).yRot(-player.getYRot() * (float) (Math.PI / 180)).add(player.getX(), player.getEyeY(), player.getZ());
-                    player.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, stack), pos.x, pos.y, pos.z, speed.x, speed.y + 0.05, speed.z);
+                    player.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, ItemStackTemplate.fromNonEmptyStack(stack)), pos.x, pos.y, pos.z, speed.x, speed.y + 0.05, speed.z);
                 }
                 volume = 0.5f + 0.5f * (float) random.nextInt(2);
                 pitch = (random.nextFloat() - random.nextFloat()) * 0.2f + 1f;

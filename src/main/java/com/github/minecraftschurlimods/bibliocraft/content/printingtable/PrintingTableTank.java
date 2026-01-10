@@ -41,7 +41,7 @@ public class PrintingTableTank extends FluidStacksResourceHandler {
         blockEntity.setChanged();
         if (blockEntity.level() instanceof ServerLevel serverLevel) {
             BlockPos pos = blockEntity.getBlockPos();
-            PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(pos), new PrintingTableTankSyncPacket(pos, getResource(0), getAmountAsInt(0)));
+            PacketDistributor.sendToPlayersTrackingChunk(serverLevel, ChunkPos.containing(pos), new PrintingTableTankSyncPacket(pos, getResource(0), getAmountAsInt(0)));
         }
     }
 

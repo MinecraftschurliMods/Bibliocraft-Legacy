@@ -41,7 +41,7 @@ public record WrittenBigBookContent(List<List<FormattedLine>> pages, String titl
 
     @Nullable
     public WrittenBigBookContent tryCraftCopy() {
-        return generation >= WrittenBookContent.MAX_CRAFTABLE_GENERATION ? null : new WrittenBigBookContent(new ArrayList<>(pages), title, author, generation + 1, currentPage);
+        return generation >= WrittenBookContent.MAX_GENERATION ? null : new WrittenBigBookContent(new ArrayList<>(pages), title, author, generation + 1, currentPage);
     }
 
     @Override

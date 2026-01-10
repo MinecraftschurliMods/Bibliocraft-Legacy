@@ -130,7 +130,7 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
     public void extractRenderState(ClockBlockEntity blockEntity, State state, float p_446851_, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, p_446851_, p_445788_, breakProgress);
         Level level = BCUtil.nonNull(blockEntity.getLevel());
-        state.dayTime = level.getDayTime();
+        state.dayTime = level.getDefaultClockTime();
         state.gameTime = level.getGameTime();
         //state.isNaturalDimension = level.dimensionType().natural(); // TODO how to replace?
 

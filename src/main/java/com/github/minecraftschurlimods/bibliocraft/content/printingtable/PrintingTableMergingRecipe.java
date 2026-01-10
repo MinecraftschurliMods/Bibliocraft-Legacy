@@ -83,7 +83,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public ItemStack assemble(PrintingTableRecipeInput input, HolderLookup.Provider registries) {
+    public ItemStack assemble(PrintingTableRecipeInput input) {
         ItemStack result = input.right().copy();
         DataComponentMap dataComponents = input.left()
                 .stream()
@@ -101,16 +101,15 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         if (rightComponents.isEmpty()) return leftComponents;
         DataComponentMap.Builder result = DataComponentMap.builder();
         for (DataComponentType<?> type : Sets.union(leftComponents.keySet(), rightComponents.keySet())) {
-            assert type != null;
             mergeComponent(leftComponents, rightComponents, type, result, registries);
         }
         return result.build();
     }
 
     private <T> void mergeComponent(DataComponentMap leftComponents, DataComponentMap rightComponents, DataComponentType<T> type, DataComponentMap.Builder resultBuilder, HolderLookup.Provider registries) {
-        @Nullable T left = leftComponents.get(type);
-        @Nullable T right = rightComponents.get(type);
-        @Nullable T result;
+        T left = leftComponents.get(type);
+        T right = rightComponents.get(type);
+        T result;
         @SuppressWarnings("unchecked")
         Merger<T> merger = (Merger<T>) mergers.get(type);
         if (left == null) {

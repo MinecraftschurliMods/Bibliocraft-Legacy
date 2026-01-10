@@ -9,7 +9,6 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -53,7 +52,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
     }
 
     @Override
-    public ItemStack assemble(PrintingTableRecipeInput input, HolderLookup.Provider registries) {
+    public ItemStack assemble(PrintingTableRecipeInput input) {
         ItemStack result = this.result.copy();
         List<Filterable<Component>> list = input
                 .left()

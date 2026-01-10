@@ -44,7 +44,7 @@ public class ClockBlockEntity extends BlockEntity {
                 setPowered(level, pos, false);
             }
         }
-        int time = (int) (level.getDayTime() % BCUtil.getDayDuration(level));
+        int time = (int) (level.getDefaultClockTime() % BCUtil.getDayDuration(level));
         if (blockEntity.triggersMap.containsKey(time)) {
             Collection<ClockTrigger> trigger = blockEntity.triggersMap.get(time);
             if (trigger.stream().anyMatch(ClockTrigger::sound)) {
@@ -79,7 +79,7 @@ public class ClockBlockEntity extends BlockEntity {
         tickSound = packet.tickSound();
         addTriggers(packet.triggers());
         if (level instanceof ServerLevel serverLevel) {
-            PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), packet);
+            PacketDistributor.sendToPlayersTrackingChunk(serverLevel, ChunkPos.containing(getBlockPos()), packet);
         }
     }
 

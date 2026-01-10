@@ -5,7 +5,6 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -66,7 +65,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
-    public ItemStack assemble(PrintingTableRecipeInput input, HolderLookup.Provider registries) {
+    public ItemStack assemble(PrintingTableRecipeInput input) {
         ItemStack stack = result.copy();
         for (DataComponentType type : dataComponentTypes) {
             stack.set(type, input.right().get(type));

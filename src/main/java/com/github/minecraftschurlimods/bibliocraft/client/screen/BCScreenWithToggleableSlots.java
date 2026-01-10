@@ -15,7 +15,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
@@ -23,6 +23,11 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlots> extends BCMenuScreen<T> {
     private static final Identifier DISABLED_SLOT = BCUtil.mcLoc("container/crafter/disabled_slot");
     private final Player player;
+
+    public BCScreenWithToggleableSlots(T menu, Inventory inventory, Component title, Identifier background, int imageWidth, int imageHeight) {
+        super(menu, inventory, title, background, imageWidth, imageHeight);
+        player = inventory.player;
+    }
 
     public BCScreenWithToggleableSlots(T menu, Inventory inventory, Component title, Identifier background) {
         super(menu, inventory, title, background);
@@ -47,7 +52,7 @@ public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlot
     }
 
     @Override
-    protected void slotClicked(Slot slot, int slotId, int mouseButton, ClickType type) {
+    protected void slotClicked(Slot slot, int slotId, int mouseButton, ContainerInput type) {
         if (slot instanceof ToggleableSlot<?> && !slot.hasItem() && !player.isSpectator()) {
             switch (type) {
                 case PICKUP -> {
