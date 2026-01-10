@@ -17,7 +17,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.function.Supplier;
@@ -38,8 +37,8 @@ public interface BCRecipes {
     Supplier<RecipeSerializer<PrintingTableMergingRecipe>> PRINTING_TABLE_MERGING =
             BCRegistries.RECIPE_SERIALIZERS.register("printing_table_merging", serializer(PrintingTableMergingRecipe.CODEC, PrintingTableMergingRecipe.STREAM_CODEC));
 
-    Supplier<LootNumberProviderType> ENCHANTMENT_LEVELS_NUMBER_PROVIDER =
-            BCRegistries.NUMBER_PROVIDERS.register("enchantment_levels", () -> new LootNumberProviderType(EnchantmentLevelsNumberProvider.CODEC));
+    Supplier<MapCodec<EnchantmentLevelsNumberProvider>> ENCHANTMENT_LEVELS_NUMBER_PROVIDER =
+            BCRegistries.NUMBER_PROVIDERS.register("enchantment_levels", () -> EnchantmentLevelsNumberProvider.CODEC);
 
     Supplier<RecipeBookCategory> PRINTING_TABLE_RECIPE_CATEGORY =
             BCRegistries.RECIPE_CATEGORIES.register("printing_table", RecipeBookCategory::new);

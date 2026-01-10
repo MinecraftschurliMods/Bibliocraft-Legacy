@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.init;
 
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.inventory.MenuType;
@@ -9,24 +10,24 @@ import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public interface BCRegistries {
     // @formatter:off
-    DeferredRegister.Blocks                  BLOCKS             = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
-    DeferredRegister.Items                   ITEMS              = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
-    DeferredRegister.Entities                ENTITIES           = DeferredRegister.createEntities(BibliocraftApi.MOD_ID);
-    DeferredRegister.DataComponents          DATA_COMPONENTS    = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
-    DeferredRegister<CreativeModeTab>        CREATIVE_TABS      = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,         BibliocraftApi.MOD_ID);
-    DeferredRegister<BlockEntityType<?>>     BLOCK_ENTITIES     = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,         BibliocraftApi.MOD_ID);
-    DeferredRegister<MenuType<?>>            MENUS              = DeferredRegister.create(Registries.MENU,                      BibliocraftApi.MOD_ID);
-    DeferredRegister<LootNumberProviderType> NUMBER_PROVIDERS   = DeferredRegister.create(Registries.LOOT_NUMBER_PROVIDER_TYPE, BibliocraftApi.MOD_ID);
-    DeferredRegister<RecipeType<?>>          RECIPE_TYPES       = DeferredRegister.create(Registries.RECIPE_TYPE,               BibliocraftApi.MOD_ID);
-    DeferredRegister<RecipeSerializer<?>>    RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER,         BibliocraftApi.MOD_ID);
-    DeferredRegister<RecipeBookCategory>     RECIPE_CATEGORIES  = DeferredRegister.create(Registries.RECIPE_BOOK_CATEGORY,      BibliocraftApi.MOD_ID);
-    DeferredRegister<SoundEvent>             SOUND_EVENTS       = DeferredRegister.create(Registries.SOUND_EVENT,               BibliocraftApi.MOD_ID);
+    DeferredRegister.Blocks                              BLOCKS             = DeferredRegister.createBlocks(BibliocraftApi.MOD_ID);
+    DeferredRegister.Items                               ITEMS              = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
+    DeferredRegister.Entities                            ENTITIES           = DeferredRegister.createEntities(BibliocraftApi.MOD_ID);
+    DeferredRegister.DataComponents                      DATA_COMPONENTS    = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
+    DeferredRegister<CreativeModeTab>                    CREATIVE_TABS      = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,         BibliocraftApi.MOD_ID);
+    DeferredRegister<BlockEntityType<?>>                 BLOCK_ENTITIES     = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,         BibliocraftApi.MOD_ID);
+    DeferredRegister<MenuType<?>>                        MENUS              = DeferredRegister.create(Registries.MENU,                      BibliocraftApi.MOD_ID);
+    DeferredRegister<MapCodec<? extends NumberProvider>> NUMBER_PROVIDERS   = DeferredRegister.create(Registries.LOOT_NUMBER_PROVIDER_TYPE, BibliocraftApi.MOD_ID);
+    DeferredRegister<RecipeType<?>>                      RECIPE_TYPES       = DeferredRegister.create(Registries.RECIPE_TYPE,               BibliocraftApi.MOD_ID);
+    DeferredRegister<RecipeSerializer<?>>                RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER,         BibliocraftApi.MOD_ID);
+    DeferredRegister<RecipeBookCategory>                 RECIPE_CATEGORIES  = DeferredRegister.create(Registries.RECIPE_BOOK_CATEGORY,      BibliocraftApi.MOD_ID);
+    DeferredRegister<SoundEvent>                         SOUND_EVENTS       = DeferredRegister.create(Registries.SOUND_EVENT,               BibliocraftApi.MOD_ID);
     // @formatter:on
 
     /**

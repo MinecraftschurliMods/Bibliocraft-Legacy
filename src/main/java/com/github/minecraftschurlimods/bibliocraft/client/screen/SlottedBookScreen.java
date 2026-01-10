@@ -18,8 +18,7 @@ public class SlottedBookScreen extends AbstractContainerScreen<SlottedBookMenu> 
     private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/slotted_book.png");
 
     public SlottedBookScreen(SlottedBookMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title);
-        imageHeight = 223;
+        super(menu, inventory, title, 176, 223);
         inventoryLabelY = imageHeight - 92;
     }
 

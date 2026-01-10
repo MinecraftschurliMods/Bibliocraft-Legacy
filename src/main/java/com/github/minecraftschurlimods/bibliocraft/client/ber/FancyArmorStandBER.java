@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.Fancy
 import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.FancyArmorStandEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -13,6 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
@@ -42,7 +42,7 @@ public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBl
             return;
         }
         state.entity = entityRenderDispatcher.extractEntity(entity, 0);
-        state.entity.lightCoords = LightTexture.FULL_BRIGHT;
+        state.entity.lightCoords = LightCoordsUtil.FULL_BRIGHT;
     }
 
     @Override

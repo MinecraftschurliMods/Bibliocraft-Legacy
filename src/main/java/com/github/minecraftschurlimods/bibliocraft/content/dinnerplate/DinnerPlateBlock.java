@@ -108,7 +108,7 @@ public class DinnerPlateBlock extends BCEntityBlock {
         switch (consumable.animation()) {
             case DRINK -> {
                 volume = 0.5f;
-                pitch = player.level().random.nextFloat() * 0.1f + 0.9f;
+                pitch = player.level().getRandom().nextFloat() * 0.1f + 0.9f;
             }
             case EAT -> {
                 RandomSource random = player.getRandom();

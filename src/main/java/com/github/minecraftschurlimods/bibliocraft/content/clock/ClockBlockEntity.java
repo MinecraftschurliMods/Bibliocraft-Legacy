@@ -78,7 +78,7 @@ public class ClockBlockEntity extends BlockEntity {
         tickSound = packet.tickSound();
         addTriggers(packet.triggers());
         if (level instanceof ServerLevel serverLevel) {
-            PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), packet);
+            PacketDistributor.sendToPlayersTrackingChunk(serverLevel, ChunkPos.containing(getBlockPos()), packet);
         }
     }
 

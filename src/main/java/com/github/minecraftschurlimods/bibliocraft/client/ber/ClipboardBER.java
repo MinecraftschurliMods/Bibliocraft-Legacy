@@ -9,7 +9,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingBlock;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.OrderedSubmitNodeCollector;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -27,6 +26,7 @@ import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
@@ -96,7 +96,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
             state.lines.add(new State.Line(page.checkboxes().get(i), page.lines().get(i)));
         }
-        state.lightCoords = LightTexture.FULL_BRIGHT;
+        state.lightCoords = LightCoordsUtil.FULL_BRIGHT;
     }
 
     private void drawText(PoseStack pose, OrderedSubmitNodeCollector collector, String text, float x, float y, int width, int light) {

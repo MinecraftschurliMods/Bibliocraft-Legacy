@@ -1,6 +1,5 @@
 package com.github.minecraftschurlimods.bibliocraft.content.printingtable;
 
-import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -14,7 +13,6 @@ import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
 
@@ -59,7 +57,7 @@ public record EnchantmentLevelsNumberProvider(DataComponentType<?> dataComponent
     }
 
     @Override
-    public LootNumberProviderType getType() {
-        return BCRecipes.ENCHANTMENT_LEVELS_NUMBER_PROVIDER.get();
+    public MapCodec<? extends NumberProvider> codec() {
+        return CODEC;
     }
 }

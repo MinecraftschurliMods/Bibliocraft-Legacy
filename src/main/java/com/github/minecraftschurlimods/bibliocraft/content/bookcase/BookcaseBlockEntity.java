@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.model.data.ModelData;
 import net.neoforged.neoforge.model.data.ModelProperty;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 public class BookcaseBlockEntity extends BCMenuBlockEntity {
     private static final int SLOTS = 16;
@@ -49,7 +48,7 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
         super.setChanged();
         requestModelDataUpdate();
         if (level() instanceof ServerLevel serverLevel) {
-            for (ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)) {
+            for (ServerPlayer player : serverLevel.getChunkSource().chunkMap.getPlayers(ChunkPos.containing(worldPosition), false)) {
                 player.connection.send(getUpdatePacket());
             }
         }
