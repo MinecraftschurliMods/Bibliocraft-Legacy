@@ -59,8 +59,7 @@ public final class BCEventHandler {
     // @formatter:off
     @ApiStatus.Internal
     public static void init(IEventBus modBus) {
-        modBus.addListener(EventPriority.LOWEST, FMLConstructModEvent.class, BCEventHandler::constructMod);
-        modBus.addListener(EventPriority.LOWEST, FMLCommonSetupEvent.class,  BCEventHandler::commonSetup);
+        modBus.addListener(EventPriority.LOWEST, FMLCommonSetupEvent.class, BCEventHandler::commonSetup);
         modBus.addListener(EntityAttributeCreationEvent.class,      BCEventHandler::entityAttributeCreation);
         modBus.addListener(RegisterCapabilitiesEvent.class,         BCEventHandler::registerCapabilities);
         modBus.addListener(RegisterPayloadHandlersEvent.class,      BCEventHandler::registerPayloadHandlers);
@@ -69,11 +68,6 @@ public final class BCEventHandler {
         NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, BCEventHandler::rightClickBlock);
     }
     // @formatter:on
-
-    private static void constructMod(FMLConstructModEvent event) {
-        ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register();
-        BCRegistries.init(BCUtil.nonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus()));
-    }
 
     private static void commonSetup(FMLCommonSetupEvent event) {
         ((LockAndKeyBehaviorsImpl) BibliocraftApi.getLockAndKeyBehaviors()).register();
