@@ -116,13 +116,10 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         if (isSlotDisabled(slot) && !stack.isEmpty()) {
             setSlotDisabled(slot, false);
         }
-
         ItemStack old = getItem(slot).copy();
         super.setItem(slot, stack);
         recipeInput = null;
-        
-        boolean changed = !ItemStack.isSameItemSameComponents(old, stack);
-        if (changed || recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
+        if (!ItemStack.isSameItemSameComponents(old, stack) || recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
             calculateRecipe(false);
             setChanged();
         }
