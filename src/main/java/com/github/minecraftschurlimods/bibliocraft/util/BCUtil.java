@@ -103,6 +103,17 @@ public final class BCUtil {
     }
 
     /**
+     * Returns the duration of a day in the given {@link Level}.
+     *
+     * @param level The {@link Level} to get the day duration for.
+     * @return The duration of a day in the given {@link Level}.
+     */
+    public static int getDayDuration(Level level) {
+        float factor = level.getDayTimePerTick();
+        return factor < 0 ? Level.TICKS_PER_DAY : (int) (Level.TICKS_PER_DAY * factor);
+    }
+
+    /**
      * Looks up the total amount of experience represented by a certain level.
      *
      * @param level The experience level to lookup the experience amount for.

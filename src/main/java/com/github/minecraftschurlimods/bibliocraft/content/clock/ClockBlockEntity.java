@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.clock;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
+import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -44,7 +45,7 @@ public class ClockBlockEntity extends BlockEntity {
                 setPowered(level, pos, false);
             }
         }
-        int time = (int) (level.getDayTime() % 24000);
+        int time = (int) (level.getDayTime() % BCUtil.getDayDuration(level));
         if (blockEntity.triggersMap.containsKey(time)) {
             Collection<ClockTrigger> trigger = blockEntity.triggersMap.get(time);
             if (trigger.stream().anyMatch(ClockTrigger::sound)) {
@@ -88,7 +89,7 @@ public class ClockBlockEntity extends BlockEntity {
         this.triggersMap.clear();
         for (ClockTrigger trigger : triggers) {
             this.triggers.add(trigger);
-            this.triggersMap.put(trigger.getInGameTime(), trigger);
+            this.triggersMap.put(trigger.getInGameTime(getLevel()), trigger);
         }
         this.triggers.sort(ClockTrigger::compareTo);
         setChanged();
