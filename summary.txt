@@ -1,1 +1,1 @@
-Mending in Sword Pedestals, and some small fixes
+Some bugfixes
