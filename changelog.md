@@ -1,4 +1,7 @@
+# Changes
+
+- Redstone books, slotted books and stockroom catalogs now stack to 1
+
 # Fixes
 
-- Fix clocks not respecting mods that change the day length (#43)
-- Fix hoppers not respecting disabled slots in fancy crafters and printing tables (#45)
+- Fix a dupe bug with the slotted book (#46)

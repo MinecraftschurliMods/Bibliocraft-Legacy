@@ -23,6 +23,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredDeferredHo
 import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.WoodTypeDeferredHolder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.world.item.Item;
@@ -81,9 +82,9 @@ public interface BCItems {
     DeferredItem<BigBookItem>          WRITTEN_BIG_BOOK       = BCRegistries.ITEMS.register("written_big_book", () -> new BigBookItem(true));
     DeferredItem<LockAndKeyItem>       LOCK_AND_KEY           = BCRegistries.ITEMS.registerItem("lock_and_key", LockAndKeyItem::new);
     DeferredItem<PlumbLineItem>        PLUMB_LINE             = BCRegistries.ITEMS.registerItem("plumb_line", PlumbLineItem::new);
-    DeferredItem<RedstoneBookItem>     REDSTONE_BOOK          = BCRegistries.ITEMS.registerItem("redstone_book", RedstoneBookItem::new);
-    DeferredItem<SlottedBookItem>      SLOTTED_BOOK           = BCRegistries.ITEMS.registerItem("slotted_book", SlottedBookItem::new);
-    DeferredItem<StockroomCatalogItem> STOCKROOM_CATALOG      = BCRegistries.ITEMS.registerItem("stockroom_catalog", StockroomCatalogItem::new);
+    DeferredItem<RedstoneBookItem>     REDSTONE_BOOK          = BCRegistries.ITEMS.register("redstone_book", () -> new RedstoneBookItem(new Item.Properties().stacksTo(1)));
+    DeferredItem<SlottedBookItem>      SLOTTED_BOOK           = BCRegistries.ITEMS.register("slotted_book", () -> new SlottedBookItem(new Item.Properties().stacksTo(1)));
+    DeferredItem<StockroomCatalogItem> STOCKROOM_CATALOG      = BCRegistries.ITEMS.register("stockroom_catalog", () -> new StockroomCatalogItem(new Item.Properties().stacksTo(1)));
     DeferredItem<TapeMeasureItem>      TAPE_MEASURE           = BCRegistries.ITEMS.registerItem("tape_measure", TapeMeasureItem::new);
     DeferredItem<Item>                 TAPE_REEL              = BCRegistries.ITEMS.registerSimpleItem("tape_reel");
     DeferredItem<TypewriterPageItem>   TYPEWRITER_PAGE        = BCRegistries.ITEMS.register("typewriter_page", () -> new TypewriterPageItem(new Item.Properties().stacksTo(1).component(BCDataComponents.TYPEWRITER_PAGE, TypewriterPage.DEFAULT)));

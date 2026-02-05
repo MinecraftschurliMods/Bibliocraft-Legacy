@@ -1,1 +1,1 @@
-Some bugfixes
+All of Bibliocraft's book items now stack to 1; fix a dupe bug
