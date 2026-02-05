@@ -22,8 +22,8 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
 
     @Override
     protected void addSlots(Inventory inventory) {
-        for (int x = 0; x < 3; x++) {
-            for (int y = 0; y < 3; y++) {
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
                 addSlot(new ToggleableSlot<>(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
             }
         }

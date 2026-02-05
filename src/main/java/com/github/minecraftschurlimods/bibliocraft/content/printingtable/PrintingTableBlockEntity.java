@@ -146,6 +146,11 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     @Override
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        return slot < 10 && !stack.hasCraftingRemainingItem() && !isSlotDisabled(slot) && super.canPlaceItem(slot, stack);
+    }
+
+    @Override
     public void onLoad() {
         if (!level().isClientSide()) {
             calculateRecipe(true);
