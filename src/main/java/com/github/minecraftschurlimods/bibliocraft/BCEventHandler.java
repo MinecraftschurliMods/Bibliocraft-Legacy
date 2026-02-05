@@ -3,7 +3,6 @@ package com.github.minecraftschurlimods.bibliocraft;
 import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.api.lockandkey.RegisterLockAndKeyBehaviorEvent;
 import com.github.minecraftschurlimods.bibliocraft.api.woodtype.RegisterBibliocraftWoodTypesEvent;
-import com.github.minecraftschurlimods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import com.github.minecraftschurlimods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSignPacket;
 import com.github.minecraftschurlimods.bibliocraft.content.bigbook.BigBookSyncPacket;
@@ -22,7 +21,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.typewriter.Typewriter
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
-import com.github.minecraftschurlimods.bibliocraft.init.BCRegistries;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
@@ -44,9 +42,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -79,23 +75,21 @@ public final class BCEventHandler {
 
     // @formatter:off
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.BOOKCASE.get(),          BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.COOKIE_JAR.get(),        BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DINNER_PLATE.get(),      BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DISC_RACK.get(),         BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DISPLAY_CASE.get(),      BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.FANCY_ARMOR_STAND.get(), BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.FANCY_CRAFTER.get(),     BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.LABEL.get(),             BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.POTION_SHELF.get(),      BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SHELF.get(),             BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SWORD_PEDESTAL.get(),    BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TOOL_RACK.get(),         BCBlockEntity::getCapability);
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TYPEWRITER.get(),        BCBlockEntity::getCapability);
-        event.registerBlock(Capabilities.FluidHandler.BLOCK,
-                (level, pos, state, blockEntity, context) -> blockEntity instanceof PrintingTableBlockEntity printingTable ? printingTable.getFluidCapability() : null,
-                BCBlocks.IRON_PRINTING_TABLE.get());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.BOOKCASE.get(),          BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.COOKIE_JAR.get(),        BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DINNER_PLATE.get(),      BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DISC_RACK.get(),         BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.DISPLAY_CASE.get(),      BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.FANCY_ARMOR_STAND.get(), BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.FANCY_CRAFTER.get(),     BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.LABEL.get(),             BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.POTION_SHELF.get(),      BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SHELF.get(),             BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SWORD_PEDESTAL.get(),    BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TOOL_RACK.get(),         BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TYPEWRITER.get(),        BCBlockEntity::getItemCapability);
+        event.registerBlock(Capabilities.FluidHandler.BLOCK, PrintingTableBlockEntity::getFluidCapability, BCBlocks.IRON_PRINTING_TABLE.get());
     }
 
     private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {

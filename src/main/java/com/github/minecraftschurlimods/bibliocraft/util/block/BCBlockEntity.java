@@ -132,7 +132,8 @@ public abstract class BCBlockEntity extends BlockEntity implements Container {
         return tag;
     }
 
-    public IItemHandler getCapability(@Nullable Direction side) {
+    @Nullable
+    public IItemHandler getItemCapability(@Nullable Direction side) {
         return items;
     }
 

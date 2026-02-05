@@ -146,7 +146,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     @Override
-    public IItemHandler getCapability(@Nullable Direction side) {
+    public IItemHandler getItemCapability(@Nullable Direction side) {
         return wrapper;
     }
 
