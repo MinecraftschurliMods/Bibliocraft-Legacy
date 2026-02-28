@@ -7,7 +7,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.clock.WallFancyClockB
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -16,22 +15,29 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.MaterialSet;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Conceptual credit for the clock hands:
  * <a href="https://github.com/MehVahdJukaar/Supplementaries/blob/master/common/src/main/java/net/mehvahdjukaar/supplementaries/client/renderers/tiles/ClockBlockTileRenderer.java">ClockBlockTileRenderer from the Supplementaries mod</a>
  */
-public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
-    public static final Material HAND_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BCUtil.bcLoc("block/clock_hand"));
-    public static final Material PENDULUM_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, BCUtil.mcLoc("block/copper_block"));
+public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.State> {
+    public static final Material HAND_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, BCUtil.bcLoc("block/clock_hand"));
+    public static final Material PENDULUM_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, BCUtil.mcLoc("block/copper_block"));
     public static final ModelLayerLocation LOCATION = new ModelLayerLocation(BCUtil.bcLoc("clock"), "main");
     private final ModelPart hourHand;
     private final ModelPart minuteHand;
@@ -39,11 +45,13 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
     private final ModelPart grandfatherHourHand;
     private final ModelPart grandfatherMinuteHand;
     private final ModelPart grandfatherPendulum;
+    private final MaterialSet materials;
     private float rotation;
     private float rotationOld;
     private long lastUpdateTick;
 
     public ClockBER(BlockEntityRendererProvider.Context context) {
+        materials = context.materials();
         ModelPart model = context.bakeLayer(LOCATION);
         hourHand = model.getChild("hour");
         minuteHand = model.getChild("minute");
@@ -67,59 +75,10 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
         return LayerDefinition.create(mesh, 16, 16);
     }
 
-    @Override
-    public void render(ClockBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
-        VertexConsumer handMaterial = HAND_MATERIAL.buffer(buffer, RenderType::entityCutout);
-        VertexConsumer pendulumMaterial = PENDULUM_MATERIAL.buffer(buffer, RenderType::entityCutout);
-        stack.pushPose();
-        ClientUtil.setupCenteredBER(stack, blockEntity);
-        if (blockEntity.getBlockState().getBlock() instanceof FancyClockBlock) {
-            renderHands(blockEntity, hourHand, minuteHand, 0.15625, 0.15625, stack, handMaterial, light, overlay);
-            renderPendulum(blockEntity, pendulum, 4, -0.0625, 0.09375, stack, pendulumMaterial, light, overlay);
-        } else if (blockEntity.getBlockState().getBlock() instanceof WallFancyClockBlock) {
-            renderHands(blockEntity, hourHand, minuteHand, 0.15625, -0.15625, stack, handMaterial, light, overlay);
-            renderPendulum(blockEntity, pendulum, 4, -0.0625, -0.21875, stack, pendulumMaterial, light, overlay);
-        } else if (blockEntity.getBlockState().getBlock() instanceof GrandfatherClockBlock) {
-            renderHands(blockEntity, grandfatherHourHand, grandfatherMinuteHand, 0.125, 0.15625, stack, handMaterial, light, overlay);
-            renderPendulum(blockEntity, grandfatherPendulum, 17, -0.125, 0.09375, stack, pendulumMaterial, light, overlay);
-        }
-        stack.popPose();
-    }
-
-    private void renderHands(ClockBlockEntity blockEntity, ModelPart hourHand, ModelPart minuteHand, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
-        Level level = BCUtil.nonNull(blockEntity.getLevel());
-        float rotation = level.dimensionType().natural() ? -((level.getDayTime() + 6000) % 12000) * 0.03f : getRotation(level);
-        stack.pushPose();
-        stack.translate(0, y, z);
-        stack.pushPose();
-        stack.mulPose(Axis.ZP.rotationDegrees(rotation));
-        hourHand.render(stack, vc, light, overlay);
-        stack.popPose();
-        stack.pushPose();
-        stack.mulPose(Axis.ZP.rotationDegrees((rotation * 12) % 360));
-        minuteHand.render(stack, vc, light, overlay);
-        stack.popPose();
-        stack.popPose();
-    }
-
-    private void renderPendulum(ClockBlockEntity blockEntity, ModelPart pendulum, float pendulumSize, double y, double z, PoseStack stack, VertexConsumer vc, int light, int overlay) {
-        float rotation = (float) Math.sin((BCUtil.nonNull(blockEntity.getLevel()).getDayTime() % 40 - 20) * Math.PI / 20);
-        stack.pushPose();
-        stack.translate(0, y, z);
-        stack.mulPose(Axis.ZP.rotationDegrees(180));
-        stack.mulPose(Axis.ZP.rotation(rotation / pendulumSize));
-        pendulum.render(stack, vc, light, overlay);
-        stack.popPose();
-    }
-
-    /**
-     * Get the rotation values for "unnatural" dimensions, e.g. the nether or end.
-     * Adapted from the {@link net.minecraft.client.renderer.item.ItemProperties} for the clock.
-     */
-    private float getRotation(Level level) {
+    private float getRotation(long gameTime) {
         float rotationNew = (float) Math.random();
-        if (level.getGameTime() != lastUpdateTick) {
-            lastUpdateTick = level.getGameTime();
+        if (gameTime != lastUpdateTick) {
+            lastUpdateTick = gameTime;
             float f = rotationNew - rotation;
             f = Mth.positiveModulo(f + 0.5f, 1) - 0.5f;
             rotationOld += f * 0.1f;
@@ -127,5 +86,86 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity> {
             rotation = Mth.positiveModulo(rotation + rotationOld, 1);
         }
         return rotation * (float) Math.PI * 4;
+    }
+
+    @Override
+    public State createRenderState() {
+        return new State();
+    }
+
+    @Override
+    public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
+        RenderType handMaterial = HAND_MATERIAL.renderType(RenderType::entityCutout);
+        RenderType pendulumRenderType = PENDULUM_MATERIAL.renderType(RenderType::entityCutout);
+        ModelPart hourHand = state.isGrandfather ? this.grandfatherHourHand : this.hourHand;
+        ModelPart minuteHand = state.isGrandfather ? this.grandfatherMinuteHand : this.minuteHand;
+        ModelPart pendulum = state.isGrandfather ? this.grandfatherPendulum : this.pendulum;
+        float handsRotation = state.isNaturalDimension ? -((state.dayTime + 6000) % 12000) * 0.03f : getRotation(state.gameTime);
+        float pendulumRotation = (float) Math.sin((state.dayTime % 40 - 20) * Math.PI / 20);
+
+        stack.pushPose();
+        ClientUtil.setupCenteredBER(stack, state);
+        stack.pushPose();
+        stack.translate(0, state.handY, state.handZ);
+        stack.pushPose();
+        stack.mulPose(Axis.ZP.rotationDegrees(handsRotation));
+        collector.submitModelPart(hourHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(HAND_MATERIAL));
+        stack.popPose();
+        stack.pushPose();
+        stack.mulPose(Axis.ZP.rotationDegrees((handsRotation * 12) % 360));
+        collector.submitModelPart(minuteHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(HAND_MATERIAL));
+        stack.popPose();
+        stack.popPose();
+        stack.pushPose();
+        stack.translate(0, state.pendulumY, state.pendulumZ);
+        stack.mulPose(Axis.ZP.rotationDegrees(180));
+        stack.mulPose(Axis.ZP.rotation(pendulumRotation / state.pendulumSize));
+        collector.submitModelPart(pendulum, stack, pendulumRenderType, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(PENDULUM_MATERIAL));
+        stack.popPose();
+        stack.popPose();
+    }
+
+    @Override
+    public void extractRenderState(ClockBlockEntity blockEntity, State state, float p_446851_, Vec3 p_445788_, @Nullable ModelFeatureRenderer.CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, p_446851_, p_445788_, breakProgress);
+        Level level = BCUtil.nonNull(blockEntity.getLevel());
+        state.dayTime = level.getDayTime();
+        state.gameTime = level.getGameTime();
+        state.isNaturalDimension = level.dimensionType().natural();
+
+        if (blockEntity.getBlockState().getBlock() instanceof FancyClockBlock) {
+            state.isGrandfather = false;
+            state.handY = 0.15625;
+            state.handZ = 0.15625;
+            state.pendulumSize = (float) 4;
+            state.pendulumY = -0.0625;
+            state.pendulumZ = 0.09375;
+        } else if (blockEntity.getBlockState().getBlock() instanceof WallFancyClockBlock) {
+            state.isGrandfather = false;
+            state.handY = 0.15625;
+            state.handZ = -0.15625;
+            state.pendulumSize = (float) 4;
+            state.pendulumY = -0.0625;
+            state.pendulumZ = -0.21875;
+        } else if (blockEntity.getBlockState().getBlock() instanceof GrandfatherClockBlock) {
+            state.isGrandfather = true;
+            state.handY = 0.125;
+            state.handZ = 0.15625;
+            state.pendulumSize = (float) 17;
+            state.pendulumY = -0.125;
+            state.pendulumZ = 0.09375;
+        }
+    }
+
+    public static class State extends BlockEntityRenderState {
+        private boolean isNaturalDimension;
+        private long gameTime;
+        private long dayTime;
+        private boolean isGrandfather;
+        private float pendulumSize;
+        private double pendulumY;
+        private double pendulumZ;
+        private double handY;
+        private double handZ;
     }
 }

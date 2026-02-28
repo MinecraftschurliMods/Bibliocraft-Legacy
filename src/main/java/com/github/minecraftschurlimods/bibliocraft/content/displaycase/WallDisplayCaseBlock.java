@@ -12,7 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -52,7 +51,7 @@ public class WallDisplayCaseBlock extends AbstractDisplayCaseBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-        return woodType != null && color != null ? new ItemStack(BCItems.DISPLAY_CASE.get(woodType, color)) : super.getCloneItemStack(state, target, level, pos, player);
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+        return woodType != null && color != null ? new ItemStack(BCItems.DISPLAY_CASE.get(woodType, color)) : super.getCloneItemStack(level, pos, state, includeData, player);
     }
 }

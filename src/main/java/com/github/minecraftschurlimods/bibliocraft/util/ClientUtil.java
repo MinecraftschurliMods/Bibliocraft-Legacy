@@ -12,37 +12,34 @@ import com.github.minecraftschurlimods.bibliocraft.client.screen.TypewriterScree
 import com.github.minecraftschurlimods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
-import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.RenderTypeHelper;
-import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
 public final class ClientUtil {
+    private static RecipeMap recipeMap = RecipeMap.EMPTY;
+    
     /**
      * Helper to get the {@link Minecraft} instance.
      *
@@ -57,7 +54,7 @@ public final class ClientUtil {
      *
      * @return The {@link ClientLevel} instance.
      */
-    public static ClientLevel getLevel() {
+    public static @Nullable ClientLevel getLevel() {
         return getMc().level;
     }
 
@@ -66,7 +63,7 @@ public final class ClientUtil {
      *
      * @return The {@link LocalPlayer} instance.
      */
-    public static LocalPlayer getPlayer() {
+    public static @Nullable LocalPlayer getPlayer() {
         return getMc().player;
     }
 
@@ -183,82 +180,16 @@ public final class ClientUtil {
      * @param stack       The pose stack to transform.
      * @param blockEntity The block entity to get the rotation from.
      */
-    public static void setupCenteredBER(PoseStack stack, BlockEntity blockEntity) {
+    public static void setupCenteredBER(PoseStack stack, BlockEntityRenderState blockEntity) {
         stack.translate(0.5, 0.5, 0.5);
-        BlockState state = blockEntity.getBlockState();
+        BlockState state = blockEntity.blockState;
         if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
             stack.mulPose(Axis.YP.rotationDegrees(switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
                 case SOUTH -> 0;
                 case EAST -> 90;
-                default -> 180;
                 case WEST -> 270;
+                default -> 180;
             }));
-        }
-    }
-
-    /**
-     * Renders an {@link ItemStack} in the {@link ItemDisplayContext#FIXED} pose.
-     *
-     * @param item    The {@link ItemStack} to render.
-     * @param stack   The {@link PoseStack} to use.
-     * @param buffer  The {@link MultiBufferSource} to use.
-     * @param light   The light value to use.
-     * @param overlay The overlay value to use.
-     */
-    public static void renderFixedItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
-        renderItem(item, stack, buffer, light, overlay, ItemDisplayContext.FIXED);
-    }
-
-    /**
-     * Renders an {@link ItemStack} in the {@link ItemDisplayContext#GUI} pose.
-     *
-     * @param item    The {@link ItemStack} to render.
-     * @param stack   The {@link PoseStack} to use.
-     * @param buffer  The {@link MultiBufferSource} to use.
-     * @param light   The light value to use.
-     * @param overlay The overlay value to use.
-     */
-    public static void renderGuiItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay) {
-        renderItem(item, stack, buffer, light, overlay, ItemDisplayContext.GUI);
-    }
-
-    /**
-     * Renders an {@link ItemStack} for use in a BER or GUI.
-     *
-     * @param item    The {@link ItemStack} to render.
-     * @param stack   The {@link PoseStack} to use.
-     * @param buffer  The {@link MultiBufferSource} to use.
-     * @param light   The light value to use.
-     * @param overlay The overlay value to use.
-     * @param context The {@link ItemDisplayContext} to use.
-     */
-    public static void renderItem(ItemStack item, PoseStack stack, MultiBufferSource buffer, int light, int overlay, ItemDisplayContext context) {
-        Minecraft minecraft = getMc();
-        ItemRenderer renderer = minecraft.getItemRenderer();
-        renderer.render(item, context, context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND || context == ItemDisplayContext.THIRD_PERSON_LEFT_HAND, stack, buffer, light, overlay, renderer.getModel(item, minecraft.level, null, 0));
-    }
-
-    /**
-     * Renders the given {@link BakedModel} in the world.
-     *
-     * @param model     The {@link BakedModel} to render.
-     * @param stack     The {@link PoseStack} to use.
-     * @param buffer    The {@link MultiBufferSource} to use.
-     * @param level     The {@link Level} to render the model in.
-     * @param pos       The {@link BlockPos} to render the model at.
-     * @param state     The {@link BlockState} to render the model for.
-     * @param random    The {@link RandomSource} to use for random models.
-     * @param modelData The {@link ModelData} to use.
-     */
-    public static void renderBakedModel(BakedModel model, PoseStack stack, MultiBufferSource buffer, Level level, BlockPos pos, BlockState state, RandomSource random, ModelData modelData) {
-        ModelBlockRenderer renderer = getMc().getBlockRenderer().getModelRenderer();
-        int color = getMc().getBlockColors().getColor(state, level, pos, 0);
-        float red = (float) (color >> 16 & 255) / 255f;
-        float green = (float) (color >> 8 & 255) / 255f;
-        float blue = (float) (color & 255) / 255f;
-        int light = LevelRenderer.getLightColor(level, pos);
-        for (RenderType type : model.getRenderTypes(state, random, modelData)) {
-            renderer.renderModel(stack.last(), buffer.getBuffer(RenderTypeHelper.getEntityRenderType(type, false)), state, model, red, green, blue, light, OverlayTexture.NO_OVERLAY, modelData, type);
         }
     }
 
@@ -269,7 +200,7 @@ public final class ClientUtil {
      * @param graphics The {@link GuiGraphics} to use.
      * @param centerX  The horizontal center of the text.
      * @param startY   The y coordinate of the text. Be aware that there will be a 1px outline above this position.
-     * @see net.minecraft.client.gui.Gui#renderExperienceLevel(GuiGraphics, net.minecraft.client.DeltaTracker)
+     * @see net.minecraft.client.gui.Gui#renderExperienceLevel(GuiGraphics, DeltaTracker)
      */
     public static void renderXpText(String text, GuiGraphics graphics, int centerX, int startY) {
         Font font = getFont();
@@ -278,7 +209,7 @@ public final class ClientUtil {
         graphics.drawString(font, text, startX - 1, startY, 0, false);
         graphics.drawString(font, text, startX, startY + 1, 0, false);
         graphics.drawString(font, text, startX, startY - 1, 0, false);
-        graphics.drawString(font, text, startX, startY, 0x80ff20, false);
+        graphics.drawString(font, text, startX, startY, 0xff80ff20, false);
     }
 
     /**
@@ -297,5 +228,17 @@ public final class ClientUtil {
         if (getMc().screen instanceof StockroomCatalogScreen screen) {
             screen.setFromPacket(packet);
         }
+    }
+
+    public static List<ClientTooltipComponent> forTooltip(Component component) {
+        return List.of(ClientTooltipComponent.create(component.getVisualOrderText()));
+    }
+
+    public static void onReceiveRecipes(RecipesReceivedEvent event) {
+        recipeMap = event.getRecipeMap();
+    }
+
+    public static RecipeMap getRecipeMap() {
+        return recipeMap;
     }
 }

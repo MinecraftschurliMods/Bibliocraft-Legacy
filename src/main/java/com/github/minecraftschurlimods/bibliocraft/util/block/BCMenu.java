@@ -59,7 +59,7 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        int slotCount = blockEntity.items.getSlots();
+        int slotCount = blockEntity.getContainerSize();
         Slot slot = slots.get(index);
         if (!slot.hasItem()) return ItemStack.EMPTY;
         ItemStack stack = slot.getItem();

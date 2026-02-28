@@ -2,7 +2,6 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.RenderType;
 
 public class ColorButton extends Button {
     private final int color;
@@ -17,6 +16,6 @@ public class ColorButton extends Button {
         int x = getX(), y = getY();
         int xOffset = width / 8, yOffset = height / 8;
         super.renderWidget(graphics, mouseX, mouseY, partialTick);
-        graphics.fill(RenderType.guiOverlay(), x + xOffset, y + yOffset, x + width - xOffset, y + height - yOffset, color);
+        graphics.fill(x + xOffset, y + yOffset, x + width - xOffset, y + height - yOffset, color);
     }
 }

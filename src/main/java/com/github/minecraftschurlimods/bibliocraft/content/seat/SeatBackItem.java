@@ -5,7 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.ColoredWoodTypeBlockItem;
-import com.github.minecraftschurlimods.bibliocraft.util.holder.ColoredWoodTypeDeferredHolder;
+import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
 import net.minecraft.Util;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,8 +33,8 @@ public class SeatBackItem extends ColoredWoodTypeBlockItem {
     }));
     public final SeatBackType type;
 
-    public SeatBackItem(ColoredWoodTypeDeferredHolder<Block, ? extends Block> holder, BibliocraftWoodType woodType, DyeColor color, SeatBackType type) {
-        super(holder, woodType, color);
+    public SeatBackItem(GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Block, ? extends Block> holder, BibliocraftWoodType woodType, DyeColor color, SeatBackType type, Properties properties) {
+        super(holder, woodType, color, properties);
         this.type = type;
     }
 
@@ -43,11 +43,6 @@ public class SeatBackItem extends ColoredWoodTypeBlockItem {
     protected BlockState getPlacementState(BlockPlaceContext context) {
         BlockState state = BCUtil.nonNull(getBlock().getStateForPlacement(context));
         return canPlace(context, state) ? state.setValue(SeatBackBlock.TYPE, type) : null;
-    }
-
-    @Override
-    public String getDescriptionId() {
-        return super.getOrCreateDescriptionId();
     }
 }
 

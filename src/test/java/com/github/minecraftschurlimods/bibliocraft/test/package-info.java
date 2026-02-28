@@ -1,7 +1,9 @@
-@MethodsReturnNonnullByDefault
+@FieldsAreNonnullByDefault
 @ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 package com.github.minecraftschurlimods.bibliocraft.test;
 
+import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

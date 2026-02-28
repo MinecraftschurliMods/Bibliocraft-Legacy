@@ -89,7 +89,7 @@ public abstract class BlockLootTableProvider implements DataProvider {
      * @param builder The builder from which to generate the loot table.
      */
     public void add(Block block, WithConditionsBuilder<LootTable.Builder> builder) {
-        map.put(block.getLootTable(), builder);
+        block.getLootTable().ifPresent(key -> map.put(key, builder));
     }
 
     /**

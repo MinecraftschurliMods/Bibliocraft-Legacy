@@ -27,7 +27,7 @@ import java.util.List;
 
 public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBindingRecipe {
     public static final MapCodec<PrintingTableBindingTypewriterPagesRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(e -> e.ingredient),
+            Ingredient.CODEC.fieldOf("ingredient").forGetter(e -> e.ingredient),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
     ).apply(inst, PrintingTableBindingTypewriterPagesRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableBindingTypewriterPagesRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -54,7 +54,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
 
     @Override
     public ItemStack assemble(PrintingTableRecipeInput input, HolderLookup.Provider registries) {
-        ItemStack result = getResultItem(registries).copy();
+        ItemStack result = this.result.copy();
         List<Filterable<Component>> list = input
                 .left()
                 .stream()
@@ -66,7 +66,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<PrintingTableBindingTypewriterPagesRecipe> getSerializer() {
         return BCRecipes.PRINTING_TABLE_BINDING_TYPEWRITER_PAGES.get();
     }
 

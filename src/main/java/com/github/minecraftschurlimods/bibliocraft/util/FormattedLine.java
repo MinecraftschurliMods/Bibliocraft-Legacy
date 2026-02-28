@@ -12,13 +12,14 @@ import net.minecraft.util.ExtraCodecs;
 
 public record FormattedLine(String text, Style style, int size, Mode mode, Alignment alignment) {
     public static final int MIN_SIZE = 5;
+    public static final int DEFAULT_SIZE = 10;
     public static final int MAX_SIZE = 35;
     public static final Codec<FormattedLine> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            Codec.STRING.fieldOf("text").forGetter(FormattedLine::text),
-            Style.Serializer.CODEC.fieldOf("style").forGetter(FormattedLine::style),
-            ExtraCodecs.intRange(MIN_SIZE, MAX_SIZE).fieldOf("size").forGetter(FormattedLine::size),
-            Mode.CODEC.fieldOf("mode").forGetter(FormattedLine::mode),
-            Alignment.CODEC.fieldOf("alignment").forGetter(FormattedLine::alignment)
+            Codec.STRING.optionalFieldOf("text", "").forGetter(FormattedLine::text),
+            Style.Serializer.CODEC.optionalFieldOf("style", Style.EMPTY).forGetter(FormattedLine::style),
+            ExtraCodecs.intRange(MIN_SIZE, MAX_SIZE).optionalFieldOf("size", DEFAULT_SIZE).forGetter(FormattedLine::size),
+            Mode.CODEC.optionalFieldOf("mode", Mode.NORMAL).forGetter(FormattedLine::mode),
+            Alignment.CODEC.optionalFieldOf("alignment", Alignment.LEFT).forGetter(FormattedLine::alignment)
     ).apply(inst, FormattedLine::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, FormattedLine> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8, FormattedLine::text,

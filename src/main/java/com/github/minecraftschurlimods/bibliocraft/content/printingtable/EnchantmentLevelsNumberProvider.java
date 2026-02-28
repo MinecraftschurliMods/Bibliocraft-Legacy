@@ -35,7 +35,7 @@ public record EnchantmentLevelsNumberProvider(DataComponentType<?> dataComponent
 
     @Override
     public float getFloat(LootContext context) {
-        ItemStack stack = context.getParam(LootContextParams.TOOL);
+        ItemStack stack = context.getParameter(LootContextParams.TOOL);
         if (stack.isEmpty() || !stack.has(dataComponent)) return 0;
         if (!(stack.get(dataComponent) instanceof ItemEnchantments enchantments)) return 0;
         float cost = 0;
