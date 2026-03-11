@@ -1,1 +1,1 @@
-All of Bibliocraft's book items now stack to 1; fix a dupe bug
+Fix some Fancy Crafter and Printing Table automation issues

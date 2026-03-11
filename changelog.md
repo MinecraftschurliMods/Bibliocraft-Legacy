@@ -1,7 +1,4 @@
-# Changes
-
-- Redstone books, slotted books and stockroom catalogs now stack to 1
-
 # Fixes
 
-- Fix a dupe bug with the slotted book (#46)
+- Fix Fancy Crafters and Printing Tables extracting items from slots they shouldn't extract from
+- Fix automation inputs into Printing Tables not causing a recipe recalculation
