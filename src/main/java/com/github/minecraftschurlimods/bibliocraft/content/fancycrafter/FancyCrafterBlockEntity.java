@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.fancycrafter;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ItemStackHandlerWrapper;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import net.minecraft.core.BlockPos;
@@ -23,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -33,19 +33,20 @@ import java.util.stream.IntStream;
 public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasToggleableSlots {
     private static final String CRAFTING_TICKS_REMAINING_KEY = "crafting_ticks_remaining";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
+    private static final int OUTPUT_SLOT = 9;
     private static final int SLOT_DISABLED = 1;
     private static final int SLOT_ENABLED = 0;
     private static final int MAX_CRAFTING_TICKS = 6;
     private final boolean[] disabledSlots = new boolean[9];
-    private final InvWrapper wrapper = new InvWrapper(this) {
+    private final IItemHandler wrapper = new ItemStackHandlerWrapper(items) {
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            return slot == 9 ? stack : super.insertItem(slot, stack, simulate);
+            return slot == OUTPUT_SLOT ? stack : super.insertItem(slot, stack, simulate);
         }
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            return slot == 9 ? ItemStack.EMPTY : super.extractItem(slot, amount, simulate);
+            return ItemStack.EMPTY;
         }
     };
     private int craftingTicksRemaining = MAX_CRAFTING_TICKS;
@@ -56,14 +57,14 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     public int getRedstoneSignal() {
-        return (int) IntStream.range(0, 9).filter(i -> !getItem(i).isEmpty() || isSlotDisabled(i)).count();
+        return (int) IntStream.range(0, OUTPUT_SLOT).filter(i -> !getItem(i).isEmpty() || isSlotDisabled(i)).count();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, FancyCrafterBlockEntity blockEntity) {
         if (blockEntity.recipe == null) return;
         CraftingRecipe recipe = blockEntity.recipe.value();
         ItemStack result = recipe.getResultItem(level.registryAccess());
-        ItemStack resultStack = blockEntity.getItem(9);
+        ItemStack resultStack = blockEntity.getItem(OUTPUT_SLOT);
         if (!resultStack.isEmpty() && (!ItemStack.isSameItemSameComponents(result, resultStack) || result.getCount() + resultStack.getCount() > result.getMaxStackSize()))
             return;
         blockEntity.craftingTicksRemaining--;
@@ -71,7 +72,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         CraftingInput input = CraftingInput.of(3, 3, blockEntity.getInputs());
         ItemStack assembled = recipe.assemble(input, level.registryAccess());
         assembled.onCraftedBySystem(level);
-        blockEntity.setItem(9, blockEntity.tryDispense(level, pos, assembled, state));
+        blockEntity.setItem(OUTPUT_SLOT, blockEntity.tryDispense(level, pos, assembled, state));
         blockEntity.craftingTicksRemaining = MAX_CRAFTING_TICKS;
         recipe.getRemainingItems(CraftingInput.of(3, 3, blockEntity.getInputs()))
                 .stream()
@@ -168,7 +169,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     private boolean isCraftingSlot(int slot) {
-        return slot >= 0 && slot < 9;
+        return slot >= 0 && slot < OUTPUT_SLOT;
     }
 
     private boolean smallerStackExists(int currentSize, ItemStack stack, int slot) {
@@ -186,7 +187,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         RecipeManager recipes = level().getRecipeManager();
         CraftingInput input = CraftingInput.of(3, 3, getInputs());
         recipe = recipes.getRecipeFor(RecipeType.CRAFTING, input, level()).orElse(null);
-        items.setStackInSlot(9, recipe == null ? ItemStack.EMPTY : recipe.value().getResultItem(level().registryAccess()).copy());
+        items.setStackInSlot(OUTPUT_SLOT, recipe == null ? ItemStack.EMPTY : recipe.value().getResultItem(level().registryAccess()).copy());
     }
 
     private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {

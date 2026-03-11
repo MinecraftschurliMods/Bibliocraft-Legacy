@@ -84,6 +84,7 @@ public final class BCEventHandler {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.FANCY_CRAFTER.get(),     BCBlockEntity::getItemCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.LABEL.get(),             BCBlockEntity::getItemCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.POTION_SHELF.get(),      BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.PRINTING_TABLE.get(),    BCBlockEntity::getItemCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SHELF.get(),             BCBlockEntity::getItemCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.SWORD_PEDESTAL.get(),    BCBlockEntity::getItemCapability);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getItemCapability);

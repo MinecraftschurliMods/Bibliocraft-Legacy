@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CodecUtil;
+import com.github.minecraftschurlimods.bibliocraft.util.ItemStackHandlerWrapper;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenuBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import net.minecraft.core.BlockPos;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,11 +40,40 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private static final String DURATION_KEY = "duration";
     private static final String PLAYER_NAME_KEY = "player_name";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
+    private static final int OUTPUT_SLOT = 10;
     private static final int SLOT_DISABLED = 1;
     private static final int SLOT_ENABLED = 0;
     private final PrintingTableTank tank;
     private final Direction[] directions;
     private final boolean[] disabledSlots = new boolean[9];
+    private final IItemHandler upItems = new ItemStackHandlerWrapper(items) {
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            if (slot == OUTPUT_SLOT) return stack;
+            ItemStack result = super.insertItem(slot, stack, simulate);
+            if (result.isEmpty()) {
+                recipeInput = null;
+                calculateRecipe(false);
+            }
+            return result;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+    };
+    private final IItemHandler downItems = new ItemStackHandlerWrapper(items) {
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return stack;
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return slot == OUTPUT_SLOT ? super.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+        }
+    };
     private PrintingTableRecipe recipe;
     private PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
@@ -144,7 +175,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot < 10 && !stack.hasCraftingRemainingItem() && !isSlotDisabled(slot) && super.canPlaceItem(slot, stack);
+        return slot < OUTPUT_SLOT && !stack.hasCraftingRemainingItem() && !isSlotDisabled(slot) && super.canPlaceItem(slot, stack);
     }
 
     @Override
@@ -154,6 +185,11 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         } else {
             PacketDistributor.sendToServer(new PrintingTableSetRecipePacket(getBlockPos(), 0, 0, 0));
         }
+    }
+
+    @Override
+    public IItemHandler getItemCapability(@Nullable Direction side) {
+        return side == Direction.DOWN ? downItems : upItems;
     }
 
     public static IFluidHandler getFluidCapability(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, @Nullable Direction context) {
@@ -227,11 +263,11 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private void finishRecipe() {
         if (recipe == null) return;
         List<ItemStack> remainingItems = recipe.getRemainingItems(getRecipeInput());
-        ItemStack stack = getItem(10);
+        ItemStack stack = getItem(OUTPUT_SLOT);
         ItemStack result = recipe.postProcess(recipe.assemble(getRecipeInput(), level().registryAccess()), this);
         if (!stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, result)) return;
         result.setCount(stack.getCount() + 1);
-        setItem(10, result);
+        setItem(OUTPUT_SLOT, result);
         IntStream.range(0, 10)
                 .mapToObj(this::getItem)
                 .forEach(e -> e.shrink(1));
@@ -272,7 +308,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
                 .findFirst()
                 .orElse(null);
         if (recipe != null) {
-            ItemStack output = getItem(10);
+            ItemStack output = getItem(OUTPUT_SLOT);
             if (!output.isEmpty() && (output.getCount() >= output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(recipe.assemble(getRecipeInput(), level().registryAccess()), output))) {
                 recipe = null;
             }
