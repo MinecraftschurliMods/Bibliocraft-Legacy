@@ -15,8 +15,8 @@ import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.state.MapRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -26,8 +26,8 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
-import org.jspecify.annotations.Nullable;
 import org.joml.Matrix4f;
+import org.jspecify.annotations.Nullable;
 
 public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.TableRenderState> {
     private static final RenderType MAP_BACKGROUND = RenderTypes.text(BCUtil.mcLoc("textures/map/map_background.png"));
