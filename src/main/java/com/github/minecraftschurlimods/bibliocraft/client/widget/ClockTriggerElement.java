@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
@@ -45,7 +45,7 @@ public class ClockTriggerElement extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         boolean hasScrollbar = owner.hasScrollbar(listSize);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, 0, 0, 0, hasScrollbar ? 20 : 0, hasScrollbar ? WIDTH - 6 : WIDTH, HEIGHT, 256, 256);
         if (trigger.redstone()) {
@@ -54,25 +54,25 @@ public class ClockTriggerElement extends Screen {
         if (trigger.sound()) {
             graphics.renderItem(NOTE_BLOCK, 19, 1);
         }
-        graphics.drawString(ClientUtil.getFont(), getTitle(), 42, 6, 0xFF111111, false);
+        graphics.text(ClientUtil.getFont(), getTitle(), 42, 6, 0xff111111, false);
         super.render(graphics, mouseX, mouseY, partialTick);
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
     }
 
-    public void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
+    public void renderTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         if (mouseY >= 2 && mouseY < 18) {
             Font font = ClientUtil.getFont();
             if (trigger.redstone() && mouseX >= 2 && mouseX < 18) {
-                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_REDSTONE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_REDSTONE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (trigger.sound() && mouseX >= 19 && mouseX < 37) {
-                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_SOUND), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_SOUND), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (editButton.getRectangle().containsPoint(mouseX, mouseY)) {
-                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EDIT_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EDIT_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (deleteButton.getRectangle().containsPoint(mouseX, mouseY)) {
-                graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.CLOCK_DELETE_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_DELETE_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             }
         }
     }

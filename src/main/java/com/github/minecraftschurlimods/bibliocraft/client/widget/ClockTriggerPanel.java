@@ -3,7 +3,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.widget;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.neoforged.neoforge.client.gui.widget.ScrollPanel;
@@ -34,7 +34,7 @@ public class ClockTriggerPanel extends ScrollPanel {
     }
 
     @Override
-    protected void drawPanel(GuiGraphics graphics, int entryRight, int relativeY, int mouseX, int mouseY) {
+    protected void drawPanel(GuiGraphicsExtractor graphics, int entryRight, int relativeY, int mouseX, int mouseY) {
         Matrix3x2fStack pose = graphics.pose();
         pose.pushMatrix();
         pose.translate(left, relativeY);
@@ -47,7 +47,7 @@ public class ClockTriggerPanel extends ScrollPanel {
         pose.popMatrix();
     }
 
-    public void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
+    public void renderTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         ClockTriggerElement hovered = getHovered(mouseX, mouseY);
         if (hovered == null) return;
         float y = mouseY - top + scrollDistance;

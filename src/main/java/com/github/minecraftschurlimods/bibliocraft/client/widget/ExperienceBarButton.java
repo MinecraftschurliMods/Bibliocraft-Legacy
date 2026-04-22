@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.client.widget;
 
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -26,7 +26,7 @@ public class ExperienceBarButton extends Button {
     }
 
     @Override
-    protected void renderContents(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    protected void renderContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, backgroundTexture, getWidth(), getHeight(), 0, 0, getX(), getY(), getWidth(), getHeight());
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, progressTexture, getWidth(), getHeight(), 0, 0, getX(), getY(), (int) (getWidth() * progressGetter.get()), getHeight());
         ClientUtil.renderXpText(levelGetter.getAsInt() + "", graphics, getX() + getWidth() / 2, getY() - 4);

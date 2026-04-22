@@ -7,7 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.block.BCMenu;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.HasToggleableSlots;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.ToggleableSlot;
 import com.github.minecraftschurlimods.bibliocraft.util.slot.ToggleableSlotSyncPacket;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -35,15 +35,15 @@ public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlot
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
         if (hoveredSlot instanceof ToggleableSlot && !menu.isSlotDisabled(hoveredSlot.getSlotIndex()) && menu.getCarried().isEmpty() && !hoveredSlot.hasItem() && !player.isSpectator()) {
-            graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.VANILLA_TOGGLABLE_SLOT), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+            graphics.tooltip(font, ClientUtil.forTooltip(Translations.VANILLA_TOGGLABLE_SLOT), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
         }
     }
 
     @Override
-    protected void renderSlot(GuiGraphics graphics, Slot slot, int mouseX, int mouseY) {
+    protected void renderSlot(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY) {
         if (slot instanceof ToggleableSlot && menu.isSlotDisabled(slot.getSlotIndex())) {
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISABLED_SLOT, slot.x - 1, slot.y - 1, 18, 18);
             return;

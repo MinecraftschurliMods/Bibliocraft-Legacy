@@ -5,7 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -34,16 +34,16 @@ public class TypewriterPageScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
         Font font = ClientUtil.getFont();
         for (int i = 0; i < page.lines().size(); i++) {
-            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
+            graphics.text(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
         }
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, TypewriterScreen.IMAGE_WIDTH, TypewriterScreen.IMAGE_HEIGHT, 256, 256);
     }

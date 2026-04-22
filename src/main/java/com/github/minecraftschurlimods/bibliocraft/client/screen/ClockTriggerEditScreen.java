@@ -5,7 +5,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.EditBox;
@@ -101,16 +101,16 @@ public class ClockTriggerEditScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TIME, contentLeftPos, contentTopPos + 6, 0xFF111111, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TIME_SEPARATOR, contentLeftPos + timeWidth + 43, contentTopPos + 6, 0xFF111111, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_EMIT_REDSTONE, contentLeftPos + 19, contentTopPos + 27, 0xFF111111, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_EMIT_SOUND, contentLeftPos + 19, contentTopPos + 46, 0xFF111111, false);
+        graphics.text(ClientUtil.getFont(), Translations.CLOCK_TIME, contentLeftPos, contentTopPos + 6, 0xff111111, false);
+        graphics.text(ClientUtil.getFont(), Translations.CLOCK_TIME_SEPARATOR, contentLeftPos + timeWidth + 43, contentTopPos + 6, 0xff111111, false);
+        graphics.text(ClientUtil.getFont(), Translations.CLOCK_EMIT_REDSTONE, contentLeftPos + 19, contentTopPos + 27, 0xff111111, false);
+        graphics.text(ClientUtil.getFont(), Translations.CLOCK_EMIT_SOUND, contentLeftPos + 19, contentTopPos + 46, 0xff111111, false);
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, WIDTH, HEIGHT, 256, 256);
     }

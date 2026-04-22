@@ -14,7 +14,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.LecternUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.lectern.TakeLecternBookPacket;
 import com.mojang.datafixers.util.Either;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -95,7 +95,7 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
         int x = (width - 256) / 2;
         int y = mouseY - 29;
@@ -106,24 +106,24 @@ public class StockroomCatalogScreen extends Screen {
                 graphics.renderItem(blockItem, x + 34, i * 19 + 29);
                 graphics.renderItemDecorations(font, blockItem, x + 34, i * 19 + 29);
                 String itemText = blockItem.getHoverName().getString(137);
-                graphics.drawString(font, itemText, x + 51, i * 19 + 33, 0, false);
+                graphics.text(font, itemText, x + 51, i * 19 + 33, 0xff000000, false);
                 i++;
             }
             if (mouseX >= x + 34 && mouseX < x + 50) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
                     BlockPos container = visibleContainers.get(y / 19);
                     int distance = (int) (lectern != null ? Math.sqrt(lectern.distSqr(container)) : ClientUtil.getPlayer().position().distanceTo(BCUtil.toVec3(container)));
-                    graphics.renderTooltip(font, ClientUtil.forTooltip(Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance)), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.forTooltip(Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance)), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_REMOVE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_REMOVE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
         } else {
@@ -132,9 +132,9 @@ public class StockroomCatalogScreen extends Screen {
                 graphics.renderItemDecorations(font, entry.item(), x + 34, i * 19 + 29);
                 String countText = Component.translatable(Translations.STOCKROOM_CATALOG_COUNT_KEY, entry.count()).getString();
                 int countWidth = font.width(countText);
-                graphics.drawString(font, countText, x + 205 - countWidth, i * 19 + 33, 0, false);
+                graphics.text(font, countText, x + 205 - countWidth, i * 19 + 33, 0xff000000, false);
                 String itemText = entry.item().getHoverName().getString(153 - countWidth);
-                graphics.drawString(font, itemText, x + 51, i * 19 + 33, 0, false);
+                graphics.text(font, itemText, x + 51, i * 19 + 33, 0xff000000, false);
                 i++;
             }
             if (mouseX >= x + 34 && mouseX < x + 50) {
@@ -145,7 +145,7 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
-                    graphics.renderTooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
         }
@@ -243,7 +243,7 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, (width - 256) / 2 + 18, 2, 0, 0, 256, 256, 256, 256);
     }

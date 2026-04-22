@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardCo
 import com.github.minecraftschurlimods.bibliocraft.content.clipboard.ClipboardSyncPacket;
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -96,7 +96,7 @@ public class ClipboardScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, (width - 192) / 2, 2, 0, 0, 192, 192, 256, 256);
     }

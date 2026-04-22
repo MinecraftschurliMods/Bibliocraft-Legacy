@@ -9,7 +9,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import net.minecraft.util.Util;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.CharacterEvent;
@@ -75,24 +75,24 @@ public class TypewriterScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
         Font font = ClientUtil.getFont();
         for (int i = 0; i < row; i++) {
             if (i >= page.lines().size()) continue;
-            graphics.drawString(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
+            graphics.text(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
         }
         if (row < TypewriterPage.MAX_LINES) {
             int width = font.width(currentLine);
-            graphics.drawString(font, currentLine, leftPos + 2, topPos + 2 + row * 10, 0xff000000, false);
+            graphics.text(font, currentLine, leftPos + 2, topPos + 2 + row * 10, 0xff000000, false);
             if (frameTick / 6 % 2 == 0) {
-                graphics.drawString(font, "_", leftPos + 2 + width, topPos + 2 + row * 10, 0xff000000, false);
+                graphics.text(font, "_", leftPos + 2 + width, topPos + 2 + row * 10, 0xff000000, false);
             }
         }
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
     }

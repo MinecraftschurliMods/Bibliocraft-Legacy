@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.util.Util;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -41,7 +41,7 @@ public class FormattedTextArea extends AbstractWidget {
         this.lines = new ArrayList<>(lines);
     }
 
-    public static void renderLines(List<FormattedLine> lines, GuiGraphics graphics, int x, int y, int width) {
+    public static void renderLines(List<FormattedLine> lines, GuiGraphicsExtractor graphics, int x, int y, int width) {
         int i = y;
         for (FormattedLine line : lines) {
             renderLine(line, graphics, x, i, width, 0, DrawCursor.NONE);
@@ -49,7 +49,7 @@ public class FormattedTextArea extends AbstractWidget {
         }
     }
 
-    public static void renderLine(FormattedLine line, GuiGraphics graphics, int x, int y, int width, int cursor, DrawCursor drawCursor) {
+    public static void renderLine(FormattedLine line, GuiGraphicsExtractor graphics, int x, int y, int width, int cursor, DrawCursor drawCursor) {
         String text = line.text();
         Style style = line.style();
         int size = line.size();
@@ -69,7 +69,7 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    protected void renderWidget(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         int x = getX();
         int y = getY() + 1;
         for (int i = 0; i < lines.size(); i++) {
@@ -78,7 +78,7 @@ public class FormattedTextArea extends AbstractWidget {
         }
     }
 
-    private void renderLine(GuiGraphics graphics, int index, int x, int y) {
+    private void renderLine(GuiGraphicsExtractor graphics, int index, int x, int y) {
         FormattedLine line = lines.get(index);
         String text = line.text();
         boolean cursorBlink = (Util.getMillis() - focusedTimestamp) / 300L % 2 == 0;
@@ -102,7 +102,7 @@ public class FormattedTextArea extends AbstractWidget {
         }
     }
 
-    private static void drawText(GuiGraphics graphics, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
+    private static void drawText(GuiGraphicsExtractor graphics, FormattedCharSequence text, float x, float y, int color, int size, FormattedLine.Mode mode) {
         Font font = ClientUtil.getFont();
         float scale = getScale(size);
         graphics.pose().pushMatrix();
@@ -110,9 +110,9 @@ public class FormattedTextArea extends AbstractWidget {
         graphics.pose().scale(scale, scale);
         if (mode == FormattedLine.Mode.GLOWING) {
             int outlineColor = color == 0 ? 0xfff0ebcc : ARGB.scaleRGB(color, 0.4f);
-            graphics.drawString(font, text, 0, 0, outlineColor);
+            graphics.text(font, text, 0, 0, outlineColor);
         } else {
-            graphics.drawString(font, text, 0, 0, color, mode == FormattedLine.Mode.SHADOW);
+            graphics.text(font, text, 0, 0, color, mode == FormattedLine.Mode.SHADOW);
         }
         graphics.pose().popMatrix();
     }

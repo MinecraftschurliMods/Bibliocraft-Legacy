@@ -8,7 +8,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.printingtable.Printin
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -72,7 +72,7 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
     }
 
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTicks, int x, int y) {
+    protected void renderBg(GuiGraphicsExtractor graphics, float partialTicks, int x, int y) {
         super.renderBg(graphics, partialTicks, x, y);
         float progress = menu.getBlockEntity().getProgress();
         int width = progress == 1f ? 0 : Mth.ceil(progress * 24);
@@ -80,7 +80,7 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
         super.render(graphics, mouseX, mouseY, partialTicks);
         int experienceCost = menu.getBlockEntity().getLevelCost();
         if (experienceCost > 0) {

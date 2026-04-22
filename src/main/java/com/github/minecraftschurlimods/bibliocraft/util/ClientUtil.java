@@ -16,6 +16,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -197,19 +198,19 @@ public final class ClientUtil {
      * Renders text in the formatting of the experience level number above the hotbar.
      *
      * @param text     The text to render.
-     * @param graphics The {@link GuiGraphics} to use.
+     * @param graphics The {@link GuiGraphicsExtractor} to use.
      * @param centerX  The horizontal center of the text.
      * @param startY   The y coordinate of the text. Be aware that there will be a 1px outline above this position.
-     * @see net.minecraft.client.gui.Gui#renderExperienceLevel(GuiGraphics, DeltaTracker)
+     * @see net.minecraft.client.gui.Gui#renderExperienceLevel(GuiGraphicsExtractor, DeltaTracker)
      */
-    public static void renderXpText(String text, GuiGraphics graphics, int centerX, int startY) {
+    public static void renderXpText(String text, GuiGraphicsExtractor graphics, int centerX, int startY) {
         Font font = getFont();
         int startX = centerX - font.width(text) / 2;
-        graphics.drawString(font, text, startX + 1, startY, 0, false);
-        graphics.drawString(font, text, startX - 1, startY, 0, false);
-        graphics.drawString(font, text, startX, startY + 1, 0, false);
-        graphics.drawString(font, text, startX, startY - 1, 0, false);
-        graphics.drawString(font, text, startX, startY, 0xff80ff20, false);
+        graphics.text(font, text, startX + 1, startY, 0xff000000, false);
+        graphics.text(font, text, startX - 1, startY, 0xff000000, false);
+        graphics.text(font, text, startX, startY + 1, 0xff000000, false);
+        graphics.text(font, text, startX, startY - 1, 0xff000000, false);
+        graphics.text(font, text, startX, startY, 0xff80ff20, false);
     }
 
     /**

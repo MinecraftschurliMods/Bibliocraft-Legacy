@@ -7,7 +7,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.screens.Screen;
@@ -65,15 +65,15 @@ public class ClockScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TICK, leftPos + 28, topPos + 11, 0xFF111111, false);
-        graphics.drawString(ClientUtil.getFont(), Translations.CLOCK_TRIGGERS, leftPos + 8, topPos + 26, 0xFF111111, false);
+        graphics.text(ClientUtil.getFont(), Translations.CLOCK_TICK, leftPos + 28, topPos + 11, 0xff111111, false);
+        graphics.text(ClientUtil.getFont(), Translations.CLOCK_TRIGGERS, leftPos + 8, topPos + 26, 0xff111111, false);
         triggerPanel.renderTooltip(graphics, mouseX, mouseY);
     }
 
     @Override
-    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.renderBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, 256, 256);
     }

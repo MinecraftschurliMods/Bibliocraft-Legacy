@@ -102,7 +102,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, F
                 case RIGHT -> width - 1 - (lineWidth * size);
             };
             int color = (style.getColor() == null ? 0 : style.getColor().getValue());
-            int outlineColor = mode == FormattedLine.Mode.GLOWING ? 0xFF000000 | (color == 0 ? 0xf0ebcc : ARGB.scaleRGB(color, 0.4f)) : 0;
+            int outlineColor = mode == FormattedLine.Mode.GLOWING ? 0xff000000 | (color == 0 ? 0xf0ebcc : ARGB.scaleRGB(color, 0.4f)) : 0;
             boolean renderWithShadow = mode == FormattedLine.Mode.SHADOW;
             submitText(stack, collector, textX, y, size, formattedText, renderWithShadow, lightCoords, color, outlineColor);
             y += line.size();
@@ -114,7 +114,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, F
         stack.pushPose();
         stack.translate(x, y, 0);
         stack.scale(size, size, 1);
-        collector.submitText(stack, 0, 0, text, renderWithShadow, Font.DisplayMode.POLYGON_OFFSET, lightCoords, 0xFF000000 | color, 0, outlineColor);
+        collector.submitText(stack, 0, 0, text, renderWithShadow, Font.DisplayMode.POLYGON_OFFSET, lightCoords, 0xff000000 | color, 0, outlineColor);
         stack.popPose();
     }
 

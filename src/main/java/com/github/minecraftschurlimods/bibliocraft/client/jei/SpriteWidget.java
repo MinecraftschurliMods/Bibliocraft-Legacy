@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.client.jei;
 
 import mezz.jei.api.gui.widgets.IRecipeWidget;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -32,7 +33,7 @@ public class SpriteWidget implements IRecipeWidget {
     }
 
     @Override
-    public void drawWidget(GuiGraphics graphics, double mouseX, double mouseY) {
+    public void drawWidget(GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, 0, 0, width, height);
     }
 }

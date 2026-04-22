@@ -61,11 +61,11 @@ public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHo
         builder.addText(Component.translatable(Translations.JEI_SECONDS_KEY, recipe.getDuration() / 20), getWidth() - 57, 10)
                 .setPosition(0, 0, getWidth(), getHeight(), HorizontalAlignment.RIGHT, VerticalAlignment.TOP)
                 .setTextAlignment(HorizontalAlignment.RIGHT)
-                .setColor(0xFF808080);
+                .setColor(0xff808080);
         builder.addText(Component.translatable(Translations.PRINTING_TABLE_MODE_KEY, Component.translatable(recipe.getMode().getTranslationKey())), getWidth() - 57, 10)
                 .setPosition(0, 0, getWidth(), getHeight(), HorizontalAlignment.RIGHT, VerticalAlignment.BOTTOM)
                 .setTextAlignment(HorizontalAlignment.RIGHT)
-                .setColor(0xFF808080);
+                .setColor(0xff808080);
         if (recipe.canHaveExperienceCost()) {
             builder.addWidget(new SpriteWidget(LEVEL, LEVEL_X, LEVEL_Y, 10, LEVEL_SIZE, LEVEL_SIZE));
         }

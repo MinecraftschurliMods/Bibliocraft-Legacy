@@ -102,7 +102,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
     private void drawText(PoseStack pose, OrderedSubmitNodeCollector collector, String text, float x, float y, int width, int light) {
         String visibleText = font.plainSubstrByWidth(text, width);
         if (visibleText.isEmpty()) return;
-        collector.submitText(pose, x, y, FormattedCharSequence.forward(text, Style.EMPTY), false, Font.DisplayMode.POLYGON_OFFSET, light, 0xFF000000, 0, 0);
+        collector.submitText(pose, x, y, FormattedCharSequence.forward(text, Style.EMPTY), false, Font.DisplayMode.POLYGON_OFFSET, light, 0xff000000, 0, 0);
     }
 
     private void blitSprite(PoseStack pose, OrderedSubmitNodeCollector collector, Vector3fc normal, Material material, int light, int overlay) {
