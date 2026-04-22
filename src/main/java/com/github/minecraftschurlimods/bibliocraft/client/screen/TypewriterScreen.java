@@ -7,7 +7,6 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.util.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;

@@ -11,7 +11,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.typewriter.Typewriter
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
 import com.mojang.datafixers.util.Function3;
-import net.minecraft.util.Util;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;

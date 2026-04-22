@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.client.screen.ClockScreen;
 import com.github.minecraftschurlimods.bibliocraft.content.clock.ClockTrigger;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.neoforged.neoforge.client.gui.widget.ScrollPanel;
