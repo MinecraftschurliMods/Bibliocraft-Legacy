@@ -38,8 +38,8 @@ public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, C
     }
 
     @Override
-    public void extractRenderState(CookieJarBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
+    public void extractRenderState(CookieJarBlockEntity blockEntity, State state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
         LegacyRandomSource random = new LegacyRandomSource(blockEntity.getBlockPos().asLong());
         int i = HashCommon.long2int(blockEntity.getBlockPos().asLong());
         List<ItemStack> items = IntStream.rangeClosed(0, blockEntity.getContainerSize() - 1)

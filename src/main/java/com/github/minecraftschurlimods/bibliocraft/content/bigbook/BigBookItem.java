@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.content.bigbook;
 
 import com.github.minecraftschurlimods.bibliocraft.init.BCDataComponents;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;

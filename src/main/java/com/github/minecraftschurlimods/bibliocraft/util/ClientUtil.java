@@ -39,7 +39,7 @@ import java.util.List;
  */
 public final class ClientUtil {
     private static RecipeMap recipeMap = RecipeMap.EMPTY;
-    
+
     /**
      * Helper to get the {@link Minecraft} instance.
      *

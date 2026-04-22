@@ -47,13 +47,13 @@ dependencies {
     }
 
     // abnormals mods for integration
-    if (abnormalsCompat) {
-        runtimeOnly("curse.maven:blueprint-382216:6449863")
-        runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
-        "dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
-        "dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
-        "dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
-    }
+    //if (abnormalsCompat) {
+        //runtimeOnly("curse.maven:blueprint-382216:6449863")
+        //runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
+        //"dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
+        //"dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
+        //"dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
+    //}
 
     testImplementation("org.junit.jupiter:junit-jupiter:${project.properties["junit_version"]}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

@@ -26,8 +26,8 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix4f;
 import org.jspecify.annotations.Nullable;
+import org.joml.Matrix4f;
 
 public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.TableRenderState> {
     private static final RenderType MAP_BACKGROUND = RenderTypes.text(BCUtil.mcLoc("textures/map/map_background.png"));

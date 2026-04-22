@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.util.holder;
 
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.Collection;
 import java.util.stream.Stream;

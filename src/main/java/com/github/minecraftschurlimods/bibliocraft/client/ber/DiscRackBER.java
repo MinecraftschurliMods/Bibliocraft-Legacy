@@ -32,8 +32,8 @@ public class DiscRackBER implements BlockEntityRenderer<DiscRackBlockEntity, Mul
     }
 
     @Override
-    public void extractRenderState(DiscRackBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTick, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
+    public void extractRenderState(DiscRackBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
         state.fill(blockEntity, ItemDisplayContext.FIXED, itemModelResolver);
     }
 

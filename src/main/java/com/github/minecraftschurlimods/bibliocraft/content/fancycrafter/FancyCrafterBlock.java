@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.ShapeUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.block.BCFacingEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;

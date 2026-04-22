@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ResolvableModel;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
 import net.neoforged.neoforge.client.model.block.CustomUnbakedBlockStateModel;
 import net.neoforged.neoforge.client.model.generators.blockstate.CustomBlockStateModelBuilder;
+import net.neoforged.neoforge.client.model.generators.blockstate.UnbakedMutator;
 
 import java.util.List;
 import java.util.Objects;

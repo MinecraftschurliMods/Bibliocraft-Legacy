@@ -202,7 +202,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             add(block, builder);
         }
     }
-    
+
     private class Recipes extends RecipeProvider {
         private final String modId;
 
@@ -404,7 +404,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             return "Recipes" + NAME_SUFFIX;
         }
     }
-    
+
     private void addBlockTags(Function<TagKey<Block>, TagAppender<Block, Block>> tag) {
         for (BibliocraftWoodType woodType : WOOD_TYPES) {
             BiConsumer<TagAppender<Block, Block>, Block> adder;
