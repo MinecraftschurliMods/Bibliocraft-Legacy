@@ -69,7 +69,7 @@ public class FormattedTextArea extends AbstractWidget {
     }
 
     @Override
-    protected void renderWidget(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractWidgetRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         int x = getX();
         int y = getY() + 1;
         for (int i = 0; i < lines.size(); i++) {

@@ -35,20 +35,20 @@ public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlot
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
+    protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractTooltip(graphics, mouseX, mouseY);
         if (hoveredSlot instanceof ToggleableSlot && !menu.isSlotDisabled(hoveredSlot.getSlotIndex()) && menu.getCarried().isEmpty() && !hoveredSlot.hasItem() && !player.isSpectator()) {
             graphics.tooltip(font, ClientUtil.forTooltip(Translations.VANILLA_TOGGLABLE_SLOT), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
         }
     }
 
     @Override
-    protected void renderSlot(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY) {
+    protected void extractSlot(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY) {
         if (slot instanceof ToggleableSlot && menu.isSlotDisabled(slot.getSlotIndex())) {
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, DISABLED_SLOT, slot.x - 1, slot.y - 1, 18, 18);
             return;
         }
-        super.renderSlot(graphics, slot, mouseX, mouseY);
+        super.extractSlot(graphics, slot, mouseX, mouseY);
     }
 
     @Override

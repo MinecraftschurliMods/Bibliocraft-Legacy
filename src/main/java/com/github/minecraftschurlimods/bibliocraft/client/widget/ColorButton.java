@@ -12,10 +12,9 @@ public class ColorButton extends Button {
     }
 
     @Override
-    protected void renderContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         int x = getX(), y = getY();
         int xOffset = width / 8, yOffset = height / 8;
-        super.renderWidget(graphics, mouseX, mouseY, partialTick);
         graphics.fill(x + xOffset, y + yOffset, x + width - xOffset, y + height - yOffset, color);
     }
 }

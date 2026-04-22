@@ -45,21 +45,21 @@ public class ClockTriggerElement extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         boolean hasScrollbar = owner.hasScrollbar(listSize);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, 0, 0, 0, hasScrollbar ? 20 : 0, hasScrollbar ? WIDTH - 6 : WIDTH, HEIGHT, 256, 256);
         if (trigger.redstone()) {
-            graphics.renderItem(REDSTONE, 2, 1);
+            graphics.item(REDSTONE, 2, 1);
         }
         if (trigger.sound()) {
-            graphics.renderItem(NOTE_BLOCK, 19, 1);
+            graphics.item(NOTE_BLOCK, 19, 1);
         }
         graphics.text(ClientUtil.getFont(), getTitle(), 42, 6, 0xff111111, false);
-        super.render(graphics, mouseX, mouseY, partialTick);
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
     }
 
     @Override
-    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
     }
 
     public void renderTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {

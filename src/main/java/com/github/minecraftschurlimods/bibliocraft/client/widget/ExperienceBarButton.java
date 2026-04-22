@@ -26,7 +26,7 @@ public class ExperienceBarButton extends Button {
     }
 
     @Override
-    protected void renderContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, backgroundTexture, getWidth(), getHeight(), 0, 0, getX(), getY(), getWidth(), getHeight());
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, progressTexture, getWidth(), getHeight(), 0, 0, getX(), getY(), (int) (getWidth() * progressGetter.get()), getHeight());
         ClientUtil.renderXpText(levelGetter.getAsInt() + "", graphics, getX() + getWidth() / 2, getY() - 4);

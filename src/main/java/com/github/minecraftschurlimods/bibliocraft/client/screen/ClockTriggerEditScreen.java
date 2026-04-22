@@ -101,8 +101,8 @@ public class ClockTriggerEditScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         graphics.text(ClientUtil.getFont(), Translations.CLOCK_TIME, contentLeftPos, contentTopPos + 6, 0xff111111, false);
         graphics.text(ClientUtil.getFont(), Translations.CLOCK_TIME_SEPARATOR, contentLeftPos + timeWidth + 43, contentTopPos + 6, 0xff111111, false);
         graphics.text(ClientUtil.getFont(), Translations.CLOCK_EMIT_REDSTONE, contentLeftPos + 19, contentTopPos + 27, 0xff111111, false);
@@ -110,8 +110,8 @@ public class ClockTriggerEditScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, WIDTH, HEIGHT, 256, 256);
     }
 

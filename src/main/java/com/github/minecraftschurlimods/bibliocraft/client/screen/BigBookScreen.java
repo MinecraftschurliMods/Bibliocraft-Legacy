@@ -305,14 +305,14 @@ public class BigBookScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         if (isSigning) {
             int x = (width - BACKGROUND_WIDTH - 80) / 2;
             graphics.text(font, Translations.VANILLA_EDIT_TITLE, x + 18 + (TEXT_WIDTH - font.width(Translations.VANILLA_EDIT_TITLE)) / 2, 34, 0xff000000, false);
             MutableComponent owner = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, player.getName()).withStyle(ChatFormatting.DARK_GRAY);
             graphics.text(font, owner, x + 18 + (TEXT_WIDTH - font.width(owner)) / 2, 60, 0xff000000, false);
-            graphics.drawWordWrap(font, Translations.VANILLA_FINALIZE_WARNING, x + 18, 82, TEXT_WIDTH, 0);
+            graphics.textWithWordWrap(font, Translations.VANILLA_FINALIZE_WARNING, x + 18, 82, TEXT_WIDTH, 0xff000000, false);
         } else {
             Component pageIndicator = Component.translatable(Translations.VANILLA_PAGE_INDICATOR_KEY, currentPage + 1, pages.size());
             if (writable) {
@@ -339,8 +339,8 @@ public class BigBookScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
         int x = (width - (writable ? BACKGROUND_WIDTH + 80 : BACKGROUND_WIDTH)) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, x, 0, 0, 0, 256, 256, 256, 256);
     }

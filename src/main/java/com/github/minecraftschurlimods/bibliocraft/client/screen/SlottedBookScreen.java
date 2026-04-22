@@ -23,19 +23,20 @@ public class SlottedBookScreen extends AbstractContainerScreen<SlottedBookMenu> 
     }
 
     @Override
-    public void renderBg(GuiGraphicsExtractor graphics, float partialTick, int mouseX, int mouseY) {
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 
     @Override
-    protected void renderLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0xff404040, false);
+    protected void extractLabels(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        graphics.text(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0xff404040, false);
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics, mouseX, mouseY, partialTick);
-        super.render(graphics, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        extractBackground(graphics, mouseX, mouseY, partialTick);
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         FormattedText text = FormattedText.of(Translations.SLOTTED_BOOK_TEXT.getString());
         List<FormattedCharSequence> lines = font.split(text, 114);
         int startX = (width - 192) / 2;
@@ -43,6 +44,5 @@ public class SlottedBookScreen extends AbstractContainerScreen<SlottedBookMenu> 
         for (int i = 0; i < lines.size(); i++) {
             graphics.text(font, lines.get(i), startX + 38, startY + i * 9, 0xff000000, false);
         }
-        renderTooltip(graphics, mouseX, mouseY);
     }
 }

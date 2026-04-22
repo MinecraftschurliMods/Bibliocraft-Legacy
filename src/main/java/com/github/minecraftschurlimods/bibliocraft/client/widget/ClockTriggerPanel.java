@@ -40,7 +40,7 @@ public class ClockTriggerPanel extends ScrollPanel {
         pose.translate(left, relativeY);
         for (int i = 0; i < elements.size(); i++) {
             pose.pushMatrix();
-            elements.get(i).render(graphics, mouseX - left, mouseY - i * ClockTriggerElement.HEIGHT - relativeY, 1);
+            elements.get(i).extractRenderState(graphics, mouseX - left, mouseY - i * ClockTriggerElement.HEIGHT - relativeY, 1);
             pose.popMatrix();
             pose.translate(0, ClockTriggerElement.HEIGHT);
         }

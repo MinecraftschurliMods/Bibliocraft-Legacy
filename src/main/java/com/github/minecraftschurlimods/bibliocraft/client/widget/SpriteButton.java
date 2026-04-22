@@ -16,7 +16,7 @@ public abstract class SpriteButton extends Button {
     protected abstract Identifier getSprite();
 
     @Override
-    protected void renderContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+    protected void extractContents(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         Identifier sprite = getSprite();
         if (sprite != null) {
             graphics.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, getX(), getY(), getWidth(), getHeight());

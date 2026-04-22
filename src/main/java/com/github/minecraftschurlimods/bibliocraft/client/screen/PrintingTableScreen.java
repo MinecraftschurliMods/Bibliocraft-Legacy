@@ -72,16 +72,16 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
     }
 
     @Override
-    protected void renderBg(GuiGraphicsExtractor graphics, float partialTick, int x, int y) {
-        super.renderBg(graphics, partialTick, x, y);
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
         float progress = menu.getBlockEntity().getProgress();
         int width = progress == 1f ? 0 : Mth.ceil(progress * 24);
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS, 24, 16, 0, 0, leftPos + 110, topPos + 35, width, 16);
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         int experienceCost = menu.getBlockEntity().getLevelCost();
         if (experienceCost > 0) {
             ClientUtil.renderXpText(experienceCost + "", graphics, leftPos + 122, topPos + 39);

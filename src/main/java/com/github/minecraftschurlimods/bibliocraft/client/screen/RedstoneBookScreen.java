@@ -18,8 +18,8 @@ public class RedstoneBookScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int x, int y, float partialTick) {
-        super.render(graphics, x, y, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int x, int y, float partialTick) {
+        super.extractRenderState(graphics, x, y, partialTick);
         FormattedText text = FormattedText.of(Translations.REDSTONE_BOOK_TEXT.getString());
         List<FormattedCharSequence> lines = font.split(text, 114);
         int startX = (width - 192) / 2;
@@ -29,8 +29,8 @@ public class RedstoneBookScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphicsExtractor graphics, int x, int y, float partialTick) {
-        super.renderBackground(graphics, x, y, partialTick);
+    public void extractBackground(GuiGraphicsExtractor graphics, int x, int y, float partialTick) {
+        super.extractBackground(graphics, x, y, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BookViewScreen.BOOK_LOCATION, (this.width - 192) / 2, 2, 0, 0, 192, 192, 256, 256);
     }
 

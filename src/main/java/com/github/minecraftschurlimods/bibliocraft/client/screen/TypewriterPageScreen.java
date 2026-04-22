@@ -34,8 +34,8 @@ public class TypewriterPageScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         Font font = ClientUtil.getFont();
         for (int i = 0; i < page.lines().size(); i++) {
             graphics.text(font, page.lines().get(i), leftPos + 2, topPos + 2 + i * 10, 0xff000000, false);
@@ -43,8 +43,8 @@ public class TypewriterPageScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0, 0, TypewriterScreen.IMAGE_WIDTH, TypewriterScreen.IMAGE_HEIGHT, 256, 256);
     }
 

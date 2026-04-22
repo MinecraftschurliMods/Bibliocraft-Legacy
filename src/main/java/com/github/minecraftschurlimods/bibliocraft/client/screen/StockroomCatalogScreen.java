@@ -95,16 +95,16 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.render(graphics, mouseX, mouseY, partialTick);
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
         int x = (width - 256) / 2;
         int y = mouseY - 29;
         int i = 0;
         if (showContainerList) {
             for (BlockPos pos : visibleContainers) {
                 ItemStack blockItem = new ItemStack(ClientUtil.getLevel().getBlockState(pos).getBlock().asItem());
-                graphics.renderItem(blockItem, x + 34, i * 19 + 29);
-                graphics.renderItemDecorations(font, blockItem, x + 34, i * 19 + 29);
+                graphics.item(blockItem, x + 34, i * 19 + 29);
+                graphics.itemDecorations(font, blockItem, x + 34, i * 19 + 29);
                 String itemText = blockItem.getHoverName().getString(137);
                 graphics.text(font, itemText, x + 51, i * 19 + 33, 0xff000000, false);
                 i++;
@@ -128,8 +128,8 @@ public class StockroomCatalogScreen extends Screen {
             }
         } else {
             for (StockroomCatalogItemEntry entry : visibleItems) {
-                graphics.renderItem(entry.item(), x + 34, i * 19 + 29);
-                graphics.renderItemDecorations(font, entry.item(), x + 34, i * 19 + 29);
+                graphics.item(entry.item(), x + 34, i * 19 + 29);
+                graphics.itemDecorations(font, entry.item(), x + 34, i * 19 + 29);
                 String countText = Component.translatable(Translations.STOCKROOM_CATALOG_COUNT_KEY, entry.count()).getString();
                 int countWidth = font.width(countText);
                 graphics.text(font, countText, x + 205 - countWidth, i * 19 + 33, 0xff000000, false);
@@ -243,8 +243,8 @@ public class StockroomCatalogScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
-        super.renderBackground(graphics, mouseX, mouseY, partialTick);
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, (width - 256) / 2 + 18, 2, 0, 0, 256, 256, 256, 256);
     }
 
