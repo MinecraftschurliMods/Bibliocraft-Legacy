@@ -35,8 +35,8 @@ public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBl
     }
 
     @Override
-    public void extractRenderState(FancyArmorStandBlockEntity blockEntity, State state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
+    public void extractRenderState(FancyArmorStandBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
         FancyArmorStandEntity entity = blockEntity.getDisplayEntity();
         if (entity == null) {
             return;

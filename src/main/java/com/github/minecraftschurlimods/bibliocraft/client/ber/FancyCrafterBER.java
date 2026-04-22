@@ -34,8 +34,8 @@ public class FancyCrafterBER implements BlockEntityRenderer<FancyCrafterBlockEnt
     }
 
     @Override
-    public void extractRenderState(FancyCrafterBlockEntity blockEntity, State state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
+    public void extractRenderState(FancyCrafterBlockEntity blockEntity, State state, float partialTick, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, p_445788_, p_446944_);
         state.fill(blockEntity, ItemDisplayContext.FIXED, itemModelResolver);
         Level level = BCUtil.nonNull(blockEntity.getLevel());
         BlockPos pos = blockEntity.getBlockPos();
