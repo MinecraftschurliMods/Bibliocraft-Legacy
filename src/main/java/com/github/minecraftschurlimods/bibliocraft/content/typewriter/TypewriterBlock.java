@@ -90,7 +90,7 @@ public class TypewriterBlock extends BCFacingEntityBlock {
                 player.addItem(typewriter.takeOutput());
                 return InteractionResult.SUCCESS;
             } else if (typewriter.getItem(TypewriterBlockEntity.INPUT).isEmpty()) {
-                player.displayClientMessage(Translations.TYPEWRITER_NO_PAPER, true);
+                player.sendOverlayMessage(Translations.TYPEWRITER_NO_PAPER);
                 return InteractionResult.SUCCESS;
             } else if (level.isClientSide()) {
                 ClientUtil.openTypewriterScreen(pos);

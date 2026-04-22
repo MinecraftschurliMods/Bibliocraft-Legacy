@@ -115,13 +115,13 @@ public class StockroomCatalogItem extends Item {
             GlobalPos globalPos = hasPositionAtNeighbor ? neighborPos : new GlobalPos(level.dimension(), pos);
             if (list.positions().contains(globalPos)) {
                 stack.update(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT, component -> component.remove(globalPos));
-                player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE_CONTAINER_KEY, BCUtil.getNameAtPos(level, pos)), true);
+                player.sendOverlayMessage(Component.translatable(Translations.STOCKROOM_CATALOG_REMOVE_CONTAINER_KEY, BCUtil.getNameAtPos(level, pos)));
                 return InteractionResult.SUCCESS;
             }
             ResourceHandler<ItemResource> cap = level.getCapability(Capabilities.Item.BLOCK, pos, context.getClickedFace());
             if (cap != null) {
                 stack.update(BCDataComponents.STOCKROOM_CATALOG_CONTENT, StockroomCatalogContent.DEFAULT, component -> component.add(globalPos));
-                player.displayClientMessage(Component.translatable(Translations.STOCKROOM_CATALOG_ADD_CONTAINER_KEY, BCUtil.getNameAtPos(level, pos)), true);
+                player.sendOverlayMessage(Component.translatable(Translations.STOCKROOM_CATALOG_ADD_CONTAINER_KEY, BCUtil.getNameAtPos(level, pos)));
                 return InteractionResult.SUCCESS;
             }
         }

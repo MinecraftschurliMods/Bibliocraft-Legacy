@@ -38,7 +38,7 @@ public class LockAndKeyItem extends Item {
         if (behavior == null) return super.useOn(context);
         Component name = behavior.getDisplayName(blockEntity);
         if (!stack.has(DataComponents.CUSTOM_NAME)) {
-            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME_KEY, name), true);
+            player.sendOverlayMessage(Component.translatable(Translations.LOCK_AND_KEY_NO_CUSTOM_NAME_KEY, name));
             if (!level.isClientSide()) {
                 Vec3 pos = context.getClickLocation();
                 level.playSound(null, pos.x(), pos.y(), pos.z(), SoundEvents.CHEST_LOCKED, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -49,12 +49,12 @@ public class LockAndKeyItem extends Item {
         if (lock == LockCode.NO_LOCK) {
             behavior.setLockKey(blockEntity, newLockCode(stack));
             blockEntity.setChanged();
-            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_LOCKED_KEY, name), true);
+            player.sendOverlayMessage(Component.translatable(Translations.LOCK_AND_KEY_LOCKED_KEY, name));
             return InteractionResult.SUCCESS;
         } else if (lock.unlocksWith(stack)) {
             behavior.setLockKey(blockEntity, LockCode.NO_LOCK);
             blockEntity.setChanged();
-            player.displayClientMessage(Component.translatable(Translations.LOCK_AND_KEY_UNLOCKED_KEY, name), true);
+            player.sendOverlayMessage(Component.translatable(Translations.LOCK_AND_KEY_UNLOCKED_KEY, name));
             return InteractionResult.SUCCESS;
         }
         return super.useOn(context);
