@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,7 +66,7 @@ public class BookcaseBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    public float getEnchantPowerBonus(BlockState state, LevelReader level, BlockPos pos) {
+    public float getEnchantPowerBonus(BlockState state, BlockGetter level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof BookcaseBlockEntity bcbe)) return super.getEnchantPowerBonus(state, level, pos);
         return super.getEnchantPowerBonus(state, level, pos) + 0.125f * IntStream.range(0, bcbe.getContainerSize())

@@ -144,7 +144,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot < 10 && stack.getCraftingRemainder().isEmpty() && !isSlotDisabled(slot) && super.canPlaceItem(slot, stack);
+        return slot < 10 && stack.getCraftingRemainder() == null && !isSlotDisabled(slot) && super.canPlaceItem(slot, stack);
     }
 
     @Override
@@ -289,7 +289,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         maxDuration = recipe == null ? 0 : recipe.getDuration();
         levelCost = recipe == null ? 0 : recipe.getExperienceLevelCost(recipeInput.right().copy(), serverLevel);
         tank.clear();
-        PacketDistributor.sendToPlayersTrackingChunk(serverLevel, new ChunkPos(getBlockPos()), new PrintingTableSetRecipePacket(getBlockPos(), duration, maxDuration, levelCost));
+        PacketDistributor.sendToPlayersTrackingChunk(serverLevel, ChunkPos.containing(getBlockPos()), new PrintingTableSetRecipePacket(getBlockPos(), duration, maxDuration, levelCost));
     }
 
     private PrintingTableRecipeInput getRecipeInput() {
