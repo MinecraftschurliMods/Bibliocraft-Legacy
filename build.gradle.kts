@@ -32,7 +32,7 @@ repositories {
 }
 
 val jei = helper.dependencies.jei()
-val abnormalsCompat = true
+val abnormalsCompat = false
 
 dependencies {
     implementation(helper.neoforge())
@@ -47,13 +47,13 @@ dependencies {
     }
 
     // abnormals mods for integration
-    //if (abnormalsCompat) {
-        //runtimeOnly("curse.maven:blueprint-382216:6449863")
-        //runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
-        //"dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
-        //"dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
-        //"dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
-    //}
+    if (abnormalsCompat) {
+        runtimeOnly("curse.maven:blueprint-382216:6449863")
+        runtimeOnly("curse.maven:buzzier-bees-355458:6449894")
+        "dataRuntimeOnly"("curse.maven:gallery-1173553:6449910")
+        "dataRuntimeOnly"("curse.maven:blueprint-382216:6449863")
+        "dataRuntimeOnly"("curse.maven:buzzier-bees-355458:6449894")
+    }
 
     testImplementation("org.junit.jupiter:junit-jupiter:${project.properties["junit_version"]}")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -68,9 +68,9 @@ helper.featureFlags.add("wip")
 helper.withCommonRuns()
 helper.withGameTestRuns()
 helper.withDataGenRuns {
-    //if (abnormalsCompat) {
-        //arguments("--existing-mod", "buzzier_bees")
-    //}
+    if (abnormalsCompat) {
+        arguments("--existing-mod", "buzzier_bees")
+    }
 }
 
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
@@ -78,6 +78,11 @@ minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer
 tasks.javadoc {
     classpath = sourceSets.api.get().compileClasspath
     source = sourceSets.api.get().allJava
+}
+
+tasks.withType<JavaCompile>().matching { !it.name.startsWith("neo") }.configureEach {
+    options.encoding = "UTF-8"
+    options.compilerArgs.addAll(arrayOf("-Xlint:-removal", "-Xmaxerrs", "9999"))
 }
 
 helper.publication.pom {
