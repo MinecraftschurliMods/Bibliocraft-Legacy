@@ -7,7 +7,6 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCSoundEvents;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
-import net.minecraft.util.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
@@ -20,6 +19,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
+import net.minecraft.util.Util;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class TypewriterScreen extends Screen {

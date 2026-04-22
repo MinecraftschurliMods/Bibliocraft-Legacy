@@ -15,8 +15,8 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import org.jspecify.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
+import org.jspecify.annotations.Nullable;
 
 public class ClockTriggerEditScreen extends Screen {
     private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/clock_edit.png");

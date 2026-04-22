@@ -11,7 +11,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.typewriter.Typewriter
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
 import com.mojang.datafixers.util.Function3;
-import net.minecraft.util.Util;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
@@ -26,6 +25,7 @@ import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;

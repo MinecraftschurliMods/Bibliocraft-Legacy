@@ -1,6 +1,10 @@
 package com.github.minecraftschurlimods.bibliocraft.client.ber;
 
-import com.github.minecraftschurlimods.bibliocraft.content.fancysign.*;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.AbstractFancySignBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlock;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignBlockEntity;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.FancySignContent;
+import com.github.minecraftschurlimods.bibliocraft.content.fancysign.WallFancySignBlock;
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.mojang.blaze3d.vertex.PoseStack;

@@ -1,7 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client.jei;
 
 import mezz.jei.api.gui.widgets.IRecipeWidget;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.renderer.RenderPipelines;

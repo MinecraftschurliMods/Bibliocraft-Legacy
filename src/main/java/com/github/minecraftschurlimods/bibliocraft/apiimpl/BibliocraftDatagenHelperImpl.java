@@ -61,7 +61,11 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.*;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.GroupedModelTemplate;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.GroupedModelTemplate2;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.WOODEN;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.WOODEN_COLORED;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.createItemModel;
 
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHelper {

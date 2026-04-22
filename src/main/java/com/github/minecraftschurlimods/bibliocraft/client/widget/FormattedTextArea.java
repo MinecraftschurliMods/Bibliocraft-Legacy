@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.FormattedLine;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.util.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -19,6 +18,7 @@ import net.minecraft.util.ARGB;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
+import net.minecraft.util.Util;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;

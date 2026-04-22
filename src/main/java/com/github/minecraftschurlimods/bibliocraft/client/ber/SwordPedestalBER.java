@@ -4,7 +4,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPe
 import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

@@ -6,7 +6,6 @@ import com.mojang.datafixers.util.Function3;
 import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.NotNullByDefault;
 
 import java.util.Collection;
 import java.util.EnumMap;
