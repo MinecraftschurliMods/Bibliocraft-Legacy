@@ -40,40 +40,29 @@ import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import org.jetbrains.annotations.ApiStatus;
 
+@EventBusSubscriber(modid = BibliocraftApi.MOD_ID)
 public final class BCEventHandler {
-    // @formatter:off
-    @ApiStatus.Internal
-    public static void init(IEventBus modBus) {
-        modBus.addListener(EventPriority.LOWEST, FMLCommonSetupEvent.class, BCEventHandler::commonSetup);
-        modBus.addListener(EntityAttributeCreationEvent.class,      BCEventHandler::entityAttributeCreation);
-        modBus.addListener(RegisterCapabilitiesEvent.class,         BCEventHandler::registerCapabilities);
-        modBus.addListener(RegisterPayloadHandlersEvent.class,      BCEventHandler::registerPayloadHandlers);
-        modBus.addListener(RegisterLockAndKeyBehaviorEvent.class,   BCEventHandler::registerLockAndKeyBehaviors);
-        modBus.addListener(RegisterBibliocraftWoodTypesEvent.class, BCEventHandler::registerBibliocraftWoodTypes);
-        NeoForge.EVENT_BUS.addListener(PlayerInteractEvent.RightClickBlock.class, BCEventHandler::rightClickBlock);
-    }
-    // @formatter:on
-
+    @SubscribeEvent
     private static void commonSetup(FMLCommonSetupEvent event) {
         ((LockAndKeyBehaviorsImpl) BibliocraftApi.getLockAndKeyBehaviors()).register();
     }
 
+    @SubscribeEvent
     private static void entityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(BCEntities.FANCY_ARMOR_STAND.get(), LivingEntity.createLivingAttributes().build());
     }
 
     // @formatter:off
+    @SubscribeEvent
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.BOOKCASE.get(),          BCBlockEntity::getItemCapability);
         event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.COOKIE_JAR.get(),        BCBlockEntity::getItemCapability);
@@ -93,32 +82,35 @@ public final class BCEventHandler {
         event.registerBlock(Capabilities.Fluid.BLOCK, PrintingTableBlockEntity::getFluidCapability, BCBlocks.IRON_PRINTING_TABLE.get());
     }
 
+    @SubscribeEvent
     private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
         event.registrar(BibliocraftApi.MOD_ID)
-                .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
-                .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
-                .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
-                .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle, ClockSyncPacket::handle)
-                .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
-                .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
-                .playToServer(PrintingTableInputPacket.TYPE,          PrintingTableInputPacket.STREAM_CODEC,          PrintingTableInputPacket::handle)
-                .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle, PrintingTableSetRecipePacket::handle)
-                .playToClient(PrintingTableTankSyncPacket.TYPE,       PrintingTableTankSyncPacket.STREAM_CODEC,       PrintingTableTankSyncPacket::handle)
-                .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
-                .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
-                .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
-                .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
-                .playToServer(TakeLecternBookPacket.TYPE,             TakeLecternBookPacket.STREAM_CODEC,             TakeLecternBookPacket::handle)
-                .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle, ToggleableSlotSyncPacket::handle)
-                .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle, TypewriterSyncPacket::handle);
+            .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
+            .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
+            .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
+            .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle, ClockSyncPacket::handle)
+            .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
+            .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
+            .playToServer(PrintingTableInputPacket.TYPE,          PrintingTableInputPacket.STREAM_CODEC,          PrintingTableInputPacket::handle)
+            .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle, PrintingTableSetRecipePacket::handle)
+            .playToClient(PrintingTableTankSyncPacket.TYPE,       PrintingTableTankSyncPacket.STREAM_CODEC,       PrintingTableTankSyncPacket::handle)
+            .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
+            .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
+            .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
+            .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
+            .playToServer(TakeLecternBookPacket.TYPE,             TakeLecternBookPacket.STREAM_CODEC,             TakeLecternBookPacket::handle)
+            .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle, ToggleableSlotSyncPacket::handle)
+            .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle, TypewriterSyncPacket::handle);
     }
 
+    @SubscribeEvent
     private static void registerLockAndKeyBehaviors(RegisterLockAndKeyBehaviorEvent event) {
         event.register(BaseContainerBlockEntity.class, be -> be.lockKey, (be, lock) -> be.lockKey = lock,    BaseContainerBlockEntity::getDisplayName);
         event.register(BeaconBlockEntity.class,        be -> be.lockKey, (be, lock) -> be.lockKey = lock,    BeaconBlockEntity::getDisplayName);
         event.register(BCBlockEntity.class,            BCBlockEntity::getLockKey, BCBlockEntity::setLockKey, BCUtil::getNameForBE);
     }
 
+    @SubscribeEvent
     private static void registerBibliocraftWoodTypes(RegisterBibliocraftWoodTypesEvent event) {
         registerVanilla(event, WoodType.OAK,      Blocks.OAK_PLANKS,      BlockFamilies.OAK_PLANKS);
         registerVanilla(event, WoodType.SPRUCE,   Blocks.SPRUCE_PLANKS,   BlockFamilies.SPRUCE_PLANKS);
@@ -135,13 +127,7 @@ public final class BCEventHandler {
     }
     // @formatter:on
 
-    /**
-     * Private helper for registering the vanilla variants.
-     */
-    private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
-        event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), () -> family);
-    }
-
+    @SubscribeEvent
     private static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         Level level = event.getLevel();
         BlockPos pos = event.getPos();
@@ -149,5 +135,12 @@ public final class BCEventHandler {
             event.setCancellationResult(InteractionResult.SUCCESS);
             event.setCanceled(true);
         }
+    }
+
+    /**
+     * Private helper for registering the vanilla variants.
+     */
+    private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
+        event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), () -> family);
     }
 }

@@ -31,6 +31,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.util.Lazy;
 
@@ -49,6 +50,7 @@ public final class BCJeiPlugin implements IModPlugin {
             Lazy.of(() -> List.of(BCItems.FANCY_GOLD_LAMP, BCItems.FANCY_IRON_LAMP, BCItems.FANCY_GOLD_LANTERN, BCItems.FANCY_IRON_LANTERN));
     private static final Lazy<List<GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, ?>>> COLORED_WOOD_TYPE_DEFERRED_HOLDERS =
             Lazy.of(() -> List.of(BCItems.DISPLAY_CASE, BCItems.SEAT, BCItems.SMALL_SEAT_BACK, BCItems.RAISED_SEAT_BACK, BCItems.FLAT_SEAT_BACK, BCItems.TALL_SEAT_BACK, BCItems.FANCY_SEAT_BACK));
+    private static RecipeMap recipeMap = RecipeMap.EMPTY;
 
     @Override
     public Identifier getPluginUid() {
@@ -88,7 +90,7 @@ public final class BCJeiPlugin implements IModPlugin {
                 registration.addIngredientInfo(holder.get(WHITE), Translations.ALL_COLORS);
             }
         }
-        registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getRecipeMap().byType(BCRecipes.PRINTING_TABLE.get()).stream().toList());
+        registration.addRecipes(PrintingTableRecipeCategory.TYPE, recipeMap.byType(BCRecipes.PRINTING_TABLE.get()).stream().toList());
     }
 
     @Override
@@ -139,6 +141,10 @@ public final class BCJeiPlugin implements IModPlugin {
         if (!CompatUtil.hasSoulCandles()) {
             remove(runtime, Stream.of(BCItems.SOUL_FANCY_GOLD_LANTERN, BCItems.SOUL_FANCY_IRON_LANTERN).map(Supplier::get).map(ItemStack::new).toList());
         }
+    }
+
+    public static void setRecipeMap(RecipeMap recipeMap) {
+        BCJeiPlugin.recipeMap = recipeMap;
     }
 
     private void remove(IJeiRuntime runtime, List<ItemStack> list) {

@@ -11,7 +11,6 @@ import net.neoforged.fml.common.Mod;
 @Mod(value = BibliocraftApi.MOD_ID)
 public final class Bibliocraft {
     public Bibliocraft(IEventBus bus) {
-        BCEventHandler.init(bus);
         ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register();
         BCRegistries.init(BCUtil.nonNull(ModList.get().getModContainerById(BibliocraftApi.MOD_ID).orElseThrow().getEventBus()));
     }

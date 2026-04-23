@@ -38,8 +38,6 @@ import java.util.List;
  * Utility class holding various helper methods. Kept separate from {@link BCUtil} for classloading reasons.
  */
 public final class ClientUtil {
-    private static RecipeMap recipeMap = RecipeMap.EMPTY;
-
     /**
      * Helper to get the {@link Minecraft} instance.
      *
@@ -232,13 +230,5 @@ public final class ClientUtil {
 
     public static List<ClientTooltipComponent> forTooltip(Component component) {
         return List.of(ClientTooltipComponent.create(component.getVisualOrderText()));
-    }
-
-    public static void onReceiveRecipes(RecipesReceivedEvent event) {
-        recipeMap = event.getRecipeMap();
-    }
-
-    public static RecipeMap getRecipeMap() {
-        return recipeMap;
     }
 }

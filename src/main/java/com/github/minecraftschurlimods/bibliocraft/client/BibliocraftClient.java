@@ -20,7 +20,5 @@ public final class BibliocraftClient {
         if (CompatUtil.hasConfigScreen()) {
             container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
         }
-        BCClientEventHandler.init(bus);
-        NeoForge.EVENT_BUS.addListener(ClientUtil::onReceiveRecipes);
     }
 }
