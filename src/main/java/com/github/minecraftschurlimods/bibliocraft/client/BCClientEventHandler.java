@@ -17,12 +17,12 @@ import com.github.minecraftschurlimods.bibliocraft.client.ber.TableBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ToolRackBER;
 import com.github.minecraftschurlimods.bibliocraft.client.jei.BCJeiPlugin;
 import com.github.minecraftschurlimods.bibliocraft.client.model.BookcaseBlockStateModel;
+import com.github.minecraftschurlimods.bibliocraft.client.model.SwordPedestalTintSource;
 import com.github.minecraftschurlimods.bibliocraft.client.model.TableBlockStateModel;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.BCMenuScreens;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.FancyCrafterScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.PrintingTableScreen;
 import com.github.minecraftschurlimods.bibliocraft.client.screen.SlottedBookScreen;
-import com.github.minecraftschurlimods.bibliocraft.content.swordpedestal.SwordPedestalBlockEntity;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlockEntities;
 import com.github.minecraftschurlimods.bibliocraft.init.BCBlocks;
 import com.github.minecraftschurlimods.bibliocraft.init.BCEntities;
@@ -37,6 +37,8 @@ import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterBlockStateModels;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+
+import java.util.List;
 
 public final class BCClientEventHandler {
     @SubscribeEvent
@@ -91,8 +93,8 @@ public final class BCClientEventHandler {
     }
 
     @SubscribeEvent
-    private static void registerColorHandlersBlock(RegisterColorHandlersEvent.Block event) {
-        event.register((state, level, pos, tintIndex) -> tintIndex == 0 && level != null && pos != null && level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe ? spbe.getColor().rgb() : -1, BCBlocks.SWORD_PEDESTAL.get());
+    private static void registerColorHandlersBlock(RegisterColorHandlersEvent.BlockTintSources event) {
+        event.register(List.of(_ -> -1, SwordPedestalTintSource.INSTANCE), BCBlocks.SWORD_PEDESTAL.get());
     }
 
     @SubscribeEvent
