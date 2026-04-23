@@ -14,6 +14,7 @@ import net.minecraft.util.Util;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
@@ -111,9 +112,8 @@ public final class BCUtil {
      * @param level The {@link Level} to get the day duration for.
      * @return The duration of a day in the given {@link Level}.
      */
-    public static int getDayDuration(Level level) {
-        float factor = level.getDayTimePerTick();
-        return factor < 0 ? Level.TICKS_PER_DAY : (int) (Level.TICKS_PER_DAY * factor);
+    public static int getDayDuration(Level level, Vec3 position) {
+        return level.dimension() == Level.OVERWORLD ? (int) (level.environmentAttributes().getValue(EnvironmentAttributes.SUN_ANGLE, position) / 360f) : -1;
     }
 
     /**

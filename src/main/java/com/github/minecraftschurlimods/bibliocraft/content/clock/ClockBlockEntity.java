@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class ClockBlockEntity extends BlockEntity {
                 setPowered(level, pos, false);
             }
         }
-        int time = (int) (level.getDefaultClockTime() % BCUtil.getDayDuration(level));
+        int time = (int) (level.getDefaultClockTime() % BCUtil.getDayDuration(level, BCUtil.toVec3(pos)));
         if (blockEntity.triggersMap.containsKey(time)) {
             Collection<ClockTrigger> trigger = blockEntity.triggersMap.get(time);
             if (trigger.stream().anyMatch(ClockTrigger::sound)) {
@@ -86,9 +87,10 @@ public class ClockBlockEntity extends BlockEntity {
     private void addTriggers(Collection<ClockTrigger> triggers) {
         this.triggers.clear();
         this.triggersMap.clear();
+        Vec3 position = BCUtil.toVec3(getBlockPos());
         for (ClockTrigger trigger : triggers) {
             this.triggers.add(trigger);
-            this.triggersMap.put(trigger.getInGameTime(getLevel()), trigger);
+            this.triggersMap.put(trigger.getInGameTime(getLevel(), position), trigger);
         }
         this.triggers.sort(ClockTrigger::compareTo);
         setChanged();

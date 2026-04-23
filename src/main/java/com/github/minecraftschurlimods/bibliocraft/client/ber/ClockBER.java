@@ -101,68 +101,66 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
         ModelPart hourHand = state.isGrandfather ? this.grandfatherHourHand : this.hourHand;
         ModelPart minuteHand = state.isGrandfather ? this.grandfatherMinuteHand : this.minuteHand;
         ModelPart pendulum = state.isGrandfather ? this.grandfatherPendulum : this.pendulum;
-        float handsRotation = state.isNaturalDimension ? -((state.dayTime + 6000) % 12000) * 0.03f : getRotation(state.gameTime);
-        float pendulumRotation = (float) Math.sin((state.dayTime % 40 - 20) * Math.PI / 20);
 
         stack.pushPose();
         ClientUtil.setupCenteredBER(stack, state);
         stack.pushPose();
         stack.translate(0, state.handY, state.handZ);
         stack.pushPose();
-        stack.mulPose(Axis.ZP.rotationDegrees(handsRotation));
+        stack.mulPose(Axis.ZP.rotationDegrees(state.handsRotation));
         collector.submitModelPart(hourHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(HAND_MATERIAL));
         stack.popPose();
         stack.pushPose();
-        stack.mulPose(Axis.ZP.rotationDegrees((handsRotation * 12) % 360));
+        stack.mulPose(Axis.ZP.rotationDegrees((state.handsRotation * 12) % 360));
         collector.submitModelPart(minuteHand, stack, handMaterial, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(HAND_MATERIAL));
         stack.popPose();
         stack.popPose();
         stack.pushPose();
         stack.translate(0, state.pendulumY, state.pendulumZ);
         stack.mulPose(Axis.ZP.rotationDegrees(180));
-        stack.mulPose(Axis.ZP.rotation(pendulumRotation / state.pendulumSize));
+        stack.mulPose(Axis.ZP.rotation(state.pendulumRotation / state.pendulumSize));
         collector.submitModelPart(pendulum, stack, pendulumRenderType, state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(PENDULUM_MATERIAL));
         stack.popPose();
         stack.popPose();
     }
 
     @Override
-    public void extractRenderState(ClockBlockEntity blockEntity, State state, float p_446851_, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, p_446851_, p_445788_, breakProgress);
+    public void extractRenderState(ClockBlockEntity blockEntity, State state, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPosition, breakProgress);
         Level level = BCUtil.nonNull(blockEntity.getLevel());
-        state.dayTime = level.getDefaultClockTime();
-        state.gameTime = level.getGameTime();
-        //state.isNaturalDimension = level.dimensionType().natural(); // TODO how to replace?
+        long dayTime = level.getDefaultClockTime();
+        long dayDuration = BCUtil.getDayDuration(level, BCUtil.toVec3(blockEntity.getBlockPos()));
+        state.handsRotation = dayDuration >= 0 ? -((dayTime + dayDuration * 0.25f) % (dayDuration / 2f)) * 0.03f : getRotation(level.getGameTime());
+        state.pendulumRotation = (float) Math.sin((dayTime % 40 - 20) * Math.PI / 20);
 
         if (blockEntity.getBlockState().getBlock() instanceof FancyClockBlock) {
             state.isGrandfather = false;
             state.handY = 0.15625;
             state.handZ = 0.15625;
-            state.pendulumSize = (float) 4;
+            state.pendulumSize = 4;
             state.pendulumY = -0.0625;
             state.pendulumZ = 0.09375;
         } else if (blockEntity.getBlockState().getBlock() instanceof WallFancyClockBlock) {
             state.isGrandfather = false;
             state.handY = 0.15625;
             state.handZ = -0.15625;
-            state.pendulumSize = (float) 4;
+            state.pendulumSize = 4;
             state.pendulumY = -0.0625;
             state.pendulumZ = -0.21875;
         } else if (blockEntity.getBlockState().getBlock() instanceof GrandfatherClockBlock) {
             state.isGrandfather = true;
             state.handY = 0.125;
             state.handZ = 0.15625;
-            state.pendulumSize = (float) 17;
+            state.pendulumSize = 17;
             state.pendulumY = -0.125;
             state.pendulumZ = 0.09375;
         }
     }
 
     public static class State extends BlockEntityRenderState {
-        private boolean isNaturalDimension;
-        private long gameTime;
-        private long dayTime;
         private boolean isGrandfather;
+        private float handsRotation;
+        private float pendulumRotation;
         private float pendulumSize;
         private double pendulumY;
         private double pendulumZ;
