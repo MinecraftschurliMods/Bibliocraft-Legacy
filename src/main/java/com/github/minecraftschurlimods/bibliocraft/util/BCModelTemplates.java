@@ -7,6 +7,7 @@ import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
@@ -200,19 +201,19 @@ public class BCModelTemplates {
                     TextureSlot.TEXTURE));
 
     public static TextureMapping lampMaterial(Identifier color, Identifier metal) {
-        return color(color).put(METAL, metal);
+        return color(color).put(METAL, new Material(metal));
     }
 
     public static TextureMapping color(Identifier color) {
-        return new TextureMapping().put(COLOR, color);
+        return new TextureMapping().put(COLOR, new Material(color));
     }
 
     public static TextureMapping lanternMaterial(Identifier candle, Identifier chain, Identifier metal) {
-        return lampMaterial(candle, metal).put(CHAIN, chain);
+        return lampMaterial(candle, metal).put(CHAIN, new Material(chain));
     }
 
     public static TextureMapping coloredAndTexturedMaterial(Identifier texture, Identifier color) {
-        return color(color).put(TextureSlot.TEXTURE, texture);
+        return color(color).put(TextureSlot.TEXTURE, new Material(texture));
     }
 
     private static class BCModelTemplate extends ModelTemplate {

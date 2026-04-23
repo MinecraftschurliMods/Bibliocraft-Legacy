@@ -23,6 +23,7 @@ import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
@@ -66,7 +67,7 @@ public final class BlockModelDatagenUtil {
         case OXIDIZED -> BCUtil.mcLoc("block/oxidized_copper_chain");
     });
 
-    public static final Function<BibliocraftWoodType, TextureMapping> DEFAULT_WOOD_TYPE_TEXTURE_MAPPING = wood -> TextureMapping.defaultTexture(wood.texture());
+    public static final Function<BibliocraftWoodType, TextureMapping> DEFAULT_WOOD_TYPE_TEXTURE_MAPPING = wood -> TextureMapping.defaultTexture(new Material(wood.texture()));
     public static final BiFunction<BibliocraftWoodType, DyeColor, TextureMapping> DEFAULT_WOOD_TYPE_COLOR_TEXTURE_MAPPING = (wood, color) -> BCModelTemplates.coloredAndTexturedMaterial(wood.texture(), WOOL_TEXTURES.get(color));
 
     public static final GroupedModelTemplate<BibliocraftWoodType> BOOKCASE = new GroupedModelTemplate<>(
@@ -239,7 +240,7 @@ public final class BlockModelDatagenUtil {
     public static void createItemModel(ItemModelGenerators itemModels, GroupedHolder<BibliocraftWoodType, Item, ?> holder, ModelTemplate template, BibliocraftWoodType woodType) {
         Item item = holder.get(woodType);
         Identifier location = ModelLocationUtils.getModelLocation(item).withPath("item/" + BlockModelDatagenUtil.nameFor(woodType, holder.getName()) + template.suffix.orElse(""));
-        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(template.create(location, TextureMapping.defaultTexture(woodType.texture()), itemModels.modelOutput)));
+        itemModels.itemModelOutput.accept(item, ItemModelUtils.plainModel(template.create(location, TextureMapping.defaultTexture(new Material(woodType.texture())), itemModels.modelOutput)));
     }
 
     public static String nameFor(BibliocraftWoodType wood, String name) {
