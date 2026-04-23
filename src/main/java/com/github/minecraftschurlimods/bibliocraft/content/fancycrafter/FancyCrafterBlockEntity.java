@@ -135,8 +135,8 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
             this.containerData.set(i, SLOT_ENABLED);
         }
 
-        input.getIntArray(DISABLED_SLOTS_KEY).ifPresent(p_409682_ -> {
-            for (int j : p_409682_) {
+        input.getIntArray(DISABLED_SLOTS_KEY).ifPresent(i -> {
+            for (int j : i) {
                 if (this.canDisableSlot(j)) {
                     this.containerData.set(j, SLOT_DISABLED);
                 }

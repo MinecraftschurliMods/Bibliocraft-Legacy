@@ -28,8 +28,8 @@ public class ShelfBER implements BlockEntityRenderer<ShelfBlockEntity, MultiItem
     }
 
     @Override
-    public void extractRenderState(ShelfBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, breakProgress);
+    public void extractRenderState(ShelfBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.fill(blockEntity, ItemDisplayContext.ON_SHELF, itemModelResolver);
     }
 

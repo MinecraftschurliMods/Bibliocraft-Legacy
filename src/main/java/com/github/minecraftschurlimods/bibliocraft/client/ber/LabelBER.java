@@ -28,8 +28,8 @@ public class LabelBER implements BlockEntityRenderer<LabelBlockEntity, MultiItem
     }
 
     @Override
-    public void extractRenderState(LabelBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 p_445788_, ModelFeatureRenderer.@Nullable CrumblingOverlay p_446944_) {
-        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, p_445788_, p_446944_);
+    public void extractRenderState(LabelBlockEntity blockEntity, MultiItemContainerRenderState state, float partialTicks, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
+        BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         state.fill(blockEntity, ItemDisplayContext.FIXED, itemModelResolver);
     }
 

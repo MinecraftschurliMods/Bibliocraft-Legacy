@@ -15,13 +15,13 @@ public class WeatheringCopperFancyLampBlock extends FancyLampBlock implements We
     }
 
     @Override
-    protected void randomTick(BlockState p_222665_, ServerLevel p_222666_, BlockPos p_222667_, RandomSource p_222668_) {
-        this.changeOverTime(p_222665_, p_222666_, p_222667_, p_222668_);
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        this.changeOverTime(state, level, pos, random);
     }
 
     @Override
-    protected boolean isRandomlyTicking(BlockState p_154935_) {
-        return WeatheringCopper.getNext(p_154935_.getBlock()).isPresent();
+    protected boolean isRandomlyTicking(BlockState state) {
+        return WeatheringCopper.getNext(state.getBlock()).isPresent();
     }
 
     @Override

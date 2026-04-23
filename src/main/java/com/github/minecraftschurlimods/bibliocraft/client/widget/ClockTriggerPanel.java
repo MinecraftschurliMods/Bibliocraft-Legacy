@@ -91,8 +91,8 @@ public class ClockTriggerPanel extends ScrollPanel {
     }
 
     @Override
-    public boolean mouseScrolled(double p_94686_, double p_94687_, double p_94688_, double p_294830_) {
-        return hasScrollbar(elements.size()) && super.mouseScrolled(p_94686_, p_94687_, p_94688_, p_294830_);
+    public boolean mouseScrolled(double x, double y, double scrollX, double scrollY) {
+        return hasScrollbar(elements.size()) && super.mouseScrolled(x, y, scrollX, scrollY);
     }
 
     public boolean hasScrollbar(int elements) {
