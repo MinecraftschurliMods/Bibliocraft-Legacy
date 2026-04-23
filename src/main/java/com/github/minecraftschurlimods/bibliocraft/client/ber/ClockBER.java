@@ -15,6 +15,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
@@ -93,8 +94,7 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
     }
 
     @Override
-    public void submit(State statimport net.minecraft.client.renderer.block.model.VariantMutator;
-e, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
+    public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraRenderState) {
         RenderType handMaterial = HAND_MATERIAL.renderType(RenderTypes::entityCutout);
         RenderType pendulumRenderType = PENDULUM_MATERIAL.renderType(RenderTypes::entityCutout);
         ModelPart hourHand = state.isGrandfather ? this.grandfatherHourHand : this.hourHand;
