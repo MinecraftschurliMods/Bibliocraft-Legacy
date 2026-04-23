@@ -13,7 +13,7 @@ import net.neoforged.neoforge.registries.datamaps.builtin.Waxable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class BCDataMapProvider extends DataMapProvider {
+public final class BCDataMapProvider extends DataMapProvider {
     public BCDataMapProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }

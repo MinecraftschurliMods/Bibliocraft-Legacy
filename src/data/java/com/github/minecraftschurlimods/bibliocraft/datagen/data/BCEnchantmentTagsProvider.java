@@ -8,7 +8,7 @@ import net.minecraft.data.tags.EnchantmentTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
-public class BCEnchantmentTagsProvider extends EnchantmentTagsProvider {
+public final class BCEnchantmentTagsProvider extends EnchantmentTagsProvider {
     public BCEnchantmentTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, BibliocraftApi.MOD_ID);
     }

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 
 import java.util.function.Function;
 
-public class BCBlockItemTagsProvider {
+public final class BCBlockItemTagsProvider {
     @SuppressWarnings("unchecked")
     static void addBlockTags(Function<TagKey<Block>, TagAppender<Block, Block>> tag) {
         tag.apply(BCTags.Blocks.FANCY_ARMOR_STANDS_WOOD);
