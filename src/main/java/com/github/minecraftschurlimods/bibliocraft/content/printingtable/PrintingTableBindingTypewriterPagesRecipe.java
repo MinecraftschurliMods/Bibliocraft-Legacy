@@ -27,16 +27,20 @@ import java.util.List;
 public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBindingRecipe {
     public static final MapCodec<PrintingTableBindingTypewriterPagesRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.fieldOf("ingredient").forGetter(e -> e.ingredient),
-            Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
+            Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
+            Codec.STRING.optionalFieldOf("group", "").forGetter(e -> e.group),
+            Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(e -> e.showNotification)
     ).apply(inst, PrintingTableBindingTypewriterPagesRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableBindingTypewriterPagesRecipe> STREAM_CODEC = StreamCodec.composite(
             Ingredient.CONTENTS_STREAM_CODEC, e -> e.ingredient,
             ByteBufCodecs.INT, e -> e.duration,
+            ByteBufCodecs.STRING_UTF8, e -> e.group,
+            ByteBufCodecs.BOOL, e -> e.showNotification,
             PrintingTableBindingTypewriterPagesRecipe::new);
     private final Ingredient ingredient;
 
-    public PrintingTableBindingTypewriterPagesRecipe(Ingredient ingredient, int duration) {
-        super(new ItemStack(Items.WRITTEN_BOOK), duration);
+    public PrintingTableBindingTypewriterPagesRecipe(Ingredient ingredient, int duration, String group, boolean showNotification) {
+        super(new ItemStack(Items.WRITTEN_BOOK), duration, group, showNotification);
         this.ingredient = ingredient;
     }
 
@@ -110,7 +114,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
 
         @Override
         public PrintingTableRecipe build() {
-            return new PrintingTableBindingTypewriterPagesRecipe(ingredient, duration);
+            return new PrintingTableBindingTypewriterPagesRecipe(ingredient, duration, group, showNotification);
         }
     }
 }

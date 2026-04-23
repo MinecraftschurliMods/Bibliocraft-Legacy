@@ -49,20 +49,24 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
             Merger.MAP_CODEC.fieldOf("component_mergers").forGetter(e -> e.mergers),
             Ingredient.CODEC.fieldOf("ingredient").forGetter(e -> e.ingredient),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
-            Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
+            Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
+            Codec.STRING.optionalFieldOf("group", "").forGetter(e -> e.group),
+            Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(e -> e.showNotification)
     ).apply(inst, PrintingTableMergingRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableMergingRecipe> STREAM_CODEC = StreamCodec.composite(
             Merger.MAP_STREAM_CODEC, e -> e.mergers,
             Ingredient.CONTENTS_STREAM_CODEC, e -> e.ingredient,
             ItemStack.STREAM_CODEC, e -> e.result,
             ByteBufCodecs.INT, e -> e.duration,
+            ByteBufCodecs.STRING_UTF8, e -> e.group,
+            ByteBufCodecs.BOOL, e -> e.showNotification,
             PrintingTableMergingRecipe::new);
 
     private final Map<DataComponentType<?>, Merger<?>> mergers;
     private final Ingredient ingredient;
 
-    public PrintingTableMergingRecipe(Map<DataComponentType<?>, Merger<?>> mergers, Ingredient ingredient, ItemStack result, int duration) {
-        super(result, duration);
+    public PrintingTableMergingRecipe(Map<DataComponentType<?>, Merger<?>> mergers, Ingredient ingredient, ItemStack result, int duration, String group, boolean showNotification) {
+        super(result, duration, group, showNotification);
         this.mergers = mergers;
         this.ingredient = ingredient;
     }
@@ -89,7 +93,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
                 .stream()
                 .filter(s -> !s.isEmpty())
                 .map(ItemStack::getComponents)
-                .reduce((left, right) -> mergeComponents(left, right, registries))
+                .reduce((left, right) -> mergeComponents(left, right, input.registryAccess()))
                 .orElse(DataComponentMap.EMPTY);
         result.applyComponents(dataComponents);
         return result;
@@ -176,7 +180,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         public PrintingTableRecipe build() {
             Map<DataComponentType<?>, Merger<?>> mergers = new HashMap<>();
             this.mergers.forEach((type, m) -> mergers.put(type, new Merger<>(type, m)));
-            return new PrintingTableMergingRecipe(mergers, ingredient, result, duration);
+            return new PrintingTableMergingRecipe(mergers, ingredient, result, duration, group, showNotification);
         }
     }
 
@@ -209,9 +213,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
 
         public DataResult<T> merge(T left, T right, HolderLookup.Provider registries) {
             Codec<T> codec = type.codec();
-            if (codec == null) {
-                return DataResult.error(() -> "Cannot merge " + type + " because it has no codec");
-            }
+            if (codec == null) return DataResult.error(() -> "Cannot merge " + type + " because it has no codec");
             RegistryOps<JsonElement> ops = registries.createSerializationContext(JsonOps.INSTANCE);
             DataResult<JsonElement> leftJsonResult = codec.encodeStart(ops, left);
             DataResult<JsonElement> rightJsonResult = codec.encodeStart(ops, right);
@@ -228,7 +230,6 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         private @Nullable JsonElement mergeJson(@Nullable JsonElement left, @Nullable JsonElement right, String path) {
             if (left == null) return right;
             if (right == null) return left;
-
             MergeMethod mergeMethod = mergers.get(path);
             if (mergeMethod == null) {
                 if (left.isJsonObject() && right.isJsonObject()) {

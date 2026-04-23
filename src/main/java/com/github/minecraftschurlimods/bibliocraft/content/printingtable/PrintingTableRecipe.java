@@ -27,10 +27,14 @@ import java.util.Map;
 public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeInput> {
     protected final ItemStack result;
     protected final int duration;
+    protected final String group;
+    protected final boolean showNotification;
 
-    public PrintingTableRecipe(ItemStack result, int duration) {
+    public PrintingTableRecipe(ItemStack result, int duration, String group, boolean showNotification) {
         this.result = result;
         this.duration = duration;
+        this.group = group;
+        this.showNotification = showNotification;
     }
 
     @Override
@@ -46,6 +50,16 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     @Override
     public PlacementInfo placementInfo() {
         return PlacementInfo.NOT_PLACEABLE;
+    }
+
+    @Override
+    public String group() {
+        return group;
+    }
+
+    @Override
+    public boolean showNotification() {
+        return showNotification;
     }
 
     public ItemStack getResultItem() {
@@ -93,6 +107,8 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         protected final ItemStack result;
         protected final int duration;
         protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
+        protected String group = "";
+        protected boolean showNotification = true;
 
         public Builder(ItemStack result, int duration) {
             this.result = result;
@@ -107,6 +123,13 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
         @Override
         public Builder group(@Nullable String group) {
+            this.group = group == null ? "" : group;
+            return this;
+        }
+
+        @SuppressWarnings("unused")
+        public Builder showNotification(boolean showNotification) {
+            this.showNotification = showNotification;
             return this;
         }
 

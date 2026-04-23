@@ -25,19 +25,23 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
             DataComponentType.CODEC.listOf(1, 256).fieldOf("data_components").forGetter(e -> e.dataComponentTypes),
             Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
-            Codec.INT.fieldOf("duration").forGetter(e -> e.duration)
+            Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
+            Codec.STRING.optionalFieldOf("group", "").forGetter(e -> e.group),
+            Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(e -> e.showNotification)
     ).apply(inst, PrintingTableCloningRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableCloningRecipe> STREAM_CODEC = StreamCodec.composite(
             DataComponentType.STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.dataComponentTypes,
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.ingredients,
             ItemStack.STREAM_CODEC, e -> e.result,
             ByteBufCodecs.INT, e -> e.duration,
+            ByteBufCodecs.STRING_UTF8, e -> e.group,
+            ByteBufCodecs.BOOL, e -> e.showNotification,
             PrintingTableCloningRecipe::new);
     protected final List<DataComponentType<?>> dataComponentTypes;
     protected final List<Ingredient> ingredients;
 
-    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, List<Ingredient> ingredients, ItemStack result, int duration) {
-        super(result, duration);
+    public PrintingTableCloningRecipe(List<DataComponentType<?>> dataComponentTypes, List<Ingredient> ingredients, ItemStack result, int duration, String group, boolean showNotification) {
+        super(result, duration, group, showNotification);
         this.dataComponentTypes = dataComponentTypes;
         this.ingredients = ingredients;
     }
@@ -117,7 +121,7 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
 
         @Override
         public PrintingTableRecipe build() {
-            return new PrintingTableCloningRecipe(dataComponentTypes, List.copyOf(ingredients), result, duration);
+            return new PrintingTableCloningRecipe(dataComponentTypes, List.copyOf(ingredients), result, duration, group, showNotification);
         }
     }
 }

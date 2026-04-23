@@ -37,18 +37,22 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
             Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
             ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
+            Codec.STRING.optionalFieldOf("group", "").forGetter(e -> e.group),
+            Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(e -> e.showNotification),
             NumberProviders.CODEC.optionalFieldOf("experience_cost").forGetter(e -> e.experienceCost)
     ).apply(inst, PrintingTableCloningWithEnchantmentsRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableCloningWithEnchantmentsRecipe> STREAM_CODEC = StreamCodec.composite(
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.ingredients,
             ItemStack.STREAM_CODEC, e -> e.result,
             ByteBufCodecs.INT, e -> e.duration,
+            ByteBufCodecs.STRING_UTF8, e -> e.group,
+            ByteBufCodecs.BOOL, e -> e.showNotification,
             CodecUtil.toStreamCodec(NumberProviders.CODEC).apply(ByteBufCodecs::optional), e -> e.experienceCost,
             PrintingTableCloningWithEnchantmentsRecipe::new);
     private final Optional<NumberProvider> experienceCost;
 
-    public PrintingTableCloningWithEnchantmentsRecipe(List<Ingredient> ingredients, ItemStack result, int duration, Optional<NumberProvider> experienceCost) {
-        super(List.of(DataComponents.STORED_ENCHANTMENTS), ingredients, result, duration);
+    public PrintingTableCloningWithEnchantmentsRecipe(List<Ingredient> ingredients, ItemStack result, int duration, String group, boolean showNotification, Optional<NumberProvider> experienceCost) {
+        super(List.of(DataComponents.STORED_ENCHANTMENTS), ingredients, result, duration, group, showNotification);
         this.experienceCost = experienceCost;
     }
 
@@ -97,7 +101,7 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
         }
 
         public PrintingTableCloningWithEnchantmentsRecipe build() {
-            return new PrintingTableCloningWithEnchantmentsRecipe(ingredients, result, duration, Optional.ofNullable(experienceCost));
+            return new PrintingTableCloningWithEnchantmentsRecipe(ingredients, result, duration, group, showNotification, Optional.ofNullable(experienceCost));
         }
     }
 }

@@ -238,7 +238,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private void finishRecipe() {
         if (recipe == null) return;
         List<ItemStack> remainingItems = recipe.getRemainingItems(getRecipeInput());
-        ItemStack result = recipe.postProcess(recipe.assemble(getRecipeInput(), level().registryAccess()), this);
+        ItemStack result = recipe.postProcess(recipe.assemble(getRecipeInput()), this);
         ItemStack stack = getItem(10);
         if (!stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, result)) return;
         result.setCount(stack.getCount() + 1);
@@ -278,7 +278,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
                 .orElse(null);
         if (recipe != null) {
             ItemStack output = getItem(10);
-            ItemStack result = recipe.assemble(recipeInput, level().registryAccess());
+            ItemStack result = recipe.assemble(recipeInput);
             if (!output.isEmpty() && (output.getCount() + result.getCount() > output.getMaxStackSize() || !ItemStack.isSameItemSameComponents(output, result))) {
                 recipe = null;
             }
@@ -294,7 +294,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     private PrintingTableRecipeInput getRecipeInput() {
         if (recipeInput == null) {
-            recipeInput = new PrintingTableRecipeInput(this.items.subList(0, 9), getItem(9));
+            recipeInput = new PrintingTableRecipeInput(this.items.subList(0, 9), getItem(9), level().registryAccess());
         }
         return recipeInput;
     }
