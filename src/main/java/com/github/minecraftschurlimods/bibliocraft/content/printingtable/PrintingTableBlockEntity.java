@@ -255,7 +255,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     private void pullExperience() {
-        try (var t = Transaction.open(null)) {
+        try (Transaction t = Transaction.openRoot()) {
             for (Direction direction : directions) {
                 ResourceHandler<FluidResource> capability = level().getCapability(Capabilities.Fluid.BLOCK, getBlockPos().relative(direction), direction);
                 if (capability == null) continue;

@@ -258,7 +258,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
                 case FIRST -> left;
                 case LAST -> right;
                 case APPEND -> {
-                    var arrayValue = new JsonArray();
+                    JsonArray arrayValue = new JsonArray();
                     if (left.isJsonArray()) {
                         arrayValue.addAll(left.getAsJsonArray());
                     } else {

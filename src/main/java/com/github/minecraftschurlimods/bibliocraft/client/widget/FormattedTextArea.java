@@ -265,8 +265,8 @@ public class FormattedTextArea extends AbstractWidget {
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         if (!isMouseOver(event.x(), event.y())) return super.mouseClicked(event, doubleClick);
-        var mouseX = event.x() - getX();
-        var mouseY = event.y() - getY();
+        double mouseX = event.x() - getX();
+        double mouseY = event.y() - getY();
         if (!event.hasShiftDown() || !isFocused()) {
             cursorY = lines.size() - 1;
             int y = 0;

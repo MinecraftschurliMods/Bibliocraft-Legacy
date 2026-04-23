@@ -106,7 +106,7 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
 
         @Override
         public BookcaseBlockStateModel bake(ModelBaker baker) {
-            var baseModel = base.bake(baker);
+            BlockStateModel baseModel = base.bake(baker);
             WeightedList.Builder<BookSet> books = WeightedList.builder();
             ModelState modelState = base.variant().modelState().asModelState();
             for (BookSet.Unbaked bookSet : bookSets) {

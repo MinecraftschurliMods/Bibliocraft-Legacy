@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
+import java.util.List;
+
 public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, FancySignBER.State> {
     private final Font font;
 
@@ -88,7 +90,7 @@ public class FancySignBER implements BlockEntityRenderer<FancySignBlockEntity, F
         float scale = 1 / 160f;
         stack.scale(scale, scale, 0);
         stack.translate(0, 1, 0);
-        var lines = back ? state.backContent.lines() : state.frontContent.lines();
+        List<FormattedLine> lines = back ? state.backContent.lines() : state.frontContent.lines();
         float y = 0;
         int width = 140;
         int lightCoords = state.lightCoords;
