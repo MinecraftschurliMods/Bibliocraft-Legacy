@@ -11,7 +11,6 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.init.BCRecipes;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
-import com.github.minecraftschurlimods.bibliocraft.util.ClientUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.CompatUtil;
 import com.github.minecraftschurlimods.bibliocraft.util.Translations;
 import com.github.minecraftschurlimods.bibliocraft.util.holder.GroupedHolder;
@@ -42,7 +41,7 @@ import java.util.stream.Stream;
 @JeiPlugin
 public final class BCJeiPlugin implements IModPlugin {
     private static final Identifier UID = BCUtil.bcLoc("jei_plugin");
-    private static final Lazy<BibliocraftWoodType> OAK = Lazy.of(() -> BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak")));
+    private static final Lazy<BibliocraftWoodType> OAK = Lazy.of(() -> BCUtil.nonNull(BibliocraftApi.getWoodTypeRegistry().get(BCUtil.mcLoc("oak"))));
     private static final DyeColor WHITE = DyeColor.WHITE;
     private static final Lazy<List<GroupedHolder<BibliocraftWoodType, Item, ?>>> WOOD_TYPE_DEFERRED_HOLDERS =
             Lazy.of(() -> List.of(BCItems.BOOKCASE, BCItems.FANCY_ARMOR_STAND, BCItems.FANCY_CLOCK, BCItems.FANCY_CRAFTER, BCItems.GRANDFATHER_CLOCK, BCItems.LABEL, BCItems.POTION_SHELF, BCItems.SHELF, BCItems.TABLE, BCItems.TOOL_RACK));

@@ -34,15 +34,18 @@ public class ClipboardScreen extends Screen {
     private final CheckboxButton[] checkboxes = new CheckboxButton[ClipboardContent.MAX_LINES];
     private final EditBox[] lines = new EditBox[ClipboardContent.MAX_LINES];
     private ClipboardContent data;
+    @Nullable
     private EditBox titleBox;
+    @Nullable
     private PageButton forwardButton;
+    @Nullable
     private PageButton backButton;
 
     public ClipboardScreen(ItemStack stack, InteractionHand hand) {
         super(stack.getHoverName());
         this.stack = stack;
         this.hand = hand;
-        this.data = stack.get(BCDataComponents.CLIPBOARD_CONTENT);
+        this.data = stack.getOrDefault(BCDataComponents.CLIPBOARD_CONTENT, ClipboardContent.DEFAULT);
     }
 
     @Override
@@ -103,11 +106,11 @@ public class ClipboardScreen extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        if (scrollY < 0 && forwardButton.visible) {
+        if (scrollY < 0 && BCUtil.nonNull(forwardButton).visible) {
             forwardButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
-        if (scrollY > 0 && backButton.visible) {
+        if (scrollY > 0 && BCUtil.nonNull(backButton).visible) {
             backButton.onPress(new MouseButtonInfo(0, 0));
             return true;
         }
@@ -119,11 +122,11 @@ public class ClipboardScreen extends Screen {
         if (super.keyPressed(event)) return true;
         return switch (event.key()) {
             case GLFW.GLFW_KEY_PAGE_UP -> {
-                backButton.onPress(event);
+                BCUtil.nonNull(backButton).onPress(event);
                 yield true;
             }
             case GLFW.GLFW_KEY_PAGE_DOWN -> {
-                forwardButton.onPress(event);
+                BCUtil.nonNull(forwardButton).onPress(event);
                 yield true;
             }
             default -> false;
@@ -131,8 +134,8 @@ public class ClipboardScreen extends Screen {
     }
 
     private void updateContents() {
-        backButton.visible = data.active() > 0;
-        titleBox.setValue(data.title());
+        BCUtil.nonNull(backButton).visible = data.active() > 0;
+        BCUtil.nonNull(titleBox).setValue(data.title());
         ClipboardContent.Page page = data.pages().get(data.active());
         for (int i = 0; i < checkboxes.length; i++) {
             checkboxes[i].setState(page.checkboxes().get(i));

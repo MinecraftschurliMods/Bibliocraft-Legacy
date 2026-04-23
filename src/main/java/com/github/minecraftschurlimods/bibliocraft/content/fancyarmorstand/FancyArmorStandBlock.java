@@ -81,7 +81,6 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     }
 
     @Override
-    @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
@@ -89,7 +88,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
                 ? BCUtil.nonNull(super.getStateForPlacement(context))
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER)
-                : null;
+                : super.getStateForPlacement(context);
     }
 
     @Override

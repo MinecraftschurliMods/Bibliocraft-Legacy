@@ -144,6 +144,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
         components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void removeComponentsFromTag(ValueOutput output) {
         output.discard(LockCode.TAG_LOCK);
@@ -166,7 +167,6 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
     }
 
     @Override
-    @Nullable
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }

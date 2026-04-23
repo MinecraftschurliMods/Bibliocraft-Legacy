@@ -23,6 +23,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HexFormat;
 
@@ -32,12 +33,19 @@ public class FancySignScreen extends Screen {
     private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/fancy_sign.png");
     private final BlockPos pos;
     private final boolean back;
+    @Nullable
     private FormattedTextArea textArea;
+    @Nullable
     private Button modeButton;
+    @Nullable
     private Button alignmentButton;
+    @Nullable
     private EditBox colorBox;
+    @Nullable
     private EditBox sizeBox;
+    @Nullable
     private Button scaleDownButton;
+    @Nullable
     private Button scaleUpButton;
 
     public FancySignScreen(BlockPos pos, boolean back) {
@@ -48,9 +56,8 @@ public class FancySignScreen extends Screen {
 
     @Override
     public void onClose() {
-        if (!(ClientUtil.getLevel().getBlockEntity(pos) instanceof FancySignBlockEntity sign))
-            return;
-        FancySignContent list = new FancySignContent(textArea.getLines());
+        if (!(ClientUtil.getLevel().getBlockEntity(pos) instanceof FancySignBlockEntity sign)) return;
+        FancySignContent list = new FancySignContent(BCUtil.nonNull(textArea).getLines());
         if (back) {
             sign.setBackContent(list);
         } else {
@@ -173,14 +180,14 @@ public class FancySignScreen extends Screen {
     }
 
     private void setColor(int color) {
-        textArea.setColor(color);
+        BCUtil.nonNull(textArea).setColor(color);
         String hexString = Integer.toHexString(color);
-        colorBox.setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
+        BCUtil.nonNull(colorBox).setValue("#" + "0".repeat(6 - hexString.length()) + hexString);
     }
 
     private void updateSizeButtons(int size) {
-        scaleDownButton.active = size > FormattedLine.MIN_SIZE;
-        scaleUpButton.active = size < FormattedLine.MAX_SIZE;
+        BCUtil.nonNull(scaleDownButton).active = size > FormattedLine.MIN_SIZE;
+        BCUtil.nonNull(scaleUpButton).active = size < FormattedLine.MAX_SIZE;
     }
 
     private void onLineChange(FormattedLine line) {
@@ -188,16 +195,16 @@ public class FancySignScreen extends Screen {
         updateAlignmentButton();
         TextColor color = line.style().getColor();
         setColor(color == null ? 0 : color.getValue());
-        sizeBox.setValue(String.valueOf(line.size()));
+        BCUtil.nonNull(sizeBox).setValue(String.valueOf(line.size()));
         updateSizeButtons(line.size());
     }
 
     private void updateModeButton() {
-        modeButton.setMessage(Component.translatable(textArea.getMode().getTranslationKey()));
+        BCUtil.nonNull(modeButton).setMessage(Component.translatable(BCUtil.nonNull(textArea).getMode().getTranslationKey()));
     }
 
     private void updateAlignmentButton() {
-        alignmentButton.setMessage(Component.translatable(textArea.getAlignment().getTranslationKey()));
+        BCUtil.nonNull(alignmentButton).setMessage(Component.translatable(BCUtil.nonNull(textArea).getAlignment().getTranslationKey()));
     }
 
     @Override

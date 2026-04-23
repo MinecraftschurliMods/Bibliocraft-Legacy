@@ -27,7 +27,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import org.jspecify.annotations.Nullable;
 
 import java.util.Calendar;
 import java.util.List;
@@ -50,8 +49,8 @@ public final class ClientUtil {
      *
      * @return The {@link ClientLevel} instance.
      */
-    public static @Nullable ClientLevel getLevel() {
-        return getMc().level;
+    public static ClientLevel getLevel() {
+        return BCUtil.nonNull(getMc().level);
     }
 
     /**
@@ -59,8 +58,8 @@ public final class ClientUtil {
      *
      * @return The {@link LocalPlayer} instance.
      */
-    public static @Nullable LocalPlayer getPlayer() {
-        return getMc().player;
+    public static LocalPlayer getPlayer() {
+        return BCUtil.nonNull(getMc().player);
     }
 
     /**

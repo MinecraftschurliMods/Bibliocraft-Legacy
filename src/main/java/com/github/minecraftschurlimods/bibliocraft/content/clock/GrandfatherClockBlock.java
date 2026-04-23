@@ -83,7 +83,6 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
     }
 
     @Override
-    @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos pos = context.getClickedPos();
         Level level = context.getLevel();
@@ -91,7 +90,7 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
                 ? BCUtil.nonNull(super.getStateForPlacement(context))
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(HALF, DoubleBlockHalf.LOWER)
-                : null;
+                : super.getStateForPlacement(context);
     }
 
     @Override
@@ -103,7 +102,7 @@ public class GrandfatherClockBlock extends AbstractClockBlock {
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
         BlockPos above = pos.above();
         level.setBlock(above, DoublePlantBlock.copyWaterloggedFrom(level, above, state.setValue(HALF, DoubleBlockHalf.UPPER)), Block.UPDATE_ALL);
     }

@@ -38,7 +38,7 @@ public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<Table
 
         base.collectParts(level, pos, state, random, parts);
 
-        @Nullable DyeColor color = level.getModelData(pos).get(TableBlockEntity.CLOTH_COLOR);
+        DyeColor color = level.getModelData(pos).get(TableBlockEntity.CLOTH_COLOR);
 
         if (color == null) {
             return;

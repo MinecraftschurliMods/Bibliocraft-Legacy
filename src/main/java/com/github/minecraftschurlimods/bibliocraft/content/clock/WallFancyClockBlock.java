@@ -27,6 +27,7 @@ public class WallFancyClockBlock extends AbstractClockBlock {
     private static final VoxelShape EAST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_90);
     private static final VoxelShape SOUTH_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.CLOCKWISE_180);
     private static final VoxelShape WEST_SHAPE = ShapeUtil.rotate(NORTH_SHAPE, Rotation.COUNTERCLOCKWISE_90);
+    @Nullable
     private final BibliocraftWoodType woodType;
 
     public WallFancyClockBlock(Properties properties) {
@@ -41,10 +42,10 @@ public class WallFancyClockBlock extends AbstractClockBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> NORTH_SHAPE;
             case EAST -> EAST_SHAPE;
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
+            default -> NORTH_SHAPE;
         };
     }
 

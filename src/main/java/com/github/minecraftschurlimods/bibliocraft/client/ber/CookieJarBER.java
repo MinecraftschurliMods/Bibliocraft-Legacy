@@ -67,9 +67,6 @@ public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, C
     public void submit(State state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState camera) {
         stack.translate(0.5, 0.5, 0.5);
         for (int i = 0; i < state.items.length; i++) {
-            if (state.items[i] == null) {
-                continue;
-            }
             stack.pushPose();
             cookiePosition(i, stack);
             state.items[i].submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);

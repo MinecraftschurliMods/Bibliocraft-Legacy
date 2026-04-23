@@ -90,7 +90,7 @@ public class ClockBlockEntity extends BlockEntity {
         Vec3 position = BCUtil.toVec3(getBlockPos());
         for (ClockTrigger trigger : triggers) {
             this.triggers.add(trigger);
-            this.triggersMap.put(trigger.getInGameTime(getLevel(), position), trigger);
+            this.triggersMap.put(trigger.getInGameTime(BCUtil.nonNull(getLevel()), position), trigger);
         }
         this.triggers.sort(ClockTrigger::compareTo);
         setChanged();

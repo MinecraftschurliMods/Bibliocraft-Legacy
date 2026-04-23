@@ -119,7 +119,7 @@ public final class BCUtil {
     /**
      * Looks up the total amount of experience represented by a certain level.
      *
-     * @param level The experience level to lookup the experience amount for.
+     * @param level The experience level to look up the experience amount for.
      * @return The total amount of experience represented by the given level.
      */
     public static int getExperienceForLevel(int level) {
@@ -132,7 +132,7 @@ public final class BCUtil {
     /**
      * Looks up the level for a corresponding experience value.
      *
-     * @param experience The experience to lookup the level amount for.
+     * @param experience The experience to look up the level amount for.
      * @return The level represented by the given amount of experience.
      */
     public static int getLevelForExperience(int experience) {

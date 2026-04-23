@@ -5,8 +5,6 @@ import com.google.gson.JsonParser;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -78,30 +76,6 @@ public final class CodecUtil {
                 return decodeJson(codec, JsonParser.parseString(buffer.readUtf()));
             }
         };
-    }
-
-    /**
-     * Encodes the given value to NBT using the given {@link Codec}.
-     *
-     * @param codec The {@link Codec} to use for encoding.
-     * @param value The value to encode to NBT.
-     * @param <T>   The type of the value and the {@link Codec}.
-     * @return The NBT representation of the given value.
-     */
-    public static <T> Tag encodeNbt(Codec<T> codec, T value) {
-        return codec.encodeStart(NbtOps.INSTANCE, value).getOrThrow();
-    }
-
-    /**
-     * Decodes the given value from NBT using the given {@link Codec}.
-     *
-     * @param codec The {@link Codec} to use for decoding.
-     * @param tag   The NBT representation to decode.
-     * @param <T>   The type of the value and the {@link Codec}.
-     * @return The decoded value.
-     */
-    public static <T> T decodeNbt(Codec<T> codec, Tag tag) {
-        return codec.decode(NbtOps.INSTANCE, tag).getOrThrow().getFirst();
     }
 
     /**

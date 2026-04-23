@@ -67,7 +67,7 @@ public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHo
                 .setTextAlignment(HorizontalAlignment.RIGHT)
                 .setColor(0xff808080);
         if (recipe.canHaveExperienceCost()) {
-            builder.addWidget(new SpriteWidget(LEVEL, LEVEL_X, LEVEL_Y, 10, LEVEL_SIZE, LEVEL_SIZE));
+            builder.addWidget(new SpriteWidget(LEVEL, LEVEL_X, LEVEL_Y, LEVEL_SIZE, LEVEL_SIZE));
         }
     }
 

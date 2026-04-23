@@ -29,6 +29,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.util.Lazy;
+import org.jspecify.annotations.Nullable;
 
 public class FancyLanternBlock extends AbstractFancyLightBlock {
     private static final VoxelShape STANDING_SHAPE = ShapeUtil.combine(
@@ -57,6 +58,7 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
         this(properties, DEFAULT_PARTICLE);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     public FancyLanternBlock(Properties properties, Identifier particle) {
         super(properties);
         this.particle = Lazy.of(() -> BuiltInRegistries.PARTICLE_TYPE.getValue(particle) instanceof ParticleOptions options ? options : null);
@@ -68,10 +70,10 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
             case STANDING -> STANDING_SHAPE;
             case HANGING -> HANGING_SHAPE;
             case WALL -> switch (state.getValue(FACING)) {
-                default -> NORTH_WALL_SHAPE;
                 case SOUTH -> SOUTH_WALL_SHAPE;
                 case WEST -> WEST_WALL_SHAPE;
                 case EAST -> EAST_WALL_SHAPE;
+                default -> NORTH_WALL_SHAPE;
             };
         };
     }
@@ -99,6 +101,7 @@ public class FancyLanternBlock extends AbstractFancyLightBlock {
     }
 
     @Override
+    @Nullable
     public BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
         return itemAbility == ItemAbilities.FIRESTARTER_LIGHT && !state.getValue(LIT) ? state.setValue(LIT, true) : super.getToolModifiedState(state, context, itemAbility, simulate);
     }

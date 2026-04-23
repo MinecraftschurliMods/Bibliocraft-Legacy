@@ -35,6 +35,7 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
         super(BCBlockEntities.SWORD_PEDESTAL.get(), 1, pos, state);
     }
 
+    @SuppressWarnings("unused")
     public static void tick(Level level, BlockPos pos, BlockState state, SwordPedestalBlockEntity blockEntity) {
         if (level.isClientSide()) return;
         if (level.getGameTime() % TICK_INTERVAL != 0) return;
@@ -48,7 +49,7 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
         if (list.isEmpty()) return;
         Vec3 vec = pos.getCenter();
         for (ExperienceOrb orb : level.getEntitiesOfClass(ExperienceOrb.class, new AABB(vec.add(-RANGE, -RANGE, -RANGE), vec.add(RANGE, RANGE, RANGE)))) {
-            int i = blockEntity.repairItem((ServerLevel) level, stack, orb.getValue());
+            blockEntity.repairItem((ServerLevel) level, stack, orb.getValue());
             orb.discard();
             if (!stack.isDamaged()) break;
         }
@@ -100,7 +101,6 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void removeComponentsFromTag(ValueOutput output) {
         super.removeComponentsFromTag(output);

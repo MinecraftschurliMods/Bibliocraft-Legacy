@@ -60,8 +60,8 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
 /*    @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean flag) {
         if (!state.is(newState.getBlock())) {
-            BlockEntity blockentity = level.getBlockEntity(pos);
-            if (blockentity instanceof FancyCrafterBlockEntity crafter) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof FancyCrafterBlockEntity crafter) {
                 for (int i = 0; i < 9; i++) {
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), crafter.getItem(i));
                 }
@@ -79,10 +79,10 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            default -> NORTH_SHAPE;
             case EAST -> EAST_SHAPE;
             case SOUTH -> SOUTH_SHAPE;
             case WEST -> WEST_SHAPE;
+            default -> NORTH_SHAPE;
         };
     }
 
@@ -106,8 +106,8 @@ public class FancyCrafterBlock extends BCFacingEntityBlock {
     }
 
     @Override
-    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        super.setPlacedBy(level, pos, state, placer, stack);
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity entity, ItemStack stack) {
+        super.setPlacedBy(level, pos, state, entity, stack);
         if (state.getValue(POWERED)) {
             level.scheduleTick(pos, this, 1);
         }

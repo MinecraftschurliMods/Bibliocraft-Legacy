@@ -32,7 +32,7 @@ public class TypewriterScreen extends Screen {
     private int leftPos;
     private int topPos;
     private int row;
-    private String currentLine;
+    private String currentLine = "";
     private int frameTick;
     private boolean hasPendingSound = false;
 

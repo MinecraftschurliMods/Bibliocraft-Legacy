@@ -11,7 +11,6 @@ import com.github.minecraftschurlimods.bibliocraft.content.printingtable.Printin
 import com.github.minecraftschurlimods.bibliocraft.content.shelf.ShelfMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.slottedbook.SlottedBookMenu;
 import com.github.minecraftschurlimods.bibliocraft.content.toolrack.ToolRackMenu;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
@@ -33,11 +32,6 @@ public interface BCMenus {
     Supplier<MenuType<SlottedBookMenu>>     SLOTTED_BOOK      = register("slotted_book",      SlottedBookMenu::new);
     Supplier<MenuType<ToolRackMenu>>        TOOL_RACK         = register("tool_rack",         ToolRackMenu::new);
     // @formatter:on
-
-    @SuppressWarnings("SameParameterValue")
-    private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(String name, IContainerFactory<T> factory, FeatureFlagSet flags) {
-        return BCRegistries.MENUS.register(name, () -> new MenuType<>(factory, flags));
-    }
 
     private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(String name, IContainerFactory<T> factory) {
         return BCRegistries.MENUS.register(name, () -> IMenuTypeExtension.create(factory));

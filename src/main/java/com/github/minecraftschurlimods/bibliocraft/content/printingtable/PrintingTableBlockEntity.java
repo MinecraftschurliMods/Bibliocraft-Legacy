@@ -156,7 +156,9 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         }
     }
 
-    public static @Nullable ResourceHandler<FluidResource> getFluidCapability(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, @Nullable Direction context) {
+    @SuppressWarnings("unused")
+    @Nullable
+    public static ResourceHandler<FluidResource> getFluidCapability(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, @Nullable Direction context) {
         return blockEntity instanceof PrintingTableBlockEntity printingTable ? printingTable.getFluidCapability() : null;
     }
 

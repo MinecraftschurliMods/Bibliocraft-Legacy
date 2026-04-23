@@ -21,7 +21,6 @@ import org.jspecify.annotations.Nullable;
 /**
  * Abstract superclass for entity blocks in this mod.
  */
-@SuppressWarnings({"DuplicatedCode"})
 public abstract class BCFacingEntityBlock extends BCFacingBlock implements EntityBlock {
     public BCFacingEntityBlock(Properties properties) {
         super(properties);

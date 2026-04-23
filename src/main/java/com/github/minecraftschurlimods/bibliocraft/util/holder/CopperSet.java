@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableBiMap;
 import com.mojang.datafixers.util.Function3;
 import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.EnumMap;
@@ -13,8 +12,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public
-class CopperSet<W, O> {
+public class CopperSet<W, O> {
     private final EnumMap<WeatheringCopper.WeatherState, W> waxed;
     private final EnumMap<WeatheringCopper.WeatherState, O> weathering;
 
@@ -39,7 +37,7 @@ class CopperSet<W, O> {
         return weathering.values();
     }
 
-    public <T1, T2> BiMap<@NotNull T1, @NotNull T2> waxedMapping(Function<O, T1> weatheringMapper, Function<W, T2> waxedMapper) {
+    public <T1, T2> BiMap<T1, T2> waxedMapping(Function<O, T1> weatheringMapper, Function<W, T2> waxedMapper) {
         return ImmutableBiMap.of(
                 weatheringMapper.apply(weathering.get(WeatheringCopper.WeatherState.UNAFFECTED)), waxedMapper.apply(waxed.get(WeatheringCopper.WeatherState.UNAFFECTED)),
                 weatheringMapper.apply(weathering.get(WeatheringCopper.WeatherState.EXPOSED)), waxedMapper.apply(waxed.get(WeatheringCopper.WeatherState.EXPOSED)),
