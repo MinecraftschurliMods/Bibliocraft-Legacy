@@ -25,10 +25,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Calendar;
@@ -198,7 +196,7 @@ public final class ClientUtil {
      * @param graphics The {@link GuiGraphicsExtractor} to use.
      * @param centerX  The horizontal center of the text.
      * @param startY   The y coordinate of the text. Be aware that there will be a 1px outline above this position.
-     * @see net.minecraft.client.gui.Gui#renderExperienceLevel(GuiGraphicsExtractor, DeltaTracker)
+     * @see net.minecraft.client.gui.Gui#extractExperienceLevel(GuiGraphicsExtractor, DeltaTracker)
      */
     public static void renderXpText(String text, GuiGraphicsExtractor graphics, int centerX, int startY) {
         Font font = getFont();
@@ -228,7 +226,11 @@ public final class ClientUtil {
         }
     }
 
-    public static List<ClientTooltipComponent> forTooltip(Component component) {
+    /**
+     * @param component The {@link Component} to show.
+     * @return The {@link ClientTooltipComponent} representation of the given {@link Component}.
+     */
+    public static List<ClientTooltipComponent> tooltip(Component component) {
         return List.of(ClientTooltipComponent.create(component.getVisualOrderText()));
     }
 }

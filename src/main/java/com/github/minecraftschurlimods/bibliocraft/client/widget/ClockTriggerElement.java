@@ -66,13 +66,13 @@ public class ClockTriggerElement extends Screen {
         if (mouseY >= 2 && mouseY < 18) {
             Font font = ClientUtil.getFont();
             if (trigger.redstone() && mouseX >= 2 && mouseX < 18) {
-                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_REDSTONE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.tooltip(Translations.CLOCK_EMIT_REDSTONE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (trigger.sound() && mouseX >= 19 && mouseX < 37) {
-                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EMIT_SOUND), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.tooltip(Translations.CLOCK_EMIT_SOUND), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (editButton.getRectangle().containsPoint(mouseX, mouseY)) {
-                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_EDIT_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.tooltip(Translations.CLOCK_EDIT_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             } else if (deleteButton.getRectangle().containsPoint(mouseX, mouseY)) {
-                graphics.tooltip(font, ClientUtil.forTooltip(Translations.CLOCK_DELETE_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                graphics.tooltip(font, ClientUtil.tooltip(Translations.CLOCK_DELETE_TRIGGER), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
             }
         }
     }

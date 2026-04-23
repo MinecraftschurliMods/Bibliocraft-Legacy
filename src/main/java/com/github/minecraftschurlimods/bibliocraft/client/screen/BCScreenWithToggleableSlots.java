@@ -38,7 +38,7 @@ public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlot
     protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
         super.extractTooltip(graphics, mouseX, mouseY);
         if (hoveredSlot instanceof ToggleableSlot && !menu.isSlotDisabled(hoveredSlot.getSlotIndex()) && menu.getCarried().isEmpty() && !hoveredSlot.hasItem() && !player.isSpectator()) {
-            graphics.tooltip(font, ClientUtil.forTooltip(Translations.VANILLA_TOGGLABLE_SLOT), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+            graphics.tooltip(font, ClientUtil.tooltip(Translations.VANILLA_TOGGLABLE_SLOT), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
         }
     }
 

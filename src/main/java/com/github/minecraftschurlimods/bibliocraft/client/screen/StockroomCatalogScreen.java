@@ -113,17 +113,17 @@ public class StockroomCatalogScreen extends Screen {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
                     BlockPos container = visibleContainers.get(y / 19);
                     int distance = (int) (lectern != null ? Math.sqrt(lectern.distSqr(container)) : ClientUtil.getPlayer().position().distanceTo(BCUtil.toVec3(container)));
-                    graphics.tooltip(font, ClientUtil.forTooltip(Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance)), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.tooltip(Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance)), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.tooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_REMOVE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.tooltip(Translations.STOCKROOM_CATALOG_REMOVE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
-                    graphics.tooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.tooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
         } else {
@@ -145,7 +145,7 @@ public class StockroomCatalogScreen extends Screen {
             }
             if (mouseX >= x + 206 && mouseX < x + 222) {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleItems.size()) {
-                    graphics.tooltip(font, ClientUtil.forTooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.tooltip(Translations.STOCKROOM_CATALOG_LOCATE), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
         }
