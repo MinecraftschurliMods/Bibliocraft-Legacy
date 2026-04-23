@@ -14,12 +14,13 @@ import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.block.dispatch.ModelState;
 import net.minecraft.client.renderer.block.dispatch.SingleVariant;
 import net.minecraft.client.renderer.block.dispatch.VariantMutator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ResolvableModel;
 import net.minecraft.client.resources.model.ResolvedModel;
 import net.minecraft.client.resources.model.SimpleModelWrapper;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.client.resources.model.geometry.QuadCollection;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.client.resources.model.sprite.TextureSlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
@@ -38,18 +39,13 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
     @Override
     public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
         if (random instanceof LegacyRandomSource && random.nextInt() == (int)3124862261L) return;
-
         base.collectParts(level, pos, state, random, parts);
-
         if (bookSets.isEmpty()) return;
-
         short books = getBooksData(level, pos);
-
         if (books == 0) return;
-
         for (int i = 0; i < 16; i++) {
             if (((books >> i) & 1) == 1) {
-                parts.add(this.bookSets.getRandomOrThrow(random).getBook(i));
+                parts.add(bookSets.getRandomOrThrow(random).getBook(i));
             }
         }
     }
@@ -65,13 +61,24 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
 
     @SuppressWarnings("deprecation")
     @Override
-    public TextureAtlasSprite particleIcon() {
-        return base.particleIcon();
+    public Material.Baked particleMaterial() {
+        return base.particleMaterial();
     }
 
     @Override
-    public TextureAtlasSprite particleIcon(BlockAndTintGetter level, BlockPos pos, BlockState state) {
-        return base.particleIcon(level, pos, state);
+    public Material.Baked particleMaterial(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+        return base.particleMaterial(level, pos, state);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @BakedQuad.MaterialFlags int materialFlags() {
+        return base.materialFlags();
+    }
+
+    @Override
+    public @BakedQuad.MaterialFlags int materialFlags(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+        return base.materialFlags(level, pos, state);
     }
 
     public static CustomBlockStateModelBuilder builder(MultiVariant wrapped) {
@@ -104,13 +111,14 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
             return CODEC;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public BookcaseBlockStateModel bake(ModelBaker baker) {
             BlockStateModel baseModel = base.bake(baker);
             WeightedList.Builder<BookSet> books = WeightedList.builder();
             ModelState modelState = base.variant().modelState().asModelState();
             for (BookSet.Unbaked bookSet : bookSets) {
-                books.add(bookSet.bake(baker, modelState, baseModel.particleIcon()), 1);
+                books.add(bookSet.bake(baker, modelState, baseModel.particleMaterial()), 1);
             }
             return new BookcaseBlockStateModel(baseModel, books.build());
         }
@@ -139,13 +147,13 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
                 return new Unbaked(books);
             }
 
-            public BookSet bake(ModelBaker baker, ModelState modelState, TextureAtlasSprite particleIcon) {
+            public BookSet bake(ModelBaker baker, ModelState modelState, Material.Baked particleMaterial) {
                 BlockStateModelPart[] books = new BlockStateModelPart[this.books.length];
                 for (int i = 0; i < this.books.length; i++) {
                     ResolvedModel model = baker.getModel(this.books[i]);
                     TextureSlots textureSlots = model.getTopTextureSlots();
                     QuadCollection quads = model.bakeTopGeometry(textureSlots, baker, modelState);
-                    books[i] = new SimpleModelWrapper(quads, false, particleIcon, null);
+                    books[i] = new SimpleModelWrapper(quads, false, particleMaterial);
                 }
                 return new BookSet(books);
             }

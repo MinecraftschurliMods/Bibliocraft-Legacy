@@ -13,9 +13,10 @@ import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.block.dispatch.ModelState;
 import net.minecraft.client.renderer.block.dispatch.SingleVariant;
 import net.minecraft.client.renderer.block.dispatch.VariantMutator;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.SimpleModelWrapper;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
@@ -35,15 +36,9 @@ public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<Table
     @Override
     public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
         if (random instanceof LegacyRandomSource && random.nextInt() == (int)3124862261L) return;
-
         base.collectParts(level, pos, state, random, parts);
-
         DyeColor color = level.getModelData(pos).get(TableBlockEntity.CLOTH_COLOR);
-
-        if (color == null) {
-            return;
-        }
-
+        if (color == null) return;
         TableBlock.Type type = state.getValue(TableBlock.TYPE);
         BlockStateModelPart clothPart = cloths.get(color).get(type);
         if (clothPart != null) {
@@ -53,13 +48,24 @@ public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<Table
 
     @SuppressWarnings("deprecation")
     @Override
-    public TextureAtlasSprite particleIcon() {
-        return base.particleIcon();
+    public Material.Baked particleMaterial() {
+        return base.particleMaterial();
     }
 
     @Override
-    public TextureAtlasSprite particleIcon(BlockAndTintGetter level, BlockPos pos, BlockState state) {
-        return base.particleIcon(level, pos, state);
+    public Material.Baked particleMaterial(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+        return base.particleMaterial(level, pos, state);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public @BakedQuad.MaterialFlags int materialFlags() {
+        return base.materialFlags();
+    }
+
+    @Override
+    public @BakedQuad.MaterialFlags int materialFlags(BlockAndTintGetter level, BlockPos pos, BlockState state) {
+        return base.materialFlags(level, pos, state);
     }
 
     @Override
