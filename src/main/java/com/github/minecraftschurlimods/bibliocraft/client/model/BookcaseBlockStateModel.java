@@ -8,16 +8,23 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.client.renderer.block.dispatch.ModelState;
+import net.minecraft.client.renderer.block.dispatch.SingleVariant;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ResolvableModel;
 import net.minecraft.client.resources.model.ResolvedModel;
 import net.minecraft.client.resources.model.SimpleModelWrapper;
+import net.minecraft.client.resources.model.geometry.QuadCollection;
+import net.minecraft.client.resources.model.sprite.TextureSlots;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
@@ -29,7 +36,7 @@ import java.util.Objects;
 
 public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet> bookSets) implements DynamicBlockStateModel {
     @Override
-    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts) {
+    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
         if (random instanceof LegacyRandomSource && random.nextInt() == (int)3124862261L) return;
 
         base.collectParts(level, pos, state, random, parts);
@@ -117,8 +124,8 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
         }
     }
 
-    public record BookSet(BlockModelPart[] books) {
-        public BlockModelPart getBook(int index) {
+    public record BookSet(BlockStateModelPart[] books) {
+        public BlockStateModelPart getBook(int index) {
             return books[index];
         }
 
@@ -133,7 +140,7 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
             }
 
             public BookSet bake(ModelBaker baker, ModelState modelState, TextureAtlasSprite particleIcon) {
-                BlockModelPart[] books = new BlockModelPart[this.books.length];
+                BlockStateModelPart[] books = new BlockStateModelPart[this.books.length];
                 for (int i = 0; i < this.books.length; i++) {
                     ResolvedModel model = baker.getModel(this.books[i]);
                     TextureSlots textureSlots = model.getTopTextureSlots();

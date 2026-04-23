@@ -1,7 +1,7 @@
 package com.github.minecraftschurlimods.bibliocraft.util;
 
 import net.minecraft.client.data.models.MultiVariant;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.neoforged.neoforge.client.model.block.CustomUnbakedBlockStateModel;
 import net.neoforged.neoforge.client.model.generators.blockstate.CustomBlockStateModelBuilder;
 import net.neoforged.neoforge.client.model.generators.blockstate.UnbakedMutator;

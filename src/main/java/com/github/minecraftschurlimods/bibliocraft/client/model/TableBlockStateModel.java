@@ -7,20 +7,20 @@ import com.github.minecraftschurlimods.bibliocraft.util.WrappingCustomBlockState
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.data.models.MultiVariant;
-import net.minecraft.client.renderer.block.model.BlockModelPart;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.block.model.SimpleModelWrapper;
-import net.minecraft.client.renderer.block.model.SingleVariant;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.client.renderer.block.dispatch.ModelState;
+import net.minecraft.client.renderer.block.dispatch.SingleVariant;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.client.resources.model.SimpleModelWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Util;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
@@ -31,9 +31,9 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<TableBlock.Type, BlockModelPart>> cloths) implements DynamicBlockStateModel {
+public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<TableBlock.Type, BlockStateModelPart>> cloths) implements DynamicBlockStateModel {
     @Override
-    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts) {
+    public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
         if (random instanceof LegacyRandomSource && random.nextInt() == (int)3124862261L) return;
 
         base.collectParts(level, pos, state, random, parts);
@@ -45,7 +45,7 @@ public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<Table
         }
 
         TableBlock.Type type = state.getValue(TableBlock.TYPE);
-        BlockModelPart clothPart = cloths.get(color).get(type);
+        BlockStateModelPart clothPart = cloths.get(color).get(type);
         if (clothPart != null) {
             parts.add(clothPart);
         }
@@ -99,7 +99,7 @@ public record TableBlockStateModel(BlockStateModel base, Map<DyeColor, Map<Table
             return new TableBlockStateModel(base.bake(baker), bakeCloths(baker, base.variant().modelState().asModelState()));
         }
 
-        private Map<DyeColor, Map<TableBlock.Type, BlockModelPart>> bakeCloths(ModelBaker baker, ModelState modelState) {
+        private Map<DyeColor, Map<TableBlock.Type, BlockStateModelPart>> bakeCloths(ModelBaker baker, ModelState modelState) {
             return Util.makeEnumMap(
                     DyeColor.class,
                     color -> Util.makeEnumMap(
