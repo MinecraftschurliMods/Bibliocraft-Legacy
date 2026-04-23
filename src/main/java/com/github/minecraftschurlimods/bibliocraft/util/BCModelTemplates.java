@@ -224,8 +224,8 @@ public class BCModelTemplates {
 
         @Override
         public Identifier create(Block block, TextureMapping textureMapping, BiConsumer<Identifier, ModelInstance> output) {
-            Identifier resourcelocation = BuiltInRegistries.BLOCK.getKey(block);
-            return this.create(resourcelocation.withPath(path -> "block/" + convertColorPath(path) + this.suffix.orElse("")), textureMapping, output);
+            Identifier id = BuiltInRegistries.BLOCK.getKey(block);
+            return this.create(id.withPath(path -> "block/" + convertColorPath(path) + this.suffix.orElse("")), textureMapping, output);
         }
 
         private String convertColorPath(String path) {
