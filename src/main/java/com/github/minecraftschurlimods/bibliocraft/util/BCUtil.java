@@ -14,7 +14,6 @@ import net.minecraft.util.Util;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
-import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.clock.ClockManager;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;

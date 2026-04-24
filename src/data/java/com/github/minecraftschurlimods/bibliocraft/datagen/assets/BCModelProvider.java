@@ -37,7 +37,15 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.*;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.COLORED;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.COPPER_BLOCKS;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.FANCY_COPPER_LAMP;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.FANCY_COPPER_LANTERN;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.GroupedModelTemplate;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.ModelBuilder;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.WOOL_TEXTURES;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.builder;
+import static com.github.minecraftschurlimods.bibliocraft.util.BlockModelDatagenUtil.lightBlockTypeDispatch;
 
 public class BCModelProvider extends ModelProvider {
     public BCModelProvider(PackOutput output) {
