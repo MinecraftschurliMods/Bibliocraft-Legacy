@@ -86,7 +86,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         Level level = context.getLevel();
         return level.isInsideBuildHeight(pos.getY() + 1) && level.getBlockState(pos.above()).canBeReplaced(context)
                 ? BCUtil.nonNull(super.getStateForPlacement(context))
-                .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(FACING, context.getHorizontalDirection())
                 .setValue(HALF, DoubleBlockHalf.LOWER)
                 : super.getStateForPlacement(context);
     }
