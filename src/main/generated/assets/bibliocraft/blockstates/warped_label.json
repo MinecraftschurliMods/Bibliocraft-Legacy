@@ -1,39 +1,20 @@
 {
   "variants": {
-    "facing=east,waterlogged=false": {
+    "facing=east": {
       "model": "bibliocraft:block/wood/warped/label",
       "uvlock": true,
       "y": 90
     },
-    "facing=east,waterlogged=true": {
-      "model": "bibliocraft:block/wood/warped/label",
-      "uvlock": true,
-      "y": 90
-    },
-    "facing=north,waterlogged=false": {
+    "facing=north": {
       "model": "bibliocraft:block/wood/warped/label",
       "uvlock": true
     },
-    "facing=north,waterlogged=true": {
-      "model": "bibliocraft:block/wood/warped/label",
-      "uvlock": true
-    },
-    "facing=south,waterlogged=false": {
+    "facing=south": {
       "model": "bibliocraft:block/wood/warped/label",
       "uvlock": true,
       "y": 180
     },
-    "facing=south,waterlogged=true": {
-      "model": "bibliocraft:block/wood/warped/label",
-      "uvlock": true,
-      "y": 180
-    },
-    "facing=west,waterlogged=false": {
-      "model": "bibliocraft:block/wood/warped/label",
-      "uvlock": true,
-      "y": 270
-    },
-    "facing=west,waterlogged=true": {
+    "facing=west": {
       "model": "bibliocraft:block/wood/warped/label",
       "uvlock": true,
       "y": 270

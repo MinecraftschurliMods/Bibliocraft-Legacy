@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/clock/grandfather_top",
+  "textures": {
+    "texture": "minecraft:block/pale_oak_planks"
+  }
+}
