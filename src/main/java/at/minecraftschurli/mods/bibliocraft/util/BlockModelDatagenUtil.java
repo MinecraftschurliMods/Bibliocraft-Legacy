@@ -11,6 +11,7 @@ import at.minecraftschurli.mods.bibliocraft.content.typewriter.TypewriterBlock;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
 import at.minecraftschurli.mods.bibliocraft.util.holder.GroupedHolder;
 import com.mojang.datafixers.util.Function3;
+import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
@@ -23,6 +24,7 @@ import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -345,15 +347,11 @@ public final class BlockModelDatagenUtil {
     public static class ModelBuilder {
         private final BlockModelGenerators generators;
         private final Block block;
-        @Nullable
-        private final String nameOverride;
-        private boolean generateItemModel = false;
-        @Nullable
-        private Identifier itemModelLocation;
-        @Nullable
-        private Function<Block, MultiVariantGenerator> variantGeneratorFunction;
-        @Nullable
-        private PropertyDispatch<MultiVariant> dispatchMap;
+        private final @Nullable String nameOverride;
+        private @Nullable Function<Identifier, ItemModel.Unbaked> itemModelGenerator;
+        private Function<Block, Identifier> itemModelLocation = this::defaultItemModel;
+        private @Nullable Function<Block, MultiVariantGenerator> variantGeneratorFunction;
+        private @Nullable PropertyDispatch<MultiVariant> dispatchMap;
         private Function<Identifier, MultiVariant> variantFunction = BlockModelGenerators::plainVariant;
 
         private ModelBuilder(BlockModelGenerators generators, Block block, @Nullable String nameOverride) {
@@ -380,17 +378,25 @@ public final class BlockModelDatagenUtil {
                 Identifier location = BuiltInRegistries.BLOCK.getKey(block);
                 throw new IllegalStateException("You cannot use withItemModel() on a block that has no item! (" + location + ")");
             }
-            this.generateItemModel = true;
+            return this.withItemModel(ItemModelUtils::plainModel);
+        }
+
+        public ModelBuilder withTintedItemModel(ItemTintSource... tints) {
+            return withItemModel(model -> ItemModelUtils.tintedModel(model, tints));
+        }
+
+        public ModelBuilder withItemModel(Function<Identifier, ItemModel.Unbaked> modelFunction) {
+            this.itemModelGenerator = modelFunction;
             return this;
         }
 
         public ModelBuilder withFlatItemModel() {
-            this.itemModelLocation = null;
+            this.itemModelLocation = this::defaultItemModel;
             return withItemModel();
         }
 
         public ModelBuilder withItemModel(Identifier itemModelLocation) {
-            this.itemModelLocation = itemModelLocation;
+            this.itemModelLocation = _ -> itemModelLocation;
             return withItemModel();
         }
 
@@ -459,7 +465,7 @@ public final class BlockModelDatagenUtil {
             if (variantGeneratorFunction != null) {
                 throw new IllegalStateException("You cannot use withSingleVariant() after withVariantGenerator()!");
             }
-            this.itemModelLocation = modelLocation;
+            this.itemModelLocation = _ -> modelLocation;
             return withVariantGenerator(b -> MultiVariantGenerator.dispatch(b, variantFunction.apply(modelLocation)));
         }
 
@@ -503,12 +509,8 @@ public final class BlockModelDatagenUtil {
             if (variantGeneratorFunction == null) {
                 throw new IllegalStateException("You must call withVariantGenerator() before calling build()!");
             }
-            if (generateItemModel) {
-                if (itemModelLocation != null) {
-                    generators.registerSimpleItemModel(block, itemModelLocation);
-                } else {
-                    generators.registerSimpleFlatItemModel(block);
-                }
+            if (itemModelGenerator != null) {
+                generators.itemModelOutput.accept(block.asItem(), itemModelGenerator.apply(itemModelLocation.apply(block)));
             }
             generators.blockStateOutput.accept(variantGeneratorFunction.apply(block));
         }
@@ -549,6 +551,10 @@ public final class BlockModelDatagenUtil {
                 result[i] = mapper.apply(models[i]);
             }
             return result;
+        }
+
+        private Identifier defaultItemModel(Block block) {
+            return generators.createFlatItemModelWithBlockTexture(block.asItem(), block);
         }
     }
 }

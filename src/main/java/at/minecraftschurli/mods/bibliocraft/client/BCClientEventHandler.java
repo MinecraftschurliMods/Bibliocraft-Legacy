@@ -98,7 +98,7 @@ public final class BCClientEventHandler {
 
     @SubscribeEvent
     private static void registerColorHandlersBlock(RegisterColorHandlersEvent.BlockTintSources event) {
-        event.register(List.of(_ -> -1, SwordPedestalTintSource.INSTANCE), BCBlocks.SWORD_PEDESTAL.get());
+        event.register(List.of(SwordPedestalTintSource.INSTANCE), BCBlocks.SWORD_PEDESTAL.get());
     }
 
     @SubscribeEvent

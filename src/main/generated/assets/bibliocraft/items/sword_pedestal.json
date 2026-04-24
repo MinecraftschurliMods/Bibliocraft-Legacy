@@ -1,6 +1,12 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bibliocraft:block/sword_pedestal"
+    "model": "bibliocraft:block/sword_pedestal",
+    "tints": [
+      {
+        "type": "minecraft:dye",
+        "default": -10585066
+      }
+    ]
   }
 }

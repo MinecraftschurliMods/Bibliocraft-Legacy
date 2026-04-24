@@ -7,6 +7,7 @@ import at.minecraftschurli.mods.bibliocraft.content.fancylight.FancyLampBlock;
 import at.minecraftschurli.mods.bibliocraft.content.fancylight.FancyLanternBlock;
 import at.minecraftschurli.mods.bibliocraft.content.fancylight.WeatheringCopperFancyLampBlock;
 import at.minecraftschurli.mods.bibliocraft.content.fancylight.WeatheringCopperFancyLanternBlock;
+import at.minecraftschurli.mods.bibliocraft.content.swordpedestal.SwordPedestalBlock;
 import at.minecraftschurli.mods.bibliocraft.content.table.TableBlock;
 import at.minecraftschurli.mods.bibliocraft.content.typewriter.TypewriterBlock;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
@@ -14,6 +15,7 @@ import at.minecraftschurli.mods.bibliocraft.init.BCItems;
 import at.minecraftschurli.mods.bibliocraft.util.BCModelTemplates;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.holder.GroupedHolder;
+import net.minecraft.client.color.item.Dye;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -130,7 +132,7 @@ public class BCModelProvider extends ModelProvider {
         builder(blockModels, BCBlocks.SWORD_PEDESTAL)
                 .withDefaultExistingModel()
                 .withHorizontalRotation()
-                .withItemModel()
+                .withTintedItemModel(new Dye(0xff000000 | SwordPedestalBlock.DEFAULT_COLOR.rgb()))
                 .build();
         builder(blockModels, BCBlocks.DISC_RACK)
                 .withDefaultExistingModel()
