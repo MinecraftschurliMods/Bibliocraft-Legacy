@@ -107,7 +107,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
 
     private void blitSprite(PoseStack pose, OrderedSubmitNodeCollector collector, Vector3fc normal, SpriteId material, int light, int overlay) {
         TextureAtlasSprite sprite = sprites.get(material);
-        blit(pose, collector, material.renderType(RenderTypes::entityCutout), 0, ClipboardBER.CHECK_ICON_SIZE, 0, ClipboardBER.CHECK_ICON_SIZE, -0.001f, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), normal, 0, light, overlay);
+        blit(pose, collector, material.renderType(RenderTypes::entityCutout), 0, ClipboardBER.CHECK_ICON_SIZE, 0, ClipboardBER.CHECK_ICON_SIZE, -0.001f, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), normal, 0xffffffff, light, overlay);
     }
 
     private static void blit(PoseStack poseStack, OrderedSubmitNodeCollector collector, RenderType renderType, float x1, float x2, float y1, float y2, float z, float minU, float maxU, float minV, float maxV, Vector3fc normal, int color, int light, int overlay) {
