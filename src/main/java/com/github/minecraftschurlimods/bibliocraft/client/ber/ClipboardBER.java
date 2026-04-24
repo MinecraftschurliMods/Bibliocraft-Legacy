@@ -21,7 +21,8 @@ import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
@@ -38,16 +39,16 @@ import java.util.List;
 @SuppressWarnings({"SameParameterValue"})
 public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, ClipboardBER.State> {
     private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/clipboard_block.png");
-    private static final Material CHECK_TEXTURE = new Material(Sheets.GUI_SHEET, BCUtil.bcLoc("check"));
-    private static final Material X_TEXTURE = new Material(Sheets.GUI_SHEET, BCUtil.bcLoc("x"));
+    private static final SpriteId CHECK_TEXTURE = new SpriteId(Sheets.GUI_SHEET, BCUtil.bcLoc("check"));
+    private static final SpriteId X_TEXTURE = new SpriteId(Sheets.GUI_SHEET, BCUtil.bcLoc("x"));
     private static final int CHECK_ICON_SIZE = 14;
 
     private final Font font;
-    private final MaterialSet materials;
+    private final SpriteGetter sprites;
 
     public ClipboardBER(BlockEntityRendererProvider.Context context) {
         font = context.font();
-        materials = context.materials();
+        sprites = context.sprites();
     }
 
     @Override
@@ -104,8 +105,8 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         collector.submitText(pose, x, y, FormattedCharSequence.forward(text, Style.EMPTY), false, Font.DisplayMode.POLYGON_OFFSET, light, 0xFF000000, 0, 0);
     }
 
-    private void blitSprite(PoseStack pose, OrderedSubmitNodeCollector collector, Vector3fc normal, Material material, int light, int overlay) {
-        TextureAtlasSprite sprite = materials.get(material);
+    private void blitSprite(PoseStack pose, OrderedSubmitNodeCollector collector, Vector3fc normal, SpriteId material, int light, int overlay) {
+        TextureAtlasSprite sprite = sprites.get(material);
         blit(pose, collector, material.renderType(RenderTypes::entityCutout), 0, ClipboardBER.CHECK_ICON_SIZE, 0, ClipboardBER.CHECK_ICON_SIZE, -0.001f, sprite.getU0(), sprite.getU1(), sprite.getV0(), sprite.getV1(), normal, 0, light, overlay);
     }
 
