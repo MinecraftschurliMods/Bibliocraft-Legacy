@@ -43,9 +43,10 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
         if (bookSets.isEmpty()) return;
         short books = getBooksData(level, pos);
         if (books == 0) return;
+        BookSet bookSet = bookSets.getRandomOrThrow(random);
         for (int i = 0; i < 16; i++) {
             if (((books >> i) & 1) == 1) {
-                parts.add(bookSets.getRandomOrThrow(random).getBook(i));
+                parts.add(bookSet.getBook(i));
             }
         }
     }
