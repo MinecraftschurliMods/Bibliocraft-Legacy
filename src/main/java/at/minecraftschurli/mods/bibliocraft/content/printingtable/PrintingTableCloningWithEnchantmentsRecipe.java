@@ -1,0 +1,108 @@
+package at.minecraftschurli.mods.bibliocraft.content.printingtable;
+
+import at.minecraftschurli.mods.bibliocraft.init.BCRecipes;
+import at.minecraftschurli.mods.bibliocraft.init.BCTags;
+import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
+import at.minecraftschurli.mods.bibliocraft.util.CodecUtil;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.context.ContextKeySet;
+import net.minecraft.util.context.ContextMap;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
+import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableCloningRecipe {
+    public static final MapCodec<PrintingTableCloningWithEnchantmentsRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
+            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(e -> e.result),
+            Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
+            Codec.STRING.optionalFieldOf("group", "").forGetter(e -> e.group),
+            Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(e -> e.showNotification),
+            NumberProviders.CODEC.optionalFieldOf("experience_cost").forGetter(e -> e.experienceCost)
+    ).apply(inst, PrintingTableCloningWithEnchantmentsRecipe::new));
+    public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableCloningWithEnchantmentsRecipe> STREAM_CODEC = StreamCodec.composite(
+            Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.ingredients,
+            ItemStackTemplate.STREAM_CODEC, e -> e.result,
+            ByteBufCodecs.INT, e -> e.duration,
+            ByteBufCodecs.STRING_UTF8, e -> e.group,
+            ByteBufCodecs.BOOL, e -> e.showNotification,
+            CodecUtil.toStreamCodec(NumberProviders.CODEC).apply(ByteBufCodecs::optional), e -> e.experienceCost,
+            PrintingTableCloningWithEnchantmentsRecipe::new);
+    private final Optional<NumberProvider> experienceCost;
+
+    public PrintingTableCloningWithEnchantmentsRecipe(List<Ingredient> ingredients, ItemStackTemplate result, int duration, String group, boolean showNotification, Optional<NumberProvider> experienceCost) {
+        super(List.of(DataComponents.STORED_ENCHANTMENTS), ingredients, result, duration, group, showNotification);
+        this.experienceCost = experienceCost;
+    }
+
+    @Override
+    public boolean matches(PrintingTableRecipeInput input, Level level) {
+        if (!super.matches(input, level)) return false;
+        ItemStack stack = input.right();
+        if (!stack.has(DataComponents.STORED_ENCHANTMENTS)) return false;
+        return BCUtil.nonNull(stack.get(DataComponents.STORED_ENCHANTMENTS))
+                .keySet()
+                .stream()
+                .noneMatch(e -> e.is(BCTags.Enchantments.PRINTING_TABLE_CLONING_BLACKLIST));
+    }
+
+    @Override
+    public RecipeSerializer<? extends Recipe<PrintingTableRecipeInput>> getSerializer() {
+        return BCRecipes.PRINTING_TABLE_CLONING_WITH_ENCHANTMENTS.get();
+    }
+
+    @Override
+    public int getExperienceLevelCost(ItemStack stack, ServerLevel level) {
+        return experienceCost.map(e -> e.getInt(new LootContext.Builder(new LootParams(level, new ContextMap.Builder().withParameter(LootContextParams.TOOL, stack).create(new ContextKeySet.Builder().required(LootContextParams.TOOL).build()), Map.of(), 0)).create(Optional.empty()))).orElse(0);
+    }
+
+    @Override
+    public boolean canHaveExperienceCost() {
+        return experienceCost.isPresent();
+    }
+
+    public static class Builder extends PrintingTableRecipe.Builder {
+        private final List<Ingredient> ingredients = new ArrayList<>();
+        private @Nullable NumberProvider experienceCost = null;
+
+        public Builder(ItemStackTemplate result, int duration) {
+            super(result, duration);
+        }
+
+        public Builder addIngredient(Ingredient ingredient) {
+            ingredients.add(ingredient);
+            return this;
+        }
+
+        public Builder experienceCost(NumberProvider experienceCost) {
+            this.experienceCost = experienceCost;
+            return this;
+        }
+
+        public PrintingTableCloningWithEnchantmentsRecipe build() {
+            return new PrintingTableCloningWithEnchantmentsRecipe(ingredients, result, duration, group, showNotification, Optional.ofNullable(experienceCost));
+        }
+    }
+}
