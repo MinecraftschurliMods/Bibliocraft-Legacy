@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:shelves",
   "key": {
-    "P": {
-      "item": "minecraft:birch_planks"
-    },
-    "S": {
-      "item": "minecraft:birch_slab"
-    }
+    "P": "minecraft:birch_planks",
+    "S": "minecraft:birch_slab"
   },
   "pattern": [
     "SSS",
@@ -16,7 +12,6 @@
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:birch_shelf"
   }
 }

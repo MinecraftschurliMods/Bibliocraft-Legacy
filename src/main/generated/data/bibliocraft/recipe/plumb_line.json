@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "I": {
-      "tag": "c:ingots/gold"
-    },
-    "S": {
-      "tag": "c:strings"
-    }
+    "I": "#c:ingots/gold",
+    "S": "#c:strings"
   },
   "pattern": [
     "SSS",
@@ -15,7 +11,6 @@
     "I S"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:plumb_line"
   }
 }

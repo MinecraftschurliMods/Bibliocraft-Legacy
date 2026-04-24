@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:flat_seat_backs",
   "key": {
-    "R": {
-      "tag": "c:rods/wooden"
-    },
-    "S": {
-      "item": "minecraft:warped_slab"
-    },
-    "W": {
-      "item": "minecraft:blue_wool"
-    }
+    "R": "#c:rods/wooden",
+    "S": "minecraft:warped_slab",
+    "W": "minecraft:blue_wool"
   },
   "pattern": [
     "RWR",
@@ -19,7 +13,6 @@
     "R R"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:blue_warped_flat_seat_back"
   }
 }

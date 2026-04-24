@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:bookcases",
   "key": {
-    "P": {
-      "item": "minecraft:warped_planks"
-    },
-    "S": {
-      "item": "minecraft:warped_slab"
-    }
+    "P": "minecraft:warped_planks",
+    "S": "minecraft:warped_slab"
   },
   "pattern": [
     "PSP",
@@ -16,7 +12,6 @@
     "PSP"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:warped_bookcase"
   }
 }

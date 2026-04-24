@@ -3,18 +3,13 @@
   "category": "misc",
   "group": "bibliocraft:fancy_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:brown_warped_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:warped_slab"
-    }
+    "#": "bibliocraft:brown_warped_flat_seat_back",
+    "S": "minecraft:warped_slab"
   },
   "pattern": [
     "S#S"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:brown_warped_fancy_seat_back"
   }
 }

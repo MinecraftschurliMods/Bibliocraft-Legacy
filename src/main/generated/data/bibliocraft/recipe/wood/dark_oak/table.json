@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:tables",
   "key": {
-    "P": {
-      "item": "minecraft:dark_oak_planks"
-    },
-    "S": {
-      "item": "minecraft:dark_oak_slab"
-    }
+    "P": "minecraft:dark_oak_planks",
+    "S": "minecraft:dark_oak_slab"
   },
   "pattern": [
     "SSS",
@@ -16,7 +12,6 @@
     " P "
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:dark_oak_table"
   }
 }

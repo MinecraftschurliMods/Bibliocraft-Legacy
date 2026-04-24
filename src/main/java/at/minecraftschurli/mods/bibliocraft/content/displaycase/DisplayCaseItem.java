@@ -12,7 +12,7 @@ import org.jspecify.annotations.Nullable;
 
 public class DisplayCaseItem extends ColoredWoodTypeBlockItem {
     public DisplayCaseItem(BibliocraftWoodType woodType, DyeColor color, Properties properties) {
-        super(BCBlocks.DISPLAY_CASE, woodType, color, properties);
+        super(BCBlocks.DISPLAY_CASE, woodType, color, properties.useBlockDescriptionPrefix());
     }
 
     @Override

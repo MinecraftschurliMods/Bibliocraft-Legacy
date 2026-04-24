@@ -37,6 +37,8 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.*;
+
 public class BCModelProvider extends ModelProvider {
     public BCModelProvider(PackOutput output) {
         super(output, BibliocraftApi.MOD_ID);

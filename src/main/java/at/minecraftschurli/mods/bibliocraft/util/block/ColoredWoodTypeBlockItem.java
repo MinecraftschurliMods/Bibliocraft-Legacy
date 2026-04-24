@@ -11,7 +11,7 @@ public class ColoredWoodTypeBlockItem extends BlockItem {
     protected final DyeColor color;
 
     public ColoredWoodTypeBlockItem(GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Block, ? extends Block> holder, BibliocraftWoodType woodType, DyeColor color, Properties properties) {
-        super(holder.get(woodType, color), properties.useBlockDescriptionPrefix());
+        super(holder.get(woodType, color), properties);
         this.woodType = woodType;
         this.color = color;
     }

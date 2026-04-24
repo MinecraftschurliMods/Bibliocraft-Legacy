@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bibliocraft:fancy_lantern",
+  "key": {
+    "C": "minecraft:brown_candle",
+    "G": "#c:glass_panes/colorless",
+    "I": "#c:ingots/copper"
+  },
+  "pattern": [
+    "GIG",
+    "ICI",
+    "GIG"
+  ],
+  "result": {
+    "id": "bibliocraft:brown_fancy_copper_lantern"
+  }
+}

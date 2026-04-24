@@ -3,16 +3,13 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": {
-      "item": "minecraft:crimson_slab"
-    }
+    "S": "minecraft:crimson_slab"
   },
   "pattern": [
     "SSS",
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:crimson_label"
   }
 }

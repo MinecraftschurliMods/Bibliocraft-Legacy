@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:fancy_armor_stands",
   "key": {
-    "R": {
-      "tag": "c:rods/wooden"
-    },
-    "S": {
-      "item": "minecraft:mangrove_slab"
-    }
+    "R": "#c:rods/wooden",
+    "S": "minecraft:mangrove_slab"
   },
   "pattern": [
     " R ",
@@ -16,7 +12,6 @@
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:mangrove_fancy_armor_stand"
   }
 }

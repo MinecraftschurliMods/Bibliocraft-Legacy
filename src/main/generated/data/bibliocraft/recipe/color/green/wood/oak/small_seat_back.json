@@ -3,19 +3,14 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": {
-      "item": "minecraft:oak_slab"
-    },
-    "W": {
-      "item": "minecraft:green_wool"
-    }
+    "S": "minecraft:oak_slab",
+    "W": "minecraft:green_wool"
   },
   "pattern": [
     "W",
     "S"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:green_oak_small_seat_back"
   }
 }

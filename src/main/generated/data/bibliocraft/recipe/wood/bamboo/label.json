@@ -3,16 +3,13 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": {
-      "item": "minecraft:bamboo_slab"
-    }
+    "S": "minecraft:bamboo_slab"
   },
   "pattern": [
     "SSS",
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:bamboo_label"
   }
 }

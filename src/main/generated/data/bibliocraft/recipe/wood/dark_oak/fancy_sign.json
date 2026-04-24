@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:fancy_sign",
   "key": {
-    "#": {
-      "item": "minecraft:paper"
-    },
-    "P": {
-      "item": "minecraft:dark_oak_planks"
-    },
-    "R": {
-      "tag": "c:rods/wooden"
-    }
+    "#": "minecraft:paper",
+    "P": "minecraft:dark_oak_planks",
+    "R": "#c:rods/wooden"
   },
   "pattern": [
     "P#P",
@@ -19,7 +13,6 @@
     " R "
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:dark_oak_fancy_sign"
   }
 }

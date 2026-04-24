@@ -1,8 +1,6 @@
 {
-  "parent": "minecraft:block/chain",
-  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/template_chain",
   "textures": {
-    "all": "bibliocraft:block/gold_chain",
-    "particle": "bibliocraft:block/gold_chain"
+    "texture": "bibliocraft:block/gold_chain"
   }
 }

@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bibliocraft:potion_shelves",
   "key": {
-    "#": {
-      "item": "minecraft:glass_bottle"
-    },
-    "P": {
-      "item": "minecraft:acacia_planks"
-    },
-    "S": {
-      "item": "minecraft:acacia_slab"
-    }
+    "#": "minecraft:glass_bottle",
+    "P": "minecraft:acacia_planks",
+    "S": "minecraft:acacia_slab"
   },
   "pattern": [
     "SSS",
@@ -19,7 +13,6 @@
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:acacia_potion_shelf"
   }
 }

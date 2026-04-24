@@ -5,12 +5,9 @@
   ],
   "duration": 100,
   "ingredients": [
-    {
-      "item": "bibliocraft:clipboard"
-    }
+    "bibliocraft:clipboard"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:clipboard"
   }
 }

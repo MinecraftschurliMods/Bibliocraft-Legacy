@@ -3,19 +3,14 @@
   "category": "misc",
   "group": "bibliocraft:small_seat_backs",
   "key": {
-    "S": {
-      "item": "minecraft:spruce_slab"
-    },
-    "W": {
-      "item": "minecraft:brown_wool"
-    }
+    "S": "minecraft:spruce_slab",
+    "W": "minecraft:brown_wool"
   },
   "pattern": [
     "W",
     "S"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:brown_spruce_small_seat_back"
   }
 }

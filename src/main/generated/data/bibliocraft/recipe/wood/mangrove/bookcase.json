@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bibliocraft:bookcases",
   "key": {
-    "P": {
-      "item": "minecraft:mangrove_planks"
-    },
-    "S": {
-      "item": "minecraft:mangrove_slab"
-    }
+    "P": "minecraft:mangrove_planks",
+    "S": "minecraft:mangrove_slab"
   },
   "pattern": [
     "PSP",
@@ -16,7 +12,6 @@
     "PSP"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:mangrove_bookcase"
   }
 }

@@ -3,19 +3,14 @@
   "category": "misc",
   "group": "bibliocraft:tall_seat_backs",
   "key": {
-    "#": {
-      "item": "bibliocraft:gray_spruce_flat_seat_back"
-    },
-    "S": {
-      "item": "minecraft:spruce_slab"
-    }
+    "#": "bibliocraft:gray_spruce_flat_seat_back",
+    "S": "minecraft:spruce_slab"
   },
   "pattern": [
     "S",
     "#"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:gray_spruce_tall_seat_back"
   }
 }

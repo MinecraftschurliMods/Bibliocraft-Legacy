@@ -3,16 +3,13 @@
   "category": "misc",
   "group": "bibliocraft:labels",
   "key": {
-    "S": {
-      "item": "minecraft:warped_slab"
-    }
+    "S": "minecraft:warped_slab"
   },
   "pattern": [
     "SSS",
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "bibliocraft:warped_label"
   }
 }
