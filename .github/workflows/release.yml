@@ -17,6 +17,8 @@ jobs:
       publish-to-maven: true
       release-type: release
       datagen-folder: src/main/generated/
+      java-version: '25'
+      run-datagen-task: 'runClientData'
     secrets:
       MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
 

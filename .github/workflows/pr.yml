@@ -14,3 +14,5 @@ jobs:
     with:
       upload-artifacts: true
       datagen-folder: src/main/generated/
+      java-version: '25'
+      run-datagen-task: 'runClientData'
