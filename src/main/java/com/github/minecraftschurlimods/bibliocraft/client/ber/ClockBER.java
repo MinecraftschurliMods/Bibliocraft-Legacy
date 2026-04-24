@@ -128,8 +128,8 @@ public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.
     public void extractRenderState(ClockBlockEntity blockEntity, State state, float partialTick, Vec3 cameraPosition, ModelFeatureRenderer.@Nullable CrumblingOverlay breakProgress) {
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPosition, breakProgress);
         Level level = BCUtil.nonNull(blockEntity.getLevel());
-        long dayTime = level.getDefaultClockTime();
-        long dayDuration = BCUtil.getDayDuration(level, BCUtil.toVec3(blockEntity.getBlockPos()));
+        long dayTime = BCUtil.getDayTime(level);
+        long dayDuration = BCUtil.getDayDuration(level);
         state.handsRotation = dayDuration >= 0 ? -((dayTime + dayDuration * 0.25f) % (dayDuration / 2f)) * 0.03f : getRotation(level.getGameTime());
         state.pendulumRotation = (float) Math.sin((dayTime % 40 - 20) * Math.PI / 20);
 

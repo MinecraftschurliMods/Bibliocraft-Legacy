@@ -7,7 +7,6 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 public record ClockTrigger(int hour, int minute, boolean redstone, boolean sound) implements Comparable<ClockTrigger> {
     public static final Codec<ClockTrigger> CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -23,9 +22,9 @@ public record ClockTrigger(int hour, int minute, boolean redstone, boolean sound
             ByteBufCodecs.BOOL, ClockTrigger::sound,
             ClockTrigger::new);
 
-    public int getInGameTime(Level level, Vec3 position) {
+    public int getInGameTime(Level level) {
         // 1 in-game hour is 1/24 day, 1 in-game minute is 1/24/60=1/1440 day, time starts at 6 AM so we offset by 18 hours.
-        int day = BCUtil.getDayDuration(level, position);
+        int day = BCUtil.getDayDuration(level);
         return (int) (hour * day / 24. + minute * day / 1440. + day * 0.75) % day;
     }
 

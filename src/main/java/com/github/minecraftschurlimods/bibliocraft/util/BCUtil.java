@@ -15,6 +15,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.clock.ClockManager;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.timeline.Timelines;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
@@ -106,14 +108,21 @@ public final class BCUtil {
         return Arrays.stream(ChatFormatting.values()).filter(ChatFormatting::isColor);
     }
 
-    /**
-     * Returns the duration of a day in the given {@link Level}.
-     *
-     * @param level The {@link Level} to get the day duration for.
-     * @return The duration of a day in the given {@link Level}.
-     */
-    public static int getDayDuration(Level level, Vec3 position) {
-        return level.dimension() == Level.OVERWORLD ? (int) (level.environmentAttributes().getValue(EnvironmentAttributes.SUN_ANGLE, position) / 360f) : -1;
+    /// Returns the duration of a day in the given [Level].
+    ///
+    /// @param level The [Level] to get the day duration for.
+    /// @return The duration of a day in the given [Level].
+    public static int getDayDuration(Level level) {
+        return level.registryAccess().get(Timelines.OVERWORLD_DAY).flatMap(timeline -> timeline.value().periodTicks()).orElse(0);
+    }
+
+    /// Returns the time of day in the given [Level].
+    ///
+    /// @param level The [Level] to get the day time for.
+    /// @return The time of day in the given [Level].
+    public static int getDayTime(Level level) {
+        ClockManager clockManager = level.clockManager();
+        return level.registryAccess().get(Timelines.OVERWORLD_DAY).map(timeline -> (int) timeline.value().getCurrentTicks(clockManager)).orElse(0);
     }
 
     /**
