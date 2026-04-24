@@ -1,7 +1,6 @@
 package at.minecraftschurli.mods.bibliocraft.content.fancyarmorstand;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCEntities;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -32,13 +31,6 @@ public class FancyArmorStandEntity extends ArmorStand {
     @Override
     protected boolean shouldDropLoot(ServerLevel level) {
         return false;
-    }
-
-    @Override
-    public float getYHeadRot() {
-        if (blockEntity == null) return super.getYHeadRot();
-        Direction facing = blockEntity.getBlockState().getValue(FancyArmorStandBlock.FACING);
-        return facing.getAxis() == Direction.Axis.Z ? facing.getOpposite().toYRot() : facing.toYRot();
     }
 
     @Override

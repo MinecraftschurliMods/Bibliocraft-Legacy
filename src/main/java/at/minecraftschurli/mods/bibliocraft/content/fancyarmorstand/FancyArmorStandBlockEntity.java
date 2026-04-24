@@ -25,6 +25,10 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     public void setLevel(Level level) {
         super.setLevel(level);
         entity = new FancyArmorStandEntity(level, this);
+        float yRot = getBlockState().getValue(FancyArmorStandBlock.FACING).getOpposite().toYRot();
+        entity.setYRot(yRot);
+        entity.setYBodyRot(yRot);
+        entity.setYHeadRot(yRot);
         entity.elytraAnimationState.tick();
     }
 
