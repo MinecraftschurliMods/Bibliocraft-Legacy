@@ -51,28 +51,24 @@ public interface BCBlockEntities {
     Supplier<BlockEntityType<TypewriterBlockEntity>>      TYPEWRITER        = register("typewriter",        TypewriterBlockEntity::new,      BCUtil.merge(BCBlocks.TYPEWRITER.holders(), BCBlocks.CLEAR_TYPEWRITER));
     // @formatter:on
 
-    /**
-     * Registration helper method that takes a supplier list instead of a vararg parameter.
-     *
-     * @param name     The registry name to use.
-     * @param supplier The block entity supplier to use.
-     * @param blocks   A list of block suppliers that are associated with the block entity.
-     * @param <T>      The exact type of the block entity.
-     * @return A block entity type supplier.
-     */
+    /// Registration helper method that takes a supplier list instead of a vararg parameter.
+    ///
+    /// @param name     The registry name to use.
+    /// @param supplier The block entity supplier to use.
+    /// @param blocks   A list of block suppliers that are associated with the block entity.
+    /// @param <T>      The exact type of the block entity.
+    /// @return A block entity type supplier.
     static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> supplier, Collection<? extends Supplier<? extends Block>> blocks) {
         return BCRegistries.BLOCK_ENTITIES.register(name, () -> new BlockEntityType<>(supplier, blocks.stream().map(Supplier::get).collect(Collectors.toSet())));
     }
 
-    /**
-     * Registration helper method that takes a supplier vararg parameter instead of a regular vararg parameter.
-     *
-     * @param name     The registry name to use.
-     * @param supplier The block entity supplier to use.
-     * @param blocks   A vararg of block suppliers that are associated with the block entity.
-     * @param <T>      The exact type of the block entity.
-     * @return A block entity type supplier.
-     */
+    /// Registration helper method that takes a supplier vararg parameter instead of a regular vararg parameter.
+    ///
+    /// @param name     The registry name to use.
+    /// @param supplier The block entity supplier to use.
+    /// @param blocks   A vararg of block suppliers that are associated with the block entity.
+    /// @param <T>      The exact type of the block entity.
+    /// @return A block entity type supplier.
     @SafeVarargs
     static <T extends BlockEntity> Supplier<BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> supplier, Supplier<? extends Block>... blocks) {
         return register(name, supplier, List.of(blocks));

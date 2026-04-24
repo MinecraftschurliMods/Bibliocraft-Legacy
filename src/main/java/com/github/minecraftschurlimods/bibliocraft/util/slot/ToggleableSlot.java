@@ -4,11 +4,9 @@ import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Represents a slot that can be disabled or enabled. If disabled, items will not be placed inside the slot.
- *
- * @param <T> The type of the owning block entity.
- */
+/// Represents a slot that can be disabled or enabled. If disabled, items will not be placed inside the slot.
+///
+/// @param <T> The type of the owning block entity.
 public class ToggleableSlot<T extends Container & HasToggleableSlots> extends Slot {
     public final T container;
 

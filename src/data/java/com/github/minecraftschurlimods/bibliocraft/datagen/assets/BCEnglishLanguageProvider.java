@@ -250,41 +250,33 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add(Translations.TAPE_MEASURE_DISTANCE_KEY, "Distance: %s blocks (x: %s, y: %s, z: %s)");
     }
 
-    /**
-     * Adds a translation with a translation key of the format "<type>.bibliocraft.<name>".
-     *
-     * @param type        The <type> part to use.
-     * @param name        The <name> part to use.
-     * @param translation The translated string.
-     */
+    /// Adds a translation with a translation key of the format "<type>.bibliocraft.<name>".
+    ///
+    /// @param type        The <type> part to use.
+    /// @param name        The <name> part to use.
+    /// @param translation The translated string.
     private void add(String type, String name, String translation) {
         add(type + "." + BibliocraftApi.MOD_ID + "." + name, translation);
     }
 
-    /**
-     * Adds an automatically-generated translation for a block.
-     *
-     * @param block The block to add the translation for.
-     */
+    /// Adds an automatically-generated translation for a block.
+    ///
+    /// @param block The block to add the translation for.
     private void addDefaultBlock(DeferredHolder<Block, ?> block) {
         add(block.get(), DatagenUtil.toTranslation(block.getId().getPath()));
     }
 
-    /**
-     * Adds an automatically-generated translation for a item.
-     *
-     * @param item The item to add the translation for.
-     */
+    /// Adds an automatically-generated translation for a item.
+    ///
+    /// @param item The item to add the translation for.
     private void addDefaultItem(DeferredHolder<Item, ?> item) {
         add(item.get(), DatagenUtil.toTranslation(item.getId().getPath()));
     }
 
-    /**
-     * Adds a translation for a sound's subtitle.
-     *
-     * @param subtitle    The subtitle key to use.
-     * @param translation The translation to use.
-     */
+    /// Adds a translation for a sound's subtitle.
+    ///
+    /// @param subtitle    The subtitle key to use.
+    /// @param translation The translation to use.
     private void addSubtitle(String subtitle, String translation) {
         add("subtitles", subtitle, translation);
     }

@@ -188,12 +188,10 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             return super.getName() + NAME_SUFFIX;
         }
 
-        /**
-         * Adds a loot table for a block.
-         *
-         * @param block    The block.
-         * @param factory  A function that returns a {@link LootTable.Builder} for a given block.
-         */
+        /// Adds a loot table for a block.
+        ///
+        /// @param block    The block.
+        /// @param factory  A function that returns a [LootTable.Builder] for a given block.
         private void loot(Block block, BibliocraftWoodType woodType, Function<Block, LootTable.Builder> factory) {
             BlockLootTableProvider.WithConditionsBuilder<LootTable.Builder> builder = BlockLootTableProvider.wrapLootTable(factory.apply(block));
             if (!woodType.getNamespace().equals("minecraft")) {
@@ -359,26 +357,22 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             }
         }
 
-        /**
-         * Adds a shaped recipe for an item.
-         *
-         * @param item     The item.
-         * @param woodType The {@link BibliocraftWoodType}.
-         * @return A {@link ShapedRecipeBuilder} with the
-         */
+        /// Adds a shaped recipe for an item.
+        ///
+        /// @param item     The item.
+        /// @param woodType The [BibliocraftWoodType].
+        /// @return A [ShapedRecipeBuilder] with the
         private static ShapedRecipeBuilder shapedRecipe(HolderLookup.RegistryLookup<Item> lookup, Item item, BibliocraftWoodType woodType, String group) {
             return ShapedRecipeBuilder.shaped(lookup, RecipeCategory.DECORATIONS, item)
                     .group(BibliocraftApi.MOD_ID + ":" + group)
                     .unlockedBy("has_planks", CriteriaTriggers.INVENTORY_CHANGED.createCriterion(new InventoryChangeTrigger.TriggerInstance(Optional.empty(), InventoryChangeTrigger.TriggerInstance.Slots.ANY, List.of(ItemPredicate.Builder.item().of(lookup, woodType.family().get().getBaseBlock()).build()))));
         }
 
-        /**
-         * Adds a shapeless recipe for an item.
-         *
-         * @param item     The item.
-         * @param woodType The {@link BibliocraftWoodType}.
-         * @return A {@link ShapelessRecipeBuilder} with the
-         */
+        /// Adds a shapeless recipe for an item.
+        ///
+        /// @param item     The item.
+        /// @param woodType The [BibliocraftWoodType].
+        /// @return A [ShapelessRecipeBuilder] with the
         private static ShapelessRecipeBuilder shapelessRecipe(HolderLookup.RegistryLookup<Item> lookup, Item item, BibliocraftWoodType woodType, String group) {
             return ShapelessRecipeBuilder.shapeless(lookup, RecipeCategory.DECORATIONS, item)
                     .group(BibliocraftApi.MOD_ID + ":" + group)
@@ -497,40 +491,34 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
         }
     }
 
-    /**
-     * Adds an English (en_us) translation to the given {@link LanguageProvider}.
-     *
-     * @param provider The {@link LanguageProvider} to add the translation to.
-     * @param woodType The {@link BibliocraftWoodType} that is currently being processed.
-     * @param holder   The {@link GroupedHolder.Nested} to add the translation for.
-     * @param suffix   The suffix of the translation.
-     */
+    /// Adds an English (en_us) translation to the given [LanguageProvider].
+    ///
+    /// @param provider The [LanguageProvider] to add the translation to.
+    /// @param woodType The [BibliocraftWoodType] that is currently being processed.
+    /// @param holder   The [GroupedHolder.Nested] to add the translation for.
+    /// @param suffix   The suffix of the translation.
     private static void woodenBlockTranslation(LanguageProvider provider, BibliocraftWoodType woodType, GroupedHolder<BibliocraftWoodType, Block, ?> holder, String suffix) {
         provider.add(holder.get(woodType), DatagenUtil.toTranslation(woodType.getPath()) + " " + suffix);
     }
 
-    /**
-     * Adds an English (en_us) translation to the given {@link LanguageProvider}.
-     *
-     * @param provider The {@link LanguageProvider} to add the translation to.
-     * @param woodType The {@link BibliocraftWoodType} that is currently being processed.
-     * @param color    The {@link DyeColor} that is currently being processed.
-     * @param holder   The {@link GroupedHolder.Nested} to add the translation for.
-     * @param suffix   The suffix of the translation.
-     */
+    /// Adds an English (en_us) translation to the given [LanguageProvider].
+    ///
+    /// @param provider The [LanguageProvider] to add the translation to.
+    /// @param woodType The [BibliocraftWoodType] that is currently being processed.
+    /// @param color    The [DyeColor] that is currently being processed.
+    /// @param holder   The [GroupedHolder.Nested] to add the translation for.
+    /// @param suffix   The suffix of the translation.
     private static void coloredWoodenBlockTranslation(LanguageProvider provider, BibliocraftWoodType woodType, DyeColor color, GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Block, ?> holder, String suffix) {
         provider.add(holder.get(woodType, color), DatagenUtil.toTranslation(color.getName()) + " " + DatagenUtil.toTranslation(woodType.getPath()) + " " + suffix);
     }
 
-    /**
-     * Adds an English (en_us) translation to the given {@link LanguageProvider}.
-     *
-     * @param provider The {@link LanguageProvider} to add the translation to.
-     * @param woodType The {@link BibliocraftWoodType} that is currently being processed.
-     * @param color    The {@link DyeColor} that is currently being processed.
-     * @param holder   The {@link GroupedHolder.Nested} to add the translation for.
-     * @param suffix   The suffix of the translation.
-     */
+    /// Adds an English (en_us) translation to the given [LanguageProvider].
+    ///
+    /// @param provider The [LanguageProvider] to add the translation to.
+    /// @param woodType The [BibliocraftWoodType] that is currently being processed.
+    /// @param color    The [DyeColor] that is currently being processed.
+    /// @param holder   The [GroupedHolder.Nested] to add the translation for.
+    /// @param suffix   The suffix of the translation.
     private static void coloredWoodenItemTranslation(LanguageProvider provider, BibliocraftWoodType woodType, DyeColor color, GroupedHolder.Nested<BibliocraftWoodType, DyeColor, Item, ?> holder, String suffix) {
         provider.add(holder.get(woodType, color), DatagenUtil.toTranslation(color.getName()) + " " + DatagenUtil.toTranslation(woodType.getPath()) + " " + suffix);
     }

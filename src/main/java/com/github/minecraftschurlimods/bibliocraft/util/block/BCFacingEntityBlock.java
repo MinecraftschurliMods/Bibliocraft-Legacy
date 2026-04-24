@@ -18,9 +18,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
-/**
- * Abstract superclass for entity blocks in this mod.
- */
+/// Abstract superclass for entity blocks in this mod.
 public abstract class BCFacingEntityBlock extends BCFacingBlock implements EntityBlock {
     public BCFacingEntityBlock(Properties properties) {
         super(properties);

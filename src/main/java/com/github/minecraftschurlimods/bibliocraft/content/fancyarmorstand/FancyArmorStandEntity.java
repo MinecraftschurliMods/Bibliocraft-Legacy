@@ -10,9 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
-/**
- * Helper entity for rendering the contents of a {@link FancyArmorStandBlockEntity}. Defers item querying and rotations to the block entity.
- */
+/// Helper entity for rendering the contents of a [FancyArmorStandBlockEntity]. Defers item querying and rotations to the block entity.
 public class FancyArmorStandEntity extends ArmorStand {
     private @Nullable FancyArmorStandBlockEntity blockEntity;
 

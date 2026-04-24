@@ -24,15 +24,13 @@ public interface BCDataComponents {
     Supplier<DataComponentType<WrittenBigBookContent>>   WRITTEN_BIG_BOOK_CONTENT  = register("written_big_book_content",  WrittenBigBookContent.CODEC,   WrittenBigBookContent.STREAM_CODEC);
     // @formatter:on
 
-    /**
-     * Registers a new data component type.
-     *
-     * @param name        The name of the data component type.
-     * @param codec       The codec to use for serializing.
-     * @param streamCodec The stream codec to use for syncing.
-     * @param <T>         The generic type of the data component.
-     * @return The supplier for the registered data component type.
-     */
+    /// Registers a new data component type.
+    ///
+    /// @param name        The name of the data component type.
+    /// @param codec       The codec to use for serializing.
+    /// @param streamCodec The stream codec to use for syncing.
+    /// @param <T>         The generic type of the data component.
+    /// @return The supplier for the registered data component type.
     static <T> Supplier<DataComponentType<T>> register(String name, Codec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
         return BCRegistries.DATA_COMPONENTS.registerComponentType(name, b -> b.persistent(codec).networkSynchronized(streamCodec));
     }

@@ -10,9 +10,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
-/**
- * Abstract superclass for rotatable blocks in this mod.
- */
+/// Abstract superclass for rotatable blocks in this mod.
 @SuppressWarnings("deprecation")
 public abstract class BCFacingBlock extends BCWaterloggedBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;

@@ -146,9 +146,7 @@ public final class BCEventHandler {
         }
     }
 
-    /**
-     * Private helper for registering the vanilla variants.
-     */
+    /// Private helper for registering the vanilla variants.
     private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
         event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), () -> family);
     }

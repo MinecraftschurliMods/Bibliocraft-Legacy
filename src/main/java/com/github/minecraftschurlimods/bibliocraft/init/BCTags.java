@@ -37,10 +37,8 @@ public interface BCTags {
         TagKey<Block> TYPEWRITERS             = tag("typewriters"); 
         // @formatter:on
 
-        /**
-         * @param name The path of the tag.
-         * @return A {@link TagKey<Block>} with this mod's namespace and the given path.
-         */
+        /// @param name The path of the tag.
+        /// @return A [TagKey<Block>] with this mod's namespace and the given path.
         static TagKey<Block> tag(String name) {
             return TagKey.create(Registries.BLOCK, BCUtil.bcLoc(name));
         }
@@ -88,10 +86,8 @@ public interface BCTags {
         TagKey<Item> TYPEWRITER_PAPER        = tag("typewriter_paper");
         // @formatter:on
 
-        /**
-         * @param name The path of the tag.
-         * @return A {@link TagKey<Item>} with this mod's namespace and the given path.
-         */
+        /// @param name The path of the tag.
+        /// @return A [TagKey<Item>] with this mod's namespace and the given path.
         static TagKey<Item> tag(String name) {
             return TagKey.create(Registries.ITEM, BCUtil.bcLoc(name));
         }

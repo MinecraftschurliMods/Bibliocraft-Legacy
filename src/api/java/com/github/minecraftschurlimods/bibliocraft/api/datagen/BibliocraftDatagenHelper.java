@@ -21,44 +21,34 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
-/**
- * This class provides helper methods to generate datagen entries for Bibliocraft blocks with your mod's wood type(s). Get via {@link BibliocraftApi#getDatagenHelper()}.
- * To use this class, during {@link net.neoforged.neoforge.data.event.GatherDataEvent}, create a new instance of this class with your mod id.
- * Then, call whatever methods you need from the respective providers. Always pass in your mod's corresponding data provider.
- */
+/// This class provides helper methods to generate datagen entries for Bibliocraft blocks with your mod's wood type(s). Get via [BibliocraftApi#getDatagenHelper()].
+/// To use this class, during [net.neoforged.neoforge.data.event.GatherDataEvent], create a new instance of this class with your mod id.
+/// Then, call whatever methods you need from the respective providers. Always pass in your mod's corresponding data provider.
 @SuppressWarnings("unused")
 public interface BibliocraftDatagenHelper {
-    /**
-     * Marks a {@link BibliocraftWoodType} as to-be-datagenned. This method is thread-safe.
-     *
-     * @param woodType The {@link BibliocraftWoodType} to mark.
-     */
+    /// Marks a [BibliocraftWoodType] as to-be-datagenned. This method is thread-safe.
+    ///
+    /// @param woodType The [BibliocraftWoodType] to mark.
     void addWoodTypeToGenerate(BibliocraftWoodType woodType);
 
-    /**
-     * @return An unmodifiable list of all {@link BibliocraftWoodType}s to datagen.
-     */
+    /// @return An unmodifiable list of all [BibliocraftWoodType]s to datagen.
     List<BibliocraftWoodType> getWoodTypesToGenerate();
 
-    /**
-     * Marks all {@link BibliocraftWoodType}s from the given mod as to-be-datagenned. This method is thread-safe.
-     *
-     * @param modid The id of the mod to mark the {@link BibliocraftWoodType}s of.
-     */
+    /// Marks all [BibliocraftWoodType]s from the given mod as to-be-datagenned. This method is thread-safe.
+    ///
+    /// @param modid The id of the mod to mark the [BibliocraftWoodType]s of.
     default void addWoodTypesToGenerateByModid(String modid) {
         BibliocraftApi.getWoodTypeRegistry().getAll().stream()
                 .filter(e -> e.getNamespace().equals(modid))
                 .forEach(this::addWoodTypeToGenerate);
     }
 
-    /**
-     * Generates language files, block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with your mod's wood type(s). Call this directly from a {@link GatherDataEvent} handler!
-     *
-     * @param modId            The namespace to store the files under, where applicable.
-     * @param lookupProvider   The lookup provider to use for the datagen.
-     * @param clientPack       The client datagen pack to use.
-     * @param serverPack       The server datagen pack to use.
-     * @param languageProvider Your mod's {@link LanguageProvider}.
-     */
+    /// Generates language files, block and item models, block and item tags, loot tables, and recipes for Bibliocraft blocks with your mod's wood type(s). Call this directly from a [GatherDataEvent] handler!
+    ///
+    /// @param modId            The namespace to store the files under, where applicable.
+    /// @param lookupProvider   The lookup provider to use for the datagen.
+    /// @param clientPack       The client datagen pack to use.
+    /// @param serverPack       The server datagen pack to use.
+    /// @param languageProvider Your mod's [LanguageProvider].
     void generateAll(String modId, CompletableFuture<HolderLookup.Provider> lookupProvider, DataGenerator.PackGenerator clientPack, DataGenerator.PackGenerator serverPack, LanguageProvider languageProvider, Function<TagKey<Block>, TagAppender<Block, Block>> blockTagAppenderFactory, Function<TagKey<Item>, TagAppender<Item, Item>> itemTagAppenderFactory);
 }

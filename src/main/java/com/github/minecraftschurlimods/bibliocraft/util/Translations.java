@@ -4,9 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
-/**
- * Utility class holding various translation keys and components.
- */
+/// Utility class holding various translation keys and components.
 public interface Translations {
     // @formatter:off
     String TYPEWRITER_NO_PAPER_KEY                 = "block." + BibliocraftApi.MOD_ID + ".typewriter.no_paper";

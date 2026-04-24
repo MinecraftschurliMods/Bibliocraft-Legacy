@@ -11,48 +11,38 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * Abstract superclass for all menus of this mod.
- *
- * @param <T> The block entity this menu is associated with.
- */
+/// Abstract superclass for all menus of this mod.
+///
+/// @param <T> The block entity this menu is associated with.
 @SuppressWarnings("SameParameterValue")
 public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContainerMenu {
     protected final T blockEntity;
 
-    /**
-     * @param type        The {@link MenuType} to use.
-     * @param id          The id of the menu, provided by the game.
-     * @param inventory   The {@link Inventory} to use, provided by the game.
-     * @param blockEntity The block entity associated with the menu.
-     */
+    /// @param type        The [MenuType] to use.
+    /// @param id          The id of the menu, provided by the game.
+    /// @param inventory   The [Inventory] to use, provided by the game.
+    /// @param blockEntity The block entity associated with the menu.
     public BCMenu(MenuType<?> type, int id, Inventory inventory, T blockEntity) {
         super(type, id);
         this.blockEntity = blockEntity;
         addSlots(inventory);
     }
 
-    /**
-     * @param type      The {@link MenuType} to use.
-     * @param id        The id of the menu, provided by the game.
-     * @param inventory The {@link Inventory} to use, provided by the game.
-     * @param data      The {@link FriendlyByteBuf} to read the block entity data from.
-     */
+    /// @param type      The [MenuType] to use.
+    /// @param id        The id of the menu, provided by the game.
+    /// @param inventory The [Inventory] to use, provided by the game.
+    /// @param data      The [FriendlyByteBuf] to read the block entity data from.
     @SuppressWarnings("unchecked")
     public BCMenu(MenuType<?> type, int id, Inventory inventory, FriendlyByteBuf data) {
         this(type, id, inventory, (T) BCUtil.nonNull(inventory.player.level().getBlockEntity(data.readBlockPos())));
     }
 
-    /**
-     * Adds slots to this menu.
-     *
-     * @param inventory The player inventory to use.
-     */
+    /// Adds slots to this menu.
+    ///
+    /// @param inventory The player inventory to use.
     protected abstract void addSlots(Inventory inventory);
 
-    /**
-     * @return The block entity this menu is associated with.
-     */
+    /// @return The block entity this menu is associated with.
     public T getBlockEntity() {
         return blockEntity;
     }
@@ -96,20 +86,16 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
         return blockEntity.stillValid(player);
     }
 
-    /**
-     * @return The block entity's display name.
-     */
+    /// @return The block entity's display name.
     public Component getDisplayName() {
         return blockEntity.getDisplayName();
     }
 
-    /**
-     * Helper method for adding the player inventory slots.
-     *
-     * @param inventory The player inventory to add slots for.
-     * @param x         The x position of the inventory.
-     * @param y         The y position of the inventory.
-     */
+    /// Helper method for adding the player inventory slots.
+    ///
+    /// @param inventory The player inventory to add slots for.
+    /// @param x         The x position of the inventory.
+    /// @param y         The y position of the inventory.
     protected void addInventorySlots(Inventory inventory, int x, int y) {
         for (int i = 0; i < 9; i++) {
             addSlot(new Slot(inventory, i, x + i * 18, y + 58));
@@ -121,16 +107,12 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
         }
     }
 
-    /**
-     * Variant of {@link Slot} that defers placement checks to the container.
-     */
+    /// Variant of [Slot] that defers placement checks to the container.
     public static class BCSlot extends Slot {
-        /**
-         * @param container The {@link Container} this slot is in.
-         * @param index     The slot index.
-         * @param x         The x position.
-         * @param y         The y position.
-         */
+        /// @param container The [Container] this slot is in.
+        /// @param index     The slot index.
+        /// @param x         The x position.
+        /// @param y         The y position.
         public BCSlot(Container container, int index, int x, int y) {
             super(container, index, x, y);
         }

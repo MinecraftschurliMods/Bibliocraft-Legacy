@@ -32,10 +32,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
-/**
- * Conceptual credit for the clock hands:
- * <a href="https://github.com/MehVahdJukaar/Supplementaries/blob/master/common/src/main/java/net/mehvahdjukaar/supplementaries/client/renderers/tiles/ClockBlockTileRenderer.java">ClockBlockTileRenderer from the Supplementaries mod</a>
- */
+/// Conceptual credit for the clock hands:
+/// <a href="https://github.com/MehVahdJukaar/Supplementaries/blob/master/common/src/main/java/net/mehvahdjukaar/supplementaries/client/renderers/tiles/ClockBlockTileRenderer.java">ClockBlockTileRenderer from the Supplementaries mod</a>
 public class ClockBER implements BlockEntityRenderer<ClockBlockEntity, ClockBER.State> {
     public static final SpriteId HAND_MATERIAL = new SpriteId(TextureAtlas.LOCATION_BLOCKS, BCUtil.bcLoc("block/clock_hand"));
     public static final SpriteId PENDULUM_MATERIAL = new SpriteId(TextureAtlas.LOCATION_BLOCKS, BCUtil.mcLoc("block/copper_block"));

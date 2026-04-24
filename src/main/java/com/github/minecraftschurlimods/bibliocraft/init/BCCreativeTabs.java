@@ -96,12 +96,10 @@ public interface BCCreativeTabs {
             })
             .build());
 
-    /**
-     * Helper method to add all {@link ItemLike}s in a list to a creative tab.
-     *
-     * @param output The {@link CreativeModeTab.Output} to add the elements to.
-     * @param list   A list of {@link ItemLike}s to add to the {@link CreativeModeTab.Output}.
-     */
+    /// Helper method to add all [ItemLike]s in a list to a creative tab.
+    ///
+    /// @param output The [CreativeModeTab.Output] to add the elements to.
+    /// @param list   A list of [ItemLike]s to add to the [CreativeModeTab.Output].
     private static void addToTab(CreativeModeTab.Output output, Collection<? extends ItemLike> list) {
         list.forEach(output::accept);
     }

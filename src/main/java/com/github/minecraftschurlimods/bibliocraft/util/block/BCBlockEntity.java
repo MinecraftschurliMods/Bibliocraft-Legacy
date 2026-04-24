@@ -34,21 +34,17 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
 
-/**
- * Abstract superclass for all block entities in this mod.
- */
+/// Abstract superclass for all block entities in this mod.
 public abstract class BCBlockEntity extends BlockEntity implements Container, ItemOwner {
     private static final String ITEMS_TAG = "items";
     protected final ResourceHandler<ItemResource> capability;
     protected final NonNullList<ItemStack> items;
     private LockCode lockKey = LockCode.NO_LOCK;
 
-    /**
-     * @param type          The {@link BlockEntityType} to use.
-     * @param containerSize The size of the container.
-     * @param pos           The position of this BE.
-     * @param state         The state of this BE.
-     */
+    /// @param type          The [BlockEntityType] to use.
+    /// @param containerSize The size of the container.
+    /// @param pos           The position of this BE.
+    /// @param state         The state of this BE.
     public BCBlockEntity(BlockEntityType<?> type, int containerSize, BlockPos pos, BlockState state) {
         super(type, pos, state);
         items = NonNullList.withSize(containerSize, ItemStack.EMPTY);

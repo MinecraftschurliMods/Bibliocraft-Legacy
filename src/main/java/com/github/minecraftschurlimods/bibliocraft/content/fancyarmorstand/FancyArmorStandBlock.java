@@ -199,18 +199,16 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         return state.getValue(HALF) == DoubleBlockHalf.LOWER ? new FancyArmorStandBlockEntity(pos, state) : null;
     }
 
-    /**
-     * Attempts to swap the armor in the given slot with the given armor stack.
-     *
-     * @param stack      The armor stack from the player inventory that should be swapped with.
-     * @param slot       The slot index. A result from {@link FancyArmorStandBlock#lookingAtSlot(BlockState, BlockHitResult)}.
-     * @param playerSlot The player inventory slot the armor stack (first parameter) is in, and where a swapped item will end up.
-     * @param state      The {@link BlockState} to use.
-     * @param level      The {@link Level} to use.
-     * @param pos        The {@link BlockPos} to use.
-     * @param player     The {@link Player} attempting to swap the items.
-     * @return Whether swapping the items was successful or not.
-     */
+    /// Attempts to swap the armor in the given slot with the given armor stack.
+    ///
+    /// @param stack      The armor stack from the player inventory that should be swapped with.
+    /// @param slot       The slot index. A result from [FancyArmorStandBlock#lookingAtSlot(BlockState, BlockHitResult)].
+    /// @param playerSlot The player inventory slot the armor stack (first parameter) is in, and where a swapped item will end up.
+    /// @param state      The [BlockState] to use.
+    /// @param level      The [Level] to use.
+    /// @param pos        The [BlockPos] to use.
+    /// @param player     The [Player] attempting to swap the items.
+    /// @return Whether swapping the items was successful or not.
     private boolean trySwapArmor(ItemStack stack, int slot, int playerSlot, BlockState state, Level level, BlockPos pos, Player player) {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();

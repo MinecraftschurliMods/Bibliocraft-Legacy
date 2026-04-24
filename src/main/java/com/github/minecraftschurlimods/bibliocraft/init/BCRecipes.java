@@ -43,14 +43,12 @@ public interface BCRecipes {
     Supplier<RecipeBookCategory> PRINTING_TABLE_RECIPE_CATEGORY =
             BCRegistries.RECIPE_CATEGORIES.register("printing_table", RecipeBookCategory::new);
 
-    /**
-     * Returns a {@link Supplier} for a {@link RecipeSerializer} created using the given {@link MapCodec} and {@link StreamCodec}.
-     *
-     * @param codec       The {@link MapCodec} to use.
-     * @param streamCodec The {@link StreamCodec} to use.
-     * @param <T>         The generic type of the {@link RecipeSerializer}.
-     * @return A {@link Supplier} for a {@link RecipeSerializer}.
-     */
+    /// Returns a [Supplier] for a [RecipeSerializer] created using the given [MapCodec] and [StreamCodec].
+    ///
+    /// @param codec       The [MapCodec] to use.
+    /// @param streamCodec The [StreamCodec] to use.
+    /// @param <T>         The generic type of the [RecipeSerializer].
+    /// @return A [Supplier] for a [RecipeSerializer].
     static <T extends Recipe<?>> Supplier<RecipeSerializer<T>> serializer(MapCodec<T> codec, StreamCodec<RegistryFriendlyByteBuf, T> streamCodec) {
         return () -> new RecipeSerializer<>(codec, streamCodec);
     }

@@ -51,9 +51,7 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
         return 1;
     }
 
-    /**
-     * @return The {@link FancyArmorStandEntity} used for actually displaying the armor.
-     */
+    /// @return The [FancyArmorStandEntity] used for actually displaying the armor.
     @Nullable
     public FancyArmorStandEntity getDisplayEntity() {
         return entity;

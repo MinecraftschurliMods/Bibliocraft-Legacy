@@ -9,9 +9,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
-/**
- * Abstract superclass for all blocks in this mod.
- */
+/// Abstract superclass for all blocks in this mod.
 public class BCWaterloggedBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 

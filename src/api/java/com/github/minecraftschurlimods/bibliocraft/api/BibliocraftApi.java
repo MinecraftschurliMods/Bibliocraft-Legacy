@@ -12,39 +12,29 @@ import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 
-/**
- * The main accessor class for Bibliocraft's API. Use this to get references to the singleton instances of various classes.
- */
+/// The main accessor class for Bibliocraft's API. Use this to get references to the singleton instances of various classes.
 public final class BibliocraftApi {
     public static final String MOD_ID = "bibliocraft";
 
     private BibliocraftApi() {
     }
 
-    /**
-     * @return The only instance of {@link BibliocraftDatagenHelper}.
-     */
+    /// @return The only instance of [BibliocraftDatagenHelper].
     public static BibliocraftDatagenHelper getDatagenHelper() {
         return InstanceHolder.DATAGEN_HELPER.get();
     }
 
-    /**
-     * @return The only instance of {@link BibliocraftWoodTypeRegistry}.
-     */
+    /// @return The only instance of [BibliocraftWoodTypeRegistry].
     public static BibliocraftWoodTypeRegistry getWoodTypeRegistry() {
         return InstanceHolder.WOOD_TYPE_REGISTRY.get();
     }
 
-    /**
-     * @return The only instance of {@link LockAndKeyBehaviors}.
-     */
+    /// @return The only instance of [LockAndKeyBehaviors].
     public static LockAndKeyBehaviors getLockAndKeyBehaviors() {
         return InstanceHolder.LOCK_AND_KEY_BEHAVIORS.get();
     }
 
-    /**
-     * The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
-     */
+    /// The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
     private static class InstanceHolder {
         private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.of(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.of(fromServiceLoader(BibliocraftWoodTypeRegistry.class));

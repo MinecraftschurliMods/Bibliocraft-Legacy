@@ -18,9 +18,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
-/**
- * Abstract superclass for non-rotatable entity blocks in this mod.
- */
+/// Abstract superclass for non-rotatable entity blocks in this mod.
 public abstract class BCEntityBlock extends BCWaterloggedBlock implements EntityBlock {
     public BCEntityBlock(Properties properties) {
         super(properties);
