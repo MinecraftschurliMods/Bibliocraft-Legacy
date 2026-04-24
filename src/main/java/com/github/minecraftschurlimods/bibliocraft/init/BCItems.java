@@ -34,6 +34,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredItem;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,8 +184,7 @@ public interface BCItems {
         return item;
     }
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
     static void init() {}
 }

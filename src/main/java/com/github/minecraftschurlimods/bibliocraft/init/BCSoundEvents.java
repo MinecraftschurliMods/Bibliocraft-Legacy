@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.bibliocraft.init;
 
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
+import org.jetbrains.annotations.ApiStatus;
 
 public interface BCSoundEvents {
     // @formatter:off
@@ -20,9 +21,7 @@ public interface BCSoundEvents {
     Holder<SoundEvent> TYPEWRITER_TYPING    = BCRegistries.SOUND_EVENTS.register("typewriter_typing",    SoundEvent::createVariableRangeEvent);
     // @formatter:on
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
-    static void init() {
-    }
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
+    static void init() {}
 }

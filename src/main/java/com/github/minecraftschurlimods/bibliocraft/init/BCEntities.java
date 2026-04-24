@@ -4,6 +4,7 @@ import com.github.minecraftschurlimods.bibliocraft.content.fancyarmorstand.Fancy
 import com.github.minecraftschurlimods.bibliocraft.content.seat.SeatEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.Supplier;
 
@@ -13,9 +14,7 @@ public interface BCEntities {
     Supplier<EntityType<SeatEntity>>            SEAT              = BCRegistries.ENTITIES.registerEntityType("seat",              SeatEntity::new,            MobCategory.MISC, b -> b.sized(0, 0.875f).noSummon());
     // @formatter:on
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
-    static void init() {
-    }
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
+    static void init() {}
 }

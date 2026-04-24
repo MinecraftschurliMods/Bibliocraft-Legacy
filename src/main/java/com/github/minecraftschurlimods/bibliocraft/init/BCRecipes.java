@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.Supplier;
 
@@ -54,9 +55,7 @@ public interface BCRecipes {
         return () -> new RecipeSerializer<>(codec, streamCodec);
     }
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
-    static void init() {
-    }
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
+    static void init() {}
 }

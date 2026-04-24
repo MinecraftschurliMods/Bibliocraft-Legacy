@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.network.IContainerFactory;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.Supplier;
 
@@ -36,9 +37,8 @@ public interface BCMenus {
     private static <T extends AbstractContainerMenu> Supplier<MenuType<T>> register(String name, IContainerFactory<T> factory) {
         return BCRegistries.MENUS.register(name, () -> IMenuTypeExtension.create(factory));
     }
-    
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
+
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
     static void init() {}
 }

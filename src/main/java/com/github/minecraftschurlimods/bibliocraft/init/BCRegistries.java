@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.ApiStatus;
 
 public interface BCRegistries {
     // @formatter:off
@@ -30,19 +31,9 @@ public interface BCRegistries {
     DeferredRegister<SoundEvent>                         SOUND_EVENTS       = DeferredRegister.create(Registries.SOUND_EVENT,               BibliocraftApi.MOD_ID);
     // @formatter:on
 
-    /**
-     * Central registration method. Classloads the registration classes and registers the registries to the mod bus.
-     */
-    static void init(IEventBus bus) {
-        BCBlocks.init();
-        BCItems.init();
-        BCCreativeTabs.init();
-        BCDataComponents.init();
-        BCBlockEntities.init();
-        BCEntities.init();
-        BCMenus.init();
-        BCRecipes.init();
-        BCSoundEvents.init();
+    /// Registers the registries to the mod bus.
+    @ApiStatus.Internal
+    static void register(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
         CREATIVE_TABS.register(bus);
@@ -54,5 +45,19 @@ public interface BCRegistries {
         RECIPE_TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
         SOUND_EVENTS.register(bus);
+    }
+
+    /// Classloads the registration classes.
+    @ApiStatus.Internal
+    static void init() {
+        BCBlocks.init();
+        BCItems.init();
+        BCCreativeTabs.init();
+        BCDataComponents.init();
+        BCBlockEntities.init();
+        BCEntities.init();
+        BCMenus.init();
+        BCRecipes.init();
+        BCSoundEvents.init();
     }
 }

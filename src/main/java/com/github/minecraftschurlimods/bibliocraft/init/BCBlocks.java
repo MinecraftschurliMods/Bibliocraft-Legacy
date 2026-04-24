@@ -44,6 +44,7 @@ import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,8 +172,7 @@ public interface BCBlocks {
         return BlockBehaviour.Properties.ofFullCopy(base).sound(SoundType.LANTERN).lightLevel(state -> state.getValue(AbstractFancyLightBlock.LIT) ? lightLevel : 0).noOcclusion();
     }
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
     static void init() {}
 }

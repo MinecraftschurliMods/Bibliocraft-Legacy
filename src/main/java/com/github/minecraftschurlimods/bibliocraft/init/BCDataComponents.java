@@ -10,6 +10,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.Supplier;
 
@@ -36,8 +37,7 @@ public interface BCDataComponents {
         return BCRegistries.DATA_COMPONENTS.registerComponentType(name, b -> b.persistent(codec).networkSynchronized(streamCodec));
     }
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
     static void init() {}
 }

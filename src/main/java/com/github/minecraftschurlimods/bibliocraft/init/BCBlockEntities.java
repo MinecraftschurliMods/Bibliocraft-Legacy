@@ -22,6 +22,7 @@ import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collection;
 import java.util.List;
@@ -77,9 +78,7 @@ public interface BCBlockEntities {
         return register(name, supplier, List.of(blocks));
     }
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
-    static void init() {
-    }
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
+    static void init() {}
 }

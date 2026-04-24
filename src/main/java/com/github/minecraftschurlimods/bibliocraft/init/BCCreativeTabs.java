@@ -10,6 +10,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -105,9 +106,7 @@ public interface BCCreativeTabs {
         list.forEach(output::accept);
     }
 
-    /**
-     * Empty method, called by {@link BCRegistries#init(net.neoforged.bus.api.IEventBus)} to classload this class.
-     */
-    static void init() {
-    }
+    /// Empty method, called by [BCRegistries#init()] to classload this class.
+    @ApiStatus.Internal
+    static void init() {}
 }
