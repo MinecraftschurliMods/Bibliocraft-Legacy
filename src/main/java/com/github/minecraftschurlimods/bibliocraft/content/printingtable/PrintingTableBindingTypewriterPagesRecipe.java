@@ -16,6 +16,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.network.Filterable;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -40,7 +41,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
     private final Ingredient ingredient;
 
     public PrintingTableBindingTypewriterPagesRecipe(Ingredient ingredient, int duration, String group, boolean showNotification) {
-        super(new ItemStack(Items.WRITTEN_BOOK), duration, group, showNotification);
+        super(new ItemStackTemplate(Items.WRITTEN_BOOK), duration, group, showNotification);
         this.ingredient = ingredient;
     }
 
@@ -57,7 +58,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
 
     @Override
     public ItemStack assemble(PrintingTableRecipeInput input) {
-        ItemStack result = this.result.copy();
+        ItemStack result = this.result.create();
         List<Filterable<Component>> list = input
                 .left()
                 .stream()
@@ -108,7 +109,7 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
         private final Ingredient ingredient;
 
         public Builder(Ingredient ingredient, int duration) {
-            super(ItemStack.EMPTY, duration);
+            super(new ItemStackTemplate(Items.WRITTEN_BOOK), duration);
             this.ingredient = ingredient;
         }
 

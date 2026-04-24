@@ -12,6 +12,7 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCItems;
 import com.github.minecraftschurlimods.bibliocraft.init.BCTags;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -24,7 +25,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -48,9 +48,8 @@ public final class BCRecipeProvider extends RecipeProvider {
     protected void buildRecipes() {
         for (DyeColor color : DyeColor.values()) {
             String name = color.getSerializedName();
-            ItemStack swordPedestal = new ItemStack(BCItems.SWORD_PEDESTAL.get());
-            swordPedestal.set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor()));
-            shaped(RecipeCategory.DECORATIONS, ItemStackTemplate.fromNonEmptyStack(swordPedestal))
+            ItemStackTemplate swordPedestal = new ItemStackTemplate(BCItems.SWORD_PEDESTAL, DataComponentPatch.builder().set(DataComponents.DYED_COLOR, new DyedItemColor(color.getTextureDiffuseColor())).build());
+            shaped(RecipeCategory.DECORATIONS, swordPedestal)
                     .pattern(" S ")
                     .pattern("SWS")
                     .define('S', Items.SMOOTH_STONE_SLAB)
@@ -387,64 +386,64 @@ public final class BCRecipeProvider extends RecipeProvider {
                 .save(output);
         SpecialRecipeBuilder.special(BigBookCloningRecipe::new).save(output, "big_book_cloning");
         SpecialRecipeBuilder.special(TypewriterPageCloningRecipe::new).save(output, "typewriter_page_cloning");
-        new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.CLIPBOARD.get()), 100)
+        new PrintingTableCloningRecipe.Builder(new ItemStackTemplate(BCItems.CLIPBOARD.get()), 100)
                 .addDataComponentType(BCDataComponents.CLIPBOARD_CONTENT.get())
                 .addIngredient(Ingredient.of(BCItems.CLIPBOARD.get()))
                 .unlockedBy("has_clipboard", has(BCItems.CLIPBOARD.get()))
                 .save(output, recipeKey("clipboard_cloning_in_printing_table"));
-        new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.TYPEWRITER_PAGE.get()), 100)
+        new PrintingTableCloningRecipe.Builder(new ItemStackTemplate(BCItems.TYPEWRITER_PAGE.get()), 100)
                 .addDataComponentType(BCDataComponents.TYPEWRITER_PAGE.get())
                 .addIngredient(tag(BCTags.Items.TYPEWRITER_PAPER))
                 .unlockedBy("has_paper", has(BCTags.Items.TYPEWRITER_PAPER))
                 .save(output, recipeKey("typewriter_page_cloning_in_printing_table"));
-        new PrintingTableCloningRecipe.Builder(new ItemStack(Items.WRITABLE_BOOK), 100)
+        new PrintingTableCloningRecipe.Builder(new ItemStackTemplate(Items.WRITABLE_BOOK), 100)
                 .addDataComponentType(DataComponents.WRITABLE_BOOK_CONTENT)
                 .addIngredient(Ingredient.of(Items.WRITABLE_BOOK))
                 .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
                 .save(output, recipeKey("writable_book_cloning_in_printing_table"));
-        new PrintingTableCloningRecipe.Builder(new ItemStack(Items.WRITTEN_BOOK), 100)
+        new PrintingTableCloningRecipe.Builder(new ItemStackTemplate(Items.WRITTEN_BOOK), 100)
                 .addDataComponentType(DataComponents.WRITTEN_BOOK_CONTENT)
                 .addIngredient(Ingredient.of(Items.WRITABLE_BOOK))
                 .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
                 .save(output, recipeKey("written_book_cloning_in_printing_table"));
-        new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.BIG_BOOK.get()), 100)
+        new PrintingTableCloningRecipe.Builder(new ItemStackTemplate(BCItems.BIG_BOOK.get()), 100)
                 .addDataComponentType(BCDataComponents.BIG_BOOK_CONTENT.get())
                 .addIngredient(Ingredient.of(BCItems.BIG_BOOK.get()))
                 .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
                 .save(output, recipeKey("big_book_cloning_in_printing_table"));
-        new PrintingTableCloningRecipe.Builder(new ItemStack(BCItems.WRITTEN_BIG_BOOK.get()), 100)
+        new PrintingTableCloningRecipe.Builder(new ItemStackTemplate(BCItems.WRITTEN_BIG_BOOK.get()), 100)
                 .addDataComponentType(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get())
                 .addIngredient(Ingredient.of(BCItems.BIG_BOOK.get()))
                 .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
                 .save(output, recipeKey("written_big_book_cloning_in_printing_table"));
-        new PrintingTableCloningWithEnchantmentsRecipe.Builder(new ItemStack(Items.ENCHANTED_BOOK), 600)
+        new PrintingTableCloningWithEnchantmentsRecipe.Builder(new ItemStackTemplate(Items.ENCHANTED_BOOK), 600)
                 .addIngredient(Ingredient.of(Items.BOOK))
                 .experienceCost(new EnchantmentLevelsNumberProvider(DataComponents.STORED_ENCHANTMENTS, ConstantValue.exactly(1), ConstantValue.exactly(2)))
                 .unlockedBy("has_enchanted_book", has(Items.ENCHANTED_BOOK))
                 .save(output, recipeKey("enchanted_book_cloning_in_printing_table"));
-        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.CLIPBOARD.get()), new ItemStack(BCItems.CLIPBOARD.get()), 200)
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.CLIPBOARD.get()), new ItemStackTemplate(BCItems.CLIPBOARD.get()), 200)
                 .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "title", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "active", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .addMerger(BCDataComponents.CLIPBOARD_CONTENT.get(), "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
                 .unlockedBy("has_clipboard", has(BCItems.CLIPBOARD.get()))
                 .save(output, recipeKey("clipboard_merging"));
-        new PrintingTableMergingRecipe.Builder(Ingredient.of(Items.WRITABLE_BOOK), new ItemStack(Items.WRITABLE_BOOK), 200)
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(Items.WRITABLE_BOOK), new ItemStackTemplate(Items.WRITABLE_BOOK), 200)
                 .addMerger(DataComponents.WRITABLE_BOOK_CONTENT, "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
                 .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
                 .save(output, recipeKey("writable_book_merging"));
-        new PrintingTableMergingRecipe.Builder(Ingredient.of(Items.WRITABLE_BOOK), new ItemStack(Items.WRITTEN_BOOK), 200)
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(Items.WRITABLE_BOOK), new ItemStackTemplate(Items.WRITTEN_BOOK), 200)
                 .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "title", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "author", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "generation", PrintingTableMergingRecipe.MergeMethod.MIN)
                 .addMerger(DataComponents.WRITTEN_BOOK_CONTENT, "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
                 .unlockedBy("has_writable_book", has(Items.WRITABLE_BOOK))
                 .save(output, recipeKey("written_book_merging"));
-        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.BIG_BOOK.get()), new ItemStack(BCItems.BIG_BOOK.get()), 200)
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.BIG_BOOK.get()), new ItemStackTemplate(BCItems.BIG_BOOK.get()), 200)
                 .addMerger(BCDataComponents.BIG_BOOK_CONTENT.get(), "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
                 .addMerger(BCDataComponents.BIG_BOOK_CONTENT.get(), "current_page", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .unlockedBy("has_big_book", has(BCItems.BIG_BOOK.get()))
                 .save(output, recipeKey("big_book_merging"));
-        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.BIG_BOOK.get()), new ItemStack(BCItems.WRITTEN_BIG_BOOK.get()), 200)
+        new PrintingTableMergingRecipe.Builder(Ingredient.of(BCItems.BIG_BOOK.get()), new ItemStackTemplate(BCItems.WRITTEN_BIG_BOOK.get()), 200)
                 .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "pages", PrintingTableMergingRecipe.MergeMethod.APPEND)
                 .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "title", PrintingTableMergingRecipe.MergeMethod.FIRST)
                 .addMerger(BCDataComponents.WRITTEN_BIG_BOOK_CONTENT.get(), "author", PrintingTableMergingRecipe.MergeMethod.FIRST)

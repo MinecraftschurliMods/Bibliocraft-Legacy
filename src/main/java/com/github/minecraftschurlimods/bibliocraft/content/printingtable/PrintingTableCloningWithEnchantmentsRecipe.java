@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.context.ContextKeySet;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -35,7 +36,7 @@ import java.util.Optional;
 public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableCloningRecipe {
     public static final MapCodec<PrintingTableCloningWithEnchantmentsRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(e -> e.ingredients),
-            ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(e -> e.result),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
             Codec.STRING.optionalFieldOf("group", "").forGetter(e -> e.group),
             Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(e -> e.showNotification),
@@ -43,7 +44,7 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
     ).apply(inst, PrintingTableCloningWithEnchantmentsRecipe::new));
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableCloningWithEnchantmentsRecipe> STREAM_CODEC = StreamCodec.composite(
             Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), e -> e.ingredients,
-            ItemStack.STREAM_CODEC, e -> e.result,
+            ItemStackTemplate.STREAM_CODEC, e -> e.result,
             ByteBufCodecs.INT, e -> e.duration,
             ByteBufCodecs.STRING_UTF8, e -> e.group,
             ByteBufCodecs.BOOL, e -> e.showNotification,
@@ -51,7 +52,7 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
             PrintingTableCloningWithEnchantmentsRecipe::new);
     private final Optional<NumberProvider> experienceCost;
 
-    public PrintingTableCloningWithEnchantmentsRecipe(List<Ingredient> ingredients, ItemStack result, int duration, String group, boolean showNotification, Optional<NumberProvider> experienceCost) {
+    public PrintingTableCloningWithEnchantmentsRecipe(List<Ingredient> ingredients, ItemStackTemplate result, int duration, String group, boolean showNotification, Optional<NumberProvider> experienceCost) {
         super(List.of(DataComponents.STORED_ENCHANTMENTS), ingredients, result, duration, group, showNotification);
         this.experienceCost = experienceCost;
     }
@@ -86,7 +87,7 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
         private final List<Ingredient> ingredients = new ArrayList<>();
         private @Nullable NumberProvider experienceCost = null;
 
-        public Builder(ItemStack result, int duration) {
+        public Builder(ItemStackTemplate result, int duration) {
             super(result, duration);
         }
 

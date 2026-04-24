@@ -73,6 +73,8 @@ helper.withDataGenRuns {
     }
 }
 
+minecraft.idea.useArgsFile = false
+
 minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
 
 tasks.javadoc {

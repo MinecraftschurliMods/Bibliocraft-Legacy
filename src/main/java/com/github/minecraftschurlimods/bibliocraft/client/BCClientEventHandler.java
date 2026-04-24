@@ -1,5 +1,6 @@
 package com.github.minecraftschurlimods.bibliocraft.client;
 
+import com.github.minecraftschurlimods.bibliocraft.api.BibliocraftApi;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ClipboardBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.ClockBER;
 import com.github.minecraftschurlimods.bibliocraft.client.ber.CookieJarBER;
@@ -30,8 +31,10 @@ import com.github.minecraftschurlimods.bibliocraft.init.BCMenus;
 import com.github.minecraftschurlimods.bibliocraft.util.BCUtil;
 import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterBlockStateModels;
@@ -40,6 +43,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import java.util.List;
 
+@EventBusSubscriber(value = Dist.CLIENT, modid = BibliocraftApi.MOD_ID)
 public final class BCClientEventHandler {
     @SubscribeEvent
     private static void registerMenuScreens(RegisterMenuScreensEvent event) {

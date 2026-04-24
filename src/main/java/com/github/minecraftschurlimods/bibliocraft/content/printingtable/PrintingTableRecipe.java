@@ -13,6 +13,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -23,14 +24,15 @@ import org.jspecify.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeInput> {
-    protected final ItemStack result;
+    protected final ItemStackTemplate result;
     protected final int duration;
     protected final String group;
     protected final boolean showNotification;
 
-    public PrintingTableRecipe(ItemStack result, int duration, String group, boolean showNotification) {
+    public PrintingTableRecipe(ItemStackTemplate result, int duration, String group, boolean showNotification) {
         this.result = result;
         this.duration = duration;
         this.group = group;
@@ -63,7 +65,7 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     }
 
     public ItemStack getResultItem() {
-        return result.copy();
+        return result.create();
     }
 
     public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
@@ -104,13 +106,13 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     public abstract PrintingTableMode getMode();
 
     public static abstract class Builder implements RecipeBuilder {
-        protected final ItemStack result;
+        protected final ItemStackTemplate result;
         protected final int duration;
         protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
         protected String group = "";
         protected boolean showNotification = true;
 
-        public Builder(ItemStack result, int duration) {
+        public Builder(ItemStackTemplate result, int duration) {
             this.result = result;
             this.duration = duration;
         }
@@ -145,7 +147,7 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
 
         @Override
         public ResourceKey<Recipe<?>> defaultId() {
-            return RecipeBuilder.getDefaultRecipeId(result);
+            return RecipeBuilder.getDefaultRecipeId(Objects.requireNonNull(result, "A result stack is required to use a default id"));
         }
 
         public abstract PrintingTableRecipe build();

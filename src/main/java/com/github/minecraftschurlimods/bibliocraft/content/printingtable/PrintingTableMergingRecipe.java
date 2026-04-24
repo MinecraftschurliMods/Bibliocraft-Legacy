@@ -25,6 +25,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -48,7 +49,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     public static final MapCodec<PrintingTableMergingRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Merger.MAP_CODEC.fieldOf("component_mergers").forGetter(e -> e.mergers),
             Ingredient.CODEC.fieldOf("ingredient").forGetter(e -> e.ingredient),
-            ItemStack.CODEC.fieldOf("result").forGetter(e -> e.result),
+            ItemStackTemplate.CODEC.fieldOf("result").forGetter(e -> e.result),
             Codec.INT.fieldOf("duration").forGetter(e -> e.duration),
             Codec.STRING.optionalFieldOf("group", "").forGetter(e -> e.group),
             Codec.BOOL.optionalFieldOf("show_notification", true).forGetter(e -> e.showNotification)
@@ -56,7 +57,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     public static final StreamCodec<RegistryFriendlyByteBuf, PrintingTableMergingRecipe> STREAM_CODEC = StreamCodec.composite(
             Merger.MAP_STREAM_CODEC, e -> e.mergers,
             Ingredient.CONTENTS_STREAM_CODEC, e -> e.ingredient,
-            ItemStack.STREAM_CODEC, e -> e.result,
+            ItemStackTemplate.STREAM_CODEC, e -> e.result,
             ByteBufCodecs.INT, e -> e.duration,
             ByteBufCodecs.STRING_UTF8, e -> e.group,
             ByteBufCodecs.BOOL, e -> e.showNotification,
@@ -65,7 +66,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     private final Map<DataComponentType<?>, Merger<?>> mergers;
     private final Ingredient ingredient;
 
-    public PrintingTableMergingRecipe(Map<DataComponentType<?>, Merger<?>> mergers, Ingredient ingredient, ItemStack result, int duration, String group, boolean showNotification) {
+    public PrintingTableMergingRecipe(Map<DataComponentType<?>, Merger<?>> mergers, Ingredient ingredient, ItemStackTemplate result, int duration, String group, boolean showNotification) {
         super(result, duration, group, showNotification);
         this.mergers = mergers;
         this.ingredient = ingredient;
@@ -151,7 +152,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
 
     @Override
     public Pair<List<Ingredient>, Ingredient> getDisplayIngredients() {
-        Ingredient input = DataComponentIngredient.of(true, result.copy());
+        Ingredient input = DataComponentIngredient.of(true, result.create());
         return Pair.of(List.of(input, input), ingredient);
     }
 
@@ -165,7 +166,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         private final Map<DataComponentType<?>, Map<String, MergeMethod>> mergers = new HashMap<>();
         private final Ingredient ingredient;
 
-        public Builder(Ingredient ingredient, ItemStack result, int duration) {
+        public Builder(Ingredient ingredient, ItemStackTemplate result, int duration) {
             super(result, duration);
             this.ingredient = ingredient;
         }

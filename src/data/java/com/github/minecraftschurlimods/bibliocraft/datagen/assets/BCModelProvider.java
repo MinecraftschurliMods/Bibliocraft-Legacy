@@ -106,7 +106,7 @@ public class BCModelProvider extends ModelProvider {
             FANCY_COPPER_LANTERN.forEach((weatherState, template) -> template.builder(blockModels, color).build().copyTo(BCBlocks.FANCY_COPPER_LANTERN.getWaxed(weatherState).get(color)));
         }
         blockModels.registerSimpleFlatItemModel(BCBlocks.GOLD_CHAIN.asItem());
-        blockModels.createAxisAlignedPillarBlockCustomModel(BCBlocks.GOLD_CHAIN.get(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.updateTemplate(model -> model.extend().renderType(BCUtil.mcLoc("cutout")).build()).create(BCBlocks.GOLD_CHAIN.get(), blockModels.modelOutput)));
+        blockModels.createAxisAlignedPillarBlockCustomModel(BCBlocks.GOLD_CHAIN.get(), BlockModelGenerators.plainVariant(TexturedModel.CHAIN.create(BCBlocks.GOLD_CHAIN.get(), blockModels.modelOutput)));
         blockModels.createLantern(BCBlocks.GOLD_LANTERN.get());
         blockModels.createLantern(BCBlocks.GOLD_SOUL_LANTERN.get());
         builder(blockModels, BCBlocks.CLIPBOARD)
