@@ -1,0 +1,99 @@
+package at.minecraftschurli.mods.bibliocraft.init;
+
+import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.block.Block;
+
+public interface BCTags {
+    interface Blocks {
+        // @formatter:off
+        TagKey<Block> BOOKCASES               = tag("bookcases");
+        TagKey<Block> DISPLAY_CASES           = tag("display_cases");
+        TagKey<Block> FANCY_ARMOR_STANDS_WOOD = tag("fancy_armor_stands/wood");
+        TagKey<Block> FANCY_ARMOR_STANDS      = tag("fancy_armor_stands");
+        TagKey<Block> FANCY_CLOCKS            = tag("fancy_clocks");
+        TagKey<Block> FANCY_CRAFTERS          = tag("fancy_crafters");
+        TagKey<Block> FANCY_SIGNS             = tag("fancy_signs");
+        TagKey<Block> GRANDFATHER_CLOCKS      = tag("grandfather_clocks");
+        TagKey<Block> LABELS                  = tag("labels");
+        TagKey<Block> POTION_SHELVES          = tag("potion_shelves");
+        TagKey<Block> PRINTING_TABLES         = tag("printing_tables");
+        TagKey<Block> SEATS                   = tag("seats");
+        TagKey<Block> SEAT_BACKS              = tag("seat_backs");
+        TagKey<Block> SHELVES                 = tag("shelves");
+        TagKey<Block> TABLES                  = tag("tables");
+        TagKey<Block> TOOL_RACKS              = tag("tool_racks");
+        TagKey<Block> FANCY_LAMPS             = tag("fancy_lamps");
+        TagKey<Block> FANCY_LAMPS_GOLD        = tag("fancy_lamps/gold");
+        TagKey<Block> FANCY_LAMPS_IRON        = tag("fancy_lamps/iron");
+        TagKey<Block> FANCY_LAMPS_COPPER      = tag("fancy_lamps/copper");
+        TagKey<Block> FANCY_LANTERNS          = tag("fancy_lanterns");
+        TagKey<Block> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
+        TagKey<Block> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
+        TagKey<Block> FANCY_LANTERNS_COPPER   = tag("fancy_lanterns/copper");
+        TagKey<Block> TYPEWRITERS             = tag("typewriters"); 
+        // @formatter:on
+
+        /// @param name The path of the tag.
+        /// @return A [TagKey<Block>] with this mod's namespace and the given path.
+        static TagKey<Block> tag(String name) {
+            return TagKey.create(Registries.BLOCK, BCUtil.bcLoc(name));
+        }
+    }
+
+    interface Items {
+        // @formatter:off
+        TagKey<Item> BOOKCASES               = tag("bookcases");
+        TagKey<Item> DISPLAY_CASES           = tag("display_cases");
+        TagKey<Item> FANCY_ARMOR_STANDS_WOOD = tag("fancy_armor_stands/wood");
+        TagKey<Item> FANCY_ARMOR_STANDS      = tag("fancy_armor_stands");
+        TagKey<Item> FANCY_CLOCKS            = tag("fancy_clocks");
+        TagKey<Item> FANCY_CRAFTERS          = tag("fancy_crafters");
+        TagKey<Item> FANCY_SIGNS             = tag("fancy_signs");
+        TagKey<Item> GRANDFATHER_CLOCKS      = tag("grandfather_clocks");
+        TagKey<Item> LABELS                  = tag("labels");
+        TagKey<Item> POTION_SHELVES          = tag("potion_shelves");
+        TagKey<Item> PRINTING_TABLES         = tag("printing_tables");
+        TagKey<Item> SEATS                   = tag("seats");
+        TagKey<Item> SEAT_BACKS_SMALL        = tag("seat_backs/small");
+        TagKey<Item> SEAT_BACKS_RAISED       = tag("seat_backs/raised");
+        TagKey<Item> SEAT_BACKS_FLAT         = tag("seat_backs/flat");
+        TagKey<Item> SEAT_BACKS_TALL         = tag("seat_backs/tall");
+        TagKey<Item> SEAT_BACKS_FANCY        = tag("seat_backs/fancy");
+        TagKey<Item> SEAT_BACKS              = tag("seat_backs");
+        TagKey<Item> SHELVES                 = tag("shelves");
+        TagKey<Item> TABLES                  = tag("tables");
+        TagKey<Item> TOOL_RACKS              = tag("tool_racks");
+        TagKey<Item> FANCY_LAMPS             = tag("fancy_lamps");
+        TagKey<Item> FANCY_LAMPS_GOLD        = tag("fancy_lamps/gold");
+        TagKey<Item> FANCY_LAMPS_IRON        = tag("fancy_lamps/iron");
+        TagKey<Item> FANCY_LAMPS_COPPER      = tag("fancy_lamps/copper");
+        TagKey<Item> FANCY_LANTERNS          = tag("fancy_lanterns");
+        TagKey<Item> FANCY_LANTERNS_GOLD     = tag("fancy_lanterns/gold");
+        TagKey<Item> FANCY_LANTERNS_IRON     = tag("fancy_lanterns/iron");
+        TagKey<Item> FANCY_LANTERNS_COPPER   = tag("fancy_lanterns/copper");
+        TagKey<Item> TYPEWRITERS             = tag("typewriters");
+        TagKey<Item> BOOKCASE_BOOKS          = tag("bookcase_books");
+        TagKey<Item> COOKIE_JAR_COOKIES      = tag("cookie_jar_cookies");
+        TagKey<Item> DISC_RACK_DISCS         = tag("disc_rack_discs");
+        TagKey<Item> FANCY_SIGN_WAX          = tag("fancy_sign_wax");
+        TagKey<Item> POTION_SHELF_POTIONS    = tag("potion_shelf_potions");
+        TagKey<Item> SWORD_PEDESTAL_SWORDS   = tag("sword_pedestal_swords");
+        TagKey<Item> TOOL_RACK_TOOLS         = tag("tool_rack_tools");
+        TagKey<Item> TYPEWRITER_PAPER        = tag("typewriter_paper");
+        // @formatter:on
+
+        /// @param name The path of the tag.
+        /// @return A [TagKey<Item>] with this mod's namespace and the given path.
+        static TagKey<Item> tag(String name) {
+            return TagKey.create(Registries.ITEM, BCUtil.bcLoc(name));
+        }
+    }
+
+    interface Enchantments {
+        TagKey<Enchantment> PRINTING_TABLE_CLONING_BLACKLIST = TagKey.create(Registries.ENCHANTMENT, BCUtil.bcLoc("printing_table_cloning_blacklist"));
+    }
+}

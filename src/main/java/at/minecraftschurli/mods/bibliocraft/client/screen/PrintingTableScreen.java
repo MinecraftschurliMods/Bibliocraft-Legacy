@@ -1,0 +1,94 @@
+package at.minecraftschurli.mods.bibliocraft.client.screen;
+
+import at.minecraftschurli.mods.bibliocraft.client.widget.ExperienceBarButton;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableInputPacket;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableMenu;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableMode;
+import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
+import at.minecraftschurli.mods.bibliocraft.util.ClientUtil;
+import at.minecraftschurli.mods.bibliocraft.util.Translations;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import org.jetbrains.annotations.UnknownNullability;
+
+public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTableMenu> {
+    private static final Identifier BACKGROUND = BCUtil.bcLoc("textures/gui/printing_table.png");
+    private static final Identifier EXPERIENCE_BAR_BACKGROUND = BCUtil.bcLoc("experience_bar_background");
+    private static final Identifier EXPERIENCE_BAR_PROGRESS = BCUtil.bcLoc("experience_bar_progress");
+    private static final Identifier PROGRESS = BCUtil.bcLoc("printing_table_progress");
+    private @UnknownNullability Button modeButton;
+    private @UnknownNullability Button experienceBarButton;
+
+    public PrintingTableScreen(PrintingTableMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title, BACKGROUND);
+    }
+
+    @Override
+    protected void init() {
+        leftPos = (width - 192) / 2;
+        topPos = (height - 192) / 2;
+        PrintingTableBlockEntity blockEntity = menu.getBlockEntity();
+        modeButton = addRenderableWidget(Button.builder(Component.empty(), $ -> {
+            blockEntity.setMode(switch (blockEntity.getMode()) {
+                case BIND -> PrintingTableMode.CLONE;
+                case CLONE -> PrintingTableMode.MERGE;
+                case MERGE -> PrintingTableMode.BIND;
+            });
+            setModeButtonMessage();
+            experienceBarButton.visible = blockEntity.getMode() == PrintingTableMode.CLONE;
+            ClientPacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), blockEntity.getMode()));
+        }).bounds(leftPos + 81, topPos + 6, 82, 20).build());
+        setModeButtonMessage();
+        experienceBarButton = addRenderableWidget(new ExperienceBarButton(Translations.PRINTING_TABLE_ADD_EXPERIENCE, leftPos + 81, topPos + 65, 82, 5, EXPERIENCE_BAR_BACKGROUND, EXPERIENCE_BAR_PROGRESS,
+                () -> BCUtil.getLevelForExperience(blockEntity.getExperience()),
+                () -> {
+                    if (blockEntity.getExperienceCost() <= 0) return 0f;
+                    if (blockEntity.isExperienceFull()) return 1f;
+                    int experience = blockEntity.getExperience();
+                    int level = BCUtil.getLevelForExperience(experience);
+                    float experienceForLevel = BCUtil.getExperienceForLevel(level);
+                    float experienceForNextLevel = BCUtil.getExperienceForLevel(level + 1);
+                    return Mth.clamp((experience - experienceForLevel) / (experienceForNextLevel - experienceForLevel), 0, 1);
+                },
+                $ -> {
+                    if (blockEntity.isExperienceFull()) return;
+                    int experienceCost = blockEntity.getExperienceCost();
+                    LocalPlayer player = ClientUtil.getPlayer();
+                    int experienceToGive = player.isCreative() ? experienceCost : Math.min(player.totalExperience, experienceCost);
+                    if (experienceToGive > 0) {
+                        ClientPacketDistributor.sendToServer(new PrintingTableInputPacket(blockEntity.getBlockPos(), experienceToGive));
+                    }
+                }
+        ));
+        experienceBarButton.visible = blockEntity.getMode() == PrintingTableMode.CLONE;
+    }
+
+    @Override
+    public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractBackground(graphics, mouseX, mouseY, partialTick);
+        float progress = menu.getBlockEntity().getProgress();
+        int width = progress == 1f ? 0 : Mth.ceil(progress * 24);
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PROGRESS, 24, 16, 0, 0, leftPos + 110, topPos + 35, width, 16);
+    }
+
+    @Override
+    public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+        super.extractRenderState(graphics, mouseX, mouseY, partialTick);
+        int experienceCost = menu.getBlockEntity().getLevelCost();
+        if (experienceCost > 0) {
+            ClientUtil.renderXpText(experienceCost + "", graphics, leftPos + 122, topPos + 39);
+        }
+    }
+
+    private void setModeButtonMessage() {
+        modeButton.setMessage(Component.translatable(Translations.PRINTING_TABLE_MODE_KEY, Component.translatable(menu.getBlockEntity().getMode().getTranslationKey())));
+    }
+}

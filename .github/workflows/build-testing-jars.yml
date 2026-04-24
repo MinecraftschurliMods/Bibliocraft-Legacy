@@ -9,3 +9,5 @@ jobs:
     with:
       upload-artifacts: true
       release-type: dev
+      java-version: 25
+      run-datagen-task: 'runClientData'

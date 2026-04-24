@@ -1,0 +1,153 @@
+package at.minecraftschurli.mods.bibliocraft;
+
+import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
+import at.minecraftschurli.mods.bibliocraft.api.lockandkey.RegisterLockAndKeyBehaviorEvent;
+import at.minecraftschurli.mods.bibliocraft.api.woodtype.RegisterBibliocraftWoodTypesEvent;
+import at.minecraftschurli.mods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
+import at.minecraftschurli.mods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
+import at.minecraftschurli.mods.bibliocraft.content.bigbook.BigBookSignPacket;
+import at.minecraftschurli.mods.bibliocraft.content.bigbook.BigBookSyncPacket;
+import at.minecraftschurli.mods.bibliocraft.content.bigbook.SetBigBookPageInLecternPacket;
+import at.minecraftschurli.mods.bibliocraft.content.clipboard.ClipboardSyncPacket;
+import at.minecraftschurli.mods.bibliocraft.content.clock.ClockSyncPacket;
+import at.minecraftschurli.mods.bibliocraft.content.fancysign.FancySignSyncPacket;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableInputPacket;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableSetRecipePacket;
+import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableTankSyncPacket;
+import at.minecraftschurli.mods.bibliocraft.content.stockroomcatalog.StockroomCatalogListPacket;
+import at.minecraftschurli.mods.bibliocraft.content.stockroomcatalog.StockroomCatalogRequestListPacket;
+import at.minecraftschurli.mods.bibliocraft.content.stockroomcatalog.StockroomCatalogSyncPacket;
+import at.minecraftschurli.mods.bibliocraft.content.typewriter.TypewriterSyncPacket;
+import at.minecraftschurli.mods.bibliocraft.init.BCBlockEntities;
+import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
+import at.minecraftschurli.mods.bibliocraft.init.BCEntities;
+import at.minecraftschurli.mods.bibliocraft.init.BCRegistries;
+import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.util.lectern.LecternUtil;
+import at.minecraftschurli.mods.bibliocraft.util.lectern.OpenBookInLecternPacket;
+import at.minecraftschurli.mods.bibliocraft.util.lectern.TakeLecternBookPacket;
+import at.minecraftschurli.mods.bibliocraft.util.slot.ToggleableSlotSyncPacket;
+import net.minecraft.core.BlockPos;
+import net.minecraft.data.BlockFamilies;
+import net.minecraft.data.BlockFamily;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+
+@EventBusSubscriber(modid = BibliocraftApi.MOD_ID)
+public final class BCEventHandler {
+    @SubscribeEvent
+    private static void commonSetup(FMLCommonSetupEvent event) {
+        ((LockAndKeyBehaviorsImpl) BibliocraftApi.getLockAndKeyBehaviors()).register();
+    }
+
+    @SubscribeEvent
+    private static void preRegister(NewRegistryEvent event) {
+        ((BibliocraftWoodTypeRegistryImpl) BibliocraftApi.getWoodTypeRegistry()).register();
+        BCRegistries.init();
+    }
+
+    @SubscribeEvent
+    private static void entityAttributeCreation(EntityAttributeCreationEvent event) {
+        event.put(BCEntities.FANCY_ARMOR_STAND.get(), LivingEntity.createLivingAttributes().build());
+    }
+
+    // @formatter:off
+    @SubscribeEvent
+    private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.BOOKCASE.get(),          BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.COOKIE_JAR.get(),        BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.DINNER_PLATE.get(),      BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.DISC_RACK.get(),         BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.DISPLAY_CASE.get(),      BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.FANCY_ARMOR_STAND.get(), BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.FANCY_CRAFTER.get(),     BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.LABEL.get(),             BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.POTION_SHELF.get(),      BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.PRINTING_TABLE.get(),    BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.SHELF.get(),             BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.SWORD_PEDESTAL.get(),    BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.TABLE.get(),             BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.TOOL_RACK.get(),         BCBlockEntity::getItemCapability);
+        event.registerBlockEntity(Capabilities.Item.BLOCK, BCBlockEntities.TYPEWRITER.get(),        BCBlockEntity::getItemCapability);
+        event.registerBlock(Capabilities.Fluid.BLOCK, PrintingTableBlockEntity::getFluidCapability, BCBlocks.IRON_PRINTING_TABLE.get());
+    }
+
+    @SubscribeEvent
+    private static void registerPayloadHandlers(RegisterPayloadHandlersEvent event) {
+        event.registrar(BibliocraftApi.MOD_ID)
+            .playToServer(BigBookSignPacket.TYPE,                 BigBookSignPacket.STREAM_CODEC,                 BigBookSignPacket::handle)
+            .playToServer(BigBookSyncPacket.TYPE,                 BigBookSyncPacket.STREAM_CODEC,                 BigBookSyncPacket::handle)
+            .playToServer(ClipboardSyncPacket.TYPE,               ClipboardSyncPacket.STREAM_CODEC,               ClipboardSyncPacket::handle)
+            .playBidirectional(ClockSyncPacket.TYPE,              ClockSyncPacket.STREAM_CODEC,                   ClockSyncPacket::handle, ClockSyncPacket::handle)
+            .playToServer(FancySignSyncPacket.TYPE,               FancySignSyncPacket.STREAM_CODEC,               FancySignSyncPacket::handle)
+            .playToClient(OpenBookInLecternPacket.TYPE,           OpenBookInLecternPacket.STREAM_CODEC,           OpenBookInLecternPacket::handle)
+            .playToServer(PrintingTableInputPacket.TYPE,          PrintingTableInputPacket.STREAM_CODEC,          PrintingTableInputPacket::handle)
+            .playBidirectional(PrintingTableSetRecipePacket.TYPE, PrintingTableSetRecipePacket.STREAM_CODEC,      PrintingTableSetRecipePacket::handle, PrintingTableSetRecipePacket::handle)
+            .playToClient(PrintingTableTankSyncPacket.TYPE,       PrintingTableTankSyncPacket.STREAM_CODEC,       PrintingTableTankSyncPacket::handle)
+            .playToServer(SetBigBookPageInLecternPacket.TYPE,     SetBigBookPageInLecternPacket.STREAM_CODEC,     SetBigBookPageInLecternPacket::handle)
+            .playToServer(StockroomCatalogSyncPacket.TYPE,        StockroomCatalogSyncPacket.STREAM_CODEC,        StockroomCatalogSyncPacket::handle)
+            .playToServer(StockroomCatalogRequestListPacket.TYPE, StockroomCatalogRequestListPacket.STREAM_CODEC, StockroomCatalogRequestListPacket::handle)
+            .playToClient(StockroomCatalogListPacket.TYPE,        StockroomCatalogListPacket.STREAM_CODEC,        StockroomCatalogListPacket::handle)
+            .playToServer(TakeLecternBookPacket.TYPE,             TakeLecternBookPacket.STREAM_CODEC,             TakeLecternBookPacket::handle)
+            .playBidirectional(ToggleableSlotSyncPacket.TYPE,     ToggleableSlotSyncPacket.STREAM_CODEC,          ToggleableSlotSyncPacket::handle, ToggleableSlotSyncPacket::handle)
+            .playBidirectional(TypewriterSyncPacket.TYPE,         TypewriterSyncPacket.STREAM_CODEC,              TypewriterSyncPacket::handle, TypewriterSyncPacket::handle);
+    }
+
+    @SubscribeEvent
+    private static void registerLockAndKeyBehaviors(RegisterLockAndKeyBehaviorEvent event) {
+        event.register(BaseContainerBlockEntity.class, be -> be.lockKey, (be, lock) -> be.lockKey = lock,    BaseContainerBlockEntity::getDisplayName);
+        event.register(BeaconBlockEntity.class,        be -> be.lockKey, (be, lock) -> be.lockKey = lock,    BeaconBlockEntity::getDisplayName);
+        event.register(BCBlockEntity.class,            BCBlockEntity::getLockKey, BCBlockEntity::setLockKey, BCUtil::getNameForBE);
+    }
+
+    @SubscribeEvent
+    private static void registerBibliocraftWoodTypes(RegisterBibliocraftWoodTypesEvent event) {
+        registerVanilla(event, WoodType.OAK,      Blocks.OAK_PLANKS,      BlockFamilies.OAK_PLANKS);
+        registerVanilla(event, WoodType.SPRUCE,   Blocks.SPRUCE_PLANKS,   BlockFamilies.SPRUCE_PLANKS);
+        registerVanilla(event, WoodType.BIRCH,    Blocks.BIRCH_PLANKS,    BlockFamilies.BIRCH_PLANKS);
+        registerVanilla(event, WoodType.JUNGLE,   Blocks.JUNGLE_PLANKS,   BlockFamilies.JUNGLE_PLANKS);
+        registerVanilla(event, WoodType.ACACIA,   Blocks.ACACIA_PLANKS,   BlockFamilies.ACACIA_PLANKS);
+        registerVanilla(event, WoodType.DARK_OAK, Blocks.DARK_OAK_PLANKS, BlockFamilies.DARK_OAK_PLANKS);
+        registerVanilla(event, WoodType.CRIMSON,  Blocks.CRIMSON_PLANKS,  BlockFamilies.CRIMSON_PLANKS);
+        registerVanilla(event, WoodType.WARPED,   Blocks.WARPED_PLANKS,   BlockFamilies.WARPED_PLANKS);
+        registerVanilla(event, WoodType.MANGROVE, Blocks.MANGROVE_PLANKS, BlockFamilies.MANGROVE_PLANKS);
+        registerVanilla(event, WoodType.BAMBOO,   Blocks.BAMBOO_PLANKS,   BlockFamilies.BAMBOO_PLANKS);
+        registerVanilla(event, WoodType.CHERRY,   Blocks.CHERRY_PLANKS,   BlockFamilies.CHERRY_PLANKS);
+        registerVanilla(event, WoodType.PALE_OAK, Blocks.PALE_OAK_PLANKS, BlockFamilies.PALE_OAK_PLANKS);
+    }
+    // @formatter:on
+
+    @SubscribeEvent
+    private static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        Level level = event.getLevel();
+        BlockPos pos = event.getPos();
+        if (level.getBlockEntity(pos) instanceof LecternBlockEntity lectern && LecternUtil.handleLecternUse(level, pos, level.getBlockState(pos), lectern, event.getEntity(), event.getHand())) {
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCanceled(true);
+        }
+    }
+
+    /// Private helper for registering the vanilla variants.
+    private static void registerVanilla(RegisterBibliocraftWoodTypesEvent event, WoodType woodType, Block planks, BlockFamily family) {
+        event.register(BCUtil.mcLoc(woodType.name()), woodType, () -> BlockBehaviour.Properties.ofFullCopy(planks), BCUtil.mcLoc("block/" + woodType.name() + "_planks"), () -> family);
+    }
+}
