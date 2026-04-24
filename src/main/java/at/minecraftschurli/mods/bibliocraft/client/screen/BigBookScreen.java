@@ -51,8 +51,10 @@ public class BigBookScreen extends Screen {
     private static final int TEXT_HEIGHT = 204;
     private final ItemStack stack;
     private final Player player;
-    private final @Nullable InteractionHand hand;
-    private final @Nullable BlockPos lectern;
+    @Nullable
+    private final InteractionHand hand;
+    @Nullable
+    private final BlockPos lectern;
     private final boolean writable;
     private final List<List<FormattedLine>> pages;
     private int currentPage;

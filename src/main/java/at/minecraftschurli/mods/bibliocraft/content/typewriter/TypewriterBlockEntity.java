@@ -55,7 +55,8 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     }
 
     @Override
-    public @Nullable ResourceHandler<ItemResource> getItemCapability(@Nullable Direction side) {
+    @Nullable
+    public ResourceHandler<ItemResource> getItemCapability(@Nullable Direction side) {
         return side == null ? null : wrappers.get(side);
     }
 

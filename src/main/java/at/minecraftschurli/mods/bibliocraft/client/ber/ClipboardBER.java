@@ -28,7 +28,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.UnknownNullability;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 import org.jspecify.annotations.Nullable;
@@ -91,7 +90,7 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPosition, breakProgress);
         ClipboardContent content = blockEntity.getContent();
         state.title = content.title();
-        state.lines = new ArrayList<>();
+        state.lines.clear();
         ClipboardContent.Page page = content.pages().get(content.active());
         for (int i = 0; i < ClipboardContent.MAX_LINES; i++) {
             state.lines.add(new State.Line(page.checkboxes().get(i), page.lines().get(i)));
@@ -121,8 +120,8 @@ public class ClipboardBER implements BlockEntityRenderer<ClipboardBlockEntity, C
     }
 
     public static class State extends BlockEntityRenderState {
-        public @UnknownNullability List<Line> lines;
-        public @UnknownNullability String title;
+        public List<Line> lines = new ArrayList<>();
+        public String title = "";
 
         public record Line(CheckboxState state, String text) {}
     }

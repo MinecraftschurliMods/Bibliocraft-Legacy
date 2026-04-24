@@ -65,7 +65,8 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         }
     };
     private int craftingTicksRemaining = MAX_CRAFTING_TICKS;
-    private @Nullable RecipeHolder<CraftingRecipe> recipe;
+    @Nullable
+    private RecipeHolder<CraftingRecipe> recipe;
 
     public FancyCrafterBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.FANCY_CRAFTER.get(), CRAFTING_SLOTS + CRAFTING_RESULT_SLOTS + STORAGE_SLOTS, defaultName("fancy_crafter"), pos, state);

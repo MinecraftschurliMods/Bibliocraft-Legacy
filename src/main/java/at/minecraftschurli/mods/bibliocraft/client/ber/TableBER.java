@@ -82,7 +82,8 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.
     }
 
     public static class TableRenderState extends SingleItemContainerRenderState {
-        private @Nullable MapRenderState map;
+        @Nullable
+        private MapRenderState map;
         private boolean isMap;
 
         public void fill(BCBlockEntity blockEntity, ItemDisplayContext displayContext, ItemModelResolver itemModelResolver, MapRenderer mapRenderer) {

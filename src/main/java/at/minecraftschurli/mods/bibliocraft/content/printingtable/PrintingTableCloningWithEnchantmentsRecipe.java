@@ -85,7 +85,8 @@ public class PrintingTableCloningWithEnchantmentsRecipe extends PrintingTableClo
 
     public static class Builder extends PrintingTableRecipe.Builder {
         private final List<Ingredient> ingredients = new ArrayList<>();
-        private @Nullable NumberProvider experienceCost = null;
+        @Nullable
+        private NumberProvider experienceCost = null;
 
         public Builder(ItemStackTemplate result, int duration) {
             super(result, duration);

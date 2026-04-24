@@ -228,7 +228,8 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
         }
 
         @Contract("!null, !null, _ -> !null")
-        private @Nullable JsonElement mergeJson(@Nullable JsonElement left, @Nullable JsonElement right, String path) {
+        @Nullable
+        private JsonElement mergeJson(@Nullable JsonElement left, @Nullable JsonElement right, String path) {
             if (left == null) return right;
             if (right == null) return left;
             MergeMethod mergeMethod = mergers.get(path);

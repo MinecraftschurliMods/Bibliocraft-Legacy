@@ -21,7 +21,8 @@ import org.jspecify.annotations.Nullable;
 public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuProvider, Nameable {
     private static final String NAME_KEY = "CustomName";
     private final Component defaultName;
-    private @Nullable Component name;
+    @Nullable
+    private Component name;
 
     /// @param type          The [BlockEntityType] to use.
     /// @param containerSize The size of the container.

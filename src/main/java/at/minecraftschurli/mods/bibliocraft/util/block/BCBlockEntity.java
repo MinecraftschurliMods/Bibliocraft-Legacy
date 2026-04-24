@@ -172,7 +172,8 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
         return saveCustomOnly(registries);
     }
 
-    public @Nullable ResourceHandler<ItemResource> getItemCapability(@Nullable Direction side) {
+    @Nullable
+    public ResourceHandler<ItemResource> getItemCapability(@Nullable Direction side) {
         return capability;
     }
 

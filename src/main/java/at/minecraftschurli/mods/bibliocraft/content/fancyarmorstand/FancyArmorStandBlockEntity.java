@@ -14,7 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
 public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
-    private @Nullable FancyArmorStandEntity entity;
+    @Nullable
+    private FancyArmorStandEntity entity;
 
     public FancyArmorStandBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.FANCY_ARMOR_STAND.get(), 4, defaultName("fancy_armor_stand"), pos, state);

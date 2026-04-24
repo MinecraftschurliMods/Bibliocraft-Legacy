@@ -45,13 +45,16 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private final PrintingTableTank tank;
     private final Direction[] directions;
     private final boolean[] disabledSlots = new boolean[9];
-    private @Nullable PrintingTableRecipe recipe;
-    private @Nullable PrintingTableRecipeInput recipeInput;
+    @Nullable
+    private PrintingTableRecipe recipe;
+    @Nullable
+    private PrintingTableRecipeInput recipeInput;
     private PrintingTableMode mode = PrintingTableMode.BIND;
     private int levelCost = 0;
     private int duration = 0;
     private int maxDuration = 0;
-    private @Nullable Component playerName = null;
+    @Nullable
+    private Component playerName = null;
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.PRINTING_TABLE.get(), 11, defaultName("printing_table"), pos, state);
@@ -176,7 +179,8 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         setChanged();
     }
 
-    public @Nullable Component getPlayerName() {
+    @Nullable
+    public Component getPlayerName() {
         return playerName;
     }
 

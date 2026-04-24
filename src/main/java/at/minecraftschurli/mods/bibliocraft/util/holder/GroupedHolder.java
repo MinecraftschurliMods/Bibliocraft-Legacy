@@ -66,11 +66,13 @@ public class GroupedHolder<K, R, T extends R> implements GroupingDeferredHolder<
         return map.values().stream().map(DeferredHolder::getId).toList();
     }
 
-    public @Unmodifiable Collection<K> keys() {
+    @Unmodifiable
+    public Collection<K> keys() {
         return Collections.unmodifiableSet(map.keySet());
     }
 
-    public @Unmodifiable Map<K, DeferredHolder<R, T>> map() {
+    @Unmodifiable
+    public Map<K, DeferredHolder<R, T>> map() {
         return Collections.unmodifiableMap(map);
     }
 
@@ -165,7 +167,8 @@ public class GroupedHolder<K, R, T extends R> implements GroupingDeferredHolder<
             return group(key).keys();
         }
 
-        public @Unmodifiable Map<K1, GroupedHolder<K2, R, T>> map() {
+        @Unmodifiable
+        public Map<K1, GroupedHolder<K2, R, T>> map() {
             return Collections.unmodifiableMap(map);
         }
     }

@@ -58,7 +58,8 @@ public class FancyArmorStandBER implements BlockEntityRenderer<FancyArmorStandBl
     }
 
     public static class State extends BlockEntityRenderState {
-        public @Nullable EntityRenderState entity;
+        @Nullable
+        public EntityRenderState entity;
         public float rotation;
     }
 }

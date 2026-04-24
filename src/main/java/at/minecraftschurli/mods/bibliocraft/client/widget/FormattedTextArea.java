@@ -34,7 +34,8 @@ public class FormattedTextArea extends AbstractWidget {
     private int cursorY = 0;
     private int highlightX = 0;
     private long focusedTimestamp = Util.getMillis();
-    private @Nullable Consumer<FormattedLine> onLineChange;
+    @Nullable
+    private Consumer<FormattedLine> onLineChange;
 
     public FormattedTextArea(int x, int y, int width, int height, List<FormattedLine> lines) {
         super(x, y, width, height, Translations.FANCY_TEXT_AREA_NARRATION);

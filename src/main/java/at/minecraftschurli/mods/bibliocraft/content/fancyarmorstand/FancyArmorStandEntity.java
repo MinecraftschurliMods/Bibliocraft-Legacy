@@ -12,7 +12,8 @@ import org.jspecify.annotations.Nullable;
 
 /// Helper entity for rendering the contents of a [FancyArmorStandBlockEntity]. Defers item querying and rotations to the block entity.
 public class FancyArmorStandEntity extends ArmorStand {
-    private @Nullable FancyArmorStandBlockEntity blockEntity;
+    @Nullable
+    private FancyArmorStandBlockEntity blockEntity;
 
     public FancyArmorStandEntity(EntityType<? extends ArmorStand> entityType, Level level) {
         super(entityType, level);

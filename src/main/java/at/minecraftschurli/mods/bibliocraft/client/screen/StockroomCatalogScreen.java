@@ -58,8 +58,10 @@ public class StockroomCatalogScreen extends Screen {
     private static final int PARTICLE_COUNT = 16;
     private final ItemStack stack;
     private final Player player;
-    private final @Nullable InteractionHand hand;
-    private final @Nullable BlockPos lectern;
+    @Nullable
+    private final InteractionHand hand;
+    @Nullable
+    private final BlockPos lectern;
     private final RandomSource random = RandomSource.create();
     private final List<Button> removeButtons = new ArrayList<>();
     private final List<Button> locateButtons = new ArrayList<>();

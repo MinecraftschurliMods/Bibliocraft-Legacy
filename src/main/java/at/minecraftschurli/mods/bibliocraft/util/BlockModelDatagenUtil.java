@@ -345,11 +345,15 @@ public final class BlockModelDatagenUtil {
     public static class ModelBuilder {
         private final BlockModelGenerators generators;
         private final Block block;
-        private final @Nullable String nameOverride;
+        @Nullable
+        private final String nameOverride;
         private boolean generateItemModel = false;
-        private @Nullable Identifier itemModelLocation;
-        private @Nullable Function<Block, MultiVariantGenerator> variantGeneratorFunction;
-        private @Nullable PropertyDispatch<MultiVariant> dispatchMap;
+        @Nullable
+        private Identifier itemModelLocation;
+        @Nullable
+        private Function<Block, MultiVariantGenerator> variantGeneratorFunction;
+        @Nullable
+        private PropertyDispatch<MultiVariant> dispatchMap;
         private Function<Identifier, MultiVariant> variantFunction = BlockModelGenerators::plainVariant;
 
         private ModelBuilder(BlockModelGenerators generators, Block block, @Nullable String nameOverride) {
