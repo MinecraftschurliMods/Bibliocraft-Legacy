@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "bibliocraft:block/clipboard"
+    "model": "bibliocraft:item/clipboard"
   }
 }

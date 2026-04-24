@@ -10,7 +10,7 @@ import org.jspecify.annotations.Nullable;
 
 public class DiscRackItem extends BlockItem {
     public DiscRackItem(Properties properties) {
-        super(BCBlocks.DISC_RACK.get(), properties);
+        super(BCBlocks.DISC_RACK.get(), properties.useBlockDescriptionPrefix());
     }
 
     @Override

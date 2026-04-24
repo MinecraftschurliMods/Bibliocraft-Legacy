@@ -63,6 +63,7 @@ public class BCModelProvider extends ModelProvider {
     private void registerItemModels(ItemModelGenerators itemModels) {
         itemModels.generateFlatItem(BCItems.BIG_BOOK.get(), ModelTemplates.FLAT_ITEM);
         itemModels.itemModelOutput.copy(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get());
+        itemModels.generateFlatItem(BCItems.CLIPBOARD.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(BCItems.LOCK_AND_KEY.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(BCItems.PLUMB_LINE.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(BCItems.STOCKROOM_CATALOG.get(), ModelTemplates.FLAT_ITEM);
@@ -112,7 +113,6 @@ public class BCModelProvider extends ModelProvider {
         builder(blockModels, BCBlocks.CLIPBOARD)
                 .withDefaultExistingModel()
                 .withHorizontalRotation()
-                .withItemModel()
                 .withUVLock()
                 .build();
         builder(blockModels, BCBlocks.DESK_BELL)
