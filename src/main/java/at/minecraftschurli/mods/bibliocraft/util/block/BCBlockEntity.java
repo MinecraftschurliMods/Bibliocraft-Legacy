@@ -97,7 +97,6 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
         return this.itemHandler.isEmpty(index);
     }
 
-    @Deprecated
     public ItemStack getItem(int index) {
         return this.itemHandler.getResource(index).toStack(this.itemHandler.getAmountAsInt(index));
     }

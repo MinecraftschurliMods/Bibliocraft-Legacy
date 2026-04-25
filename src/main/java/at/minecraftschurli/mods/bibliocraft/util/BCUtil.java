@@ -266,16 +266,8 @@ public final class BCUtil {
     /// @param pos       The [BlockPos] the insertion takes place at.
     /// @param direction The [Direction] from which the insertion happens.
     /// @param stack     The [ItemStack] to be inserted.
-    /// @param source    The source of the insertion. May be null.
+    /// @param source    The source of the insertion.
     public static void tryInsert(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable BCBlockEntity source) {
-        ResourceHandler<ItemResource> handler = getItemHandler(level, pos, direction);
-        if (handler == null || ResourceHandlerUtil.isFull(handler)) return;
-        try (Transaction transaction = Transaction.openRoot()) {
-            if (handler.insert(ItemResource.of(stack), 1, transaction) == 1) {
-                transaction.commit();
-                stack.shrink(1);
-            }
-        }
     }
 
     /// Swap the given item stack with the contents of the given slot in the given {@link BCItemHandler},

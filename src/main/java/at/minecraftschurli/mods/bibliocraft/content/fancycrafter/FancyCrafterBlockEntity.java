@@ -27,7 +27,9 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     private static final String CRAFTING_TICKS_REMAINING_KEY = "crafting_ticks_remaining";
     private static final String DISABLED_SLOTS_KEY = "disabled_slots";
     private static final IntList INPUTS = IntList.of(IntStream.range(0, 18).filter(i -> i != 9).toArray());
-    private static final IntList OUTPUTS = IntList.of(9);
+    private static final IntList OUTPUTS = IntList.of();
     private static final int WIDTH = 3;
     private static final int HEIGHT = 3;
     static final int SLOT_DISABLED = 1;
@@ -161,44 +163,53 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         CraftingInput input = CraftingInput.ofPositioned(WIDTH, HEIGHT, blockEntity.getContents()).input();
         ItemStack result = recipe.assemble(input);
         ItemStack resultStack = blockEntity.getItem(CRAFTING_RESULT_SLOT_INDEX);
-        if (!resultStack.isEmpty() && !ItemStack.isSameItemSameComponents(result, resultStack))
-            return;
+        if (!resultStack.isEmpty() && !ItemStack.isSameItemSameComponents(result, resultStack)) return;
         blockEntity.craftingTicksRemaining--;
         if (blockEntity.craftingTicksRemaining > 0) return;
         result.onCraftedBySystem(level);
-        ItemStack dispensed = blockEntity.tryDispense(level, pos, result, state);
-        if (blockEntity.isSlotDisabled(CRAFTING_RESULT_SLOT_INDEX)) {
-            blockEntity.setSlotDisabled(CRAFTING_RESULT_SLOT_INDEX, false);
-        }
-        blockEntity.getItemHandler().set(CRAFTING_RESULT_SLOT_INDEX, ItemResource.of(dispensed), dispensed.count());
-        blockEntity.calculateRecipe();
-        blockEntity.craftingTicksRemaining = MAX_CRAFTING_TICKS;
-        recipe.getRemainingItems(input)
-                .stream()
-                .filter(e -> !e.isEmpty())
-                .forEach(e -> blockEntity.tryDispense(level, pos, e, state));
-        List<ItemStack> inputs = new ArrayList<>(input.items()
-                .stream()
-                .filter(e -> !e.isEmpty())
-                .toList());
-        // for loop instead of stream chain to prevent CME
-        for (int i = CRAFTING_SLOTS + CRAFTING_RESULT_SLOTS; i < blockEntity.getContainerSize(); i++) {
-            ItemStack stack = blockEntity.getItem(i);
-            if (stack.isEmpty()) continue;
-            List<ItemStack> toRemove = new ArrayList<>();
-            for (ItemStack e : inputs) {
-                if (!ItemStack.isSameItemSameComponents(e, stack) || e.getCount() >= e.getMaxStackSize()) continue;
-                e.grow(1);
-                toRemove.add(e);
-                stack.shrink(1);
+        try (Transaction transaction = Transaction.openRoot()) {
+            ItemStack dispensed = blockEntity.tryDispense(level, pos, result, state, transaction);
+            if (dispensed.isEmpty()) {
+                blockEntity.craftingTicksRemaining = MAX_CRAFTING_TICKS;
+                recipe.getRemainingItems(input)
+                    .stream()
+                    .filter(e -> !e.isEmpty())
+                    .forEach(e -> blockEntity.tryDispense(level, pos, e, state, transaction));
+                List<ItemStack> inputs = new ArrayList<>(input.items()
+                    .stream()
+                    .filter(e -> !e.isEmpty())
+                    .toList());
+                // for loop instead of stream chain to prevent CME
+                for (int i = CRAFTING_SLOTS + CRAFTING_RESULT_SLOTS; i < blockEntity.getContainerSize(); i++) {
+                    ItemStack stack = blockEntity.getItem(i);
+                    if (stack.isEmpty()) continue;
+                    List<ItemStack> toRemove = new ArrayList<>();
+                    for (ItemStack e : inputs) {
+                        if (!ItemStack.isSameItemSameComponents(e, stack) || e.getCount() >= e.getMaxStackSize()) continue;
+                        e.grow(1);
+                        toRemove.add(e);
+                        stack.shrink(1);
+                    }
+                    toRemove.forEach(inputs::remove);
+                }
+                input.items()
+                    .stream()
+                    .filter(e -> !e.isEmpty())
+                    .forEach(e -> e.shrink(1));
+                transaction.commit();
             }
-            toRemove.forEach(inputs::remove);
         }
-        input.items()
-                .stream()
-                .filter(e -> !e.isEmpty())
-                .forEach(e -> e.shrink(1));
+        blockEntity.calculateRecipe();
         blockEntity.setChanged();
+    }
+
+    public void setSlot(int slot, ItemStack stack) {
+        if (isSlotDisabled(slot)) {
+            setSlotDisabled(slot, false);
+        }
+        if (slot != CRAFTING_RESULT_SLOT_INDEX) {
+            calculateRecipe();
+        }
     }
 
     private boolean smallerStackExists(int currentSize, ItemStack stack, int slot) {
@@ -210,10 +221,20 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
         return false;
     }
 
-    private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state) {
+    private ItemStack tryDispense(Level level, BlockPos pos, ItemStack stack, BlockState state, Transaction parent) {
+        if (level.isClientSide()) return stack;
         Direction direction = state.getValue(FancyCrafterBlock.FACING);
-        BCUtil.tryInsert(level, pos.relative(direction), direction.getOpposite(), stack, this);
-        if (!stack.isEmpty() && !level.isClientSide() && level.getBlockState(pos.above()).getCollisionShape(level, pos.above()).isEmpty()) {
+        ResourceHandler<ItemResource> handler = BCUtil.getItemHandler(level, pos.relative(direction), direction.getOpposite());
+        if (handler != null && !ResourceHandlerUtil.isFull(handler)) {
+            try (Transaction transaction = Transaction.open(parent)) {
+                if (handler.insert(ItemResource.of(stack), 1, transaction) == 1) {
+                    transaction.commit();
+                    stack.shrink(1);
+                }
+            }
+            return stack;
+        }
+        if (!stack.isEmpty() && level.getBlockState(pos.above()).getCollisionShape(level, pos.above()).isEmpty()) {
             Vec3 vec3 = Vec3.atCenterOf(pos.above());
             ItemEntity entity = new ItemEntity(level, vec3.x(), vec3.y(), vec3.z(), stack);
             level.addFreshEntity(entity);

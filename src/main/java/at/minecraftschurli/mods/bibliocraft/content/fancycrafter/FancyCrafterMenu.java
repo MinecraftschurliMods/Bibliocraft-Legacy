@@ -34,7 +34,14 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
         BCItemHandler itemHandler = getItemHandler();
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
-                addSlot(new ToggleableSlot(itemHandler, this::isSlotDisabled, x + y * 3, 30 + x * 18, 17 + y * 18));
+                int slot = x + y * 3;
+                addSlot(new ToggleableSlot(itemHandler, this::isSlotDisabled, slot, 30 + x * 18, 17 + y * 18) {
+                    @Override
+                    protected void setStackCopy(ItemStack stack) {
+                        super.setStackCopy(stack);
+                        blockEntity.setSlot(slot, stack);
+                    }
+                });
             }
         }
         addSlot(new ResultSlot(itemHandler, FancyCrafterBlockEntity.CRAFTING_RESULT_SLOT_INDEX, 124, 35));
