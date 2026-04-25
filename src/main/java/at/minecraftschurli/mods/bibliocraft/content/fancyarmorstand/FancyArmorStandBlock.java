@@ -4,7 +4,6 @@ import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.ShapeUtil;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCFacingInteractibleBlock;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -40,8 +39,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jspecify.annotations.Nullable;
 
 public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
@@ -143,13 +140,14 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
-            if (slot != -1 && trySwapArmor(player.getItemBySlot(switch (3 - slot) {
+            ItemStack itemBySlot = player.getItemBySlot(switch (3 - slot) {
                 case 0 -> EquipmentSlot.FEET;
                 case 1 -> EquipmentSlot.LEGS;
                 case 2 -> EquipmentSlot.CHEST;
                 case 3 -> EquipmentSlot.HEAD;
                 default -> throw new IllegalStateException("Invalid slot index: " + slot);
-            }), slot, 39 - slot, state, level, pos, player))
+            });
+            if (slot != -1 && trySwapArmor(itemBySlot, slot, 39 - slot, state, level, pos, player))
                 return InteractionResult.SUCCESS;
         }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
@@ -162,8 +160,10 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
             int slot = lookingAtSlot(state, hit);
-            if (slot != -1 && trySwapArmor(stack, slot, hand == InteractionHand.MAIN_HAND ? player.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND, state, level, pos, player))
+            int playerSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND;
+            if (slot != -1 && trySwapArmor(stack, slot, playerSlot, state, level, pos, player)) {
                 return InteractionResult.SUCCESS;
+            }
         }
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();
@@ -218,15 +218,11 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof BCBlockEntity bcbe)) return false;
-        BCItemHandler itemHandler = bcbe.getItemHandler();
-        ItemResource resource = ItemResource.of(stack);
-        ItemResource slotResource = itemHandler.getResource(slot);
-        if (!itemHandler.isValid(slot, resource)) return false;
-        itemHandler.set(slot, resource, itemHandler.getAmountAsInt(slot));
-        player.getInventory().setItem(playerSlot, slotResource.toStack());
-        if (slotResource.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {
-            level.playSound(null, player, equipable.equipSound().value(), SoundSource.PLAYERS, 1, 1);
-        }
-        return true;
+        return BCUtil.swapItem(stack, s -> {
+            player.getInventory().setItem(playerSlot, s);
+            if (s.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {
+                level.playSound(null, player, equipable.equipSound().value(), SoundSource.PLAYERS, 1, 1);
+            }
+        }, bcbe.getItemHandler(), slot);
     }
 }

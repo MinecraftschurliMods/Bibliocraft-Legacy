@@ -46,6 +46,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private static final int SLOT_ENABLED = 0;
     private static final IntList INPUTS = IntList.of(IntStream.range(0, 10).toArray());
     private static final IntList OUTPUTS = IntList.of(10);
+    public static final String TANK_KEY = "tank";
     private final ResourceHandler<ItemResource> inputItemHandler;
     private final ResourceHandler<ItemResource> outputItemHandler;
     private final PrintingTableTank tank;
@@ -96,10 +97,10 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        input.read(MODE_KEY, PrintingTableMode.CODEC).ifPresent(this::setMode);
+        input.read(MODE_KEY, PrintingTableMode.CODEC).ifPresent(mode -> this.mode = mode);
         duration = input.getIntOr(DURATION_KEY, 0);
         input.read(PLAYER_NAME_KEY, ComponentSerialization.CODEC).ifPresent(this::setPlayerName);
-        tank.deserialize(input);
+        input.child(TANK_KEY).ifPresent(tank::deserialize);
         int[] tagSlots = input.getIntArray(DISABLED_SLOTS_KEY).orElse(new int[9]);
         for (int i = 0; i < 9; i++) {
             disabledSlots[i] = canDisableSlot(i) && tagSlots[i] == SLOT_DISABLED;
@@ -114,7 +115,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         if (playerName != null) {
             output.store(PLAYER_NAME_KEY, ComponentSerialization.CODEC, playerName);
         }
-        tank.serialize(output);
+        tank.serialize(output.child(TANK_KEY));
         int[] tagSlots = new int[9];
         for (int i = 0; i < 9; i++) {
             tagSlots[i] = disabledSlots[i] ? SLOT_DISABLED : SLOT_ENABLED;
@@ -142,7 +143,7 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     @Override
     public boolean canDisableSlot(int slot) {
-        return isCraftingSlot(slot) && getItem(slot).isEmpty();
+        return isCraftingSlot(slot) && isEmpty(slot);
     }
 
     @Override

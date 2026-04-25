@@ -12,8 +12,6 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 /// Abstract superclass for rotatable entity blocks that have in-world interactions.
 public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
@@ -34,22 +32,19 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
         if (!canAccessFromDirection(state, hit.getDirection()))
             return super.useItemOn(stack, state, level, pos, player, hand, hit);
         int slot = lookingAtSlot(state, hit);
-        if (slot != -1) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof BCBlockEntity bcbe) {
-                if (!bcbe.getLockKey().canUnlock(player)) {
-                    BaseContainerBlockEntity.sendChestLockedNotifications(pos.getCenter(), player, BCUtil.getNameAtPos(level, pos));
-                    return InteractionResult.CONSUME;
-                }
-                BCItemHandler itemHandler = bcbe.getItemHandler();
-                ItemResource resource = ItemResource.of(stack);
-                ItemResource slotResource = itemHandler.getResource(slot);
-                if (resource.isEmpty() || itemHandler.isValid(slot, resource)) {
-                    itemHandler.set(slot, resource, itemHandler.getAmountAsInt(slot));
-                    player.setItemInHand(hand, slotResource.toStack());
-                    return InteractionResult.SUCCESS;
-                }
-            }
+        if (slot == -1) {
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
+        }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof BCBlockEntity bcbe)) {
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
+        }
+        if (!bcbe.getLockKey().canUnlock(player)) {
+            BaseContainerBlockEntity.sendChestLockedNotifications(pos.getCenter(), player, BCUtil.getNameAtPos(level, pos));
+            return InteractionResult.CONSUME;
+        }
+        if (BCUtil.swapItem(stack, s -> player.setItemInHand(hand, s), bcbe.getItemHandler(), slot)) {
+            return InteractionResult.SUCCESS;
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }

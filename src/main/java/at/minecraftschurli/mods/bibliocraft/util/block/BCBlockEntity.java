@@ -28,6 +28,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jspecify.annotations.Nullable;
 
@@ -96,6 +97,7 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
         return this.itemHandler.isEmpty(index);
     }
 
+    @Deprecated
     public ItemStack getItem(int index) {
         return this.itemHandler.getResource(index).toStack(this.itemHandler.getAmountAsInt(index));
     }
@@ -121,6 +123,7 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     public void removeComponentsFromTag(ValueOutput output) {
         output.discard(LockCode.TAG_LOCK);
         output.discard(BCItemHandler.ITEMS_TAG);
+        output.discard(StacksResourceHandler.VALUE_IO_KEY);
     }
 
     @Override

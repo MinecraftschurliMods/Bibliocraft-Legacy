@@ -29,7 +29,11 @@ public class BCItemHandler extends ItemStacksResourceHandler {
     @Override
     public void deserialize(ValueInput input) {
         if (input.keySet().contains(StacksResourceHandler.VALUE_IO_KEY)) {
+            int size = size();
             super.deserialize(input);
+            if (size != size()) {
+                throw new IllegalStateException("Deserialized inventory size does not match expected size: expected " + size + ", got " + size());
+            }
         } else {
             loadLegacyInventory(input);
         }
@@ -37,21 +41,21 @@ public class BCItemHandler extends ItemStacksResourceHandler {
 
     @Override
     protected int getCapacity(int index, ItemResource resource) {
-        return capacityProvider.getCapacity(resource);
+        return this.capacityProvider.getCapacity(resource);
     }
 
     @Override
     public boolean isValid(int index, ItemResource resource) {
-        return validityPredicate.isValid(index, resource);
+        return this.validityPredicate.isValid(index, resource);
     }
 
     @Override
     protected void onContentsChanged(int index, ItemStack previousContents) {
-        changeListener.onChanged();
+        this.changeListener.onChanged();
     }
 
     public boolean isEmpty(int index) {
-        return stacks.get(index).isEmpty();
+        return this.stacks.get(index).isEmpty();
     }
 
     protected void fillFromComponent(ItemContainerContents containerContents) {

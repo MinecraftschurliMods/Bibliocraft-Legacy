@@ -2,6 +2,7 @@ package at.minecraftschurli.mods.bibliocraft.util;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
@@ -38,6 +39,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 /// Utility class holding various helper methods.
@@ -274,5 +276,34 @@ public final class BCUtil {
                 stack.shrink(1);
             }
         }
+    }
+
+    /// Swap the given item stack with the contents of the given slot in the given {@link BCItemHandler},
+    /// the itemSetter is used to set the extracted {@link ItemStack} to where the stack is coming from.
+    public static boolean swapItem(ItemStack stack, Consumer<ItemStack> itemSetter, BCItemHandler itemHandler, int slot) {
+        int amount = itemHandler.getAmountAsInt(slot);
+        ItemResource resource = itemHandler.getResource(slot);
+        if (stack.isEmpty() && resource.isEmpty()) {
+            return false;
+        }
+        try (Transaction transaction = Transaction.openRoot()) {
+            ItemStack extracted = ItemStack.EMPTY;
+            if (!resource.isEmpty()) {
+                int extract = itemHandler.extract(slot, resource, amount, transaction);
+                if (amount != extract) {
+                    return false;
+                }
+                extracted = resource.toStack(extract);
+            }
+            if (!stack.isEmpty()) {
+                int insert = itemHandler.insert(slot, ItemResource.of(stack), stack.count(), transaction);
+                if (insert != stack.count()) {
+                    return false;
+                }
+            }
+            itemSetter.accept(extracted);
+            transaction.commit();
+        }
+        return true;
     }
 }
