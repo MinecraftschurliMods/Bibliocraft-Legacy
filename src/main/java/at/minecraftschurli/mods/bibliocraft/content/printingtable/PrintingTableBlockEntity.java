@@ -242,6 +242,17 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
         setChanged();
     }
 
+    public void setSlot(int slot, ItemStack stack) {
+        if (isSlotDisabled(slot) && !stack.isEmpty()) {
+            setSlotDisabled(slot, false);
+        }
+        recipeInput = null;
+        if (recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
+            calculateRecipe(false);
+            setChanged();
+        }
+    }
+
     private void finishRecipe() {
         if (recipe == null) return;
         List<ItemStack> remainingItems = recipe.getRemainingItems(getRecipeInput());
@@ -255,23 +266,15 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
                 .forEach(e -> e.shrink(1));
         for (int i = 0; i < remainingItems.size(); i++) {
             ItemStack remaining = remainingItems.get(i);
-            if (remaining.isEmpty()) continue;
             setItem(i, remaining.copy());
         }
         calculateRecipe(false);
+        setChanged();
     }
 
     private void setItem(int slot, ItemStack stack) {
-        if (isSlotDisabled(slot) && !stack.isEmpty()) {
-            setSlotDisabled(slot, false);
-        }
-        ItemStack old = getItem(slot).copy();
         getItemHandler().set(slot, ItemResource.of(stack), stack.count());
-        recipeInput = null;
-        if (!ItemStack.isSameItemSameComponents(old, stack) || recipe == null || !recipe.matches(getRecipeInput(), BCUtil.nonNull(getLevel()))) {
-            calculateRecipe(false);
-            setChanged();
-        }
+        setSlot(slot, stack);
     }
 
     private void pullExperience() {

@@ -29,10 +29,23 @@ public class PrintingTableMenu extends BCMenu<PrintingTableBlockEntity> implemen
         BCItemHandler itemHandler = getItemHandler();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlot(new ToggleableSlot(itemHandler, this::isSlotDisabled, j + i * 3, 17 + j * 18, 17 + i * 18));
+                int slot = j + i * 3;
+                addSlot(new ToggleableSlot(itemHandler, this::isSlotDisabled, slot, 17 + j * 18, 17 + i * 18) {
+                    @Override
+                    protected void setStackCopy(ItemStack stack) {
+                        super.setStackCopy(stack);
+                        blockEntity.setSlot(slot, stack);
+                    }
+                });
             }
         }
-        addItemHandlerSlot(9, 90, 35);
+        addSlot(new ResourceHandlerSlot(itemHandler, itemHandler::set, 9, 90, 35) {
+            @Override
+            protected void setStackCopy(ItemStack stack) {
+                super.setStackCopy(stack);
+                blockEntity.setSlot(9, stack);
+            }
+        });
         addSlot(new ResultSlot(itemHandler, 10, 142, 35));
         addInventorySlots(inventory, 8, 84);
     }

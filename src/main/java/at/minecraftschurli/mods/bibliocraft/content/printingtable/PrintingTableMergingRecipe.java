@@ -147,6 +147,7 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
             if (stack.isEmpty()) continue;
             remainingItems.set(i, stack.copy());
         }
+        remainingItems.set(9, ItemStack.EMPTY);
         return remainingItems;
     }
 
