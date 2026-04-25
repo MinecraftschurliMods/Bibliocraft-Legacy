@@ -280,29 +280,29 @@ public final class BCUtil {
 
     /// Swap the given item stack with the contents of the given slot in the given {@link BCItemHandler},
     /// the itemSetter is used to set the extracted {@link ItemStack} to where the stack is coming from.
-    public static boolean swapItem(ItemStack stack, Consumer<ItemStack> itemSetter, BCItemHandler itemHandler, int slot) {
+    public static boolean swapItem(ItemStack stack, Consumer<ItemStack> itemSetter, BCItemHandler itemHandler, int slot, @Nullable Transaction transaction) {
         int amount = itemHandler.getAmountAsInt(slot);
         ItemResource resource = itemHandler.getResource(slot);
         if (stack.isEmpty() && resource.isEmpty()) {
             return false;
         }
-        try (Transaction transaction = Transaction.openRoot()) {
+        try (Transaction t1 = Transaction.open(transaction)) {
             ItemStack extracted = ItemStack.EMPTY;
             if (!resource.isEmpty()) {
-                int extract = itemHandler.extract(slot, resource, amount, transaction);
+                int extract = itemHandler.extract(slot, resource, amount, t1);
                 if (amount != extract) {
                     return false;
                 }
                 extracted = resource.toStack(extract);
             }
             if (!stack.isEmpty()) {
-                int insert = itemHandler.insert(slot, ItemResource.of(stack), stack.count(), transaction);
+                int insert = itemHandler.insert(slot, ItemResource.of(stack), stack.count(), t1);
                 if (insert != stack.count()) {
                     return false;
                 }
             }
             itemSetter.accept(extracted);
-            transaction.commit();
+            t1.commit();
         }
         return true;
     }

@@ -43,7 +43,7 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
             BaseContainerBlockEntity.sendChestLockedNotifications(pos.getCenter(), player, BCUtil.getNameAtPos(level, pos));
             return InteractionResult.CONSUME;
         }
-        if (BCUtil.swapItem(stack, s -> player.setItemInHand(hand, s), bcbe.getItemHandler(), slot)) {
+        if (BCUtil.swapItem(stack, s -> player.setItemInHand(hand, s), bcbe.getItemHandler(), slot, null)) {
             return InteractionResult.SUCCESS;
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hit);

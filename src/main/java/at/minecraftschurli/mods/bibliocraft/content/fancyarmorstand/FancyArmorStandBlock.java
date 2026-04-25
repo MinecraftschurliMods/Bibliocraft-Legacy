@@ -4,6 +4,7 @@ import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.ShapeUtil;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCFacingInteractibleBlock;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -39,7 +40,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jspecify.annotations.Nullable;
+
+import java.util.List;
 
 public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape Z_SHAPE_BOTTOM = ShapeUtil.combine(
@@ -51,6 +55,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     private static final VoxelShape X_SHAPE_BOTTOM = ShapeUtil.rotate(Z_SHAPE_BOTTOM, Rotation.CLOCKWISE_90);
     private static final VoxelShape X_SHAPE_TOP = ShapeUtil.rotate(Z_SHAPE_TOP, Rotation.CLOCKWISE_90);
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
+    private static final List<EquipmentSlot> EQUIPMENT_SLOTS = List.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
 
     public FancyArmorStandBlock(Properties properties) {
         super(properties);
@@ -138,35 +143,76 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
 
     @Override
     public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
-        if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
-            int slot = lookingAtSlot(state, hit);
-            ItemStack itemBySlot = player.getItemBySlot(switch (3 - slot) {
-                case 0 -> EquipmentSlot.FEET;
-                case 1 -> EquipmentSlot.LEGS;
-                case 2 -> EquipmentSlot.CHEST;
-                case 3 -> EquipmentSlot.HEAD;
-                default -> throw new IllegalStateException("Invalid slot index: " + slot);
-            });
-            if (slot != -1 && trySwapArmor(itemBySlot, slot, 39 - slot, state, level, pos, player))
-                return InteractionResult.SUCCESS;
-        }
+        boolean isPowered = level.hasNeighborSignal(pos);
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();
+            isPowered = isPowered || level.hasNeighborSignal(pos);
+        } else {
+            isPowered = isPowered || level.hasNeighborSignal(pos.above());
+        }
+        if (!player.isSecondaryUseActive() || !canAccessFromDirection(state, hit.getDirection())) {
+            return super.useWithoutItem(state, level, pos, player, hit);
+        }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof BCBlockEntity bcbe)) {
+            return super.useWithoutItem(state, level, pos, player, hit);
+        }
+        BCItemHandler itemHandler = bcbe.getItemHandler();
+        if (isPowered && trySwapArmorSet(itemHandler, player)) {
+            return InteractionResult.SUCCESS;
+        }
+        int slot = lookingAtSlot(state, hit);
+        EquipmentSlot equipmentSlot = EQUIPMENT_SLOTS.get(slot);
+        ItemStack itemBySlot = player.getItemBySlot(equipmentSlot);
+        if (BCUtil.swapItem(itemBySlot, s -> player.setItemSlot(equipmentSlot, s, true), itemHandler, slot, null)) {
+            return InteractionResult.SUCCESS;
         }
         return super.useWithoutItem(state, level, pos, player, hit);
     }
 
+    private static boolean trySwapArmorSet(BCItemHandler itemHandler, Player player) {
+        try (Transaction transaction = Transaction.openRoot()) {
+            for (int slot = 0; slot < EQUIPMENT_SLOTS.size(); slot++) {
+                EquipmentSlot equipmentSlot = EQUIPMENT_SLOTS.get(slot);
+                ItemStack itemBySlot = player.getItemBySlot(equipmentSlot);
+                if (!BCUtil.swapItem(itemBySlot, s -> player.setItemSlot(equipmentSlot, s, true), itemHandler, slot, transaction)) {
+                    return false;
+                }
+            }
+            transaction.commit();
+        }
+        return true;
+    }
+
     @Override
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.isSecondaryUseActive() && canAccessFromDirection(state, hit.getDirection())) {
-            int slot = lookingAtSlot(state, hit);
-            int playerSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND;
-            if (slot != -1 && trySwapArmor(stack, slot, playerSlot, state, level, pos, player)) {
-                return InteractionResult.SUCCESS;
-            }
-        }
+        boolean isPowered = level.hasNeighborSignal(pos);
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             pos = pos.below();
+            isPowered = isPowered || level.hasNeighborSignal(pos);
+        } else {
+            isPowered = isPowered || level.hasNeighborSignal(pos.above());
+        }
+        if (!player.isSecondaryUseActive() || !canAccessFromDirection(state, hit.getDirection())) {
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
+        }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof BCBlockEntity bcbe)) {
+            return super.useItemOn(stack, state, level, pos, player, hand, hit);
+        }
+        BCItemHandler itemHandler = bcbe.getItemHandler();
+        if (stack.isEmpty() && isPowered && trySwapArmorSet(itemHandler, player)) {
+            return InteractionResult.SUCCESS;
+        }
+        int slot = lookingAtSlot(state, hit);
+        int playerSlot = hand == InteractionHand.MAIN_HAND ? player.getInventory().getSelectedSlot() : Inventory.SLOT_OFFHAND;
+        if (slot != -1 && BCUtil.swapItem(stack, s -> {
+            player.getInventory().setItem(playerSlot, s);
+            if (s.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {
+                level.playSound(null, player, equipable.equipSound().value(), SoundSource.PLAYERS, 1, 1);
+            }
+        }, itemHandler, slot, null)) {
+            return InteractionResult.SUCCESS;
         }
         return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
@@ -200,29 +246,5 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
     @Nullable
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return state.getValue(HALF) == DoubleBlockHalf.LOWER ? new FancyArmorStandBlockEntity(pos, state) : null;
-    }
-
-    /// Attempts to swap the armor in the given slot with the given armor stack.
-    ///
-    /// @param stack      The armor stack from the player inventory that should be swapped with.
-    /// @param slot       The slot index. A result from [FancyArmorStandBlock#lookingAtSlot(BlockState, BlockHitResult)].
-    /// @param playerSlot The player inventory slot the armor stack (first parameter) is in, and where a swapped item will end up.
-    /// @param state      The [BlockState] to use.
-    /// @param level      The [Level] to use.
-    /// @param pos        The [BlockPos] to use.
-    /// @param player     The [Player] attempting to swap the items.
-    /// @return Whether swapping the items was successful or not.
-    private boolean trySwapArmor(ItemStack stack, int slot, int playerSlot, BlockState state, Level level, BlockPos pos, Player player) {
-        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            pos = pos.below();
-        }
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!(blockEntity instanceof BCBlockEntity bcbe)) return false;
-        return BCUtil.swapItem(stack, s -> {
-            player.getInventory().setItem(playerSlot, s);
-            if (s.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {
-                level.playSound(null, player, equipable.equipSound().value(), SoundSource.PLAYERS, 1, 1);
-            }
-        }, bcbe.getItemHandler(), slot);
     }
 }
