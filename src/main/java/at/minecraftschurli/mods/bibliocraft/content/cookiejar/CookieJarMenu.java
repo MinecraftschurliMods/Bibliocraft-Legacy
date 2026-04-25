@@ -17,6 +17,11 @@ public class CookieJarMenu extends BCMenu<CookieJarBlockEntity> {
         blockEntity.startOpen(inventory.player);
     }
 
+    /// @return The block entity this menu is associated with.
+    public CookieJarBlockEntity getBlockEntity() {
+        return blockEntity;
+    }
+
     @Override
     protected void addSlots(Inventory inventory) {
         for (int j = 0; j < 4; j++) {

@@ -1,14 +1,14 @@
 package at.minecraftschurli.mods.bibliocraft.content.printingtable;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenu;
-import at.minecraftschurli.mods.bibliocraft.util.slot.BCSlot;
 import at.minecraftschurli.mods.bibliocraft.util.slot.HasToggleableSlots;
 import at.minecraftschurli.mods.bibliocraft.util.slot.ToggleableSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 public class PrintingTableMenu extends BCMenu<PrintingTableBlockEntity> implements HasToggleableSlots {
     public PrintingTableMenu(int id, Inventory inventory, PrintingTableBlockEntity blockEntity) {
@@ -19,15 +19,21 @@ public class PrintingTableMenu extends BCMenu<PrintingTableBlockEntity> implemen
         super(BCMenus.PRINTING_TABLE.get(), id, inventory, buf);
     }
 
+    /// @return The block entity this menu is associated with.
+    public PrintingTableBlockEntity getBlockEntity() {
+        return blockEntity;
+    }
+
     @Override
     protected void addSlots(Inventory inventory) {
+        BCItemHandler itemHandler = getItemHandler();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                addSlot(new ToggleableSlot<>(blockEntity, j + i * 3, 17 + j * 18, 17 + i * 18));
+                addSlot(new ToggleableSlot(itemHandler, this::isSlotDisabled, j + i * 3, 17 + j * 18, 17 + i * 18));
             }
         }
-        addSlot(new BCSlot(blockEntity, 9, 90, 35));
-        addSlot(new ResultSlot(blockEntity, 10, 142, 35));
+        addItemHandlerSlot(9, 90, 35);
+        addSlot(new ResultSlot(itemHandler, 10, 142, 35));
         addInventorySlots(inventory, 8, 84);
     }
 
@@ -48,9 +54,9 @@ public class PrintingTableMenu extends BCMenu<PrintingTableBlockEntity> implemen
         return blockEntity.canDisableSlot(slot);
     }
 
-    public static class ResultSlot extends BCSlot {
-        public ResultSlot(BCBlockEntity blockEntity, int slot, int x, int y) {
-            super(blockEntity, slot, x, y);
+    public static class ResultSlot extends ResourceHandlerSlot {
+        public ResultSlot(BCItemHandler itemHandler, int slot, int x, int y) {
+            super(itemHandler, itemHandler::set, slot, x, y);
         }
 
         @Override

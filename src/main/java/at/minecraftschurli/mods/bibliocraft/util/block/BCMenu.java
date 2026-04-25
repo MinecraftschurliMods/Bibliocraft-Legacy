@@ -1,7 +1,7 @@
 package at.minecraftschurli.mods.bibliocraft.util.block;
 
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
-import at.minecraftschurli.mods.bibliocraft.util.slot.BCSlot;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,12 +10,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 /// Abstract superclass for all menus of this mod.
 ///
 /// @param <T> The block entity this menu is associated with.
 @SuppressWarnings("SameParameterValue")
 public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContainerMenu {
+    // TODO make this no longer need a reference to the BE
     protected final T blockEntity;
 
     /// @param type        The [MenuType] to use.
@@ -42,13 +44,17 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
     /// @param inventory The player inventory to use.
     protected abstract void addSlots(Inventory inventory);
 
-    /// @return The block entity this menu is associated with.
-    public T getBlockEntity() {
-        return blockEntity;
+    public BCItemHandler getItemHandler() {
+        return blockEntity.getItemHandler();
+    }
+
+    public BlockPos getBlockPos() {
+        return blockEntity.getBlockPos();
     }
 
     protected void addItemHandlerSlot(int index, int x, int y) {
-        addSlot(new BCSlot(blockEntity, index, x, y));
+        BCItemHandler itemHandler = getItemHandler();
+        addSlot(new ResourceHandlerSlot(itemHandler, itemHandler::set, index, x, y));
     }
 
     @Override

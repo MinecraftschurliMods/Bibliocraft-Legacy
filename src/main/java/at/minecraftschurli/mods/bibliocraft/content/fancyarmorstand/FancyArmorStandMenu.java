@@ -1,9 +1,8 @@
 package at.minecraftschurli.mods.bibliocraft.content.fancyarmorstand;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenu;
-import at.minecraftschurli.mods.bibliocraft.util.slot.BCSlot;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -13,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.Equippable;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import org.jspecify.annotations.Nullable;
 
 public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
@@ -26,10 +26,11 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
 
     @Override
     protected void addSlots(Inventory inventory) {
-        addSlot(new EquipableSlot(blockEntity, 0, 80, 8, EquipmentSlot.HEAD));
-        addSlot(new EquipableSlot(blockEntity, 1, 80, 26, EquipmentSlot.CHEST));
-        addSlot(new EquipableSlot(blockEntity, 2, 80, 44, EquipmentSlot.LEGS));
-        addSlot(new EquipableSlot(blockEntity, 3, 80, 62, EquipmentSlot.FEET));
+        BCItemHandler itemHandler = getItemHandler();
+        addSlot(new EquipableSlot(itemHandler, 0, 80, 8, EquipmentSlot.HEAD));
+        addSlot(new EquipableSlot(itemHandler, 1, 80, 26, EquipmentSlot.CHEST));
+        addSlot(new EquipableSlot(itemHandler, 2, 80, 44, EquipmentSlot.LEGS));
+        addSlot(new EquipableSlot(itemHandler, 3, 80, 62, EquipmentSlot.FEET));
         addInventorySlots(inventory, 8, 84);
         addSlot(new PlayerEquipableSlot(inventory, 39, 126, 8, EquipmentSlot.HEAD));
         addSlot(new PlayerEquipableSlot(inventory, 38, 126, 26, EquipmentSlot.CHEST));
@@ -40,7 +41,7 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = slots.get(index);
-        int slotCount = blockEntity.getContainerSize();
+        int slotCount = getItemHandler().size();
         ItemStack stack = slot.getItem();
         ItemStack originalStack = stack.copy();
         if (index < slotCount) { // If slot is an armor stand slot
@@ -105,16 +106,16 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
     }
 
     /// Variant of [Slot] that only accepts items that go in a given [EquipmentSlot]. Uses [BCSlot] as its base class.
-    private static class EquipableSlot extends BCSlot {
+    private static class EquipableSlot extends ResourceHandlerSlot {
         private final EquipmentSlot slotType;
 
-        /// @param blockEntity The [BCBlockEntity] this slot is in.
+        /// @param itemHandler The [BCItemHandler] this slot is accessing.
         /// @param index       The slot index.
         /// @param x           The x position.
         /// @param y           The y position.
         /// @param slotType    The [EquipmentSlot] to limit slot contents with.
-        public EquipableSlot(BCBlockEntity blockEntity, int index, int x, int y, EquipmentSlot slotType) {
-            super(blockEntity, index, x, y);
+        public EquipableSlot(BCItemHandler itemHandler, int index, int x, int y, EquipmentSlot slotType) {
+            super(itemHandler, itemHandler::set, index, x, y);
             this.slotType = slotType;
         }
 

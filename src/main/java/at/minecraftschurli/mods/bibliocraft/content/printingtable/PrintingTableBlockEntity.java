@@ -4,9 +4,7 @@ import at.minecraftschurli.mods.bibliocraft.init.BCBlockEntities;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
 import at.minecraftschurli.mods.bibliocraft.init.BCRecipes;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCInputItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenuBlockEntity;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCOutputItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.slot.HasToggleableSlots;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.BlockPos;
@@ -48,8 +46,8 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     private static final int SLOT_ENABLED = 0;
     private static final IntList INPUTS = IntList.of(IntStream.range(0, 10).toArray());
     private static final IntList OUTPUTS = IntList.of(10);
-    private final BCInputItemHandler inputItemHandler = new BCInputItemHandler(getContainerSize(), this, INPUTS);
-    private final BCOutputItemHandler outputItemHandler = new BCOutputItemHandler(getContainerSize(), this, OUTPUTS);
+    private final ResourceHandler<ItemResource> inputItemHandler;
+    private final ResourceHandler<ItemResource> outputItemHandler;
     private final PrintingTableTank tank;
     private final Direction[] directions;
     private final boolean[] disabledSlots = new boolean[9];
@@ -66,9 +64,11 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     public PrintingTableBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.PRINTING_TABLE.get(), 11, defaultName("printing_table"), pos, state);
-        tank = new PrintingTableTank(this, state.is(BCBlocks.IRON_PRINTING_TABLE));
+        this.tank = new PrintingTableTank(this, state.is(BCBlocks.IRON_PRINTING_TABLE));
         Direction facing = state.getValue(PrintingTableBlock.FACING);
-        directions = new Direction[]{Direction.UP, facing, facing.getClockWise(), facing.getOpposite(), facing.getCounterClockWise(), Direction.DOWN};
+        this.directions = new Direction[]{Direction.UP, facing, facing.getClockWise(), facing.getOpposite(), facing.getCounterClockWise(), Direction.DOWN};
+        this.inputItemHandler = getItemHandler().forInput(INPUTS);
+        this.outputItemHandler = getItemHandler().forOutput(OUTPUTS);
     }
 
     @SuppressWarnings("unused")

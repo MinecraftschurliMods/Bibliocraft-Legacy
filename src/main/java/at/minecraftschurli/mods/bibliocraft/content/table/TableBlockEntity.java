@@ -51,14 +51,14 @@ public class TableBlockEntity extends BCBlockEntity {
     @Override
     public boolean isValid(int slot, ItemResource stack) {
         if (slot == 1) {
-            return itemHandler.isEmpty(1) && stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock;
+            return isEmpty(1) && stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock;
         }
         return super.isValid(slot, stack);
     }
 
     @Override
     public ModelData getModelData() {
-        if (itemHandler.isEmpty(1) || !(itemHandler.getResource(1).getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof WoolCarpetBlock carpet)) return super.getModelData();
+        if (isEmpty(1) || !(getItemHandler().getResource(1).getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof WoolCarpetBlock carpet)) return super.getModelData();
         return ModelData.builder().with(CLOTH_COLOR, carpet.getColor()).build();
     }
 }

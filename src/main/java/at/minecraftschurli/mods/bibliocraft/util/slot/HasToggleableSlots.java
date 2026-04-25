@@ -1,5 +1,7 @@
 package at.minecraftschurli.mods.bibliocraft.util.slot;
 
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+
 /// Represents that the implementer has [ToggleableSlot]s.
 public interface HasToggleableSlots {
     /// @param slot The index of the [ToggleableSlot] to query.

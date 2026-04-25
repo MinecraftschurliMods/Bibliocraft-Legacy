@@ -35,8 +35,7 @@ import java.util.Objects;
 
 /// Abstract superclass for all block entities in this mod.
 public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
-    protected final BCItemHandler itemHandler;
-    private final int containerSize;
+    private final BCItemHandler itemHandler;
     private final int slotCapacity;
     private LockCode lockKey = LockCode.NO_LOCK;
 
@@ -55,35 +54,34 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     /// @param state         The state of this BE.
     public BCBlockEntity(BlockEntityType<?> type, int containerSize, int slotCapacity, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.itemHandler = new BCItemHandler(containerSize, this);
-        this.containerSize = containerSize;
+        this.itemHandler = new BCItemHandler(containerSize, this::isValid, this::getCapacity, this::setChanged);
         this.slotCapacity = slotCapacity;
     }
 
     public BCItemHandler getItemHandler() {
-        return itemHandler;
+        return this.itemHandler;
     }
 
     public int getContainerSize() {
-        return containerSize;
+        return this.itemHandler.size(); 
     }
 
     public LockCode getLockKey() {
-        return lockKey;
+        return this.lockKey;
     }
 
     public void setLockKey(LockCode lockKey) {
         this.lockKey = lockKey;
         setChanged();
-        level().sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        level().sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
     }
 
     public boolean isLocked() {
-        return LockCode.NO_LOCK.equals(lockKey);
+        return LockCode.NO_LOCK.equals(this.lockKey);
     }
 
     public int getCapacity(ItemResource resource) {
-        return Math.min(slotCapacity, resource.getMaxStackSize());
+        return Math.min(this.slotCapacity, resource.getMaxStackSize());
     }
 
     public boolean stillValid(Player player) {
@@ -95,27 +93,27 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     }
 
     public boolean isEmpty(int index) {
-        return itemHandler.isEmpty(index);
+        return this.itemHandler.isEmpty(index);
     }
 
     public ItemStack getItem(int index) {
-        return itemHandler.getResource(index).toStack(itemHandler.getAmountAsInt(index));
+        return this.itemHandler.getResource(index).toStack(this.itemHandler.getAmountAsInt(index));
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
         super.applyImplicitComponents(componentGetter);
-        lockKey = componentGetter.getOrDefault(DataComponents.LOCK, LockCode.NO_LOCK);
-        itemHandler.fillFromComponent(componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
+        this.lockKey = componentGetter.getOrDefault(DataComponents.LOCK, LockCode.NO_LOCK);
+        this.itemHandler.fillFromComponent(componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
         if (isLocked()) {
-            components.set(DataComponents.LOCK, lockKey);
+            components.set(DataComponents.LOCK, this.lockKey);
         }
-        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(itemHandler.copyToList()));
+        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(this.itemHandler.copyToList()));
     }
 
     @SuppressWarnings("deprecation")
@@ -128,16 +126,16 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        lockKey = LockCode.fromTag(input);
-        itemHandler.deserialize(input);
+        this.lockKey = LockCode.fromTag(input);
+        this.itemHandler.deserialize(input);
         requestModelDataUpdate();
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        lockKey.addToTag(output);
-        itemHandler.serialize(output);
+        this.lockKey.addToTag(output);
+        this.itemHandler.serialize(output);
     }
 
     @Override
@@ -152,17 +150,17 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
 
     @Nullable
     public ResourceHandler<ItemResource> getItemCapability(@Nullable Direction side) {
-        return itemHandler;
+        return this.itemHandler;
     }
 
     @Override
     public Level level() {
-        return Objects.requireNonNull(level);
+        return Objects.requireNonNull(this.level);
     }
 
     @Override
     public Vec3 position() {
-        return Vec3.atCenterOf(worldPosition);
+        return Vec3.atCenterOf(this.worldPosition);
     }
 
     @Override
@@ -172,6 +170,6 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     }
     
     public NonNullList<ItemStack> getContents() {
-        return itemHandler.copyToList();
+        return this.itemHandler.copyToList();
     }
 }

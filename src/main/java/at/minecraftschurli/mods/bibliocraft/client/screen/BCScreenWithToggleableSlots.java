@@ -53,7 +53,7 @@ public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlot
 
     @Override
     protected void slotClicked(Slot slot, int slotId, int mouseButton, ContainerInput type) {
-        if (slot instanceof ToggleableSlot<?> && !slot.hasItem() && !player.isSpectator()) {
+        if (slot instanceof ToggleableSlot && !slot.hasItem() && !player.isSpectator()) {
             switch (type) {
                 case PICKUP -> {
                     if (menu.isSlotDisabled(slotId)) {
@@ -75,7 +75,7 @@ public class BCScreenWithToggleableSlots<T extends BCMenu<?> & HasToggleableSlot
 
     protected void setSlotDisabled(int slot, boolean disabled) {
         menu.setSlotDisabled(slot, disabled);
-        ClientPacketDistributor.sendToServer(new ToggleableSlotSyncPacket(menu.getBlockEntity().getBlockPos(), slot, disabled));
+        ClientPacketDistributor.sendToServer(new ToggleableSlotSyncPacket(menu.getBlockPos(), slot, disabled));
         player.playSound(SoundEvents.UI_BUTTON_CLICK.value(), 0.4F, disabled ? 0.75F : 1F);
     }
 }

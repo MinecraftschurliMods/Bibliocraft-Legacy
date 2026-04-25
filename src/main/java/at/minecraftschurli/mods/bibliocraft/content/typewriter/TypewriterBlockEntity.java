@@ -5,8 +5,6 @@ import at.minecraftschurli.mods.bibliocraft.init.BCDataComponents;
 import at.minecraftschurli.mods.bibliocraft.init.BCItems;
 import at.minecraftschurli.mods.bibliocraft.init.BCTags;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCInputItemHandler;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCOutputItemHandler;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,12 +22,14 @@ public class TypewriterBlockEntity extends BCBlockEntity {
     private static final IntList INPUTS = IntList.of(INPUT);
     private static final IntList OUTPUTS = IntList.of(OUTPUT);
     private static final String PAGE_KEY = "page";
-    private final BCInputItemHandler inputItemHandler = new BCInputItemHandler(getContainerSize(), this, INPUTS);
-    private final BCOutputItemHandler outputItemHandler = new BCOutputItemHandler(getContainerSize(), this, OUTPUTS);
+    private final ResourceHandler<ItemResource> inputItemHandler;
+    private final ResourceHandler<ItemResource> outputItemHandler;
     private TypewriterPage page = TypewriterPage.DEFAULT;
 
     public TypewriterBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.TYPEWRITER.get(), 2, pos, state);
+        this.inputItemHandler = getItemHandler().forInput(INPUTS);
+        this.outputItemHandler = getItemHandler().forOutput(OUTPUTS);
     }
 
     @Override

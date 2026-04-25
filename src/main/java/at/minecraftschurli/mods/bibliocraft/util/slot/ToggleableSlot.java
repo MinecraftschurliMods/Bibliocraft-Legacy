@@ -1,21 +1,22 @@
 package at.minecraftschurli.mods.bibliocraft.util.slot;
 
-import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
+
+import java.util.function.IntPredicate;
 
 /// Represents a slot that can be disabled or enabled. If disabled, items will not be placed inside the slot.
-///
-/// @param <T> The type of the owning block entity.
-public class ToggleableSlot<T extends BCBlockEntity & HasToggleableSlots> extends BCSlot {
-    public final T blockEntity;
+public class ToggleableSlot extends ResourceHandlerSlot {
+    private final IntPredicate slotDisabledPredicate;
 
-    public ToggleableSlot(T blockEntity, int slot, int x, int y) {
-        super(blockEntity, slot, x, y);
-        this.blockEntity = blockEntity;
+    public ToggleableSlot(BCItemHandler itemHandler, IntPredicate slotDisabledPredicate, int slot, int x, int y) {
+        super(itemHandler, itemHandler::set, slot, x, y);
+        this.slotDisabledPredicate = slotDisabledPredicate;
     }
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return super.mayPlace(stack) && !blockEntity.isSlotDisabled(getContainerSlot());
+        return super.mayPlace(stack) && !slotDisabledPredicate.test(getContainerSlot());
     }
 }

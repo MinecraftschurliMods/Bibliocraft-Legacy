@@ -2,9 +2,7 @@ package at.minecraftschurli.mods.bibliocraft.content.fancycrafter;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCBlockEntities;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCInputItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenuBlockEntity;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCOutputItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.slot.HasToggleableSlots;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -50,8 +48,8 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     static final int STORAGE_SLOTS = 8;
     static final int CRAFTING_RESULT_SLOT_INDEX = CRAFTING_SLOTS;
     private static final int MAX_CRAFTING_TICKS = 6;
-    private final BCInputItemHandler inputItemHandler = new BCInputItemHandler(getContainerSize(), this, INPUTS);
-    private final BCOutputItemHandler outputItemHandler = new BCOutputItemHandler(getContainerSize(), this, OUTPUTS);
+    private final ResourceHandler<ItemResource> inputItemHandler;
+    private final ResourceHandler<ItemResource> outputItemHandler;
     private final ContainerData containerData = new ContainerData() {
         private final int[] slotStates = new int[CRAFTING_SLOTS];
 
@@ -76,6 +74,8 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
 
     public FancyCrafterBlockEntity(BlockPos pos, BlockState state) {
         super(BCBlockEntities.FANCY_CRAFTER.get(), CRAFTING_SLOTS + CRAFTING_RESULT_SLOTS + STORAGE_SLOTS, defaultName("fancy_crafter"), pos, state);
+        this.inputItemHandler = getItemHandler().forInput(INPUTS);
+        this.outputItemHandler = getItemHandler().forOutput(OUTPUTS);
     }
 
     @Override

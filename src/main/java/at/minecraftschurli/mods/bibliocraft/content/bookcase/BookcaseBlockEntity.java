@@ -60,7 +60,7 @@ public class BookcaseBlockEntity extends BCMenuBlockEntity {
         ModelData.Builder builder = ModelData.builder();
         short books = 0;
         for (int i = 0; i < SLOTS; i++) {
-            books |= (short) ((itemHandler.isEmpty(i) ? 0 : 1) << i);
+            books |= (short) ((isEmpty(i) ? 0 : 1) << i);
         }
         builder.with(BOOKS, books);
         return builder.build();

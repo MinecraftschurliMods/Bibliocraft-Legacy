@@ -1,5 +1,6 @@
 package at.minecraftschurli.mods.bibliocraft.util.block;
 
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
@@ -7,69 +8,46 @@ import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 import java.util.function.Consumer;
 
-public class BCItemHandler extends StacksResourceHandler<ItemStack, ItemResource> {
+public class BCItemHandler extends ItemStacksResourceHandler {
     static final String ITEMS_TAG = "items";
-    protected final BCBlockEntity blockEntity;
+    private final ValidityPredicate validityPredicate;
+    private final CapacityProvider capacityProvider;
+    private final ChangeListener changeListener;
 
-    public BCItemHandler(int size, BCBlockEntity blockEntity) {
-        super(size, ItemStack.EMPTY, ItemStack.CODEC);
-        this.blockEntity = blockEntity;
+    public BCItemHandler(int size, ValidityPredicate validityPredicate, CapacityProvider capacityProvider, ChangeListener changeListener) {
+        super(size);
+        this.validityPredicate = validityPredicate;
+        this.capacityProvider = capacityProvider;
+        this.changeListener = changeListener;
     }
 
+    /// Overridden for legacy compat
     @Override
-    public ItemResource getResourceFrom(ItemStack stack) {
-        return ItemResource.of(stack);
-    }
-
-    @Override
-    public int getAmountFrom(ItemStack stack) {
-        return stack.getCount();
-    }
-
-    @Override
-    protected ItemStack getStackFrom(ItemResource resource, int amount) {
-        return resource.toStack(amount);
+    public void deserialize(ValueInput input) {
+        if (input.keySet().contains(StacksResourceHandler.VALUE_IO_KEY)) {
+            super.deserialize(input);
+        } else {
+            loadLegacyInventory(input);
+        }
     }
 
     @Override
     protected int getCapacity(int index, ItemResource resource) {
-        return blockEntity.getCapacity(resource);
-    }
-
-    @Override
-    protected ItemStack copyOf(ItemStack stack) {
-        return stack.copy();
-    }
-
-    @Override
-    public boolean matches(ItemStack stack, ItemResource resource) {
-        return resource.matches(stack);
-    }
-
-    @Override
-    public void deserialize(ValueInput input) {
-        int size = stacks.size();
-        input.child(ITEMS_TAG).ifPresent(i -> modifyContents(stacks -> ContainerHelper.loadAllItems(i, stacks)));
-        super.deserialize(input);
-        size = Math.max(size, stacks.size());
-        NonNullList<ItemStack> list = NonNullList.createWithCapacity(size);
-        for (int i = 0; i < size; i++) {
-            list.add(i < stacks.size() ? stacks.get(i) : ItemStack.EMPTY);
-        }
-        stacks = list;
+        return capacityProvider.getCapacity(resource);
     }
 
     @Override
     public boolean isValid(int index, ItemResource resource) {
-        return blockEntity.isValid(index, resource);
+        return validityPredicate.isValid(index, resource);
     }
 
     @Override
     protected void onContentsChanged(int index, ItemStack previousContents) {
-        blockEntity.setChanged();
+        changeListener.onChanged();
     }
 
     public boolean isEmpty(int index) {
@@ -80,9 +58,36 @@ public class BCItemHandler extends StacksResourceHandler<ItemStack, ItemResource
         modifyContents(containerContents::copyInto);
     }
 
+    private void loadLegacyInventory(ValueInput input) {
+        input.child(ITEMS_TAG).ifPresent(i -> modifyContents(stacks -> ContainerHelper.loadAllItems(i, stacks)));
+    }
+
     protected void modifyContents(Consumer<NonNullList<ItemStack>> modifier) {
         NonNullList<ItemStack> stacks = copyToList();
         modifier.accept(stacks);
         setStacks(stacks);
+    }
+
+    public LimitedAccessItemHandler forOutput(IntList outputs) {
+        return new LimitedAccessItemHandler(this, (index, mode) -> mode == LimitedAccessItemHandler.AccessPredicate.Mode.EXTRACT && outputs.contains(index));
+    }
+
+    public LimitedAccessItemHandler forInput(IntList inputs) {
+        return new LimitedAccessItemHandler(this, (index, mode) -> mode == LimitedAccessItemHandler.AccessPredicate.Mode.INSERT && inputs.contains(index));
+    }
+
+    @FunctionalInterface
+    public interface ValidityPredicate {
+        boolean isValid(int slot, ItemResource resource);
+    }
+
+    @FunctionalInterface
+    public interface CapacityProvider {
+        int getCapacity(ItemResource resource);
+    }
+
+    @FunctionalInterface
+    public interface ChangeListener {
+        void onChanged();
     }
 }

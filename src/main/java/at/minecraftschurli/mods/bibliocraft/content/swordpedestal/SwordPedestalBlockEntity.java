@@ -41,7 +41,7 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, SwordPedestalBlockEntity blockEntity) {
         if (level.isClientSide()) return;
         if (level.getGameTime() % TICK_INTERVAL != 0) return;
-        ItemStack stack = ItemUtil.getStack(blockEntity.itemHandler, 0);
+        ItemStack stack = ItemUtil.getStack(blockEntity.getItemHandler(), 0);
         if (!stack.isDamaged()) return;
         List<Holder<Enchantment>> list = stack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT))
             .keySet()
@@ -55,7 +55,7 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
             orb.discard();
             if (!stack.isDamaged()) break;
         }
-        blockEntity.itemHandler.set(0, ItemResource.of(stack), stack.count());
+        blockEntity.getItemHandler().set(0, ItemResource.of(stack), stack.count());
     }
 
     public DyedItemColor getColor() {

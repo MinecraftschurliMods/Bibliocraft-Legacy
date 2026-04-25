@@ -1,9 +1,8 @@
 package at.minecraftschurli.mods.bibliocraft.content.fancycrafter;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenu;
-import at.minecraftschurli.mods.bibliocraft.util.slot.BCSlot;
 import at.minecraftschurli.mods.bibliocraft.util.slot.HasToggleableSlots;
 import at.minecraftschurli.mods.bibliocraft.util.slot.ToggleableSlot;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,6 +12,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements HasToggleableSlots {
     private final ContainerData containerData;
@@ -31,21 +31,22 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
 
     @Override
     protected void addSlots(Inventory inventory) {
+        BCItemHandler itemHandler = getItemHandler();
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
-                addSlot(new ToggleableSlot<>(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
+                addSlot(new ToggleableSlot(itemHandler, this::isSlotDisabled, x + y * 3, 30 + x * 18, 17 + y * 18));
             }
         }
-        addSlot(new ResultSlot(blockEntity, FancyCrafterBlockEntity.CRAFTING_RESULT_SLOT_INDEX, 124, 35));
+        addSlot(new ResultSlot(itemHandler, FancyCrafterBlockEntity.CRAFTING_RESULT_SLOT_INDEX, 124, 35));
         for (int i = 0; i < FancyCrafterBlockEntity.STORAGE_SLOTS; i++) {
-            addSlot(new BCSlot(blockEntity, i + FancyCrafterBlockEntity.CRAFTING_SLOTS + FancyCrafterBlockEntity.CRAFTING_RESULT_SLOTS, 17 + i * 18, 78));
+            addItemHandlerSlot(i + FancyCrafterBlockEntity.CRAFTING_SLOTS + FancyCrafterBlockEntity.CRAFTING_RESULT_SLOTS, 17 + i * 18, 78);
         }
         addInventorySlots(inventory, 8, 110);
     }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        int slotCount = blockEntity.getContainerSize();
+        int slotCount = getItemHandler().size();
         Slot slot = slots.get(index);
         if (!slot.hasItem()) return ItemStack.EMPTY;
         ItemStack stack = slot.getItem();
@@ -113,9 +114,9 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
         return true;
     }
 
-    private static class ResultSlot extends BCSlot {
-        public ResultSlot(BCBlockEntity blockEntity, int slot, int x, int y) {
-            super(blockEntity, slot, x, y);
+    private static class ResultSlot extends ResourceHandlerSlot {
+        public ResultSlot(BCItemHandler itemHandler, int slot, int x, int y) {
+            super(itemHandler, itemHandler::set, slot, x, y);
         }
 
         @Override
