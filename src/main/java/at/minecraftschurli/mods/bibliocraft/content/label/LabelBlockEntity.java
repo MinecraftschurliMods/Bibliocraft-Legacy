@@ -9,16 +9,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class LabelBlockEntity extends BCMenuBlockEntity {
     public LabelBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.LABEL.get(), 3, defaultName("label"), pos, state);
+        super(BCBlockEntities.LABEL.get(), 3, 1, defaultName("label"), pos, state);
     }
 
     @Override
     protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
         return new LabelMenu(id, inventory, this);
-    }
-
-    @Override
-    public int getMaxStackSize() {
-        return 1;
     }
 }

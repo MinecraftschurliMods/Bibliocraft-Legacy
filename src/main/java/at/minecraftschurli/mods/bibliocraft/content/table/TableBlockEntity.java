@@ -8,7 +8,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WoolCarpetBlock;
@@ -16,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.neoforged.neoforge.model.data.ModelData;
 import net.neoforged.neoforge.model.data.ModelProperty;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class TableBlockEntity extends BCBlockEntity {
     public static final ModelProperty<DyeColor> CLOTH_COLOR = new ModelProperty<>();
@@ -49,16 +49,16 @@ public class TableBlockEntity extends BCBlockEntity {
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
+    public boolean isValid(int slot, ItemResource stack) {
         if (slot == 1) {
-            return getItem(1).isEmpty() && stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock;
+            return itemHandler.isEmpty(1) && stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock;
         }
-        return super.canPlaceItem(slot, stack);
+        return super.isValid(slot, stack);
     }
 
     @Override
     public ModelData getModelData() {
-        if (getItem(1).isEmpty() || !(getItem(1).getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof WoolCarpetBlock carpet)) return super.getModelData();
+        if (itemHandler.isEmpty(1) || !(itemHandler.getResource(1).getItem() instanceof BlockItem bi) || !(bi.getBlock() instanceof WoolCarpetBlock carpet)) return super.getModelData();
         return ModelData.builder().with(CLOTH_COLOR, carpet.getColor()).build();
     }
 }

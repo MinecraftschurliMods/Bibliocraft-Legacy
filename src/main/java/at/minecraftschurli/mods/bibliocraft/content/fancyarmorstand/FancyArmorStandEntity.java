@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
 
 /// Helper entity for rendering the contents of a [FancyArmorStandBlockEntity]. Defers item querying and rotations to the block entity.
@@ -35,6 +36,6 @@ public class FancyArmorStandEntity extends ArmorStand {
 
     @Override
     public ItemStack getItemBySlot(EquipmentSlot slot) {
-        return slot.isArmor() && blockEntity != null ? blockEntity.getItem(3 - slot.getIndex()) : super.getItemBySlot(slot);
+        return slot.isArmor() && blockEntity != null ? ItemUtil.getStack(blockEntity.getItemHandler(), 3 - slot.getIndex()) : super.getItemBySlot(slot);
     }
 }

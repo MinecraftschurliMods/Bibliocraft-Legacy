@@ -70,6 +70,6 @@ public class SwordPedestalBlock extends BCFacingInteractibleBlock {
     protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
         if (level.isClientSide() || !(level.getBlockEntity(pos) instanceof SwordPedestalBlockEntity spbe))
             return super.getAnalogOutputSignal(state, level, pos, direction);
-        return spbe.getItem(0).isEmpty() ? 0 : 15;
+        return spbe.isEmpty(0) ? 0 : 15;
     }
 }

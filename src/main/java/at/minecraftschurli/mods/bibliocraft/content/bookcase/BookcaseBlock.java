@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
 
 import java.util.stream.IntStream;
@@ -60,7 +61,7 @@ public class BookcaseBlock extends BCFacingEntityBlock {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof BookcaseBlockEntity bcbe)) return super.getAnalogOutputSignal(state, level, pos, direction);
         for (int i = 15; i >= 0; i--) {
-            if (bcbe.getItem(i).getItem() instanceof RedstoneBookItem) return i;
+            if (bcbe.getItemHandler().getResource(i).getItem() instanceof RedstoneBookItem) return i;
         }
         return super.getAnalogOutputSignal(state, level, pos, direction);
     }
@@ -69,8 +70,8 @@ public class BookcaseBlock extends BCFacingEntityBlock {
     public float getEnchantPowerBonus(BlockState state, BlockGetter level, BlockPos pos) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof BookcaseBlockEntity bcbe)) return super.getEnchantPowerBonus(state, level, pos);
-        return super.getEnchantPowerBonus(state, level, pos) + 0.125f * IntStream.range(0, bcbe.getContainerSize())
-                .mapToObj(bcbe::getItem)
+        return super.getEnchantPowerBonus(state, level, pos) + 0.125f * bcbe.getItemHandler().copyToList()
+                .stream()
                 .filter(e -> !e.isEmpty())
                 .count();
     }

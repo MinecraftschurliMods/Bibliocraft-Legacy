@@ -40,7 +40,7 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
                     return InteractionResult.CONSUME;
                 }
                 ItemStack slotStack = bcbe.getItem(slot);
-                if (stack.isEmpty() || bcbe.canPlaceItem(slot, stack)) {
+                if (stack.isEmpty() || bcbe.isValid(slot, stack)) {
                     bcbe.setItem(slot, stack);
                     player.setItemInHand(hand, slotStack);
                     return InteractionResult.SUCCESS;

@@ -216,7 +216,7 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof BCBlockEntity bcbe)) return false;
         ItemStack slotStack = bcbe.getItem(slot);
-        if (!bcbe.canPlaceItem(slot, stack)) return false;
+        if (!bcbe.isValid(slot, stack)) return false;
         bcbe.setItem(slot, stack);
         player.getInventory().setItem(playerSlot, slotStack);
         if (slotStack.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {

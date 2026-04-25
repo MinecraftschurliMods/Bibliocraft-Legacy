@@ -29,7 +29,9 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.fluid.FluidResource;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
+import org.jetbrains.annotations.UnknownNullability;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -146,8 +148,8 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
-        return slot < 10 && stack.getCraftingRemainder() == null && !isSlotDisabled(slot) && super.canPlaceItem(slot, stack);
+    public boolean isValid(int slot, ItemResource stack) {
+        return slot < 10 && stack.getCraftingRemainder() == null && !isSlotDisabled(slot) && super.isValid(slot, stack);
     }
 
     @Override

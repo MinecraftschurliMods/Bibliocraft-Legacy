@@ -17,7 +17,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jspecify.annotations.Nullable;
 
 /// Abstract superclass for block entities with an associated menu.
-@SuppressWarnings("unused")
 public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuProvider, Nameable {
     private static final String NAME_KEY = "CustomName";
     private final Component defaultName;
@@ -31,6 +30,11 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
     /// @param state         The state of this BE.
     public BCMenuBlockEntity(BlockEntityType<?> type, int containerSize, Component defaultName, BlockPos pos, BlockState state) {
         super(type, containerSize, pos, state);
+        this.defaultName = defaultName;
+    }
+
+    public BCMenuBlockEntity(BlockEntityType<?> type, int containerSize, int slotCapacity, Component defaultName, BlockPos pos, BlockState state) {
+        super(type, containerSize, slotCapacity, pos, state);
         this.defaultName = defaultName;
     }
 

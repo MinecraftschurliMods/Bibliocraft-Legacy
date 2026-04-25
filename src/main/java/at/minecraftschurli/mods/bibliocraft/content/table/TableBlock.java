@@ -28,6 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 
 public class TableBlock extends BCFacingEntityBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
@@ -122,7 +123,7 @@ public class TableBlock extends BCFacingEntityBlock {
             return super.useItemOn(stack, state, level, pos, player, hand, hit);
         Direction direction = hit.getDirection();
         if (direction == Direction.DOWN) return super.useItemOn(stack, state, level, pos, player, hand, hit);
-        boolean useCarpet = direction != Direction.UP && ((stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock) || (stack.isEmpty() && !table.getItem(1).isEmpty()));
+        boolean useCarpet = direction != Direction.UP && ((stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock) || (stack.isEmpty() && !table.isEmpty(1)));
         ItemStack originalStack = table.getItem(useCarpet ? 1 : 0);
         if (ItemStack.isSameItem(stack, originalStack)) return InteractionResult.FAIL;
         table.setItem(useCarpet ? 1 : 0, stack.copyWithCount(1));

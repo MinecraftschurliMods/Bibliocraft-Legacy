@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
+import org.jetbrains.annotations.UnknownNullability;
 import org.jspecify.annotations.Nullable;
 
 import java.util.EnumMap;
@@ -50,7 +51,7 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
+    public boolean isValid(int slot, ItemResource stack) {
         return slot == INPUT && stack.is(BCTags.Items.TYPEWRITER_PAPER);
     }
 
@@ -67,7 +68,7 @@ public class TypewriterBlockEntity extends BCBlockEntity implements WorldlyConta
 
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-        return direction != Direction.DOWN && canPlaceItem(index, stack);
+        return direction != Direction.DOWN && isValid(index, stack);
     }
 
     @Override

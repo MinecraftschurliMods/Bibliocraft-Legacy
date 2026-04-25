@@ -16,6 +16,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
@@ -28,27 +29,37 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /// Abstract superclass for all block entities in this mod.
-public abstract class BCBlockEntity extends BlockEntity implements Container, ItemOwner {
+public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     private static final String ITEMS_TAG = "items";
-    protected final ResourceHandler<ItemResource> capability;
-    protected final NonNullList<ItemStack> items;
+    protected final ItemHandler itemHandler;
+    private final int slotCapacity;
     private LockCode lockKey = LockCode.NO_LOCK;
 
     /// @param type          The [BlockEntityType] to use.
-    /// @param containerSize The size of the container.
+    /// @param inventorySize The size of the container.
     /// @param pos           The position of this BE.
     /// @param state         The state of this BE.
-    public BCBlockEntity(BlockEntityType<?> type, int containerSize, BlockPos pos, BlockState state) {
+    public BCBlockEntity(BlockEntityType<?> type, int inventorySize, BlockPos pos, BlockState state) {
+        this(type, inventorySize, Item.ABSOLUTE_MAX_STACK_SIZE, pos, state);
+    }
+
+    public BCBlockEntity(BlockEntityType<?> type, int inventorySize, int slotCapacity, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        items = NonNullList.withSize(containerSize, ItemStack.EMPTY);
-        capability = VanillaContainerWrapper.of(this);
+        this.itemHandler = new ItemHandler(inventorySize);
+        this.slotCapacity = slotCapacity;
+    }
+
+    public ItemStacksResourceHandler getItemHandler() {
+        return itemHandler;
     }
 
     public LockCode getLockKey() {
@@ -65,69 +76,27 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
         return LockCode.NO_LOCK.equals(this.lockKey);
     }
 
-    @Override
-    public int getContainerSize() {
-        return items.size();
+    public int getCapacity(ItemResource resource) {
+        return Math.min(this.slotCapacity, resource.getMaxStackSize());
     }
 
-    @Override
-    public boolean isEmpty() {
-        for (ItemStack itemstack : items) {
-            if (!itemstack.isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public ItemStack getItem(int slot) {
-        return slot < getContainerSize() ? items.get(slot) : ItemStack.EMPTY;
-    }
-
-    @Override
-    public ItemStack removeItem(int slot, int count) {
-        ItemStack itemstack = ContainerHelper.removeItem(items, slot, count);
-        if (!itemstack.isEmpty()) {
-            this.setChanged();
-        }
-        return itemstack;
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int slot) {
-        return ContainerHelper.takeItem(items, slot);
-    }
-
-    @Override
-    public void setItem(int slot, ItemStack stack) {
-        setItem(slot, stack, false);
-    }
-
-    @Override
-    public void setItem(int slot, ItemStack stack, boolean insideTransaction) {
-        items.set(slot, stack);
-        stack.limitSize(this.getMaxStackSize(stack));
-        if (!insideTransaction) {
-            this.setChanged();
-        }
-    }
-
-    @Override
     public boolean stillValid(Player player) {
         return Container.stillValidBlockEntity(this, player);
     }
 
-    @Override
-    public void clearContent() {
-       items.clear();
+    public boolean isValid(int slot, ItemResource resource) {
+        return true;
+    }
+
+    public boolean isEmpty(int index) {
+        return itemHandler.isEmpty(index);
     }
 
     @Override
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
         super.applyImplicitComponents(componentGetter);
         this.lockKey = componentGetter.getOrDefault(DataComponents.LOCK, LockCode.NO_LOCK);
-        componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyInto(items);
+        this.itemHandler.fillFromComponent(componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
     }
 
     @Override
@@ -137,7 +106,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
             components.set(DataComponents.LOCK, this.lockKey);
         }
 
-        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items));
+        components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(itemHandler.copyToList()));
     }
 
     @SuppressWarnings("deprecation")
@@ -151,7 +120,11 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
         this.lockKey = LockCode.fromTag(input);
-        input.child(ITEMS_TAG).ifPresent(i -> ContainerHelper.loadAllItems(i, items));
+        if (input.keySet().contains(StacksResourceHandler.VALUE_IO_KEY)) {
+            this.itemHandler.deserialize(input);
+        } else {
+            this.itemHandler.loadLegacyInventory(input);
+        }
         requestModelDataUpdate();
     }
 
@@ -159,7 +132,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         this.lockKey.addToTag(output);
-        ContainerHelper.saveAllItems(output.child(ITEMS_TAG), items);
+        this.itemHandler.serialize(output);
     }
 
     @Override
@@ -174,7 +147,7 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
 
     @Nullable
     public ResourceHandler<ItemResource> getItemCapability(@Nullable Direction side) {
-        return capability;
+        return itemHandler;
     }
 
     @Override
@@ -191,5 +164,48 @@ public abstract class BCBlockEntity extends BlockEntity implements Container, It
     public float getVisualRotationYInDegrees() {
         BlockState blockState = getBlockState();
         return blockState.hasProperty(BlockStateProperties.HORIZONTAL_FACING) ? blockState.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() : 0;
+    }
+    
+    public NonNullList<ItemStack> getContents() {
+        return itemHandler.copyToList();
+    }
+
+    protected class ItemHandler extends ItemStacksResourceHandler {
+        private ItemHandler(int size) {
+            super(size);
+        }
+
+        protected void modifyContents(Consumer<NonNullList<ItemStack>> modifier) {
+            NonNullList<ItemStack> stacks = copyToList();
+            modifier.accept(stacks);
+            setStacks(stacks);
+        }
+
+        protected void fillFromComponent(ItemContainerContents containerContents) {
+            modifyContents(containerContents::copyInto);
+        }
+
+        protected void loadLegacyInventory(ValueInput input) {
+            input.child(ITEMS_TAG).ifPresent(i -> modifyContents(stacks -> ContainerHelper.loadAllItems(i, stacks)));
+        }
+
+        public boolean isEmpty(int index) {
+            return stacks.get(index).isEmpty();
+        }
+
+        @Override
+        public boolean isValid(int index, ItemResource resource) {
+            return BCBlockEntity.this.isValid(index, resource);
+        }
+
+        @Override
+        protected int getCapacity(int index, ItemResource resource) {
+            return BCBlockEntity.this.getCapacity(resource);
+        }
+
+        @Override
+        protected void onContentsChanged(int index, ItemStack previousContents) {
+            BCBlockEntity.this.setChanged();
+        }
     }
 }

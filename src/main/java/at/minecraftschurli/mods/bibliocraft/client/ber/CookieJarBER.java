@@ -14,7 +14,9 @@ import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
@@ -23,7 +25,6 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, CookieJarBER.State> {
     private final ItemModelResolver itemModelResolver;
@@ -42,21 +43,17 @@ public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, C
         BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTicks, cameraPosition, breakProgress);
         LegacyRandomSource random = new LegacyRandomSource(blockEntity.getBlockPos().asLong());
         int i = HashCommon.long2int(blockEntity.getBlockPos().asLong());
-        List<ItemStack> items = IntStream.rangeClosed(0, blockEntity.getContainerSize() - 1)
-                .mapToObj(blockEntity::getItem)
-                .filter(e -> !e.isEmpty())
-                .toList();
-        List<ItemStack> cookies = BuiltInRegistries.ITEM.get(BCTags.Items.COOKIE_JAR_COOKIES)
+        List<Holder<Item>> cookies = BuiltInRegistries.ITEM.get(BCTags.Items.COOKIE_JAR_COOKIES)
                 .orElseThrow()
                 .stream()
                 .sorted(Comparator.comparing(a -> BuiltInRegistries.ITEM.getKey(a.value())))
-                .map(ItemStack::new)
                 .toList();
+        List<ItemStack> items = blockEntity.getContents();
         state.items = new ItemStackRenderState[items.size()];
         for (int j = 0; j < items.size(); j++) {
             ItemStack item = items.get(j);
-            ItemStack cookie = cookies.get(random.nextInt(cookies.size()));
-            ItemStack stack = item.is(BCTags.Items.COOKIE_JAR_COOKIES) ? item : cookie;
+            Holder<Item> cookie = cookies.get(random.nextInt(cookies.size()));
+            ItemStack stack = item.is(BCTags.Items.COOKIE_JAR_COOKIES) ? item : new ItemStack(cookie);
             ItemStackRenderState itemstackrenderstate = new ItemStackRenderState();
             this.itemModelResolver.updateForTopItem(itemstackrenderstate, stack, ItemDisplayContext.FIXED, blockEntity.level(), blockEntity, i + j);
             state.items[j] = itemstackrenderstate;

@@ -18,7 +18,7 @@ public class PotionShelfMenu extends BCMenu<PotionShelfBlockEntity> {
     protected void addSlots(Inventory inventory) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 4; j++) {
-                addSlot(new BCSlot(blockEntity, i * 4 + j, 53 + j * 18, 15 + i * 19));
+                addItemHandlerSlot(i * 4 + j, 53 + j * 18, 15 + i * 19);
             }
         }
         addInventorySlots(inventory, 8, 84);

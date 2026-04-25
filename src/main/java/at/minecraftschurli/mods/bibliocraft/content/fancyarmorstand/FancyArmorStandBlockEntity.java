@@ -7,10 +7,10 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jspecify.annotations.Nullable;
 
 public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
@@ -18,7 +18,7 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     private FancyArmorStandEntity entity;
 
     public FancyArmorStandBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.FANCY_ARMOR_STAND.get(), 4, defaultName("fancy_armor_stand"), pos, state);
+        super(BCBlockEntities.FANCY_ARMOR_STAND.get(), 4, 1, defaultName("fancy_armor_stand"), pos, state);
     }
 
     @Override
@@ -47,13 +47,8 @@ public class FancyArmorStandBlockEntity extends BCMenuBlockEntity {
     }
 
     @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        return stack.isEmpty() || (stack.get(DataComponents.EQUIPPABLE) instanceof Equippable equippable && equippable.slot().isArmor() && equippable.slot().getIndex() == 3 - index && super.canPlaceItem(index, stack));
-    }
-
-    @Override
-    public int getMaxStackSize() {
-        return 1;
+    public boolean isValid(int index, ItemResource stack) {
+        return stack.isEmpty() || (stack.get(DataComponents.EQUIPPABLE) instanceof Equippable equippable && equippable.slot().isArmor() && equippable.slot().getIndex() == 3 - index && super.isValid(index, stack));
     }
 
     /// @return The [FancyArmorStandEntity] used for actually displaying the armor.

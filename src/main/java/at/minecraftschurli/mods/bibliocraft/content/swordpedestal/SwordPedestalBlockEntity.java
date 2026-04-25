@@ -22,6 +22,8 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 
 import java.util.List;
 
@@ -32,14 +34,14 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     private DyedItemColor color = SwordPedestalBlock.DEFAULT_COLOR;
 
     public SwordPedestalBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.SWORD_PEDESTAL.get(), 1, pos, state);
+        super(BCBlockEntities.SWORD_PEDESTAL.get(), 1, 1, pos, state);
     }
 
     @SuppressWarnings("unused")
     public static void tick(Level level, BlockPos pos, BlockState state, SwordPedestalBlockEntity blockEntity) {
         if (level.isClientSide()) return;
         if (level.getGameTime() % TICK_INTERVAL != 0) return;
-        ItemStack stack = blockEntity.getItem(0).copy();
+        ItemStack stack = ItemUtil.getStack(blockEntity.itemHandler, 0);
         if (!stack.isDamaged()) return;
         List<Holder<Enchantment>> list = stack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT))
             .keySet()
@@ -53,7 +55,7 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
             orb.discard();
             if (!stack.isDamaged()) break;
         }
-        blockEntity.setItem(0, stack);
+        blockEntity.itemHandler.set(0, ItemResource.of(stack), stack.count());
     }
 
     public DyedItemColor getColor() {
@@ -66,13 +68,8 @@ public class SwordPedestalBlockEntity extends BCBlockEntity {
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
+    public boolean isValid(int slot, ItemResource stack) {
         return stack.is(BCTags.Items.SWORD_PEDESTAL_SWORDS);
-    }
-
-    @Override
-    public int getMaxStackSize() {
-        return 1;
     }
 
     @Override

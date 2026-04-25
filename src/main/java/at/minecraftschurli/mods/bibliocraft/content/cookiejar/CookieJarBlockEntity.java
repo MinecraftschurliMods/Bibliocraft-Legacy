@@ -3,7 +3,6 @@ package at.minecraftschurli.mods.bibliocraft.content.cookiejar;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlockEntities;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenuBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.ContainerUser;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -31,10 +30,7 @@ public class CookieJarBlockEntity extends BCMenuBlockEntity {
 
         @Override
         public boolean isOwnContainer(Player player) {
-            if (player.containerMenu instanceof CookieJarMenu) {
-                Container container = ((CookieJarMenu) player.containerMenu).getBlockEntity();
-                return container == CookieJarBlockEntity.this;
-            } else return false;
+            return player.containerMenu instanceof CookieJarMenu cookieJarMenu && cookieJarMenu.getBlockEntity() == CookieJarBlockEntity.this;
         }
     };
 
@@ -51,14 +47,12 @@ public class CookieJarBlockEntity extends BCMenuBlockEntity {
         level().setBlock(getBlockPos(), pState.setValue(BarrelBlock.OPEN, pOpen), 3);
     }
 
-    @Override
     public void startOpen(ContainerUser user) {
         if (!this.remove && !user.getLivingEntity().isSpectator()) {
             this.openersCounter.incrementOpeners(user.getLivingEntity(), level(), this.getBlockPos(), this.getBlockState(), user.getContainerInteractionRange());
         }
     }
 
-    @Override
     public void stopOpen(ContainerUser user) {
         if (!this.remove && !user.getLivingEntity().isSpectator()) {
             this.openersCounter.decrementOpeners(user.getLivingEntity(), level(), this.getBlockPos(), this.getBlockState());

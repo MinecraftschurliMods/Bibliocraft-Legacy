@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.jspecify.annotations.Nullable;
 
 public class SingleItemContainerRenderState extends BlockEntityRenderState {
@@ -14,7 +15,7 @@ public class SingleItemContainerRenderState extends BlockEntityRenderState {
     public ItemStackRenderState itemStackState;
 
     public void fill(BCBlockEntity blockEntity, ItemDisplayContext displayContext, ItemModelResolver itemModelResolver) {
-        ItemStack itemstack = blockEntity.getItem(0);
+        ItemStack itemstack = ItemUtil.getStack(blockEntity.getItemHandler(), 0);
         if (itemstack.isEmpty()) {
             return;
         }

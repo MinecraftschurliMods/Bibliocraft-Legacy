@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     }
 
     @Override
-    public boolean canPlaceItem(int slot, ItemStack stack) {
+    public boolean isValid(int slot, ItemResource stack) {
         if (stack.getCraftingRemainder() != null) {
             return false;
         } else if (isSlotDisabled(slot)) {
@@ -149,7 +150,6 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         output.putInt(CRAFTING_TICKS_REMAINING_KEY, this.craftingTicksRemaining);
-        ContainerHelper.saveAllItems(output, this.items);
 
         IntList intlist = new IntArrayList();
 
@@ -174,12 +174,12 @@ public class FancyCrafterBlockEntity extends BCMenuBlockEntity implements HasTog
 
     @Override
     public List<ItemStack> getItems() {
-        return this.items.subList(0, CRAFTING_SLOTS);
+        return this.getContents().subList(0, CRAFTING_SLOTS);
     }
 
     @Override
     public void fillStackedContents(StackedItemContents stackedContents) {
-        for (ItemStack itemstack : getItems()) {
+        for (ItemStack itemstack : getContents()) {
             stackedContents.accountSimpleStack(itemstack);
         }
     }

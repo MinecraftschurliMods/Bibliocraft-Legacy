@@ -26,6 +26,7 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.transfer.item.ItemUtil;
 import org.joml.Matrix4f;
 import org.jspecify.annotations.Nullable;
 
@@ -87,7 +88,7 @@ public class TableBER implements BlockEntityRenderer<TableBlockEntity, TableBER.
         private boolean isMap;
 
         public void fill(BCBlockEntity blockEntity, ItemDisplayContext displayContext, ItemModelResolver itemModelResolver, MapRenderer mapRenderer) {
-            ItemStack item = blockEntity.getItem(0);
+            ItemStack item = ItemUtil.getStack(blockEntity.getItemHandler(), 0);
             if (!item.is(Items.FILLED_MAP)) {
                 super.fill(blockEntity, displayContext, itemModelResolver);
                 return;

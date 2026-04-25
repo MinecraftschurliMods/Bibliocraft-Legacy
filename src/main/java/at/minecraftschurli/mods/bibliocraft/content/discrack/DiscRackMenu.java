@@ -17,7 +17,7 @@ public class DiscRackMenu extends BCMenu<DiscRackBlockEntity> {
     @Override
     protected void addSlots(Inventory inventory) {
         for (int i = 0; i < 9; i++) {
-            addSlot(new BCSlot(blockEntity, i, 8 + i * 18, 34));
+            addItemHandlerSlot(i, 8 + i * 18, 34);
         }
         addInventorySlots(inventory, 8, 84);
     }

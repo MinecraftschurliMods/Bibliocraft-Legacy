@@ -17,9 +17,9 @@ public class LabelMenu extends BCMenu<LabelBlockEntity> {
 
     @Override
     protected void addSlots(Inventory inventory) {
-        addSlot(new Slot(blockEntity, 0, 80, 45));
-        addSlot(new Slot(blockEntity, 1, 35, 26));
-        addSlot(new Slot(blockEntity, 2, 125, 26));
+        addItemHandlerSlot(0, 80, 45);
+        addItemHandlerSlot(1, 35, 26);
+        addItemHandlerSlot(2, 125, 26);
         addInventorySlots(inventory, 8, 84);
     }
 }

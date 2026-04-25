@@ -18,7 +18,7 @@ public class BookcaseMenu extends BCMenu<BookcaseBlockEntity> {
     protected void addSlots(Inventory inventory) {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 8; j++) {
-                addSlot(new BCSlot(blockEntity, i * 8 + j, 17 + j * 18, 17 + i * 25));
+                addItemHandlerSlot(i * 8 + j, 17 + j * 18, 17 + i * 25);
             }
         }
         addInventorySlots(inventory, 8, 84);
