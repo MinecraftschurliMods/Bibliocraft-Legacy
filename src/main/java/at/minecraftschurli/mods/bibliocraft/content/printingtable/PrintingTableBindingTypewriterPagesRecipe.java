@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.WrittenBookContent;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
@@ -72,6 +73,11 @@ public class PrintingTableBindingTypewriterPagesRecipe extends PrintingTableBind
     @Override
     public RecipeSerializer<PrintingTableBindingTypewriterPagesRecipe> getSerializer() {
         return BCRecipes.PRINTING_TABLE_BINDING_TYPEWRITER_PAGES.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(ingredient);
     }
 
     @Override

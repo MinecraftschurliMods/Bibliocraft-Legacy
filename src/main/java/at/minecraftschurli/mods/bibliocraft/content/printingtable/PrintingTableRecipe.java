@@ -50,11 +50,6 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     }
 
     @Override
-    public PlacementInfo placementInfo() {
-        return PlacementInfo.NOT_PLACEABLE;
-    }
-
-    @Override
     public String group() {
         return group;
     }
@@ -69,18 +64,12 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
     }
 
     public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
-        return defaultCraftingReminder(input);
-    }
-
-    static NonNullList<ItemStack> defaultCraftingReminder(PrintingTableRecipeInput input) {
-        NonNullList<ItemStack> nonnulllist = NonNullList.withSize(input.size(), ItemStack.EMPTY);
-
-        for (int i = 0; i < nonnulllist.size(); i++) {
+        NonNullList<ItemStack> list = NonNullList.withSize(input.size(), ItemStack.EMPTY);
+        for (int i = 0; i < list.size(); i++) {
             ItemStack item = input.getItem(i);
-            nonnulllist.set(i, item.getCraftingRemainder() != null ? item.getCraftingRemainder().create() : ItemStack.EMPTY);
+            list.set(i, item.getCraftingRemainder() != null ? item.getCraftingRemainder().create() : ItemStack.EMPTY);
         }
-
-        return nonnulllist;
+        return list;
     }
 
     public int getDuration() {

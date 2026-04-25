@@ -13,6 +13,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -84,6 +85,11 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     @Override
     public RecipeSerializer<? extends Recipe<PrintingTableRecipeInput>> getSerializer() {
         return BCRecipes.PRINTING_TABLE_CLONING.get();
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(ingredients);
     }
 
     @Override

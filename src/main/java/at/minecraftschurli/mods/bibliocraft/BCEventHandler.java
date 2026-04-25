@@ -22,6 +22,7 @@ import at.minecraftschurli.mods.bibliocraft.content.typewriter.TypewriterSyncPac
 import at.minecraftschurli.mods.bibliocraft.init.BCBlockEntities;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
 import at.minecraftschurli.mods.bibliocraft.init.BCEntities;
+import at.minecraftschurli.mods.bibliocraft.init.BCRecipes;
 import at.minecraftschurli.mods.bibliocraft.init.BCRegistries;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
@@ -47,6 +48,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -135,6 +137,11 @@ public final class BCEventHandler {
         registerVanilla(event, WoodType.PALE_OAK, Blocks.PALE_OAK_PLANKS, BlockFamilies.PALE_OAK_PLANKS);
     }
     // @formatter:on
+
+    @SubscribeEvent
+    private static void onDatapackSync(OnDatapackSyncEvent event) {
+        event.sendRecipes(BCRecipes.PRINTING_TABLE.get());
+    }
 
     @SubscribeEvent
     private static void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
