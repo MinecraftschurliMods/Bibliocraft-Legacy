@@ -1,6 +1,7 @@
 package at.minecraftschurli.mods.bibliocraft.util;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.ChatFormatting;
@@ -15,27 +16,25 @@ import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.clock.ClockManager;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.timeline.Timelines;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
+import net.neoforged.neoforge.transfer.item.ContainerOrHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -140,10 +139,23 @@ public final class BCUtil {
     ///
     /// @param level The experience level to calculate the experience amount for.
     /// @return The total amount of experience represented by the given level.
-    private static int calculateExperienceForLevel(int level) {
+    public static int calculateExperienceForLevel(int level) {
         if (level <= 16) return level * level + 6 * level;
         if (level <= 31) return (int) (2.5 * level * level - 40.5 * level + 360);
         return (int) (4.5 * level * level + 162.5 * level + 2220);
+    }
+
+    /// Returns the [ResourceHandler<ItemResource>] at the given [BlockPos] in the given [Level], if available.
+    ///
+    /// @param level     The [Level] to query.
+    /// @param pos       The [BlockPos] to query.
+    /// @param direction The [Direction] to pass in.
+    @Nullable
+    public static ResourceHandler<ItemResource> getItemHandler(Level level, BlockPos pos, @Nullable Direction direction) {
+        ContainerOrHandler containerOrHandler = HopperBlockEntity.getContainerOrHandlerAt(level, pos, direction);
+        if (containerOrHandler.isEmpty()) return null;
+        Container container = containerOrHandler.container();
+        return container == null ? nonNull(containerOrHandler.itemHandler()) : VanillaContainerWrapper.of(container);
     }
 
     /// Returns a display name for the given position. If there is a nameable block entity at the position, the block entity's name is returned, otherwise the block's name is returned.
@@ -247,35 +259,20 @@ public final class BCUtil {
     }
 
     /// Attempts to insert the given [ItemStack] into a container at the given [BlockPos] in the given [Level] from the given [Direction], if possible.
-    /// First, the vanilla way using [Container] is checked. If that doesn't work, the NeoForge way using [IItemHandler] is checked.
     ///
     /// @param level     The [Level] the insertion takes place in.
     /// @param pos       The [BlockPos] the insertion takes place at.
     /// @param direction The [Direction] from which the insertion happens.
     /// @param stack     The [ItemStack] to be inserted.
     /// @param source    The source of the insertion. May be null.
-    /// @param <T>       The generic type of the source.
-    /// @return The [ItemStack] left after the insertion has been attempted and, if applicable, succeeded.
-    public static <T extends BlockEntity & Container> ItemStack tryInsert(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable T source) {
-        Container container = HopperBlockEntity.getContainerAt(level, pos.relative(direction));
-        if (container != null) return HopperBlockEntity.addItem(source, container, stack, direction.getOpposite());
-        ResourceHandler<ItemResource> cap = level.getCapability(Capabilities.Item.BLOCK, pos, level.getBlockState(pos), source, direction);
-        if (cap == null) {
-            List<Entity> list = level.getEntities((Entity) null, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), EntitySelector.ENTITY_STILL_ALIVE);
-            if (!list.isEmpty()) {
-                Collections.shuffle(list);
-                for (Entity entity : list) {
-                    cap = entity.getCapability(Capabilities.Item.ENTITY_AUTOMATION, direction);
-                    if (cap != null) break;
-                }
+    public static void tryInsert(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable BCBlockEntity source) {
+        ResourceHandler<ItemResource> handler = getItemHandler(level, pos, direction);
+        if (handler == null || ResourceHandlerUtil.isFull(handler)) return;
+        try (Transaction transaction = Transaction.openRoot()) {
+            if (handler.insert(ItemResource.of(stack), 1, transaction) == 1) {
+                transaction.commit();
+                stack.shrink(1);
             }
         }
-        if (cap != null) {
-            IItemHandler handler = IItemHandler.of(cap);
-            for (int slot = 0; slot < handler.getSlots() && !stack.isEmpty(); slot++) {
-                stack = handler.insertItem(slot, stack, false);
-            }
-        }
-        return stack;
     }
 }

@@ -2,7 +2,6 @@ package at.minecraftschurli.mods.bibliocraft.content.slottedbook;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCItems;
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
-import at.minecraftschurli.mods.bibliocraft.util.slot.ViewSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -91,6 +90,22 @@ public class SlottedBookMenu extends AbstractContainerMenu {
         @Override
         public boolean mayPlace(ItemStack stack) {
             return !stack.is(BCItems.SLOTTED_BOOK) && super.mayPlace(stack);
+        }
+    }
+
+    public static class ViewSlot extends Slot {
+        public ViewSlot(Container container, int slot, int x, int y) {
+            super(container, slot, x, y);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return false;
+        }
+
+        @Override
+        public boolean mayPickup(Player player) {
+            return false;
         }
     }
 }

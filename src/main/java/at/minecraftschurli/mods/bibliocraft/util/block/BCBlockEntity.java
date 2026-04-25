@@ -12,7 +12,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Player;
@@ -29,37 +28,44 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.StacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /// Abstract superclass for all block entities in this mod.
 public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
-    private static final String ITEMS_TAG = "items";
-    protected final ItemHandler itemHandler;
+    protected final BCItemHandler itemHandler;
+    private final int containerSize;
     private final int slotCapacity;
     private LockCode lockKey = LockCode.NO_LOCK;
 
     /// @param type          The [BlockEntityType] to use.
-    /// @param inventorySize The size of the container.
+    /// @param containerSize The size of the container.
     /// @param pos           The position of this BE.
     /// @param state         The state of this BE.
-    public BCBlockEntity(BlockEntityType<?> type, int inventorySize, BlockPos pos, BlockState state) {
-        this(type, inventorySize, Item.ABSOLUTE_MAX_STACK_SIZE, pos, state);
+    public BCBlockEntity(BlockEntityType<?> type, int containerSize, BlockPos pos, BlockState state) {
+        this(type, containerSize, Item.ABSOLUTE_MAX_STACK_SIZE, pos, state);
     }
 
-    public BCBlockEntity(BlockEntityType<?> type, int inventorySize, int slotCapacity, BlockPos pos, BlockState state) {
+    /// @param type          The [BlockEntityType] to use.
+    /// @param containerSize The size of the container.
+    /// @param slotCapacity  The max capacity of each slot.
+    /// @param pos           The position of this BE.
+    /// @param state         The state of this BE.
+    public BCBlockEntity(BlockEntityType<?> type, int containerSize, int slotCapacity, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.itemHandler = new ItemHandler(inventorySize);
+        this.itemHandler = new BCItemHandler(containerSize, this);
+        this.containerSize = containerSize;
         this.slotCapacity = slotCapacity;
     }
 
-    public ItemStacksResourceHandler getItemHandler() {
+    public BCItemHandler getItemHandler() {
         return itemHandler;
+    }
+
+    public int getContainerSize() {
+        return containerSize;
     }
 
     public LockCode getLockKey() {
@@ -73,11 +79,11 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     }
 
     public boolean isLocked() {
-        return LockCode.NO_LOCK.equals(this.lockKey);
+        return LockCode.NO_LOCK.equals(lockKey);
     }
 
     public int getCapacity(ItemResource resource) {
-        return Math.min(this.slotCapacity, resource.getMaxStackSize());
+        return Math.min(slotCapacity, resource.getMaxStackSize());
     }
 
     public boolean stillValid(Player player) {
@@ -92,20 +98,23 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
         return itemHandler.isEmpty(index);
     }
 
+    public ItemStack getItem(int index) {
+        return itemHandler.getResource(index).toStack(itemHandler.getAmountAsInt(index));
+    }
+
     @Override
     protected void applyImplicitComponents(DataComponentGetter componentGetter) {
         super.applyImplicitComponents(componentGetter);
-        this.lockKey = componentGetter.getOrDefault(DataComponents.LOCK, LockCode.NO_LOCK);
-        this.itemHandler.fillFromComponent(componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
+        lockKey = componentGetter.getOrDefault(DataComponents.LOCK, LockCode.NO_LOCK);
+        itemHandler.fillFromComponent(componentGetter.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY));
     }
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
         super.collectImplicitComponents(components);
-        if (this.isLocked()) {
-            components.set(DataComponents.LOCK, this.lockKey);
+        if (isLocked()) {
+            components.set(DataComponents.LOCK, lockKey);
         }
-
         components.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(itemHandler.copyToList()));
     }
 
@@ -113,26 +122,22 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     @Override
     public void removeComponentsFromTag(ValueOutput output) {
         output.discard(LockCode.TAG_LOCK);
-        output.discard(ITEMS_TAG);
+        output.discard(BCItemHandler.ITEMS_TAG);
     }
 
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        this.lockKey = LockCode.fromTag(input);
-        if (input.keySet().contains(StacksResourceHandler.VALUE_IO_KEY)) {
-            this.itemHandler.deserialize(input);
-        } else {
-            this.itemHandler.loadLegacyInventory(input);
-        }
+        lockKey = LockCode.fromTag(input);
+        itemHandler.deserialize(input);
         requestModelDataUpdate();
     }
 
     @Override
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
-        this.lockKey.addToTag(output);
-        this.itemHandler.serialize(output);
+        lockKey.addToTag(output);
+        itemHandler.serialize(output);
     }
 
     @Override
@@ -168,44 +173,5 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     
     public NonNullList<ItemStack> getContents() {
         return itemHandler.copyToList();
-    }
-
-    protected class ItemHandler extends ItemStacksResourceHandler {
-        private ItemHandler(int size) {
-            super(size);
-        }
-
-        protected void modifyContents(Consumer<NonNullList<ItemStack>> modifier) {
-            NonNullList<ItemStack> stacks = copyToList();
-            modifier.accept(stacks);
-            setStacks(stacks);
-        }
-
-        protected void fillFromComponent(ItemContainerContents containerContents) {
-            modifyContents(containerContents::copyInto);
-        }
-
-        protected void loadLegacyInventory(ValueInput input) {
-            input.child(ITEMS_TAG).ifPresent(i -> modifyContents(stacks -> ContainerHelper.loadAllItems(i, stacks)));
-        }
-
-        public boolean isEmpty(int index) {
-            return stacks.get(index).isEmpty();
-        }
-
-        @Override
-        public boolean isValid(int index, ItemResource resource) {
-            return BCBlockEntity.this.isValid(index, resource);
-        }
-
-        @Override
-        protected int getCapacity(int index, ItemResource resource) {
-            return BCBlockEntity.this.getCapacity(resource);
-        }
-
-        @Override
-        protected void onContentsChanged(int index, ItemStack previousContents) {
-            BCBlockEntity.this.setChanged();
-        }
     }
 }

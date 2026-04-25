@@ -2,6 +2,7 @@ package at.minecraftschurli.mods.bibliocraft.content.dinnerplate;
 
 import at.minecraftschurli.mods.bibliocraft.util.ShapeUtil;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCEntityBlock;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -25,6 +26,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jspecify.annotations.Nullable;
 
 public class DinnerPlateBlock extends BCEntityBlock {
@@ -68,12 +71,11 @@ public class DinnerPlateBlock extends BCEntityBlock {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof DinnerPlateBlockEntity plate))
             return super.useItemOn(stack, state, level, pos, player, hand, hit);
-        ItemStack slotStack = plate.getItem(0);
+        BCItemHandler itemHandler = plate.getItemHandler();
+        ItemStack slotStack = itemHandler.getResource(0).toStack(itemHandler.getAmountAsInt(0));
         if (stack.has(DataComponents.CONSUMABLE) && stack.has(DataComponents.FOOD)) {
             if (slotStack.isEmpty()) {
-                ItemStack foodStack = stack.copy();
-                foodStack.setCount(1);
-                plate.setItem(0, foodStack);
+                itemHandler.set(0, ItemResource.of(stack), 1);
                 stack.shrink(1);
                 newState = newState.setValue(PROGRESS, 0);
             } else {
@@ -88,7 +90,7 @@ public class DinnerPlateBlock extends BCEntityBlock {
             newState = newState.setValue(PROGRESS, 0);
             triggerItemUseEffects(player, slotStack, 16);
             slotStack.finishUsingItem(level, player);
-            plate.setItem(0, ItemStack.EMPTY);
+            itemHandler.set(0, ItemResource.of(ItemStack.EMPTY), 0);
         }
         level.setBlock(pos, newState, Block.UPDATE_ALL);
         return InteractionResult.SUCCESS;

@@ -1,6 +1,7 @@
 package at.minecraftschurli.mods.bibliocraft.util.block;
 
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
+import at.minecraftschurli.mods.bibliocraft.util.slot.BCSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,7 +10,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 
 /// Abstract superclass for all menus of this mod.
 ///
@@ -48,12 +48,12 @@ public abstract class BCMenu<T extends BCMenuBlockEntity> extends AbstractContai
     }
 
     protected void addItemHandlerSlot(int index, int x, int y) {
-        addSlot(new ResourceHandlerSlot(this.blockEntity.itemHandler, this.blockEntity.itemHandler::set, index, x, y));
+        addSlot(new BCSlot(blockEntity, index, x, y));
     }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        int slotCount = this.blockEntity.itemHandler.size();
+        int slotCount = blockEntity.getContainerSize();
         Slot slot = slots.get(index);
         if (!slot.hasItem()) return ItemStack.EMPTY;
         ItemStack stack = slot.getItem();

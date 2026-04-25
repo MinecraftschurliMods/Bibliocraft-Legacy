@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 /// Abstract superclass for rotatable entity blocks that have in-world interactions.
 public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
@@ -39,10 +41,12 @@ public abstract class BCFacingInteractibleBlock extends BCFacingEntityBlock {
                     BaseContainerBlockEntity.sendChestLockedNotifications(pos.getCenter(), player, BCUtil.getNameAtPos(level, pos));
                     return InteractionResult.CONSUME;
                 }
-                ItemStack slotStack = bcbe.getItem(slot);
-                if (stack.isEmpty() || bcbe.isValid(slot, stack)) {
-                    bcbe.setItem(slot, stack);
-                    player.setItemInHand(hand, slotStack);
+                BCItemHandler itemHandler = bcbe.getItemHandler();
+                ItemResource resource = ItemResource.of(stack);
+                ItemResource slotResource = itemHandler.getResource(slot);
+                if (resource.isEmpty() || itemHandler.isValid(slot, resource)) {
+                    itemHandler.set(slot, resource, itemHandler.getAmountAsInt(slot));
+                    player.setItemInHand(hand, slotResource.toStack());
                     return InteractionResult.SUCCESS;
                 }
             }

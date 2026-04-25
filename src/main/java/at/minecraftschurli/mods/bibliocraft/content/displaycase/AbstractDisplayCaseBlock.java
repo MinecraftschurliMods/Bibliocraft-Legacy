@@ -42,7 +42,7 @@ public abstract class AbstractDisplayCaseBlock extends BCFacingInteractibleBlock
             setOpen(level, pos, state, true);
             return InteractionResult.SUCCESS;
         }
-        if (stack.isEmpty() && level.getBlockEntity(pos) instanceof DisplayCaseBlockEntity dcbe && dcbe.getItem(0).isEmpty()) {
+        if (stack.isEmpty() && level.getBlockEntity(pos) instanceof DisplayCaseBlockEntity dcbe && dcbe.getItemHandler().getResource(0).isEmpty()) {
             setOpen(level, pos, state, false);
             return InteractionResult.SUCCESS;
         }

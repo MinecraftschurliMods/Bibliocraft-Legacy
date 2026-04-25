@@ -1,10 +1,11 @@
 package at.minecraftschurli.mods.bibliocraft.content.fancycrafter;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenu;
+import at.minecraftschurli.mods.bibliocraft.util.slot.BCSlot;
 import at.minecraftschurli.mods.bibliocraft.util.slot.HasToggleableSlots;
 import at.minecraftschurli.mods.bibliocraft.util.slot.ToggleableSlot;
-import at.minecraftschurli.mods.bibliocraft.util.slot.ViewSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -35,9 +36,9 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
                 addSlot(new ToggleableSlot<>(blockEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
             }
         }
-        addSlot(new ViewSlot(blockEntity, FancyCrafterBlockEntity.CRAFTING_RESULT_SLOT_INDEX, 124, 35));
+        addSlot(new ResultSlot(blockEntity, FancyCrafterBlockEntity.CRAFTING_RESULT_SLOT_INDEX, 124, 35));
         for (int i = 0; i < FancyCrafterBlockEntity.STORAGE_SLOTS; i++) {
-            addSlot(new Slot(blockEntity, i + FancyCrafterBlockEntity.CRAFTING_SLOTS + FancyCrafterBlockEntity.CRAFTING_RESULT_SLOTS, 17 + i * 18, 78));
+            addSlot(new BCSlot(blockEntity, i + FancyCrafterBlockEntity.CRAFTING_SLOTS + FancyCrafterBlockEntity.CRAFTING_RESULT_SLOTS, 17 + i * 18, 78));
         }
         addInventorySlots(inventory, 8, 110);
     }
@@ -110,5 +111,21 @@ public class FancyCrafterMenu extends BCMenu<FancyCrafterBlockEntity> implements
                 return false;
         }
         return true;
+    }
+
+    private static class ResultSlot extends BCSlot {
+        public ResultSlot(BCBlockEntity blockEntity, int slot, int x, int y) {
+            super(blockEntity, slot, x, y);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return false;
+        }
+
+        @Override
+        public boolean mayPickup(Player player) {
+            return false;
+        }
     }
 }

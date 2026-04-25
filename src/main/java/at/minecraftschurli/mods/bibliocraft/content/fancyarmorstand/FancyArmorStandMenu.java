@@ -1,7 +1,9 @@
 package at.minecraftschurli.mods.bibliocraft.content.fancyarmorstand;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenu;
+import at.minecraftschurli.mods.bibliocraft.util.slot.BCSlot;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -29,10 +31,10 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
         addSlot(new EquipableSlot(blockEntity, 2, 80, 44, EquipmentSlot.LEGS));
         addSlot(new EquipableSlot(blockEntity, 3, 80, 62, EquipmentSlot.FEET));
         addInventorySlots(inventory, 8, 84);
-        addSlot(new EquipableSlot(inventory, 39, 126, 8, EquipmentSlot.HEAD));
-        addSlot(new EquipableSlot(inventory, 38, 126, 26, EquipmentSlot.CHEST));
-        addSlot(new EquipableSlot(inventory, 37, 126, 44, EquipmentSlot.LEGS));
-        addSlot(new EquipableSlot(inventory, 36, 126, 62, EquipmentSlot.FEET));
+        addSlot(new PlayerEquipableSlot(inventory, 39, 126, 8, EquipmentSlot.HEAD));
+        addSlot(new PlayerEquipableSlot(inventory, 38, 126, 26, EquipmentSlot.CHEST));
+        addSlot(new PlayerEquipableSlot(inventory, 37, 126, 44, EquipmentSlot.LEGS));
+        addSlot(new PlayerEquipableSlot(inventory, 36, 126, 62, EquipmentSlot.FEET));
     }
 
     @Override
@@ -102,17 +104,17 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
         return null;
     }
 
-    /// Variant of [Slot] that only accepts items that go in a given [EquipmentSlot].
-    private static class EquipableSlot extends Slot {
+    /// Variant of [Slot] that only accepts items that go in a given [EquipmentSlot]. Uses [BCSlot] as its base class.
+    private static class EquipableSlot extends BCSlot {
         private final EquipmentSlot slotType;
 
-        /// @param container The [Container] this slot is in.
-        /// @param index     The slot index.
-        /// @param x         The x position.
-        /// @param y         The y position.
-        /// @param slotType  The [EquipmentSlot] to limit slot contents with.
-        public EquipableSlot(Container container, int index, int x, int y, EquipmentSlot slotType) {
-            super(container, index, x, y);
+        /// @param blockEntity The [BCBlockEntity] this slot is in.
+        /// @param index       The slot index.
+        /// @param x           The x position.
+        /// @param y           The y position.
+        /// @param slotType    The [EquipmentSlot] to limit slot contents with.
+        public EquipableSlot(BCBlockEntity blockEntity, int index, int x, int y, EquipmentSlot slotType) {
+            super(blockEntity, index, x, y);
             this.slotType = slotType;
         }
 
@@ -125,5 +127,31 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
         public int getMaxStackSize() {
             return 1;
         }
+    }
+
+    /// Variant of [Slot] that only accepts items that go in a given [EquipmentSlot]. Uses the vanilla [Slot] as its base class.
+    private static class PlayerEquipableSlot extends Slot {
+
+        private final EquipmentSlot slotType;
+
+        /// @param container The [Container] this slot is in.
+        /// @param index     The slot index.
+        /// @param x         The x position.
+        /// @param y         The y position.
+        /// @param slotType  The [EquipmentSlot] to limit slot contents with.
+        public PlayerEquipableSlot(Container container, int index, int x, int y, EquipmentSlot slotType) {
+            super(container, index, x, y);
+            this.slotType = slotType;
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return stack.get(DataComponents.EQUIPPABLE) instanceof Equippable equippable && equippable.slot() == slotType;
+        }
+        @Override
+        public int getMaxStackSize() {
+            return 1;
+        }
+
     }
 }

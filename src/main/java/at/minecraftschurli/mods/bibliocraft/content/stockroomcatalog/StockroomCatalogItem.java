@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 
@@ -63,11 +62,10 @@ public class StockroomCatalogItem extends Item {
     public static List<StockroomCatalogItemEntry> calculateItems(List<BlockPos> positions, Level level, StockroomCatalogSorting.Item itemSorting) {
         SequencedMap<ItemStack, StockroomCatalogItemEntry> tempItems = new LinkedHashMap<>();
         for (BlockPos pos : positions) {
-            ResourceHandler<ItemResource> cap = level.getCapability(Capabilities.Item.BLOCK, pos, null);
-            if (cap == null) continue;
-            IItemHandler handler = IItemHandler.of(cap);
-            for (int i = 0; i < handler.getSlots(); i++) {
-                ItemStack originalStack = handler.getStackInSlot(i);
+            ResourceHandler<ItemResource> handler = BCUtil.getItemHandler(level, pos, null);
+            if (handler == null) continue;
+            for (int i = 0; i < handler.size(); i++) {
+                ItemStack originalStack = handler.getResource(i).toStack(handler.getAmountAsInt(i));
                 if (originalStack.isEmpty()) continue;
                 ItemStack stack = originalStack.copy();
                 int count = stack.getCount();

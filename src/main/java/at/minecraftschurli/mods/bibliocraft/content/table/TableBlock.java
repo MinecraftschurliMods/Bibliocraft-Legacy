@@ -4,6 +4,7 @@ import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.ShapeUtil;
 import at.minecraftschurli.mods.bibliocraft.util.StringRepresentableEnum;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCFacingEntityBlock;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -28,7 +29,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.transfer.item.ItemUtil;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 public class TableBlock extends BCFacingEntityBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
@@ -124,15 +126,17 @@ public class TableBlock extends BCFacingEntityBlock {
         Direction direction = hit.getDirection();
         if (direction == Direction.DOWN) return super.useItemOn(stack, state, level, pos, player, hand, hit);
         boolean useCarpet = direction != Direction.UP && ((stack.getItem() instanceof BlockItem bi && bi.getBlock() instanceof WoolCarpetBlock) || (stack.isEmpty() && !table.isEmpty(1)));
-        ItemStack originalStack = table.getItem(useCarpet ? 1 : 0);
-        if (ItemStack.isSameItem(stack, originalStack)) return InteractionResult.FAIL;
-        table.setItem(useCarpet ? 1 : 0, stack.copyWithCount(1));
+        BCItemHandler itemHandler = table.getItemHandler();
+        int index = useCarpet ? 1 : 0;
+        ItemStack original = itemHandler.getResource(index).toStack();
+        if (ItemStack.isSameItem(stack, original)) return InteractionResult.FAIL;
+        itemHandler.set(index, ItemResource.of(stack), 1);
         stack.shrink(1);
-        if (!originalStack.isEmpty()) {
+        if (!original.isEmpty()) {
             if (stack.isEmpty()) {
-                player.setItemInHand(hand, originalStack);
+                player.setItemInHand(hand, original);
             } else {
-                player.getInventory().add(originalStack);
+                player.getInventory().add(original);
             }
         }
         return InteractionResult.SUCCESS;

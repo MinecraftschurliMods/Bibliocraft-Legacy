@@ -4,6 +4,7 @@ import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.ShapeUtil;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCFacingInteractibleBlock;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -39,6 +40,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jspecify.annotations.Nullable;
 
 public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
@@ -215,11 +218,13 @@ public class FancyArmorStandBlock extends BCFacingInteractibleBlock {
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof BCBlockEntity bcbe)) return false;
-        ItemStack slotStack = bcbe.getItem(slot);
-        if (!bcbe.isValid(slot, stack)) return false;
-        bcbe.setItem(slot, stack);
-        player.getInventory().setItem(playerSlot, slotStack);
-        if (slotStack.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {
+        BCItemHandler itemHandler = bcbe.getItemHandler();
+        ItemResource resource = ItemResource.of(stack);
+        ItemResource slotResource = itemHandler.getResource(slot);
+        if (!itemHandler.isValid(slot, resource)) return false;
+        itemHandler.set(slot, resource, itemHandler.getAmountAsInt(slot));
+        player.getInventory().setItem(playerSlot, slotResource.toStack());
+        if (slotResource.get(DataComponents.EQUIPPABLE) instanceof Equippable equipable) {
             level.playSound(null, player, equipable.equipSound().value(), SoundSource.PLAYERS, 1, 1);
         }
         return true;
