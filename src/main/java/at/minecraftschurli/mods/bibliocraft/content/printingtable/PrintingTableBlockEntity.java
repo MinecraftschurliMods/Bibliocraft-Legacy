@@ -2,6 +2,7 @@ package at.minecraftschurli.mods.bibliocraft.content.printingtable;
 
 import at.minecraftschurli.mods.bibliocraft.init.BCBlockEntities;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
+import at.minecraftschurli.mods.bibliocraft.init.BCFluids;
 import at.minecraftschurli.mods.bibliocraft.init.BCRecipes;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenuBlockEntity;
@@ -199,15 +200,13 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
     }
 
     private FluidResource getExperienceResource() {
-        return level()
-                .registryAccess()
-                .lookupOrThrow(Registries.FLUID)
-                .get(Tags.Fluids.EXPERIENCE)
-                .stream()
-                .flatMap(HolderSet.ListBacked::stream)
-                .findFirst()
-                .map(FluidResource::of)
-                .orElseThrow();
+        return FluidResource.of(level().registryAccess()
+            .lookupOrThrow(Registries.FLUID)
+            .get(Tags.Fluids.EXPERIENCE)
+            .stream()
+            .flatMap(HolderSet.ListBacked::stream)
+            .findFirst()
+            .orElse(BCFluids.EXPERIENCE));
     }
 
     public float getProgress() {

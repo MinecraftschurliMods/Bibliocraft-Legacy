@@ -10,9 +10,12 @@ import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.jetbrains.annotations.ApiStatus;
 
 public interface BCRegistries {
@@ -21,6 +24,8 @@ public interface BCRegistries {
     DeferredRegister.Items                               ITEMS              = DeferredRegister.createItems(BibliocraftApi.MOD_ID);
     DeferredRegister.Entities                            ENTITIES           = DeferredRegister.createEntities(BibliocraftApi.MOD_ID);
     DeferredRegister.DataComponents                      DATA_COMPONENTS    = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, BibliocraftApi.MOD_ID);
+    DeferredRegister<FluidType>                          FLUID_TYPES        = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES,  BibliocraftApi.MOD_ID);
+    DeferredRegister<Fluid>                              FLUIDS             = DeferredRegister.create(Registries.FLUID,                     BibliocraftApi.MOD_ID);
     DeferredRegister<CreativeModeTab>                    CREATIVE_TABS      = DeferredRegister.create(Registries.CREATIVE_MODE_TAB,         BibliocraftApi.MOD_ID);
     DeferredRegister<BlockEntityType<?>>                 BLOCK_ENTITIES     = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE,         BibliocraftApi.MOD_ID);
     DeferredRegister<MenuType<?>>                        MENUS              = DeferredRegister.create(Registries.MENU,                      BibliocraftApi.MOD_ID);
@@ -36,6 +41,8 @@ public interface BCRegistries {
     static void register(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
+        FLUID_TYPES.register(bus);
+        FLUIDS.register(bus);
         CREATIVE_TABS.register(bus);
         DATA_COMPONENTS.register(bus);
         BLOCK_ENTITIES.register(bus);
@@ -52,6 +59,7 @@ public interface BCRegistries {
     static void init() {
         BCBlocks.init();
         BCItems.init();
+        BCFluids.init();
         BCCreativeTabs.init();
         BCDataComponents.init();
         BCBlockEntities.init();

@@ -7,6 +7,7 @@ import at.minecraftschurli.mods.bibliocraft.client.screen.FancyCrafterScreen;
 import at.minecraftschurli.mods.bibliocraft.client.screen.PrintingTableScreen;
 import at.minecraftschurli.mods.bibliocraft.content.fancycrafter.FancyCrafterMenu;
 import at.minecraftschurli.mods.bibliocraft.content.printingtable.PrintingTableMenu;
+import at.minecraftschurli.mods.bibliocraft.init.BCFluids;
 import at.minecraftschurli.mods.bibliocraft.init.BCItems;
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
 import at.minecraftschurli.mods.bibliocraft.init.BCRecipes;
@@ -19,6 +20,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
@@ -33,6 +35,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.util.Lazy;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -140,6 +143,7 @@ public final class BCJeiPlugin implements IModPlugin {
         if (!CompatUtil.hasSoulCandles()) {
             remove(runtime, Stream.of(BCItems.SOUL_FANCY_GOLD_LANTERN, BCItems.SOUL_FANCY_IRON_LANTERN).map(Supplier::get).map(ItemStack::new).toList());
         }
+        runtime.getIngredientManager().removeIngredientsAtRuntime(NeoForgeTypes.FLUID_STACK, List.of(new FluidStack(BCFluids.EXPERIENCE, 1000)));
     }
 
     public static void setRecipeMap(RecipeMap recipeMap) {

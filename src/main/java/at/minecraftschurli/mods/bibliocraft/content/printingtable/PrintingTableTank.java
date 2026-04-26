@@ -1,5 +1,6 @@
 package at.minecraftschurli.mods.bibliocraft.content.printingtable;
 
+import at.minecraftschurli.mods.bibliocraft.init.BCFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -52,7 +53,7 @@ public class PrintingTableTank extends FluidStacksResourceHandler {
 
     @Override
     public boolean isValid(int index, FluidResource resource) {
-        return index == 0 && resource.is(Tags.Fluids.EXPERIENCE);
+        return index == 0 && (resource.is(Tags.Fluids.EXPERIENCE) || resource.is(BCFluids.EXPERIENCE));
     }
 
     @Override

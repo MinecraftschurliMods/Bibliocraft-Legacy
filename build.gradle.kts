@@ -39,7 +39,7 @@ dependencies {
     testImplementation(helper.testframework())
 
     // jei for integration
-    val jeiApiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-${mc}-common-api:${version}" }
+    val jeiApiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-${mc}-neoforge-api:${version}" }
     val jeiDep = helper.minecraftVersion.zip(jei.version) { mc, version -> "mezz.jei:jei-${mc}-neoforge:${version}" }
     compileOnly(jeiApiDep)
     if (!helper.runningInCI.getOrElse(false)) {

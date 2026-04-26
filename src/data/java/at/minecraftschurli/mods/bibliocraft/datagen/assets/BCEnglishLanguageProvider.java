@@ -155,6 +155,7 @@ public class BCEnglishLanguageProvider extends LanguageProvider {
         add("container", "printing_table", "Printing Table");
         add("container", "shelf", "Shelf");
         add("container", "tool_rack", "Tool Rack");
+        add("fluid", "experience", "Experience");
         add("itemGroup." + BibliocraftApi.MOD_ID, "Bibliocraft");
         add(FormattedLine.Mode.NORMAL.getTranslationKey(), "Normal");
         add(FormattedLine.Mode.SHADOW.getTranslationKey(), "Shadow");
