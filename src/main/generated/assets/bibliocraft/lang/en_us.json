@@ -1336,6 +1336,7 @@
   "container.bibliocraft.printing_table": "Printing Table",
   "container.bibliocraft.shelf": "Shelf",
   "container.bibliocraft.tool_rack": "Tool Rack",
+  "fluid.bibliocraft.experience": "Experience",
   "gui.bibliocraft.clock.add_trigger": "Add Trigger",
   "gui.bibliocraft.clock.delete_trigger": "Delete Trigger",
   "gui.bibliocraft.clock.edit_trigger": "Edit Trigger",
