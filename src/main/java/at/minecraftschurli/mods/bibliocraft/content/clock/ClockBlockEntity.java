@@ -3,8 +3,6 @@ package at.minecraftschurli.mods.bibliocraft.content.clock;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlockEntities;
 import at.minecraftschurli.mods.bibliocraft.init.BCSoundEvents;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +27,6 @@ public class ClockBlockEntity extends BlockEntity {
     private static final String TICK_SOUND_KEY = "tick";
     private static final String TRIGGERS_KEY = "triggers";
     private final List<ClockTrigger> triggers = new ArrayList<>();
-    private final Multimap<Integer, ClockTrigger> triggersMap = HashMultimap.create();
     private int redstoneTick = 0;
     private boolean tickSound = true;
 
@@ -45,15 +42,20 @@ public class ClockBlockEntity extends BlockEntity {
             }
         }
         int time = BCUtil.getDayTime(level);
-        if (blockEntity.triggersMap.containsKey(time)) {
-            Collection<ClockTrigger> trigger = blockEntity.triggersMap.get(time);
-            if (trigger.stream().anyMatch(ClockTrigger::sound)) {
-                level.playSound(null, pos, BCSoundEvents.CLOCK_CHIME.value(), SoundSource.BLOCKS, 1, 1);
-            }
-            if (trigger.stream().anyMatch(ClockTrigger::redstone)) {
-                blockEntity.redstoneTick = 2;
-                setPowered(level, pos, true);
-            }
+        boolean sound = false;
+        boolean redstone = false;
+        for (ClockTrigger trigger : blockEntity.triggers) {
+            if (trigger.getInGameTime(level) != time) continue;
+            if (trigger.sound()) sound = true;
+            if (trigger.redstone()) redstone = true;
+            if (sound && redstone) break;
+        }
+        if (sound) {
+            level.playSound(null, pos, BCSoundEvents.CLOCK_CHIME.value(), SoundSource.BLOCKS, 1, 1);
+        }
+        if (redstone) {
+            blockEntity.redstoneTick = 2;
+            setPowered(level, pos, true);
         }
         if (blockEntity.getTickSound() && level instanceof ServerLevel serverLevel && serverLevel.getGameRules().get(GameRules.ADVANCE_TIME) && time % 20 == 0) {
             level.playSound(null, pos, time % 40 == 0 ? BCSoundEvents.CLOCK_TICK.value() : BCSoundEvents.CLOCK_TOCK.value(), SoundSource.BLOCKS, 1, 1);
@@ -85,11 +87,7 @@ public class ClockBlockEntity extends BlockEntity {
 
     private void addTriggers(Collection<ClockTrigger> triggers) {
         this.triggers.clear();
-        this.triggersMap.clear();
-        for (ClockTrigger trigger : triggers) {
-            this.triggers.add(trigger);
-            this.triggersMap.put(trigger.getInGameTime(BCUtil.nonNull(getLevel())), trigger);
-        }
+        this.triggers.addAll(triggers);
         this.triggers.sort(ClockTrigger::compareTo);
         setChanged();
     }
@@ -119,4 +117,6 @@ public class ClockBlockEntity extends BlockEntity {
     public boolean getTickSound() {
         return tickSound;
     }
+    
+    
 }

@@ -48,7 +48,7 @@ public class CookieJarBER implements BlockEntityRenderer<CookieJarBlockEntity, C
                 .stream()
                 .sorted(Comparator.comparing(a -> BuiltInRegistries.ITEM.getKey(a.value())))
                 .toList();
-        List<ItemStack> items = blockEntity.getContents();
+        List<ItemStack> items = blockEntity.getContents().stream().filter(stack -> !stack.isEmpty()).toList();
         state.items = new ItemStackRenderState[items.size()];
         for (int j = 0; j < items.size(); j++) {
             ItemStack item = items.get(j);
