@@ -5,6 +5,7 @@ import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
 import at.minecraftschurli.mods.bibliocraft.init.BCFluids;
 import at.minecraftschurli.mods.bibliocraft.init.BCRecipes;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
+import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCMenuBlockEntity;
 import at.minecraftschurli.mods.bibliocraft.util.slot.HasToggleableSlots;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -18,6 +19,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -254,26 +256,34 @@ public class PrintingTableBlockEntity extends BCMenuBlockEntity implements HasTo
 
     private void finishRecipe() {
         if (recipe == null) return;
-        List<ItemStack> remainingItems = recipe.getRemainingItems(getRecipeInput());
+        List<@Nullable ItemStackTemplate> remainingItems = recipe.getRemainingItems(getRecipeInput());
         ItemStack result = recipe.postProcess(recipe.assemble(getRecipeInput()), this);
-        ItemStack stack = getItem(10);
-        if (!stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, result)) return;
-        result.setCount(stack.getCount() + 1);
-        setItem(10, result);
-        IntStream.range(0, 10)
-                .mapToObj(this::getItem)
-                .forEach(e -> e.shrink(1));
+        if (result.isEmpty()) return;
+        BCItemHandler itemHandler = getItemHandler();
+        try (var transaction = Transaction.openRoot()) {
+            for (int i = 0; i < 10; i++) {
+                ItemResource resource = itemHandler.getResource(i);
+                if (resource.isEmpty()) continue;
+                int extracted = itemHandler.extract(i, resource, 1, transaction);
+                if (extracted != 1) return;
+            }
+            ItemResource resultResource = ItemResource.of(result);
+            ItemResource resultSlotResource = itemHandler.getResource(10);
+            if (!resultSlotResource.isEmpty() && !resultResource.equals(resultSlotResource)) return;
+            int amount = itemHandler.getAmountAsInt(10);
+            int capacity = itemHandler.getCapacityAsInt(10, resultSlotResource);
+            if (amount + result.count() > capacity) return;
+            itemHandler.set(10, resultResource, amount + result.count());
+            transaction.commit();
+        }
         for (int i = 0; i < remainingItems.size(); i++) {
-            ItemStack remaining = remainingItems.get(i);
-            setItem(i, remaining.copy());
+            ItemStackTemplate remaining = remainingItems.get(i);
+            if (remaining != null) {
+                itemHandler.set(i, ItemResource.of(remaining), remaining.count());
+            }
         }
         calculateRecipe(false);
         setChanged();
-    }
-
-    private void setItem(int slot, ItemStack stack) {
-        getItemHandler().set(slot, ItemResource.of(stack), stack.count());
-        setSlot(slot, stack);
     }
 
     private void pullExperience() {
