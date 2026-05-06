@@ -10,6 +10,10 @@
       "required": false
     },
     {
+      "id": "auroral:frosted_cookies",
+      "required": false
+    },
+    {
       "id": "create:sweet_roll",
       "required": false
     },
@@ -243,6 +247,10 @@
     },
     {
       "id": "merrymaking:tree_christmas_cookie",
+      "required": false
+    },
+    {
+      "id": "pantryforblockheads:fortune_cookie",
       "required": false
     },
     {
