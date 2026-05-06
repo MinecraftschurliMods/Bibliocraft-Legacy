@@ -3,12 +3,10 @@ package at.minecraftschurli.mods.bibliocraft.api;
 import at.minecraftschurli.mods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
 import at.minecraftschurli.mods.bibliocraft.api.lockandkey.LockAndKeyBehaviors;
 import at.minecraftschurli.mods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.util.Lazy;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
 

@@ -1,7 +1,6 @@
 package at.minecraftschurli.mods.bibliocraft.util;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
-import at.minecraftschurli.mods.bibliocraft.util.block.BCBlockEntity;
 import at.minecraftschurli.mods.bibliocraft.util.block.BCItemHandler;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
@@ -25,7 +24,6 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.timeline.Timelines;
 import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.ResourceHandlerUtil;
 import net.neoforged.neoforge.transfer.item.ContainerOrHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
@@ -258,16 +256,6 @@ public final class BCUtil {
     /// @return The given [Vec3i], represented as a [Vec3].
     public static Vec3 toVec3(Vec3i vec) {
         return new Vec3(vec.getX(), vec.getY(), vec.getZ());
-    }
-
-    /// Attempts to insert the given [ItemStack] into a container at the given [BlockPos] in the given [Level] from the given [Direction], if possible.
-    ///
-    /// @param level     The [Level] the insertion takes place in.
-    /// @param pos       The [BlockPos] the insertion takes place at.
-    /// @param direction The [Direction] from which the insertion happens.
-    /// @param stack     The [ItemStack] to be inserted.
-    /// @param source    The source of the insertion.
-    public static void tryInsert(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable BCBlockEntity source) {
     }
 
     /// Swap the given item stack with the contents of the given slot in the given {@link BCItemHandler},

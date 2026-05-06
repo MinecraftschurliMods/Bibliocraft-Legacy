@@ -7,7 +7,6 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
-import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
@@ -15,12 +14,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,11 +63,11 @@ public abstract class PrintingTableRecipe implements Recipe<PrintingTableRecipeI
         return result.create();
     }
 
-    public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
-        NonNullList<ItemStack> list = NonNullList.withSize(input.size(), ItemStack.EMPTY);
+    public List<@Nullable ItemStackTemplate> getRemainingItems(PrintingTableRecipeInput input) {
+        List<@Nullable ItemStackTemplate> list = new ArrayList<>(Collections.nCopies(input.size(), null));
         for (int i = 0; i < list.size(); i++) {
             ItemStack item = input.getItem(i);
-            list.set(i, item.getCraftingRemainder() != null ? item.getCraftingRemainder().create() : ItemStack.EMPTY);
+            list.set(i, item.getCraftingRemainder() != null ? item.getCraftingRemainder() : null);
         }
         return list;
     }

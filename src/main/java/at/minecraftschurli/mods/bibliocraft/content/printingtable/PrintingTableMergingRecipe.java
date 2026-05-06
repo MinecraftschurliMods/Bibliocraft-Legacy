@@ -16,7 +16,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -140,14 +139,14 @@ public class PrintingTableMergingRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
-        NonNullList<ItemStack> remainingItems = super.getRemainingItems(input);
+    public List<@Nullable ItemStackTemplate> getRemainingItems(PrintingTableRecipeInput input) {
+        List<@Nullable ItemStackTemplate> remainingItems = super.getRemainingItems(input);
         for (int i = 0; i < 9; i++) {
             ItemStack stack = input.left().get(i);
             if (stack.isEmpty()) continue;
-            remainingItems.set(i, stack.copy());
+            remainingItems.set(i, ItemStackTemplate.fromNonEmptyStack(stack));
         }
-        remainingItems.set(9, ItemStack.EMPTY);
+        remainingItems.set(9, null);
         return remainingItems;
     }
 

@@ -5,7 +5,6 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -18,6 +17,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,9 +98,9 @@ public class PrintingTableCloningRecipe extends PrintingTableRecipe {
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(PrintingTableRecipeInput input) {
-        NonNullList<ItemStack> remainingItems = super.getRemainingItems(input);
-        remainingItems.set(9, input.right().copy());
+    public List<@Nullable ItemStackTemplate> getRemainingItems(PrintingTableRecipeInput input) {
+        List<@Nullable ItemStackTemplate> remainingItems = super.getRemainingItems(input);
+        remainingItems.set(9, input.right().isEmpty() ? null : ItemStackTemplate.fromNonEmptyStack(input.right()));
         return remainingItems;
     }
 
