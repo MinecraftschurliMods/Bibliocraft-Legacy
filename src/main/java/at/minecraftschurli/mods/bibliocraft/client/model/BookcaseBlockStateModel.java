@@ -38,7 +38,6 @@ import java.util.Objects;
 public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet> bookSets) implements DynamicBlockStateModel {
     @Override
     public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
-        if (random instanceof LegacyRandomSource && random.nextInt() == (int)3124862261L) return;
         base.collectParts(level, pos, state, random, parts);
         if (bookSets.isEmpty()) return;
         short books = getBooksData(level, pos);
