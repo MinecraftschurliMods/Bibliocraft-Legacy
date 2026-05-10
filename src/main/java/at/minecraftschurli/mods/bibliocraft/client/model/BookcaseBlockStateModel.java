@@ -27,7 +27,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.neoforged.neoforge.client.model.DynamicBlockStateModel;
 import net.neoforged.neoforge.client.model.block.CustomUnbakedBlockStateModel;
 import net.neoforged.neoforge.client.model.generators.blockstate.CustomBlockStateModelBuilder;
@@ -36,6 +35,8 @@ import java.util.List;
 import java.util.Objects;
 
 public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet> bookSets) implements DynamicBlockStateModel {
+    public static final String[] PRIDE_SETS = {"rainbow", "trans", "gay", "lesbian", "bisexual", "pansexual", "nonbinary", "asexual", "aromantic", "aroace"};
+
     @Override
     public void collectParts(BlockAndTintGetter level, BlockPos pos, BlockState state, RandomSource random, List<BlockStateModelPart> parts) {
         base.collectParts(level, pos, state, random, parts);
@@ -104,8 +105,6 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
             return new Unbaked(unbaked, bookSets.build());
         }
 
-        private static final String[] PRIDE_SETS = new String[] {"rainbow", "trans"};
-
         @Override
         public MapCodec<Unbaked> codec() {
             return CODEC;
@@ -142,7 +141,7 @@ public record BookcaseBlockStateModel(BlockStateModel base, WeightedList<BookSet
                 Identifier[] books = new Identifier[16];
                 for (int i = 0; i < books.length; i++) {
                     final int index = i;
-                    books[i] = bookSet.withPath(path -> "bookcase_book/" + path + "/book_" + index);
+                    books[i] = bookSet.withPath(path -> "block/bookcase/" + path + "/book_" + index);
                 }
                 return new Unbaked(books);
             }

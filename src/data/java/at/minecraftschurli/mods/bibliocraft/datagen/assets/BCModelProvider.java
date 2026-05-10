@@ -1,6 +1,7 @@
 package at.minecraftschurli.mods.bibliocraft.datagen.assets;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
+import at.minecraftschurli.mods.bibliocraft.client.model.BookcaseBlockStateModel;
 import at.minecraftschurli.mods.bibliocraft.content.cookiejar.CookieJarBlock;
 import at.minecraftschurli.mods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
 import at.minecraftschurli.mods.bibliocraft.content.fancylight.FancyLampBlock;
@@ -24,7 +25,9 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Holder;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
@@ -36,10 +39,20 @@ import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
+import java.util.Arrays;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.*;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.COLORED;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.COPPER_BLOCKS;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.FANCY_COPPER_LAMP;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.FANCY_COPPER_LANTERN;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.GroupedModelTemplate;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.ModelBuilder;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.WOOL_TEXTURES;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.builder;
+import static at.minecraftschurli.mods.bibliocraft.util.BlockModelDatagenUtil.lightBlockTypeDispatch;
 
 public class BCModelProvider extends ModelProvider {
     public BCModelProvider(PackOutput output) {
@@ -77,6 +90,17 @@ public class BCModelProvider extends ModelProvider {
     }
 
     private void registerBlockModels(BlockModelGenerators blockModels) {
+        TextureSlot bookSlot = TextureSlot.create("book");
+        ModelTemplate[] books = IntStream.range(0, 16)
+            .mapToObj(i -> ModelTemplates.create(BCUtil.bcLoc("template/bookcase/book_" + i).toString(), bookSlot))
+            .toArray(ModelTemplate[]::new);
+        Stream.concat(Stream.of("default"), Arrays.stream(BookcaseBlockStateModel.PRIDE_SETS))
+            .forEach(e -> {
+                for (int i = 0; i < books.length; i++) {
+                    ModelTemplate book = books[i];
+                    book.create(BCUtil.bcLoc("block/bookcase/" + e + "/book_" + i), new TextureMapping().put(bookSlot, new Material(BCUtil.bcLoc("block/bookcase/" + e + "/book_" + i))), blockModels.modelOutput);
+                }
+            });
         Identifier goldMaterial = BCUtil.mcLoc("block/gold_block");
         Identifier ironMaterial = BCUtil.mcLoc("block/iron_block");
         Identifier clearColor = BCUtil.mcLoc("block/glass");

@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "name": "book11",
+      "from": [9, 1, 9],
+      "to": [10, 6, 15],
+      "faces": {
+        "north": {"uv": [13, 6, 14, 11], "texture": "book"},
+        "east": {"uv": [0, 6, 6, 11], "texture": "book"},
+        "south": {"uv": [6, 6, 7, 11], "texture": "book"},
+        "west": {"uv": [7, 6, 13, 11], "texture": "book"},
+        "up": {"uv": [6, 0, 7, 6], "texture": "book"},
+        "down": {"uv": [7, 0, 8, 6], "texture": "book"}
+      }
+    }
+  ]
+}
