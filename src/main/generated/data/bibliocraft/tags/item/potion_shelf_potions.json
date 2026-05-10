@@ -17,6 +17,10 @@
       "required": false
     },
     {
+      "id": "aquaculture:tin_can",
+      "required": false
+    },
+    {
       "id": "ars_additions:xp_jar",
       "required": false
     },
@@ -62,6 +66,14 @@
     },
     {
       "id": "arsdelight:unstable_cocktail",
+      "required": false
+    },
+    {
+      "id": "arsmagicalegacy:crystal_phylactery",
+      "required": false
+    },
+    {
+      "id": "arsmagicalegacy:mana_martini",
       "required": false
     },
     {
@@ -181,6 +193,10 @@
       "required": false
     },
     {
+      "id": "enderio:soul_vial",
+      "required": false
+    },
+    {
       "id": "endersdelight:chorus_juice",
       "required": false
     },
@@ -194,6 +210,10 @@
     },
     {
       "id": "ends_delight:chorus_fruit_milk_tea",
+      "required": false
+    },
+    {
+      "id": "everlastingabilities:ability_bottle",
       "required": false
     },
     {
@@ -645,6 +665,38 @@
       "required": false
     },
     {
+      "id": "ftbic:canned_food",
+      "required": false
+    },
+    {
+      "id": "ftbic:dark_spray_paint_can",
+      "required": false
+    },
+    {
+      "id": "ftbic:empty_can",
+      "required": false
+    },
+    {
+      "id": "ftbic:fluid_cell",
+      "required": false
+    },
+    {
+      "id": "ftbic:small_coolant_cell",
+      "required": false
+    },
+    {
+      "id": "ftbic:medium_coolant_cell",
+      "required": false
+    },
+    {
+      "id": "ftbic:large_coolant_cell",
+      "required": false
+    },
+    {
+      "id": "ftbic:light_spray_paint_can",
+      "required": false
+    },
+    {
       "id": "gobberdelight:ender_gooey_apple_cider",
       "required": false
     },
@@ -662,6 +714,18 @@
     },
     {
       "id": "irons_spellbooks:lightning_bottle",
+      "required": false
+    },
+    {
+      "id": "justdirethings:fuel_canister",
+      "required": false
+    },
+    {
+      "id": "justdirethings:fluid_canister",
+      "required": false
+    },
+    {
+      "id": "justdirethings:potion_canister",
       "required": false
     },
     {
@@ -706,6 +770,10 @@
     },
     {
       "id": "naturesaura:vacuum_bottle",
+      "required": false
+    },
+    {
+      "id": "pantryforblockheads:soy_milk",
       "required": false
     },
     {
@@ -957,6 +1025,14 @@
       "required": false
     },
     {
+      "id": "tropicraft:pink_pony_bottle",
+      "required": false
+    },
+    {
+      "id": "tropicraft:yellow_pony_bottle",
+      "required": false
+    },
+    {
       "id": "twilightdelight:glacier_ice_tea",
       "required": false
     },
@@ -1114,6 +1190,14 @@
     },
     {
       "id": "vegandelight:soymilk_bottle",
+      "required": false
+    },
+    {
+      "id": "xycraft_machines:creative_cell",
+      "required": false
+    },
+    {
+      "id": "xycraft_machines:durable_cell",
       "required": false
     }
   ]
