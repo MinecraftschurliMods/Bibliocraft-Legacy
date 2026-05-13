@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-public class BCModelTemplates {
+public final class BCModelTemplates {
     private static final TextureSlot COLOR = TextureSlot.create("color");
     private static final TextureSlot METAL = TextureSlot.create("metal");
     private static final TextureSlot CHAIN = TextureSlot.create("chain");
@@ -216,9 +216,12 @@ public class BCModelTemplates {
         return color(color).put(TextureSlot.TEXTURE, new Material(texture));
     }
 
+    private BCModelTemplates() {}
+
     private static class BCModelTemplate extends ModelTemplate {
         private static final Set<String> COLORS = Arrays.stream(DyeColor.values()).map(DyeColor::getName).collect(Collectors.toUnmodifiableSet());
 
+        @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
         public BCModelTemplate(Optional<Identifier> model, Optional<String> suffix, TextureSlot... slots) {
             super(model, suffix, slots);
         }
