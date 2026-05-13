@@ -41,7 +41,8 @@ public class WallDiscRackBlock extends BCFacingInteractibleBlock {
 
     @Override
     public int lookingAtSlot(BlockState state, BlockHitResult hit) {
-        return (int) (12.5 - hit.getLocation().subtract(Vec3.atLowerCornerOf(hit.getBlockPos())).scale(16).y());
+        int i = (int) (12.5 - hit.getLocation().subtract(Vec3.atLowerCornerOf(hit.getBlockPos())).scale(16).y());
+        return i >= 9 || i < 0 ? -1 : i;
     }
 
     @Override
