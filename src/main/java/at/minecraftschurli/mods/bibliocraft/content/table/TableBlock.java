@@ -30,7 +30,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 public class TableBlock extends BCFacingEntityBlock {
     public static final EnumProperty<Type> TYPE = EnumProperty.create("type", Type.class);
@@ -129,8 +128,8 @@ public class TableBlock extends BCFacingEntityBlock {
         BCItemHandler itemHandler = table.getItemHandler();
         int index = useCarpet ? 1 : 0;
         ItemStack original = itemHandler.getResource(index).toStack();
-        if (ItemStack.isSameItem(stack, original)) return InteractionResult.FAIL;
-        itemHandler.set(index, ItemResource.of(stack), 1);
+        if (ItemStack.isSameItemSameComponents(stack, original)) return InteractionResult.FAIL;
+        itemHandler.set(index, ItemResource.of(stack), stack.isEmpty() ? 0 : 1);
         stack.shrink(1);
         if (!original.isEmpty()) {
             if (stack.isEmpty()) {
