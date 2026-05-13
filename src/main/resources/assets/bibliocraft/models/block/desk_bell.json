@@ -125,6 +125,11 @@
 		},
 		"ground": {
 			"translation": [0, 5, 0]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"translation": [0, 5, 0],
+			"scale": [1.25, 1.25, 1.25]
 		}
 	},
 	"groups": [
