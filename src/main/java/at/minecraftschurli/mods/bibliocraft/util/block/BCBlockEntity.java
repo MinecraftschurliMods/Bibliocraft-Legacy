@@ -12,6 +12,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
+import net.minecraft.world.Containers;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Player;
@@ -173,5 +174,12 @@ public abstract class BCBlockEntity extends BlockEntity implements ItemOwner {
     
     public NonNullList<ItemStack> getContents() {
         return this.itemHandler.copyToList();
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        if (level != null) {
+            Containers.dropContents(level, pos, getContents());
+        }
     }
 }
