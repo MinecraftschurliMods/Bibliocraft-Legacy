@@ -92,6 +92,15 @@
 			"rotation": [0, 135, 0],
 			"translation": [0, 2.5, 1],
 			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"translation": [5, 0, 0],
+			"scale": [1.25, 1.25, 1.25]
 		}
 	}
 }
