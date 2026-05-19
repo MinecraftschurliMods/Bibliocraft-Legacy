@@ -18,6 +18,7 @@ import at.minecraftschurli.mods.bibliocraft.client.ber.TableBER;
 import at.minecraftschurli.mods.bibliocraft.client.ber.ToolRackBER;
 import at.minecraftschurli.mods.bibliocraft.client.jei.BCJeiPlugin;
 import at.minecraftschurli.mods.bibliocraft.client.model.BookcaseBlockStateModel;
+import at.minecraftschurli.mods.bibliocraft.client.model.ConditionalModelLoader;
 import at.minecraftschurli.mods.bibliocraft.client.model.SwordPedestalTintSource;
 import at.minecraftschurli.mods.bibliocraft.client.model.TableBlockStateModel;
 import at.minecraftschurli.mods.bibliocraft.client.screen.BCMenuScreens;
@@ -36,6 +37,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterBlockStateModels;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -63,7 +65,12 @@ public final class BCClientEventHandler {
     }
 
     @SubscribeEvent
-    private static void registerGeometryLoaders(RegisterBlockStateModels event) {
+    private static void registerModelLoaders(ModelEvent.RegisterLoaders event) {
+        event.register(ConditionalModelLoader.ID, new ConditionalModelLoader());
+    }
+
+    @SubscribeEvent
+    private static void registerBlockStateModels(RegisterBlockStateModels event) {
         event.registerModel(BCUtil.bcLoc("bookcase"), BookcaseBlockStateModel.Unbaked.CODEC);
         event.registerModel(BCUtil.bcLoc("table"), TableBlockStateModel.Unbaked.CODEC);
     }

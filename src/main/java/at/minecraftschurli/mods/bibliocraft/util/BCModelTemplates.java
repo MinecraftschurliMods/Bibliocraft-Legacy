@@ -219,6 +219,7 @@ public class BCModelTemplates {
     private static class BCModelTemplate extends ModelTemplate {
         private static final Set<String> COLORS = Arrays.stream(DyeColor.values()).map(DyeColor::getName).collect(Collectors.toUnmodifiableSet());
 
+        @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
         public BCModelTemplate(Optional<Identifier> model, Optional<String> suffix, TextureSlot... slots) {
             super(model, suffix, slots);
         }

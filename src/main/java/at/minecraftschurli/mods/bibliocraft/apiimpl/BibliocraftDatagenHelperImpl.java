@@ -121,7 +121,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
                 }
                 for (DyeColor color : DyeColor.values()) {
                     for (GroupedModelTemplate2<BibliocraftWoodType, DyeColor> template : WOODEN_COLORED) {
-                        template.builder(blockModels, woodType, color).build();
+                        template.build(blockModels, woodType, color);
                     }
                     seatBackItemModel(itemModels, BCItems.SMALL_SEAT_BACK, woodType, color);
                     seatBackItemModel(itemModels, BCItems.RAISED_SEAT_BACK, woodType, color);
