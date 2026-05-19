@@ -1,0 +1,6 @@
+{
+  "parent": "bibliocraft:block/template/bookcase/book_15",
+  "textures": {
+    "book": "bibliocraft:block/bookcase/asexual/book_15"
+  }
+}

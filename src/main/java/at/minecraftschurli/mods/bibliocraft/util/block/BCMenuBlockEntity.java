@@ -33,6 +33,12 @@ public abstract class BCMenuBlockEntity extends BCBlockEntity implements MenuPro
         this.defaultName = defaultName;
     }
 
+    /// @param type          The [BlockEntityType] to use.
+    /// @param containerSize The size of the container.
+    /// @param slotCapacity  The max capacity of each slot.
+    /// @param defaultName   The title of the title, shown in GUIs.
+    /// @param pos           The position of this BE.
+    /// @param state         The state of this BE.
     public BCMenuBlockEntity(BlockEntityType<?> type, int containerSize, int slotCapacity, Component defaultName, BlockPos pos, BlockState state) {
         super(type, containerSize, slotCapacity, pos, state);
         this.defaultName = defaultName;

@@ -35,7 +35,7 @@ public class CookieJarBlockEntity extends BCMenuBlockEntity {
     };
 
     public CookieJarBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.COOKIE_JAR.get(), 8, defaultName("cookie_jar"), pos, state);
+        super(BCBlockEntities.COOKIE_JAR.get(), 8, 1, defaultName("cookie_jar"), pos, state);
     }
 
     @Override

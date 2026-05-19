@@ -474,7 +474,7 @@ public final class BibliocraftDatagenHelperImpl implements BibliocraftDatagenHel
             woodenBlockTranslation(provider, woodType, BCBlocks.GRANDFATHER_CLOCK, "Grandfather Clock");
             woodenBlockTranslation(provider, woodType, BCBlocks.LABEL, "Label");
             woodenBlockTranslation(provider, woodType, BCBlocks.POTION_SHELF, "Potion Shelf");
-            woodenBlockTranslation(provider, woodType, BCBlocks.SHELF, "Shelf");
+            woodenBlockTranslation(provider, woodType, BCBlocks.SHELF, "Storage Shelf");
             woodenBlockTranslation(provider, woodType, BCBlocks.TABLE, "Table");
             woodenBlockTranslation(provider, woodType, BCBlocks.TOOL_RACK, "Tool Rack");
             for (DyeColor color : DyeColor.values()) {

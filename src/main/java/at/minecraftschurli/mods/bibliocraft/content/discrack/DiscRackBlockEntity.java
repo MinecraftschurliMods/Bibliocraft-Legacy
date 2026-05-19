@@ -12,7 +12,7 @@ import org.jetbrains.annotations.UnknownNullability;
 
 public class DiscRackBlockEntity extends BCMenuBlockEntity {
     public DiscRackBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.DISC_RACK.get(), 9, defaultName("disc_rack"), pos, state);
+        super(BCBlockEntities.DISC_RACK.get(), 9, 1, defaultName("disc_rack"), pos, state);
     }
 
     @Override

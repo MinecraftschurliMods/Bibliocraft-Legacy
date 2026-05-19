@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class ShelfBlockEntity extends BCMenuBlockEntity {
     public ShelfBlockEntity(BlockPos pos, BlockState state) {
-        super(BCBlockEntities.SHELF.get(), 4, defaultName("shelf"), pos, state);
+        super(BCBlockEntities.SHELF.get(), 4, 1, defaultName("shelf"), pos, state);
     }
 
     @Override
