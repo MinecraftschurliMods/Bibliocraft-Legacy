@@ -24,8 +24,8 @@ public class ConditionalModelLoaderBuilder extends CustomLoaderBuilder {
         return builder;
     }
 
-    public ConditionalModelLoaderBuilder addCondition(ICondition condition) {
-        conditions.add(condition);
+    public ConditionalModelLoaderBuilder addConditions(ICondition... conditions) {
+        this.conditions.addAll(List.of(conditions));
         return this;
     }
 

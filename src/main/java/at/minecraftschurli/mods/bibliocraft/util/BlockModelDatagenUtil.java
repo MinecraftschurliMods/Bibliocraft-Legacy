@@ -1,7 +1,9 @@
 package at.minecraftschurli.mods.bibliocraft.util;
 
+import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
 import at.minecraftschurli.mods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import at.minecraftschurli.mods.bibliocraft.client.model.BookcaseBlockStateModel;
+import at.minecraftschurli.mods.bibliocraft.client.model.ConditionalModelLoaderBuilder;
 import at.minecraftschurli.mods.bibliocraft.client.model.TableBlockStateModel;
 import at.minecraftschurli.mods.bibliocraft.content.fancylight.AbstractFancyLightBlock;
 import at.minecraftschurli.mods.bibliocraft.content.fancysign.FancySignBlock;
@@ -22,6 +24,7 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.client.renderer.block.dispatch.VariantMutator;
 import net.minecraft.client.renderer.item.ItemModel;
@@ -41,13 +44,20 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.client.model.generators.blockstate.CustomBlockStateModelBuilder;
+import net.neoforged.neoforge.client.model.generators.template.CustomLoaderBuilder;
+import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
@@ -77,11 +87,12 @@ public final class BlockModelDatagenUtil {
             DEFAULT_WOOD_TYPE_TEXTURE_MAPPING,
             BlockModelDatagenUtil::nameFor,
             (modelBuilder, textureMapping) -> modelBuilder
-                    .withWrappedVariantFunction(BookcaseBlockStateModel::builder)
-                    .withSingleModel(BCModelTemplates.BOOKCASE, textureMapping)
-                    .withHorizontalRotation()
-                    .withUVLock()
-                    .withItemModel());
+                .withModLoadedConditionFromTextures()
+                .withWrappedVariantFunction(BookcaseBlockStateModel::builder)
+                .withSingleModel(BCModelTemplates.BOOKCASE, textureMapping)
+                .withHorizontalRotation()
+                .withUVLock()
+                .withItemModel());
     public static final GroupedModelTemplate<BibliocraftWoodType> FANCY_CLOCK = horizontalWoodTemplateNoItem(BCBlocks.FANCY_CLOCK, BCModelTemplates.FANCY_CLOCK);
     public static final GroupedModelTemplate<BibliocraftWoodType> WALL_FANCY_CLOCK = horizontalWoodTemplateNoItem(BCBlocks.WALL_FANCY_CLOCK, BCModelTemplates.WALL_FANCY_CLOCK);
     public static final GroupedModelTemplate<BibliocraftWoodType> FANCY_SIGN = horizontalWoodTemplate(BCBlocks.FANCY_SIGN, FancySignBlock.HANGING, BCModelTemplates.FANCY_SIGN_HANGING, BCModelTemplates.FANCY_SIGN, false);
@@ -98,50 +109,55 @@ public final class BlockModelDatagenUtil {
             DEFAULT_WOOD_TYPE_COLOR_TEXTURE_MAPPING,
             BlockModelDatagenUtil::nameFor,
             (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(BlockStateProperties.OPEN, BCModelTemplates.DISPLAY_CASE_OPEN, BCModelTemplates.DISPLAY_CASE_CLOSED, textureMapping)
-                    .withHorizontalRotation()
-                    .withItemModelFromDispatch(BlockStateProperties.OPEN, true));
+                .withModLoadedConditionFromTextures()
+                .withModelDispatch(BlockStateProperties.OPEN, BCModelTemplates.DISPLAY_CASE_OPEN, BCModelTemplates.DISPLAY_CASE_CLOSED, textureMapping)
+                .withHorizontalRotation()
+                .withItemModelFromDispatch(BlockStateProperties.OPEN, true));
     public static final GroupedModelTemplate2<BibliocraftWoodType, DyeColor> WALL_DISPLAY_CASE = new GroupedModelTemplate2<>(
             BCBlocks.WALL_DISPLAY_CASE,
             DEFAULT_WOOD_TYPE_COLOR_TEXTURE_MAPPING,
             BlockModelDatagenUtil::nameFor,
             (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(BlockStateProperties.OPEN, BCModelTemplates.WALL_DISPLAY_CASE_OPEN, BCModelTemplates.WALL_DISPLAY_CASE_CLOSED, textureMapping)
-                    .withHorizontalRotation()
-                    .withUVLock());
+                .withModLoadedConditionFromTextures()
+                .withModelDispatch(BlockStateProperties.OPEN, BCModelTemplates.WALL_DISPLAY_CASE_OPEN, BCModelTemplates.WALL_DISPLAY_CASE_CLOSED, textureMapping)
+                .withHorizontalRotation()
+                .withUVLock());
     public static final GroupedModelTemplate2<BibliocraftWoodType, DyeColor> SEAT = new GroupedModelTemplate2<>(
             BCBlocks.SEAT,
             DEFAULT_WOOD_TYPE_COLOR_TEXTURE_MAPPING,
             BlockModelDatagenUtil::nameFor,
             (modelBuilder, textureMapping) -> modelBuilder
-                    .withSingleModel(BCModelTemplates.SEAT, textureMapping)
-                    .withItemModel());
+                .withModLoadedConditionFromTextures()
+                .withSingleModel(BCModelTemplates.SEAT, textureMapping)
+                .withItemModel());
     public static final GroupedModelTemplate2<BibliocraftWoodType, DyeColor> SEAT_BACK = new GroupedModelTemplate2<>(
             BCBlocks.SEAT_BACK,
             DEFAULT_WOOD_TYPE_COLOR_TEXTURE_MAPPING,
             BlockModelDatagenUtil::nameFor,
             (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(SeatBackBlock.TYPE, BCModelTemplates.SEAT_BACK::get, textureMapping)
-                    .withHorizontalRotation()
-                    .withUVLock());
+                .withModLoadedConditionFromTextures()
+                .withModelDispatch(SeatBackBlock.TYPE, BCModelTemplates.SEAT_BACK::get, textureMapping)
+                .withHorizontalRotation()
+                .withUVLock());
     public static final GroupedModelTemplate<BibliocraftWoodType> TABLE = new GroupedModelTemplate<>(
             BCBlocks.TABLE,
             DEFAULT_WOOD_TYPE_TEXTURE_MAPPING,
             BlockModelDatagenUtil::nameFor,
             (modelBuilder, textureMapping) -> modelBuilder
-                    .withWrappedVariantFunction(TableBlockStateModel::builder)
-                    .withModelDispatch(TableBlock.TYPE, BCModelTemplates.TABLE::get, textureMapping)
-                    .withItemModelFromDispatch(TableBlock.TYPE, TableBlock.Type.NONE)
-                    .withHorizontalRotation()
-                    .withUVLock());
+                .withModLoadedConditionFromTextures()
+                .withWrappedVariantFunction(TableBlockStateModel::builder)
+                .withModelDispatch(TableBlock.TYPE, BCModelTemplates.TABLE::get, textureMapping)
+                .withItemModelFromDispatch(TableBlock.TYPE, TableBlock.Type.NONE)
+                .withHorizontalRotation()
+                .withUVLock());
     public static final GroupedModelTemplate<DyeColor> TYPEWRITER = new GroupedModelTemplate<>(
             BCBlocks.TYPEWRITER,
             color -> BCModelTemplates.color(BCUtil.mcLoc("block/" + color.getSerializedName() + "_terracotta")),
             BlockModelDatagenUtil::nameFor,
             (modelBuilder, textureMapping) -> modelBuilder
-                    .withModelDispatch(TypewriterBlock.PAPER, i -> BCModelTemplates.TYPEWRITER[i], textureMapping)
-                    .withHorizontalRotation()
-                    .withItemModelFromDispatch(TypewriterBlock.PAPER, 0));
+                .withModelDispatch(TypewriterBlock.PAPER, i -> BCModelTemplates.TYPEWRITER[i], textureMapping)
+                .withHorizontalRotation()
+                .withItemModelFromDispatch(TypewriterBlock.PAPER, 0));
     public static final GroupedModelTemplate<DyeColor> FANCY_GOLD_LAMP = new GroupedModelTemplate<>(
             BCBlocks.FANCY_GOLD_LAMP,
             coloredLampMaterial(BCUtil.mcLoc("block/gold_block")),
@@ -156,8 +172,7 @@ public final class BlockModelDatagenUtil {
             BCBlocks.FANCY_COPPER_LAMP.getWeathering(weatherState),
             coloredLampMaterial(COPPER_BLOCKS.get(weatherState)),
             BlockModelDatagenUtil::nameFor,
-            BlockModelDatagenUtil::buildLampModel
-    ));
+            BlockModelDatagenUtil::buildLampModel));
     public static final GroupedModelTemplate<DyeColor> FANCY_GOLD_LANTERN = new GroupedModelTemplate<>(
             BCBlocks.FANCY_GOLD_LANTERN,
             coloredLanternMaterial(BCUtil.bcLoc("block/gold_chain"), BCUtil.mcLoc("block/gold_block")),
@@ -172,8 +187,7 @@ public final class BlockModelDatagenUtil {
             BCBlocks.FANCY_COPPER_LANTERN.getWeathering(weatherState),
             coloredLanternMaterial(COPPER_CHAINS.get(weatherState), COPPER_BLOCKS.get(weatherState)),
             BlockModelDatagenUtil::nameFor,
-            BlockModelDatagenUtil::buildLanternModel
-    ));
+            BlockModelDatagenUtil::buildLanternModel));
 
     public static final List<GroupedModelTemplate<BibliocraftWoodType>> WOODEN = List.of(
             BOOKCASE,
@@ -209,19 +223,19 @@ public final class BlockModelDatagenUtil {
     }
 
     public static GroupedModelTemplate<BibliocraftWoodType> horizontalWoodTemplate(GroupedHolder<BibliocraftWoodType, Block, ? extends Block> holder, ModelTemplate template) {
-        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withSingleModel(template, textureMapping).withHorizontalRotation().withUVLock().withItemModel());
+        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withModLoadedConditionFromTextures().withSingleModel(template, textureMapping).withHorizontalRotation().withUVLock().withItemModel());
     }
 
     public static GroupedModelTemplate<BibliocraftWoodType> horizontalWoodTemplateNoItem(GroupedHolder<BibliocraftWoodType, Block, ? extends Block> holder, ModelTemplate template) {
-        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withSingleModel(template, textureMapping).withHorizontalRotation().withUVLock());
+        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withModLoadedConditionFromTextures().withSingleModel(template, textureMapping).withHorizontalRotation().withUVLock());
     }
 
     public static GroupedModelTemplate<BibliocraftWoodType> horizontalDoubleHighWoodTemplate(GroupedHolder<BibliocraftWoodType, Block, ? extends Block> holder, ModelTemplate templateTop, ModelTemplate templateBottom) {
-        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withModelDispatch(BlockStateProperties.DOUBLE_BLOCK_HALF, doubleBlockHalfDispatch(templateTop, templateBottom), textureMapping).withHorizontalRotation().withUVLock());
+        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withModLoadedConditionFromTextures().withModelDispatch(BlockStateProperties.DOUBLE_BLOCK_HALF, doubleBlockHalfDispatch(templateTop, templateBottom), textureMapping).withHorizontalRotation().withUVLock());
     }
 
     public static GroupedModelTemplate<BibliocraftWoodType> horizontalWoodTemplate(GroupedHolder<BibliocraftWoodType, Block, ? extends Block> holder, BooleanProperty property, ModelTemplate templateOnTrue, ModelTemplate templateOnFalse, boolean itemModelFrom) {
-        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withModelDispatch(property, templateOnTrue, templateOnFalse, textureMapping).withHorizontalRotation().withUVLock().withItemModelFromDispatch(property, itemModelFrom));
+        return new GroupedModelTemplate<>(holder, DEFAULT_WOOD_TYPE_TEXTURE_MAPPING, BlockModelDatagenUtil::nameFor, (modelBuilder, textureMapping) -> modelBuilder.withModLoadedConditionFromTextures().withModelDispatch(property, templateOnTrue, templateOnFalse, textureMapping).withHorizontalRotation().withUVLock().withItemModelFromDispatch(property, itemModelFrom));
     }
 
     public static Function<AbstractFancyLightBlock.Type, ModelTemplate> lightBlockTypeDispatch(ModelTemplate standing, ModelTemplate hanging, ModelTemplate wall) {
@@ -343,7 +357,7 @@ public final class BlockModelDatagenUtil {
         }
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "UnusedReturnValue"})
     public static class ModelBuilder {
         private final BlockModelGenerators generators;
         private final Block block;
@@ -353,11 +367,27 @@ public final class BlockModelDatagenUtil {
         private @Nullable Function<Block, MultiVariantGenerator> variantGeneratorFunction;
         private @Nullable PropertyDispatch<MultiVariant> dispatchMap;
         private Function<Identifier, MultiVariant> variantFunction = BlockModelGenerators::plainVariant;
+        private @Nullable Function<ExtendedModelTemplateBuilder, ExtendedModelTemplateBuilder> templateWrapper = null;
+        private boolean addModLoadedConditionFromTextures = false;
 
         private ModelBuilder(BlockModelGenerators generators, Block block, @Nullable String nameOverride) {
             this.generators = generators;
             this.block = block;
             this.nameOverride = nameOverride;
+        }
+
+        public ModelBuilder withModLoadedConditionFromTextures() {
+            addModLoadedConditionFromTextures = true;
+            return this;
+        }
+
+        public <T extends CustomLoaderBuilder> ModelBuilder withCustomLoader(Supplier<T> loaderFactory, Consumer<T> action) {
+            if (templateWrapper != null) {
+                templateWrapper = templateWrapper.andThen(builder -> builder.customLoader(loaderFactory, action));
+            } else {
+                templateWrapper = builder -> builder.customLoader(loaderFactory, action);
+            }
+            return this;
         }
 
         public ModelBuilder withWrappedVariantFunction(Function<MultiVariant, CustomBlockStateModelBuilder> wrapper) {
@@ -516,6 +546,20 @@ public final class BlockModelDatagenUtil {
         }
 
         private Identifier buildBlockModel(ModelTemplate template, TextureMapping textureMapping) {
+            if (addModLoadedConditionFromTextures) {
+                Set<String> mods = new HashSet<>();
+                for (TextureSlot requiredSlot : template.requiredSlots) {
+                    mods.add(textureMapping.get(requiredSlot).sprite().getNamespace());
+                }
+                mods.remove(Identifier.DEFAULT_NAMESPACE);
+                mods.remove(BibliocraftApi.MOD_ID);
+                if (!mods.isEmpty()) {
+                    withCustomLoader(ConditionalModelLoaderBuilder::new, builder -> builder.addConditions(mods.stream().map(ModLoadedCondition::new).toArray(ICondition[]::new)));
+                }
+            }
+            if (templateWrapper != null) {
+                template = templateWrapper.apply(template.extend()).build();
+            }
             Identifier baseName = ModelLocationUtils.getModelLocation(block);
             if (nameOverride != null) {
                 baseName = baseName.withPath("block/" + nameOverride);
