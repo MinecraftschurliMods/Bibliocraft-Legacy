@@ -38,10 +38,12 @@ public final class BCConfig {
         JEI_SHOW_WOOD_TYPES = builder
                 .comment("Whether to show blocks for all wood types in JEI, or just the default oak.")
                 .translation("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_wood_types")
+                .worldRestart()
                 .define("show_wood_types", true);
         JEI_SHOW_COLOR_TYPES = builder
                 .comment("Whether to show blocks for all color types in JEI, or just the default white.")
                 .translation("config." + BibliocraftApi.MOD_ID + ".compatibility.jei.show_color_types")
+                .worldRestart()
                 .define("show_color_types", true);
         builder.pop();
         CLIENT_SPEC = builder.build();
