@@ -45,30 +45,33 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
         if (!slot.hasItem()) return ItemStack.EMPTY;
         ItemStack stack = slot.getItem();
         ItemStack originalStack = stack.copy();
-        if (index < slotCount) { // If slot is an armor stand slot
-            // Try moving to the inventory armor
-            if (!tryMoveToInvArmor(stack, index)) return ItemStack.EMPTY;
-            // Try moving to the hotbar or inventory
-            if (!moveItemStackTo(stack, slotCount, slotCount + 36, false)) return ItemStack.EMPTY;
-        } else if (index > slotCount + 35) { // If slot is an inventory armor slot
-            // Try moving to the armor stand
-            if (!tryMoveToArmorStand(stack, index)) return ItemStack.EMPTY;
-            // Try moving to the hotbar or inventory
-            if (!moveItemStackTo(stack, slotCount, slotCount + 36, false)) return ItemStack.EMPTY;
-        } else if (index < slotCount + 9) { // If slot is a hotbar slot
-            // Try moving to the armor stand
-            if (!tryMoveToArmorStand(stack, index)) return ItemStack.EMPTY;
-            // Try moving to the inventory armor
-            if (!tryMoveToInvArmor(stack, index)) return ItemStack.EMPTY;
-            // Try moving to the inventory
-            if (!moveItemStackTo(stack, slotCount + 9, slotCount + 36, false)) return ItemStack.EMPTY;
-        } else if (index < slotCount + 36) { // If slot is an inventory slot
-            // Try moving to the armor stand
-            if (!tryMoveToArmorStand(stack, index)) return ItemStack.EMPTY;
-            // Try moving to the inventory armor
-            if (!tryMoveToInvArmor(stack, index)) return ItemStack.EMPTY;
-            // Try moving to the hotbar
-            if (!moveItemStackTo(stack, slotCount, slotCount + 9, false)) return ItemStack.EMPTY;
+        int start = 0;
+        int hotbar = start + slotCount;
+        int inventory = hotbar + 9;
+        int inventoryArmor = inventory + 27;
+        int end = inventoryArmor + 4;
+        if (index < hotbar) { // If slot is an armor stand slot
+            // Try moving to the inventory armor, or hotbar or inventory
+            if (!moveItemStackTo(stack, inventoryArmor, end, true)
+                && !moveItemStackTo(stack, hotbar, inventoryArmor, false)
+            ) return ItemStack.EMPTY;
+        } else if (index >= inventoryArmor) { // If slot is an inventory armor slot
+            // Try moving to the armor stand, or hotbar or inventory
+            if (!moveItemStackTo(stack, start, hotbar, false)
+                && !moveItemStackTo(stack, hotbar, inventoryArmor, false)
+            ) return ItemStack.EMPTY;
+        } else if (index < inventory) { // If slot is a hotbar slot
+            // Try moving to the armor stand, inventory armor, or inventory
+            if (!moveItemStackTo(stack, start, hotbar, false)
+                && !moveItemStackTo(stack, inventoryArmor, end, true)
+                && !moveItemStackTo(stack, inventory, inventoryArmor, false)
+            ) return ItemStack.EMPTY;
+        } else { // If slot is an inventory slot
+            // Try moving to the armor stand, inventory armor, or hotbar
+            if (!moveItemStackTo(stack, start, hotbar, false)
+                && !moveItemStackTo(stack, inventoryArmor, end, true)
+                && !moveItemStackTo(stack, hotbar, inventory, false)
+            ) return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) {
             slot.set(ItemStack.EMPTY);
@@ -76,20 +79,6 @@ public class FancyArmorStandMenu extends BCMenu<FancyArmorStandBlockEntity> {
             slot.setChanged();
         }
         return originalStack;
-    }
-
-    private boolean tryMoveToInvArmor(ItemStack stack, int index) {
-        for (int i = 40; i < 44; i++) {
-            if (!moveItemStackTo(stack, i, i + 1, false)) return false;
-        }
-        return true;
-    }
-
-    private boolean tryMoveToArmorStand(ItemStack stack, int index) {
-        for (int i = 0; i < 4; i++) {
-            if (!moveItemStackTo(stack, i, i + 1, false)) return false;
-        }
-        return true;
     }
 
     /// Variant of [Slot] that only accepts items that go in a given [EquipmentSlot]. Uses [ResourceHandlerSlot] as its base class.
