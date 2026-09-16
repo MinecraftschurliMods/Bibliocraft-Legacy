@@ -1,1 +1,1 @@
-Fix a dupe bug and some JEI adjustments
+Fix a dupe bug, and some JEI adjustments

@@ -5,6 +5,7 @@
 
 # Changes
 
+- Add some more items for bookcases and potion shelves
 - Make use of JEI's new grouping feature for displaying Fancy Workbenches at the side of the Crafting category
 
 # Fixes
