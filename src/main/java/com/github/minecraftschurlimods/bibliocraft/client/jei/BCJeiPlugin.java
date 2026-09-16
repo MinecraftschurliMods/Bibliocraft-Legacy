@@ -33,11 +33,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 import net.neoforged.neoforge.common.util.Lazy;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @JeiPlugin
@@ -69,27 +72,9 @@ public final class BCJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-            for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                registration.addIngredientInfo(holder.get(OAK.get()), Translations.ALL_WOOD_TYPES);
-            }
-        }
-        if (!BCConfig.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                    registration.addIngredientInfo(holder.get(OAK.get(), WHITE), Translations.ALL_COLORS_AND_WOOD_TYPES);
-                }
-            } else {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                    for (BibliocraftWoodType woodType : BibliocraftApi.getWoodTypeRegistry().getAll()) {
-                        registration.addIngredientInfo(holder.get(woodType, WHITE), Translations.ALL_COLORS);
-                    }
-                }
-            }
-            for (ColoredDeferredHolder<Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
-                registration.addIngredientInfo(holder.get(WHITE), Translations.ALL_COLORS);
-            }
-        }
+        forWoodTypeLists(($, items) -> items.forEach(i -> registration.addIngredientInfo(i, Translations.ALL_WOOD_TYPES)));
+        forColorLists(($, items) -> items.forEach(i -> registration.addIngredientInfo(i, Translations.ALL_COLORS)));
+        forWoodTypeColorLists(($, items) -> items.forEach(i -> registration.addIngredientInfo(i, Translations.ALL_WOOD_TYPES)), ($, items) -> items.forEach(i -> registration.addIngredientInfo(i, Translations.ALL_COLORS)), ($, items) -> items.forEach(i -> registration.addIngredientInfo(i, Translations.ALL_COLORS_AND_WOOD_TYPES)));
         registration.addRecipes(PrintingTableRecipeCategory.TYPE, ClientUtil.getLevel().getRecipeManager().getAllRecipesFor(BCRecipes.PRINTING_TABLE.get()));
     }
 
@@ -101,11 +86,7 @@ public final class BCJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        if (BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-            registration.addRecipeCatalysts(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.values().toArray(ItemLike[]::new));
-        } else {
-            registration.addRecipeCatalysts(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.get(OAK.get()));
-        }
+        registration.addRecipeCatalyst(RecipeTypes.CRAFTING, acceptor -> acceptor.addItemStacks(BCItems.FANCY_CRAFTER.values().stream().map(ItemStack::new).toList()));
         registration.addRecipeCatalysts(PrintingTableRecipeCategory.TYPE, BCItems.PRINTING_TABLE, BCItems.IRON_PRINTING_TABLE);
     }
 
@@ -117,27 +98,9 @@ public final class BCJeiPlugin implements IModPlugin {
 
     @Override
     public void onRuntimeAvailable(IJeiRuntime runtime) {
-        if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-            for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                removeAllExcept(runtime, holder, holder.get(OAK.get()));
-            }
-        }
-        if (!BCConfig.JEI_SHOW_COLOR_TYPES.get()) {
-            if (!BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                    removeAllExcept(runtime, holder, holder.get(OAK.get(), WHITE));
-                }
-            } else {
-                for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
-                    for (BibliocraftWoodType woodType : BibliocraftApi.getWoodTypeRegistry().getAll()) {
-                        removeAllExcept(runtime, holder, holder.get(woodType, WHITE));
-                    }
-                }
-            }
-            for (ColoredDeferredHolder<Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
-                removeAllExcept(runtime, holder, holder.get(WHITE));
-            }
-        }
+        forWoodTypeLists((holder, item) -> removeAllExcept(runtime, holder, item));
+        forColorLists((holder, item) -> removeAllExcept(runtime, holder, item));
+        forWoodTypeColorLists((holder, item) -> removeAllExcept(runtime, holder, item));
         if (!CompatUtil.hasSoulCandles()) {
             remove(runtime, Stream.of(BCItems.SOUL_FANCY_GOLD_LANTERN, BCItems.SOUL_FANCY_IRON_LANTERN).map(Supplier::get).map(ItemStack::new).toList());
         }
@@ -147,7 +110,43 @@ public final class BCJeiPlugin implements IModPlugin {
         runtime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, list);
     }
 
-    private void removeAllExcept(IJeiRuntime runtime, GroupingDeferredHolder<Item, ?> holder, Item except) {
-        remove(runtime, holder.values().stream().filter(e -> e != except).map(ItemStack::new).toList());
+    private void removeAllExcept(IJeiRuntime runtime, GroupingDeferredHolder<Item, ?> holder, Set<Item> except) {
+        remove(runtime, holder.values().stream().filter(e -> !except.contains(e)).map(ItemStack::new).toList());
+    }
+
+    private void forWoodTypeLists(BiConsumer<WoodTypeDeferredHolder<Item, ?>, Set<Item>> consumer) {
+        if (BCConfig.JEI_SHOW_WOOD_TYPES.get()) return;
+        for (WoodTypeDeferredHolder<Item, ?> holder : WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+            consumer.accept(holder, Set.of(holder.get(OAK.get())));
+        }
+    }
+
+    private void forColorLists(BiConsumer<ColoredDeferredHolder<Item, ?>, Set<Item>> consumer) {
+        if (BCConfig.JEI_SHOW_COLOR_TYPES.get()) return;
+        for (ColoredDeferredHolder<Item, ?> holder : COLORED_DEFERRED_HOLDERS.get()) {
+            consumer.accept(holder, Set.of(holder.get(WHITE)));
+        }
+    }
+
+    private void forWoodTypeColorLists(BiConsumer<GroupingDeferredHolder<Item, ?>, Set<Item>> woodConsumer, BiConsumer<GroupingDeferredHolder<Item, ?>, Set<Item>> colorConsumer, BiConsumer<GroupingDeferredHolder<Item, ?>, Set<Item>> bothConsumer) {
+        boolean dontShowWoodTypes = !BCConfig.JEI_SHOW_WOOD_TYPES.get();
+        boolean dontShowColorTypes = !BCConfig.JEI_SHOW_COLOR_TYPES.get();
+        if (dontShowWoodTypes && dontShowColorTypes) {
+            for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+                bothConsumer.accept(holder, Set.of(holder.get(OAK.get(), WHITE)));
+            }
+        } else if (dontShowWoodTypes) {
+            for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+                woodConsumer.accept(holder, Arrays.stream(DyeColor.values()).map(e -> holder.get(OAK.get(), e)).collect(Collectors.toSet()));
+            }
+        } else if (dontShowColorTypes) {
+            for (ColoredWoodTypeDeferredHolder<Item, ?> holder : COLORED_WOOD_TYPE_DEFERRED_HOLDERS.get()) {
+                colorConsumer.accept(holder, BibliocraftApi.getWoodTypeRegistry().getAll().stream().map(e -> holder.get(e, WHITE)).collect(Collectors.toSet()));
+            }
+        }
+    }
+
+    private void forWoodTypeColorLists(BiConsumer<GroupingDeferredHolder<Item, ?>, Set<Item>> consumer) {
+        forWoodTypeColorLists(consumer, consumer, consumer);
     }
 }

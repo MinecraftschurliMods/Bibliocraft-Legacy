@@ -59,6 +59,10 @@
       "required": false
     },
     {
+      "id": "silentgear:material_book",
+      "required": false
+    },
+    {
       "id": "solcarrot:food_book",
       "required": false
     },

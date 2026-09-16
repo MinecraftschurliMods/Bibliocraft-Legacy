@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class BCEnchantmentTagsProvider extends EnchantmentTagsProvider {
+public final class BCEnchantmentTagsProvider extends EnchantmentTagsProvider {
     public BCEnchantmentTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, BibliocraftApi.MOD_ID, existingFileHelper);
     }

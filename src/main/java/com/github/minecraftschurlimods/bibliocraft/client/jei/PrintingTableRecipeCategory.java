@@ -52,6 +52,7 @@ public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHo
         builder.addOutputSlot(126, 19).setOutputSlotBackground().addItemStack(recipe.getResultItem());
     }
 
+    @SuppressWarnings("removal")
     @Override
     public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<PrintingTableRecipe> holder, IFocusGroup focuses) {
         super.createRecipeExtras(builder, holder, focuses);
