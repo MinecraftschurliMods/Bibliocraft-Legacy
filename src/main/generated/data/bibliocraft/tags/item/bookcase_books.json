@@ -15,54 +15,6 @@
       "required": false
     },
     {
-      "id": "apothic_enchanting:boots_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:bow_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:chestplate_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:extraction_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:fishing_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:helmet_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:improved_scrap_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:leggings_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:other_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:pickaxe_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:scrap_tome",
-      "required": false
-    },
-    {
-      "id": "apothic_enchanting:weapon_tome",
-      "required": false
-    },
-    {
       "id": "auroral:guide",
       "required": false
     },
@@ -112,6 +64,10 @@
     },
     {
       "id": "silentgear:blueprint_book",
+      "required": false
+    },
+    {
+      "id": "silentgear:material_book",
       "required": false
     },
     {

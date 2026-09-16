@@ -773,6 +773,10 @@
       "required": false
     },
     {
+      "id": "oritech:weed_killer",
+      "required": false
+    },
+    {
       "id": "pantryforblockheads:soy_milk",
       "required": false
     },
@@ -814,6 +818,10 @@
     },
     {
       "id": "productivebees:bee_bomb",
+      "required": false
+    },
+    {
+      "id": "productivebees:bee_bomb_angry",
       "required": false
     },
     {
