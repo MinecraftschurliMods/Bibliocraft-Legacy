@@ -11,6 +11,7 @@ import at.minecraftschurli.mods.bibliocraft.init.BCFluids;
 import at.minecraftschurli.mods.bibliocraft.init.BCItems;
 import at.minecraftschurli.mods.bibliocraft.init.BCMenus;
 import at.minecraftschurli.mods.bibliocraft.init.BCRecipes;
+import at.minecraftschurli.mods.bibliocraft.init.BCTags;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
 import at.minecraftschurli.mods.bibliocraft.util.CompatUtil;
 import at.minecraftschurli.mods.bibliocraft.util.Translations;
@@ -34,7 +35,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeMap;
-import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -92,11 +93,7 @@ public final class BCJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        if (BCConfig.JEI_SHOW_WOOD_TYPES.get()) {
-            registration.addCraftingStation(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.values().toArray(ItemLike[]::new));
-        } else {
-            registration.addCraftingStation(RecipeTypes.CRAFTING, BCItems.FANCY_CRAFTER.get(OAK.get()));
-        }
+        registration.addCraftingStation(RecipeTypes.CRAFTING, new SlotDisplay.TagSlotDisplay(BCTags.Items.FANCY_CRAFTERS));
         registration.addCraftingStation(PrintingTableRecipeCategory.TYPE, BCItems.PRINTING_TABLE, BCItems.IRON_PRINTING_TABLE);
     }
 
