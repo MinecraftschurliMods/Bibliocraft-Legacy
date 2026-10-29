@@ -1,7 +1,7 @@
 pluginManagement {
     plugins {
-        id("net.neoforged.gradle.userdev") version "7.1.22"
-        id("com.github.minecraftschurlimods.helperplugin") version "1.21"
+        id("net.neoforged.gradle.userdev") version "7.1.39"
+        id("at.minecraftschurli.gradle.modhelper") version "2.0"
     }
     repositories {
         mavenLocal()
@@ -12,7 +12,7 @@ pluginManagement {
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 rootProject.name = "Bibliocraft-Legacy"
