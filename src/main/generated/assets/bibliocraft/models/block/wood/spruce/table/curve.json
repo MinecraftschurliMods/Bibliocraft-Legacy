@@ -1,6 +1,0 @@
-{
-  "parent": "bibliocraft:block/template/table/curve",
-  "textures": {
-    "texture": "minecraft:block/spruce_planks"
-  }
-}
