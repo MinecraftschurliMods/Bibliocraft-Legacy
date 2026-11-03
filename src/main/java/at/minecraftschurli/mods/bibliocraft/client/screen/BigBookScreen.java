@@ -312,11 +312,11 @@ public class BigBookScreen extends Screen {
         if (isSigning) {
             int x = (width - BACKGROUND_WIDTH - 80) / 2;
             graphics.text(font, Translations.VANILLA_EDIT_TITLE, x + 18 + (TEXT_WIDTH - font.width(Translations.VANILLA_EDIT_TITLE)) / 2, 34, 0xff000000, false);
-            MutableComponent owner = Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, player.getName()).withStyle(ChatFormatting.DARK_GRAY);
+            MutableComponent owner = Component.translatable(Translations.Keys.VANILLA_BY_AUTHOR_KEY, player.getName()).withStyle(ChatFormatting.DARK_GRAY);
             graphics.text(font, owner, x + 18 + (TEXT_WIDTH - font.width(owner)) / 2, 60, 0xff000000, false);
             graphics.textWithWordWrap(font, Translations.VANILLA_FINALIZE_WARNING, x + 18, 82, TEXT_WIDTH, 0xff000000, false);
         } else {
-            Component pageIndicator = Component.translatable(Translations.VANILLA_PAGE_INDICATOR_KEY, currentPage + 1, pages.size());
+            Component pageIndicator = Component.translatable(Translations.Keys.VANILLA_PAGE_INDICATOR_KEY, currentPage + 1, pages.size());
             if (writable) {
                 graphics.text(font, pageIndicator, (width - BACKGROUND_WIDTH - 80) / 2 + 16 + TEXT_WIDTH - font.width(pageIndicator), 18, 0xff000000, false);
             } else {

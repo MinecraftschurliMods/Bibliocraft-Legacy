@@ -115,7 +115,7 @@ public class StockroomCatalogScreen extends Screen {
                 if (y > 0 && y % 19 < 16 && y / 19 < visibleContainers.size()) {
                     BlockPos container = visibleContainers.get(y / 19);
                     int distance = (int) (lectern != null ? Math.sqrt(lectern.distSqr(container)) : ClientUtil.getPlayer().position().distanceTo(BCUtil.toVec3(container)));
-                    graphics.tooltip(font, ClientUtil.tooltip(Component.translatable(Translations.STOCKROOM_CATALOG_DISTANCE_KEY, distance)), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+                    graphics.tooltip(font, ClientUtil.tooltip(Component.translatable(Translations.Keys.STOCKROOM_CATALOG_DISTANCE_KEY, distance)), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
                 }
             }
             if (mouseX >= x + 189 && mouseX < x + 205) {
@@ -132,7 +132,7 @@ public class StockroomCatalogScreen extends Screen {
             for (StockroomCatalogItemEntry entry : visibleItems) {
                 graphics.item(entry.item(), x + 34, i * 19 + 29);
                 graphics.itemDecorations(font, entry.item(), x + 34, i * 19 + 29);
-                String countText = Component.translatable(Translations.STOCKROOM_CATALOG_COUNT_KEY, entry.count()).getString();
+                String countText = Component.translatable(Translations.Keys.STOCKROOM_CATALOG_COUNT_KEY, entry.count()).getString();
                 int countWidth = font.width(countText);
                 graphics.text(font, countText, x + 205 - countWidth, i * 19 + 33, 0xff000000, false);
                 String itemText = entry.item().getHoverName().getString(153 - countWidth);
@@ -396,7 +396,7 @@ public class StockroomCatalogScreen extends Screen {
         }
 
         private static <T extends StockroomCatalogSorting> Component message(T t) {
-            return Component.translatable(Translations.STOCKROOM_CATALOG_SORT_KEY, Component.translatable(t.getTranslationKey()));
+            return Component.translatable(Translations.Keys.STOCKROOM_CATALOG_SORT_KEY, Component.translatable(t.getTranslationKey()));
         }
     }
 }

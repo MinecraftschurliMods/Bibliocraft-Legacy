@@ -1,1 +1,1 @@
-Fix a dupe bug, and some JEI adjustments
+Use runtime resource generation for wooden blocks and items.

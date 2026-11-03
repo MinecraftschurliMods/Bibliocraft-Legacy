@@ -50,5 +50,8 @@ dependencies {
         }
     }
 
+    implementation("at.minecraftschurli.mods:dynassetgen:26.1.2-1.0-SNAPSHOT")
+    jarJar("at.minecraftschurli.mods:dynassetgen:26.1.2-1.0-SNAPSHOT")
+
     "modCompileOnly"("org.jetbrains:annotations:26.1.0")
 }

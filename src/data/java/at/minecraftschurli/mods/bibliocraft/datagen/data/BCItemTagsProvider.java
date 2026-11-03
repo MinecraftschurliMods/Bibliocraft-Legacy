@@ -1,7 +1,6 @@
 package at.minecraftschurli.mods.bibliocraft.datagen.data;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
-import at.minecraftschurli.mods.bibliocraft.api.datagen.NonClearingItemTagsProvider;
 import at.minecraftschurli.mods.bibliocraft.init.BCItems;
 import at.minecraftschurli.mods.bibliocraft.init.BCTags;
 import at.minecraftschurli.mods.bibliocraft.util.BCUtil;
@@ -9,17 +8,21 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagBuilder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
+public final class BCItemTagsProvider extends ItemTagsProvider {
     public BCItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, BibliocraftApi.MOD_ID);
     }
@@ -463,6 +466,11 @@ public final class BCItemTagsProvider extends NonClearingItemTagsProvider {
         tag(BCTags.Items.TYPEWRITER_PAPER).add(Items.PAPER);
         tag(ItemTags.BOOKSHELF_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.REDSTONE_BOOK.get(), BCItems.SLOTTED_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
         tag(ItemTags.LECTERN_BOOKS).add(BCItems.BIG_BOOK.get(), BCItems.WRITTEN_BIG_BOOK.get(), BCItems.STOCKROOM_CATALOG.get());
+    }
+
+    private TagAppender<Identifier, Item> lazyTag(TagKey<Item> key) {
+        TagBuilder tagbuilder = this.getOrCreateRawBuilder(key);
+        return TagAppender.<Item>forBuilder(tagbuilder).map(rl -> ResourceKey.create(Registries.ITEM, rl));
     }
 
     private static class BlockToItemConverter implements TagAppender<Block, Block> {

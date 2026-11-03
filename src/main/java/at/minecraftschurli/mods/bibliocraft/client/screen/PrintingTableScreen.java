@@ -89,6 +89,6 @@ public class PrintingTableScreen extends BCScreenWithToggleableSlots<PrintingTab
     }
 
     private void setModeButtonMessage() {
-        modeButton.setMessage(Component.translatable(Translations.PRINTING_TABLE_MODE_KEY, Component.translatable(menu.getBlockEntity().getMode().getTranslationKey())));
+        modeButton.setMessage(Component.translatable(Translations.Keys.PRINTING_TABLE_MODE_KEY, Component.translatable(menu.getBlockEntity().getMode().getTranslationKey())));
     }
 }

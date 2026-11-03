@@ -47,7 +47,7 @@ public record WrittenBigBookContent(List<List<FormattedLine>> pages, String titl
     @Override
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter) {
         if (!StringUtil.isBlank(author())) {
-            tooltipAdder.accept(Component.translatable(Translations.VANILLA_BY_AUTHOR_KEY, author()).withStyle(ChatFormatting.GRAY));
+            tooltipAdder.accept(Component.translatable(Translations.Keys.VANILLA_BY_AUTHOR_KEY, author()).withStyle(ChatFormatting.GRAY));
         }
         tooltipAdder.accept(Component.translatable("book.generation." + generation()).withStyle(ChatFormatting.GRAY));
     }

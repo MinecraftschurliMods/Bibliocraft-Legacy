@@ -56,13 +56,13 @@ public class PrintingTableRecipeCategory extends AbstractRecipeCategory<RecipeHo
     public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<PrintingTableRecipe> holder, IFocusGroup focuses) {
         super.createRecipeExtras(builder, holder, focuses);
         PrintingTableRecipe recipe = holder.value();
-        builder.addRecipePlusSign().setPosition(57, 21);
-        builder.addAnimatedRecipeArrow(recipe.getDuration()).setPosition(95, 20);
-        builder.addText(Component.translatable(Translations.JEI_SECONDS_KEY, recipe.getDuration() / 20), getWidth() - 57, 10)
+        builder.addRecipePlusSignWidget().setPosition(57, 21);
+        builder.addAnimatedRecipeArrowWidget(recipe.getDuration()).setPosition(95, 20);
+        builder.addText(Component.translatable(Translations.Keys.JEI_SECONDS_KEY, recipe.getDuration() / 20), getWidth() - 57, 10)
                 .setPosition(0, 0, getWidth(), getHeight(), HorizontalAlignment.RIGHT, VerticalAlignment.TOP)
                 .setTextAlignment(HorizontalAlignment.RIGHT)
                 .setColor(0xff808080);
-        builder.addText(Component.translatable(Translations.PRINTING_TABLE_MODE_KEY, Component.translatable(recipe.getMode().getTranslationKey())), getWidth() - 57, 10)
+        builder.addText(Component.translatable(Translations.Keys.PRINTING_TABLE_MODE_KEY, Component.translatable(recipe.getMode().getTranslationKey())), getWidth() - 57, 10)
                 .setPosition(0, 0, getWidth(), getHeight(), HorizontalAlignment.RIGHT, VerticalAlignment.BOTTOM)
                 .setTextAlignment(HorizontalAlignment.RIGHT)
                 .setColor(0xff808080);

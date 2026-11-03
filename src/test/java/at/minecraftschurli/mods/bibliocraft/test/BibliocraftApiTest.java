@@ -1,9 +1,7 @@
 package at.minecraftschurli.mods.bibliocraft.test;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
-import at.minecraftschurli.mods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
 import at.minecraftschurli.mods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
-import at.minecraftschurli.mods.bibliocraft.apiimpl.BibliocraftDatagenHelperImpl;
 import at.minecraftschurli.mods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.testframework.junit.EphemeralTestServerProvider;
@@ -14,14 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(EphemeralTestServerProvider.class)
 public class BibliocraftApiTest {
-    /// Test that the BibliocraftDatagenHelper is available via the BibliocraftApi
-    @Test
-    public void testDatagenHelperAvailable(MinecraftServer server) {
-        BibliocraftDatagenHelper datagenHelper = BibliocraftApi.getDatagenHelper();
-        assertNotNull(datagenHelper, "BibliocraftDatagenHelper is not available");
-        assertInstanceOf(BibliocraftDatagenHelperImpl.class, datagenHelper, "BibliocraftDatagenHelper implementation is replaced");
-    }
-
     /// Test that the BibliocraftWoodTypeRegistry is available via the BibliocraftApi
     @Test
     public void testWoodTypeRegistryAvailable(MinecraftServer server) {
