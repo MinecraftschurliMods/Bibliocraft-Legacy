@@ -50,8 +50,6 @@ import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -63,9 +61,9 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public final class BlockModelDatagenUtil {
-    public static final Map<DyeColor, Identifier> CANDLE_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_candle_lit"))));
-    public static final Map<DyeColor, Identifier> GLASS_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_stained_glass"))));
-    public static final Map<DyeColor, Identifier> WOOL_TEXTURES = Util.make(new HashMap<>(), map -> Arrays.stream(DyeColor.values()).forEach(color -> map.put(color, BCUtil.mcLoc("block/" + color.getName() + "_wool"))));
+    public static final Map<DyeColor, Identifier> CANDLE_TEXTURES = Util.makeEnumMap(DyeColor.class, color -> BCUtil.mcLoc("block/" + color.getName() + "_candle_lit"));
+    public static final Map<DyeColor, Identifier> GLASS_TEXTURES = Util.makeEnumMap(DyeColor.class, color -> BCUtil.mcLoc("block/" + color.getName() + "_stained_glass"));
+    public static final Map<DyeColor, Identifier> WOOL_TEXTURES = Util.makeEnumMap(DyeColor.class, color -> BCUtil.mcLoc("block/" + color.getName() + "_wool"));
     public static final Map<WeatheringCopper.WeatherState, Identifier> COPPER_BLOCKS = Util.makeEnumMap(WeatheringCopper.WeatherState.class, weatherState -> switch (weatherState) {
         case UNAFFECTED -> BCUtil.mcLoc("block/copper_block");
         case WEATHERED -> BCUtil.mcLoc("block/weathered_copper");

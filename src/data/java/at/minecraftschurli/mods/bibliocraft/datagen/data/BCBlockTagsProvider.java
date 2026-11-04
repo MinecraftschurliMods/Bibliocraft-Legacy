@@ -1,16 +1,16 @@
 package at.minecraftschurli.mods.bibliocraft.datagen.data;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
-import at.minecraftschurli.mods.bibliocraft.api.datagen.NonClearingBlockTagsProvider;
 import at.minecraftschurli.mods.bibliocraft.init.BCBlocks;
 import at.minecraftschurli.mods.bibliocraft.init.BCTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
-public final class BCBlockTagsProvider extends NonClearingBlockTagsProvider {
+public final class BCBlockTagsProvider extends BlockTagsProvider {
     public BCBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider, BibliocraftApi.MOD_ID);
     }

@@ -102,49 +102,7 @@ public class BibliocraftCompat {
 }
 ```
 
-And that's it! Now, if you boot up your game, you will notice that Bibliocraft will have blocks in your wood type's variant, however they will not have models, textures or any other data. For that, we need to set up datagen. And this is where things become a little tricky.
-
-Due to how Minecraft's datagen works, it is not possible to have multiple data providers write to the same file. This means that we have to capture the language provider and the two tags providers and pass them to our providers directly, due to how Bibliocraft's datagen is structured internally.
-
-With language providers, this works without issues. However, Mojang programmed the tags providers to auto-clear before running their `#addTags` method. This is bad for us because it means we will lose tag entries.
-
-As a workaround, the Bibliocraft API provides you with the `NonClearingBlockTagsProvider` and `NonClearingItemTagsProvider` classes. These classes are modified to not clear the existing values before generating, and can be used as a drop-in replacement for `BlockTagsProvider`/`ItemTagsProvider` in your tag datagen classes.
-
-Tying it all together, a Bibliocraft-enabled datagen would look something like this:
-
-```java
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = "yourmodid")
-public final class YourModDatagen {
-    @SubscribeEvent
-    private static void gatherData(GatherDataEvent event) {
-        DataGenerator generator = event.getGenerator();
-        PackOutput output = generator.getPackOutput();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-
-        // First, store your language provider, your block tags provider, and your item tags provider as local fields.
-        // Datagen for languages other than US English is currently not supported.
-        LanguageProvider languageProvider = generator.addProvider(event.includeClient(),
-                new YourModEnglishLanguageProvider(output, "yourmodid", "en_us"));
-        BlockTagsProvider blockTagsProvider = generator.addProvider(event.includeServer(),
-                new YourModBlockTagsProvider(output, lookupProvider, "yourmodid", existingFileHelper));
-        ItemTagsProvider itemTagsProvider = generator.addProvider(event.includeServer(),
-                new YourModItemTagsProvider(output, lookupProvider, blockTagsProvider.contentsGetter(), "yourmodid", existingFileHelper));
-        // Get the datagen helper and the wood type registry.
-        BibliocraftDatagenHelper helper = BibliocraftApi.getDatagenHelper();
-        BibliocraftWoodTypeRegistry registry = BibliocraftApi.getWoodTypeRegistry();
-        // Add your wood types.
-        helper.addWoodTypeToGenerate(registry.get(ResourceLocation.fromNamespaceAndPath("yourmodid", "yourwoodtype")));
-        helper.addWoodTypeToGenerate(registry.get(ResourceLocation.fromNamespaceAndPath("yourmodid", "yourwoodtype2")));
-        // Alternatively, add all your wood types at once.
-        helper.addWoodTypesToGenerateByModid("yourmodid");
-        // Actually generate the files.
-        helper.generateAll("yourmodid", event, languageProvider, blockTagsProvider, itemTagsProvider);
-    }
-}
-```
-
-Running this will output `assets` and `data` in both Bibliocraft's and your own mod's namespaces. This is expected and no reason to worry, as this is required by Bibliocraft's internal structure.
+And that's it! Now, if you boot up your game, you will notice that Bibliocraft will have blocks in your wood type's variant.
 
 ### Adding Custom Lock Behaviors
 

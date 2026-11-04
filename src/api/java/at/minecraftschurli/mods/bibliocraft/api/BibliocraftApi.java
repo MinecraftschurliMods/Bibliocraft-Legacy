@@ -1,6 +1,5 @@
 package at.minecraftschurli.mods.bibliocraft.api;
 
-import at.minecraftschurli.mods.bibliocraft.api.datagen.BibliocraftDatagenHelper;
 import at.minecraftschurli.mods.bibliocraft.api.lockandkey.LockAndKeyBehaviors;
 import at.minecraftschurli.mods.bibliocraft.api.woodtype.BibliocraftWoodTypeRegistry;
 import net.neoforged.fml.loading.FMLLoader;
@@ -14,13 +13,7 @@ import java.util.function.Supplier;
 public final class BibliocraftApi {
     public static final String MOD_ID = "bibliocraft";
 
-    private BibliocraftApi() {
-    }
-
-    /// @return The only instance of [BibliocraftDatagenHelper].
-    public static BibliocraftDatagenHelper getDatagenHelper() {
-        return InstanceHolder.DATAGEN_HELPER.get();
-    }
+    private BibliocraftApi() {}
 
     /// @return The only instance of [BibliocraftWoodTypeRegistry].
     public static BibliocraftWoodTypeRegistry getWoodTypeRegistry() {
@@ -34,12 +27,10 @@ public final class BibliocraftApi {
 
     /// The internal class used to hold the instances. DO NOT ACCESS YOURSELF!
     private static class InstanceHolder {
-        private static final Lazy<BibliocraftDatagenHelper> DATAGEN_HELPER = Lazy.of(fromServiceLoader(BibliocraftDatagenHelper.class));
         private static final Lazy<BibliocraftWoodTypeRegistry> WOOD_TYPE_REGISTRY = Lazy.of(fromServiceLoader(BibliocraftWoodTypeRegistry.class));
         private static final Lazy<LockAndKeyBehaviors> LOCK_AND_KEY_BEHAVIORS = Lazy.of(fromServiceLoader(LockAndKeyBehaviors.class));
 
-        private InstanceHolder() {
-        }
+        private InstanceHolder() {}
 
         private static <T> Supplier<T> fromServiceLoader(Class<T> clazz) {
             return () -> ServiceLoader.load(FMLLoader.getCurrent().getGameLayer(), clazz).findFirst().orElseThrow(() -> {

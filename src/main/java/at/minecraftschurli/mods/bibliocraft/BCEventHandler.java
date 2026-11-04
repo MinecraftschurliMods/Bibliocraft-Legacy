@@ -2,9 +2,12 @@ package at.minecraftschurli.mods.bibliocraft;
 
 import at.minecraftschurli.mods.bibliocraft.api.BibliocraftApi;
 import at.minecraftschurli.mods.bibliocraft.api.lockandkey.RegisterLockAndKeyBehaviorEvent;
+import at.minecraftschurli.mods.bibliocraft.api.woodtype.BibliocraftWoodType;
 import at.minecraftschurli.mods.bibliocraft.api.woodtype.RegisterBibliocraftWoodTypesEvent;
 import at.minecraftschurli.mods.bibliocraft.apiimpl.BibliocraftWoodTypeRegistryImpl;
 import at.minecraftschurli.mods.bibliocraft.apiimpl.LockAndKeyBehaviorsImpl;
+import at.minecraftschurli.mods.bibliocraft.assets.BibliocraftDynamicAssets;
+import at.minecraftschurli.mods.bibliocraft.client.assets.BibliocraftClientDynamicAssets;
 import at.minecraftschurli.mods.bibliocraft.content.bigbook.BigBookSignPacket;
 import at.minecraftschurli.mods.bibliocraft.content.bigbook.BigBookSyncPacket;
 import at.minecraftschurli.mods.bibliocraft.content.bigbook.SetBigBookPageInLecternPacket;
@@ -30,6 +33,7 @@ import at.minecraftschurli.mods.bibliocraft.util.lectern.LecternUtil;
 import at.minecraftschurli.mods.bibliocraft.util.lectern.OpenBookInLecternPacket;
 import at.minecraftschurli.mods.bibliocraft.util.lectern.TakeLecternBookPacket;
 import at.minecraftschurli.mods.bibliocraft.util.slot.ToggleableSlotSyncPacket;
+import at.minecraftschurli.mods.dynassetgen.api.DynamicPacks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
@@ -46,6 +50,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
@@ -53,6 +58,11 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @EventBusSubscriber(modid = BibliocraftApi.MOD_ID)
 public final class BCEventHandler {
